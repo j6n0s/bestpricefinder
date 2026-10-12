@@ -1,0 +1,48 @@
+key,name,base,n_chains,min_chain,min,max_chain,max,ratio,n_chains_within_5pct_of_min,cheapest_sku,priciest_chain_cheapest_sku
+teljes_kiorlesu_kenyer,teljes kiőrlésű kenyér,kg,5,Aldi,448,Tesco,1778,3.97,1,Kemencés Kedvenc TK kenyér,TELJ.K.TÖBBMAGV. KENYÉR 500G
+karfiol,karfiol,db,6,Auchan,399,Lidl,999,2.5,1,Karfiol Ft/db,Karfiol db
+olivaolaj,extra szűz olívaolaj,l,6,Auchan,2400,Spar,5299,2.21,1,Piacelli extra szűz olasz olívaolaj 500 ml,DESPAR extraszűz olívaolaj 1 l
+lazacfile,lazacfilé (natúr),kg,6,Aldi,4796,Penny,9997,2.08,3,MSC vadlazac filé 250g,Gran mare lazacfilé
+paradicsom,"paradicsom (friss, koktél is)",kg,6,Lidl,429,Aldi,879,2.05,2,Paradicsom 1kg,Paradicsom fürtös lédig
+csaszarszalonna,császárszalonna / bacon,kg,6,Lidl,2399,Auchan,4690,1.95,2,"Pikok Pure Füstölt  szalonna,  ca. 500g",Encsi füstölt-főtt császárszalonna Ft/kg
+teljes_kiorlesu_teszta,teljes kiőrlésű száraztészta,kg,4,Aldi,798,Auchan,1538,1.93,2,Teljeskiőrlésű fusilli 500g,Don Francesco Integrale fusilli teljes kiőrlésű durum száraztészta 500 g
+petrezselyemgyoker,petrezselyemgyökér,kg,6,Spar,689,Aldi,1299,1.89,1,Petrezselyemgyökér csomós,Petrezselyemgyökér lédig
+banan,banán,kg,6,Lidl,379,Aldi,699,1.84,1,Banán kg,Banán lédig
+tej15,"tej 1,5%",l,6,Spar,155,Aldi,265,1.71,1,"Farmer UHT tej 1,5%, 1l","Kokárdás UHT tej 1,5% 1 l"
+sargarepa,sárgarépa,kg,6,Auchan,299,Penny,499,1.67,2,Sárgarépa 2 kg,Sárgarépa 1kg-os
+lencse,lencse (száraz),kg,6,Aldi,738,Auchan,1198,1.62,4,BON-RI zöld lencse/vörös lencse 500g,Kalifa lencse 500 g
+burgonya,étkezési burgonya,kg,6,Lidl,194,Auchan,314,1.61,1,Burgonya 2kg hálós,Piros burgonya 10 kg
+fozotejszin10,főzőtejszín 10%,l,6,Penny,1038,Tesco,1658,1.6,4,Milkeria UHT 10% főzőtejsz.,Meggle UHT főzőtejszín 10% 500 ml
+tehenturo,tehéntúró,kg,6,Aldi,876,Tesco,1358,1.55,2,Krém-tehéntúró 250g,Tesco félzsíros túró 500 g QQ
+alma,alma,kg,6,Aldi,325,Penny,499,1.54,2,Alma piros lédig,Idared alma lédig kg
+citrom,citrom,kg,6,Spar,799,Penny,1199,1.5,1,Citrom lédig,Citrom lédig kg
+uborka,kígyóuborka,kg,5,Lidl,856,Tesco,1226,1.43,2,Kígyóuborka 2db,Kígyóuborka db
+teszta_kocka,nagykocka tészta,kg,6,Spar,638,Penny,898,1.41,1,Tetővári spagetti 4 tojásos száraztészta 500 g,Aranykosár 4 tojásos spagetti
+teszta_csusza,csusza / széles metélt,kg,6,Spar,638,Penny,898,1.41,1,Tetővári spagetti 4 tojásos száraztészta 500 g,Aranykosár 4 tojásos spagetti
+zoldpaprika,zöldpaprika (étkezési/TV/lecsó),kg,6,Spar,602,Penny,827,1.37,1,"S-budget xxl lecsópaprika 1,5kg",Hazai lecsópaprika 750gr
+vaj,vaj,kg,6,Aldi,1796,Tesco,2395,1.33,2,Desira márkázott vaj 250g,Tesco vaj 200 g QQ
+voroshagyma,vöröshagyma,kg,6,Lidl,190,Auchan,250,1.32,1,Vöröshagyma 2kg,Vöröshagyma Ft/kg
+lilahagyma,lilahagyma,kg,6,Lidl,190,Auchan,250,1.32,1,Vöröshagyma 2kg,Vöröshagyma Ft/kg
+gorog_joghurt,görög (típusú) joghurt,kg,2,Tesco,996,Spar,1293,1.3,1,RN NATÚR GÖRÖG LIGHT JOGHURT 1 kg QQ,DANONE GÖRÖG STILUSU JOGHURT 375 g QQ
+tojas,tojás,db,6,Lidl,46,Tesco,57,1.26,2,"Friss Tojás 10 db, S-es",MU 30DB TOJÁS 1290G S MÉRET QQ
+szarazkolbasz,szárazkolbász,kg,6,Aldi,3197,Spar,3998,1.25,3,Parasztkolbász 300g,SPAR Hazai Szeretem csemege paraszt kolbász 400 g
+korte,körte,kg,6,Spar,557,Penny,699,1.25,1,s-budget körte 1 kg,Conference körte lédig kg
+fejes_kaposzta,fejes káposzta,kg,5,Aldi,209,Spar,257,1.23,2,Fejes káposzta lédig,Fejeskáposzta
+tv_paprika,tölteni való (TV) paprika,kg,6,Auchan,698,Penny,845,1.21,1,Étkezési paprika Ft/kg,Magyar tv paprika lédig kg
+trappista,trappista sajt,kg,6,Aldi,1990,Penny,2390,1.2,1,Kokárdás trappista sajt kg,Sissy trappista sajt egész kg
+natur_joghurt,natúr joghurt,kg,6,Aldi,429,Tesco,507,1.18,5,"Milsani natúr joghurt 0,1% 175g",SZENTKÚTI-TEJ NAT. JOG. LIGHT ÉLŐ. 150 g QQ
+csirkecomb,csirkecomb (egész/alsó/felső),kg,6,Lidl,755,Auchan,881,1.17,2,"Friss csirkecomb , kg",Friss csirke comb vákuumcsomagolásban Ft/kg
+darált_sertes_sovany,darált sertéshús max 20% zsír,kg,4,Lidl,1799,Aldi,2078,1.16,2,"Húsfarm Sertés darálthús 20 %, 1kg",Darált sertéshús 20 % 500g
+rizs,"rizs (fehér, hosszú szemű)",kg,5,Tesco,529,Auchan,599,1.13,4,HEARTY FOOD RIZS 1KG,"Auchan Tipp ""B"" minőségű rizs 1 kg"
+fokhagyma,fokhagyma,kg,6,Aldi,1465,Auchan,1606,1.1,4,Fokhagyma lédig,Fokhagyma lédig Ft/kg
+csemegekukorica,csemegekukorica konzerv,kg,6,Aldi,1049,Penny,1154,1.1,3,King’s Crown morzsolt csemegekukorica hozzáadott cukor nélkül 340g,Jar/penny szuper édes kukorica
+kristalycukor,kristálycukor,kg,6,Aldi,295,Tesco,323,1.09,5,Sweet Family Kristálycukor 1kg,Tesco kristálycukor 1 kg QQ
+feta,feta sajt,kg,6,Auchan,4332,Spar,4645,1.07,5,Hotos Feta P.D.O. sajt juh- és kecsketejből 600 g,S-Budget feta sajt 200 g
+csirkemellfile,csirkemellfilé,kg,6,Lidl,1859,Aldi,1979,1.06,2,"Csirkemell tokány, kg",Húsmester csirkemellfilé kg vákuumcsomagolt
+pulykamellfile,pulykamellfilé,kg,6,Auchan,2998,Spar,3118,1.04,6,Pulykamellfilé 450 g,Gallio pulykamellfilé 450 g
+kokusztej,kókusztej,l,2,Tesco,2795,Auchan,2895,1.04,2,The Bridge UHT gluténmentes bio kókusz főzőtejszín 200 ml,The Bridge UHT gluténmentes bio kókusz főzőtejszín 200 ml
+finomliszt,búzafinomliszt BL55,kg,6,Lidl,178,Aldi,183,1.03,6,"Belbake Búzafinomliszt BL-55,  1kg",Happy Harvest búza finomliszt 1 kg
+zoldborso_fagyasztott,gyorsfagyasztott zöldborsó,kg,6,Aldi,753,Auchan,776,1.03,6,Zöldborsó extra zsenge 450g,"Auchan Kedvenc extra zsenge zöldborsó I. osztály, gyorsfagyasztott 450 g"
+brokkoli,brokkoli (friss),kg,6,Aldi,1398,Tesco,1438,1.03,6,Brokkoli 500g,TS BROCCOLI 500 G
+napraforgo_olaj,napraforgó étolaj,l,6,Auchan,739,Aldi,749,1.01,6,Kunsági éden étolaj 1l,Bellasan napraforgó étolaj 1l
+tejfol12,tejföl 12%,kg,6,Aldi,798,Tesco,800,1.0,6,Milsani/Milfina tejföl 12% 450g,Tesco tejföl 12% 450 g QQ

@@ -1,0 +1,7 @@
+ean,product,auchan_online_price_huf,gvh_auchan_price_huf,gvh_price_types,match,notes
+5998398312346,"Nagykun B minőségű rizs 1 kg",799,799,"NORMAL 799",equal,
+5999086449146,"Auchan Kedvenc tejföl 20% 450 g",449,449,"NORMAL 449",equal,
+3245677726366,"Auchan Kedvenc extra szűz olívaolaj 750 ml",3369,3369,"NORMAL 3369",equal,
+5999086455338,"Auchan Kedvenc finomított napraforgó étolaj 1 l",750,750,"NORMAL 750",equal,
+5997956700984,"Kalifa lencse 500 g",609,599,"NORMAL 599; DISCOUNTED 499",online_higher,"online +10 Ft vs GVH NORMAL; GVH also shows 499 DISCOUNTED"
+2175100000002 vs 2148180000002/2175210000008,"Friss csirkemellfilé védőgázas (Ft/kg)",2197,1967,"NORMAL 1967 (different SKU 2148180000002); Auchan Kedvenc vákuum 1973",not_same_sku,"online unit price 2197 Ft/kg vs comparable in-store SKUs 1967-1973 Ft/kg"

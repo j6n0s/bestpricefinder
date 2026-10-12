@@ -1,0 +1,149 @@
+week,key,base,qty_base,n_recipes,level,pantry,source,used_cost,separate_pack_cost,week_pack_cost,leftover_base,packs,primary_chain
+W1,lencse,kg,0.2,1,E,False,Auchan,239.6,599.0,599.0,0.3,Kalifa lencse 500 g,Auchan
+W1,voroshagyma,kg,0.2,2,E,False,Auchan,50.0,50.0,50.0,0.0,variable-weight,Auchan
+W1,fokhagyma,kg,0.0,3,E,False,Auchan,40.2,40.1,40.2,0.0,variable-weight,Auchan
+W1,napraforgo_olaj,l,0.0,3,E,True,Auchan,33.3,2217.0,739.0,1.0,Kunsági éden étolaj 1l,Auchan
+W1,finomliszt,kg,0.0,2,E,True,Auchan,5.4,362.0,181.0,1.0,Auchan Tipp búzafinomliszt BL-55 1 kg,Auchan
+W1,pirospaprika,kg,0.0,2,N,True,kifli,87.9,1758.0,879.0,0.1,Horváth Rozi édes őrölt paprika I. o. 100 g,Auchan
+W1,baberlevel,kg,0.0,1,N,True,kifli,16.7,209.0,209.0,0.0,Lucullus babérlevél egész 5 g,Auchan
+W1,ecet,l,0.0,1,N,True,kifli,3.0,295.0,295.0,1.0,Kitchin Ételecet 10% 1 l,Auchan
+W1,kristalycukor,kg,0.0,1,E,True,Auchan,1.5,295.0,295.0,1.0,Sweet Family Kristálycukor 1kg,Auchan
+W1,tejfol12,kg,0.1,1,E,False,Auchan,47.9,147.0,147.0,0.1,"Auchan Kedvenc tejföl pasztőrözött, homogénezett 12% 175 g",Auchan
+W1,tojas,db,4.0,2,E,False,Auchan,194.0,1002.0,501.0,6.0,Auchan Tipp friss tojás A osztály S méret 10 db,Auchan
+W1,csirkecomb,kg,0.6,1,E,False,Auchan,528.6,528.6,528.6,0.0,variable-weight,Auchan
+W1,zoldpaprika,kg,0.1,1,E,False,Auchan,76.8,76.8,76.8,0.0,variable-weight,Auchan
+W1,paradicsom,kg,0.3,2,E,False,Auchan,129.9,259.8,259.8,0.0,variable-weight,Auchan
+W1,natur_joghurt,kg,0.1,1,E,False,Auchan,64.3,75.0,75.0,0.0,"Auchan Tipp natúr joghurt 0,1% 175 g",Auchan
+W1,rizs,kg,0.3,2,E,False,Auchan,167.7,1198.0,599.0,0.7,"Auchan Tipp ""B"" minőségű rizs 1 kg",Auchan
+W1,csirkemellfile,kg,0.3,1,E,False,Auchan,577.8,577.8,577.8,0.0,variable-weight,Auchan
+W1,brokkoli,kg,0.7,2,E,False,Auchan,908.7,1398.0,1398.0,0.3,Brokkoli 500 g + Brokkoli 500 g,Auchan
+W1,fozotejszin10,l,0.1,1,E,False,Auchan,111.9,359.0,359.0,0.1,Meggle UHT főzőtejszín 10% 200 ml,Auchan
+W1,citrom,kg,0.1,3,E,False,Auchan,116.9,116.9,116.9,0.0,variable-weight,Auchan
+W1,zabpehely,kg,0.1,1,N,False,kifli,79.8,399.0,399.0,0.4,YUTTO Finom zabpehely 500 g,Auchan
+W1,tej15,l,0.4,1,E,False,Auchan,106.0,265.0,265.0,0.6,"Auchan Tipp UHT tej 1,5 % 1 l",Auchan
+W1,banan,kg,0.2,1,E,False,Auchan,99.8,127.3,127.3,0.0,variable-weight,Auchan
+W1,alma,kg,0.2,1,E,False,Auchan,71.8,71.8,71.8,0.0,variable-weight,Auchan
+W1,mez,kg,0.0,1,N,True,kifli,67.3,3199.0,3199.0,0.9,"Ezercsepp Vegyes virágméz 0,95 kg",Auchan
+W1,fahej,kg,0.0,1,N,True,kifli,15.9,159.0,159.0,0.0,Lucullus fahéj őrölt 20 g,Auchan
+W1,dio,kg,0.0,1,N,False,kifli,163.9,1639.0,1639.0,0.2,Kalifa étkezési dióbél 200 g,Auchan
+W1,lazacfile,kg,0.3,1,E,False,Auchan,1470.0,2227.2,2227.2,0.0,variable-weight,Auchan
+W1,edesburgonya,kg,0.5,1,N,False,kifli,599.5,599.5,599.5,0.0,variable-weight,Auchan
+W1,olivaolaj,l,0.0,2,E,True,Auchan,84.0,2400.0,1200.0,0.5,Piacelli extra szűz olasz olívaolaj 500 ml,Auchan
+W1,tonhal_konzerv,db,1.0,1,N,False,kifli,2199.0,2199.0,2199.0,0.0,Twist tonhal natúr lében 240 g (168 g töltőtömeg),Auchan
+W1,jegsalata,kg,0.2,1,N,False,kifli,599.3,899.0,899.0,0.1,Jégsaláta csomagolt 300 g,Auchan
+W1,uborka,kg,0.1,1,E,False,Penny,162.4,379.0,379.0,0.2,Kígyóuborka db,Auchan
+W1,csemegekukorica,kg,0.1,1,E,False,Auchan,113.7,324.0,324.0,0.2,Auchan Kedvenc morzsolt csemegekukorica 340/285 g,Auchan
+W1,lilahagyma,kg,0.0,1,S,False,Auchan,10.0,10.0,10.0,0.0,variable-weight,Auchan
+W1,teljes_kiorlesu_kenyer,kg,0.1,1,E,False,Auchan,49.8,199.0,199.0,0.3,Auchan Kedvenc teljes kiőrlésű kenyér 400 g,Auchan
+W2,karfiol,db,1.0,1,E,False,Auchan,399.0,399.0,399.0,0.0,Karfiol Ft/db,Auchan
+W2,darált_sertes_sovany,kg,0.2,1,E,False,Lidl,449.8,449.8,449.8,0.0,variable-weight,Auchan
+W2,rizs,kg,0.2,2,E,False,Auchan,119.8,1198.0,599.0,0.8,"Auchan Tipp ""B"" minőségű rizs 1 kg",Auchan
+W2,voroshagyma,kg,0.3,3,E,False,Auchan,65.0,65.0,65.0,0.0,variable-weight,Auchan
+W2,fokhagyma,kg,0.0,4,E,False,Auchan,56.2,56.2,56.2,0.0,variable-weight,Auchan
+W2,tejfol12,kg,0.2,1,E,False,Auchan,159.6,294.0,294.0,0.1,"Auchan Kedvenc tejföl pasztőrözött, homogénezett 12% 175 g + Auchan Kedvenc tejföl pasztőrözött, homogénezett 12% 175 g",Auchan
+W2,tojas,db,1.0,1,E,False,Auchan,48.5,501.0,501.0,9.0,Auchan Tipp friss tojás A osztály S méret 10 db,Auchan
+W2,trappista,kg,0.0,1,E,False,Auchan,85.6,337.0,337.0,0.1,Ammerländer trappista,Auchan
+W2,napraforgo_olaj,l,0.0,3,E,True,Auchan,33.3,2217.0,739.0,1.0,Kunsági éden étolaj 1l,Auchan
+W2,pirospaprika,kg,0.0,1,N,True,kifli,17.6,879.0,879.0,0.1,Horváth Rozi édes őrölt paprika I. o. 100 g,Auchan
+W2,fejes_kaposzta,kg,0.5,1,E,False,Aldi,104.5,104.5,104.5,0.0,variable-weight,Auchan
+W2,teszta_kocka,kg,0.2,1,S,False,Auchan,116.8,365.0,365.0,0.3,Auchan Kedvenc spagetti száraztészta 4 tojásos 500 g,Auchan
+W2,kristalycukor,kg,0.0,2,E,True,Auchan,10.3,590.0,295.0,1.0,Sweet Family Kristálycukor 1kg,Auchan
+W2,alma,kg,0.3,1,E,False,Auchan,119.7,119.7,119.7,0.0,variable-weight,Auchan
+W2,korte,kg,0.2,1,E,False,Auchan,134.0,139.8,139.8,0.0,variable-weight,Auchan
+W2,citrom,kg,0.1,2,E,False,Auchan,71.9,71.9,71.9,0.0,variable-weight,Auchan
+W2,fahej,kg,0.0,1,N,True,kifli,15.9,159.0,159.0,0.0,Lucullus fahéj őrölt 20 g,Auchan
+W2,natur_joghurt,kg,0.1,1,E,False,Auchan,64.3,75.0,75.0,0.0,"Auchan Tipp natúr joghurt 0,1% 175 g",Auchan
+W2,finomliszt,kg,0.0,1,E,True,Auchan,1.8,181.0,181.0,1.0,Auchan Tipp búzafinomliszt BL-55 1 kg,Auchan
+W2,csicseri_konzerv,db,1.0,1,N,False,kifli,215.0,215.0,215.0,0.0,Kitchin csicseriborsó enyhén sós lében 420 g (240 g töltőtömeg),Auchan
+W2,kokusztej,l,0.2,1,S,False,Auchan,579.0,579.0,579.0,0.0,The Bridge UHT gluténmentes bio kókusz főzőtejszín 200 ml,Auchan
+W2,paradicsom_konzerv,kg,0.4,1,N,False,kifli,305.0,305.0,305.0,0.0,Kitchin apróra vágott hámozott paradicsom 400 g,Auchan
+W2,gyomber,kg,0.0,1,N,False,kifli,30.0,899.0,899.0,0.3,Titbit gyömbér csomagolt 300 g,Auchan
+W2,curry,kg,0.0,1,N,True,kifli,159.7,539.0,539.0,0.0,Kotányi currypor 27 g,Auchan
+W2,spenot,kg,0.3,2,N,False,kifli,979.3,2798.0,1399.0,0.1,"Spenót, csomagolt 500 g",Auchan
+W2,teljes_kiorlesu_teszta,kg,0.2,1,E,False,Auchan,276.8,769.0,769.0,0.3,Don Francesco Integrale fusilli teljes kiőrlésű durum száraztészta 500 g,Auchan
+W2,fozotejszin10,l,0.1,1,E,False,Auchan,167.9,359.0,359.0,0.1,Meggle UHT főzőtejszín 10% 200 ml,Auchan
+W2,parmezan,kg,0.0,1,N,False,kifli,209.7,699.0,699.0,0.1,Miil olasz reszelt félzsíros kemény sajt 100 g,Auchan
+W2,olivaolaj,l,0.0,2,E,True,Auchan,60.0,2400.0,1200.0,0.5,Piacelli extra szűz olasz olívaolaj 500 ml,Auchan
+W2,szerecsendio,kg,0.0,1,N,True,kifli,15.3,399.0,399.0,0.0,Lucullus szerecsendió őrölt 13 g,Auchan
+W2,csirkemellfile,kg,0.3,1,E,False,Auchan,674.1,674.1,674.1,0.0,variable-weight,Auchan
+W2,gorog_joghurt,kg,0.2,1,E,False,Spar,258.7,386.0,386.0,0.0,Koliós Hercules High Protein zsírmentes görög joghurt 200 g,Auchan
+W2,uborka,kg,0.1,1,E,False,Penny,162.4,379.0,379.0,0.2,Kígyóuborka db,Auchan
+W2,oregano,kg,0.0,1,N,True,kifli,39.8,199.0,199.0,0.0,Lucullus oregánó morzsolt 5 g,Auchan
+W2,bulgur,kg,0.1,1,N,False,kifli,83.8,349.0,349.0,0.4,Kitchin Bulgur 500 g,Auchan
+W2,paradicsom,kg,0.1,1,E,False,Auchan,65.0,129.9,129.9,0.0,variable-weight,Auchan
+W3,zoldborso_fagyasztott,kg,0.3,1,E,False,Spar,226.0,339.0,339.0,0.1,SPAR gyorsfagyasztott extra zsenge zöldborsó 450 g,Spar
+W3,sargarepa,kg,0.1,1,E,False,Spar,48.9,48.9,48.9,0.0,variable-weight,Spar
+W3,petrezselyemgyoker,kg,0.1,1,E,False,Spar,55.1,55.1,55.1,0.0,variable-weight,Spar
+W3,napraforgo_olaj,l,0.0,3,E,True,Spar,30.0,2247.0,749.0,1.0,S-Budget 100% finomított napraforgó-étolaj 1 l,Spar
+W3,finomliszt,kg,0.0,2,E,True,Spar,6.4,366.0,183.0,1.0,S-Budget búzafinomliszt BL 55 1 kg,Spar
+W3,petrezselyemzold,kg,0.0,2,N,False,kifli,368.5,958.0,479.0,0.0,Petrezselyemzöld csomós 26 g,Spar
+W3,kristalycukor,kg,0.0,2,E,True,Spar,5.3,590.0,295.0,1.0,S-BUDGET Kristálycukor 1kg,Spar
+W3,teljes_kiorlesu_kenyer,kg,0.1,1,E,False,Spar,61.5,205.0,205.0,0.3,Teljes kiőrlésű kenyér 400 g,Spar
+W3,tv_paprika,kg,0.4,1,E,False,Spar,358.6,358.6,358.6,0.0,variable-weight,Spar
+W3,darált_sertes_sovany,kg,0.2,1,E,False,Lidl,449.8,449.8,449.8,0.0,variable-weight,Spar
+W3,rizs,kg,0.2,2,E,False,Spar,104.3,1098.0,549.0,0.8,S-Budget ¨B¨ minőségű rizs 1 kg,Spar
+W3,tojas,db,1.0,1,E,False,Spar,50.8,508.0,508.0,9.0,S-budget tojás 10db ¨s¨,Spar
+W3,voroshagyma,kg,0.2,2,E,False,Spar,37.8,37.8,37.8,0.0,variable-weight,Spar
+W3,fokhagyma,kg,0.0,3,E,False,Spar,37.2,37.2,37.2,0.0,variable-weight,Spar
+W3,passata,kg,0.5,1,N,False,kifli,315.0,315.0,315.0,0.0,Kitchin Paradicsompüré 500 g,Spar
+W3,pirospaprika,kg,0.0,1,N,True,kifli,17.6,879.0,879.0,0.1,Horváth Rozi édes őrölt paprika I. o. 100 g,Spar
+W3,burgonya,kg,0.4,1,E,False,Spar,115.2,115.2,115.2,0.0,variable-weight,Spar
+W3,teszta_csusza,kg,0.2,1,S,False,Spar,127.6,319.0,319.0,0.3,Tetővári spagetti 4 tojásos száraztészta 500 g,Spar
+W3,tehenturo,kg,0.2,1,E,False,Spar,339.0,339.0,339.0,0.0,S-Budget félzsíros rögös túró 250 g,Spar
+W3,tejfol12,kg,0.1,1,E,False,Spar,119.7,149.0,149.0,0.0,S-BUDGET félzsíros tejföl 12% 175 g,Spar
+W3,csaszarszalonna,kg,0.0,1,E,False,Spar,119.6,119.6,119.6,0.0,variable-weight,Spar
+W3,quinoa,kg,0.1,1,N,False,kifli,239.8,999.0,999.0,0.4,Prémium Natura Quinoa 500 g,Spar
+W3,uborka,kg,0.3,1,E,False,Spar,256.7,399.0,399.0,0.1,Kígyóuborka db,Spar
+W3,paradicsom,kg,0.4,2,E,False,Spar,345.2,345.2,345.2,0.0,variable-weight,Spar
+W3,kaliforniai_paprika,kg,0.3,2,N,False,kifli,929.4,3098.0,1549.0,0.2,Trikolor kaliforniai paprika csomagolt 500 g,Spar
+W3,feta,kg,0.2,2,E,False,Spar,743.2,1858.0,929.0,0.0,S-Budget feta sajt 200 g,Spar
+W3,lilahagyma,kg,0.1,1,S,False,Spar,11.8,11.8,11.8,0.0,variable-weight,Spar
+W3,olivaolaj,l,0.0,2,E,True,Spar,212.0,3498.0,1749.0,0.2,Bertolli Originale extra szűz olívaolaj 250 ml,Spar
+W3,citrom,kg,0.1,2,E,False,Spar,55.9,55.9,55.9,0.0,variable-weight,Spar
+W3,vorosbab_konzerv,db,1.0,1,N,False,kifli,249.0,249.0,249.0,0.0,Kitchin vörös vesebab enyhén sós lében 430 g (240 g töltőtömeg),Spar
+W3,csemegekukorica,kg,0.1,1,E,False,Spar,146.9,299.0,299.0,0.1,S-Budget morzsolt csemegekukorica 340 g,Spar
+W3,paradicsom_konzerv,kg,0.4,1,N,False,kifli,305.0,305.0,305.0,0.0,Kitchin apróra vágott hámozott paradicsom 400 g,Spar
+W3,chili,kg,0.0,1,N,True,kifli,24.2,485.0,485.0,0.0,Kotányi Chili Cayenne őrölt 20 g,Spar
+W3,komeny,kg,0.0,1,N,True,kifli,33.2,249.0,249.0,0.0,Lucullus római kömény őrölt 15 g,Spar
+W3,natur_joghurt,kg,0.1,1,E,False,Spar,43.8,85.0,85.0,0.1,S-Budget natúr joghurt 175 g,Spar
+W3,cukkini,kg,0.4,1,N,False,kifli,639.6,639.6,639.6,0.0,variable-weight,Spar
+W3,teljes_kiorlesu_teszta,kg,0.2,1,E,False,Aldi,127.7,399.0,399.0,0.3,Teljeskiőrlésű fusilli 500g,Spar
+W4,burgonya,kg,1.0,2,E,False,Auchan,314.3,319.0,319.0,0.0,variable-weight,Auchan
+W4,tojas,db,8.0,2,E,False,Auchan,388.0,1002.0,501.0,2.0,Auchan Tipp friss tojás A osztály S méret 10 db,Auchan
+W4,tejfol12,kg,0.2,1,E,False,Auchan,159.6,294.0,294.0,0.1,"Auchan Kedvenc tejföl pasztőrözött, homogénezett 12% 175 g + Auchan Kedvenc tejföl pasztőrözött, homogénezett 12% 175 g",Auchan
+W4,natur_joghurt,kg,0.1,1,E,False,Auchan,42.9,75.0,75.0,0.1,"Auchan Tipp natúr joghurt 0,1% 175 g",Auchan
+W4,szarazkolbasz,kg,0.1,1,E,False,Auchan,187.8,244.5,244.5,0.0,variable-weight,Auchan
+W4,vaj,kg,0.0,2,E,False,Auchan,71.6,572.0,286.0,0.1,Mlekovita Maslo vaj 82% 100 g,Auchan
+W4,csirkemellfile,kg,0.3,1,E,False,Auchan,577.8,577.8,577.8,0.0,variable-weight,Auchan
+W4,sargarepa,kg,0.4,3,E,False,Auchan,119.6,199.6,199.6,0.0,variable-weight,Auchan
+W4,petrezselyemgyoker,kg,0.1,1,E,False,Auchan,89.8,149.9,149.9,0.0,variable-weight,Auchan
+W4,zoldborso_fagyasztott,kg,0.1,1,E,False,Auchan,116.3,349.0,349.0,0.3,"Auchan Kedvenc extra zsenge zöldborsó I. osztály, gyorsfagyasztott 450 g",Auchan
+W4,csiperke,kg,0.5,2,N,False,kifli,899.1,1998.0,999.0,0.1,Gourmet fehér csiperkegomba 500 g,Auchan
+W4,voroshagyma,kg,0.4,4,E,False,Auchan,90.0,90.0,90.0,0.0,variable-weight,Auchan
+W4,fozotejszin10,l,0.1,1,E,False,Auchan,111.9,359.0,359.0,0.1,Meggle UHT főzőtejszín 10% 200 ml,Auchan
+W4,finomliszt,kg,0.0,1,E,True,Auchan,1.8,181.0,181.0,1.0,Auchan Tipp búzafinomliszt BL-55 1 kg,Auchan
+W4,napraforgo_olaj,l,0.0,1,E,True,Auchan,11.1,739.0,739.0,1.0,Kunsági éden étolaj 1l,Auchan
+W4,petrezselyemzold,kg,0.0,3,N,False,kifli,276.3,1437.0,479.0,0.0,Petrezselyemzöld csomós 26 g,Auchan
+W4,rizs,kg,0.1,1,E,False,Auchan,83.9,599.0,599.0,0.9,"Auchan Tipp ""B"" minőségű rizs 1 kg",Auchan
+W4,pulykamellfile,kg,0.3,1,E,False,Auchan,899.3,926.7,926.7,0.0,variable-weight,Auchan
+W4,zoldpaprika,kg,0.1,1,E,False,Auchan,76.8,76.8,76.8,0.0,variable-weight,Auchan
+W4,olivaolaj,l,0.1,4,E,True,Auchan,144.0,4800.0,1200.0,0.4,Piacelli extra szűz olasz olívaolaj 500 ml,Auchan
+W4,fokhagyma,kg,0.0,3,E,False,Auchan,40.2,40.1,40.2,0.0,variable-weight,Auchan
+W4,rozmaring,kg,0.0,1,N,True,kifli,61.8,309.0,309.0,0.0,Lucullus morzsolt rozmaring 5 g,Auchan
+W4,paradicsom_konzerv,kg,0.4,1,N,False,kifli,305.0,305.0,305.0,0.0,Kitchin apróra vágott hámozott paradicsom 400 g,Auchan
+W4,kaliforniai_paprika,kg,0.1,1,N,False,kifli,464.7,1549.0,1549.0,0.3,Trikolor kaliforniai paprika csomagolt 500 g,Auchan
+W4,komeny,kg,0.0,1,N,True,kifli,33.2,249.0,249.0,0.0,Lucullus római kömény őrölt 15 g,Auchan
+W4,pirospaprika,kg,0.0,1,N,True,kifli,26.4,879.0,879.0,0.1,Horváth Rozi édes őrölt paprika I. o. 100 g,Auchan
+W4,feta,kg,0.1,1,E,False,Auchan,216.6,1039.0,1039.0,0.1,Mevgal Feta sajt natúr 150 g,Auchan
+W4,teljes_kiorlesu_kenyer,kg,0.1,1,E,False,Auchan,59.7,199.0,199.0,0.3,Auchan Kedvenc teljes kiőrlésű kenyér 400 g,Auchan
+W4,arborio,kg,0.2,1,N,False,kifli,303.7,949.0,949.0,0.3,KITCHIN Arborio rizs 500 g,Auchan
+W4,alaple_kocka,db,1.0,1,N,True,kifli,73.2,879.0,879.0,11.0,Maggi zöldségleveskocka 120 g (12 kocka),Auchan
+W4,parmezan,kg,0.0,1,N,False,kifli,209.7,699.0,699.0,0.1,Miil olasz reszelt félzsíros kemény sajt 100 g,Auchan
+W4,barna_rizs,kg,0.1,1,N,False,kifli,143.9,1199.0,1199.0,0.9,Valoryz barna rizs 1 kg,Auchan
+W4,edesburgonya,kg,0.3,1,N,False,kifli,359.7,359.7,359.7,0.0,variable-weight,Auchan
+W4,csicseri_konzerv,db,1.0,1,N,False,kifli,215.0,215.0,215.0,0.0,Kitchin csicseriborsó enyhén sós lében 420 g (240 g töltőtömeg),Auchan
+W4,avokado,db,1.0,1,N,False,kifli,559.0,559.0,559.0,0.0,BIO avokádó 1 db (kb. 150 g),Auchan
+W4,uborka,kg,0.1,1,E,False,Penny,162.4,379.0,379.0,0.2,Kígyóuborka db,Auchan
+W4,spenot,kg,0.1,1,N,False,kifli,167.9,1399.0,1399.0,0.4,"Spenót, csomagolt 500 g",Auchan
+W4,tahini,kg,0.0,1,N,False,kifli,188.9,3149.0,3149.0,0.5,Nuts&Berries Tahini 500 g,Auchan
+W4,citrom,kg,0.0,1,E,False,Auchan,27.0,27.0,27.0,0.0,variable-weight,Auchan

@@ -1,0 +1,86 @@
+id,slot,title,level,level_txt,changes,uses_KSH,veg_g,red_g,fish,legume,cost_pp
+B01,B,Gombás-sajtos melegszendvics,2,minor swap,friss_fuszernoveny:omitted; salata->uborka; balzsamecet:at-home condiment,True,135,0,0,0,396
+B02,B,Sütőtökös zabkása,3,dish changed (identity swap),zabpehely->rizs; sutotok->sargarepa; lenmag->dio,True,130,0,0,0,297
+B03,B,Céklás túrókrém,3,dish changed (identity swap),cekla->sargarepa,True,125,0,0,0,221
+B04,B,Sárgabarackos-túrós zabkása,3,dish changed (identity swap),zabpehely->rizs; sargabarack->korte; mandula->dio,True,0,0,0,0,276
+B05,B,Granola meggyel és natúr joghurttal,4,dropped,granola:NO GVH/KSH SUBSTITUTE -> dish dropped; meggy->alma,False,0,0,0,0,62
+B06,B,"Padlizsánkrém paradicsommal, purpur kenyérrel",4,dropped,padlizsan:NO GVH/KSH SUBSTITUTE -> dish dropped; mustar:at-home condiment,False,130,0,0,0,135
+B07,B,Caprese tükörtojás,2,minor swap,parmai_sonka->sonka; friss_fuszernoveny:omitted,False,50,0,0,0,327
+B08,B,Spenótos omlett tortillában,3,dish changed (identity swap),spenot_friss->fagy_brokkoli; tortilla->kenyer_tk,False,24,0,0,0,168
+B09,B,Csicseriborsókrémes szendvics,3,dish changed (identity swap),csicseri->lencse; zeller->petrezselyemgyoker; salata->uborka; mustar:at-home condiment,False,172,0,0,1,176
+B10,B,Őszibarackos granola,3,dish changed (identity swap),zabpehely->rizs; kokuszreszelek->dio; oszibarack->korte,True,0,0,0,0,276
+B11,B,Tojáskrémes szendvics,1,herb/condiment omitted,mustar:at-home condiment; friss_fuszernoveny:omitted,False,152,0,0,0,192
+B12,B,Caprese szendvics,1,herb/condiment omitted,friss_fuszernoveny:omitted,False,150,0,0,0,376
+B13,B,"Reggeli menü: zabpelyhes-túrós lepény, pulykasonka, rukkola, zöld tea",3,dish changed (identity swap),zabpehely->rizs; rukkola->uborka,False,30,0,0,0,324
+B14,B,"Reggeli menü: csicseriborsókrém, light sajt, tk. kenyér, újhagyma",3,dish changed (identity swap),csicseri->lencse; mustar:at-home condiment; friss_fuszernoveny:omitted; ujhagyma->voroshagyma,False,74,0,0,1,170
+B15,B,Teljes kiőrlésű tortillatekercs,3,dish changed (identity swap),tortilla->kenyer_tk; salata->uborka; kaliforniai->zoldpaprika; tokmagolaj->olivaolaj,False,80,0,0,0,291
+B16,B,Almás-diós zabpehely tejjel,3,dish changed (identity swap),zabpehely->rizs,True,0,0,0,0,227
+B17,B,"Reggeli menü: Graham kenyér, pulykasonka, óvári sajt, retek, tea",2,minor swap,friss_fuszernoveny:omitted; retek->uborka,False,50,0,0,0,297
+B18,B,"Reggeli menü: sült padlizsán, szezámos zsemle, uborka, tejeskávé",4,dropped,padlizsan:NO GVH/KSH SUBSTITUTE -> dish dropped,False,31,0,0,0,209
+B19,B,"Reggeli menü: tonhalkrém, korpás kifli, narancslé",4,dropped,tonhal_konzerv:NO GVH/KSH SUBSTITUTE -> dish dropped; majonez:at-home condiment,False,60,0,0,0,224
+B20,B,"Reggeli menü: zöldséges tojás, félbarna kenyér, tej",2,minor swap,cukkini->zoldpaprika; salata->uborka,False,100,0,0,0,251
+B21,B,Tojásos-zabpelyhes muffin,3,dish changed (identity swap),zabpehely->rizs; parmezan->trappista; cukkini->zoldpaprika; kaliforniai->zoldpaprika; friss_fuszernoveny:omitted,False,100,0,0,0,230
+B22,B,Cukkinis-sajtos gofri,3,dish changed (identity swap),cukkini->zoldpaprika; friss_fuszernoveny:omitted,False,126,0,0,0,189
+B23,B,Cseresznyés köleskása,3,dish changed (identity swap),koles->rizs; cseresznye->eper,True,0,0,0,0,350
+B24,B,Epres zabkása,3,dish changed (identity swap),zabpehely->rizs,True,0,0,0,0,415
+B25,B,Körtés túrókrém teljes kiőrlésű pirítóssal,0,as published,,True,0,0,0,0,267
+L01,L-main,Zabpelyhes töltött paprika,3,dish changed (identity swap),zeller->petrezselyemgyoker; paradicsompure->paradicsom; zabpehely->rizs,False,168,0,0,0,346
+L02,L-main,Grillezett csirkecombfilé lecsós bulgurral,3,dish changed (identity swap),bulgur->rizs,False,218,0,0,0,273
+L03,L-main,Vagdalt pogácsa csirkemellből basmati rizzsel,2,minor swap,zsemlemorzsa->zsemle; salata->uborka,False,94,0,0,0,309
+L04,L-main,Fetával töltött gombafejek,1,herb/condiment omitted,friss_fuszernoveny:omitted,True,202,0,0,0,613
+L05,L-soup,Kakukkfüves póréhagymaleves,3,dish changed (identity swap),porehagyma->voroshagyma; feherbor:omitted,False,62,0,0,0,48
+L06,L-soup,Fejtett bableves,0,as published,,True,154,0,0,1,128
+L07,L-side,Jércesaláta gazdagon,2,minor swap,cekla->sargarepa; zeller->petrezselyemgyoker; torma:omitted,False,30,0,0,0,141
+L08,L-main,"Tonhal aszalt szilvával, burgonyapürével",3,dish changed (identity swap),tonhal_friss->lazac; alaple:at-home condiment; aszalt_szilva->alma,False,0,0,1,0,1004
+L10,L-soup,Indiai vöröslencseleves,2,minor swap,suritett_paradicsom->paradicsom,False,206,0,0,1,94
+L11,L-main,"Busafilé póréhagymamártással, sült céklás édesburgonyával",3,dish changed (identity swap),busa->harcsa; porehagyma->voroshagyma; cekla->sargarepa; edesburgonya->burgonya; alaple:at-home condiment,False,125,0,1,0,802
+L13,L-main,"Aszalt szilvával töltött pulykamell, kelbimbó, burgonyasaláta",3,dish changed (identity swap),aszalt_szilva->alma; kelbimbo->brokkoli; mustar:at-home condiment,False,131,0,0,0,867
+L14,L-main,Édesburgonya gnocchi,3,dish changed (identity swap),edesburgonya->burgonya,False,0,0,0,0,39
+L15,L-side,Tejszínes gombamártás,2,minor swap,porehagyma->voroshagyma,True,66,0,0,0,161
+L17,L-main,Kapros töltött tök,3,dish changed (identity swap),fozotok->zoldpaprika; arpagyongy->rizs; friss_fuszernoveny:omitted,False,175,75,0,0,348
+L19,L-soup,Sütőtökkrémleves tökmaggal,3,dish changed (identity swap),sutotok->sargarepa; tokmag->dio,True,112,0,0,0,197
+L20,L-main,"Sült tőkehalfilé, spenóttal töltött burgonya",3,dish changed (identity swap),spenot_fagy->fagy_brokkoli,False,102,0,1,0,673
+L21,L-main,Sült csirkemell tejszínes brokkolival és bulgurral,3,dish changed (identity swap),bulgur->rizs,False,200,0,0,0,580
+L23,L-soup,Szilvakrémleves,3,dish changed (identity swap),szilva->alma; aszalt_szilva->alma,False,0,0,0,0,84
+L24,L-main,Töltött cukkini barna rizzsel,3,dish changed (identity swap),cukkini->zoldpaprika,False,255,0,0,0,452
+L25,L-side,Kapormártás,1,herb/condiment omitted,friss_fuszernoveny:omitted,False,5,0,0,0,31
+L26,L-soup,Árpagyöngyleves,3,dish changed (identity swap),arpagyongy->rizs; zeller->petrezselyemgyoker; friss_fuszernoveny:omitted,True,108,0,0,0,126
+L27,L-main,Baromfivagdalt zöldbabfőzelékkel,3,dish changed (identity swap),zsemlemorzsa->zsemle; friss_fuszernoveny:omitted; zoldbab->zoldborso; friss_fuszernoveny:omitted,False,235,0,0,1,409
+L29,L-soup,Hagymaleves,1,herb/condiment omitted,alaple:at-home condiment,False,88,0,0,0,45
+L30,L-main,Vadas marha teljes kiőrlésű spagettivel,1,herb/condiment omitted,mustar:at-home condiment,False,88,100,0,0,554
+L31,L-soup,Brokkolikrémleves,0,as published,,False,123,0,0,0,257
+L32,L-main,"Paradicsommal sült csirkemell, burgonyapüré, vöröskáposzta-saláta",1,herb/condiment omitted,friss_fuszernoveny:omitted,False,172,0,0,0,426
+L33,L-soup,Tárkonyos pulykaraguleves gyöngybabbal,1,herb/condiment omitted,friss_fuszernoveny:omitted,True,203,0,0,1,313
+L34,L-main,Hajdinás rakott karfiol,3,dish changed (identity swap),kapia->zoldpaprika; hajdina->rizs; friss_fuszernoveny:omitted,False,230,0,0,0,294
+L36,L-soup,Zöldségleves,2,minor swap,zeller->petrezselyemgyoker; karalabe->sargarepa; friss_fuszernoveny:omitted; friss_fuszernoveny:omitted,False,115,0,0,0,84
+L37,L-main,"Roston harcsa, spenótlevelek, párolt köles, fokhagymamártás",3,dish changed (identity swap),spenot_friss->fagy_brokkoli; koles->rizs; friss_fuszernoveny:omitted,False,110,0,1,0,895
+L38,L-main,Sárgabarackos csirkemell petrezselymes újburgonyával,3,dish changed (identity swap),sargabarack->korte; friss_fuszernoveny:omitted,False,0,0,0,0,322
+L39,L-main,Tojásos lecsó,0,as published,,False,325,0,0,0,325
+L40,L-main,Töltött cukkini darált hússal és rizzsel,3,dish changed (identity swap),cukkini->zoldpaprika; paradicsompure->paradicsom; friss_fuszernoveny:omitted,False,390,100,0,0,506
+L41,L-soup,Tavaszi zöldségleves csigatésztával,2,minor swap,karalabe->sargarepa; friss_fuszernoveny:omitted,False,182,0,0,0,120
+L42,L-main,Mézes-mustáros csirkecombfilé,1,herb/condiment omitted,mustar:at-home condiment,True,2,0,0,0,206
+L43,L-side,Petrezselymes újburgonya,1,herb/condiment omitted,friss_fuszernoveny:omitted,False,0,0,0,0,45
+L44,L-side,Ecetes fejes saláta újhagymával,3,dish changed (identity swap),salata->uborka; ujhagyma->voroshagyma,False,125,0,0,0,100
+L46,L-main,Kelkáposztás-burgonyás rakottas,0,as published,,False,325,0,0,0,408
+L47,L-soup,Tárkonyos csirkeraguleves zöldségekkel,2,minor swap,zeller->petrezselyemgyoker; mustar:at-home condiment,True,210,0,0,0,346
+L48,L-main,Sült pisztráng sült zöldségekkel,3,dish changed (identity swap),pisztrang->harcsa; friss_fuszernoveny:omitted; sutotok->sargarepa,False,255,0,1,0,1068
+L49,L-side,Céklás-almás-diós saláta,3,dish changed (identity swap),cekla->sargarepa; rukkola->uborka; balzsamecet:at-home condiment,True,82,0,0,0,156
+L51,L-main,Mustáros-tejszínes sertésragu brokkolival és bulgurral,3,dish changed (identity swap),mustar:at-home condiment; bulgur->rizs,False,128,100,0,0,403
+D01,D,Sütőben sült rozmaringos csirke zöldségekkel,2,minor swap,cekla->sargarepa; friss_fuszernoveny:omitted,False,176,0,0,0,345
+D02,D,Őszi saláta grillezett camemberttel,3,dish changed (identity swap),salata->uborka; szolo->korte; balzsamecet:at-home condiment,True,20,0,0,0,634
+D03,D,Póréhagymás tojásomlett,3,dish changed (identity swap),porehagyma->voroshagyma; rukkola->uborka,False,135,0,0,0,239
+D04,D,Zelleres túrókrém kovászolt kenyérrel,3,dish changed (identity swap),zeller->petrezselyemgyoker,False,100,0,0,0,173
+D05,D,Csirkemellfilé körtés-rukkolás salátával és kuszkusszal,3,dish changed (identity swap),kuszkusz->rizs; rukkola->uborka; mustar:at-home condiment,True,20,0,0,0,302
+D06,D,Szilvás-diós zabkása,3,dish changed (identity swap),zabpehely->rizs; aszalt_szilva->alma,True,0,0,0,0,220
+D07,D,"Vacsora menü: burgonyasaláta, csirkemell, rozsos kenyér",1,herb/condiment omitted,majonez:at-home condiment,False,55,0,0,0,308
+D08,D,"Vacsora menü: főtt tojás, parajkrém, almás limonádé",3,dish changed (identity swap),spenot_friss->fagy_brokkoli; friss_fuszernoveny:omitted; friss_fuszernoveny:omitted,False,155,0,0,0,372
+D09,D,"Vacsora menü: kapros túrókrém, graham kenyér, paprika, tej",1,herb/condiment omitted,friss_fuszernoveny:omitted,False,60,0,0,0,253
+D10,D,"Vacsora menü: mustáros-zöldséges sertéstokány, barna rizs",2,minor swap,cukkini->zoldpaprika; mustar:at-home condiment; friss_fuszernoveny:omitted,False,125,100,0,0,243
+D11,D,"Vacsora menü: szárnyas májpástétom, barna kenyér, uborka, gyümölcstea",4,dropped,csirkemaj:NO GVH/KSH SUBSTITUTE -> dish dropped,False,75,0,0,0,154
+D12,D,"Vacsora menü: szezámos csirkemell, vegyes saláta, őszibaracklé",3,dish changed (identity swap),szezammag->dio; salata->uborka; retek->uborka; tokmagolaj->olivaolaj; oszibarackle->almale,True,235,0,0,0,700
+D13,D,Zöldséges kuszkusz saláta,3,dish changed (identity swap),kuszkusz->rizs; kaliforniai->zoldpaprika; csicseri->lencse; friss_fuszernoveny:omitted; friss_fuszernoveny:omitted,False,238,0,0,1,391
+D14,D,Sült padlizsán saláta tortilla ropogóssal,4,dropped,padlizsan:NO GVH/KSH SUBSTITUTE -> dish dropped; tortilla->kenyer_tk,False,2,0,0,0,55
+D15,D,Hideg tésztasaláta zöldségekkel,0,as published,,False,212,0,0,0,349
+D16,D,Hideg joghurtos uborkaleves pirítóssal,1,herb/condiment omitted,friss_fuszernoveny:omitted,False,101,0,0,0,170
+D17,D,Sült sárgarépás-csicseriborsós falatok,3,dish changed (identity swap),csicseri->lencse; zabpehely->rizs,False,159,0,0,1,73
+D18,D,Tepsis csirke kelbimbóval és burgonyával,3,dish changed (identity swap),kelbimbo->brokkoli,False,126,0,0,0,309

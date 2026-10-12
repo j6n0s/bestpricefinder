@@ -1,0 +1,499 @@
+rid,src,meal,title,url,servings,key,grams
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,csulok,1000.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,sor,500.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,alaple,200.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,szojaszosz,13.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,voroshagyma,200.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,fokhagyma,20.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,mustar,5.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,mez,5.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,fuszer,100.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,fuszer,0.5
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,friss_fuszernoveny,15.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,friss_fuszernoveny,3.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,so,1
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,savanyu_kaposzta,500.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,burgonya,1000.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,finomliszt,26.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,zsir,26.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,alma,320.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,mez,26.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,narancs,100.0
+P01,penny,M,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,friss_fuszernoveny,30.0
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,cekla,300.0
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,olaj,500.0
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,so,1
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,edesburgonya,300.0
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,karfiol,1000.0
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,alma,160.0
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,csirkemell,500.0
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,finomliszt,52.0
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,tojas,165.0
+P02,penny,M,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,zsemlemorzsa,150.0
+P03,penny,B,Céklás-diós kenyér,https://www.penny.hu/receptek/ceklas-dios-kenyer,4.0,cekla,360.0
+P03,penny,B,Céklás-diós kenyér,https://www.penny.hu/receptek/ceklas-dios-kenyer,4.0,finomliszt,720.0
+P03,penny,B,Céklás-diós kenyér,https://www.penny.hu/receptek/ceklas-dios-kenyer,4.0,so,10.0
+P03,penny,B,Céklás-diós kenyér,https://www.penny.hu/receptek/ceklas-dios-kenyer,4.0,elesztő,7.0
+P03,penny,B,Céklás-diós kenyér,https://www.penny.hu/receptek/ceklas-dios-kenyer,4.0,olivaolaj,10.0
+P03,penny,B,Céklás-diós kenyér,https://www.penny.hu/receptek/ceklas-dios-kenyer,4.0,viz,100.0
+P03,penny,B,Céklás-diós kenyér,https://www.penny.hu/receptek/ceklas-dios-kenyer,4.0,dio,60.0
+P03,penny,B,Céklás-diós kenyér,https://www.penny.hu/receptek/ceklas-dios-kenyer,4.0,olaj,13.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,finomliszt,500.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,tej,200.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,vaj,100.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,elesztő,7.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,barnacukor,80.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,tojas,110.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,narancs,200.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,vanilia,8.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,so,0.5
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,dio,100.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,kesudio,100.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,barnacukor,150.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,vaj,100.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,tej,500.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,habtejszin,300.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,tojas,440.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,barnacukor,100.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,vanilia,8.0
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,fagylalt,10
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,kesudio,10
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,dio,10
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,kesudio,10
+P04,penny,X,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,mez,13.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,gm_liszt,300.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,sutotok,1500.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,zsemlemorzsa,400.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,olivaolaj,200.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,alma,640.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,fuszer,200.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,fuszer,100.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,fuszer,5.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,fuszer,5.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,egyeb_N,70.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,egyeb_N,26.0
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,citrom,1.5
+P05,penny,M,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,so,1
+P06,penny,B,Zöldséges tortilla tekercs,https://www.penny.hu/receptek/zoldseges-tortilla-tekercs,4.0,zoldpaprika,50.0
+P06,penny,B,Zöldséges tortilla tekercs,https://www.penny.hu/receptek/zoldseges-tortilla-tekercs,4.0,ujhagyma,30.0
+P06,penny,B,Zöldséges tortilla tekercs,https://www.penny.hu/receptek/zoldseges-tortilla-tekercs,4.0,olivabogyo,100.0
+P06,penny,B,Zöldséges tortilla tekercs,https://www.penny.hu/receptek/zoldseges-tortilla-tekercs,4.0,kremsajt,150.0
+P06,penny,B,Zöldséges tortilla tekercs,https://www.penny.hu/receptek/zoldseges-tortilla-tekercs,4.0,tejfol20,200.0
+P06,penny,B,Zöldséges tortilla tekercs,https://www.penny.hu/receptek/zoldseges-tortilla-tekercs,4.0,fuszer,5.0
+P06,penny,B,Zöldséges tortilla tekercs,https://www.penny.hu/receptek/zoldseges-tortilla-tekercs,4.0,trappista,100.0
+P06,penny,B,Zöldséges tortilla tekercs,https://www.penny.hu/receptek/zoldseges-tortilla-tekercs,4.0,tortilla,250.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,voroshagyma,100.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,fokhagyma,5.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,kaliforniai,400.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,zoldpaprika,200.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,lilahagyma,80.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,kapia,50.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,csirkemell,400.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,so,1
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,olivaolaj,65.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,fuszer,5.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,citrom,50.0
+P07,penny,M,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,fuszer,5.0
+P08,penny,M,Kókuszos görögdinnye-krémleves,https://www.penny.hu/receptek/kokuszos-gorogdinnye-kremleves,4.0,gorogdinnye,800.0
+P08,penny,M,Kókuszos görögdinnye-krémleves,https://www.penny.hu/receptek/kokuszos-gorogdinnye-kremleves,4.0,kokusztej,100.0
+P08,penny,M,Kókuszos görögdinnye-krémleves,https://www.penny.hu/receptek/kokuszos-gorogdinnye-kremleves,4.0,lime,120.0
+P08,penny,M,Kókuszos görögdinnye-krémleves,https://www.penny.hu/receptek/kokuszos-gorogdinnye-kremleves,4.0,fuszer,10.0
+P08,penny,M,Kókuszos görögdinnye-krémleves,https://www.penny.hu/receptek/kokuszos-gorogdinnye-kremleves,4.0,kokuszreszelek,13.0
+P08,penny,M,Kókuszos görögdinnye-krémleves,https://www.penny.hu/receptek/kokuszos-gorogdinnye-kremleves,4.0,olivaolaj,30.0
+P08,penny,M,Kókuszos görögdinnye-krémleves,https://www.penny.hu/receptek/kokuszos-gorogdinnye-kremleves,4.0,so,1
+P09,penny,M,Sárgarépás vendégváró golyó,https://www.penny.hu/receptek/sargarepas-vendegvaro-golyo,4.0,dio,100.0
+P09,penny,M,Sárgarépás vendégváró golyó,https://www.penny.hu/receptek/sargarepas-vendegvaro-golyo,4.0,aszalt_gyumolcs,150.0
+P09,penny,M,Sárgarépás vendégváró golyó,https://www.penny.hu/receptek/sargarepas-vendegvaro-golyo,4.0,sargarepa,160.0
+P09,penny,M,Sárgarépás vendégváró golyó,https://www.penny.hu/receptek/sargarepas-vendegvaro-golyo,4.0,kokuszreszelek,180.0
+P09,penny,M,Sárgarépás vendégváró golyó,https://www.penny.hu/receptek/sargarepas-vendegvaro-golyo,4.0,kakaopor,5.0
+P09,penny,M,Sárgarépás vendégváró golyó,https://www.penny.hu/receptek/sargarepas-vendegvaro-golyo,4.0,fuszer,2.5
+P09,penny,M,Sárgarépás vendégváró golyó,https://www.penny.hu/receptek/sargarepas-vendegvaro-golyo,4.0,fuszer,2.5
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,tokehal,500.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,finomliszt,350.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,sor,500.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,sutopor,6.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,so,1
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,fuszer,2.5
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,fuszer,2.5
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,fuszer,1.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,citrom,200.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,olaj,1000.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,burgonya,1000.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,olaj,1000.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,majonez,52.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,tejfol20,26.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,mustar,13.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,porcukor,13.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,csemegeuborka,350.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,lilahagyma,80.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,friss_fuszernoveny,25.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,friss_fuszernoveny,25.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,citrom,50.0
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,fuszer,0.5
+P10,penny,M,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,so,1
+P11,penny,B,Kolbászos gravy-krém baguette-n,https://www.penny.hu/receptek/kolbaszos-gravy-krem-baguette-n,4.0,tej,720.0
+P11,penny,B,Kolbászos gravy-krém baguette-n,https://www.penny.hu/receptek/kolbaszos-gravy-krem-baguette-n,4.0,finomliszt,100.0
+P11,penny,B,Kolbászos gravy-krém baguette-n,https://www.penny.hu/receptek/kolbaszos-gravy-krem-baguette-n,4.0,so,1
+P11,penny,B,Kolbászos gravy-krém baguette-n,https://www.penny.hu/receptek/kolbaszos-gravy-krem-baguette-n,4.0,kolbasz,250.0
+P11,penny,B,Kolbászos gravy-krém baguette-n,https://www.penny.hu/receptek/kolbaszos-gravy-krem-baguette-n,4.0,zsemle_egyeb,500.0
+P12,penny,X,Könnyed nyári málnás pohárkrém,https://www.penny.hu/receptek/konnyed-nyari-malnas-poharkrem,6.0,feherbor,200.0
+P12,penny,X,Könnyed nyári málnás pohárkrém,https://www.penny.hu/receptek/konnyed-nyari-malnas-poharkrem,6.0,cukor,50.0
+P12,penny,X,Könnyed nyári málnás pohárkrém,https://www.penny.hu/receptek/konnyed-nyari-malnas-poharkrem,6.0,malna,350.0
+P12,penny,X,Könnyed nyári málnás pohárkrém,https://www.penny.hu/receptek/konnyed-nyari-malnas-poharkrem,6.0,habtejszin,400.0
+P12,penny,X,Könnyed nyári málnás pohárkrém,https://www.penny.hu/receptek/konnyed-nyari-malnas-poharkrem,6.0,porcukor,70.0
+P12,penny,X,Könnyed nyári málnás pohárkrém,https://www.penny.hu/receptek/konnyed-nyari-malnas-poharkrem,6.0,vanilia,5.0
+P12,penny,X,Könnyed nyári málnás pohárkrém,https://www.penny.hu/receptek/konnyed-nyari-malnas-poharkrem,6.0,babapiskota,70.0
+P12,penny,X,Könnyed nyári málnás pohárkrém,https://www.penny.hu/receptek/konnyed-nyari-malnas-poharkrem,6.0,friss_fuszernoveny,1
+P13,penny,X,Csokiba mártott alma,https://www.penny.hu/receptek/csokiba-martott-alma,4.0,csokolade,100.0
+P13,penny,X,Csokiba mártott alma,https://www.penny.hu/receptek/csokiba-martott-alma,4.0,alma,320.0
+P13,penny,X,Csokiba mártott alma,https://www.penny.hu/receptek/csokiba-martott-alma,4.0,olaj,5.0
+P13,penny,X,Csokiba mártott alma,https://www.penny.hu/receptek/csokiba-martott-alma,4.0,dio,30.0
+P13,penny,X,Csokiba mártott alma,https://www.penny.hu/receptek/csokiba-martott-alma,4.0,aszalt_gyumolcs,30.0
+P14,penny,M,Padlizsánkrém baguette-n,https://www.penny.hu/receptek/padlizsankrem-baguette-n,4.0,padlizsan,700.0
+P14,penny,M,Padlizsánkrém baguette-n,https://www.penny.hu/receptek/padlizsankrem-baguette-n,4.0,fokhagyma,15.0
+P14,penny,M,Padlizsánkrém baguette-n,https://www.penny.hu/receptek/padlizsankrem-baguette-n,4.0,olivaolaj,26.0
+P14,penny,M,Padlizsánkrém baguette-n,https://www.penny.hu/receptek/padlizsankrem-baguette-n,4.0,majonez,26.0
+P14,penny,M,Padlizsánkrém baguette-n,https://www.penny.hu/receptek/padlizsankrem-baguette-n,4.0,so,1
+P14,penny,M,Padlizsánkrém baguette-n,https://www.penny.hu/receptek/padlizsankrem-baguette-n,4.0,zsemle_egyeb,250.0
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,salata,280.0
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,sutotok,500.0
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,olivaolaj,26.0
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,mez,13.0
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,so,1
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,quinoa,100.0
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,majonez,39.0
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,tokmag,65.0
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,fuszer,1
+P15,penny,M,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,olivaolaj,13.0
+P16,penny,X,Forró fehércsokoládé pillecukorral,https://www.penny.hu/receptek/forro-fehercsokolade-pillecukorral,4.0,tej,960.0
+P16,penny,X,Forró fehércsokoládé pillecukorral,https://www.penny.hu/receptek/forro-fehercsokolade-pillecukorral,4.0,csokolade,200.0
+P16,penny,X,Forró fehércsokoládé pillecukorral,https://www.penny.hu/receptek/forro-fehercsokolade-pillecukorral,4.0,vanilia,5.0
+P16,penny,X,Forró fehércsokoládé pillecukorral,https://www.penny.hu/receptek/forro-fehercsokolade-pillecukorral,4.0,habtejszin,10
+P16,penny,X,Forró fehércsokoládé pillecukorral,https://www.penny.hu/receptek/forro-fehercsokolade-pillecukorral,4.0,csokolade,100.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,cukor,52.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,finomliszt,500.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,margarin,200.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,tej,500.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,tojas,220.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,vanilia,8.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,sutopor,12.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,olaj,15
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,lekvar,10
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,tej,1000.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,pudingpor,40.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,pudingpor,40.0
+P17,penny,X,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,cukor,104.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,burgonya,1000.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,finomliszt,250.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,so,15.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,fuszer,1.5
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,so,1000.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,olaj,100.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,voroshagyma,1000.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,szalonna,500.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,tejfol20,330.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,ujhagyma,12.5
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,friss_fuszernoveny,12.5
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,friss_fuszernoveny,1.5
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,fuszer,39.0
+P18,penny,M,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,so,1
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,finomliszt,350.0
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,kakaopor,200.0
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,porcukor,197.0
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,barnacukor,150.0
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,so,100.0
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,sutopor,7.0
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,tojas,220.0
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,vaj,150.0
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,csokolade,149.0
+P19,penny,X,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,porcukor,100.0
+P20,penny,X,Meggyes brownie,https://www.penny.hu/receptek/meggyes-brownie,6.0,csokolade,300.0
+P20,penny,X,Meggyes brownie,https://www.penny.hu/receptek/meggyes-brownie,6.0,vaj,300.0
+P20,penny,X,Meggyes brownie,https://www.penny.hu/receptek/meggyes-brownie,6.0,cukor,250.0
+P20,penny,X,Meggyes brownie,https://www.penny.hu/receptek/meggyes-brownie,6.0,finomliszt,250.0
+P20,penny,X,Meggyes brownie,https://www.penny.hu/receptek/meggyes-brownie,6.0,gyumolcsbefott,350.0
+P20,penny,X,Meggyes brownie,https://www.penny.hu/receptek/meggyes-brownie,6.0,sutopor,7.5
+P20,penny,X,Meggyes brownie,https://www.penny.hu/receptek/meggyes-brownie,6.0,tojas,275.0
+P20,penny,X,Meggyes brownie,https://www.penny.hu/receptek/meggyes-brownie,6.0,so,1.5
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,voroshagyma,100.0
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,fokhagyma,5.0
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,paradicsom,120.0
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,salata,300.0
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,olivaolaj,52.0
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,daralt_sertes,250.0
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,fuszer,5.0
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,pizzateszta,400.0
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,trappista,200.0
+P21,penny,M,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,tejfol20,100.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,csirkecombfile,1000.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,tojas,55.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,mustar,26.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,ketchup,26.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,fuszer,5.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,zsemlemorzsa,13.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,paradicsom,240.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,uborka,400.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,zsemle_egyeb,160.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,trappista,80.0
+P22,penny,M,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,salata,20.0
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,finomliszt,500.0
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,porcukor,350.0
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,sutopor,6.0
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,tejfol20,52.0
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,friss_fuszernoveny,1.5
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,so,0.5
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,vaj,250.0
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,tojas,275.0
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,citrom,200.0
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,turo,500.0
+P23,penny,X,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,buzadara,52.0
+P24,penny,X,Erdei gyümölcsös fagylalt,https://www.penny.hu/receptek/erdei-gyumolcsos-fagylalt,4.0,joghurt,450.0
+P24,penny,X,Erdei gyümölcsös fagylalt,https://www.penny.hu/receptek/erdei-gyumolcsos-fagylalt,4.0,mez,60.0
+P24,penny,X,Erdei gyümölcsös fagylalt,https://www.penny.hu/receptek/erdei-gyumolcsos-fagylalt,4.0,afonya,250.0
+P24,penny,X,Erdei gyümölcsös fagylalt,https://www.penny.hu/receptek/erdei-gyumolcsos-fagylalt,4.0,afonya,100.0
+P24,penny,X,Erdei gyümölcsös fagylalt,https://www.penny.hu/receptek/erdei-gyumolcsos-fagylalt,4.0,habtejszin,250.0
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,tojas,165.0
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,daralt_sertes,600.0
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,so,1
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,karfiol,300.0
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,zsemle,60.0
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,viz,1100.0
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,fuszer,1
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,olaj,26.0
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,zsemlemorzsa,100.0
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,tejfol20,100.0
+P25,penny,M,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,trappista,100.0
+P26,penny,B,Sajtos-tormás-sonkás kalácsszendvics,https://www.penny.hu/receptek/sajtos-tormas-sonkas-kalacsszendvics,3.0,kalacs,300.0
+P26,penny,B,Sajtos-tormás-sonkás kalácsszendvics,https://www.penny.hu/receptek/sajtos-tormas-sonkas-kalacsszendvics,3.0,trappista,200.0
+P26,penny,B,Sajtos-tormás-sonkás kalácsszendvics,https://www.penny.hu/receptek/sajtos-tormas-sonkas-kalacsszendvics,3.0,torma,39.0
+P26,penny,B,Sajtos-tormás-sonkás kalácsszendvics,https://www.penny.hu/receptek/sajtos-tormas-sonkas-kalacsszendvics,3.0,kremsajt,125.0
+P26,penny,B,Sajtos-tormás-sonkás kalácsszendvics,https://www.penny.hu/receptek/sajtos-tormas-sonkas-kalacsszendvics,3.0,sonka,200.0
+P26,penny,B,Sajtos-tormás-sonkás kalácsszendvics,https://www.penny.hu/receptek/sajtos-tormas-sonkas-kalacsszendvics,3.0,vaj,13.0
+P27,penny,M,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,olaj,26.0
+P27,penny,M,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,voroshagyma,100.0
+P27,penny,M,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,burgonya,500.0
+P27,penny,M,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,kolbasz,300.0
+P27,penny,M,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,petrezselyemgyoker,50.0
+P27,penny,M,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,sargarepa,50.0
+P27,penny,M,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,tejfol20,150.0
+P27,penny,M,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,so,1
+P27,penny,M,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,friss_fuszernoveny,12.5
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,voroshagyma,100.0
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,fokhagyma,5.0
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,salata,300.0
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,kaliforniai,200.0
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,trappista,100.0
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,olivaolaj,39.0
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,daralt_sertes,500.0
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,so,1
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,fuszer,5.0
+P28,penny,M,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,tortilla,240.0
+P29,penny,M,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,tojas,55.0
+P29,penny,M,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,kapia,100.0
+P29,penny,M,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,csirkemell,100.0
+P29,penny,M,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,so,1
+P29,penny,M,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,pizzateszta,400.0
+P29,penny,M,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,spenot_fagy,100.0
+P29,penny,M,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,mozzarella,125.0
+P29,penny,M,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,paradicsom_konzerv,39.0
+P29,penny,M,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,parmezan,20.0
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,finomliszt,250.0
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,vaj,160.0
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,mandula,78.0
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,porcukor,120.0
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,narancs,200.0
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,tojas,110.0
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,so,0.5
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,habtejszin,90.0
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,csokolade,180.0
+P30,penny,X,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,lekvar,120.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,kapia,1000.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,paradicsom,1000.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,voroshagyma,1000.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,fokhagyma,2.5
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,alaple,500.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,aszalt_paradicsom,100.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,paradicsom_konzerv,13.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,ketchup,2.5
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,olivaolaj,39.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,fuszer,13.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,so,13.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,fuszer,2.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,fuszer,1.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,fuszer,1.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,fuszer,100.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,kolbasz,250.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,citrom,100.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,malna,100.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,malna,100.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,kapia,100.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,friss_fuszernoveny,25.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,ujhagyma,12.5
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,zsemle_egyeb,180.0
+P31,penny,M,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,kalacs,250.0
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,csirkemell,300.0
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,so,1
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,olivaolaj,15
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,teszta_egyeb,300.0
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,so,1
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,vaj,13.0
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,fokhagyma,15.0
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,fozotejszin,500.0
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,parmezan,50.0
+P32,penny,M,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,friss_fuszernoveny,25.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,gm_liszt,300.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,gm_liszt,125.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,elesztő,10
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,viz,250.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,cukor,2.5
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,olaj,13.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,so,1
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,kolbasz,125.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,lilahagyma,160.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,szalonna,50.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,tejfol20,150.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,trappista,100.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,fokhagyma,10.0
+P33,penny,M,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,so,1
+P34,penny,B,Sonkával töltött sült zsemle,https://www.penny.hu/receptek/sonkaval-toltott-sult-zsemle,1.0,zsemle,60.0
+P34,penny,B,Sonkával töltött sült zsemle,https://www.penny.hu/receptek/sonkaval-toltott-sult-zsemle,1.0,csirkesonka,100.0
+P34,penny,B,Sonkával töltött sült zsemle,https://www.penny.hu/receptek/sonkaval-toltott-sult-zsemle,1.0,tojas,55.0
+P34,penny,B,Sonkával töltött sült zsemle,https://www.penny.hu/receptek/sonkaval-toltott-sult-zsemle,1.0,tejfol20,39.0
+P34,penny,B,Sonkával töltött sült zsemle,https://www.penny.hu/receptek/sonkaval-toltott-sult-zsemle,1.0,trappista,80.0
+P34,penny,B,Sonkával töltött sült zsemle,https://www.penny.hu/receptek/sonkaval-toltott-sult-zsemle,1.0,so,1
+P34,penny,B,Sonkával töltött sült zsemle,https://www.penny.hu/receptek/sonkaval-toltott-sult-zsemle,1.0,friss_fuszernoveny,10.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,daralt_sertes,300.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,rizs,80.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,voroshagyma,200.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,tojas,55.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,olaj,50.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,finomliszt,50.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,fuszer,1
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,so,1
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,zoldpaprika,200.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,paradicsom_konzerv,160.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,cukor,60.0
+P35,penny,M,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,zeller,200.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,cukkini,300
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,sargarepa,160.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,voroshagyma,50.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,kaliforniai,100.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,kaliforniai,100.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,kaliforniai,100.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,rizsteszta,180.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,mogyoro,10
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,fuszer,1
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,fokhagyma,10.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,szojaszosz,26.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,szojaszosz,26.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,fuszer,1.5
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,ketchup,10.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,lime,30.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,tojas,110.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,olivaolaj,13.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,mogyoro,70.0
+P36,penny,M,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,barnacukor,10.0
+P37,penny,B,Hagymás-májas pirítós,https://www.penny.hu/receptek/hagymas-majas-piritos,4.0,voroshagyma,100.0
+P37,penny,B,Hagymás-májas pirítós,https://www.penny.hu/receptek/hagymas-majas-piritos,4.0,sertesmaj,200.0
+P37,penny,B,Hagymás-májas pirítós,https://www.penny.hu/receptek/hagymas-majas-piritos,4.0,olivaolaj,13.0
+P37,penny,B,Hagymás-májas pirítós,https://www.penny.hu/receptek/hagymas-majas-piritos,4.0,so,1
+P37,penny,B,Hagymás-májas pirítós,https://www.penny.hu/receptek/hagymas-majas-piritos,4.0,kenyer_feher,160.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,buzadara,60.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,tej,250.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,szalonna,300.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,so,1
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,turo,250.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,olivaolaj,65.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,mozzarella,250.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,kenyer_feher,80.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,kaliforniai,200.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,koktelparadicsom,150.0
+P38,penny,M,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,uborka,100.0
+P39,penny,M,Tojásos nokedli fejessalátával,https://www.penny.hu/receptek/tojasos-nokedli-fejessalataval,4.0,finomliszt,500.0
+P39,penny,M,Tojásos nokedli fejessalátával,https://www.penny.hu/receptek/tojasos-nokedli-fejessalataval,4.0,tojas,385.0
+P39,penny,M,Tojásos nokedli fejessalátával,https://www.penny.hu/receptek/tojasos-nokedli-fejessalataval,4.0,viz,400.0
+P39,penny,M,Tojásos nokedli fejessalátával,https://www.penny.hu/receptek/tojasos-nokedli-fejessalataval,4.0,vaj,70.0
+P39,penny,M,Tojásos nokedli fejessalátával,https://www.penny.hu/receptek/tojasos-nokedli-fejessalataval,4.0,salata,300.0
+P39,penny,M,Tojásos nokedli fejessalátával,https://www.penny.hu/receptek/tojasos-nokedli-fejessalataval,4.0,cukor,7.5
+P39,penny,M,Tojásos nokedli fejessalátával,https://www.penny.hu/receptek/tojasos-nokedli-fejessalataval,4.0,ecet,7.5
+P39,penny,M,Tojásos nokedli fejessalátával,https://www.penny.hu/receptek/tojasos-nokedli-fejessalataval,4.0,so,1
+P40,penny,X,Narancsos-csokoládés muffin,https://www.penny.hu/receptek/narancsos-csokolades-muffin,4.0,narancs,400.0
+P40,penny,X,Narancsos-csokoládés muffin,https://www.penny.hu/receptek/narancsos-csokolades-muffin,4.0,tojas,55.0
+P40,penny,X,Narancsos-csokoládés muffin,https://www.penny.hu/receptek/narancsos-csokolades-muffin,4.0,olaj,90.0
+P40,penny,X,Narancsos-csokoládés muffin,https://www.penny.hu/receptek/narancsos-csokolades-muffin,4.0,kakaopor,100.0
+P40,penny,X,Narancsos-csokoládés muffin,https://www.penny.hu/receptek/narancsos-csokolades-muffin,4.0,cukor,100.0
+P40,penny,X,Narancsos-csokoládés muffin,https://www.penny.hu/receptek/narancsos-csokolades-muffin,4.0,sutopor,5.0
+P40,penny,X,Narancsos-csokoládés muffin,https://www.penny.hu/receptek/narancsos-csokolades-muffin,4.0,finomliszt,250.0
+P40,penny,X,Narancsos-csokoládés muffin,https://www.penny.hu/receptek/narancsos-csokolades-muffin,4.0,so,1
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,kacsa,800.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,kacsa,1000.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,voroshagyma,200.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,fokhagyma,20.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,burgonya,600.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,friss_fuszernoveny,6.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,friss_fuszernoveny,18.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,fuszer,100.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,fuszer,1
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,so,1
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,almale,1000.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,mez,200.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,balzsamecet,100.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,fokhagyma,5.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,friss_fuszernoveny,3.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,friss_fuszernoveny,6.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,fuszer,4.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,lilakaposzta,1000.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,narancs,200.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,balzsamecet,100.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,almale,200.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,alaple,200.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,aszalt_gyumolcs,100.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,barnacukor,65.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,fuszer,1.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,fuszer,1
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,leveles_teszta,250.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,vaj,100.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,tojas,55.0
+P41,penny,M,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,so,1
+P42,penny,M,Bruschetta téli kiadásban,https://www.penny.hu/receptek/bruschetta-teli-kiadasban,4.0,zsemle_egyeb,250.0
+P42,penny,M,Bruschetta téli kiadásban,https://www.penny.hu/receptek/bruschetta-teli-kiadasban,4.0,brie,170.0
+P42,penny,M,Bruschetta téli kiadásban,https://www.penny.hu/receptek/bruschetta-teli-kiadasban,4.0,alma,320.0
+P42,penny,M,Bruschetta téli kiadásban,https://www.penny.hu/receptek/bruschetta-teli-kiadasban,4.0,citrom,100.0
+P42,penny,M,Bruschetta téli kiadásban,https://www.penny.hu/receptek/bruschetta-teli-kiadasban,4.0,dio,150.0
+P42,penny,M,Bruschetta téli kiadásban,https://www.penny.hu/receptek/bruschetta-teli-kiadasban,4.0,mez,25.0
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,finomliszt,200.0
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,vaj,50.0
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,tojas,220.0
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,tej,300.0
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,vanilia,16.0
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,porcukor,13.0
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,so,0.5
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,aszalt_gyumolcs,100.0
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,lekvar,10
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,mandula,100.0
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,porcukor,10
+P43,penny,X,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,fagylalt,10
+P44,penny,B,Western omlett,https://www.penny.hu/receptek/western-omlett,4.0,tej,50.0
+P44,penny,B,Western omlett,https://www.penny.hu/receptek/western-omlett,4.0,tojas,220.0
+P44,penny,B,Western omlett,https://www.penny.hu/receptek/western-omlett,4.0,vaj,26.0
+P44,penny,B,Western omlett,https://www.penny.hu/receptek/western-omlett,4.0,sonka,150.0
+P44,penny,B,Western omlett,https://www.penny.hu/receptek/western-omlett,4.0,cheddar,50.0
+P44,penny,B,Western omlett,https://www.penny.hu/receptek/western-omlett,4.0,so,1
+P44,penny,B,Western omlett,https://www.penny.hu/receptek/western-omlett,4.0,voroshagyma,100.0
+P44,penny,B,Western omlett,https://www.penny.hu/receptek/western-omlett,4.0,kaliforniai,200.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,tojas,275.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,porcukor,65.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,retesliszt,52.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,kakaopor,26.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,sutopor,2.5
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,vaj,150.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,porcukor,100.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,kakaopor,30.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,tej,250.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,retesliszt,39.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,gyumolcsbefott,150.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,feherbor,150.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,vanilia,8.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,gyumolcsbefott,50.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,csokolade,100.0
+P45,penny,X,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,vaj,100.0

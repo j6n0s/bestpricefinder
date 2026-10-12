@@ -1,0 +1,258 @@
+store,chain,address,items,actual,assortment_only,chain_best_any_store,price_effect,assortment_effect
+spar-110,Spar,Batthyány tér 5-6,24,16741,16222,14524,520,1697
+spar-197,Spar,Alagút utca 5-7.,25,17769,17033,14524,735,2509
+aldi-J179,Aldi,Mészáros utca 56/A,24,14797,14797,14797,0,0
+tesco-4064,Tesco,Galoca u. 22.,21,16807,16442,16845,365,-403
+spar-8264,Spar,Hűvösvölgyi út. 138..,24,16736,15902,14524,834,1377
+spar-174,Spar,Lövőház u. 2-6,24,16386,15703,14524,684,1178
+spar-8257,Spar,Törökvész u. 87-91,24,16537,15703,14524,834,1178
+spar-8262,Spar,Gábor Áron u. 74-78.,24,17009,16058,14524,951,1533
+tesco-4037,Tesco,Bimbó út 133.,22,16903,16498,16845,405,-347
+aldi-J110,Aldi,Pasaréti út 98.,24,14797,14797,14797,0,0
+lidl-316,Lidl,Csalogány u. 43,24,13529,13529,13529,0,0
+tesco-4078,Tesco,Máriaremetei út 72,21,17068,16613,16845,455,-232
+spar-194,Spar,Hidegkúti út 167.,24,17208,16257,14524,951,1732
+lidl-352,Lidl,Máriaremetei út 1.,24,13529,13529,13529,0,0
+tesco-4043,Tesco,Matyas Kiraly u. 1.,21,16536,16186,16845,350,-659
+spar-11,Spar,Monostori u. 3.,22,15435,14567,14524,869,42
+spar-8265,Spar,Bécsi u.,25,16585,15902,14524,684,1377
+spar-8218,Spar,Bécsi u. 154.,25,16386,15703,14524,684,1178
+spar-63,Spar,Vörösvári út 98.,21,15732,15095,14524,637,571
+spar-13,Spar,Szérűskert utca 018910/23,22,15865,15077,14524,787,553
+auchan-007,Auchan,Szentendrei út 115.,22,16136,16136,14839,0,1297
+aldi-J049,Aldi,Huszti út 33.,24,14797,14797,14797,0,0
+penny-58,Penny,Huszti út 36.,25,15446,15446,15446,0,0
+lidl-177,Lidl,Huszti út 20,24,13849,13529,13529,320,0
+tesco-1025,Tesco,Bécsi út 258.,25,16855,16845,16845,10,0
+tesco-4056,Tesco,Kolosy Tér 4.,20,15877,15643,16845,234,-1203
+spar-14,Spar,Pacsirtamező u. 49.,23,15605,14921,14524,684,397
+tesco-4051,Tesco,Pablo Neruda 1-2.,22,16987,16582,16845,405,-263
+penny-231,Penny,Pacsirtamező utca 41-43.,25,15446,15446,15446,0,0
+lidl-285,Lidl,Bécsi út 325-337.,24,13529,13529,13529,0,0
+spar-106,Spar,Csobánka tér 3.,24,15937,14986,14524,951,462
+tesco-4046,Tesco,Madzsar J. u. 9-11.,22,16650,16245,16845,405,-600
+spar-15,Spar,Viziorgona u. 5,22,15367,14567,14524,801,42
+aldi-J048,Aldi,Rákóczi utca 38.,24,14797,14797,14797,0,0
+lidl-219,Lidl,Szentendrei út 251-253,24,13849,13529,13529,320,0
+penny-229,Penny,Pünkösdfürdő u. 52-54.,25,15518,15518,15446,0,72
+lidl-358,Lidl,Görgey Artúr u. 14-20,24,13529,13529,13529,0,0
+spar-16,Spar,Rózsa u. 77.,25,17232,16595,14524,637,2071
+spar-17,Spar,István u. 10,24,17210,16259,14524,951,1734
+penny-265,Penny,Rózsa u. 20-22.,25,15446,15446,15446,0,0
+lidl-158,Lidl,Megyeri út 53,24,13849,13529,13529,320,0
+spar-136,Spar,Nap. u. 16.,24,15782,14981,14524,801,456
+spar-105,Spar,Rózsa u. 18.,24,17573,16372,14524,1201,1847
+spar-19,Spar,Árpád út 183-185.,25,16940,16257,14524,684,1732
+spar-8255,Spar,Görgey Artúr út 22.,25,16892,16058,14524,834,1533
+penny-11,Penny,Baross utca 6.,25,15446,15446,15446,0,0
+penny-254,Penny,Külső Szilágyi út 4.,25,15446,15446,15446,0,0
+aldi-J120,Aldi,Óceánárok utca 3-5.,24,14797,14797,14797,0,0
+spar-137,Spar,Megyeri út 236,24,17091,16257,14524,834,1732
+spar-107,Spar,Kordován tér 12.,25,17208,16257,14524,951,1732
+lidl-357,Lidl,Arany János utca 27-29,24,13529,13529,13529,0,0
+spar-166,Spar,Károly krt 22-24,22,16351,15525,14524,826,1001
+aldi-J065,Aldi,Kossuth Lajos u. 13.,24,14797,14797,14797,0,0
+lidl-355,Lidl,Ferenciek tere 2.,24,13529,13529,13529,0,0
+aldi-J063,Aldi,Báthory u. 8.,24,14797,14797,14797,0,0
+spar-165,Spar,Vértanúk tere 1.,23,16383,15604,14524,779,1079
+lidl-299,Lidl,VI. Király u. 112.,24,13529,13529,13529,0,0
+tesco-4062,Tesco,Terez krt. 55-57.,22,16744,16270,16845,474,-575
+spar-172,Spar,Véáci út 1-3,23,16549,15715,14524,834,1190
+lidl-274,Lidl,Bajcsy-Zsilinszky út 61.,24,13529,13529,13529,0,0
+spar-121,Spar,Teréz krt. 2.,21,16145,15149,14524,997,624
+spar-169,Spar,Teréz krt 28,23,15875,15041,14524,834,516
+spar-8251,Spar,Nyugati tér 1-2.,25,16585,15902,14524,684,1377
+penny-233,Penny,Király utca 82.,25,15446,15446,15446,0,0
+spar-8263,Spar,Dembinszky u 12.,25,16741,16058,14524,684,1533
+spar-8252,Spar,Akácfa utca 42-48,23,15782,14981,14524,801,456
+lidl-356,Lidl,Rákóczi út 48-50.,24,13529,13529,13529,0,0
+penny-224,Penny,Garay tér 20.,25,15446,15446,15446,0,0
+aldi-J062,Aldi,Rákóczi út 65.,24,14797,14797,14797,0,0
+tesco-4063,Tesco,Népszínház u. 30.,22,16666,16192,16845,474,-653
+lidl-333,Lidl,Leonardo da Vinci u. 23.,24,13529,13529,13529,0,0
+spar-22,Spar,Szigony u. 12,25,16702,15902,14524,801,1377
+spar-23,Spar,Rákóczi tér 7/8,23,15917,15311,14524,606,786
+spar-8259,Spar,Blaha Lujza tér 1-2.,23,15664,14981,14524,684,456
+penny-235,Penny,József krt. 45.,25,15446,15446,15446,0,0
+aldi-J190,Aldi,Üllői út 14.,24,14797,14797,14797,0,0
+lidl-331,Lidl,Teleki tér 1.,24,13529,13529,13529,0,0
+lidl-338,Lidl,Hungária körút 26.,24,13529,13529,13529,0,0
+penny-74,Penny,Hős u. 9.,25,15446,15446,15446,0,0
+tesco-1014,Tesco,Kerepesi út 9.,25,16855,16845,16845,10,0
+tesco-4080,Tesco,Rákóczi út 1-3.,21,16806,16332,16845,474,-513
+spar-119,Spar,Rákóczi u. 19.,23,16933,15922,14524,1011,1398
+penny-234,Penny,Könyves Kálmán krt. 62-64.,25,15446,15446,15446,0,0
+aldi-J194,Aldi,Orczy út 46-48.,24,14797,14797,14797,0,0
+spar-8256,Spar,Üllöi Út 147,24,15782,14981,14524,801,456
+tesco-4067,Tesco,Kalvin ter 7.,21,16592,16158,16845,434,-688
+spar-24,Spar,Rádai u. 32,21,16096,15153,14524,943,628
+aldi-J064,Aldi,Vámház körút 1-3.,24,14797,14797,14797,0,0
+aldi-J056,Aldi,Tűzoltó utca 10-16.,24,14797,14797,14797,0,0
+spar-179,Spar,Tűzoltó utca 50-56.,21,16203,15377,14524,826,852
+aldi-J129,Aldi,Soroksári út 138-142.,24,14797,14797,14797,0,0
+spar-168,Spar,Mester utca 1.,24,16027,15084,14524,943,560
+spar-129,Spar,Mester u. 30-32,24,17101,16267,14524,834,1742
+penny-276,Penny,Thaly K. u. 41.,25,15446,15446,15446,0,0
+lidl-195,Lidl,Gubacsi út 34.,24,13849,13529,13529,320,0
+spar-158,Spar,Vágóhíd u 3,23,17639,16670,14524,969,2146
+aldi-J242,Aldi,Könyves Kálmán krt. 12-14.,24,14797,14797,14797,0,0
+spar-176,Spar,Könyves Kálmán krt 12-14,24,15657,14870,14524,787,346
+lidl-235,Lidl,Lobogó u. 12,24,13529,13529,13529,0,0
+spar-109,Spar,Lobogó utca 14.,24,17383,16431,14524,951,1907
+lidl-232,Lidl,Üllői út 112.,24,13529,13529,13529,0,0
+penny-285,Penny,Liget tér 1.,25,15446,15446,15446,0,0
+penny-39,Penny,Kolozsvári utca 55.,25,15518,15518,15446,0,72
+spar-27,Spar,Kőrösi Csoma S. út 35-37,22,15722,15085,14524,637,561
+spar-26,Spar,Liget tér 5.,24,15883,14981,14524,902,456
+lidl-181,Lidl,Sibrik Miklós út 30/b.,24,13849,13529,13529,320,0
+spar-8222,Spar,Sibrik Miklós utca 32,24,16386,15703,14524,684,1178
+lidl-165,Lidl,Maglódi út 17,24,13849,13529,13529,320,0
+spar-8254,Spar,Kerepesi út 73.,25,16702,15902,14524,801,1377
+spar-8219,Spar,Kerepesi út 61,25,16386,15703,14524,684,1178
+aldi-J055,Aldi,Kerepesi út 71.,24,14797,14797,14797,0,0
+spar-28,Spar,Újhegyi sétány 18,23,15873,14921,14524,951,397
+penny-42,Penny,Sibrik Miklós út 23.,25,15518,15518,15446,0,72
+auchan-121,Auchan,Gyömrői út 99.,22,16581,16465,14839,116,1626
+spar-29,Spar,Péterhegyi lejtő 36,25,17383,16431,14524,951,1907
+aldi-J233,Aldi,Karolina út 17.,24,14797,14797,14797,0,0
+lidl-335,Lidl,Bartók Béla út 47.,24,13529,13529,13529,0,0
+tesco-4042,Tesco,Bartok Bela u. 105-113,21,16720,16286,16845,434,-559
+spar-196,Spar,Hadak útja 1.,25,17482,16798,14524,684,2274
+lidl-237,Lidl,Fehérvári út 211.,24,13529,13529,13529,0,0
+aldi-J158,Aldi,Kondorosi út 7.,24,14797,14797,14797,0,0
+tesco-4079,Tesco,Fehérvári út 45-47.,22,16170,16170,16845,0,-675
+aldi-J235,Aldi,Kondorosi út 6.,24,14797,14797,14797,0,0
+aldi-J045,Aldi,Sopron út 56.,24,14797,14797,14797,0,0
+aldi-J046,Aldi,Hunyadi J. út 19.,24,14797,14797,14797,0,0
+tesco-1009,Tesco,Hengermalom utca 19-21.,25,16855,16845,16845,10,0
+spar-8244,Spar,Október 23. utca,24,16550,15716,14524,834,1191
+spar-32,Spar,Irinyi J. u.34.,23,15700,15025,14524,675,500
+auchan-010,Auchan,Hunyadi János u. 19.,23,16138,16138,14839,0,1299
+penny-102,Penny,Rétköz u. 1.,25,15518,15518,15446,0,72
+lidl-343,Lidl,Budaörsi út 121.,23,13529,13529,13529,0,0
+spar-8261,Spar,Rétköz u. 7.,24,15465,14782,14524,684,257
+aldi-J047,Aldi,Rétköz u. 10/b.,24,14797,14797,14797,0,0
+spar-35,Spar,Tétényi u. 31,24,15975,15023,14524,951,499
+spar-156,Spar,Fehérvári út 45,23,17539,16798,14524,741,2273
+tesco-4033,Tesco,Andor u. 2.,22,16903,16498,16845,405,-347
+spar-170,Spar,Alkotás utca 53.,24,16892,16058,14524,834,1533
+tesco-4005,Tesco,Pagony utca 27-29.,23,17003,16550,16845,454,-296
+spar-120,Spar,Böszörményi u. 38/b,23,16102,15103,14524,999,578
+aldi-J068,Aldi,Rokolya utca 1-13.,24,14797,14797,14797,0,0
+tesco-4006,Tesco,Reitter Ferenc út 132,22,16560,16170,16845,390,-675
+tesco-4049,Tesco,Béke u. 13-19.,22,17077,16687,16845,390,-158
+spar-36,Spar,Gyöngyösi sétány 2,25,17115,16431,14524,684,1907
+aldi-J067,Aldi,Váci út 14.,24,14797,14797,14797,0,0
+spar-189,Spar,Váci út 34.,21,15989,14978,14524,1011,454
+lidl-339,Lidl,Victor Hugo u.11-15.,24,13529,13529,13529,0,0
+aldi-J052,Aldi,Pannónia utca 59-63.,24,14797,14797,14797,0,0
+spar-157,Spar,Bessenyei u. 8.,22,16770,15996,14524,774,1471
+penny-251,Penny,Véső u. 11.,25,15446,15446,15446,0,0
+spar-167,Spar,Váci út 37.,24,16962,16267,14524,696,1742
+penny-252,Penny,Váci út 9-15.,25,15446,15446,15446,0,0
+lidl-217,Lidl,Béke utca 2-4.,24,13849,13529,13529,320,0
+penny-87,Penny,Jász u. 105.,25,15446,15446,15446,0,0
+penny-293,Penny,Szent István krt. 30,25,15446,15446,15446,0,0
+spar-154,Spar,Váci út 178.,24,16783,16100,14524,684,1575
+tesco-1640,Tesco,Gács utca 3.,25,16855,16845,16845,10,0
+lidl-346,Lidl,Váci út 201,24,13529,13529,13529,0,0
+spar-38,Spar,Országbíró u.38-42.,24,17208,16257,14524,951,1732
+aldi-J247,Aldi,Csizma utca 3.,24,14797,14797,14797,0,0
+aldi-J118,Aldi,Petneházy utca 12.,24,14797,14797,14797,0,0
+lidl-348,Lidl,Nagy Lajos király útja 121-123,24,13529,13529,13529,0,0
+tesco-4053,Tesco,Erzsébet királyné 125.,22,16432,16042,16845,390,-804
+tesco-4083,Tesco,Nagy Lajos király útja 73-77,22,17130,16700,16845,430,-145
+spar-40,Spar,Szentmihályi u. 23,24,15956,15320,14524,637,795
+spar-41,Spar,Ond Vezér u. 34,24,16998,16197,14524,801,1673
+spar-42,Spar,Vezér u.39-41,25,17057,16257,14524,801,1732
+penny-4,Penny,Füredi út 37.,25,15446,15446,15446,0,0
+aldi-J125,Aldi,Szugló utca 60-62.,24,14797,14797,14797,0,0
+spar-140,Spar,Egressy út 178/c,25,17266,16431,14524,834,1907
+tesco-4087,Tesco,Thököly út 151c,22,17130,16700,16845,430,-145
+aldi-J137,Aldi,Csömöri út 13.,24,14797,14797,14797,0,0
+spar-190,Spar,Örs Vezér tere 24,22,15406,14722,14524,684,198
+tesco-1400,Tesco,Pillangó utca 15.,24,16921,16911,16845,10,66
+lidl-167,Lidl,Mogyoródi út 23-29,24,13849,13529,13529,320,0
+aldi-J053,Aldi,Régi Fóti út 64.,24,14797,14797,14797,0,0
+penny-112,Penny,Régi Fóti út 66-68.,25,15518,15518,15446,0,72
+tesco-1390,Tesco,Szentmihályi utca 131.,25,16855,16845,16845,10,0
+lidl-205,Lidl,Régi Fóti u. 1,24,13849,13529,13529,320,0
+spar-183,Spar,Szentmihályi út 142.,23,15782,14981,14524,801,456
+spar-104,Spar,Vasutastelep utca 4.,23,16932,16249,14524,684,1724
+penny-301,Penny,Nyírpalota út 2-4.,25,15446,15446,15446,0,0
+spar-43,Spar,Nyírpalota út 54.,23,16118,15351,14524,767,826
+lidl-210,Lidl,Erdőkerülő utca 36.,24,13849,13529,13529,320,0
+aldi-J124,Aldi,Erdőkerülő u. 47.,24,14797,14797,14797,0,0
+aldi-J058,Aldi,Késmárk utca 10.,24,14797,14797,14797,0,0
+lidl-359,Lidl,Madách utca 72.,24,13529,13529,13529,0,0
+lidl-209,Lidl,János u. 196,24,13849,13529,13529,320,0
+tesco-4045,Tesco,Rákosi út 142-146,20,17051,16686,16845,365,-159
+spar-45,Spar,Veres Péter u. 47,23,15956,15320,14524,637,795
+lidl-377,Lidl,Alsómalom utca 8-10.,24,13529,13529,13529,0,0
+spar-46,Spar,Arany J. u. 102,24,17057,16257,14524,801,1732
+aldi-J051,Aldi,Bökényföldi út 102.,24,14797,14797,14797,0,0
+lidl-255,Lidl,Újszász u. 47/B,24,13529,13529,13529,0,0
+aldi-J059,Aldi,Pesti út 237/p,24,14797,14797,14797,0,0
+spar-148,Spar,Jászapáti utca 71-75.,25,17266,16431,14524,834,1907
+penny-26,Penny,Pesti út 16-18.,25,15446,15446,15446,0,0
+lidl-129,Lidl,Pesti út 237/H,24,13849,13529,13529,320,0
+lidl-336,Lidl,Pesti út 2.,24,13529,13529,13529,0,0
+spar-49,Spar,Maroshévíz u. 1,23,15661,14793,14524,869,268
+aldi-J114,Aldi,Pesti út 2.,24,14797,14797,14797,0,0
+spar-48,Spar,Bakancsos u. 5,25,17057,16257,14524,801,1732
+spar-47,Spar,Pesti u. 169,24,15782,14981,14524,801,456
+tesco-1560,Tesco,Pesti út 5-7.,25,16855,16845,16845,10,0
+aldi-J254,Aldi,Táncsics Mihály út 49.,24,14797,14797,14797,0,0
+penny-23,Penny,Üllői út 661.,25,15446,15446,15446,0,0
+penny-64,Penny,Margó Tivadar u. 31.,25,15518,15518,15446,0,72
+lidl-226,Lidl,Üllői út 379-381.,24,13529,13529,13529,0,0
+spar-115,Spar,Üllői u. 525.,21,15765,15205,14524,559,681
+lidl-337,Lidl,Cziffra Gy.u.115.,24,13529,13529,13529,0,0
+spar-164,Spar,Cziffra György u. 15/b.,24,15966,14981,14524,985,456
+spar-52,Spar,Üllői u. 753,24,15792,14991,14524,801,466
+spar-54,Spar,Nefelejcs u. 89,23,15605,14999,14524,606,474
+aldi-J057,Aldi,Cziffra György utca 7.,24,14797,14797,14797,0,0
+lidl-109,Lidl,Margó Tivadar u. 83.,24,13849,13529,13529,320,0
+lidl-260,Lidl,Nagykőrösi út 35-38.,24,13529,13529,13529,0,0
+spar-132,Spar,Alacskai út 3.,23,16004,15203,14524,801,679
+aldi-J066,Aldi,Szalay utca 7-17.,24,14797,14797,14797,0,0
+tesco-1059,Tesco,Vak Bottyán u. 75 B,25,16855,16845,16845,10,0
+penny-57,Penny,Ady E. út 32-40.,25,15446,15446,15446,0,0
+spar-8258,Spar,Áruház köz 1-3.,24,15427,14626,14524,801,102
+lidl-391,Lidl,XIX. Szalay utca 14.,24,13529,13529,13529,0,0
+spar-8202,Spar,Üllői u. 201.,25,16386,15703,14524,684,1178
+lidl-325,Lidl,Báthory u. 6.,24,13529,13529,13529,0,0
+spar-117,Spar,Üllői u. 248.,24,15655,14636,14524,1019,112
+penny-283,Penny,Üllői út 266.,25,15446,15446,15446,0,0
+aldi-J060,Aldi,Hofherr Albert utca 40/a.,24,14797,14797,14797,0,0
+aldi-J069,Aldi,Üllői út 280.,24,14797,14797,14797,0,0
+spar-57,Spar,Nagysándor József u.19,24,17159,16207,14524,951,1683
+aldi-J248,Aldi,Kossuth Lajos utca 33.,24,14797,14797,14797,0,0
+spar-8207,Spar,Széchenyi u.1.,25,16399,15716,14524,684,1191
+penny-69,Penny,Topánka u. 7.,25,15446,15446,15446,0,0
+aldi-J061,Aldi,Köves út 9.,24,14797,14797,14797,0,0
+aldi-J140,Aldi,Székelyhíd utca 23.,24,14797,14797,14797,0,0
+tesco-1540,Tesco,Mártirok útja 281.,25,16855,16845,16845,10,0
+penny-44,Penny,Kossuth Lajos u. 69.,25,15446,15446,15446,0,0
+tesco-4055,Tesco,Kossuth Lajos u. 70.,22,19050,18020,16845,1031,1174
+spar-58,Spar,Kossuth L. u. 22,21,15693,15205,14524,487,681
+aldi-J101,Aldi,II. Rákóczi F. út 154-170.,24,14797,14797,14797,0,0
+aldi-J107,Aldi,Szent Imre tér 6-8.,24,14797,14797,14797,0,0
+spar-8260,Spar,Görgey Artúr tér 20.,25,16741,16058,14524,684,1533
+spar-59,Spar,Kikötő u. 8,23,16998,16197,14524,801,1673
+aldi-J159,Aldi,II. Rákóczi Ferenc u. 257.,24,14797,14797,14797,0,0
+tesco-1890,Tesco,II. Rákóczi Ferenc út 191.,25,16855,16845,16845,10,0
+spar-61,Spar,Csikó sétány 2,24,15664,14981,14524,684,456
+spar-108,Spar,Kossuth Lajos u 160-164,23,15722,14921,14524,801,397
+lidl-287,Lidl,Ady Endre út 58.,24,13529,13529,13529,0,0
+spar-62,Spar,Kossuth L. u. 41,22,15977,15176,14524,801,652
+tesco-4082,Tesco,Ady Endre u. 99,22,19117,18467,16845,650,1622
+aldi-J155,Aldi,Háros utca 11/B.,24,14797,14797,14797,0,0
+tesco-1710,Tesco,Nagytétényi utca 35.,25,16879,16869,16845,10,23
+spar-118,Spar,Rákóczi u. 20/a,23,17066,16197,14524,869,1673
+aldi-J050,Aldi,Nagytétényi út 145-147.,24,14797,14797,14797,0,0
+lidl-161,Lidl,Nagytétényi út 216-218.,24,13849,13529,13529,320,0
+lidl-307,Lidl,Ciklámen u. 3.,24,13529,13529,13529,0,0
+aldi-J054,Aldi,Haraszti út 32/b,24,14797,14797,14797,0,0
+lidl-282,Lidl,Haraszti út 34.,24,13529,13529,13529,0,0
+auchan-003,Auchan,Bevásárló u. 2.,23,15697,15697,14839,0,858

@@ -1,0 +1,1830 @@
+uuid,chain,postalCode,city,address,lat,lon,openingTime,budapest
+spar-110,Spar,1011,Budapest I.,Batthyány tér 5-6,47.506062,19.038035,,True
+dm-220,dm,1011,BUDAPEST,Batthyány tér 5-6.,47.50616,19.03808,,True
+spar-197,Spar,1013,Budapest,Alagút utca 5-7.,47.49703,19.03245,,True
+aldi-J179,Aldi,1016,Budapest,Mészáros utca 56/A,47.491114,19.031097,,True
+dm-363,dm,1016,Budapest,Krisztina krt. 65-67.,47.4967653,19.0317985,,True
+tesco-4064,Tesco,1020,Budapest,Galoca u. 22.,47.5515213,18.9642296,,True
+spar-8264,Spar,1021,Budapest,Hűvösvölgyi út. 138..,47.53763,18.966444,,True
+dm-139,dm,1021,Budapest,Hűvösvölgyi út 138.,47.53768,18.96638,,True
+dm-308,dm,1023,Budapest,Bécsi út 33-35.,47.52717,19.03827,,True
+spar-174,Spar,1024,Budapest,Lövőház u. 2-6,47.508788,19.027246,,True
+dm-407,dm,1024,Budapest,Lövőház utca 2-6.,47.5089792,19.0266522,,True
+spar-191,Spar,1024,Budapest,Retek u. 4.,47.508069,19.025903,,True
+rossmann-241,Rossmann,1024,Budapest,Lövőház utca 2-6.,47.50836,19.02651,,True
+spar-8257,Spar,1025,Budapest,Törökvész u. 87-91,47.529338,19.005061,,True
+dm-100,dm,1025,Budapest,Törökvész út 87-91.,47.5290574,19.005256,,True
+dm-430,dm,1026,Budapest,Gábor Áron utca 74-78/A,47.5225813,19.0147782,,True
+spar-8262,Spar,1026,Budapest,Gábor Áron u. 74-78.,47.522315,19.015081,,True
+tesco-4037,Tesco,1026,Budapest,Bimbó út 133.,47.5210304,19.0065308,,True
+aldi-J110,Aldi,1026,Budapest,Pasaréti út 98.,47.523664,18.99382,,True
+dm-318,dm,1026,Budapest,Pázsit utca 2.,47.51631,18.9999,,True
+dm-115,dm,1027,Budapest,Margit körút 50-52.,47.5109,19.03223,,True
+rossmann-222,Rossmann,1027,Budapest,Margit körút 3.,47.51477,19.03749,,True
+lidl-316,Lidl,1027,Budapest,Csalogány u. 43,47.50813,19.03156,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-390,dm,1028,Budapest,Hidegkúti út 1.,47.544591,18.9609646,,True
+tesco-4078,Tesco,1028,Budapest,Máriaremetei út 72,47.5482712,18.9529209,,True
+spar-194,Spar,1028,Budapest,Hidegkúti út 167.,47.563949,18.961992,,True
+lidl-352,Lidl,1028,Budapest,Máriaremetei út 1.,47.54506,18.96289,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+tesco-4043,Tesco,1030,Budapest,Matyas Kiraly u. 1.,47.5859108,19.0453606,,True
+rossmann-372,Rossmann,1031,Budapest,Mészkő utca 2-4.,47.580657,19.030509,,True
+spar-11,Spar,1031,Budapest,Monostori u. 3.,47.573008,19.049383,,True
+dm-408,dm,1032,Budapest,Bécsi út 154.,47.5473089,19.0278057,,True
+spar-8265,Spar,1032,Budapest,Bécsi u.,47.5431,19.0289,,True
+spar-8218,Spar,1032,Budapest III.,Bécsi u. 154.,47.546497,19.028357,,True
+spar-63,Spar,1032,Budapest,Vörösvári út 98.,47.54581,19.03309,,True
+spar-13,Spar,1033,Budapest,Szérűskert utca 018910/23,47.55668,19.04451,,True
+auchan-007,Auchan,1033,Budapest,Szentendrei út 115.,47.5593514,19.0499436,,True
+aldi-J049,Aldi,1033,Budapest,Huszti út 33.,47.55488,19.04082,,True
+penny-58,Penny,1033,Budapest,Huszti út 36.,47.55663,19.039715,,True
+lidl-177,Lidl,1033,Budapest,Huszti út 20,47.55278,19.03975,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+rossmann-212,Rossmann,1035,Budapest,Flórián tér 6-9.,47.54264,19.04042,,True
+tesco-1025,Tesco,1035,Budapest,Bécsi út 258.,47.563179,19.0228691,,True
+tesco-4056,Tesco,1036,Budapest,Kolosy Tér 4.,47.5280495,19.0380192,,True
+dm-354,dm,1036,Budapest,Bécsi út 136.,47.5438008,19.028565,,True
+spar-14,Spar,1036,Budapest,Pacsirtamező u. 49.,47.536887,19.041105,,True
+tesco-4051,Tesco,1036,Budapest,Pablo Neruda 1-2.,47.5970001,19.0496807,,True
+penny-231,Penny,1036,Budapest,Pacsirtamező utca 41-43.,47.536626,19.040351,,True
+rossmann-230,Rossmann,1036,Budapest,Bécsi út 38-44.,47.52813,19.03752,,True
+lidl-285,Lidl,1037,Budapest,Bécsi út 325-337.,47.56073,19.0244,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+rossmann-380,Rossmann,1037,Budapest,Bécsi út 266/A,47.563,19.02176,,True
+spar-106,Spar,1038,Budapest III.,Csobánka tér 3.,47.598939,19.052251,,True
+tesco-4046,Tesco,1039,Budapest,Madzsar J. u. 9-11.,47.601177,19.058481,,True
+spar-15,Spar,1039,Budapest,Viziorgona u. 5,47.598074,19.049105,,True
+aldi-J048,Aldi,1039,Budapest,Rákóczi utca 38.,47.57994,19.04991,,True
+dm-2,dm,1039,Budapest,Csobánka tér 1.,47.59814,19.05152,,True
+lidl-219,Lidl,1039,Budapest,Szentendrei út 251-253,47.58036,19.04784,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-59,dm,1039,Budapest,Rákóczi út 36.,47.5811642,19.0498929,,True
+penny-229,Penny,1039,Budapest,Pünkösdfürdő u. 52-54.,47.594764,19.054088,,True
+dm-114,dm,1039,Budapest,Heltai Jenő tér 1-3.,47.59827,19.0577,,True
+dm-404,dm,1041,Budapest,Görgey A. Út 14-20.,47.5655029,19.095692,,True
+lidl-358,Lidl,1041,Budapest,Görgey Artúr u. 14-20,47.56525,19.09624,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-16,Spar,1041,Budapest,Rózsa u. 77.,47.5638,19.10025,,True
+spar-17,Spar,1042,Budapest,István u. 10,47.56103,19.0891,,True
+penny-265,Penny,1042,Budapest,Rózsa u. 20-22.,47.557792,19.099566,,True
+dm-361,dm,1042,Budapest,Árpád út 183-185.,47.5610646,19.1068556,,True
+lidl-158,Lidl,1044,Budapest,Megyeri út 53,47.58835,19.09738,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+rossmann-326,Rossmann,1044,Budapest,Garam u. 3.,47.570604,19.077755,,True
+tesco-1046,Tesco,1044,Budapest,Garam u. 3.,47.5706444,19.0780506,,True
+dm-6,dm,1045,Budapest,Rózsa utca 16-18.,47.55732,19.10019,,True
+spar-136,Spar,1045,Budapest IV.,Nap. u. 16.,47.555185,19.0944,,True
+spar-105,Spar,1045,Budapest IV.,Rózsa u. 18.,47.55705,19.09966,,True
+spar-19,Spar,1045,Budapest,Árpád út 183-185.,47.560965,19.106268,,True
+spar-8255,Spar,1046,Budapest,Görgey Artúr út 22.,47.56637,19.097432,,True
+rossmann-228,Rossmann,1046,Budapest,Corvin utca 14.,47.57268,19.10099,,True
+penny-11,Penny,1047,Budapest,Baross utca 6.,47.56622,19.080281,,True
+penny-254,Penny,1048,Budapest,Külső Szilágyi út 4.,47.579112,19.115479,,True
+rossmann-238,Rossmann,1048,Budapest,Óceánárok utca 3-5.,47.57872,19.11444,,True
+aldi-J120,Aldi,1048,Budapest,Óceánárok utca 3-5.,47.57878,19.11456,,True
+spar-137,Spar,1048,Budapest IV.,Megyeri út 236,47.593265,19.11894,,True
+dm-331,dm,1048,Budapest,Lóverseny tér 3/b.,47.58048,19.1146,,True
+spar-20,Spar,1048,Budapest,Külső-Szilágyi u. 48,47.58518,19.11649,,True
+spar-107,Spar,1048,Budapest IV.,Kordován tér 12.,47.586672,19.113218,,True
+dm-53,dm,1051,Budapest,Arany János utca 30.,47.50251,19.05308,,True
+lidl-357,Lidl,1051,Budapest,Arany János utca 27-29,47.50237,19.05319,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-334,dm,1052,Budapest,Sütő utca 2.,47.49671,19.05386,,True
+mueller-5253,Müller,1052,Budapest,Váci utca 16,47.49442894,19.05250406,,True
+dm-362,dm,1052,Budapest,Petőfi Sándor utca 3.,47.4936041,19.0552508,,True
+dm-5,dm,1052,Budapest,Károly körút 26.,47.49626,19.05736,,True
+spar-166,Spar,1052,Budapest,Károly krt 22-24,47.4959,19.05789,,True
+dm-80,dm,1053,Budapest,Királyi Pál utca 20.,47.48868,19.0603,,True
+aldi-J065,Aldi,1053,Budapest,Kossuth Lajos u. 13.,47.4938,19.0587,,True
+lidl-355,Lidl,1053,Budapest,Ferenciek tere 2.,47.49303,19.05567,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+aldi-J063,Aldi,1054,Budapest,Báthory u. 8.,47.5061,19.0502,,True
+spar-165,Spar,1054,Budapest,Vértanúk tere 1.,47.505267,19.048278,,True
+dm-48,dm,1055,Budapest,Szent István körút 11.,47.51227,19.05057,,True
+lidl-299,Lidl,1061,Budapest,VI. Király u. 112.,47.50705,19.07169,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-332,dm,1061,Budapest,Andrássy út 35.,47.50338,19.06081,,True
+spar-193,Spar,1061,Budapest,Andrássy út 30.,47.503496,19.06049,,True
+dm-21,dm,1061,Budapest,Király utca 34.,47.50009,19.05993,,True
+rossmann-91,Rossmann,1062,Budapest,"Westend, Váci út 1-3.",47.51135,19.05657,,True
+tesco-4062,Tesco,1062,Budapest,Terez krt. 55-57.,47.5101013,19.0570393,,True
+spar-172,Spar,1062,Budapest,Véáci út 1-3,47.512331,19.057587,,True
+dm-343,dm,1062,Budapest,Váci út 1-3.,47.51362,19.0595,,True
+lidl-274,Lidl,1065,Budapest,Bajcsy-Zsilinszky út 61.,47.50904,19.05526,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-121,Spar,1066,Budapest VI.,Teréz krt. 2.,47.503351,19.065528,,True
+rossmann-304,Rossmann,1066,Budapest,Teréz körút 46.,47.50813,19.05899,,True
+spar-169,Spar,1066,Budapest,Teréz krt 28,47.506465,19.061334,,True
+dm-380,dm,1066,Budapest,Nyugati tér 1-2.,47.5099116,19.0556612,,True
+spar-8251,Spar,1066,Budapest,Nyugati tér 1-2.,47.51005,19.05638,,True
+rossmann-203,Rossmann,1067,Budapest,Teréz körút 19.,47.50595,19.06271,,True
+penny-233,Penny,1068,Budapest,Király utca 82.,47.504745,19.067777,,True
+spar-8263,Spar,1071,Budapest,Dembinszky u 12.,47.50595,19.0771,,True
+dm-140,dm,1071,Budapest,Dembinszky utca 12.,47.50627,19.076,,True
+spar-8252,Spar,1072,Budapest,Akácfa utca 42-48,47.5001,19.06413,,True
+spar-114,Spar,1073,Budapest VII.,Erzsébet krt. 27..,47.500731,19.068807,,True
+spar-21,Spar,1073,Budapest,Erzsébet krt. 24,47.50022,19.06882,,True
+rossmann-85,Rossmann,1073,Budapest,Erzsébet körút 19.,47.49982,19.06949,,True
+lidl-356,Lidl,1074,Budapest,Rákóczi út 48-50.,47.49748,19.07103,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+tesco-4054,Tesco,1074,Budapest,Rákóczi út 20.,47.4956894,19.0646305,,True
+rossmann-305,Rossmann,1075,Budapest,Károly krt. 11.,47.49695,19.05739,,True
+penny-224,Penny,1076,Budapest,Garay tér 20.,47.504139,19.085807,,True
+dm-473,dm,1076,Budapest,Garay tér 20.,47.50383,19.08536,,True
+rossmann-13,Rossmann,1077,Budapest,Király utca 51.,47.50204,19.06305,,True
+rossmann-72,Rossmann,1077,Budapest,Baross tér 14.,47.50066,19.08164,,True
+aldi-J062,Aldi,1081,Budapest,Rákóczi út 65.,47.49882,19.07669,,True
+tesco-4063,Tesco,1081,Budapest,Népszínház u. 30.,47.4947815,19.07757,,True
+lidl-333,Lidl,1082,Budapest,Leonardo da Vinci u. 23.,47.48593,19.07732,Nyitvatartás: 06:30-22:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+mueller-5247,Müller,1082,Budapest,Kisfaludy utca 32-38,47.48629656,19.07225921,,True
+rossmann-235,Rossmann,1082,Budapest,Corvin sétány 1.,47.48581,19.07536,,True
+dm-303,dm,1082,Budapest,Kisfaludy utca 32-38.,47.4862591,19.0738342,,True
+spar-22,Spar,1083,Budapest,Szigony u. 12,47.48689,19.0836,,True
+spar-23,Spar,1084,Budapest,Rákóczi tér 7/8,47.49311,19.07391,,True
+spar-8259,Spar,1085,Budapest,Blaha Lujza tér 1-2.,47.49627,19.0689,,True
+dm-30,dm,1085,Budapest,József körút 46.,47.49047,19.07091,,True
+penny-235,Penny,1085,Budapest,József krt. 45.,47.490599,19.070565,,True
+dm-416,dm,1085,Budapest,Blaha Lujza tér 1.,47.4961979,19.069137,,True
+aldi-J190,Aldi,1085,Budapest,Üllői út 14.,47.488655,19.064121,,True
+mueller-5244,Müller,1085,Budapest,József krt. 5,47.49608928,19.07034256,,True
+lidl-331,Lidl,1086,Budapest,Teleki tér 1.,47.49302,19.08423,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+rossmann-263,Rossmann,1087,Budapest,Kerepesi út 9.,47.49834,19.09262,,True
+dm-374,dm,1087,Budapest,Kerepesi út 9.,47.498083,19.093535,,True
+lidl-338,Lidl,1087,Budapest VIII,Hungária körút 26.,47.49556,19.1081,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+penny-74,Penny,1087,Budapest,Hős u. 9.,47.496128,19.107554,,True
+tesco-1014,Tesco,1087,Budapest,Kerepesi út 9.,47.4991417,19.0916309,,True
+tesco-4080,Tesco,1088,Budapest,Rákóczi út 1-3.,47.4942207,19.0607605,,True
+spar-119,Spar,1088,Budapest VIII.,Rákóczi u. 19.,47.495318,19.064763,,True
+penny-234,Penny,1089,Budapest,Könyves Kálmán krt. 62-64.,47.482003,19.103099,,True
+aldi-J194,Aldi,1089,Budapest,Orczy út 46-48.,47.486835,19.092926,,True
+spar-8256,Spar,1091,Budapest,Üllöi Út 147,47.47068,19.11061,,True
+rossmann-296,Rossmann,1091,Budapest,Kálvin tér 7. (Városkapu üzletház),47.4887174,19.0611699,,True
+tesco-4067,Tesco,1091,Budapest,Kalvin ter 7.,47.4887085,19.0612202,,True
+spar-24,Spar,1092,Budapest,Rádai u. 32,47.48496,19.06553,,True
+dm-20,dm,1092,Budapest,Ferenc körút 2-4.,47.48135,19.06757,,True
+aldi-J064,Aldi,1093,Budapest,Vámház körút 1-3.,47.48729,19.0582,,True
+rossmann-25,Rossmann,1094,Budapest,Ferenc körút 23.,47.483,19.06906,,True
+aldi-J056,Aldi,1094,Budapest,Tűzoltó utca 10-16.,47.48416,19.07166,,True
+dm-144,dm,1094,Budapest,Mester utca 40-44.,47.47913,19.073,,True
+tesco-4029,Tesco,1094,Budapest,Thaly Kálmán út 46-48.,47.4812508,19.0772305,,True
+spar-179,Spar,1094,Budapest,Tűzoltó utca 50-56.,47.481844,19.077577,,True
+aldi-J129,Aldi,1095,Budapest,Soroksári út 138-142.,47.454293,19.087497,,True
+spar-168,Spar,1095,Budapest,Mester utca 1.,47.48135,19.06812,,True
+rossmann-234,Rossmann,1095,Budapest,Soroksári út 30-34.,47.47482,19.07038,,True
+spar-129,Spar,1095,Budapest IX.,Mester u. 30-32,47.48027,19.07125,,True
+dm-379,dm,1095,Budapest,Soroksári út 138-142.,47.453767,19.0885113,,True
+spar-135,Spar,1095,Budapest IX.,Soroksári út. 1,47.47824,19.06742,,True
+penny-276,Penny,1096,Budapest,Thaly K. u. 41.,47.48184,19.078245,,True
+lidl-195,Lidl,1097,Budapest,Gubacsi út 34.,47.44477,19.09653,Nyitvatartás: 06:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-158,Spar,1097,Budapest,Vágóhíd u 3,47.47197,19.07699,,True
+rossmann-280,Rossmann,1097,Budapest,Vágóhíd utca 3.,47.474215,19.0826397,,True
+rossmann-319,Rossmann,1097,Budapest,Könyves Kálmán krt. 12-14.,47.47095,19.08416,,True
+aldi-J242,Aldi,1097,Budapest,Könyves Kálmán krt. 12-14.,47.47213,19.08392,,True
+spar-176,Spar,1097,Budapest,Könyves Kálmán krt 12-14,47.47108,19.08418,,True
+tesco-1008,Tesco,1097,Budapest,Koppány utca 2-4.,47.4656105,19.0796299,,True
+dm-314,dm,1097,Budapest,Könyves Kálmán körút 12-14,47.4701036,19.0846317,,True
+lidl-235,Lidl,1098,Budapest,Lobogó u. 12,47.46185,19.11464,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-178,dm,1098,Budapest,Napfény utca 7.,47.46223,19.11476,,True
+spar-109,Spar,1098,Budapest IX.,Lobogó utca 14.,47.46219,19.11502,,True
+lidl-232,Lidl,1101,Budapest,Üllői út 112.,47.47306,19.10976,Nyitvatartás: 06:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+penny-285,Penny,1102,Budapest,Liget tér 1.,47.48282,19.12897,,True
+penny-39,Penny,1102,Budapest,Kolozsvári utca 55.,47.491315,19.137082,,True
+spar-27,Spar,1102,Budapest,Kőrösi Csoma S. út 35-37,47.48843,19.13481,,True
+spar-26,Spar,1102,Budapest,Liget tér 5.,47.4837,19.12793,,True
+lidl-181,Lidl,1103,Budapest,Sibrik Miklós út 30/b.,47.46984,19.15586,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-224,dm,1103,Budapest,Gyömrői út 99.,47.46663,19.15753,,True
+rossmann-289,Rossmann,1103,Budapest,Kazah utca 1.,47.4710324,19.1544507,,True
+spar-8222,Spar,1103,Budapest,Sibrik Miklós utca 32,47.470433,19.156749,,True
+rossmann-155,Rossmann,1105,Budapest,Kőrösi Csoma Sándor út 35-37.,47.48269,19.13995,,True
+lidl-165,Lidl,1106,Budapest,Maglódi út 17,47.48654,19.15334,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-8254,Spar,1106,Budapest,Kerepesi út 73.,47.50391,19.1519,,True
+dm-4,dm,1106,Budapest,Kerepesi út 73.,47.50369,19.15153,,True
+spar-171,Spar,1106,Budapest,Örs vezér tere 25.,47.5024646,19.1369534,,True
+spar-8219,Spar,1106,Budapest X.,Kerepesi út 61,47.5029,19.13633,,True
+rossmann-213,Rossmann,1106,Budapest,Örs vezér tere 25.,47.50299,19.13759,,True
+mueller-5245,Müller,1106,Budapest,Kerepesi út 61,47.50281734,19.1390765,,True
+aldi-J055,Aldi,1106,Budapest,Kerepesi út 71.,47.50336,19.15092,,True
+dm-420,dm,1106,Budapest,Örs vezér tere 25. Árkád,47.5028949,19.1397568,,True
+spar-28,Spar,1108,Budapest,Újhegyi sétány 18,47.4715,19.16458,,True
+penny-42,Penny,1108,Budapest,Sibrik Miklós út 23.,47.469338,19.157492,,True
+auchan-121,Auchan,1108,Budapest,Gyömrői út 99.,47.466603,19.1579,,True
+rossmann-52,Rossmann,1111,Budapest,Bartók Béla út 48.,47.47843,19.04953,,True
+spar-101,Spar,1112,Budapest XI,Balatoni út 000853/15.,47.4622,19.01688,,True
+spar-29,Spar,1112,Budapest,Péterhegyi lejtő 36,47.44869,19.00704,,True
+dm-395,dm,1112,Budapest,Balatoni út 2/A,47.465589,19.0161313,,True
+aldi-J233,Aldi,1113,Budapest,Karolina út 17.,47.481894611440595,19.029782379849333,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+rossmann-192,Rossmann,1113,Budapest,Andor u. 2.,47.4559,19.03924,,True
+lidl-335,Lidl,1114,Budapest,Bartók Béla út 47.,47.47839,19.04858,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+tesco-4042,Tesco,1115,Budapest,Bartok Bela u. 105-113,47.4721718,19.0313206,,True
+spar-196,Spar,1115,Budapest,Hadak útja 1.,47.46345,19.02563,,True
+spar-30,Spar,1115,Budapest,Etele út 58-60.,47.46365,19.02891,,True
+lidl-237,Lidl,1116,Budapest,Fehérvári út 211.,47.44621,19.03657,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+aldi-J158,Aldi,1116,Budapest,Kondorosi út 7.,47.451093,19.037851,,True
+tesco-4079,Tesco,1116,Budapest,Fehérvári út 45-47.,47.4697113,19.0445805,,True
+aldi-J235,Aldi,1116,Budapest,Kondorosi út 6.,47.45064528877389,19.04214230780085,,True
+aldi-J045,Aldi,1116,Budapest,Sopron út 56.,47.46154,19.04388,,True
+aldi-J046,Aldi,1116,Budapest,Hunyadi J. út 19.,47.43812,19.04038,,True
+rossmann-240,Rossmann,1117,Budapest,Hunyadi János út 19.,47.43278,19.04135,,True
+rossmann-365,Rossmann,1117,Budapest,Hunyadi János utca 19.,47.43506,19.04117,,True
+dm-205,dm,1117,Budapest,Hengermalom út 19-21.,47.46074,19.05131,,True
+tesco-1009,Tesco,1117,Budapest,Hengermalom utca 19-21.,47.4611511,19.0506992,,True
+spar-8244,Spar,1117,Budapest XI,Október 23. utca,47.47446,19.04985,,True
+spar-32,Spar,1117,Budapest,Irinyi J. u.34.,47.47403,19.0544,,True
+auchan-010,Auchan,1117,Budapest,Hunyadi János u. 19.,47.4349426,19.0409022,,True
+dm-172,dm,1117,Budapest,Hunyadi János utca 19.,47.4358,19.04109,,True
+dm-233,dm,1117,Budapest,Október huszonharmadika utca 8-10.,47.4742,19.04862,,True
+spar-155,Spar,1117,Budapest,Dombóvári út 27.,47.46813,19.05849,,True
+rossmann-297,Rossmann,1117,Budapest,Bíró László József körút 17. fszt 4.,47.4659141,19.0579241,,True
+penny-102,Penny,1118,Budapest,Rétköz u. 1.,47.464428,19.006119,,True
+lidl-343,Lidl,1118,Budapest,Budaörsi út 121.,47.46614,19.01457,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-8261,Spar,1118,Budapest,Rétköz u. 7.,47.46625,19.00593,,True
+dm-66,dm,1118,Budapest,Rétköz utca 7.,47.46643,19.00563,,True
+aldi-J047,Aldi,1118,Budapest,Rétköz u. 10/b.,47.46582,19.005862,,True
+mueller-5257,Müller,1119,Budapest,Hadak útja 1,47.4640416,19.0258879,,True
+dm-388,dm,1119,Budapest,Hadak útja 1,47.4640288,19.0251648,,True
+spar-35,Spar,1119,Budapest,Tétényi u. 31,47.46775,19.03325,,True
+spar-156,Spar,1119,Budapest,Fehérvári út 45,47.470002,19.044583,,True
+spar-161,Spar,1119,Budapest XI.,Fehérvári u. 97-99,47.46346,19.04225,,True
+tesco-4033,Tesco,1119,Budapest,Andor u. 2.,47.45578,19.0386505,,True
+spar-170,Spar,1123,Budapest,Alkotás utca 53.,47.490877,19.023299,,True
+mueller-5252,Müller,1123,Budapest,Alkotás utca 53.,47.4907309,19.023923,,True
+dm-125,dm,1123,Budapest,Alkotás utca 53.,47.49033,19.02373,,True
+tesco-4005,Tesco,1124,Budapest,Pagony utca 27-29.,47.495119,19.003971,,True
+dm-333,dm,1124,Budapest,Apor Vilmos tér 11.,47.49123,19.01212,,True
+dm-24,dm,1126,Budapest,Böszörményi út 36/a.,47.49247,19.01677,,True
+spar-120,Spar,1126,Budapest XII.,Böszörményi u. 38/b,47.491856,19.016345,,True
+aldi-J068,Aldi,1131,Budapest,Rokolya utca 1-13.,47.54234,19.08898,,True
+tesco-4006,Tesco,1131,Budapest,Reitter Ferenc út 132,47.540539,19.09088,,True
+tesco-4049,Tesco,1131,Budapest,Béke u. 13-19.,47.5332184,19.0820999,,True
+spar-36,Spar,1131,Budapest,Gyöngyösi sétány 2,47.549556,19.077015,,True
+dm-325,dm,1132,Budapest,Váci út 20-26.,47.51459,19.05853,,True
+aldi-J067,Aldi,1132,Budapest,Váci út 14.,47.51314,19.05725,,True
+spar-189,Spar,1132,Budapest,Váci út 34.,47.515511,19.0592098,,True
+lidl-339,Lidl,1132,Budapest,Victor Hugo u.11-15.,47.51775,19.05793,Nyitvatartás: 07:00-22:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+rossmann-32,Rossmann,1132,Budapest,Váci út 36-38.,47.51581,19.05952,,True
+rossmann-113,Rossmann,1133,Budapest,Dráva utca 18-20.,47.5255733,19.0582722,,True
+aldi-J052,Aldi,1133,Budapest,Pannónia utca 59-63.,47.52007,19.05677,,True
+spar-157,Spar,1133,Budapest,Bessenyei u. 8.,47.522397,19.057786,,True
+penny-251,Penny,1133,Budapest,Véső u. 11.,47.529185,19.062183,,True
+dm-386,dm,1134,Budapest,Váci út 35.,47.5256682,19.0639934,,True
+spar-167,Spar,1134,Budapest,Váci út 37.,47.525895,19.064306,,True
+penny-252,Penny,1134,Budapest,Váci út 9-15.,47.51876,19.06118,,True
+lidl-217,Lidl,1135,Budapest,Béke utca 2-4.,47.53153,19.08057,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+penny-87,Penny,1135,Budapest,Jász u. 105.,47.537143,19.087413,,True
+rossmann-199,Rossmann,1135,Budapest,Béke tér 1-3.,47.52983,19.08168,,True
+penny-293,Penny,1137,Budapest,Szent István krt. 30,47.51859,19.0518199,,True
+rossmann-202,Rossmann,1137,Budapest,Szent István körút 4.,47.51314,19.04857,,True
+rossmann-278,Rossmann,1138,Budapest,Váci út 129-133.,47.544264,19.071751,,True
+dm-398,dm,1138,Budapest,Esztergomi út 31-43.,47.5326532,19.0635518,,True
+dm-321,dm,1138,Budapest,Gács utca 3.,47.5548714,19.0797415,,True
+spar-154,Spar,1138,Budapest,Váci út 178.,47.549641,19.072888,,True
+rossmann-254,Rossmann,1138,Budapest,Váci út 201.,47.55967,19.07766,,True
+spar-128,Spar,1138,Budapest XIII.,Váci út 138/a,47.536023,19.067763,,True
+tesco-1640,Tesco,1138,Budapest,Gács utca 3.,47.5248413,19.1535892,,True
+dm-162,dm,1138,Budapest,Váci út 178.,47.5493498,19.0728936,,True
+rossmann-255,Rossmann,1138,Budapest,Váci út 178.,47.55087,19.07361,,True
+lidl-346,Lidl,1138,Budapest XIII,Váci út 201,47.55903,19.07787,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-38,Spar,1139,Budapest,Országbíró u.38-42.,47.53153,19.081197,,True
+aldi-J247,Aldi,1139,Budapest,Csizma utca 3.,47.53484,19.08168,,True
+aldi-J118,Aldi,1139,Budapest,Petneházy utca 12.,47.534734,19.071727,,True
+lidl-348,Lidl,1141,Budapest,Nagy Lajos király útja 121-123,47.51701,19.11683,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+tesco-4053,Tesco,1142,Budapest,Erzsébet királyné 125.,47.5348511,19.1132507,,True
+tesco-4083,Tesco,1142,Budapest,Nagy Lajos király útja 73-77,47.5121384,19.1250706,,True
+dm-310,dm,1143,Budapest,Stefánia út 2.,47.442666,18.9357923,,True
+spar-40,Spar,1144,Budapest,Szentmihályi u. 23,47.509225,19.14964,,True
+spar-41,Spar,1144,Budapest,Ond Vezér u. 34,47.5063,19.14684,,True
+spar-42,Spar,1144,Budapest,Vezér u.39-41,47.51006,19.14291,,True
+penny-4,Penny,1144,Budapest,Füredi út 37.,47.51011,19.145275,,True
+aldi-J125,Aldi,1145,Budapest,Szugló utca 60-62.,47.515404,19.113024,,True
+spar-140,Spar,1146,Budapest,Egressy út 178/c,47.520067,19.126518,,True
+dm-166,dm,1146,Budapest,Szabó József utca 6.,47.50451,19.09284,,True
+tesco-4087,Tesco,1146,Budapest,Thököly út 151c,47.5160217,19.1073399,,True
+aldi-J137,Aldi,1147,Budapest,Csömöri út 13.,47.52130700617114,19.11497550252738,,True
+dm-57,dm,1147,Budapest,Csömöri út 9-11.,47.52096,19.11449,,True
+dm-50,dm,1147,Budapest,Mexikói út 70.,47.51961,19.09111,,True
+dm-319,dm,1148,Budapest,Örs vezér tere 24.,47.504326,19.1379327,,True
+rossmann-369,Rossmann,1148,Budapest,Csömöri út 13.,47.5215,19.11483,,True
+spar-190,Spar,1148,Budapest,Örs Vezér tere 24,47.504359,19.13712,,True
+spar-39,Spar,1149,Budapest,Nagy Lajos király u. 191,47.523,19.10232,,True
+tesco-1400,Tesco,1149,Budapest,Pillangó utca 15.,47.5044212,19.1166706,,True
+rossmann-324,Rossmann,1149,Budapest,Pillangó u. 15.,47.50506,19.11704,,True
+dm-393,dm,1149,Budapest,Pillangó utca 16-20.,47.5039815,19.1167047,,True
+lidl-167,Lidl,1149,Budapest,Mogyoródi út 23-29,47.50686,19.11523,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-41,dm,1152,Budapest,Szentmihályi út 131.,47.5529725,19.1417485,,True
+aldi-J053,Aldi,1152,Budapest,Régi Fóti út 64.,47.56197,19.12286,,True
+rossmann-231,Rossmann,1152,Budapest,Szentmihályi út 131.,47.55051,19.13733,,True
+penny-112,Penny,1152,Budapest,Régi Fóti út 66-68.,47.561029,19.121573,,True
+tesco-1390,Tesco,1152,Budapest,Szentmihályi utca 131.,47.5515404,19.1388302,,True
+lidl-205,Lidl,1152,Budapest,Régi Fóti u. 1,47.56697,19.13276,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-183,Spar,1154,Budapest,Szentmihályi út 142.,47.55207,19.13431,,True
+spar-104,Spar,1155,Budapest XV.,Vasutastelep utca 4.,47.54316,19.12248,,True
+penny-301,Penny,1156,Budapest,Nyírpalota út 2-4.,47.54363,19.13886,,True
+spar-44,Spar,1156,Budapest,Nyírpalota u. 2-4.,47.538753,19.136384,,True
+spar-43,Spar,1156,Budapest,Nyírpalota út 54.,47.545657,19.139594,,True
+lidl-210,Lidl,1156,Budapest,Erdőkerülő utca 36.,47.54121,19.15078,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+aldi-J124,Aldi,1157,Budapest,Erdőkerülő u. 47.,47.541179,19.15138,,True
+aldi-J058,Aldi,1158,Budapest,Késmárk utca 10.,47.5343,19.14225,,True
+rossmann-229,Rossmann,1158,Budapest,Zsókavár utca 24.28.,47.54209,19.14215,,True
+spar-126,Spar,1158,Budapest XV.,Drégelyvár u. 57-63.,47.535395,19.133933,,True
+lidl-359,Lidl,1158,Budapest,Madách utca 72.,47.53705,19.13846,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+lidl-209,Lidl,1161,Budapest,János u. 196,47.53469,19.16077,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+tesco-4045,Tesco,1162,Budapest,Rákosi út 142-146,47.5236893,19.1724796,,True
+spar-45,Spar,1163,Budapest,Veres Péter u. 47,47.50905,19.18032,,True
+rossmann-256,Rossmann,1163,Budapest,Sashalmi tér 3.,47.50996,19.17151,,True
+lidl-377,Lidl,1164,Budapest XVI.,Alsómalom utca 8-10.,47.52668,19.20617,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-46,Spar,1165,Budapest,Arany J. u. 102,47.521223,19.186229,,True
+aldi-J051,Aldi,1165,Budapest,Bökényföldi út 102.,47.50373,19.21618,,True
+lidl-255,Lidl,1165,Budapest,Újszász u. 47/B,47.50565,19.20084,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+rossmann-236,Rossmann,1165,Budapest,Jókai Mór utca 4.,47.5099146,19.1912884,,True
+aldi-J059,Aldi,1171,Budapest,Pesti út 237/p,47.47135,19.28366,,True
+spar-148,Spar,1172,Budapest,Jászapáti utca 71-75.,47.496549,19.272546,,True
+penny-26,Penny,1173,Budapest,Pesti út 16-18.,47.484461,19.236087,,True
+lidl-129,Lidl,1173,Budapest,Pesti út 237/H,47.47292,19.27393,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+lidl-336,Lidl,1173,Budapest XVII.,Pesti út 2.,47.48505,19.22504,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+rossmann-232,Rossmann,1173,Budapest,Pesti út 2.,47.48455,19.22952,,True
+spar-49,Spar,1173,Budapest,Maroshévíz u. 1,47.475328,19.266264,,True
+aldi-J114,Aldi,1173,Budapest,Pesti út 2.,47.48529,19.22585,,True
+spar-48,Spar,1173,Budapest,Bakancsos u. 5,47.48009,19.24416,,True
+spar-47,Spar,1173,Budapest,Pesti u. 169,47.47942,19.25581,,True
+dm-87,dm,1173,Budapest,Pesti út 172.,47.47959,19.25754,,True
+tesco-1560,Tesco,1173,Budapest,Pesti út 5-7.,47.4844093,19.2277393,,True
+aldi-J254,Aldi,1174,Budapest,Táncsics Mihály út 49.,47.47296,19.2406,,True
+penny-23,Penny,1181,Budapest,Üllői út 661.,47.433432,19.201849,,True
+penny-64,Penny,1181,Budapest,Margó Tivadar u. 31.,47.438202,19.170926,,True
+lidl-226,Lidl,1181,Budapest,Üllői út 379-381.,47.44642,19.17058,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-115,Spar,1182,Budapest XVIII.,Üllői u. 525.,47.43938,19.18665,,True
+lidl-337,Lidl,1182,Budapest,Cziffra Gy.u.115.,47.43441,19.20089,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-365,dm,1182,Budapest,Üllői út 661.,47.4332335,19.2017797,,True
+spar-164,Spar,1182,Budapest,Cziffra György u. 15/b.,47.43299,19.1777,,True
+spar-52,Spar,1182,Budapest,Üllői u. 753,47.42916,19.21765,,True
+spar-54,Spar,1183,Budapest,Nefelejcs u. 89,47.44638,19.19003,,True
+rossmann-273,Rossmann,1183,Budapest,"Üllői út 448., Szarvas csárda tér",47.44014,19.18621,,True
+spar-173,Spar,1185,Budapest,"Liszt Ferenc Nemzetközi repülőtér, 2B",47.4331769,19.2621404,,True
+aldi-J057,Aldi,1186,Budapest,Cziffra György utca 7.,47.43225,19.17373,,True
+dm-290,dm,1186,Budapest,Cziffra György utca 15/b.,47.43273,19.17798,,True
+lidl-109,Lidl,1186,Budapest,Margó Tivadar u. 83.,47.43192,19.17402,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-53,Spar,1188,Budapest,Nemes u. 7,47.40468,19.18738,,True
+lidl-260,Lidl,1188,Budapest,Nagykőrösi út 35-38.,47.40697,19.18186,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-132,Spar,1188,Budapest XVIII.,Alacskai út 3.,47.41686,19.20792,,True
+aldi-J066,Aldi,1191,Budapest,Szalay utca 7-17.,47.46263,19.13137,,True
+dm-418,dm,1191,Budapest,Vak Bottyán u. 75.,47.4629072,19.1458667,,True
+tesco-1059,Tesco,1191,Budapest,Vak Bottyán u. 75 B,47.462298,19.147798,,True
+penny-57,Penny,1191,Budapest,Ady E. út 32-40.,47.46104,19.131361,,True
+spar-8258,Spar,1191,Budapest,Áruház köz 1-3.,47.45824,19.14731,,True
+rossmann-205,Rossmann,1191,Budapest,Vak Bottyán utca 75/A-C,47.46174,19.14898,,True
+rossmann-216,Rossmann,1191,Budapest,Szalay utca 7-17.,47.46119,19.13098,,True
+lidl-391,Lidl,1191,Budapest,XIX. Szalay utca 14.,47.46179,19.13216,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 7:00-19:00,True
+spar-8202,Spar,1191,Budapest XIX.,Üllői u. 201.,47.46405,19.12746,,True
+rossmann-331,Rossmann,1191,Budapest,Áruház köz 1-3.,47.45843,19.14689,,True
+spar-102,Spar,1191,Budapest XIX.,Eötvös u. 5.,47.45895,19.14253,,True
+lidl-325,Lidl,1191,Budapest,Báthory u. 6.,47.45704,19.14462,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-405,dm,1193,Budapest,Üllői út 266.,47.4528998,19.1569,,True
+spar-117,Spar,1193,Budapest XIX.,Üllői u. 248.,47.45454,19.15241,,True
+dm-385,dm,1193,Budapest,Üllői út 201.,47.4637657,19.1280422,,True
+penny-283,Penny,1193,Budapest,Üllői út 266.,47.452686,19.156769,,True
+aldi-J060,Aldi,1194,Budapest,Hofherr Albert utca 40/a.,47.43726,19.1471,,True
+aldi-J069,Aldi,1195,Budapest,Üllői út 280.,47.45283,19.15581,,True
+spar-57,Spar,1201,Budapest,Nagysándor József u.19,47.43509,19.10713,,True
+dm-67,dm,1201,Budapest,Széchenyi út 1/a.,47.4388,19.10083,,True
+aldi-J248,Aldi,1203,Budapest,Kossuth Lajos utca 33.,47.43775,19.10242,,True
+spar-8207,Spar,1203,Budapest XX.,Széchenyi u.1.,47.43935,19.10088,,True
+rossmann-168,Rossmann,1203,Budapest,Kossuth Lajos utca. 32-36.,47.43781,19.10319,,True
+penny-69,Penny,1203,Budapest,Topánka u. 7.,47.438227,19.101385,,True
+aldi-J061,Aldi,1204,Budapest,Köves út 9.,47.41664,19.14273,,True
+aldi-J140,Aldi,1204,Budapest,Székelyhíd utca 23.,47.432144,19.118742,,True
+tesco-1540,Tesco,1204,Budapest,Mártirok útja 281.,47.431839,19.1377506,,True
+tesco-4044,Tesco,1210,Budapest,Szent Laszlo u. 115,47.4073906,19.0794907,,True
+rossmann-249,Rossmann,1211,Budapest,II. Rákóczi Ferenc út 154-170.,47.42757,19.06751,,True
+penny-44,Penny,1211,Budapest,Kossuth Lajos u. 69.,47.428632,19.069806,,True
+tesco-4055,Tesco,1211,Budapest,Kossuth Lajos u. 70.,47.4283638,19.0704021,,True
+dm-17,dm,1211,Budapest,Kossuth Lajos utca 89.,47.426,19.06987,,True
+spar-58,Spar,1211,Budapest,Kossuth L. u. 22,47.43509,19.07097,,True
+aldi-J101,Aldi,1211,Budapest,II. Rákóczi F. út 154-170.,47.423848,19.067829,,True
+aldi-J107,Aldi,1211,Budapest,Szent Imre tér 6-8.,47.4314,19.0673,,True
+rossmann-227,Rossmann,1212,Budapest,Görgey Artúr tér 20.,47.42383,19.07042,,True
+spar-8260,Spar,1212,Budapest,Görgey Artúr tér 20.,47.4236,19.07092,,True
+spar-59,Spar,1212,Budapest,Kikötő u. 8,47.42126,19.0873,,True
+spar-60,Spar,1214,Budapest,Szabadság 20,47.41117,19.06059,,True
+aldi-J159,Aldi,1214,Budapest,II. Rákóczi Ferenc u. 257.,47.404345,19.051666,,True
+tesco-1890,Tesco,1214,Budapest,II. Rákóczi Ferenc út 191.,47.4132195,19.0576496,,True
+spar-61,Spar,1214,Budapest,Csikó sétány 2,47.4081,19.07273,,True
+dm-384,dm,1214,Budapest,II. Rákóczi Ferenc utca 191.,47.4145499,19.0545999,,True
+spar-108,Spar,1214,Budapest XXI.,Kossuth Lajos u 160-164,47.41723,19.06396,,True
+auchan-108,Auchan,1214,Budapest,II. Rákóczi Ferenc utca 277.,47.401818,19.051058,,True
+lidl-287,Lidl,1215,Budapest,Ady Endre út 58.,47.43518,19.07516,Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+spar-62,Spar,1221,Budapest,Kossuth L. u. 41,47.4254,19.03897,,True
+tesco-4082,Tesco,1221,Budapest,Ady Endre u. 99,47.4408985,19.022021,,True
+dm-76,dm,1222,Budapest,Nagytétényi út 27-47.,47.4067895,19.0174905,,True
+aldi-J155,Aldi,1222,Budapest,Háros utca 11/B.,47.411126,19.025273,,True
+tesco-1710,Tesco,1222,Budapest,Nagytétényi utca 35.,47.4095497,19.0217934,,True
+rossmann-248,Rossmann,1222,Budapest,Háros utca 11/B.,47.41099,19.02561,,True
+rossmann-292,Rossmann,1222,Budapest,Nagytétényi út 37-43.,47.4066985,19.0169441,,True
+spar-118,Spar,1223,Budapest XXII.,Rákóczi u. 20/a,47.40702,19.00703,,True
+aldi-J050,Aldi,1225,Budapest,Nagytétényi út 145-147.,47.39944,19.00505,,True
+lidl-161,Lidl,1225,Budapest,Nagytétényi út 216-218.,47.39976,19.00418,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,True
+lidl-307,Lidl,1237,Budapest,Ciklámen u. 3.,47.41618,19.13102,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+rossmann-265,Rossmann,1237,Budapest,Bevásárló utca 2.,47.4189889,19.1578878,,True
+aldi-J054,Aldi,1239,Budapest,Haraszti út 32/b,47.38623,19.10965,,True
+lidl-282,Lidl,1239,Budapest,Haraszti út 34.,47.38596,19.1092,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,True
+dm-127,dm,1239,Budapest,Grassalkovich út 160.,47.39938,19.11436,,True
+auchan-003,Auchan,1239,Budapest,Bevásárló u. 2.,47.41882641,19.15766072,,True
+dm-340,dm,1239,Budapest,Bevásárló utca 4.,47.4149388,19.1598579,,True
+lidl-136,Lidl,2000,Szentendre,Dózsa Gy. út 20,47.65109,19.07169,Nyitvatartás: 06:30-22:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-461,dm,2000,Szentendre,Dobogókői út 6,47.6446,19.0638,,False
+aldi-J038,Aldi,2000,Szentendre,Kalászi út 2/a.,47.63928,19.06595,,False
+dm-123,dm,2000,Szentendre,Dunakanyar körút 2.,47.66176,19.0755,,False
+spar-8203,Spar,2000,Szentendre,Dobogókői u. 4.,47.646068,19.063413,,False
+spar-65,Spar,2000,Szentendre,Ady E. u. 24,47.679567,19.079427,,False
+spar-8266,Spar,2000,Szentendre,Dunakanyar krt. 2,47.66163,19.074124,,False
+rossmann-207,Rossmann,2000,Szentendre,Dózsa György út 20.,47.64986,19.06983,,False
+aldi-J079,Aldi,2011,Budakalász,Omszk park 4.,47.61426,19.06158,,False
+rossmann-354,Rossmann,2011,Budakalász,Omszk park 1. 1861/13.,47.6132,19.06136,,False
+auchan-023,Auchan,2011,Budakalász,Omszk park 1.,47.6126114,19.0610288,,False
+spar-185,Spar,2013,Pomáz,Huszár utca 25.,47.646047,19.020482,,False
+lidl-366,Lidl,2013,Pomáz,József Attila utca 32.,47.64274,19.0303,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-274,dm,2013,Pomáz,Huszár utca 25.,47.64582,19.02069,,False
+rossmann-208,Rossmann,2021,Tahitótfalu,Szentendrei út 5-15.,47.75134,19.07841,,False
+tesco-4040,Tesco,2022,Tahitótfalu,Szentendrei út 5-15.,47.751339,19.0782909,,False
+penny-37,Penny,2030,Érd,Budai út 24806/2. hrsz.,47.378057,18.935243,,False
+spar-66,Spar,2030,Érd,Tárnoki u.87,47.396,18.91161,,False
+lidl-280,Lidl,2030,Érd,Diósdi u. 2-4,47.37939,18.92316,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-206,Penny,2030,Érd,Bajcsy-Zs. út 133-135.,47.408587,18.888916,,False
+tesco-1970,Tesco,2030,Érd,Budafoki út 2-4.,47.378891,18.9383698,,False
+dm-367,dm,2030,Érd,Iparos utca 5.,47.4138281,18.8828425,,False
+spar-131,Spar,2030,Érd,Diósdi út 46.,47.38648,18.92498,,False
+lidl-225,Lidl,2030,Érd,Balatoni út 73-75.,47.3936,18.9369,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-173,dm,2030,Érd,Budai út 13.,47.3788232,18.9247769,,False
+spar-8236,Spar,2030,Érd,Iparos utca 5.,47.41378,18.88284,,False
+aldi-J022,Aldi,2030,Érd,Sulák utca 2.,47.37833,18.93978,,False
+rossmann-196,Rossmann,2030,Érd,Budai út 28.,47.37849,18.92574,,False
+dm-457,dm,2030,Érd,Budafoki út 2-4,47.37756,18.937662,,False
+aldi-J200,Aldi,2040,Budaörs,Építők útja 2-4.,47.455025,18.951207,,False
+rossmann-311,Rossmann,2040,Budaörs,Sport u 2-4 Auchan,47.45452,18.942,,False
+aldi-J156,Aldi,2040,Budaörs,Malomkő utca 3.,47.453309,18.971061,,False
+rossmann-260,Rossmann,2040,Budaörs,Kinizsi út 1-3.,47.44992,18.96458,,False
+dm-311,dm,2040,Budaörs,Malomkő utca 7.,47.45429,18.97466,,False
+dm-449,dm,2040,Budaörs,Károly király út 145.,47.451,18.9598,,False
+aldi-J003,Aldi,2040,Budaörs,Kandó Kálmán utca 2.,47.46361,18.89514,,False
+auchan-002,Auchan,2040,Budaörs,Sport u. 2 - 4.,47.4549639,18.9436305,,False
+lidl-349,Lidl,2040,Budaörs,Károly király út 145.,47.45094,18.96106,Nyitvatartás: 07:00-21:30#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1520,Tesco,2040,Budaörs,Kinizsi utca 1-3.,47.4492912,18.9629097,,False
+auchan-022,Auchan,2045,Törökbálint,Torbágy u. 1.,47.4410342,18.8878328,,False
+rossmann-264,Rossmann,2045,Törökbálint,Torbágy utca 1.,47.44085,18.88774,,False
+tesco-4090,Tesco,2045,Törökbálint,Bajcsy-Zsilinszky út 67,47.441021,18.9141903,,False
+dm-359,dm,2045,Törökbálint,Feketerét u. 2.,47.4511419,18.9036884,,False
+spar-195,Spar,2045,Törökbálint,Feketerét utca 2.,47.451274,18.903409,,False
+aldi-J033,Aldi,2045,Törökbálint,Süssen utca 1.,47.44477,18.88518,,False
+dm-243,dm,2049,Diósd,Balatoni út 2/a.,47.40415,18.94672,,False
+spar-8234,Spar,2049,Diósd,Balatoni út 2/a.,47.404122,18.946629,,False
+dm-351,dm,2051,Biatorbágy,Budaörsi út 4.,47.4647246,18.8882917,,False
+rossmann-302,Rossmann,2051,Biatorbágy,Csodaszarvas utca 4.,47.4727,18.83757,,False
+penny-151,Penny,2051,Biatorbágy,Csodaszarvas u. 1.,47.473382,18.836907,,False
+spar-223,Spar,2060,Bicske,Kossuth tér,47.491446,18.635526,,False
+dm-324,dm,2060,Bicske,Kossuth tér 1.,47.49131,18.63528,,False
+tesco-1049,Tesco,2060,Bicske,Csabdi út 4.,47.5012016,18.6287193,,False
+rossmann-339,Rossmann,2060,Bicske,Szent László u 49.,47.49728,18.63805,,False
+lidl-207,Lidl,2060,Bicske,Szent László utca 55.,47.49959,18.63165,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-315,Rossmann,2071,Páty,Somogyi Béla út 3.,47.50997,18.84499,,False
+tesco-4061,Tesco,2071,Páty,Rakoczi u. 11.,47.515416,18.8302,,False
+rossmann-293,Rossmann,2081,Piliscsaba,Fő út 49.,47.63197,18.83695,,False
+aldi-J008,Aldi,2081,Piliscsaba,Fő út 2.,47.62772,18.85223,,False
+aldi-J041,Aldi,2083,Solymár,Terstyánszky Ödön u. 128.,47.5985,18.92428,,False
+lidl-342,Lidl,2083,Solymár,Terstyánszky Ödön utca 89.,47.59598,18.93031,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-206,dm,2083,Solymár,Terstyánszky út 100.,47.59821,18.92808,,False
+spar-175,Spar,2083,Solymár,Terstyánszky u. 102.,47.597656,18.927234,,False
+auchan-012,Auchan,2083,Solymár,Szent Flórián u. 2 - 4.,47.597798,18.963376,,False
+rossmann-300,Rossmann,2083,Solymár,Terstyánszky Ödön utca 94.,47.5892196,18.9296062,,False
+dm-328,dm,2085,Pilisvörösvár,Fő út 33.,47.61832,18.91354,,False
+lidl-370,Lidl,2085,Pilisvörösvár,Budai út 18.,47.61372,18.92699,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-247,Penny,2085,Pilisvörösvár,Piliscsabai utca 1.,47.61649,18.89006,,False
+mueller-5231,Müller,2092,Budakeszi,Bianka utca 1,47.49985546,18.91710359,,False
+spar-69,Spar,2092,Budakeszi,Márity László út 20.,47.515927,18.922697,,False
+aldi-J002,Aldi,2092,Budakeszi,Szőlőskert utca 2.,47.50095,18.91858,,False
+dm-411,dm,2092,Budakeszi,Fő út 36.,47.5168937,18.9364805,,False
+lidl-350,Lidl,2092,Budakeszi,Kert utca 27-29.,47.50328,18.9219,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1037,Tesco,2092,Budakeszi,Bianka u. 1.,47.498455,18.914674,,False
+rossmann-299,Rossmann,2094,Nagykovácsi,Lenvirág park 1.,47.57876,18.88306,,False
+rossmann-268,Rossmann,2096,Üröm,Dózsa György út 36.,47.59035,19.01055,,False
+lidl-351,Lidl,2096,Üröm,Dózsa György út 63.,47.59069,19.01066,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-71,Spar,2100,Gödöllő,Kossuth L. u. 46-48,47.59845,19.34356,,False
+mueller-5230,Müller,2100,Gödöllő,Bossányi Krisztina utca 2,47.60768247,19.3392602,,False
+lidl-318,Lidl,2100,Gödöllő,Ottó Ferenc utca 2-4.,47.61127,19.33748,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1720,Tesco,2100,Gödöllő,Thegze Lajos utca 2.,47.6107712,19.3359947,,False
+dm-345,dm,2100,Gödöllő,Bossányi Krisztina u. 2.,47.60772,19.3393,,False
+rossmann-288,Rossmann,2100,Gödöllő,Dózsa György út 1127/4.,47.60817,19.33826,,False
+spar-180,Spar,2100,Gödöllő,Köztársaság út 85.,47.586191,19.373692,,False
+penny-65,Penny,2100,Gödöllő,Dózsa Gy. u. 90-92.,47.606704,19.340865,,False
+aldi-J091,Aldi,2100,Gödöllő,Bossányi Krisztina utca 4.,47.60843,19.34038,,False
+rossmann-362,Rossmann,2100,Gödöllő,Szabadság tér 1.,47.59802,19.34673,,False
+lidl-354,Lidl,2111,Szada,Dózsa György út 1/B,47.62403,19.32478,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-269,Rossmann,2111,Szada,Dózsa György út 1/b.,47.6233953,19.325017,,False
+dm-475,dm,2112,Veresegyház,Szadai út 7.,47.6486,19.2926,,False
+dm-396,dm,2112,Veresegyház,Erkel Ferenc tér 4.,47.6587159,19.2696037,,False
+lidl-361,Lidl,2112,Veresegyház,Szadai út 7.,47.64866,19.29255,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-72,Spar,2112,Veresegyház,Gödöllői u. 2/a,47.64981,19.29216,,False
+rossmann-239,Rossmann,2112,Veresegyház,Erkel Ferenc tér 1.,47.6590126,19.2680534,,False
+lidl-353,Lidl,2112,Veresegyház,Budapesti út 1.,47.6586,19.26899,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-192,Spar,2113,Erdőkertes,Béke utca 2.,47.667907,19.303738,,False
+tesco-4076,Tesco,2117,Isaszeg,Aulich u. 23.,47.5382996,19.3932495,,False
+dm-227,dm,2117,Isaszeg,Rákóczi út 21.,47.52976,19.3966,,False
+penny-257,Penny,2117,Isaszeg,Rákóczi u. 58.,47.527723,19.391119,,False
+penny-106,Penny,2119,Pécel,Ráday Gedeon tér 2.,47.491846,19.341878,,False
+rossmann-342,Rossmann,2119,Pécel,Ráday Gedeon tér 1.,47.49166,19.34272,,False
+lidl-202,Lidl,2120,Dunakeszi,Berek u. 2.,47.62312,19.12345,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-306,dm,2120,Dunakeszi,Fő út 190.,47.65558,19.12972,,False
+dm-200,dm,2120,Dunakeszi,Nádas utca 8.,47.60977,19.11937,,False
+auchan-004,Auchan,2120,Dunakeszi,Nádas u. 6.,47.60680105,19.11665511,,False
+spar-73,Spar,2120,Dunakeszi,Barátság útja 13,47.639582,19.124481,,False
+rossmann-120,Rossmann,2120,Dunakeszi,Cassalgrande tér 4.,47.64186,19.12665,,False
+aldi-J085,Aldi,2120,Dunakeszi,Pallag utca 68.,47.62201,19.12185,,False
+rossmann-370,Rossmann,2120,Dunakeszi,Pallag u. 11.,47.61129,19.11524,,False
+dm-101,dm,2120,Dunakeszi,Barátság utca 33.,47.64208,19.12641,,False
+spar-152,Spar,2120,Dunakeszi,Toldi M. u,47.63252,19.15443,,False
+tesco-1058,Tesco,2120,Dunakeszi,"Foti ut, 120.",47.6273117,19.1497898,,False
+penny-100,Penny,2120,Dunakeszi,Fő út 20-22.,47.631115,19.12842,,False
+tesco-1041,Tesco,2120,Dunakeszi,Fő út 190.,47.65485,19.1308002,,False
+spar-74,Spar,2131,Göd,Pesti u. 176,47.702195,19.13611,,False
+penny-114,Penny,2131,Göd,Kincsem utca 6.,47.69136,19.134198,,False
+auchan-009,Auchan,2141,Csömör,Határ út 6.,47.54127554,19.24331921,,False
+rossmann-252,Rossmann,2141,Csömör,Határ út 8.,47.5406689,19.2488369,,False
+spar-182,Spar,2143,Kistarcsa,Semmelweis tér 2,47.54091,19.25325,,False
+lidl-160,Lidl,2143,Kistarcsa,Szabadság útja 60,47.54961,19.26718,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-371,dm,2143,Kistarcsa,Semmelweis tér 2.,47.5408332,19.2535981,,False
+penny-135,Penny,2143,Kistarcsa,Szabadság út 56/K.,47.548626,19.266596,,False
+aldi-J117,Aldi,2144,Kerepes,Szabadság útja 1/e,47.55249,19.26895,,False
+auchan-016,Auchan,2151,Fót,Fehérkő út 1.,47.580981,19.161503,,False
+rossmann-322,Rossmann,2151,Fót,Móricz Zsigmond u. 23/a.,47.61802,19.19515,,False
+rossmann-262,Rossmann,2151,Fót,Fehérkő utca 1.,47.5810859,19.1649915,,False
+lidl-389,Lidl,2151,Fót,Keleti Márton utca,47.61403,19.17649,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J071,Aldi,2151,Fót,Fehérkő utca 5.,47.58033,19.15825,,False
+rossmann-323,Rossmann,2151,Dunaújváros,Dózsa György út 4/A,46.96423,18.93782,,False
+penny-176,Penny,2170,Aszód,Kossuth u. 45-49.,47.61367,19.564005,,False
+rossmann-172,Rossmann,2170,Aszód,Kossuth Lajos utca 15.,47.65115,19.47714,,False
+lidl-362,Lidl,2170,Aszód,Pesti út 14-16.,47.65108,19.47339,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-260,Penny,2194,Tura,Galgahévízi út 45.,47.616929,19.57755,,False
+dm-366,dm,2200,Monor,Ady Endre út. 1.,47.3521243,19.4446129,,False
+lidl-172,Lidl,2200,Monor,Gém utca 1.,47.34736,19.43267,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1043,Tesco,2200,Monor,4-es főút (HRSZ 0359/75),47.3567581,19.3967609,,False
+spar-75,Spar,2200,Monor,Ady Endre u. 57-59.,47.349019,19.434465,,False
+rossmann-184,Rossmann,2200,Monor,Kossuth Lajos utca 77.,47.35039,19.44632,,False
+penny-148,Penny,2200,Monor,Ady Endre u. 7.,47.352175,19.442472,,False
+aldi-J115,Aldi,2200,Monor,Ady Endre u. 3.,47.3521,19.4443,,False
+aldi-J073,Aldi,2220,Vecsés,Széchenyi utca 2.,47.40044,19.248995,,False
+penny-56,Penny,2220,Vecsés,Fő út 104-106.,47.409542,19.275001,,False
+dm-242,dm,2220,Vecsés,Fő út 246-248.,47.41631,19.24911,,False
+mueller-5216,Müller,2220,Vecsés,Fő út 246-248,47.41695926,19.2505973,,False
+tesco-1015,Tesco,2220,Vecsés,Fő út 246-248.,47.4158707,19.2500992,,False
+aldi-J246,Aldi,2220,Vecsés,Üllői út 829.,47.42243,19.23688,,False
+rossmann-317,Rossmann,2220,Vecsés,Üllői u. 829.,47.4226,19.23697,,False
+lidl-132,Lidl,2220,Vecsés,Fő u. 244,47.41618,19.25349,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-117,Penny,2225,Üllő,Ócsai út 2.,47.384549,19.344376,,False
+tesco-4017,Tesco,2225,Üllő,K-Sped krt. 2.,47.3788795,19.3519592,,False
+aldi-J144,Aldi,2225,Üllő,K-Sped krt. 368/129.,47.374455,19.364475,,False
+rossmann-360,Rossmann,2225,Üllő,Gyömrői út 83.,47.393661,19.366728,,False
+rossmann-142,Rossmann,2230,Gyömrő,Simon Mihály tér 5.,47.42638,19.3849,,False
+penny-256,Penny,2230,Gyömrő,Simon Mihály tér 3.,47.426295,19.385636,,False
+tesco-4028,Tesco,2230,Gyömrö,Mendei u. 2.,47.4166794,19.4060707,,False
+auchan-015,Auchan,2234,Maglód,Eszterházy János u. 1.,47.459205,19.332057,,False
+rossmann-261,Rossmann,2234,Maglód,Eszterházy János utca 1.,47.4591055,19.3347961,,False
+spar-149,Spar,2234,Maglód,Damjanich u. 29.,47.448423,19.36159,,False
+tesco-4035,Tesco,2241,Sülysáp,Szent Istvan ter 6.,47.4503899,19.5338707,,False
+lidl-145,Lidl,2300,Ráckeve,Lacházi út 26,47.16419,18.95178,Nyitvatartás: 07:00-22:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+rossmann-279,Rossmann,2300,Ráckeve,Kossuth Lajos utca 23.,47.161247,18.945416,,False
+penny-144,Penny,2300,Ráckeve,Móricz Zsigmond u. 3-7.,47.157996,18.943947,,False
+dm-402,dm,2300,Ráckeve,Szent István tér 1.,47.1589872,18.9454156,,False
+tesco-4014,Tesco,2300,Ráckeve,Kossuth Lajos u. 98-100.,47.1732903,18.9430408,,False
+spar-88,Spar,2310,Szigetszentmiklós,Gyári u.92.,47.333821,19.002291,,False
+aldi-J025,Aldi,2310,Szigetszentmiklós,Csepeli út 26.,47.36997,19.04733,,False
+spar-187,Spar,2310,Szigetszentmiklós,Szentmiklósi út 3528/49/A,47.338852,19.035248,,False
+aldi-J224,Aldi,2310,Szigetszentmiklós,Ifjúság útja 16.,47.34256,19.04049,,False
+auchan-220,Auchan,2310,Szigetszentmiklós,Belterület 12220 hrsz.,47.3778,19.0439,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 06:00-21:00,False
+rossmann-209,Rossmann,2310,Szigetszentmiklós,Apor Vilmos u. 1.,47.33358,19.00446,,False
+auchan-008,Auchan,2310,Szigetszentmiklós,Háros út 120.,47.3820126,19.0267413,,False
+penny-21,Penny,2310,Szigetszentmiklós,Bajcsy-Zs. u. 8.,47.343674,19.038334,,False
+lidl-175,Lidl,2310,Szigetszentmiklós,Csepeli út 16/a.,47.35584,19.04637,Nyitvatartás: 06:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-248,dm,2310,Szigetszentmiklós,Szent Miklós útja 7.,47.33891,19.03491,,False
+aldi-J006,Aldi,2314,Halásztelek,Korbuly utca 1.,47.37573,19.00308,,False
+spar-162,Spar,2314,Halásztelek,Rákóczi 94-96,47.36668,18.99261,,False
+penny-189,Penny,2315,Szigethalom,Mű út 5108 hrsz,47.328175,19.007841,,False
+spar-146,Spar,2315,Szigethalom,Mű út. 2340. hrsz,47.327859,19.007509,,False
+lidl-369,Lidl,2315,Szigethalom,Mű út 7.,47.32947,19.00575,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1030,Tesco,2316,Tököl,Hermina u. 1-3.,47.3384705,18.9982605,,False
+spar-139,Spar,2316,Tököl,Fő utca 88.,47.323191,18.963461,,False
+dm-298,dm,2316,Tököl,Hermina utca 3.,47.33807,18.9959,,False
+dm-170,dm,2330,Dunaharaszti,Baktay tér 5.,47.35475,19.09187,,False
+dm-279,dm,2330,Dunaharaszti,Alsónémedi út 69.,47.34442,19.11919,,False
+aldi-J035,Aldi,2330,Dunaharaszti,Jedlik Ányos utca 1.,47.34808,19.11853,,False
+rossmann-284,Rossmann,2330,Dunaharaszti,Némedi út 67.,47.345566,19.1184868,,False
+lidl-114,Lidl,2330,Dunaharaszti,Némedi út 102/A,47.34674,19.11881,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-79,Spar,2330,Dunaharaszti,Fő u.180-184.,47.351094,19.081417,,False
+tesco-1039,Tesco,2330,Dunaharaszti,Némedi út 69.,47.3493881,19.1067905,,False
+tesco-4077,Tesco,2330,Dunaharaszti,Fő út 56.,47.3495216,19.0552597,,False
+tesco-4027,Tesco,2340,Kiskunlacháza,Dózsa Gy. út 1/a.,47.18256,19.009227,,False
+penny-131,Penny,2351,Alsónémedi,Penny u. 2.,47.345151,19.157584,,False
+dm-389,dm,2360,Gyál,Vak Bottyán u. 68.,47.3871314,19.2144088,,False
+spar-82,Spar,2360,Gyál,Déryné u.1-3.,47.382072,19.213116,,False
+penny-179,Penny,2360,Gyál,Kőrösi u.- Mátyás  király u. 1.,47.390582,19.205134,,False
+tesco-4022,Tesco,2364,Ócsa,Kiss János u. 14.,47.2905998,19.2303505,,False
+spar-181,Spar,2364,Ócsa,Szabadság tér 1.,47.29296,19.22754,,False
+dm-299,dm,2364,Ócsa,Szabadság tér 3,47.29329,19.22729,,False
+aldi-J075,Aldi,2370,Dabas,Domb út 1.,47.1955,19.32109,,False
+spar-631,Spar,2370,Dabas,Bartók B. út 46.,47.18734,19.319975,,False
+penny-12,Penny,2370,Dabas,Pesti út 2.,47.1937,19.32533,,False
+rossmann-140,Rossmann,2370,Dabas,Bartók Béla út 46/b,47.18727,19.32009,,False
+lidl-383,Lidl,2370,Dabas,Bartók Béla út 93.,47.18778,19.3229,Nyitatartás: 06:30-21:00,False
+tesco-1022,Tesco,2370,Dabas,HRSZ 2256/15,47.165717,19.277528,,False
+mueller-5224,Müller,2400,Dunaújváros,Kandó Kálmán tér 11,46.96124829,18.90805099,,False
+lidl-230,Lidl,2400,Dunaújváros,Velinszky utca 1.,46.95905,18.94564,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-465,dm,2400,Dunaújváros,Kandó Kálmán tér 12.,46.9622,18.9059,,False
+rossmann-245,Rossmann,2400,Dunaújváros,Kenyérgyári út 2.,46.95901,18.93433,,False
+lidl-387,Lidl,2400,Dunaújváros,Magyar út 11.,46.97448,18.92757,Nyitvatartás: 06:30-21:00,False
+penny-162,Penny,2400,Dunaújváros,Kenyérgyári u. 2.,46.958661,18.933698,,False
+tesco-1700,Tesco,2400,Dunaújváros,Aranyvölgyi út 6.,46.977881,18.924576,,False
+spar-260,Spar,2400,Dunaújváros,Dózsa György u. 56,46.96262,18.93403,,False
+aldi-J044,Aldi,2400,Dunaújváros,Eszperantó út 4.,46.9564,18.9492,,False
+penny-103,Penny,2400,Dunaújváros,Baracsi út 5.,46.972664,18.928121,,False
+spar-8217,Spar,2400,Dunaújváros,Béke körút 2.,46.9608,18.91948,,False
+spar-230,Spar,2400,Dunaújváros,Vasmű út.,46.96093,18.94376,,False
+aldi-J032,Aldi,2400,Dunaújváros,Kandó Kálmán tér 10.,46.96039,18.90893,,False
+tesco-4069,Tesco,2400,Dunaújváros,Bercsényi Miklós utca 4,46.9670982,18.9309597,,False
+dm-31,dm,2400,Dunaújváros,Dózsa György utca 4/b.,46.96344,18.9364,,False
+rossmann-166,Rossmann,2440,Százhalombatta,Damjanich utca 16.,47.31999,18.90543,,False
+tesco-1840,Tesco,2440,Százhalombatta,Damjanich utca 29.,47.3144913,18.9162407,,False
+dm-240,dm,2440,Százhalombatta,Vörösmarty út 2.,47.32203,18.90091,,False
+spar-159,Spar,2440,Százhalombatta,Vörösmarty u 2.,47.322287,18.901269,,False
+rossmann-336,Rossmann,2462,Martonvásár,Dózsa György út 6-10.,47.31421,18.78798,,False
+tesco-4089,Tesco,2462,Martonvásár,Ady Endre u. 6,47.3196592,18.7888364,,False
+rossmann-226,Rossmann,2481,Velence,Tópart út 47.,47.2337115,18.6599796,,False
+spar-234,Spar,2481,Velence,Tópart u 47.,47.2344891,18.6594231,,False
+penny-94,Penny,2483,Gárdony,Szabadság út 2400/2.,47.208839,18.631168,,False
+dm-316,dm,2483,Gárdony,Szabadság út 10.,47.20756,18.62923,,False
+aldi-J005,Aldi,2484,Gárdony,Szabadság út 21.,47.20206,18.61846,,False
+lidl-306,Lidl,2484,Agárd,Akácfa utca 2.,47.19876,18.61113,Nyitvatartás: 07:00-22:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+lidl-321,Lidl,2500,Esztergom,Dobogókői út 39.,47.77414,18.75485,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1630,Tesco,2500,Esztergom,Mátyás király utca 30.,47.7787285,18.7480793,,False
+rossmann-55,Rossmann,2500,Esztergom,Petőfi Sándor utca 2.,47.79373,18.74244,,False
+mueller-5211,Müller,2500,Esztergom,Dobogókői út 84,47.7732593,18.7557465,,False
+lidl-148,Lidl,2500,Esztergom,Bánomi út 10.,47.80327,18.75317,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-203,dm,2500,Esztergom,Rákóczi Ferenc tér 4.,47.79366,18.74224,,False
+aldi-J004,Aldi,2500,Esztergom,Dobogókői utca 86.,47.7744,18.75543,,False
+spar-360,Spar,2509,Esztergom,Damjanich János út 2.,47.74826,18.73103,,False
+rossmann-115,Rossmann,2510,Dorog,Bécsi út 57.,47.71916,18.73034,,False
+penny-49,Penny,2510,Dorog,Bécsi út 86.,47.719862,18.727195,,False
+tesco-4018,Tesco,2510,Dorog,Eötvös József u. 39.,47.78582,18.7355499,,False
+spar-320,Spar,2510,Dorog,Bányász körönd 1737/16. hrsz,47.72995,18.726,,False
+lidl-270,Lidl,2510,Dorog,Bányász körönd 1737/16. hrsz,47.72889,18.72779,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-344,dm,2510,Dorog,Ella köz 5.,47.72081,18.72927,,False
+aldi-J184,Aldi,2534,Tát,Bécsi út 35-36.,47.738474,18.660641,,False
+rossmann-276,Rossmann,2534,Tát,Bécsi út 35-36.,47.7384414,18.6606408,,False
+rossmann-334,Rossmann,2536,Nyergesújfalu,Május 1 tér 2.,47.7572,18.56696,,False
+spar-361,Spar,2536,Nyergesújfalu,Kossuth u. 1439/6 hrsz.,47.75937,18.56472,,False
+dm-436,dm,2600,Vác,Balassagyarmati út 9-15.,47.7928,19.1167,,False
+lidl-279,Lidl,2600,Vác,Naszály utca 20.,47.78753,19.13241,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-307,dm,2600,Vác,Deres utca 2.,47.7551812,19.1455689,,False
+lidl-367,Lidl,2600,Vác,Balassagyarmati út 9-15.,47.79244,19.11617,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-33,dm,2600,Vác,Széchenyi utca 15-17.,47.77961,19.12954,,False
+rossmann-337,Rossmann,2600,Vác,Kodály Zoltán út 2.,47.79188,19.11711,,False
+spar-84,Spar,2600,Vác,Gombási u.7,47.795,19.13265,,False
+rossmann-95,Rossmann,2600,Vác,Széchenyi út 3-7.,47.77894,19.12894,,False
+spar-8267,Spar,2600,Vác,Avar u. 6.,47.768905,19.140925,,False
+lidl-178,Lidl,2600,Vác,Bolgár u. 1.,47.76211,19.14148,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J070,Aldi,2600,Vác,Gödöllői út 2.,47.76375,19.14247,,False
+tesco-1047,Tesco,2600,Vác,Deres út 2.,47.8276901,19.1001701,,False
+penny-76,Penny,2660,Balassagyarmat,Kóvári út 12.,48.074522,19.283053,,False
+aldi-J249,Aldi,2660,Balassagyarmat,Rákóczi fejedelem út 56.,48.08057,19.29941,,False
+tesco-1019,Tesco,2660,Balassagyarmat,Mikszáth Kálmán u. 56.,48.0848808,19.2992191,,False
+rossmann-34,Rossmann,2660,Balassagyarmat,Rákóczi fejedelem út 34-36.,48.07919,19.29451,,False
+spar-810,Spar,2660,Balassagyarmat,Mikszáth K. u. 14,48.080688,19.297245,,False
+dm-439,dm,2660,Balassagyarmat,Mikszáth Kálmán utca 54.,48.0841919,19.300338,,False
+lidl-199,Lidl,2660,Balassagyarmat,Kóvári út 8,48.07319,19.28208,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-300,dm,2700,Cegléd,Kossuth Ferenc utca 6.,47.17207,19.79677,,False
+rossmann-251,Rossmann,2700,Cegléd,Kőrösi út 38.,47.1636,19.79477,,False
+tesco-1680,Tesco,2700,Cegléd,Malomtó szél utca 29-30.,47.1819916,19.7987404,,False
+aldi-J142,Aldi,2700,Cegléd,Mozdony u. 2.,47.18244,19.80189,,False
+lidl-108,Lidl,2700,Cegléd,Törteli út 2.,47.1732,19.8159,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J090,Aldi,2700,Cegléd,Pesti út 93.,47.17774,19.77475,,False
+penny-52,Penny,2700,Cegléd,Malomtószél 27.,47.18266,19.799175,,False
+spar-620,Spar,2700,Cegléd,Kossuth F. u.9.,47.178803,19.800078,,False
+rossmann-355,Rossmann,2700,Cegléd,Szolnoki út,47.17495,19.81762,,False
+penny-264,Penny,2700,Cegléd,Kőrösi út 38.,47.163728,19.795173,,False
+tesco-4023,Tesco,2721,Pilis,Kossuth Lajos u. 2/H.,47.2883797,19.5431404,,False
+rossmann-175,Rossmann,2721,Pilis,Rákóczi út 19.,47.28449,19.54469,,False
+penny-93,Penny,2721,Pilis,Szabadság tér 3.,47.286703,19.547925,,False
+tesco-4031,Tesco,2730,Albertirsa,Vasut utca 4/13.,47.245327,19.612755,,False
+penny-238,Penny,2730,Albertirsa,Pesti út 112-118.,47.251913,19.603679,,False
+dm-244,dm,2730,Albertirsa,Vasút utca 4-11.,47.24392,19.61224,,False
+penny-85,Penny,2740,Abony,Gaál Miklós u. 1-3.,47.189904,20.007769,,False
+rossmann-96,Rossmann,2740,Abony,Kossuth Lajos tér 4.,47.189123,20.0046319,,False
+spar-85,Spar,2740,Abony,Ceglédi u. 8,47.188371,20.001297647,,False
+tesco-1010,Tesco,2750,Nagykőrös,Ceglédi u. 28.,47.04701,19.782611,,False
+spar-645,Spar,2750,Nagykőrös,Ceglédi út 14,47.03902,19.783931,,False
+lidl-212,Lidl,2750,Nagykőrös,Kecskeméti út 73.,47.0206,19.77499,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-7,Penny,2750,Nagykőrös,Kecskeméti u. 86.,47.020347,19.775583,,False
+aldi-J126,Aldi,2750,Nagykőrös,Kossuth Lajos út 49-51.,47.034724,19.768256,,False
+dm-455,dm,2751,Nagykőrös,Kecskeméti út 88.,47.0227,19.7767,,False
+dm-435,dm,2760,Nagykáta,Jászberényi út 1/F.,47.419259,19.755103,,False
+lidl-265,Lidl,2760,Nagykáta,Dózsa György u. 16.,47.41566,19.73933,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-139,Penny,2760,Nagykáta,Ady Endre u. 45-49.,47.41912,19.740902,,False
+rossmann-117,Rossmann,2760,Nagykáta,István király út 1.,47.41757,19.7407,,False
+aldi-J236,Aldi,2760,Nagykáta,"Nagykáta külterület, 0457/33 hrsz",47.419424898026726,19.754823662548873,,False
+penny-8,Penny,2800,Tatabánya,Győri út 35.,47.593979,18.388204,,False
+spar-322,Spar,2800,Tatabánya,Szent Borbála út 33/1,47.560119,18.411607,,False
+spar-321,Spar,2800,Tatabánya,Gál ltp. 301.,47.561673,18.41909,,False
+spar-319,Spar,2800,Tatabánya,Szt. György u. 48.,47.590299,18.368664,,False
+spar-318,Spar,2800,Tatabánya,Sárberki ltp. 514,47.573608,18.40567,,False
+spar-308,Spar,2800,Tatabánya,Vadász út 28.,47.58415,18.388051,,False
+spar-307,Spar,2800,Tatabánya,Béla király krt. 67.,47.583829,18.401159,,False
+lidl-189,Lidl,2800,Tatabánya,Szent Borbála út 31.,47.55974,18.41245,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-229,Lidl,2800,Tatabánya,Győri út 31.,47.59284,18.3891,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-356,dm,2800,Tatabánya,Győri út 7-9.,47.5867214,18.3940868,,False
+spar-8213,Spar,2800,Tatabánya,Győri u. 25.,47.591261,18.390463,,False
+dm-249,dm,2800,Tatabánya,Vadász út 34.,47.58359,18.3878,,False
+mueller-5217,Müller,2800,Tatabánya,Szent Borbála út 33/3,47.55939567,18.41421896,,False
+spar-362,Spar,2800,Tatabánya,Dózsa u. 28.,47.577552,18.388174,,False
+penny-34,Penny,2800,Tatabánya,Ságvári Endre út 2119/189 hrsz.,47.562892,18.409005,,False
+aldi-J230,Aldi,2800,Tatabánya,Köztársaság útja 1/F,47.582907,18.396607,,False
+rossmann-340,Rossmann,2800,Tatabánya,Győri u. 25.,47.59125,18.38948,,False
+tesco-1590,Tesco,2800,Tatabánya,Bláthy Ottó utca 1.,47.5703888,18.4112606,,False
+penny-266,Penny,2800,Tatabánya,Petőfi S. u. 82.,47.590035,18.370155,,False
+rossmann-217,Rossmann,2800,Tatabánya,Fő tér 10.,47.58468,18.39848,,False
+aldi-J020,Aldi,2800,Tatabánya,Szent Borbála út 35.,47.56131,18.40967,,False
+spar-364,Spar,2800,Tatabánya,Fő tér 10,47.584502,18.398574,,False
+rossmann-244,Rossmann,2837,Vértesszőlős,Határ út 1-3.,47.60339,18.38706,,False
+spar-316,Spar,2840,Oroszlány,Népek B. u. 35.,47.491307,18.316247,,False
+tesco-1018,Tesco,2840,Oroszlány,Környei út 3-5.,47.493811,18.321056,,False
+penny-32,Penny,2840,Oroszlány,Takács I. u. 1/a,47.493564,18.319881,,False
+lidl-152,Lidl,2840,Oroszlány,Környei u. 2.,47.49414,18.32244,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-425,dm,2840,Oroszlány,Környei út 1/A,47.4939434,18.3207906,,False
+rossmann-156,Rossmann,2870,Kisbér,Városház tér 1.,47.50066,18.02598,,False
+penny-156,Penny,2870,Kisbér,Városház tér 1600/20 hrsz,47.500743,18.026719,,False
+spar-323,Spar,2870,Kisbér,Kossuth u. 4/6,47.502542,18.026037,,False
+dm-397,dm,2890,Tata,Május 1. út 33.,47.6511431,18.3135117,,False
+spar-317,Spar,2890,Tata,Ady E. u. 20.,47.65007,18.326365,,False
+penny-33,Penny,2890,Tata,Keszthelyi u. 1440/9 hrsz.,47.648654,18.315502,,False
+spar-306,Spar,2890,Tata,Rákóczi F. u. 9.,47.644988,18.315519,,False
+tesco-1011,Tesco,2890,Tata,Ring utca 1.,47.6292992,18.3113308,,False
+rossmann-97,Rossmann,2890,Tata,Ady Endre út 3.,47.651219,18.324777,,False
+spar-8232,Spar,2890,Tata,Május 1. út 33.,47.6505719,18.3163059,,False
+lidl-208,Lidl,2890,Tata,Piac tér  8.,47.6521,18.31761,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-444,dm,2900,Komárom,Várfal u. 3,47.7389,18.139,,False
+penny-6,Penny,2900,Komárom,Mártírok u. 84.,47.738237,18.141512,,False
+tesco-1800,Tesco,2900,Komárom,Bajcsy-Zsilinszky Endre u.7.,47.7464104,18.1181602,,False
+rossmann-153,Rossmann,2900,Komló,Kossuth Lajos utca 87.,46.19263,18.25675,,False
+dm-347,dm,2900,Komárom,Klapka György út 1-3.,47.74372,18.11845,,False
+spar-367,Spar,2900,Komárom,Klapka György u. 8/a,47.743886,18.11725,,False
+lidl-168,Lidl,2900,Komárom,Mártírok útja 80.,47.73815,18.13826,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-374,Rossmann,2900,Komárom,Táncsics Mihály u. 54.,47.74271,18.13355,,False
+spar-311,Spar,2900,Komárom,Klapka György u. 69.,47.746884,18.110058,,False
+rossmann-98,Rossmann,2900,Komárom,Igmándi út 14.,47.74522,18.1195,,False
+penny-218,Penny,2941,Ács,Zúgó u. 2.,47.711968,18.017339,,False
+dm-146,dm,3000,Hatvan,Kossuth tér 18.,47.66709,19.68207,,False
+aldi-J086,Aldi,3000,Hatvan,Bibó István utca 3.,47.67689,19.66564,,False
+spar-868,Spar,3000,Hatvan,Nádasdy Tamás u. 2,47.66886,19.688538,,False
+tesco-1024,Tesco,3000,Hatvan,"Bibó István út 1,",47.6768913,19.6672001,,False
+lidl-102,Lidl,3000,Hatvan,Radnóti tér 19.,47.66916,19.67326,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+mueller-5219,Müller,3000,Hatvan,Bibó István utca 3,47.6782476,19.66528535,,False
+penny-35,Penny,3000,Hatvan,Horváth Mihály u. 68-72.,47.666925,19.695683,,False
+rossmann-89,Rossmann,3000,Hatvan,Grassalkovich út 3-5.,47.66828,19.68022,,False
+penny-157,Penny,3060,Pásztó,Gyárliget u. 1.,47.91978,19.69915,,False
+rossmann-102,Rossmann,3060,Pásztó,Fő út 73.,47.91964,19.69826,,False
+spar-873,Spar,3060,Pásztó,Fő u. 83-87,47.920592,19.700413,,False
+rossmann-181,Rossmann,3070,Bátonyterenye,Városház út 3.,47.99213,19.82988,,False
+lidl-203,Lidl,3070,Bátonyterenye,Berekgát köz 2.,48.00427,19.82438,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-147,Penny,3070,Bátonyterenye,Kossuth út 8.,47.989648,19.828341,,False
+spar-807,Spar,3100,Salgótarján,Bem u. 14-16.,48.103527,19.802265,,False
+spar-814,Spar,3100,Salgótarján,Füleki út.203.,48.130494,19.812954,,False
+tesco-1760,Tesco,3100,Salgótarján,Rákóczi út 143.,48.0785103,19.7920609,,False
+dm-149,dm,3100,Salgótarján,Rákóczi út 15.,48.10589,19.8089,,False
+dm-151,dm,3100,Salgótarján,Bem József utca 14.,48.1036,19.80218,,False
+spar-875,Spar,3100,Salgótarján,Budapesti u. 57,48.07547,19.785053,,False
+rossmann-237,Rossmann,3100,Salgótarján,Fõ tér 4.,48.10529,19.80807,,False
+penny-108,Penny,3100,Salgótarján,Bem u. 7.,48.104268,19.801888,,False
+lidl-314,Lidl,3104,Salgótarján,Csokonai út 23.,48.07728,19.79042,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-344,Rossmann,3170,Szécsény,Rákóczi út 95.,48.08156,19.5202,,False
+spar-876,Spar,3170,Szécsény,Rákóczi u. 112,48.0813058,19.5146894,,False
+penny-197,Penny,3170,Szécsény,Sas u. 3.,48.079376,19.520653,,False
+spar-804,Spar,3200,Gyöngyös,Dobó út 5.,47.788794,19.936953,,False
+penny-70,Penny,3200,Gyöngyös,Gyöngyvirág u. 2.,47.775163,19.931149,,False
+rossmann-139,Rossmann,3200,Gyöngyös,Kossuth Lajos út 27.,47.7847242,19.930313,,False
+tesco-1730,Tesco,3200,Gyöngyös,Vásár utca 2.,47.767849,19.9188404,,False
+lidl-223,Lidl,3200,Gyöngyös,Budai Nagy Antal tér 10.,47.77668,19.92822,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-431,dm,3200,Gyöngyös,Páter Kiss Szaléz utca 22.,47.7826999,19.9278001,,False
+spar-869,Spar,3200,Gyöngyös,Jókai u. 57,47.778183,19.922407,,False
+dm-296,dm,3200,Gyöngyös,Vásár utca 2.,47.76943,19.91317,,False
+rossmann-358,Rossmann,3300,Eger,Farkasvölgy u. 9-15.,47.89057,20.37794,,False
+dm-38,dm,3300,Eger,Sas utca 1.,47.88991,20.38116,,False
+rossmann-18,Rossmann,3300,Eger,Katona tér 1-3.,47.90345,20.37421,,False
+dm-253,dm,3300,Eger,Törvényház utca 4.,47.9007057,20.3680731,,False
+tesco-1490,Tesco,3300,Eger,Rakóczi út 100.,47.925091,20.37046,,False
+penny-75,Penny,3300,Eger,II. Rákóczi Ferenc u. 96.,47.922607,20.370019,,False
+spar-870,Spar,3300,Eger,Barkóczy u. 6,47.901521,20.370856,,False
+aldi-J243,Aldi,3300,Eger,Mátyás király út 138.,47.871838,20.382522,,False
+tesco-4032,Tesco,3300,Eger,Torvenyhaz u. 4,47.8992157,20.3689213,,False
+aldi-J206,Aldi,3300,Eger,II. Rákóczi Ferenc utca 90.,47.92153,20.369922,,False
+lidl-150,Lidl,3300,Eger,II. Rákóczi Ferenc u. 141.,47.92572,20.36782,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-821,Spar,3300,Eger,Dobó István tér 1.,47.902306,20.376034,,False
+penny-187,Penny,3300,Eger,Mátyás király út 139.,47.874775,20.382974,,False
+rossmann-328,Rossmann,3300,Eger,II. Rákóczi F. u. 100,47.92513,20.37042,,False
+lidl-309,Lidl,3300,Eger,Mátyás király út 144.,47.87038,20.38027,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-413,dm,3300,Eger,Cifrakapu u. 164.,47.9221603,20.370855,,False
+dm-320,dm,3300,Eger,Dobó tér 1.,47.90275,20.37604,,False
+spar-802,Spar,3300,Eger,Sas u. 1.,47.889863,20.381586,,False
+rossmann-121,Rossmann,3360,Heves,Hősök tere 15.,47.59549,20.28868,,False
+lidl-286,Lidl,3360,Heves,Kolozsvári út 2/A.,47.59181,20.28058,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-817,Spar,3360,Heves,Fő út 48.,47.593145,20.281186,,False
+penny-54,Penny,3360,Heves,Szerelem Alfréd u. 7-9.,47.597344,20.28842,,False
+penny-270,Penny,3390,Füzesabony,Arany J. u. 18.,47.7515,20.420176,,False
+spar-871,Spar,3390,Füzesabony,Hunyadi János u. 4/2,47.739677,20.408649,,False
+rossmann-194,Rossmann,3390,Füzesabony,Rákóczi Ferenc út 52.,47.74942,20.41729,,False
+dm-377,dm,3400,Mezőkövesd,Mátyás király út 60-64.,47.8077253,20.5662867,,False
+spar-641,Spar,3400,Mezőkövesd,Egri út 1.,47.80694,20.561637,,False
+tesco-1001,Tesco,3400,Mezőkövesd,Egri utca 51.,47.8089294,20.5504398,,False
+lidl-201,Lidl,3400,Mezőkövesd,Dohány út 2/A.,47.80032,20.56876,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-299,Penny,3400,Mezőkövesd,Mátyás Király u. 199.,47.809945,20.570945,,False
+rossmann-376,Rossmann,3400,Mezőkövesd,Kölcsey út 70.,47.80926,20.55353,,False
+aldi-J244,Aldi,3503,Miskolc,Nagyváthy János u. 2.,48.10343,20.76444,,False
+dm-459,dm,3508,Miskolc,Mésztelep utca 1/A.,48.07327,20.77839,,False
+rossmann-368,Rossmann,3516,Miskolc,Pesti út 15.,48.0541,20.798246,,False
+auchan-021,Auchan,3516,Miskolc,Pesti út 9.,48.057349,20.802603,,False
+lidl-185,Lidl,3516,Miskolc,Pesti út 5.,48.05966,20.79626,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J083,Aldi,3516,Miskolc,Forrás utca 5.,48.05444,20.80006,,False
+mueller-5203,Müller,3516,Miskolc,Pesti út 19,48.0556484,20.80092925,,False
+spar-861,Spar,3524,Miskolc,Klapka Gy. u. 9-11,48.0874,20.77384,,False
+penny-30,Penny,3525,Miskolc,Ilona u.1.,48.105685,20.77072,,False
+tesco-1020,Tesco,3525,Miskolc,Mesztelep u. 1/a,48.0718613,20.7844105,,False
+spar-8268,Spar,3525,Miskolc,Széchenyi u. 111.,48.10248,20.78852,,False
+mueller-5202,Müller,3525,Miskolc,Szentpéteri kapu 80,48.12791752,20.78537589,,False
+aldi-J240,Aldi,3525,Miskolc,Szentpáli u. 2-6,48.1047207422337,20.788956640599057,,False
+rossmann-348,Rossmann,3525,MIskolc,Szentpáli út 2-6.,48.10485,20.78867,,False
+rossmann-303,Rossmann,3525,MIskolc,Széchenyi István utca 24.,48.1026,20.78336,,False
+spar-862,Spar,3525,Miskolc,Széchenyi István u.7,48.1028,20.78093,,False
+tesco-4052,Tesco,3526,Miskolc,Arany János tér 1.,48.107811,20.7872696,,False
+tesco-4060,Tesco,3526,Miskolc,Széchenyi út 29.,48.1026802,20.7846394,,False
+dm-368,dm,3526,Miskolc,Szentpéteri kapu 103.,48.1260498,20.7828295,,False
+tesco-1450,Tesco,3526,Miskolc,Szentpéteri kapu 103.,48.1246109,20.7854309,,False
+lidl-380,Lidl,3527,Miskolc,József Attila utca 74.,48.10615,20.82064,Nyitva tartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+auchan-014,Auchan,3527,Miskolc,József Attila u. 87.,48.1093167,20.8360229,,False
+dm-376,dm,3527,Miskolc,József Attila utca 87.,48.1085373,20.8361739,,False
+rossmann-233,Rossmann,3527,Miskolc,Széchenyi István út 111.,48.1031143,20.7902323,,False
+penny-31,Penny,3527,Miskolc,"Soltész Nagy Kálmán utca, Hrsz.: 40271/11.",48.081827,20.785789,,False
+spar-8212,Spar,3527,Miskolc,Bajcsy-Zs. u. 2-4.,48.10268,20.79223,,False
+spar-805,Spar,3529,Miskolc,Fényi Gyula tér,48.08345,20.77688,,False
+rossmann-30,Rossmann,3529,Miskolc,Szentgyörgy út 21.,48.08196,20.77857,,False
+spar-863,Spar,3530,Miskolc,Király u. 7/a,48.09969,20.79243,,False
+dm-145,dm,3530,Miskolc,Bajcsy-Zsilinszky utca 2-4.,48.1027787,20.7923522,,False
+dm-357,dm,3530,Miskolc,Andrássy Gyula utca 32.,48.1021476,20.7312838,,False
+rossmann-357,Rossmann,3531,MIskolc,Kiss Ernő u. 13.,48.10061,20.74749,,False
+aldi-J072,Aldi,3531,Miskolc,Kiss Ernő utca 13/A,48.10008,20.74727,,False
+lidl-215,Lidl,3531,Miskolc,Kiss Ernő u. 13/b.,48.09986,20.74546,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-864,Spar,3532,Miskolc,Újgyőri főtér 32,48.10177,20.73126,,False
+penny-81,Penny,3532,Miskolc,Andrássy utca 65.,48.100069,20.714601,,False
+lidl-166,Lidl,3533,Miskolc,Csermőkei út 207.,48.07736,20.77295,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-88,Rossmann,3580,Tiszaújváros,Szent István út 15.,47.93146,21.03398,,False
+tesco-1860,Tesco,3580,Tiszaújváros,Örösi út 1/A.,47.9318008,21.0261497,,False
+spar-812,Spar,3580,Tiszaújváros,Lévai u. 2.,47.933164,21.046637,,False
+dm-238,dm,3580,Tiszaújváros,Mátyás király út 3.,47.9303066,21.0303967,,False
+lidl-281,Lidl,3580,Tiszaújváros,Lévay u. 118.,47.93708,21.0279,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-66,Penny,3580,Tiszaújváros,Lévai József u. 62.,47.935683,21.038503,,False
+lidl-190,Lidl,3600,Ózd,Sárli út 2.,48.22067,20.2798,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-330,Rossmann,3600,Ózd,Sárli u. 4.,48.22236,20.2809,,False
+aldi-J143,Aldi,3600,Ózd,Jászi Oszkár u. 4.,48.220712,20.289407,,False
+penny-86,Penny,3600,Ózd,Zrínyi Miklós út 14.,48.218075,20.26914,,False
+spar-8229,Spar,3600,Ózd,Sárli út 4.,48.22172,20.28103,,False
+dm-458,dm,3600,Ózd,Sárli u. 1.,48.2200906,20.2787507,,False
+tesco-1002,Tesco,3600,Ózd,Brassói út 3.,48.2227974,20.2757492,,False
+spar-809,Spar,3700,Kazincbarcika,Egressy u. 1/a,48.24558,20.61528,,False
+aldi-J078,Aldi,3700,Kazincbarcika,Hadak útja 9.,48.25904,20.62205,,False
+dm-414,dm,3700,Kazincbarcika,Hadak útja 11.,48.259131,20.6208691,,False
+rossmann-74,Rossmann,3700,Kazincbarcika,Fő tér 2.,48.25338,20.62767,,False
+penny-73,Penny,3700,Kazincbarcika,Tóth Árpád utca 1.,48.255493,20.625156,,False
+spar-820,Spar,3700,Kazincbarcika,Mátyás kir. u. 58,48.25211,20.62966,,False
+tesco-1006,Tesco,3700,Kazincbarcika,Attila u. 10/B.,48.2599983,20.61693,,False
+lidl-142,Lidl,3700,Kazincbarcika,Mátyás király út 34/A.,48.24743,20.62312,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-866,Spar,3770,Sajószentpéter,Kossuth L. u. 96,48.216286,20.721617,,False
+rossmann-131,Rossmann,3770,Sajószentpéter,Kossuth Lajos út 222.,48.219971,20.705821,,False
+penny-92,Penny,3770,Sajószentpéter,Kossuth Lajos út 190-194,48.219165,20.709553,,False
+penny-153,Penny,3780,Edelény,Borsodi út 9/A.,48.296155,20.74232,,False
+penny-212,Penny,3800,Szikszó,Kassai út 15.,48.197748,20.93074,,False
+penny-272,Penny,3860,Encs,Petőfi S. u. 87.,48.335432,21.10964,,False
+spar-818,Spar,3860,Encs,Petőfi út 66.,48.33321,21.11091,,False
+tesco-1036,Tesco,3900,Szerencs,Gyár u. 40.,48.1582985,21.2041798,,False
+dm-295,dm,3900,Szerencs,Gyár utca 40.,48.15356,21.19246,,False
+rossmann-313,Rossmann,3900,Szerencs,Gyár út 39.,48.15592,21.2008,,False
+lidl-252,Lidl,3900,Szerencs,Csalogány út 58.,48.15465,21.19514,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-158,Penny,3900,Szerencs,Rákóczi u. 115.,48.160315,21.208219,,False
+spar-808,Spar,3900,Szerencs,Gyár. u. 2.,48.16188,21.20893,,False
+rossmann-356,Rossmann,3910,Tokaj,Bajcsy-Zsilinszky Endre út 10/a.,48.11703,21.41164,,False
+penny-178,Penny,3910,Tokaj,Bajcsy-Zsilinszky Endre út  8-10.,48.116857,21.411272,,False
+spar-813,Spar,3950,Sárospatak,Wesselényi út 34/A.,48.32908,21.55862,,False
+penny-152,Penny,3950,Sárospatak,Wesselényi út 32.,48.328236,21.559271,,False
+penny-118,Penny,3980,Sátoraljaújhely,Rákóczi Ferenc út 50.,48.398995,21.660441,,False
+dm-250,dm,3980,Sátoraljaújhely,Kazinczy Ferenc út 156.,48.41353,21.6488,,False
+tesco-1007,Tesco,3980,Sátoraljaújhely,Kazinczy Ferenc utca 105.,48.4154816,21.6453495,,False
+lidl-233,Lidl,3980,Sátoraljaújhely,Esze Tamás u. 92.,48.388,21.65485,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J141,Aldi,3980,Sátoraljaújhely,Kazinczy u. 156.,48.413531,21.648114,,False
+tesco-4081,Tesco,4000,Debrecen,Piac u. 16.,47.5302887,21.6251602,,False
+lidl-344,Lidl,4002,Debrecen,Balmazújvárosi út 7.,47.54261,21.59573,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-338,Rossmann,4024,Debrecen,Piac u. 1.,47.53115,21.6236,,False
+rossmann-1,Rossmann,4024,Debrecen,Jerikó utca 3.,47.5426612,21.6139202,,False
+rossmann-107,Rossmann,4024,Debrecen,Kossuth utca 1.,47.52901,21.6259,,False
+spar-916,Spar,4024,Debrecen,Fórum Üzletház Csapó u 30,47.53423,21.62685,,False
+dm-277,dm,4024,Debrecen,Csapó utca 30.,47.5326399,21.628941,,False
+dm-120,dm,4026,Debrecen,Péterfia utca 18.,47.5348922,21.625441,,False
+aldi-J128,Aldi,4026,Debrecen,Péterfia utca 18.,47.534849,21.625606,,False
+penny-249,Penny,4026,Debrecen,Péterfia u. 13-19.,47.53485,21.626412,,False
+aldi-J234,Aldi,4027,Debrecen,Dózsa György utca 20.,47.541004,21.616533,,False
+spar-8206,Spar,4027,Debrecen,Füredi u. 27.,47.54167,21.61981,,False
+rossmann-218,Rossmann,4029,Debrecen,Csapó utca 30.,47.53299,21.63032,,False
+aldi-J139,Aldi,4030,Debrecen,Vágóhíd utca 7.,47.521543023451514,21.651213095968885,,False
+tesco-1990,Tesco,4030,Debrecen,Mikepércsi út. 73a,47.5081596,21.6301899,,False
+aldi-J092,Aldi,4030,Debrecen,Ozmán utca 1.,47.49576,21.63222,,False
+spar-918,Spar,4030,Debrecen,Somlyai út 1-3.,47.50322,21.63113,,False
+rossmann-308,Rossmann,4030,Debrecen,Mikepércsi út 168.,47.494597,21.633881,,False
+spar-5230,Spar,4030,Debrecen,Mikerpécsi út 6.,47.5142414,21.6257175,,False
+spar-8223,Spar,4030,Debrecen,Mikepércsi u. 6.,47.51465,21.62951,,False
+lidl-376,Lidl,4030,Debrecen,Mikepércsi út  168.,47.49463,21.63246,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-379,Lidl,4030,Debrecen,Monostorpályi út,47.51665,21.63177,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+auchan-020,Auchan,4031,Debrecen,Kishatár út 7.,47.5403259,21.5836198,,False
+tesco-1460,Tesco,4031,Debrecen,Kishegyesi út 1-11.,47.5298615,21.6103706,,False
+dm-69,dm,4031,Debrecen,Angyalföld tér 17.,47.52289,21.60405,,False
+aldi-J080,Aldi,4031,Debrecen,Kishatár utca 9/A,47.54259,21.5811,,False
+mueller-5209,Müller,4031,Debrecen,Kishatár utca 1,47.54404994,21.57808953,,False
+dm-254,dm,4031,Debrecen,Kishatár utca 9.,47.54322,21.58129,,False
+lidl-382,Lidl,4031,Debrecen,Széchenyi utca 59.,47.52517,21.61455,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-216,Lidl,4031,Debrecen,Derék u. 31.,47.52547,21.59808,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-121,Penny,4031,Debrecen,Külső-Szoboszlói út 1.,47.514577,21.604542,,False
+spar-909,Spar,4031,Debrecen,Derék u. 68.,47.521698,21.599363,,False
+dm-364,dm,4031,Debrecen,Kishegyesi út 1-11.,47.5306476,21.6077487,,False
+spar-960,Spar,4032,Debrecen,Nagy Lajos király tér1-3,47.54612,21.62114,,False
+aldi-J116,Aldi,4032,Debrecen,Ötvenhatosok tere 5/B.,47.547,21.6118,,False
+dm-62,dm,4032,Debrecen,56-osok tere 6/a.,47.54765,21.61126,,False
+aldi-J119,Aldi,4032,Debrecen,Vincellér utca 5.,47.514601,21.600589,,False
+spar-901,Spar,4032,Debrecen,Ötvenhatosok tere 6/b,47.547759,21.61075,,False
+penny-190,Penny,4033,Debrecen,Sámsoni út 99.,47.54859,21.659235,,False
+lidl-334,Lidl,4034,Debrecen,Faraktár utca 58.,47.52947,21.6511,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-188,Lidl,4060,Balmazújváros,Böszörményi u. 1.,47.61575,21.34737,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-200,Rossmann,4060,Balmazújváros,Veres Péter út 1.,47.61259,21.34336,,False
+penny-72,Penny,4060,Balmazújváros,Kastélykert u. 1-3.,47.613247,21.344866,,False
+rossmann-221,Rossmann,4080,Hajdúnánás,Kossuth Lajos utca 12-15.,47.84407,21.42955,,False
+lidl-137,Lidl,4080,Hajdúnánás,Dorogi u. 108.,47.84076,21.44537,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J238,Aldi,4080,Hajdúnánás,Kossuth utca 21.,47.84749267859313,21.42987763771941,,False
+penny-174,Penny,4080,Hajdúnánás,Mártírok útja 6-8.,47.844516,21.430877,,False
+dm-231,dm,4087,Hajdúdorog,Vasvári tér 8.,47.81583,21.50028,,False
+penny-268,Penny,4087,Hajdúdorog,Böszörményi út 29.,47.812346,21.497981,,False
+penny-128,Penny,4090,Polgár,Hősök útja 38-42,47.870481,21.117263,,False
+aldi-J180,Aldi,4100,Berettyóújfalu,Dózsa György u. 66.,47.21489917269173,21.536755182671328,,False
+spar-962,Spar,4100,Berettyóújfalu,Dózsa Gy.u.66,47.214806,21.536309,,False
+rossmann-214,Rossmann,4100,Berettyóújfalu,Dózsa György utca 2.,47.22258,21.53566,,False
+lidl-198,Lidl,4100,Berettyóújfalu,Kossuth u. 98.,47.23299,21.53317,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1040,Tesco,4100,Berettyóújfalu,Honvéd u. 13.,47.2383385,21.5355301,,False
+penny-133,Penny,4100,Berettyóújfalu,Dózsa György u. 30.,47.218595,21.53687,,False
+penny-172,Penny,4130,Derecske,Köztársaság út 67.,47.354179,21.572984,,False
+penny-84,Penny,4150,Püspökladány,Kossuth L. u. 1/1.,47.316681,21.115009,,False
+spar-905,Spar,4150,Püspökladány,Kossuth L. u. 11-17,47.315345,21.114001,,False
+lidl-243,Lidl,4150,Püspökladány,Rákóczi utca 16-20.,47.32086,21.11988,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-133,dm,4150,Püspökladány,Bocskai út 1.,47.31731,21.11798,,False
+aldi-J082,Aldi,4200,Hajdúszoboszló,Kabai útfél 0348/5,47.43665,21.37807,,False
+dm-381,dm,4200,Hajdúszoboszló,Kabai útfél HRSZ.0228,47.4337163,21.3767736,,False
+spar-964,Spar,4200,Hajdúszoboszló,Halasi Fekete Péter tér 2.,47.44611,21.39088,,False
+lidl-373,Lidl,4200,Hajdúszoboszló,Dózsa György út 62,47.436980518902146,21.380232844114516,Nyitva tartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1028,Tesco,4200,Hajdúszoboszló,Kabai útfél (HRSZ 0228/2),47.4300499,21.3674393,,False
+penny-43,Penny,4200,Hajdúszoboszló,Dózsa György út 1-5.,47.442696,21.387459,,False
+rossmann-275,Rossmann,4200,Hajdúszoboszló,Hősök tere 9-11.,47.44499,21.39138,,False
+spar-915,Spar,4200,Hajdúszoboszló,Hőforrás út,47.43494,21.40672,,False
+spar-920,Spar,4220,Hajdúböszörmény,Baltazár Dezső u. 4-16.,47.70595,21.50338,,False
+penny-140,Penny,4220,Hajdúböszörmény,Baltazár Dezső u. 7-9.,47.668699,21.510888,,False
+lidl-288,Lidl,4220,Hajdúböszörmény,Bánság tér 10.,47.66226,21.51019,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-965,Spar,4220,Hajdúböszörmény,Bánsági tér 1/a,47.66209,21.51599,,False
+aldi-J093,Aldi,4220,Hajdúböszörmény,Külső-Szoboszlói utca 2/B,47.66246,21.50138,,False
+rossmann-220,Rossmann,4220,Hajdúböszörmény,Kossuth Lajos utca 3.,47.67178,21.50812,,False
+dm-221,dm,4225,Debrecen,Szentgyörgyfalvi u. 9.,47.5977128,21.5787777,,False
+tesco-4020,Tesco,4225,Debrecen,Szentgyörgyfalvi út 9.,47.593029,21.5808392,,False
+spar-903,Spar,4225,Debrecen Józsa,Szentgyörgyfalvi út,47.60451,21.56864,,False
+lidl-204,Lidl,4242,Hajdúhadház,Dr. Földi János utca 55.,47.69069,21.67177,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-155,Penny,4242,Hajdúhadház,Dr. Földi János u. 57/a.,47.692349,21.672459,,False
+lidl-290,Lidl,4244,Újfehértó,Debreceni út 14-24.,47.79558,21.68231,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-917,Spar,4244,Újfehértó,Gyár u 1.,47.81571,21.7003,,False
+penny-120,Penny,4244,Újfehértó,Debreceni u. 7-9.,47.796778,21.682588,,False
+dm-258,dm,4244,Újfehértó,Fő tér 15,47.79863,21.68218,,False
+lidl-390,Lidl,4251,Hajdúsámson,Kiscsere utca 3.,47.59025,21.73229,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-267,Penny,4251,Hajdúsámson,Kossuth utca hrsz. 1456/1.,47.60177,21.75673,,False
+rossmann-359,Rossmann,4251,Hajdúsámson,Kiscsere utca 3.,47.59048,21.73173,,False
+spar-907,Spar,4300,Nyírbátor,Eduárd u.13.,47.83299,22.13052,,False
+rossmann-363,Rossmann,4300,Nyírbátor,Kossuth Lajos utca 2.,47.83617,22.13183,,False
+penny-123,Penny,4300,Nyírbátor,Radnóti Miklós utca 8.,47.834499,22.130828,,False
+tesco-1053,Tesco,4300,Nyírbátor,Debreceni u. 71.,47.8343697,22.1181202,,False
+rossmann-189,Rossmann,4320,Nagykálló,Árpád utca 10.,47.87538,21.84799,,False
+spar-8228,Spar,4400,Nyíregyháza,Korányi Frigyes u,47.97224,21.72651,,False
+aldi-J096,Aldi,4400,Nyíregyháza,Kállói út 16/C,47.94452,21.73689,,False
+aldi-J097,Aldi,4400,Nyíregyháza,Törzs utca 2.,47.95301,21.74331,,False
+aldi-J098,Aldi,4400,Nyíregyháza,Pazonyi út 40.,47.97067,21.74113,,False
+aldi-J193,Aldi,4400,Nyíregyháza,Móricz Zsigmond utca 25.,47.941699,21.715342,,False
+aldi-J250,Aldi,4400,Nyíregyháza,Vay Ádám körút 20.,47.95846,21.71901,,False
+dm-190,dm,4400,Nyíregyháza,Pazonyi út 39/a.,47.96911,21.73934,,False
+dm-245,dm,4400,Nyíregyháza,Nagy Imre tér 1.,47.9579157,21.7177754,,False
+dm-349,dm,4400,Nyíregyháza,Szegfű utca 75.,47.955263,21.732125,,False
+lidl-116,Lidl,4400,Nyíregyháza,Pazonyi út 37/a.,47.9685,21.73775,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-130,Lidl,4400,Nyíregyháza,Debreceni u. 106/c.,47.93641,21.71912,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+mueller-5225,Müller,4400,Nyíregyháza,Dózsa György utca 4-6,47.95692302,21.71670676,,False
+penny-110,Penny,4400,Nyíregyháza,Család u. 35.,47.958169,21.736063,,False
+penny-193,Penny,4400,Nyíregyháza,László u. 10.,47.958835,21.728585,,False
+penny-244,Penny,4400,Nyíregyháza,Állomás tér 6.,47.945459,21.707898,,False
+rossmann-253,Rossmann,4400,Nyíregyháza,Dózsa György utca 3/b.,47.956603,21.7171728,,False
+rossmann-259,Rossmann,4400,Nyíregyháza,Pazonyi út 36.,47.97162,21.73778,,False
+rossmann-287,Rossmann,4400,Nyíregyháza,László utca 4.,47.9550397,21.7276053,,False
+spar-914,Spar,4400,Nyíregyháza,Nagy Imre tér 1.,47.95835,21.7181,,False
+spar-966,Spar,4400,Nyíregyháza,Tiszavasvári u. 95,47.957228,21.672194,,False
+spar-8211,Spar,4400,Nyíregyháza,László u.8.,47.955953,21.727577,,False
+tesco-1440,Tesco,4400,Nyíregyháza,Pazonyi út 36.,47.9687386,21.7344608,,False
+penny-89,Penny,4440,Tiszavasvári,Vasvári Pál u. 26-28.,47.959854,21.353998,,False
+rossmann-106,Rossmann,4440,Tiszavasvári,Kossuth Lajos utca 11-13.,47.95649,21.3582,,False
+penny-258,Penny,4465,Rakamaz,Kossuth u. 5.,48.126323,21.459517,,False
+rossmann-377,Rossmann,4484,Ibrány,Árpád u. 4-8.,48.132404,21.717262,,False
+tesco-1810,Tesco,4600,Kisvárda,Városmajor út 72.,48.2329216,22.0645199,,False
+aldi-J095,Aldi,4600,Kisvárda,Városmajor utca 53.,48.23527,22.06409,,False
+rossmann-314,Rossmann,4600,Kisvárda,Városmajor u. 84.,48.234,22.06221,,False
+penny-166,Penny,4600,Kisvárda,Városmajor u. 68.,48.230813,22.067024,,False
+lidl-131,Lidl,4600,Kisvárda,Attila út 2/A.,48.2104,22.07579,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-243,Penny,4625,Záhony,Krúdy Gyula út 656/16 hrsz.,48.404622,22.168276,,False
+penny-130,Penny,4700,Mátészalka,József Attila köz 9.,47.957386,22.324976,,False
+tesco-1005,Tesco,4700,Mátészalka,Alkotmány utca 1/A.,47.9491806,22.3251305,,False
+rossmann-75,Rossmann,4700,Mátészalka,Bajcsy-Zsilinszky út 25.,47.95469,22.3241,,False
+dm-138,dm,4700,Mátészalka,Bajcsy-Zsilinszky utca 23.,47.95483,22.32395,,False
+spar-904,Spar,4700,Mátészalka,Szalkay L u,47.95331,22.32243,,False
+penny-181,Penny,4800,Vásárosnamény,Jókai u. 42.,48.124909,22.318985,,False
+spar-906,Spar,4800,Vásárosnamény,Jókai u. 8-12,48.12714,22.31859,,False
+tesco-4034,Tesco,4800,Vasarosnamény,Beregszászi út 1/b.,48.1268883,22.3193607,,False
+rossmann-352,Rossmann,4800,Vásárosnamény,Jókai Mór út 9-13.,48.12798,22.31782,,False
+rossmann-141,Rossmann,4900,Fehérgyarmat,Kossuth Lajos utca 14.,47.9896712,22.5129447,,False
+penny-177,Penny,4900,Fehérgyarmat,Kiss Ernő u. 16-20.,47.983806,22.514914,,False
+dm-294,dm,5000,Szolnok,Mátyás király út 29.,47.1802771,20.182412,,False
+tesco-4036,Tesco,5000,Szolnok,Széchenyi István körút 133,47.1940193,20.1804295,,False
+penny-129,Penny,5000,Szolnok,Bolt köz 2.,47.168351,20.173843,,False
+aldi-J127,Aldi,5000,Szolnok,Széchenyi István körút 139.,47.193925,20.179314,,False
+spar-668,Spar,5000,Szolnok,Boldog Sándor István krt. 25/a,47.17818,20.195854,,False
+spar-667,Spar,5000,Szolnok,Városmajor u. 34,47.183004,20.20496,,False
+aldi-J099,Aldi,5000,Szolnok,Felső-Szandai rét 9.,47.1567,20.19815,,False
+spar-633,Spar,5000,Szolnok,Ady Endre út 15.,47.17795,20.193381,,False
+dm-446,dm,5000,Orosháza,Sánc utca 10.,46.5493,20.6501,,False
+aldi-J237,Aldi,5000,Szolnok,Ady Endre út 3.,47.176824012930176,20.19988040826866,,False
+spar-622,Spar,5000,Szolnok,Ady E. u. 28/a.,47.17763,20.193965,,False
+rossmann-180,Rossmann,5000,Szolnok,Széchenyi István körút 131.,47.193956,20.1825953,,False
+tesco-1950,Tesco,5000,Szolnok,Téglagyári út 30.,47.1777611,20.1630707,,False
+mueller-5213,Müller,5000,Szolnok,Felső Szandai rét 3,47.15676438,20.19599247,,False
+rossmann-14,Rossmann,5000,Szolnok,Boldog Sándor István körút 13.,47.1768,20.19482,,False
+penny-303,Penny,5000,Szolnok,Ady Endre út 15.,47.177784,20.192875,,False
+tesco-4050,Tesco,5000,Szolnok,Karinthy Frigyes út 38.,47.1328888,20.2167492,,False
+lidl-381,Lidl,5000,Szolnok,Tószegi út 5.,47.16035,20.17386,Nyitva tartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-95,Penny,5000,Szolnok,Széchenyi István krt. 137.,47.193845,20.180186,,False
+lidl-120,Lidl,5000,Szolnok,Délibáb u. 6.,47.18374,20.18464,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-464,dm,5000,Szolnok,Ady Endre út 15.,47.1777015,20.1933998,,False
+spar-8214,Spar,5000,Szolnok,Mátyás Király u.29.,47.179982,20.182813,,False
+rossmann-68,Rossmann,5000,Szolnok,Ady Endre út 28/A.,47.17764,20.19131,,False
+auchan-019,Auchan,5000,Szolnok,Felső Szandai rét 1.,47.1594836,20.1974097,,False
+lidl-106,Lidl,5000,Szolnok,Széchenyi krt. 4/b.,47.19102,20.19356,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-261,Penny,5052,Újszász,Bajcsy-Zsilinszky u. 18.,47.293546,20.073238,,False
+lidl-276,Lidl,5100,Jászberény,Nagykátai út 7/a.,47.4901,19.8899,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J094,Aldi,5100,Jászberény,Nagykátai utca 22/C,47.48873,19.88738,,False
+penny-19,Penny,5100,Jászberény,Nagykátai u. 4.,47.490125,19.893097,,False
+tesco-1790,Tesco,5100,Jászberény,Nagykátai út 2/A.,47.4911308,19.8954601,,False
+dm-285,dm,5100,Jászberény,Nagykátai út 24/A,47.4883849,19.8863768,,False
+rossmann-301,Rossmann,5100,Jászberény,Szövetkezet út 1.,47.5009,19.91438,,False
+penny-242,Penny,5123,Jászárokszállás,Kossuth Lajos utca 4.,47.643624,19.978347,,False
+rossmann-350,Rossmann,5123,Jászárokszállás,Arany János u. 3.,47.64354,19.97656,,False
+rossmann-332,Rossmann,5130,Jászapáti,dr. Szlovencsák Imre út 5,47.51526,20.13885,,False
+penny-98,Penny,5130,Jászapáti,Petőfi Sándor út 8.,47.513705,20.142418,,False
+rossmann-90,Rossmann,5200,Törökszentmiklós,Kossuth Lajos utca 118.,47.17429,20.3822,,False
+spar-670,Spar,5200,Törökszentmiklós,Kossuth út 138-142,47.177528,20.405796,,False
+spar-623,Spar,5200,Törökszentmiklós,Kossuth Lajos 98-100,47.180007,20.417989,,False
+lidl-242,Lidl,5200,Törökszentmiklós,Kossuth Lajos u. 102-108.,47.18043,20.417,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-366,Rossmann,5200,Törökszentmiklós,Kossuth Lajos u. 134.,47.17793,20.40672,,False
+penny-91,Penny,5200,Törökszentmiklós,Hunyadi tér 1-3,47.176742,20.402878,,False
+penny-263,Penny,5241,Abádszalók,Füredi út 27/2.,47.47517,20.599772,,False
+rossmann-198,Rossmann,5300,Karcag,Kossuth Lajos tér 10.,47.31746,20.92701,,False
+aldi-J087,Aldi,5300,Karcag,Kisújszállási út 90.,47.29985,20.89904,,False
+tesco-1013,Tesco,5300,Karcag,Kisújszállási u. 34.,47.3044205,20.9042797,,False
+penny-13,Penny,5300,Karcag,Püspökladányi út 91.,47.308369,20.937291,,False
+lidl-194,Lidl,5310,Kisújszállás,Deák Ferenc u. 10.,47.21722,20.74994,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-125,Rossmann,5310,Kisújszállás,Szabadság tér 2.,47.21806,20.75732,,False
+penny-14,Penny,5310,Kisújszállás,Deák u. 87/a.,47.219757,20.739171,,False
+spar-672,Spar,5310,Kisújszállás,Deák F. u. 13-17,47.218231,20.751634,,False
+rossmann-361,Rossmann,5310,Kisújszállás,Deák Ferenc u 11.,47.217997,20.750582,,False
+penny-262,Penny,5321,Kunmadaras,Semmelweis út 3-5.,47.428996,20.79375,,False
+penny-198,Penny,5340,Kunhegyes,Béke u. 2-4.,47.368107,20.632091,,False
+rossmann-343,Rossmann,5350,Tiszafüred,Piac tér 6/1.,47.61735,20.75888,,False
+penny-143,Penny,5350,Tiszafüred,Húszöles út 16.,47.621245,20.748416,,False
+spar-811,Spar,5350,Tiszafüred,Ady Endre u.14,47.621236,20.746318,,False
+tesco-1051,Tesco,5350,Tiszafüred,Madách Imre u. 2.,47.6032486,20.7590599,,False
+lidl-179,Lidl,5350,Tiszafüred,Húszöles út 25.,47.62345,20.74741,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+lidl-245,Lidl,5400,Mezőtúr,Földvári út 21.,47.00213,20.61189,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-624,Spar,5400,Mezőtúr,Dózsa György út. 2.,46.999774,20.629277,,False
+rossmann-134,Rossmann,5400,Mezőtúr,Kossuth Lajos tér 7-9.,47.0006,20.62938,,False
+penny-101,Penny,5400,Mezőtúr,Földvári u. 17-19.,47.002701,20.614307,,False
+rossmann-179,Rossmann,5420,Túrkeve,Széchenyi utca 34.,47.10404,20.74092,,False
+penny-269,Penny,5420,Túrkeve,Széchenyi utca 54.,47.103633,20.741394,,False
+tesco-4015,Tesco,5420,Túrkeve,Kabai u. 2.,47.10886,20.7339497,,False
+penny-78,Penny,5430,Tiszaföldvár,Mártírok út 1.,46.980318,20.256482,,False
+aldi-J208,Aldi,5435,Martfű,Szolnoki út 146.,47.01818530462483,20.286424473406395,,False
+dm-421,dm,5435,Martfű,Földvári út,47.01604,20.28973,,False
+lidl-171,Lidl,5435,Martfű,Földvári út 1.,47.01749,20.28978,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-644,Spar,5435,Martfű,Szolnoki út 146.,47.018159,20.285826,,False
+rossmann-138,Rossmann,5440,Kunszentmárton,Köztársaság tér 11.,46.83928,20.28327,,False
+penny-125,Penny,5440,Kunszentmárton,Kossuth Lajos u. 1.,46.841553,20.287321,,False
+lidl-360,Lidl,5440,Kunszentmárton,Kossuth Lajos u. 23,46.84238,20.29018,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-153,Lidl,5500,Gyomaendrőd,Fő út 81/2.,46.9319,20.8011,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-310,Rossmann,5500,Gyomaendrőd,Újkert sor 2.,46.92985,20.80516,,False
+penny-82,Penny,5500,Gyomaendrőd,Pásztor János u. 42.,46.933727,20.817262,,False
+penny-168,Penny,5520,Szeghalom,Széchenyi u. 39.,47.015412,21.167555,,False
+lidl-246,Lidl,5520,Szeghalom,Széchenyi u. 45-49.,47.01602,21.16612,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-627,Spar,5520,Szeghalom,Ady Endre út. 10-12,47.014293,21.17736,,False
+rossmann-291,Rossmann,5520,Szeghalom,Tildy Zoltán utca 1.,47.02094,21.1777,,False
+penny-215,Penny,5530,Vésztő,Kossuth Lajos utca 27.,46.922785,21.261535,,False
+lidl-147,Lidl,5540,Szarvas,Csabai út 1/4.,46.85658,20.56658,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-59,Penny,5540,Szarvas,Szabadság u. 55.,46.859379,20.558512,,False
+dm-440,dm,5540,Szarvas,Kossuth Lajos utca 41.,46.8609046,20.5588067,,False
+spar-632,Spar,5540,Szarvas,Szabadság u.47-49.,46.859978,20.556584,,False
+tesco-1910,Tesco,5540,Szarvas,Csabai út 9.,46.8545189,20.5728607,,False
+aldi-J252,Aldi,5600,Békéscsaba,Andrássy út 71-73,46.6723,21.08444,,False
+tesco-1580,Tesco,5600,Békéscsaba,Szarvasi utca 68.,46.6820793,21.0743904,,False
+spar-676,Spar,5600,Békéscsaba,Lencsési út 20.,46.6681664,21.1133692,,False
+spar-675,Spar,5600,Békéscsaba,Andrássy út 3-5.,46.679291,21.096543,,False
+spar-674,Spar,5600,Békéscsaba,Szarvasi út 15-17,46.684235,21.085564,,False
+spar-660,Spar,5600,Békéscsaba,Kazinczy u. 21-23,46.681457,21.080779,,False
+spar-621,Spar,5600,Békéscsaba,Andrássy u. 37.-43.,46.677416,21.090177,,False
+penny-306,Penny,5600,Békéscsaba,Gyulai út 77.,46.680675,21.1163699,,False
+dm-346,dm,5600,Békéscsaba,Szarvasi út 68/2.,46.6806683,21.071252,,False
+rossmann-211,Rossmann,5600,Békéscsaba,Andrássy út 3-5.,46.67958,21.09743,,False
+aldi-J074,Aldi,5600,Békéscsaba,Gyulai út 51/2.,46.68069,21.11625,,False
+dm-469,dm,5600,Békéscsaba,Gyulai út 77.,46.6762,21.1291,,False
+tesco-4012,Tesco,5600,Békéscsaba,Corvin utca 41.,46.6710892,21.1060905,,False
+dm-130,dm,5600,Békéscsaba,Andrássy út 37-43.,46.67691,21.09078,,False
+lidl-133,Lidl,5600,Békéscsaba,Corvin u. 29-33.,46.67102,21.1063,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-122,Penny,5600,Békéscsaba,Berényi út 14.,46.685607,21.089098,,False
+rossmann-333,Rossmann,5600,Békéscsaba,Andrássy út 71.,46.6725,21.08457,,False
+lidl-388,Lidl,5600,Békéscsaba,Szarvasi út 15-17.,46.68458,21.08605,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 7:00-19:00,False
+aldi-J253,Aldi,5600,Békéscsaba,Corvin utca 39.,46.66994,21.10709,,False
+mueller-5210,Müller,5600,Békéscsaba,Szarvasi út 68/2,46.68057565,21.07483013,,False
+penny-18,Penny,5600,Békéscsaba,Temető sor 1/1,46.668889,21.084973,,False
+rossmann-103,Rossmann,5630,Békés,Széchenyi tér 5.,46.77295,21.13221,,False
+spar-618,Spar,5630,Békés,Szarvasi u. 1.,46.771295,21.129906,,False
+penny-132,Penny,5630,Békés,Kossuth Lajos u. 19.,46.772451,21.127332,,False
+lidl-157,Lidl,5630,Békés,Kossuth L. u. 31.,46.77263,21.12506,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-4026,Tesco,5650,Mezőberény,Békési út 18.,46.8177605,21.0321808,,False
+penny-45,Penny,5650,Mezőberény,Békési út 40.,46.818935,21.033688,,False
+spar-625,Spar,5650,Mezőberény,Kossuth tér 2.,46.823791,21.027816,,False
+dm-167,dm,5650,Mezőberény,Kossuth tér 2.,46.82395,21.0285,,False
+aldi-J145,Aldi,5700,Gyula,Kossuth Lajos tér 34.,46.64287210020503,21.27060983936437,,False
+dm-216,dm,5700,Gyula,Kétegyházi út 6660/1 hrsz.,46.64027,21.26149,,False
+lidl-121,Lidl,5700,Gyula,Szent István u. 69/1.,46.6359,21.28122,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J089,Aldi,5700,Gyula,Bicere utca 15/A,46.653621,21.237211,,False
+spar-8227,Spar,5700,Gyula,Kétegyházi u. 1.,46.639507,21.26215,,False
+tesco-1026,Tesco,5700,Gyula,Csabai út 3.,46.6409378,21.2632751,,False
+rossmann-104,Rossmann,5700,Gyula,Kossuth Lajos tér 27.,46.64322,21.27209,,False
+penny-68,Penny,5700,Gyula,Zrínyi Miklós tér 2.,46.64064,21.265174,,False
+tesco-4024,Tesco,5720,Sarkad,Szalontai út 3-7.,46.7460785,21.3861294,,False
+penny-154,Penny,5720,Sarkad,Gyulai út 2.,46.738851,21.373491,,False
+lidl-249,Lidl,5800,Mezőkovácsháza,Árpád u. 135.,46.40593,20.91845,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-159,Penny,5800,Mezőkovácsháza,Árpád utca 147-149.,46.405893,20.920449,,False
+lidl-224,Lidl,5900,Orosháza,Hóvirág u. 1-5.,46.55319,20.65404,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1690,Tesco,5900,Orosháza,Vásárhelyi út 23/A,46.5508804,20.6501293,,False
+penny-90,Penny,5900,Orosháza,Móricz Zs. u. 2.,46.556485,20.662342,,False
+dm-153,dm,5900,Orosháza,Széchenyi tér 1.,46.55822,20.66927,,False
+spar-661,Spar,5900,Orosháza,Széchenyi tér 8,46.558379,20.669193,,False
+rossmann-28,Rossmann,5900,Orosháza,György Vilmos tér 2.,46.55904,20.6703,,False
+tesco-1027,Tesco,6000,Kecskemét,Izsáki út 12/B,46.8953781,19.6655903,,False
+rossmann-224,Rossmann,6000,Kecskemét,Deák Ferenc tér 6.,46.90599,19.68904,,False
+dm-422,dm,6000,Kecskemét,Nyíri út 38.,46.9108444,19.6740205,,False
+aldi-J076,Aldi,6000,Kecskemét,Izsáki út 69.,46.88941,19.64079,,False
+dm-297,dm,6000,Kecskemét,Izsáki út 12.,46.89344,19.66617,,False
+auchan-006,Auchan,6000,Kecskemét,Dunaföldvári út 2.,46.8876053,19.6368941,,False
+dm-373,dm,6000,Kecskemét,Dunaföldvári út 2.,46.8873852,19.63533,,False
+lidl-364,Lidl,6000,Kecskemét,Izsáki út 2.,46.8999,19.67701,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-16,Penny,6000,Kecskemét,Tordai u. 2.,46.921904,19.678938,,False
+spar-523,Spar,6000,Kecskemét,Jász utca 26.,46.907322,19.677504,,False
+lidl-372,Lidl,6000,Kecskemét,Nyíri út 38/E,46.91124,19.67238,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-524,Spar,6000,Kecskemét,Korona u. 2.,46.90755,19.68874,,False
+rossmann-346,Rossmann,6000,Kecskemét,Tordai utca 4.,46.92223,19.67879,,False
+dm-181,dm,6000,Kecskemét,Korona utca 2.,46.90745,19.68946,,False
+tesco-1480,Tesco,6000,Kecskemét,Talfája út 1.,46.9672775,19.7186146,,False
+rossmann-257,Rossmann,6000,Kecskemét,Nagykőrösi utca 2.,46.90961,19.69355,,False
+penny-115,Penny,6000,Kecskemét,Kodály Zoltán tér 8.,46.915285,19.698241,,False
+aldi-J123,Aldi,6000,Kecskemét,Szt. István krt. 30.,46.911441,19.719867,,False
+dm-35,dm,6000,Kecskemét,Március 15. út 5/a.,46.91891,19.67423,,False
+lidl-169,Lidl,6000,Kecskemét,Szolnoki út 18.,46.91283,19.71087,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-138,Penny,6000,Kecskemét,Kossuth krt. 60.,46.899701,19.692176,,False
+aldi-J225,Aldi,6000,Kecskemét,Izsáki út 4/B.,46.898562721141865,19.67390338256766,,False
+spar-8269,Spar,6000,Kecskemét,Nagykörösi u. 2.,46.909904,19.693508,,False
+aldi-J121,Aldi,6000,Kecskemét,Rákóczi út 13/A.,46.909651,19.697543,,False
+spar-560,Spar,6000,Kecskemét,Március 15-e u. 5/a,46.918914,19.673805,,False
+penny-170,Penny,6050,Lajosmizse,Dózsa Gy. út 147.,47.021463,19.563325,,False
+rossmann-247,Rossmann,6050,Lajosmizse,Dózsa György út 98.,47.02529,19.55929,,False
+penny-167,Penny,6060,Tiszakécske,Vincze János Nándor utca 1.,46.943036,20.097113,,False
+rossmann-327,Rossmann,6060,Tiszakécske,Vízhányó János u. 4,46.93693,20.09525,,False
+spar-643,Spar,6060,Tiszakécske,Vízhányó János u. 2/a,46.93699,20.096446,,False
+tesco-4025,Tesco,6090,Kunszentmiklós,Rákóczi Ferenc u. 57/a.,47.021801,19.1142902,,False
+penny-51,Penny,6100,Kiskunfélegyháza,Dr. Holló Lajos u. 2907/72 hrsz.,46.72444,19.846811,,False
+spar-562,Spar,6100,Kiskunfélegyháza,Béke tér 2-4,46.711586,19.851783,,False
+spar-536,Spar,6100,Kiskunfélegyháza,Dr. Holló Lajos u. 74,46.722451,19.845989,,False
+spar-531,Spar,6100,Kiskunfélegyháza,Wesselényi u. 1.,46.711647,19.847211,,False
+rossmann-112,Rossmann,6100,Kiskunhalas,Bethlen Gábor tér 5.,46.43082,19.48066,,False
+dm-358,dm,6100,Kiskunfélegyháza,Mártírok útja 2.,46.7117037,19.8485743,,False
+rossmann-99,Rossmann,6100,Kiskunfélegyháza,Kossuth Lajos utca 1.,46.71197,19.84903,,False
+tesco-1940,Tesco,6100,Kiskunfélegyháza,IX. körzet 8/B.,46.676297,19.855567,,False
+lidl-186,Lidl,6100,Kiskunfélegyháza,Majsai út 5.,46.70677,19.83778,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-165,Rossmann,6120,Kiskunmajsa,Fő utca 67.,46.4923976,19.7364645,,False
+penny-149,Penny,6120,Kiskunmajsa,Félegyházi út 22.,46.497066,19.738322,,False
+spar-535,Spar,6120,KIskunmajsa,Csontos Károly 8.-12.,46.493953,19.736455,,False
+lidl-197,Lidl,6200,Kiskőrös,Kossuth utca 13.,46.62332,19.28844,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-50,Penny,6200,Kiskőrös,Dózsa György út 31.,46.621861,19.278485,,False
+tesco-1880,Tesco,6200,Kiskőrös,Kossuth Lajos utca 61.,46.6215782,19.2862854,,False
+rossmann-110,Rossmann,6200,Kiskőrös,Petőfi Sándor tér 8.,46.62087,19.28498,,False
+rossmann-335,Rossmann,6230,Soltvadkert,Kossuth Lajos u 110.,46.58227,19.37277,,False
+lidl-371,Lidl,6230,Soltvadkert,Kossuth Lajos u. 110.,46.58267,19.37227,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-540,Spar,6237,Kecel,Vasút út 14.,46.525985,19.254264,,False
+tesco-1870,Tesco,6300,Kalocsa,Bátyai út 8-10.,46.5210304,18.9800606,,False
+aldi-J024,Aldi,6300,Kalocsa,Bátyai út 5/A,46.52121,18.97852,,False
+spar-538,Spar,6300,Kalocsa,Szent István király u. 84,46.523692,18.98345,,False
+dm-406,dm,6300,Kalocsa,Bátyai út 6-8.,46.5208395,18.9806478,,False
+rossmann-100,Rossmann,6300,Kalocsa,Szent István király út 59.,46.52528,18.97932,,False
+lidl-110,Lidl,6300,Kalocsa,Pataji út 31.,46.53908,18.98554,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-38,Penny,6300,Kalocsa,Széchenyi út 10.,46.526139,18.985105,,False
+lidl-254,Lidl,6320,Solt,Kossuth Lajos utca 2-8.,46.80692,19.004,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-300,Penny,6320,Solt,Kecskeméti út 3/A,46.807115,19.0040049,,False
+tesco-1750,Tesco,6400,Kiskunhalas,Fejérföld utca 24.,46.4190788,19.4972095,,False
+dm-434,dm,6400,Kiskunhalas,Füzér utca 3/A,46.417365,19.4960109,,False
+aldi-J077,Aldi,6400,Kiskunhalas,Fűzér utca 1.,46.41824,19.49578,,False
+mueller-5227,Müller,6400,Kiskunhalas,Fűzér utca 2,46.41830989,19.49712753,,False
+lidl-257,Lidl,6400,Kiskunhalas,Széchenyi út 1-3.,46.43549,19.48544,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-553,Spar,6400,Kiskunhalas,Bethlen tér 1.,46.429989,19.480303,,False
+spar-566,Spar,6400,Kiskunhalas,Semmelweis tér 30,46.430556,19.475278,,False
+penny-141,Penny,6430,Bácsalmás,Damjanich utca 76.,46.125463,19.338313,,False
+penny-295,Penny,6500,Baja,Csermák Mihály tér 4.,46.18343,18.95605,,False
+spar-534,Spar,6500,Baja,Jelky tér 4.,46.183383,18.952269,,False
+mueller-5205,Müller,6500,Baja,Gránátos utca 20,46.18909872,18.93688207,,False
+dm-9,dm,6500,Baja,Eötvös utca 5.,46.17858,18.95156,,False
+spar-537,Spar,6500,Baja,Bernhardt S. u.77.,46.194931,18.957899,,False
+tesco-1650,Tesco,6500,Baja,Gránátos utca 11.,46.1901703,18.9351006,,False
+penny-99,Penny,6500,Baja,Kölcsey F. u. 44.,46.184373,18.944694,,False
+lidl-236,Lidl,6500,Baja,Bajcsy-Zsilinszky utca 9.,46.18252,18.9342,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J026,Aldi,6500,Baja,Dózsa György út 87.,46.19447,18.95183,,False
+rossmann-53,Rossmann,6500,Baja,Csermák Mihály tér 4.,46.18333,18.95544,,False
+penny-1,Penny,6600,Szentes,Kossuth u. 29-31.,46.652002,20.267156,,False
+dm-292,dm,6600,Szentes,Kossuth utca 14.,46.65173,20.26103,,False
+lidl-174,Lidl,6600,Szentes,Ipartelepi út 2-6.,46.6539,20.27606,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1830,Tesco,6600,Szentes,Alsórét utca 258.,46.654789,20.263749,,False
+aldi-J081,Aldi,6600,Szentes,Csongrádi út 65.,46.66176,20.24092,,False
+rossmann-21,Rossmann,6600,Szentes,Kossuth Lajos út 11-13.,46.65142,20.26089,,False
+penny-55,Penny,6640,Csongrád,Fő u. 61/a,46.712445,20.13423,,False
+lidl-104,Lidl,6640,Csongrád,Fő u. 59.,46.7111,20.13752,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-105,dm,6640,Csongrád,Fő utca 6-10.,46.71048,20.14869,,False
+aldi-J245,Aldi,6720,Szeged,Dugonics tér 8-9.,46.2507,20.14372,,False
+spar-615,Spar,6720,Szeged,Széchenyi tér 15.,46.252986,20.147464,,False
+dm-143,dm,6720,Szeged,Kárász utca 8.,46.25172,20.14721,,False
+rossmann-204,Rossmann,6722,Szeged,Tisza Lajos körút 49.,46.2545,20.14628,,False
+penny-24,Penny,6723,Szeged,Makkosházi krt. 27/B.,46.272815,20.150371,,False
+tesco-4016,Tesco,6723,Szeged,Etelka sor 1.,46.2589417,20.1714897,,False
+aldi-J241,Aldi,6723,Szeged,Makkosházi körút 29.,46.27256,20.14845,,False
+lidl-107,Lidl,6723,Szeged,Makkosházi krt. 21.,46.27312,20.15422,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-614,Spar,6723,Szeged,Csillag krt. 6.,46.268031,20.167764,,False
+spar-617,Spar,6723,Szeged,Szilléri sugár út 26.,46.263911,20.163675,,False
+spar-612,Spar,6723,Szeged,Tápai u. 50.,46.261553,20.170378,,False
+rossmann-173,Rossmann,6723,Szeged,Budapesti körút 33.,46.27234,20.16135,,False
+tesco-4013,Tesco,6723,Szeged,Makkosházi krt. 4.,46.2725487,20.1572399,,False
+rossmann-22,Rossmann,6723,Szeged,Jókai utca 7-9.,46.2487,20.14638,,False
+penny-53,Penny,6723,Szeged,Víztorony tér 15455/37 hrsz.,46.269892,20.163222,,False
+lidl-365,Lidl,6724,Szeged,Vásárhelyi Pál út 7.,46.26108,20.12832,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-304,dm,6724,Szeged,Londoni körút 3.,46.2547691,20.1377251,,False
+rossmann-206,Rossmann,6724,Szeged,Londoni körút 3.,46.25206,20.13862,,False
+spar-648,Spar,6724,Szeged,Londoni krt. 3.,46.255014,20.136314,,False
+tesco-1420,Tesco,6724,Szeged,Rókusi krt. 42-64.,46.270249,20.138958,,False
+mueller-5255,Müller,6724,Szeged,Londoni körút 3,46.25441453,20.13818404,,False
+aldi-J122,Aldi,6724,Szeged,Kossuth Lajos sgt. 119.,46.266531,20.128715,,False
+rossmann-272,Rossmann,6724,Szeged,Kossuth Lajos sugárút 119.,46.2661421,20.1287261,,False
+spar-608,Spar,6724,Szeged,Sárosi u. 4.,46.268756,20.149625,,False
+dm-452,dm,6724,Szeged,Rókusi krt. 42-64.,46.2688,20.1393,,False
+spar-616,Spar,6724,Szeged,Mars tér 1-3.,46.257583,20.141272,,False
+dm-237,dm,6725,Szeged,Szabadkai út 7.,46.2436819,20.119716,,False
+penny-296,Penny,6725,Szeged,Kálvária sgt. 96/A,46.25364,20.12247,,False
+aldi-J084,Aldi,6725,Szeged,Móravárosi körút 3.,46.24374,20.12387,,False
+lidl-144,Lidl,6725,Szeged,Szabadkai út 1/c.,46.24256,20.12669,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-609,Spar,6725,Szeged,Szentháromság u. 68.,46.242947,20.139286,,False
+tesco-4057,Tesco,6725,Szeged,Tisza Lajos krt 41,46.2559204,20.1477203,,False
+rossmann-225,Rossmann,6726,Szeged,Szőregi út 80.,46.23594,20.1714,,False
+spar-607,Spar,6726,Szeged,Csanádi u. 7.,46.245431,20.158661,,False
+penny-20,Penny,6728,Szeged,Dorozsmai út 52/B.,46.26744,20.098818,,False
+auchan-018,Auchan,6728,Szeged,Zápor út 4.,46.2750623,20.1041773,,False
+tesco-1029,Tesco,6729,Szeged,Szabadkai u. 7.,46.244308,20.121335,,False
+rossmann-378,Rossmann,6760,Kistelek,Rákóczi u. 4-6.,46.4689779,19.976375,,False
+spar-665,Spar,6760,Kistelek,Ifjúság tér  1/C,46.474325,19.974983,,False
+rossmann-383,Rossmann,6762,Sándorfalva,Árpád utca 1.,46.36012,20.09903,,False
+rossmann-349,Rossmann,6782,Mórahalom,Szegedi út 32.,46.2166,19.88491,,False
+lidl-103,Lidl,6800,Hódmezővásárhely,Hódtó u. 2.,46.41118,20.3262,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+mueller-5201,Müller,6800,Hódmezővásárhely,Kaszap Street 20,46.41039311,20.32301046,,False
+spar-602,Spar,6800,Hódmezővásárhely,Andrássy u. 8.,46.414636,20.321019,,False
+penny-25,Penny,6800,Hódmezővásárhely,Kaszap u. 18.,46.410384,20.322836,,False
+tesco-1620,Tesco,6800,Hódmezővásárhely,Hódtó utca 17-19.,46.4110909,20.3304901,,False
+spar-8235,Spar,6800,Hódmezővásárhely,Kaszap utca,46.409886,20.322447,,False
+aldi-J088,Aldi,6800,Hódmezővásárhely,Kaszap utca 31.,46.41058,20.32395,,False
+rossmann-19,Rossmann,6800,Hódmezővásárhely,Andrássy út 4.,46.41463,20.31977,,False
+dm-317,dm,6800,Hódmezővásárhely,Kaszap utca 20.,46.4099,20.32195,,False
+tesco-1960,Tesco,6900,Makó,Aradi utca 103.,46.216568,20.5005836,,False
+lidl-149,Lidl,6900,Makó,Szegedi u. 63.,46.21009,20.46222,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-83,Penny,6900,Makó,Szegedi utca 14/A.,46.212402,20.471818,,False
+rossmann-108,Rossmann,6900,Makó,Széchenyi tér 14-16.,46.21513,20.47592,,False
+spar-626,Spar,6900,Makó,Csanád Vezér tér 31.,46.2190356,20.477336,,False
+penny-80,Penny,7000,Sárbogárd,Ady Endre  utca 184-192.,46.882459,18.622346,,False
+lidl-192,Lidl,7000,Sárbogárd,Ady E. utca 232-236.,46.87788,18.62502,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1038,Tesco,7000,Sárbogárd,Ady E. út 19.,46.895153,18.615598,,False
+rossmann-351,Rossmann,7000,Sárbogárd,Ady Endre út 40.,46.89553,18.61587,,False
+aldi-J016,Aldi,7020,Dunaföldvár,Füzes sor 2-4.,46.80986,18.91043,,False
+dm-312,dm,7020,Dunaföldvár,Béke tér 14.,46.80628,18.92488,,False
+penny-62,Penny,7020,Dunaföldvár,Kenderföldi út 22.,46.80381,18.918341,,False
+spar-225,Spar,7020,Dunaföldvár,Béke tér 7.,46.804972,18.924158,,False
+tesco-1820,Tesco,7030,Paks,Tolnai út 2/1.,46.619399,18.852929,,False
+spar-511,Spar,7030,Paks,Dózsa Gy. u. 51-53.,46.624048,18.8587475,,False
+rossmann-282,Rossmann,7030,Paks,Dózsa György út 52.,46.6237501,18.8583417,,False
+lidl-218,Lidl,7030,Paks,Tolnai út 70.,46.61234,18.85079,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-575,Spar,7030,Paks,Barátság u. 1-3,46.6150424,18.8442473,,False
+penny-46,Penny,7030,Paks,Táncsics Mihály u. 3523/17 hrsz.,46.619295,18.857196,,False
+dm-61,dm,7030,Paks,Barátság utca 3.,46.61575,18.84404,,False
+aldi-J034,Aldi,7030,Paks,Vasút utca 4.,46.610089,18.851692,,False
+lidl-134,Lidl,7090,Tamási,Deák Ferenc utca 10/A,46.62888,18.28078,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-211,dm,7090,Tamási,Szabadság út 31.,46.63255,18.28163,,False
+spar-637,Spar,7090,Tamási,Garay u. 1-3,46.6332017,18.2809809,,False
+penny-109,Penny,7090,Tamási,Szabadság u. 59-63,46.63632,18.282391,,False
+tesco-1600,Tesco,7100,Szekszárd,Tartsay Vilmos utca 40.,46.3314018,18.7032509,,False
+dm-463,dm,7100,Szekszárd,Arany János u. 17-21,46.3469,18.703,,False
+spar-8246,Spar,7100,Szekszárd,Tartsay u. 9,46.3434416,18.71086,,False
+auchan-120,Auchan,7100,Szekszárd,Liszt Ferenc tér 2-4.,46.356852,18.711065,,False
+rossmann-325,Rossmann,7100,Szekszárd,Tartsay Vilmos u. 40.,46.3304,18.70576,,False
+penny-47,Penny,7100,Szekszárd,Béri Balogh Ádám u.79.,46.335169,18.699399,,False
+rossmann-44,Rossmann,7100,Szekszárd,Széchenyi út 1-7.,46.35154,18.702,,False
+tesco-4030,Tesco,7100,Szekszárd,Arany Janos utca 31,46.3463097,18.7031002,,False
+spar-576,Spar,7100,Szekszárd,Széchenyi u. 18-20,46.3504552,18.7019482,,False
+dm-215,dm,7100,Szekszárd,Tartsay utca 42.,46.3308,18.70177,,False
+lidl-384,Lidl,7100,Szekszárd,Arany János utca 4.,46.34694,18.70332,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-111,Lidl,7100,Szekszárd,Béri Balogh Ádám utca 94/B,46.33426,18.70013,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-63,Penny,7130,Tolna,Arany J. u. 5.,46.424481,18.790019,,False
+spar-577,Spar,7130,Tolna,Deák u. 81,46.422522,18.783102,,False
+dm-382,dm,7131,Tolna,Deák Ferenc utca 81.,46.4221991,18.7829039,,False
+penny-237,Penny,7140,Bátaszék,Szentháromság tér 22.,46.18679,18.7227,,False
+rossmann-381,Rossmann,7140,Bátaszék,Szentháromság út,46.186513,18.722268,,False
+tesco-1016,Tesco,7150,Bonyhád,Völgység utca 8.,46.299406,18.537462,,False
+spar-619,Spar,7150,Bonyhád,Széchenyi tér. 5.,46.296642,18.533465,,False
+rossmann-345,Rossmann,7150,Bonyhád,Völgység u. 10.,46.30066,18.5386,,False
+penny-36,Penny,7150,Bonyhád,Zrínyi u. 25.,46.298298,18.539101,,False
+aldi-J015,Aldi,7150,Bonyhád,Deák Ferenc utca 10/B,46.29634,18.53912,,False
+dm-423,dm,7150,Bonyhád,Deák Ferenc utca 10/E,46.29529,18.53996,,False
+lidl-140,Lidl,7150,Bonyhád,Deák Ferenc utca 10/A,46.29579,18.54028,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-118,Lidl,7200,Dombóvár,Kórház utca 55.,46.38758,18.14377,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-70,Rossmann,7200,Dombóvár,Hunyadi János tér 17.,46.37568,18.131,,False
+tesco-1017,Tesco,7200,Dombóvár,Koztarsasag u. 7.,46.3924065,18.1453228,,False
+penny-124,Penny,7200,Dombóvár,Teleki utca 19-23.,46.380394,18.131959,,False
+spar-635,Spar,7200,Dombóvár,Hunyadi tér 23.,46.37751,18.13021,,False
+dm-470,dm,7200,Dombóvár,Radnóti u. 2/A.,46.38723,18.14538,,False
+lidl-127,Lidl,7300,Komló,Tröszt utca 1.,46.19052,18.25874,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-539,Spar,7300,Komló,Alkotmány u. 45.,46.196553,18.271757,,False
+penny-96,Penny,7300,Komló,Kossuth Lajos u. 28.,46.189196,18.267569,,False
+tesco-1850,Tesco,7300,Komló,Kossuth Lajos utca 54-56.,46.1918297,18.2589092,,False
+rossmann-210,Rossmann,7400,Kaposvár,Petőfi utca 56.,46.3147972,17.7964616,,False
+aldi-J177,Aldi,7400,Kaposvár,Petőfi utca 56.,46.364698,17.785211,,False
+rossmann-267,Rossmann,7400,Kaposvár,Berzsenyi Dániel utca 1-3.,46.35619,17.78465,,False
+penny-116,Penny,7400,Kaposvár,Hunyadi János utca 36-46.,46.364841,17.796767,,False
+aldi-J043,Aldi,7400,Kaposvár,Árpád u. 31.,46.36461,17.81041,,False
+dm-403,dm,7400,Kaposvár,Árpád út 20.,46.3632341,17.810196,,False
+dm-353,dm,7400,Kaposvár,Irányi Dániel utca 5.,46.3560737,17.7925861,,False
+spar-8245,Spar,7400,Kaposvár,Árpád u. 20.,46.363328,17.811108,,False
+spar-712,Spar,7400,Kaposvár,Petőfi tér 1-3.,46.3537124,17.7924807,,False
+lidl-126,Lidl,7400,Kaposvár,Bereczk S. utca 2.,46.35794,17.78322,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+mueller-5223,Müller,7400,Kaposvár,Áchim András utca 4,46.35483402,17.78706901,,False
+spar-708,Spar,7400,Kaposvár,Honvéd u. 57.,46.365551,17.787339,,False
+tesco-1410,Tesco,7400,Kaposvár,Berzsenyi utca 13.,46.3591201,17.7805027,,False
+lidl-267,Lidl,7400,Kaposvár,Füredi út 97.,46.37805,17.78118,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-717,Spar,7400,Kaposvár,Berzsenyi u. 1-3,46.3566343,17.783818,,False
+lidl-170,Lidl,7400,Kaposvár,Előd Vezér utca 3.,46.36656,17.80861,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-286,Rossmann,7400,Kaposvár,Irányi Dániel utca 2.,46.3564897,17.7921342,,False
+spar-711,Spar,7500,Nagyatád,Korányi  S. 21-23,46.230891,17.36148,,False
+dm-315,dm,7500,Nagyatád,Korányi Sándor utca 21-23.,46.23076,17.36153,,False
+penny-113,Penny,7500,Nagyatád,Hunyadi u. 11.,46.225097,17.371221,,False
+rossmann-137,Rossmann,7500,Nagyatád,Aradi út 2.,46.22874,17.36135,,False
+tesco-1044,Tesco,7500,Nagyatád,Szabadság út 38.,46.2251205,17.3804493,,False
+lidl-159,Lidl,7500,Nagyatád,Árpád utca 49.,46.22454,17.37023,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-145,Penny,7557,Barcs,Hősök tere 6-7.,45.958805,17.466755,,False
+dm-110,dm,7570,Barcs,Köztársaság utca 25.,45.96128,17.46439,,False
+spar-709,Spar,7570,Barcs,Erkel Ferenc u. 1,45.96272,17.46556,,False
+lidl-141,Lidl,7570,Barcs,Erkel F. utca 2.,45.96234,17.46667,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-285,Rossmann,7621,Pécs,Kossuth tér 5.,46.073515,18.229434,,False
+rossmann-105,Rossmann,7622,Pécs,Bajcsy-Zsilinszky utca 11.,46.07134,18.22997,,False
+spar-8221,Spar,7622,Pécs,Bajcsy-Zsilinszki út 11.,46.0714004,18.2298371,,False
+penny-67,Penny,7622,Pécs,Zsolnay Vilmos u. 8.,46.075286,18.242813,,False
+dm-419,dm,7622,Pécs,Siklósi út 37.,46.056615,18.233013,,False
+spar-8209,Spar,7622,Pécs,Siklósi u. 37.,46.056618,18.234041,,False
+dm-137,dm,7622,Pécs,Bajcsy-Zsilinszky utca 11.,46.07222,18.23147,,False
+dm-26,dm,7624,Pécs,Király utca 9.,46.07639,18.22988,,False
+spar-501,Spar,7624,Pécs,Ifjúság u. 11.,46.0759163,18.20758,,False
+spar-505,Spar,7624,Pécs,Alkotmány u. 48.,46.0769019,18.2137251,,False
+dm-27,dm,7624,Pécs,Rókus utca 1.,46.07377,18.21181,,False
+dm-428,dm,7627,Pécs,Puskin tér 21,46.085397,18.2625717,,False
+lidl-206,Lidl,7627,Pécs,Puskin tér 22.,46.08428,18.26314,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-191,Penny,7630,Pécs,Pécsváradi út 1.,46.086679,18.27156,,False
+aldi-J030,Aldi,7630,Pécs,Zsolnay Vilmos utca 48.,46.07971,18.25561,,False
+tesco-1980,Tesco,7630,Pécs,Budai Vám utca 1.,46.103821,18.260209,,False
+dm-392,dm,7631,Pécs,Megyeri út 76.,46.0499133,18.2116735,,False
+tesco-1052,Tesco,7631,Pécs,Kincses u. 1.,46.03624,18.234774,,False
+rossmann-295,Rossmann,7631,Pécs,Kincses út 1.,46.037009,18.2339907,,False
+spar-513,Spar,7632,Pécs,Lahti út. 2/1.,46.04146,18.21318,,False
+aldi-J188,Aldi,7632,Pécs,Megyeri út 76/1.,46.051083,18.212366,,False
+mueller-5235,Müller,7632,Pécs,Siklósi út 68/a,46.05259,18.231101,,False
+lidl-386,Lidl,7632,Pécs,Málomi út 3.,46.04745,18.22602,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 06:30-21:00,False
+penny-88,Penny,7632,Pécs,Sztárai Mihály út 4.,46.036303,18.228731,,False
+lidl-231,Lidl,7632,Pécs,Lahti utca 45.,46.04149,18.2124,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-183,Lidl,7632,Pécs,Siklósi út 52/A,46.05657,18.23072,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-4019,Tesco,7632,Pécs,Maléter Pál út 1.,46.042357,18.217892,,False
+penny-216,Penny,7632,Pécs,Megyeri út 84.,46.047116,18.213912,,False
+penny-221,Penny,7632,Pécs,Siklósi út 68/A,46.050082,18.230594,,False
+spar-502,Spar,7632,Pécs,Éva u. 17.,46.0458705,18.2184785,,False
+spar-515,Spar,7632,Pécs,Csontváry u. 2.,46.038875,18.22288,,False
+rossmann-174,Rossmann,7632,Pécs,Lahti utca 2.,46.04182,18.21551,,False
+aldi-J018,Aldi,7632,Pécs,Árnyas utca 25.,46.05132,18.23082,,False
+dm-37,dm,7633,Pécs,Ybl Miklós út 12.,46.06429,18.19788,,False
+spar-500,Spar,7633,Pécs,Gosztonyi Gy. U. 2.,46.06787,18.20095,,False
+lidl-227,Lidl,7633,Pécs,Lázár Vilmos utca 10.,46.07118,18.20589,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J042,Aldi,7633,Pécs,Tüzér utca 5/A,46.06948,18.20856,,False
+spar-510,Spar,7633,Pécs,Pollack M. u. 19.,46.0669407,18.1889051,,False
+rossmann-375,Rossmann,7633,Pécs,Ybl Miklós u. 10,46.06468,18.19823,,False
+rossmann-371,Rossmann,7634,Pécs,Makay István u. 5.,46.06341,18.18417,,False
+aldi-J182,Aldi,7634,Pécs,Nyugati Ipari út 1.,46.0647,18.1738,,False
+tesco-1470,Tesco,7634,Pécs,Makay István út 5.,46.064743,18.1848145,,False
+spar-512,Spar,7636,Pécs,Malomhegyi u. 2.,46.0299813,18.2225339,,False
+penny-134,Penny,7700,Mohács,Kossuth u. 95-97.,45.998673,18.679955,,False
+lidl-112,Lidl,7700,Mohács,Pécsi út 41.,45.99681,18.66865,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J017,Aldi,7700,Mohács,Pécsi út 53.,45.99671,18.66972,,False
+dm-291,dm,7700,Mohács,Pécsi út 61.,45.99616,18.65842,,False
+tesco-1042,Tesco,7700,Mohács,Pécsi út 61.,45.9968796,18.6675301,,False
+spar-509,Spar,7700,Mohács,Horváth K. u. 3/5,45.9913111,18.6686811,,False
+spar-518,Spar,7700,Mohács,Kígyó u. 6.,45.9910922,18.6934001,,False
+rossmann-193,Rossmann,7700,Mohács,Dózsa György utca 8.,45.99041,18.68503,,False
+penny-275,Penny,7720,Pécsvárad,Erzsébeti út 1811/2 krsz.,46.154438,18.422308,,False
+spar-516,Spar,7761,Kozármisleny,Vadvirág u. 1.,46.053905,18.283996,,False
+penny-107,Penny,7800,Siklós,Szent István tér 7.,45.855733,18.293057,,False
+rossmann-316,Rossmann,7800,Siklós,Felszabadulás utca 15.,45.853371,18.298085,,False
+spar-506,Spar,7800,Siklós,Szt. István tér 9.,45.856102,18.2925841,,False
+lidl-191,Lidl,7800,Siklós,Szent István tér 2.,45.85518,18.29389,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J019,Aldi,7801,Siklós,Harkányi út 59.,45.857455,18.27546,,False
+tesco-1930,Tesco,7801,Siklós,Harkányi út 55.,45.8585396,18.2787991,,False
+spar-504,Spar,7815,Harkány,Kossuth L. u. 20-21.,45.8500649,18.2356696,,False
+spar-572,Spar,7815,Harkány,Siklósi utca 2365/2. hrsz,45.8474529,18.2367871,,False
+spar-573,Spar,7900,Szigetvár,József Attila u. 212-214,46.046888,17.81117,,False
+tesco-1034,Tesco,7900,Szigetvár,Almáspatak u. 7.,46.0435715,17.8003197,,False
+spar-514,Spar,7900,Szigetvár,Széchenyi u. 11,46.0471047,17.7958233,,False
+rossmann-306,Rossmann,7900,Szigetvár,Görösgali út 1.,46.04855,17.78399,,False
+lidl-113,Lidl,7900,Szigetvár,Almás patak utca 5.,46.045,17.79727,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-119,Penny,7900,Szigetvár,Istvánffy Miklós u. 16/1.,46.043557,17.803135,,False
+penny-274,Penny,7940,Szentlőrinc,Ifjúság útja 1.,46.039265,17.994284,,False
+spar-574,Spar,7940,Szentlőrinc,Pécsi u. 21,46.03988,17.99011,,False
+spar-264,Spar,8000,Székesfehérvár,Vizivárosi ltp.,47.1931,18.42609,,False
+penny-292,Penny,8000,Székesfehérvár,Budai út hrsz. 8587/15,47.193386,18.425617,,False
+rossmann-290,Rossmann,8000,Székesfehérvár,Balatoni út 44-49.,47.1652873,18.4034195,,False
+spar-221,Spar,8000,Székesfehérvár,Balatoni út 5531/47. hrsz,47.184317,18.405361,,False
+aldi-J109,Aldi,8000,Székesfehérvár,Holland fasor 1.,47.15105,18.43108,,False
+spar-8270,Spar,8000,Székesfehérvár,Rákóczi u. 3-5.,47.19257,18.413225,,False
+lidl-154,Lidl,8000,Székesfehérvár,Balatoni út 21.,47.18385,18.40673,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-155,Lidl,8000,Székesfehérvár,Farkasvermi köz 1.,47.20445,18.38531,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-222,Spar,8000,Székesfehérvár,Selyem u. 5531/38 hrsz,47.188215,18.404525,,False
+penny-188,Penny,8000,Székesfehérvár,Széchenyi u. 104.,47.177305,18.418857,,False
+spar-8241,Spar,8000,Székesfehérvár,Balatoni út 44-46.,47.16488,18.40374,,False
+auchan-005,Auchan,8000,Székesfehérvár,Holland fasor 2.,47.149528,18.4322609,,False
+lidl-117,Lidl,8000,Székesfehérvár,Mártírok útja 11.,47.18975,18.44655,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+mueller-5212,Müller,8000,Székesfehérvár,Szent Flórián körút 13,47.21424599,18.41711775,,False
+rossmann-347,Rossmann,8000,Székesfehérvár,Aszalvölgyi u. 1.,47.20716,18.4277,,False
+rossmann-353,Rossmann,8000,Székesfehérvár,Pozsonyi út 4,47.20456,18.43644,,False
+aldi-J010,Aldi,8000,Székesfehérvár,Szt. Flórián Krt. 11.,47.21313,18.41739,,False
+tesco-1430,Tesco,8000,Székesfehérvár,Aszalvölgyi u. 1.,47.2102013,18.4255791,,False
+aldi-J226,Aldi,8000,Székesfehérvár,Budai út 173.,47.19597,18.46901,,False
+penny-28,Penny,8000,Székesfehérvár,Palotai út 10.,47.193102,18.402654,,False
+dm-432,dm,8000,Székesfehérvár,Rákóczi utca 3,47.1928112,18.4136527,,False
+rossmann-386,Rossmann,8000,Székesfehérvár,Selyem utca 41.,47.188046,18.404335,,False
+rossmann-385,Rossmann,8000,Székesfehérvár,Holland fasor 3.,47.15017,18.427144,,False
+dm-313,dm,8000,Székesfehérvár,Budai út 41.,47.19157,18.42424,,False
+spar-8204,Spar,8000,Székesfehérvár,Budai u. 41.,47.19118,18.42367,,False
+dm-355,dm,8000,Székesfehérvár,Holland fasor 1.,47.1511862,18.4313419,,False
+aldi-J040,Aldi,8000,Székesfehérvár,Jancsár köz 1-3.,47.18185,18.40887,,False
+dm-32,dm,8000,Székesfehérvár,Dr. Koch László utca 2.,47.19447,18.40914,,False
+spar-265,Spar,8000,Székesfehérvár,Palotai u. 58,47.19516,18.40051,,False
+spar-267,Spar,8000,Székesfehérvár,Pozsonyi út10,47.20502,18.44315,,False
+tesco-1780,Tesco,8000,Székesfehérvár,Palotai út 6.,47.1945915,18.4013901,,False
+rossmann-40,Rossmann,8000,Székesfehérvár,"Alba Plaza, Palotai út 1.",47.19054,18.40555,,False
+lidl-375,Lidl,8000,Székesfehérvár,Pozsonyi út 4.,47.20485,18.44116,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-312,Rossmann,8060,Mór,Akai út 10.,47.37737,18.18883,,False
+aldi-J154,Aldi,8060,Mór,Akai út 10.,47.376726,18.18822,,False
+penny-126,Penny,8060,Mór,Deák F. u. 28.,47.370853,18.204594,,False
+dm-236,dm,8060,Mór,Szent István tér 5/a.,47.37217,18.20975,,False
+lidl-128,Lidl,8060,Mór,Akai utca 8.,47.3758,18.18933,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-429,dm,8100,Várpalota,Fehérvári út 19.,47.2004,18.1533,,False
+lidl-163,Lidl,8100,Várpalota,Hét vezér utca 3.,47.20072,18.14776,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-15,Penny,8100,Várpalota,Hétvezér u. 1.,47.201215,18.14762,,False
+rossmann-379,Rossmann,8100,Várpalota,Fehérvári út 19-21.,47.200547,18.148646,,False
+tesco-1004,Tesco,8100,Várpalota,Fehérvári utca 17.,47.200296,18.148532,,False
+penny-291,Penny,8127,Aba,Rákóczi u. 38/3,47.033924,18.532095,,False
+aldi-J178,Aldi,8130,Enying,Váci Mihály u. 2754/26 hrsz,46.945965,18.229039,,False
+penny-137,Penny,8130,Enying,Hősök tere 2.,46.926323,18.246983,,False
+lidl-272,Lidl,8130,Enying,Rákóczi Ferenc utca 5.,46.92545,18.24869,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-287,Penny,8154,Polgárdi,Balatoni út 8/D.,47.052555,18.3042549,,False
+rossmann-341,Rossmann,8174,Balatonkenese,Fő utca 8.,47.03747,18.10738,,False
+lidl-374,Lidl,8175,Balatonfűzfő,Vízmű utca 1.,47.06908,18.03253,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-109,Rossmann,8200,Veszprém,Budapest út 20-28.,47.09582,17.91879,,False
+rossmann-45,Rossmann,8200,Veszprém,Kossuth Lajos utca 6.,47.09291,17.91057,,False
+penny-255,Penny,8200,Veszprém,Egyetem u. 16.,47.084548,17.909693,,False
+penny-213,Penny,8200,Veszprém,Dózsa György tér 1.,47.102322,17.898407,,False
+penny-10,Penny,8200,Veszprém,Aulich Lajos utca 1.,47.113149,17.923995,,False
+penny-9,Penny,8200,Veszprém,Csillag u. 22.,47.096492,17.926852,,False
+lidl-397,Lidl,8200,Veszprém,Pápai út 43. (hrsz 1943/3),47.1038,17.88498,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 7:00-19:02,False
+lidl-213,Lidl,8200,Veszprém,Cholnoky utca 29/1.,47.08726,17.92222,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+lidl-193,Lidl,8200,Veszprém,Észak-keleti útgyűrű 2.,47.11114,17.92613,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-201,Spar,8200,Veszprém,Jutasi út 18.,47.10739,17.91065,,False
+spar-209,Spar,8200,Veszprém,Cserhát ltp. 6.,47.09387,17.91095,,False
+dm-378,dm,8200,Veszprém,Külső-Kádártai u. 3.,47.1028484,17.9333574,,False
+dm-360,dm,8200,Veszprém,Dornyai Béla utca 4.,47.0849472,17.9265076,,False
+dm-352,dm,8200,Veszprém,Kossuth Lajos utca 6.,47.09327,17.91157,,False
+spar-8216,Spar,8200,Veszprém,Darnyai Béla út.,47.08457,17.9259,,False
+tesco-1510,Tesco,8200,Veszprém,Külső-Kádártai utca 3.,47.0974007,17.9220791,,False
+aldi-J185,Aldi,8200,Veszprém,Kistó utca 2.,47.107051,17.895203,,False
+aldi-J181,Aldi,8200,Veszprém,Budapest út 20-28.,47.095709,17.918609,,False
+tesco-4003,Tesco,8200,Veszprém,Mártirok útja 13.,47.087471,17.9123898,,False
+aldi-J031,Aldi,8200,Veszprém,Dornyai Béla utca 5.,47.08199,17.92457,,False
+aldi-J013,Aldi,8200,Veszprém,Észak-keleti útgyűrű 6.,47.10864,17.92763,,False
+aldi-J153,Aldi,8220,Balatonalmádi,Szabolcs utca 2.,47.040027,18.018802,,False
+rossmann-250,Rossmann,8220,Balatonalmádi,Szabolcs utca 2.,47.04085,18.01906,,False
+dm-443,dm,8220,Balatonalmádi,Városház tér 5.,47.029258,18.0146738,,False
+penny-111,Penny,8220,Balatonalmádi,József Attila út 2.,47.028688,18.016145,,False
+tesco-1045,Tesco,8230,Balatonfüred,Széchenyi u. 55.,46.9481583,17.8784504,,False
+penny-165,Penny,8230,Balatonfüred,Széchenyi u. 47.,46.949955,17.881501,,False
+spar-280,Spar,8230,Balatonfüred,Széchenyi u. 47.,46.9484234,17.8747226,,False
+dm-401,dm,8230,Balatonfüred,Széchenyi utca 55.,46.9481032,17.8770305,,False
+rossmann-157,Rossmann,8230,Balatonfüred,Jókai Mór utca 17.,46.95639,17.88876,,False
+aldi-J112,Aldi,8230,Balatonfüred,Petőfi Sándor utca 80.,46.9622,17.897,,False
+aldi-J039,Aldi,8230,Balatonfüred,Fürdő utca 31.,46.95003,17.87524,,False
+spar-228,Spar,8230,Balatonfüred,Arácsi út. 15.,46.961916,17.87898,,False
+penny-2,Penny,8300,Tapolca,Gyulakeszi u. 120.,46.879473,17.449898,,False
+rossmann-51,Rossmann,8300,Tapolca,Deák Ferenc utca 2-4.,46.88254,17.43896,,False
+tesco-1900,Tesco,8300,Tapolca,Veszprémi út 5.,46.883448,17.437112,,False
+spar-202,Spar,8300,Tapolca,Juhász Gyula út,46.88551,17.44866,,False
+lidl-122,Lidl,8300,Tapolca,Veszprémi út 1.,46.88042,17.45224,Nyitvatartás: 07:00-22:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+dm-281,dm,8300,Tapolca,Fő tér 4.,46.88259,17.43995,,False
+aldi-J108,Aldi,8300,Tapolca,Veszprémi út 3.,46.8803,17.4534,,False
+spar-281,Spar,8330,Sümeg,84-es főút hrsz. 1623/10,46.98017,17.29036,,False
+tesco-4021,Tesco,8330,Sümeg,Baglyas tér 2.,46.984068,17.287022,,False
+penny-302,Penny,8330,Sümeg,84-es főút hrsz. 1623/10,46.96796,17.2915351,,False
+rossmann-187,Rossmann,8330,Sümeg,Kossuth Lajos utca 3.,46.97788,17.2818,,False
+lidl-277,Lidl,8330,Sümeg,Fehérkő utca 1/1.,46.9853,17.28421,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+rossmann-243,Rossmann,8360,Keszthely,Kossuth Lajos utca 35.,46.76562,17.24277,,False
+dm-438,dm,8360,Keszthely,Frech Miklós utca 2.,46.7735397,17.2639557,,False
+aldi-J028,Aldi,8360,Keszthely,Tündérlak út 2.,46.77494,17.27757,,False
+penny-171,Penny,8360,Keszthely,Frech Miklós u. 1.,46.773485,17.26502,,False
+rossmann-266,Rossmann,8360,Keszthely,Csapás út 27.,46.77827,17.25922,,False
+aldi-J183,Aldi,8360,Keszthely,Csapás út 7-9.,46.777421,17.246089,,False
+penny-5,Penny,8360,Keszthely,Csapás út 6.,46.776311,17.244214,,False
+mueller-5221,Müller,8360,Keszthely,Murvás út 2,46.77848607,17.25887288,,False
+lidl-268,Lidl,8360,Keszthely,Sopron utca 43.,46.77552,17.24168,Nyitvatartás: 07:00-22:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+spar-8225,Spar,8360,Keszthely,Tapolcai út.,46.77389,17.2674,,False
+tesco-1003,Tesco,8360,Keszthely,Csapás utca 27.,46.7778702,17.2619591,,False
+lidl-124,Lidl,8360,Keszthely,Tapolcai út 45/a,46.77334,17.27197,Nyitvatartás: 07:00-22:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+dm-427,dm,8360,Keszthely,Csapás út 7-9.,46.7780931,17.2457791,,False
+spar-207,Spar,8360,Keszthely,Bercsényi Miklós u. 65/F,46.76572,17.23657,,False
+dm-165,dm,8380,Hévíz,Nagyparkoló tér 12-14.,46.79169,17.19204,,False
+dm-262,dm,8400,Ajka,Csingeri út 2.,47.10626,17.56411,,False
+penny-17,Penny,8400,Ajka,Fő út 7.,47.112122,17.556411,,False
+tesco-1770,Tesco,8400,Ajka,Fő út 66.,47.1148186,17.5497303,,False
+rossmann-47,Rossmann,8400,Ajka,Szabadság tér 14.,47.10565,17.56527,,False
+mueller-5222,Müller,8400,Ajka,Fő út 29,47.11674746,17.54815332,,False
+lidl-173,Lidl,8400,Ajka,Hársfa utca 1/A,47.11558,17.551,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-216,Spar,8400,Ajka,Ifjúság út 9.,47.10852,17.55111,,False
+aldi-J001,Aldi,8400,Ajka,Fő út 31.,47.11788,17.54627,,False
+tesco-4004,Tesco,8420,Zirc,Állomás utca 5.,47.2660599,17.8790207,,False
+rossmann-384,Rossmann,8420,Zirc,Állomás utca 3.,47.26547,17.87695,,False
+penny-71,Penny,8420,Zirc,Rákóczi tér 12.,47.263051,17.870694,,False
+rossmann-23,Rossmann,8500,Pápa,Kossuth Lajos utca 13.,47.32875,17.4671,,False
+dm-217,dm,8500,Pápa,Celli út 25.,47.32995,17.45738,,False
+spar-283,Spar,8500,Pápa,Szabadság u. 1/b,47.330732,17.469665,,False
+lidl-115,Lidl,8500,Pápa,Jókai Mór utca 57.,47.32316,17.47493,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-136,Penny,8500,Pápa,Veszprémi út 10-14.,47.320465,17.478455,,False
+tesco-1740,Tesco,8500,Pápa,Cellei út 92.,47.3258705,17.4528198,,False
+spar-8231,Spar,8500,Pápa,Celli út 21.,47.329301,17.456956,,False
+rossmann-367,Rossmann,8500,Pápa,Celli utca 90.,47.32353,17.44925,,False
+aldi-J029,Aldi,8500,Pápa,Celli út 71.,47.32255,17.44612,,False
+tesco-1660,Tesco,8600,Siófok,Vak B. utca 27.,46.892923,18.058911,,False
+tesco-4070,Tesco,8600,Siófok,Dózsa György út 18-20.,46.9079895,18.0609703,,False
+penny-278,Penny,8600,Siófok,Fő tér 6.,46.906487,18.051598,,False
+penny-104,Penny,8600,Siófok,Vak Bottyán u. 1-5.,46.90173,18.048615,,False
+rossmann-320,Rossmann,8600,Siófok,Fő utca 166.,46.9055,18.05058,,False
+lidl-211,Lidl,8600,Siófok,Zamárdi utca 1-2.,46.90012,18.02826,Nyitvatartás: 06:30-22:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+dm-121,dm,8600,Siófok,Fő utca 188-190.,46.90718,18.05558,,False
+dm-330,dm,8600,Siófok,Fő tér 6.,46.90611,18.05194,,False
+aldi-J009,Aldi,8600,Siófok,Attila utca 74.,46.89161,18.05812,,False
+aldi-J113,Aldi,8622,Szántód,Május 1. utca 10.,46.86209,17.90468,,False
+dm-251,dm,8622,Szántód,Siófoki út 3.,46.86081,17.90378,,False
+rossmann-246,Rossmann,8622,Szántód,Május 1. utca 10.,46.86209,17.90285,,False
+spar-714,Spar,8622,Szántód,Siófoki út 3.,46.86127,17.90441,,False
+tesco-4071,Tesco,8623,Balatonföldvár,Budapesti út 1.,46.8495102,17.8797398,,False
+spar-761,Spar,8630,Balatonboglár,Dózsa György u. 53-59,46.77561,17.64835,,False
+tesco-1021,Tesco,8630,Balatonboglár,Klapka u. 30.,46.767668,17.655575,,False
+rossmann-294,Rossmann,8638,Balatonlelle,Rákóczi út 297.,46.783663,17.6821431,,False
+dm-409,dm,8638,Balatonlelle,Richter utca 2,46.7827,17.6816977,,False
+penny-3,Penny,8638,Balatonlelle,Rákóczi u. 3069/1 hrsz.,46.783572,17.673341,,False
+spar-715,Spar,8638,Balatonlelle,Rákóczi Ferenc 202-204,46.7878,17.69813,,False
+aldi-J023,Aldi,8638,Balatonlelle,Rákóczi út 309.,46.78284,17.68052,,False
+lidl-101,Lidl,8638,Balatonlelle,Rákóczi F. út 307.,46.78371,17.68244,Nyitvatartás: 06:30-22:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+lidl-266,Lidl,8640,Fonyód,Ady Endre utca 57-59.,46.75114,17.56922,Nyitvatartás: 07:00-22:00#Nyitvatartás - Vasárnap: 07:00-20:00,False
+rossmann-143,Rossmann,8640,Fonyód,Ady Endre utca 7.,46.74936,17.55762,,False
+aldi-J229,Aldi,8646,Balatonfenyves,Vörösmarty utca 10.,46.71251,17.48021,,False
+penny-289,Penny,8660,Tab,Dózsa György u. 2/a.,46.73542,18.036564,,False
+rossmann-281,Rossmann,8700,Marcali,Noszlopy Gáspár utca 18.,46.5926454,17.4061556,,False
+penny-77,Penny,8700,Marcali,Marczali Henrik utca 1638/7. hrsz.,46.58285,17.4118,,False
+spar-405,Spar,8700,Marcali,Szigetvári u. 3.,46.57787,17.40792,,False
+aldi-J186,Aldi,8700,Marcali,Noszlopy Gáspár utca 18.,46.592708,17.406145,,False
+lidl-262,Lidl,8700,Marcali,Rákóczi Ferenc utca 50.,46.58459,17.41091,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+dm-134,dm,8700,Marcali,Rákóczi utca 19.,46.58094,17.41285,,False
+tesco-1031,Tesco,8700,Marcali,Noszlopy u. 177.,46.6049881,17.4034805,,False
+penny-97,Penny,8790,Zalaszentgrót,Batthyány  u. 2/a.,46.941988,17.07274,,False
+dm-278,dm,8790,Zalaszentgrót,Eötvös Károly utca 1.,46.9433316,17.0766872,,False
+lidl-105,Lidl,8800,Nagykanizsa,Balatoni utca 41.,46.46092,17.00693,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-271,Rossmann,8800,Nagykanizsa,Erzsébet tér 2.,46.4562797,16.9861829,,False
+spar-707,Spar,8800,Nagykanizsa,Kalmár u.3,46.45732,16.98487,,False
+dm-252,dm,8800,Nagykanizsa,Táborhely utca 4.,46.4535008,17.0126337,,False
+mueller-5206,Müller,8800,Nagykanizsa,Dózsa György út 123,46.46325147,17.00634238,,False
+aldi-J231,Aldi,8800,Nagykanizsa,Király utca 36.,46.45442,16.98754,,False
+penny-27,Penny,8800,Nagykanizsa,Dózsa György utca 160.,46.462639,17.01107,,False
+tesco-1550,Tesco,8800,Nagykanizsa,Boszorkány utca 2.,46.4639816,17.0148506,,False
+penny-186,Penny,8800,Nagykanizsa,Kalmár u. 8.,46.458451,16.982677,,False
+dm-302,dm,8800,Nagykanizsa,Király utca 36.,46.45509,16.98747,,False
+aldi-J152,Aldi,8800,Nagykanizsa,Dózsa György utca 146.,46.46271,17.00772,,False
+spar-8238,Spar,8800,Nagykanizsa,Táborhely u. 4.,46.45345,17.0112,,False
+penny-169,Penny,8840,Csurgó,Rákóczi u. 7.,46.261172,17.095897,,False
+lidl-278,Lidl,8840,Csurgó,Széchenyi tér 12-14.,46.25532,17.09921,Nyitvatartás: 07:00-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-767,Spar,8868,Letenye,Kossuth L. u. 2,46.432445,16.723696,,False
+dm-323,dm,8900,Zalaegerszeg,Kossuth utca 21-23.,46.8411154,16.8456827,,False
+rossmann-270,Rossmann,8900,Zalaegerszeg,Stadion utca 5.,46.8472484,16.8512064,,False
+aldi-J037,Aldi,8900,Zalaegerszeg,Balatoni út 13.,46.8427,16.86908,,False
+lidl-180,Lidl,8900,Zalaegerszeg,Platán sor 6/A,46.84035,16.83401,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-364,Rossmann,8900,Zalaegerszeg,Platán sor 8.,47.84087,16.83329,,False
+lidl-222,Lidl,8900,Zalaegerszeg,Átkötő utca 3.,46.8459,16.86397,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1610,Tesco,8900,Zalaegerszeg,Sport utca 1.,46.8408508,16.8623009,,False
+spar-8205,Spar,8900,Zalaegerszeg,Ola u.1.,46.84764,16.8339,,False
+spar-702,Spar,8900,Zalaegerszeg,Göcseji u. 35.,46.83763,16.83611,,False
+spar-769,Spar,8900,Zalaegerszeg,Batthyány u. 14,46.84884,16.84615,,False
+dm-286,dm,8900,Zalaegerszeg,Balatoni út 5-7.,46.8407567,16.8673517,,False
+mueller-5215,Müller,8900,Zalaegerszeg,Átkötő utca 2.,46.8466928,16.86384755,,False
+penny-142,Penny,8900,Zalaegerszeg,Platán sor 17/b.,46.845605,16.830157,,False
+rossmann-54,Rossmann,8900,Zalaegerszeg,Kossuth Lajos út 3.,46.84325,16.84582,,False
+auchan-123,Auchan,8900,Zalaegerszeg,Stadion u. 5.,46.844611,16.8492133,,False
+spar-768,Spar,8900,Zalaegerszeg,Becsali köz 2-6,46.8327,16.82755,,False
+penny-226,Penny,8900,Zalaegerszeg,Köztársaság útja 51.,46.831661,16.835963,,False
+penny-127,Penny,8960,Lenti,Petőfi út 43/2 hrsz,46.623103,16.547332,,False
+rossmann-329,Rossmann,8960,Lenti,Széchenyi István tér 7.,46.62303,16.54663,,False
+spar-409,Spar,9011,Győr,Egressy Béni út 80.,47.697731,17.733607,,False
+rossmann-274,Rossmann,9011,Győr,Egressy Béni út 80.,47.69749,17.7327,,False
+tesco-1570,Tesco,9012,Győr,Királyszék utca 33.,47.6480064,17.6230869,,False
+aldi-J014,Aldi,9012,Győr,Malomszéki utca 11.,47.65287,17.63202,,False
+rossmann-36,Rossmann,9021,Győr,Baross Gábor út 25.,47.68584,17.63424,,False
+lidl-323,Lidl,9021,Győr,Mécs László utca,47.66294,17.63583,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-8271,Spar,9021,Győr,Arany J. u. 16.,47.68587,17.63301,,False
+dm-25,dm,9021,Győr,Baross Gábor utca 24.,47.68554,17.63359,,False
+penny-228,Penny,9023,Győr,Tihanyi Árpád út 89.,47.669583,17.655212,,False
+lidl-221,Lidl,9023,Győr,Tihanyi Árpád út 9.,47.68377,17.64334,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-466,Spar,9023,Győr,Fehérvári u 20,47.68042,17.65679,,False
+rossmann-154,Rossmann,9023,Győr,Földes Gábor utca 23.,47.67554,17.65291,,False
+rossmann-309,Rossmann,9023,Győr,Fehérvári út 3.,47.68817,17.64973,,False
+tesco-3002,Tesco,9023,Győr,Herman Ottó út 22a,47.677091,17.644023,,False
+spar-8201,Spar,9023,Győr,Fehérvári u. 3.,47.68765,17.64882,,False
+dm-433,dm,9023,Győr,Fehérvári út 3.,47.6878363,17.6494757,,False
+tesco-3004,Tesco,9023,Győr,Szigethy A. út 112,47.677156,17.652467,,False
+tesco-5016,Tesco,9024,Győr,Bartók Béla út 13,47.6809196,17.6394005,,False
+rossmann-318,Rossmann,9024,Győr,Mécs László u 1/C,47.65976,17.63621,,False
+mueller-5220,Müller,9024,Győr,Malomszéki út 9,47.65236255,17.6310849,,False
+tesco-3001,Tesco,9024,Győr,Lajta út 12.,47.6680031,17.6407642,,False
+spar-460,Spar,9024,Győr,Pátzay Pál u.,47.66046,17.63584,,False
+tesco-3003,Tesco,9024,Győr,Mécs Lajos út 4,47.667653,17.630099,,False
+penny-246,Penny,9024,Győr,Gerence utca 29-31.,47.66501,17.63715,,False
+auchan-122,Auchan,9024,Győr,Vasvári Pál u. 1,47.6695278,17.6471815,,False
+rossmann-215,Rossmann,9024,Győr,Vasvári Pál út 1.,47.66961,17.64744,,False
+aldi-J157,Aldi,9024,Győr,Szauter Ferenc utca 3. C.,47.666276,17.647158,,False
+tesco-5017,Tesco,9024,Győr,Hunyadi út 2.,47.6798706,17.6325397,,False
+aldi-J011,Aldi,9025,Győr,Csipkegyári utca 11.,47.67685,17.61512,,False
+dm-293,dm,9025,Győr,Csipkegyári utca 11.,47.67744,17.61743,,False
+lidl-256,Lidl,9025,Győr,Kossuth Lajos utca 123.,47.6784,17.61443,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-5002,Tesco,9025,Győr,Hédervári út 20,47.6955719,17.6301193,,False
+tesco-5018,Tesco,9025,Győr,Köztelek út 87.,47.6855698,17.6185303,,False
+penny-230,Penny,9026,Győr,Szabadrév u. 20.,47.700563,17.641853,,False
+spar-408,Spar,9026,Győr,Rónay Jácint u. 12.,47.693847,17.630414,,False
+spar-8226,Spar,9027,Győr ECE,Budai út 1.,47.69119,17.64552,,False
+dm-442,dm,9027,Győr,Nagysándor József u. 31,47.6956005,17.6621995,,False
+dm-175,dm,9027,Győr,Budai út 1.,47.68921,17.64475,,False
+rossmann-171,Rossmann,9027,Győr,Budai út 1.,47.68893,17.64498,,False
+aldi-J227,Aldi,9027,Győr,Nagysándor József u. 31.,47.69544,17.66215,,False
+lidl-200,Lidl,9027,Győr,Szeszgyár utca 6.,47.689,17.65244,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J036,Aldi,9028,Győr,Fehérvári út 5/A,47.68209,17.6561,,False
+lidl-125,Lidl,9028,Győr,Jereváni utca 42.,47.66768,17.65624,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+rossmann-201,Rossmann,9028,Győr,Jereváni út 32.,47.66697,17.6588,,False
+penny-286,Penny,9082,Nyúl,Kossuth Lajos utca 7.,47.58536,17.693375,,False
+rossmann-321,Rossmann,9100,Tét,Győri út 29,47.5163,17.51704,,False
+rossmann-116,Rossmann,9200,Mosonmagyaróvár,Erkel Ferenc utca 5.,47.8744,17.26939,,False
+lidl-123,Lidl,9200,Mosonmagyaróvár,Királyhidai utca 49.,47.87669,17.26232,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-5004,Tesco,9200,Mosonmagyaróvár,Szent I. út 96.,47.85657,17.27701,,False
+spar-407,Spar,9200,Mosonmagyaróvár,Régi Vámház tér 5.,47.87225,17.26903,,False
+penny-22,Penny,9200,Mosonmagyaróvár,Szent István király u. 52.,47.860622,17.275864,,False
+spar-461,Spar,9200,Mosonmagyaróvár,Aranyossziget u. 1,47.86179,17.27649,,False
+aldi-J007,Aldi,9200,Mosonmagyaróvár,Királyhidai út 63.,47.87927,17.25577,,False
+tesco-5005,Tesco,9200,Mosonmagyaróvár,Szent I. út 44.,47.861304,17.274927,,False
+tesco-5003,Tesco,9200,Mosonmagyaróvár,Magyar út 32-34,47.8756104,17.2707691,,False
+mueller-5204,Müller,9200,Mosonmagyaróvár,Szekeres Richárd utca 19,47.87823495,17.25937052,,False
+dm-394,dm,9200,Mosonmagyaróvár,Királyhidai u. 67.,47.880017,17.2570177,,False
+tesco-1670,Tesco,9200,Mosonmagyaróvár,Királyhidai utca 42.,47.8790588,17.2549,,False
+tesco-5015,Tesco,9221,Levél,Szövetkezet út 84,47.8958511,17.2124195,,False
+spar-424,Spar,9300,Csorna,Erzsébet k. u. 5.,47.609987,17.248309,,False
+tesco-1920,Tesco,9300,Csorna,Bartók Béla u. 3/c,47.6074104,17.2445107,,False
+spar-462,Spar,9300,Csorna,Mártírok tér 1,47.610484,17.248771,,False
+penny-29,Penny,9300,Csorna,Soproni u. 66/D.,47.609797,17.240016,,False
+rossmann-48,Rossmann,9300,Csorna,Mártírok tere 1.,47.6111,17.25045,,False
+lidl-138,Lidl,9300,Csorna,Soproni út 66/C.,47.61027,17.24063,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+penny-60,Penny,9330,Kapuvár,Berg Gusztáv u. 1340/23hrsz.,47.592187,17.035681,,False
+spar-463,Spar,9330,Kapuvár,Győri u.,47.592923,17.028812,,False
+rossmann-219,Rossmann,9330,Kapuvár,Fő tér 27.,47.59366,17.02436,,False
+lidl-363,Lidl,9330,Kapuvár,Győri u. 60.,47.592,17.03938,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-403,Spar,9330,Kapuvár,Fő tér 2,47.592575,17.02713,,False
+dm-387,dm,9400,Sopron,Lackner Kristóf utca 35.,47.6976822,16.5800206,,False
+dm-257,dm,9400,Sopron,Határdomb út 2.,47.67229,16.61305,,False
+lidl-184,Lidl,9400,Sopron,Lófuttató utca 4.,47.674,16.60143,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+auchan-124,Auchan,9400,Sopron,Lackner Kristóf u. 35,47.6904447,16.5810484,,False
+spar-8224,Spar,9400,Sopron,Selmeczi út. 15-17,47.689585,16.583954,,False
+lidl-291,Lidl,9400,Sopron,Bánfalvi út 12.,47.68538,16.56848,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+mueller-5207,Müller,9400,Sopron,Ipar körút 31,47.66944178,16.60985941,,False
+rossmann-382,Rossmann,9400,Sopron,Ipari krt. 30.,47.66986,16.61273,,False
+tesco-1530,Tesco,9400,Sopron,Ipar körút 30.,47.6703987,16.6112499,,False
+spar-404,Spar,9400,Sopron,Arany János u. 16,47.677796,16.588495,,False
+aldi-J170,Aldi,9400,Sopron,Gyár utca 2.,47.68981,16.58137,,False
+rossmann-298,Rossmann,9400,Sopron,Bánfalvi út 6-8.,47.685011,16.570746,,False
+tesco-5012,Tesco,9400,Sopron,József Attila út 1.,47.677074,16.58427,,False
+spar-410,Spar,9400,Sopron,Bánfalvi út,47.68517,16.57037,,False
+rossmann-127,Rossmann,9400,Sopron,Kodály Zoltán tér 16.,47.69049,16.57716,,False
+dm-341,dm,9400,Sopron,Várkerület 100-102.,47.68409,16.59222,,False
+tesco-5011,Tesco,9400,Sopron,Végfordulat út 9,47.681662,16.58448,,False
+aldi-J111,Aldi,9400,Sopron,Ágfalvi út 4/A.,47.68661,16.56352,,False
+tesco-5009,Tesco,9400,Sopron,Lackner K. út 11,47.688542,16.586546,,False
+tesco-5010,Tesco,9400,Sopron,IV László K. út 39.,47.6922684,16.5727997,,False
+penny-175,Penny,9400,Sopron,Határdomb u. 2.,47.672458,16.613015,,False
+spar-464,Spar,9400,Sopron,Csarnok u. 10,47.687153,16.585743,,False
+tesco-5007,Tesco,9400,Sopron,Hátsókapu út 8.,47.6835289,16.5913792,,False
+dm-370,dm,9400,Sopron,Besenyő utca 19/a.,47.6866646,16.5635568,,False
+spar-465,Spar,9400,Sopron,Kodály tér 18,47.691096,16.575467,,False
+tesco-5006,Tesco,9400,Sopron,Király J. út 3.,47.6790314,16.5929298,,False
+aldi-J021,Aldi,9400,Sopron,Győri út 45.,47.67081,16.61698,,False
+rossmann-145,Rossmann,9400,Sopron,Várkerület 81.,47.68321,16.5918,,False
+spar-406,Spar,9443,Petőháza,Spar út 1.,47.589626,16.890452,,False
+dm-260,dm,9443,Petőháza,Spar út (hrsz.269/109) 1.,47.5899078,16.8896676,,False
+tesco-4058,Tesco,9500,Celldömölk,Sági út 41.,47.2524986,17.15242,,False
+aldi-J172,Aldi,9500,Celldömölk,Nemesdölki u. 15,47.26204670748326,17.140174262252792,,False
+spar-208,Spar,9500,Celldömölk,Sági út 22.,47.2541,17.15344,,False
+rossmann-80,Rossmann,9500,Celldömölk,Széchenyi utca 2.,47.25784,17.15188,,False
+dm-208,dm,9500,Celldömölk,Dr. Géfin Lajos tér 2.,47.25618,17.15307,,False
+penny-40,Penny,9500,Celldömölk,Sági u. 56/a.,47.249281,17.152692,,False
+spar-213,Spar,9600,Sárvár,Laktanya u 32-44.,47.25428,16.92909,,False
+aldi-J171,Aldi,9600,Sárvár,Deák Ferenc utca 14.,47.257246,16.938129,,False
+lidl-196,Lidl,9600,Sárvár,Rákóczi utca 12.,47.25025,16.94171,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+tesco-1033,Tesco,9600,Sárvár,Rákóczi u. 83.,47.247508,16.95206,,False
+rossmann-178,Rossmann,9600,Sárvár,Batthyány utca 38.,47.25268,16.93121,,False
+dm-107,dm,9600,Sárvár,Batthyány Lajos utca 16.,47.25341,16.93304,,False
+penny-61,Penny,9600,Sárvár,Batthyány u. 71.,47.254136,16.925321,,False
+dm-79,dm,9700,Szombathely,Körmendi út HRSZ.9591,47.21455,16.62219,,False
+rossmann-242,Rossmann,9700,Szombathely,Körmendi út 52-54.,47.22209,16.61751,,False
+penny-210,Penny,9700,Szombathely,Gazdag Erzsi u. 12.,47.242792,16.59007,,False
+penny-220,Penny,9700,Szombathely,Körmendi út 42-48.,47.222804,16.616988,,False
+tesco-1500,Tesco,9700,Szombathely,Zanati utca 70.,47.2488289,16.6727104,,False
+rossmann-387,Rossmann,9700,Mosonmagyaróvár,Királyhidai u.42,47.876483,17.25703,,False
+spar-8208,Spar,9700,Szombathely,Újvilág u.,47.214359,16.621832,,False
+aldi-J228,Aldi,9700,Szombathely,Szent Márton u. 57-61.,47.23363,16.63042,,False
+spar-214,Spar,9700,Szombathely,Szt.Márton u. 21,47.23209,16.62653,,False
+dm-195,dm,9700,Szombathely,Varasd utca 1.,47.2362075,16.6543577,,False
+mueller-5208,Müller,9700,Szombathely,Viktória utca 12,47.2554081,16.62152586,,False
+aldi-J027,Aldi,9700,Szombathely,Demeter utca 2.,47.25485,16.61883,,False
+lidl-301,Lidl,9700,Szombathely,Zanati út 42,47.23865,16.64467,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-272,Spar,9700,Szombathely,Szűrcsapó u. 23,47.23828,16.60584,,False
+dm-56,dm,9700,Szombathely,Fő tér 41,47.23072,16.62217,,False
+rossmann-148,Rossmann,9700,Szombathely,Éhen Gyula tér 3-5.,47.2365,16.63183,,False
+lidl-143,Lidl,9700,Szombathely,Kenyérvíz utca 2.,47.22418,16.63221,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+aldi-J012,Aldi,9700,Szombathely,Szent Gellért utca 49.,47.21473,16.61897,,False
+lidl-139,Lidl,9700,Szombathely,Verseny utca 30.,47.25349,16.61867,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-273,Spar,9700,Szombathely,11-es Huszár u. 39-45,47.241235,16.622901,,False
+spar-203,Spar,9700,Szombathely,Körmendi út 52-54.,47.221546,16.617611,,False
+spar-206,Spar,9700,Szombathely,Hefele Menyhért u.3-5.,47.22978,16.61967,,False
+penny-164,Penny,9700,Szombathely,Sárvár u. 1.,47.239508,16.648364,,False
+tesco-4001,Tesco,9700,Szombathely,Gazdag E. út 10,47.243254,16.590019,,False
+spar-211,Spar,9700,Szombathely,Kiskar u. 6.,47.2299,16.61679,,False
+rossmann-283,Rossmann,9700,Szombathely,Fő tér 12.,47.2310708,16.6227139,,False
+dm-164,dm,9700,Szombathely,Szűrcsapó utca 23.,47.2388,16.60606,,False
+tesco-1060,Tesco,9730,Kőszeg,Pogányi út 7.,47.385918,16.539713,,False
+rossmann-130,Rossmann,9730,Kőszeg,Rákóczi út 23.,47.38622,16.54297,,False
+penny-79,Penny,9730,Kőszeg,Pogányi út 1.,47.380797,16.555503,,False
+spar-274,Spar,9730,Kőszeg,Rákóczi F. u. 80-82,47.38282,16.54892,,False
+dm-338,dm,9730,Kőszeg,Pogányi út 7.,47.38015,16.55451,,False
+lidl-394,Lidl,9730,Kőszeg,Cáki út 2.,47.37898,16.55703,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 7:00-19:01,False
+dm-301,dm,9737,Bük,Kossuth Lajos utca 127/a.,47.3749782,16.7707072,,False
+penny-280,Penny,9737,Bük,"Kossuth Lajos utca 80., 1610 Hrsz",47.37407,16.76632,,False
+spar-275,Spar,9800,Vasvár,Alkotmány u. 95,47.056936,16.807907,,False
+penny-41,Penny,9900,Körmend,Rákóczi u. 49.,47.008966,16.593938,,False
+tesco-1012,Tesco,9900,Körmend,Sport út 5,47.0150414,16.6133003,,False
+dm-426,dm,9900,Körmend,Rákóczi út 55.,47.0091033,16.5913986,,False
+aldi-J173,Aldi,9900,Körmend,Rákóczi utca 57.,47.00941158441045,16.59038390405865,,False
+spar-276,Spar,9900,Körmend,Rákóczi út 2/C,47.01216,16.60739,,False
+lidl-182,Lidl,9900,Körmend,Dr. Remetei Filep utca 2.,47.00903,16.5932,Nyitvatartás: 06:30-21:00#Nyitvatartás - Vasárnap: 07:00-19:00,False
+spar-277,Spar,9970,Szentgotthárd,Hunyadi u. 21,46.95557,16.26959,,False
+penny-105,Penny,9970,Szentgotthárd,Füzesi u. 5.,46.958558,16.276441,,False
+dm-375,dm,9970,Szentgotthárd,Füzesi út 5/a.,46.9582504,16.2760818,,False

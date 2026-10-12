@@ -1,0 +1,162 @@
+leaf_id,name,path,top
+1,"Pasztőrözött ESL tej, 2,8% zsírtart.",tejtermek_sajt_tojas/tej/esl_28,"Tejtermék, sajt, tojás"
+2,"Pasztőrözött ESL tej, 1,5% zsírtart.",tejtermek_sajt_tojas/tej/esl_15,"Tejtermék, sajt, tojás"
+3,"UHT tej dobozban, 2,8% zsírtart.",tejtermek_sajt_tojas/tej/uht_28,"Tejtermék, sajt, tojás"
+4,"UHT tej dobozban, 1,5% zsírtart.",tejtermek_sajt_tojas/tej/uht_15,"Tejtermék, sajt, tojás"
+5,Tejföl 20% zsírtart.,tejtermek_sajt_tojas/tejfol/tejfol_20,"Tejtermék, sajt, tojás"
+6,Tejföl 12% zsírtart.,tejtermek_sajt_tojas/tejfol/tejfol_12,"Tejtermék, sajt, tojás"
+7,Natúr joghurt,tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt,"Tejtermék, sajt, tojás"
+8,Kefir és kaukázusi kefir,tejtermek_sajt_tojas/joghurt_turo_kefir/kefir,"Tejtermék, sajt, tojás"
+9,Tehéntúró,tejtermek_sajt_tojas/joghurt_turo_kefir/tehenturo,"Tejtermék, sajt, tojás"
+84,Gyümölcsjoghurt,tejtermek_sajt_tojas/joghurt_turo_kefir/gyumolcsjoghurt,"Tejtermék, sajt, tojás"
+10,Trappista tömbsajt,tejtermek_sajt_tojas/sajt/trappista_tombsajt,"Tejtermék, sajt, tojás"
+105,Trappista darabolt sajt,tejtermek_sajt_tojas/sajt/trappista_darabolt_sajt,"Tejtermék, sajt, tojás"
+106,Trappista szeletelt sajt,tejtermek_sajt_tojas/sajt/trappista_szeletelt_sajt,"Tejtermék, sajt, tojás"
+107,Ementáli,tejtermek_sajt_tojas/sajt/ementali,"Tejtermék, sajt, tojás"
+108,Cheddar,tejtermek_sajt_tojas/sajt/cheddar,"Tejtermék, sajt, tojás"
+109,Gouda,tejtermek_sajt_tojas/sajt/gouda,"Tejtermék, sajt, tojás"
+110,Edami,tejtermek_sajt_tojas/sajt/edami,"Tejtermék, sajt, tojás"
+111,Camambert,tejtermek_sajt_tojas/sajt/camambert,"Tejtermék, sajt, tojás"
+112,Brie,tejtermek_sajt_tojas/sajt/brie,"Tejtermék, sajt, tojás"
+113,Feta,tejtermek_sajt_tojas/sajt/feta,"Tejtermék, sajt, tojás"
+114,Mozzarella,tejtermek_sajt_tojas/sajt/mozzarella,"Tejtermék, sajt, tojás"
+115,Ömlesztett sajtok,tejtermek_sajt_tojas/sajt/omlesztettsajtok,"Tejtermék, sajt, tojás"
+11,Margarin,tejtermek_sajt_tojas/vaj_vajkrem_margarin/margarin,"Tejtermék, sajt, tojás"
+12,Vaj,tejtermek_sajt_tojas/vaj_vajkrem_margarin/vaj,"Tejtermék, sajt, tojás"
+13,Vajkrém,tejtermek_sajt_tojas/vaj_vajkrem_margarin/vajkrem,"Tejtermék, sajt, tojás"
+63,Sütőmargarin,tejtermek_sajt_tojas/vaj_vajkrem_margarin/sutomargarin,"Tejtermék, sajt, tojás"
+14,Tojás,tejtermek_sajt_tojas/tojasok/tojas,"Tejtermék, sajt, tojás"
+81,Főzőtejszín,tejtermek_sajt_tojas/tejszin/fozotejszin,"Tejtermék, sajt, tojás"
+82,Habtejszín,tejtermek_sajt_tojas/tejszin/habtejszin,"Tejtermék, sajt, tojás"
+116,Túródesszert,tejtermek_sajt_tojas/tejdesszert/turodesszert,"Tejtermék, sajt, tojás"
+15,Sertéscomb,hus_hal_felvagott/sertes/sertes_comb,"Hús, hal, felvágott"
+16,Sertéskaraj,hus_hal_felvagott/sertes/sertes_karaj,"Hús, hal, felvágott"
+85,Darált sertéshús,hus_hal_felvagott/sertes/daralt_serteshus,"Hús, hal, felvágott"
+118,Sertésoldalas,hus_hal_felvagott/sertes/sertesoldalas,"Hús, hal, felvágott"
+119,Sertéstarja,hus_hal_felvagott/sertes/sertestarja,"Hús, hal, felvágott"
+17,Egész csirke és tyúk,hus_hal_felvagott/szarnyas/csirke_egesz,"Hús, hal, felvágott"
+18,Csirkemellfilé,hus_hal_felvagott/szarnyas/csirkemell,"Hús, hal, felvágott"
+19,Csirkecomb,hus_hal_felvagott/szarnyas/csirkecomb,"Hús, hal, felvágott"
+20,Csirkeszárny,hus_hal_felvagott/szarnyas/csirkeszarny,"Hús, hal, felvágott"
+21,Pulykamellfilé,hus_hal_felvagott/szarnyas/pulykamell,"Hús, hal, felvágott"
+64,Marhalábszár,hus_hal_felvagott/marha/marhalabszar,"Hús, hal, felvágott"
+86,Darált marhahús,hus_hal_felvagott/marha/daralt_marhahus,"Hús, hal, felvágott"
+87,Fehérpecsenye,hus_hal_felvagott/marha/feherpecsenye,"Hús, hal, felvágott"
+22,Sertészsír,hus_hal_felvagott/egyeb_huskeszitmeny/sertes_zsir,"Hús, hal, felvágott"
+23,Virsli,hus_hal_felvagott/egyeb_huskeszitmeny/virsli,"Hús, hal, felvágott"
+24,Párizsi,hus_hal_felvagott/felvagott/parizsi,"Hús, hal, felvágott"
+25,Téliszalámi,hus_hal_felvagott/felvagott/teliszalami,"Hús, hal, felvágott"
+26,Pulykamell sonka,hus_hal_felvagott/felvagott/sonka_pulykamell,"Hús, hal, felvágott"
+27,"Sonka, sertéscombból",hus_hal_felvagott/felvagott/sonka_sertescomb,"Hús, hal, felvágott"
+88,Szárazkolbász,hus_hal_felvagott/kolbasz/szarazkolbasz,"Hús, hal, felvágott"
+89,Császárszalonna,hus_hal_felvagott/szalonna/csaszarszalonna,"Hús, hal, felvágott"
+90,Kolozsvári szalonna,hus_hal_felvagott/szalonna/kolozsvariszalonna,"Hús, hal, felvágott"
+91,Pontyszelet,hus_hal_felvagott/hal/pontyszelet,"Hús, hal, felvágott"
+92,Harcsafilé,hus_hal_felvagott/hal/harcsafile,"Hús, hal, felvágott"
+93,Tengeri halfilé,hus_hal_felvagott/hal/tengeri_halfile,"Hús, hal, felvágott"
+28,Alma,zoldseg_gyumolcs/gyumolcs/alma,"Zöldség, gyümölcs"
+29,Körte,zoldseg_gyumolcs/gyumolcs/korte,"Zöldség, gyümölcs"
+30,Földieper,zoldseg_gyumolcs/gyumolcs/foldieper,"Zöldség, gyümölcs"
+31,Banán,zoldseg_gyumolcs/gyumolcs/banan,"Zöldség, gyümölcs"
+32,Citrom,zoldseg_gyumolcs/gyumolcs/citrom,"Zöldség, gyümölcs"
+33,Narancs,zoldseg_gyumolcs/gyumolcs/narancs,"Zöldség, gyümölcs"
+34,Paradicsom,zoldseg_gyumolcs/zoldseg/paradicsom,"Zöldség, gyümölcs"
+35,Zöldpaprika,zoldseg_gyumolcs/zoldseg/zoldpaprika,"Zöldség, gyümölcs"
+36,Sárgarépa,zoldseg_gyumolcs/zoldseg/sargarepa,"Zöldség, gyümölcs"
+37,Petrezselyemgyökér,zoldseg_gyumolcs/zoldseg/petrezselyemgyoker,"Zöldség, gyümölcs"
+38,Uborka,zoldseg_gyumolcs/zoldseg/uborka,"Zöldség, gyümölcs"
+39,Fokhagyma,zoldseg_gyumolcs/zoldseg/fokhagyma,"Zöldség, gyümölcs"
+40,Vöröshagyma,zoldseg_gyumolcs/zoldseg/voroshagyma,"Zöldség, gyümölcs"
+41,Étkezési burgonya,zoldseg_gyumolcs/zoldseg/burgonya,"Zöldség, gyümölcs"
+42,Étkezési újburgonya,zoldseg_gyumolcs/zoldseg/ujburgonya,"Zöldség, gyümölcs"
+43,Fejes káposzta,zoldseg_gyumolcs/zoldseg/fejeskaposzta,"Zöldség, gyümölcs"
+44,Kelkáposzta,zoldseg_gyumolcs/zoldseg/kelkaposzta,"Zöldség, gyümölcs"
+45,Karfiol,zoldseg_gyumolcs/zoldseg/karfiol,"Zöldség, gyümölcs"
+97,Brokkoli,zoldseg_gyumolcs/zoldseg/brokkoli,"Zöldség, gyümölcs"
+59,Gyorsfagyasztott zöldborsó,zoldseg_gyumolcs/fagyasztott_zoldseg/gyorsfagyasztott_zoldborso,"Zöldség, gyümölcs"
+60,Hasábburgonya,zoldseg_gyumolcs/fagyasztott_zoldseg/hasabburgonya,"Zöldség, gyümölcs"
+98,Fagyasztott brokkoli,zoldseg_gyumolcs/fagyasztott_zoldseg/fagyasztott_brokkoli,"Zöldség, gyümölcs"
+46,"Fehér kenyér, cipó és vekni",pekaru/kenyerfelek/feherkenyer_cipo,Pékáru
+47,"Félbarna kenyér, cipó és vekni",pekaru/kenyerfelek/felbarnakenyer_cipo,Pékáru
+48,"Teljes kiőrlésű kenyér, cipó és vekni",pekaru/kenyerfelek/teljeskiorlesu_kenyer_cipo,Pékáru
+49,"Rozsos kenyér, cipó és vekni",pekaru/kenyerfelek/rozskenyer_cipo,Pékáru
+94,Zsemle,pekaru/zsemle/zsemle,Pékáru
+50,Száraztészta,tartos_elelmiszer_ital/teszta_haztartasikeksz/szarazteszta,"Tartós élelmiszerek, italok"
+58,Háztartási keksz,tartos_elelmiszer_ital/teszta_haztartasikeksz/haztartasikeksz,"Tartós élelmiszerek, italok"
+51,"Étolaj, napraforgó",tartos_elelmiszer_ital/liszt_cukor_olaj/etolaj,"Tartós élelmiszerek, italok"
+52,Finomliszt,tartos_elelmiszer_ital/liszt_cukor_olaj/finomliszt,"Tartós élelmiszerek, italok"
+53,Rétesliszt,tartos_elelmiszer_ital/liszt_cukor_olaj/retesliszt,"Tartós élelmiszerek, italok"
+54,Kristálycukor,tartos_elelmiszer_ital/liszt_cukor_olaj/kristalycukor,"Tartós élelmiszerek, italok"
+55,Porcukor,tartos_elelmiszer_ital/liszt_cukor_olaj/porcukor,"Tartós élelmiszerek, italok"
+120,Extra szűz olívaolaj,tartos_elelmiszer_ital/liszt_cukor_olaj/extraszuzolivaolaj,"Tartós élelmiszerek, italok"
+121,Olívapogácsa olaj,tartos_elelmiszer_ital/liszt_cukor_olaj/olivapogacsaolaj,"Tartós élelmiszerek, italok"
+56,Csemegekukorica-konzerv,tartos_elelmiszer_ital/konzerv_savanyusag/csemegekukoricakonzerv,"Tartós élelmiszerek, italok"
+57,Csemegeuborka,tartos_elelmiszer_ital/konzerv_savanyusag/csemegeuborka,"Tartós élelmiszerek, italok"
+61,Narancslé,tartos_elelmiszer_ital/viz_gyumolcsle/narancsle,"Tartós élelmiszerek, italok"
+62,Almalé,tartos_elelmiszer_ital/viz_gyumolcsle/almale,"Tartós élelmiszerek, italok"
+67,Ásványvíz,tartos_elelmiszer_ital/viz_gyumolcsle/asvanyviz,"Tartós élelmiszerek, italok"
+95,Rizs,tartos_elelmiszer_ital/rizs/rizs,"Tartós élelmiszerek, italok"
+96,Lencse,tartos_elelmiszer_ital/huvelyesek_magvak/lencse,"Tartós élelmiszerek, italok"
+100,Földimogyoró,tartos_elelmiszer_ital/huvelyesek_magvak/foldimogyoro,"Tartós élelmiszerek, italok"
+101,Őrölt kávé,tartos_elelmiszer_ital/tea_kave/orolt_kave,"Tartós élelmiszerek, italok"
+102,Tea,tartos_elelmiszer_ital/tea_kave/tea,"Tartós élelmiszerek, italok"
+122,Szemes kávé,tartos_elelmiszer_ital/tea_kave/szemeskave,"Tartós élelmiszerek, italok"
+103,Kakaópor 10-12% kakaóvajjal,tartos_elelmiszer_ital/kakao/kakaopor_10_12,"Tartós élelmiszerek, italok"
+104,Kakaópor 20-22% kakaóvajjal,tartos_elelmiszer_ital/kakao/kakaopor_20_22,"Tartós élelmiszerek, italok"
+68,Növényi italok,specialis_etrend/novenyi_termekek/novenyi_italok,Speciális étrend
+78,Tejföl helyettesítésére szolgáló vegán növényi krém,specialis_etrend/novenyi_termekek/vegan_novenyi_krem_tejfol,Speciális étrend
+83,Tejszín helyettesítésére szolgáló növényi krém,specialis_etrend/novenyi_termekek/vegan_novenyi_krem_tejszin,Speciális étrend
+69,Laktózmentes tej,specialis_etrend/laktozmentes_termekek/laktozmentes_tej,Speciális étrend
+70,Laktózmentes tejföl,specialis_etrend/laktozmentes_termekek/laktozmentes_tejfol,Speciális étrend
+71,Laktózmentes natúr joghurt,specialis_etrend/laktozmentes_termekek/laktozmentes_natur_joghurt,Speciális étrend
+72,Laktózmentes kefir,specialis_etrend/laktozmentes_termekek/laktozmentes_kefir,Speciális étrend
+73,Laktózmentes túró,specialis_etrend/laktozmentes_termekek/laktozmentes_turo,Speciális étrend
+74,Laktózmentes trappista sajt,specialis_etrend/laktozmentes_termekek/laktozmentes_trappista_sajt,Speciális étrend
+75,Laktózmentes margarin és sütőmargarin,specialis_etrend/laktozmentes_termekek/laktozmentes_margarin_sutomargarin,Speciális étrend
+76,Laktózmentes vaj,specialis_etrend/laktozmentes_termekek/laktozmentes_vaj,Speciális étrend
+77,Laktózmentes vajkrém,specialis_etrend/laktozmentes_termekek/laktozmentes_vajkrem,Speciális étrend
+79,"Gluténmentes kenyér, cipó és vekni",specialis_etrend/glutenmentes_termekek/glutenmentes_kenyer_cipo_vekni,Speciális étrend
+80,Gluténmentes száraztészta,specialis_etrend/glutenmentes_termekek/glutozmentes_szarazteszta,Speciális étrend
+99,Gluténmentes liszt,specialis_etrend/glutenmentes_termekek/glutenmentes_liszt,Speciális étrend
+117,Laktózmentes túródesszert,specialis_etrend/laktozmentestejdesszert/laktozmentesturodesszert,Speciális étrend
+123,Pépes bébiétel,baba/bebietel_tapszer/pepesbebietel,Baba
+124,Tej- és gabonapép,baba/bebietel_tapszer/tej_gabonapep,Baba
+125,Tápszer,baba/bebietel_tapszer/tapszer,Baba
+142,Babasampon,baba/babaapolas/babasampon,Baba
+144,Babatusfürdő és fürdető,baba/babaapolas/babatusfurdo_furdeto,Baba
+150,Babatestápló,baba/babaapolas/babatestaplo,Baba
+163,Hintőpor,baba/babaapolas/hintopor,Baba
+161,Nadrágpelenka,baba/eldobhatopelenka/nadragpelenka,Baba
+162,Bugyipelenka,baba/eldobhatopelenka/bugyipelenka,Baba
+126,Toalettpapír,haztartas/haztartasi_papiraru_csomagolo/toalettpapir,Háztartás
+127,Papír kéztörlő henger,haztartas/haztartasi_papiraru_csomagolo/papirkeztorlohenger,Háztartás
+128,Papír zsebkendő,haztartas/haztartasi_papiraru_csomagolo/papirzsebkendo,Háztartás
+129,Alufólia,haztartas/haztartasi_papiraru_csomagolo/alufolia,Háztartás
+130,Mosópor,haztartas/ruhatisztitas/mosopor,Háztartás
+131,Folyékony mosószer,haztartas/ruhatisztitas/folyekonymososzer,Háztartás
+132,Mosókapszula,haztartas/ruhatisztitas/mosokapszula,Háztartás
+133,Öblítő,haztartas/ruhatisztitas/oblito,Háztartás
+134,Mosogatószer,haztartas/tisztitoszer/mosogatoszer,Háztartás
+135,Gépi mosogató tabletta,haztartas/tisztitoszer/gepimosogatotabletta,Háztartás
+136,Folyékony súrolószer,haztartas/tisztitoszer/folyekonysuroloszer,Háztartás
+137,Általános tisztítószer,haztartas/tisztitoszer/altalanostisztitoszer,Háztartás
+138,Folyékony szappan,szepseg_higienia/tisztalkodas/folyekonyszappan,Szépség és higiénia
+139,Szappan,szepseg_higienia/tisztalkodas/szappan,Szépség és higiénia
+140,Kézfertőtlenítő gél,szepseg_higienia/tisztalkodas/kezfertotlenitogel,Szépség és higiénia
+141,Sampon,szepseg_higienia/tisztalkodas/sampon,Szépség és higiénia
+143,Tusfürdő,szepseg_higienia/tisztalkodas/tusfurdo,Szépség és higiénia
+145,Fogkrém,szepseg_higienia/tisztalkodas/fogkrem,Szépség és higiénia
+146,Gyermek fogkrém,szepseg_higienia/tisztalkodas/gyermekfogkrem,Szépség és higiénia
+147,Fogkefe,szepseg_higienia/tisztalkodas/fogkefe,Szépség és higiénia
+148,Gyermek fogkefe,szepseg_higienia/tisztalkodas/gyermekfogkefe,Szépség és higiénia
+149,Testápoló,szepseg_higienia/szepsegapolas/testapolo,Szépség és higiénia
+151,Golyós dezodor,szepseg_higienia/szepsegapolas/golyosdezodor,Szépség és higiénia
+152,Izzadásgátló stift,szepseg_higienia/szepsegapolas/izzadasgatlostift,Szépség és higiénia
+153,Dezodor,szepseg_higienia/szepsegapolas/dezodor,Szépség és higiénia
+154,Eldobható borotva,szepseg_higienia/szepsegapolas/eldobhatoborotva,Szépség és higiénia
+155,Utántöltő borotvafej,szepseg_higienia/szepsegapolas/utantoltoborotvafej,Szépség és higiénia
+156,Borotvahab,szepseg_higienia/szepsegapolas/borotvahab,Szépség és higiénia
+157,Borotvazselé,szepseg_higienia/szepsegapolas/borotvazsele,Szépség és higiénia
+158,Egészségügyi betét,szepseg_higienia/intimhigienia/egeszsegugyibetet,Szépség és higiénia
+159,Tisztasági betét,szepseg_higienia/intimhigienia/tisztasagibetet,Szépség és higiénia
+160,Tampon,szepseg_higienia/intimhigienia/tampon,Szépség és higiénia

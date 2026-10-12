@@ -1,0 +1,22 @@
+variant,mode,chain,items_found,cost_imputed_missing_at_median,cost_common_items,n_common_items,missing
+typical_store_modal_price,all,Lidl,24,13850,11906,20,Fokhagyma
+typical_store_modal_price,all,Aldi,24,14797,12697,20,Rizs
+typical_store_modal_price,all,Penny,25,15446,13472,20,
+typical_store_modal_price,all,Spar,24,16008,13632,20,Teljes kiőrlésű kenyér
+typical_store_modal_price,all,Auchan,23,16822,14209,20,Uborka (kígyóuborka);Fejes káposzta
+typical_store_modal_price,all,Tesco,25,16855,13103,20,
+typical_store_modal_price,all,CHERRY-PICK (6 chains),25,13140,11401,20,
+typical_store_modal_price,no_loyalty,Lidl,24,13850,11906,20,Fokhagyma
+typical_store_modal_price,no_loyalty,Aldi,24,14797,12697,20,Rizs
+typical_store_modal_price,no_loyalty,Penny,25,15446,13472,20,
+typical_store_modal_price,no_loyalty,Spar,24,16008,13632,20,Teljes kiőrlésű kenyér
+typical_store_modal_price,no_loyalty,Tesco,25,16855,13103,20,
+typical_store_modal_price,no_loyalty,Auchan,23,16939,14326,20,Uborka (kígyóuborka);Fejes káposzta
+typical_store_modal_price,no_loyalty,CHERRY-PICK (6 chains),25,13140,11401,20,
+typical_store_modal_price,normal,Lidl,24,14050,12106,20,Fokhagyma
+typical_store_modal_price,normal,Aldi,24,14797,12697,20,Rizs
+typical_store_modal_price,normal,Penny,25,15766,13472,20,
+typical_store_modal_price,normal,Spar,24,16345,13970,20,Teljes kiőrlésű kenyér
+typical_store_modal_price,normal,Auchan,23,17238,14426,20,Uborka (kígyóuborka);Fejes káposzta
+typical_store_modal_price,normal,Tesco,25,17696,13584,20,
+typical_store_modal_price,normal,CHERRY-PICK (6 chains),25,13683,11783,20,

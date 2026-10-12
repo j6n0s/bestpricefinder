@@ -1,0 +1,103 @@
+DRAFT — FOR THE FOUNDER TO FILE THEMSELVES. NOTHING HAS BEEN SUBMITTED.
+Prepared 2026-10-12. Research, not legal advice; a short review by a Hungarian lawyer before filing is advisable.
+
+HOW TO FILE (VERIFIED from https://kozadatportal.hu/pdf/utmutato_adathasznositas.pdf?ver=2 and Act CI 2023 §19(3), §62)
+1. Go to kozadatportal.hu → "Adathasznosítás" → "Adathasznosítás-támogatási szolgáltatások igénylése". This redirects to SZÜF (magyarorszag.hu).
+2. Click "Ügyintézés indítása". Log in through KAÜ (Ügyfélkapu+ / DÁP). File as "Cégkapu" if a company exists, otherwise as "Természetes személy".
+3. Fill in:
+   - 3.1 Igénylő beazonosítása (name, address/seat, phone, e-mail);
+   - 3.2 "Szolgáltatás típusa" → choose the item for "nem személyes és nem védett adat rendelkezésre bocsátása" (wording may differ);
+   - "Igény szöveges indoklása" → paste the text below;
+   - 3.3 Csatolmány: PDF/DOCX/XLSX only. If a fee arises, attach the request signed with an e-signature (eAláírás/AVDH), per Act CI §58(2)-(3).
+4. Click "Ellenőrzések futtatása", then "Kitöltés befejezése", then "Beküldés folytatása". Save the PDF/KR copy.
+5. Questions go to igenykezeles@navu.hu.
+Deadlines to diary, counted from complete receipt by GVH (Act CI):
+   - formal check: 5 working days (§64(3));
+   - deficiency notice: 5–10 working days to fix (§64(5));
+   - decision: 20 working days, extendable once by 20 (§65);
+   - court action: within 10 working days of a refusal or a missed deadline (§72(2)).
+
+======================================================================
+"IGÉNY SZÖVEGES INDOKLÁSA" (paste into the form)
+======================================================================
+
+Tárgy: Az árfigyelő rendszer nem archivált adatainak rendelkezésre bocsátása további felhasználás céljára (2023. évi CI. törvény 35. §, 62–69. §)
+
+Szolgáltató (az adatot kezelő közfeladatot ellátó szerv): Gazdasági Versenyhivatal, mint az árfigyelő rendszer üzemeltetője (2025. évi L. törvény 56. §, 70. §).
+
+1. Kifejezett nyilatkozat [Nahtv. 64. § (1) a)]
+Kifejezetten nyilatkozom, hogy az alábbiakban megjelölt közadatokat a nemzeti adatvagyon hasznosításának rendszeréről és az egyes szolgáltatásokról szóló 2023. évi CI. törvény szerinti további felhasználás céljára kérem.
+
+2. Igénylő adatai [64. § (1) b)]
+Név / cégnév: [..............]
+Lakcím / székhely: [..............]
+Kapcsolattartó telefonszám: [..............]
+Elektronikus levélcím: [..............]
+
+3. Az igényelt közadatok pontos megjelölése [64. § (1) c)]
+Az árfigyelő rendszerben nyilvántartott, a 2025. évi L. törvény 70. §-a szerint nyilvános (nem archivált) adatok:
+ a) kereskedők és üzletek (57. § (1) a)): kereskedő azonosítója és neve; üzlet azonosítója, irányítószáma, települése, címe, földrajzi koordinátái és nyitvatartási ideje;
+ b) termékkategóriák: azonosító, megnevezés, hierarchia;
+ c) a termék azonosításához szükséges adatok (57. § (1) ba)): termékazonosító (vonalkód vagy kereskedői azonosító), megnevezés, márka, kiszerelés, mértékegység, termékkategória — a termékkép és a termékképre mutató elérhetőség NÉLKÜL;
+ d) a termék ártípusa, napi ára, korábbi ára, törzsvásárlói ára és egységára kereskedőnként, és ahol eltér, üzletenként (57. § (1) bb)–bc), 57. § (2)), az ár érvényességi napjának megjelölésével.
+Kifejezetten NEM kérem: az archivált adatokat (2025. évi L. tv. 57. § (5)), a termékképeket, a logókat és a védjegyábrákat (Nahtv. 65. § (3) b)).
+
+4. Kívánt formátum, technikai eszköz és mód [64. § (1) d)]
+Elsődlegesen: géppel olvasható JSON formátum, dokumentált alkalmazásprogramozási interfészen (REST API) keresztül, igénylőhöz rendelt hozzáférési kulccsal. A napi adatoknál ez a Nahtv. 2. § 8. pontja és 37. § (3) bekezdése szerinti dinamikus adatként, közvetlenül a napi frissítést követően történjen.
+Emellett vagy helyette: a teljes napi adatállomány csoportos letöltése JSON vagy CSV (UTF-8) formátumban.
+Elfogadható alternatíva (Nahtv. 36. § (2)–(3), 40. § (2)): az arfigyelo.gvh.hu nyilvános felülete mögötti meglévő adatvégpontok írásban dokumentált használata, a Szolgáltató által meghatározott kéréskorlát mellett.
+Nyelv: magyar.
+
+5. Rendszeresség [64. § (1) e)]
+Naponta: a teljes napi állomány az ár érvényességi napján [06:00] óráig. A napközbeni javítások legfeljebb óránként egyszeri lekérdezéssel.
+Vállalt kéréskorlát: legfeljebb [1] kérés/másodperc és legfeljebb [....] kérés/nap, vagy a Szolgáltató által megadott ennél szigorúbb korlát.
+
+6. A további felhasználás célja és vállalt feltételek
+Fogyasztói mobilalkalmazás, amely egészséges heti étrendtervet és alapvető recepteket kínál. A receptek hozzávalóinak árát összehasonlítja, a felhasználó hozzájárulásával a közelében lévő üzletekre szűrve.
+Vállaljuk az alábbiakat:
+ - a forrás feltüntetése: „Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), [dátum]”;
+ - egyértelmű nyilatkozat, hogy az alkalmazás nem hivatalos, és nem áll kapcsolatban a Gazdasági Versenyhivatallal;
+ - a GVH és az „Árfigyelő” név, logó, arculati elemek nem szerepelnek a termék nevében, ikonjában vagy megjelenésében;
+ - az árak dátummal jelennek meg, azzal a megjegyzéssel, hogy az egyes üzletekben eltérhetnek;
+ - a nyers adatállományt nem értékesítjük tovább;
+ - termékképet nem jelenítünk meg az árfigyelő rendszerből.
+
+7. Kérések az eljárással kapcsolatban
+ (i) Kérem a 69. § (4) bekezdése szerinti, további felhasználásra vonatkozó megállapodás tervezetének megküldését.
+ (ii) Díjfizetési kötelezettség esetén kérem a díj kiszámításánál figyelembe vett tényezők előzetes közlését (5. § (2)), a 67. § (3) bekezdés szerinti határköltség-korlátra tekintettel.
+ (iii) Kérem, hogy a megállapodás az árfigyelő rendszer mindenkori üzemeltetőjére, illetve a Gazdasági Versenyhivatal jogutódjára is kiterjedjen.
+ (iv) Javaslom, hogy a Szolgáltató a 69. § (6)–(7) bekezdése szerinti általános szerződési feltételeket tegye közzé a Nemzeti Közadatportálon, és ott publikálja a nem archivált árfigyelő-adatokat is (21. § (1)). Így bármely igénylő azonos feltételekkel juthat hozzájuk (6. §).
+ (v) Kérem annak írásbeli megerősítését, hogy az eljárás ideje alatt a nyilvános felület adatainak a 6. pontban vállalt feltételek és a fenti kéréskorlát szerinti felhasználását a Szolgáltató nem kifogásolja.
+ (vi) A kapcsolattartást kizárólag elektronikus úton kérem (58. § (1)).
+
+Kelt: [hely], [dátum]
+
+======================================================================
+OPTIONAL COMPANION LETTER TO GVH (informal, sent in parallel by the founder via GVH's official electronic channel (e-Papír / Hivatali kapu) or ugyfelszolgalat@gvh.hu; NOT a substitute for the portal filing)
+======================================================================
+Tárgy: Tájékoztatás és egyeztetési kérés – az Árfigyelő nyilvános adatainak felhasználása fogyasztói alkalmazásban
+
+Tisztelt Gazdasági Versenyhivatal!
+
+A Nemzeti Közadatportálon [dátum]-án/én [iktatószám] számon igényt nyújtottam be az árfigyelő rendszer nem archivált adatainak további felhasználására (2023. évi CI. törvény 62. §).
+
+Egy egészséges étrendtervező alkalmazást fejlesztek, amely a hozzávalók árát a 2025. évi L. törvény 70. §-a szerint nyilvános árfigyelő-adatok alapján hasonlítja össze. Az alkalmazás forrásmegjelöléssel és dátummal mutatja az adatokat. Kifejezetten jelzi, hogy nem hivatalos, és nem áll kapcsolatban a GVH-val. Nem használ GVH- vagy Árfigyelő-arculatot, és nem jelenít meg termékképeket.
+
+Kérem, jelezzék, ha az adatok felhasználásának módjával kapcsolatban (például kéréskorlát, forrásmegjelölés szövege vagy technikai hozzáférés) elvárásuk van. Kérem azt is, hogy egy rövid egyeztetésre szakmai kapcsolattartót jelöljenek ki.
+
+Tisztelettel:
+[név], [cég], [elérhetőség]
+
+======================================================================
+ENGLISH SUMMARY (for the founder)
+======================================================================
+- Statutory route: Act CI 2023, general procedure. The request is filed only electronically via the portal and SZÜF, goes to NAVÜ's office storage and is forwarded to GVH.
+- The request asks for non-archived Árfigyelő data: chains, stores, categories, product IDs, and daily, previous and loyalty prices. Images and archive are excluded on purpose, so GVH has no ground to refuse under Act CI §65(3)(b) or (c).
+- It asks for API or bulk access as dynamic data (§37(3)), with a fallback of documented use of the existing endpoints. It volunteers attribution, a non-affiliation disclaimer, no branding, no images and no resale.
+- It asks for:
+  - a draft agreement;
+  - the fee factors (marginal-cost cap);
+  - a successor clause;
+  - publication of general terms on the portal, which means identical terms for everyone, a statutory duty anyway;
+  - an interim no-objection letter.
+- Placeholders are in [brackets]. Do not include any data beyond what §64(1)(b) requires.

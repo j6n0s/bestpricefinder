@@ -1,0 +1,43 @@
+mode,clean,chain,items_found,items_total,cost_found_items,cost_imputed_missing_at_median,cost_common_items,n_common_items,checkout_cost_found,missing
+all,False,Aldi,24,25,14319,14593,13165,21,17214,Rizs
+all,False,Auchan,23,25,13991,14813,13531,21,14812,Uborka (kígyóuborka);Fejes káposzta
+all,False,Lidl,24,25,13033,13183,11911,21,17537,Fokhagyma
+all,False,Penny,25,25,15446,15446,14369,21,18439,
+all,False,Spar,25,25,14225,14225,12945,21,16281,
+all,False,Tesco,25,25,16845,16845,15770,21,18903,
+all,False,CHERRY-PICK (6 chains),25,25,12204,12204,11146,21,13017,
+all,True,Aldi,24,25,14522,14797,13369,21,17214,Rizs
+all,True,Auchan,23,25,13991,14813,13531,21,14812,Uborka (kígyóuborka);Fejes káposzta
+all,True,Lidl,24,25,13380,13530,12258,21,17803,Fokhagyma
+all,True,Penny,25,25,15446,15446,14369,21,18439,
+all,True,Spar,25,25,14525,14525,13245,21,16281,
+all,True,Tesco,25,25,16845,16845,15770,21,18933,
+all,True,CHERRY-PICK (6 chains),25,25,12204,12204,11146,21,13017,
+no_loyalty,False,Aldi,24,25,14319,14593,13165,21,17214,Rizs
+no_loyalty,False,Auchan,23,25,13991,14813,13531,21,14812,Uborka (kígyóuborka);Fejes káposzta
+no_loyalty,False,Lidl,24,25,13033,13183,11911,21,17537,Fokhagyma
+no_loyalty,False,Penny,25,25,15446,15446,14369,21,18439,
+no_loyalty,False,Spar,25,25,14225,14225,12945,21,16281,
+no_loyalty,False,Tesco,25,25,16845,16845,15770,21,18903,
+no_loyalty,False,CHERRY-PICK (6 chains),25,25,12204,12204,11146,21,13017,
+no_loyalty,True,Aldi,24,25,14522,14797,13369,21,17214,Rizs
+no_loyalty,True,Auchan,23,25,13991,14813,13531,21,14812,Uborka (kígyóuborka);Fejes káposzta
+no_loyalty,True,Lidl,24,25,13380,13530,12258,21,17803,Fokhagyma
+no_loyalty,True,Penny,25,25,15446,15446,14369,21,18439,
+no_loyalty,True,Spar,25,25,14525,14525,13245,21,16281,
+no_loyalty,True,Tesco,25,25,16845,16845,15770,21,18933,
+no_loyalty,True,CHERRY-PICK (6 chains),25,25,12204,12204,11146,21,13017,
+normal,False,Aldi,24,25,14319,14593,13165,21,17214,Rizs
+normal,False,Auchan,23,25,14091,15072,13631,21,14912,Uborka (kígyóuborka);Fejes káposzta
+normal,False,Lidl,24,25,13233,13383,12111,21,17737,Fokhagyma
+normal,False,Penny,25,25,15766,15766,14369,21,18759,
+normal,False,Spar,25,25,15225,15225,13946,21,17216,
+normal,False,Tesco,25,25,17746,17746,16251,21,19775,
+normal,False,CHERRY-PICK (6 chains),25,25,12908,12908,11689,21,13721,
+normal,True,Aldi,24,25,14522,14797,13369,21,17214,Rizs
+normal,True,Auchan,23,25,14091,15072,13631,21,14912,Uborka (kígyóuborka);Fejes káposzta
+normal,True,Lidl,24,25,13580,13730,12458,21,18003,Fokhagyma
+normal,True,Penny,25,25,15766,15766,14369,21,18759,
+normal,True,Spar,25,25,15525,15525,14246,21,17216,
+normal,True,Tesco,25,25,17746,17746,16251,21,19805,
+normal,True,CHERRY-PICK (6 chains),25,25,12908,12908,11689,21,13721,

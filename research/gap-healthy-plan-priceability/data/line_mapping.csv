@@ -1,0 +1,1385 @@
+rid,src,meal,role,key,cls,herb,g_per_serving,cost_per_serving,price,unit,price_basis
+B01,okostanyer,B,breakfast,kenyer_tk,E,False,80.0,40.4,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+B01,okostanyer,B,breakfast,gomba,K,False,100.0,190.0,1900.0,kg,"KSH ara0044 2026-09 #14111 Gomba, kg"
+B01,okostanyer,B,breakfast,sajt_light,S,False,50.0,109.2,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+B01,okostanyer,B,breakfast,vaj,E,False,10.0,20.2,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+B01,okostanyer,B,breakfast,fokhagyma,E,False,5.0,7.5,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+B01,okostanyer,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+B01,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B01,okostanyer,B,breakfast,friss_fuszernoveny,N,True,5.0,68.2,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+B01,okostanyer,B,breakfast,salata,N,False,30.0,66.6,2219.8,kg,KIFLI/1.35 (jégsaláta)
+B01,okostanyer,B,breakfast,balzsamecet,N,False,5.0,10.0,2000,l,EST
+B02,okostanyer,B,breakfast,zabpehely,N,False,50.0,29.6,591.1,kg,KIFLI/1.35
+B02,okostanyer,B,breakfast,tej,E,False,200.0,53.0,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+B02,okostanyer,B,breakfast,sutotok,N,False,130.0,65.0,500,kg,EST
+B02,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B02,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B02,okostanyer,B,breakfast,mez,K,False,7.0,41.8,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+B02,okostanyer,B,breakfast,dio,K,False,8.0,49.4,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+B02,okostanyer,B,breakfast,lenmag,N,False,10.0,15.0,1500,kg,EST
+B03,okostanyer,B,breakfast,cekla,N,False,25.0,12.5,500,kg,EST
+B03,okostanyer,B,breakfast,turo,E,False,40.0,50.2,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+B03,okostanyer,B,breakfast,dio,K,False,7.5,46.4,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+B03,okostanyer,B,breakfast,vaj,E,False,10.0,20.2,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+B03,okostanyer,B,breakfast,so,P,False,0.2,0.1,266,kg,pantry
+B03,okostanyer,B,breakfast,kenyer_graham,S,False,40.0,20.2,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+B03,okostanyer,B,breakfast,zoldpaprika,E,False,100.0,71.9,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+B04,okostanyer,B,breakfast,zabpehely,N,False,40.0,23.6,591.1,kg,KIFLI/1.35
+B04,okostanyer,B,breakfast,tej,E,False,100.0,26.5,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+B04,okostanyer,B,breakfast,viz,P,False,1.0,0.0,0,l,pantry
+B04,okostanyer,B,breakfast,vanilia,P,False,1.0,20.0,20000,kg,pantry
+B04,okostanyer,B,breakfast,turo,E,False,50.0,62.8,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+B04,okostanyer,B,breakfast,sargabarack,N,False,100.0,120.0,1200,kg,EST
+B04,okostanyer,B,breakfast,mez,K,False,7.0,41.8,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+B04,okostanyer,B,breakfast,mandula,N,False,10.0,60.0,6000,kg,EST
+B04,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B05,okostanyer,B,breakfast,joghurt,E,False,100.0,42.9,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+B05,okostanyer,B,breakfast,granola,N,False,40.0,100.0,2500,kg,EST
+B05,okostanyer,B,breakfast,meggy,N,False,50.0,100.0,2000,kg,EST
+B06,okostanyer,B,breakfast,padlizsan,N,False,50.0,55.0,1100,kg,EST
+B06,okostanyer,B,breakfast,sargarepa,E,False,10.0,4.9,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+B06,okostanyer,B,breakfast,voroshagyma,E,False,20.0,4.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+B06,okostanyer,B,breakfast,olivaolaj,E,False,7.0,25.3,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+B06,okostanyer,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+B06,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B06,okostanyer,B,breakfast,mustar,N,False,5.0,5.0,1000,kg,EST
+B06,okostanyer,B,breakfast,kenyer_rozs,E,False,30.0,17.9,598.0,kg,GVH median of chain minima (5 chains); min Auchan 578
+B06,okostanyer,B,breakfast,paradicsom,E,False,100.0,83.0,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+B07,okostanyer,B,breakfast,tojas,E,False,110.0,99.0,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+B07,okostanyer,B,breakfast,parmai_sonka,N,False,15.0,135.0,9000,kg,EST
+B07,okostanyer,B,breakfast,mozzarella,E,False,50.0,135.6,2712.0,kg,GVH median of chain minima (6 chains); min Aldi 2248
+B07,okostanyer,B,breakfast,koktelparadicsom,S,False,50.0,41.5,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+B07,okostanyer,B,breakfast,friss_fuszernoveny,N,True,2.0,27.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+B07,okostanyer,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+B07,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B07,okostanyer,B,breakfast,kenyer_tk,E,False,40.0,20.2,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+B08,okostanyer,B,breakfast,tojas,E,False,110.0,99.0,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+B08,okostanyer,B,breakfast,spenot_friss,N,False,40.0,82.9,2072.6,kg,KIFLI/1.35
+B08,okostanyer,B,breakfast,olaj,E,False,10.0,7.5,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+B08,okostanyer,B,breakfast,tortilla,N,False,60.0,108.0,1800,kg,EST
+B08,okostanyer,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+B08,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B08,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B09,okostanyer,B,breakfast,zsemle_egyeb,S,False,70.0,82.7,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+B09,okostanyer,B,breakfast,csicseri,N,False,100.0,66.4,663.6,kg,KIFLI/1.35 per kg drained
+B09,okostanyer,B,breakfast,zeller,N,False,20.0,16.0,800,kg,EST
+B09,okostanyer,B,breakfast,salata,N,False,20.0,44.4,2219.8,kg,KIFLI/1.35 (jégsaláta)
+B09,okostanyer,B,breakfast,lilahagyma,S,False,20.0,4.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+B09,okostanyer,B,breakfast,mustar,N,False,5.0,5.0,1000,kg,EST
+B09,okostanyer,B,breakfast,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+B09,okostanyer,B,breakfast,citrom,E,False,15.0,13.5,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+B09,okostanyer,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+B09,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B10,okostanyer,B,breakfast,zabpehely,N,False,50.0,29.6,591.1,kg,KIFLI/1.35
+B10,okostanyer,B,breakfast,kokuszreszelek,N,False,20.0,60.0,3000,kg,EST
+B10,okostanyer,B,breakfast,oszibarack,N,False,150.0,150.0,1000,kg,EST
+B10,okostanyer,B,breakfast,barnacukor,S,False,2.5,0.7,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+B10,okostanyer,B,breakfast,olaj,E,False,12.5,9.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+B10,okostanyer,B,breakfast,dio,K,False,3.8,23.2,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+B10,okostanyer,B,breakfast,fuszer,P,False,0.2,3.0,12000,kg,pantry
+B11,okostanyer,B,breakfast,tojas,E,False,41.2,37.1,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+B11,okostanyer,B,breakfast,mustar,N,False,5.0,5.0,1000,kg,EST
+B11,okostanyer,B,breakfast,margarin,E,False,13.8,9.6,699.0,kg,GVH median of chain minima (6 chains); min Penny 612
+B11,okostanyer,B,breakfast,voroshagyma,E,False,2.5,0.5,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+B11,okostanyer,B,breakfast,so,P,False,0.2,0.1,266,kg,pantry
+B11,okostanyer,B,breakfast,fuszer,P,False,0.2,3.0,12000,kg,pantry
+B11,okostanyer,B,breakfast,friss_fuszernoveny,N,True,0.5,6.8,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+B11,okostanyer,B,breakfast,kenyer_felbarna,E,False,70.0,36.6,523.2,kg,GVH median of chain minima (6 chains); min Auchan 438
+B11,okostanyer,B,breakfast,zoldpaprika,E,False,150.0,107.8,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+B12,okostanyer,B,breakfast,paradicsom,E,False,150.0,124.5,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+B12,okostanyer,B,breakfast,mozzarella,E,False,75.0,203.4,2712.0,kg,GVH median of chain minima (6 chains); min Aldi 2248
+B12,okostanyer,B,breakfast,olivaolaj,E,False,5.0,18.1,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+B12,okostanyer,B,breakfast,fuszer,P,False,0.2,3.0,12000,kg,pantry
+B12,okostanyer,B,breakfast,friss_fuszernoveny,N,True,1.0,13.6,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+B12,okostanyer,B,breakfast,kenyer_tk,E,False,60.0,30.3,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+B13,okostanyer,B,breakfast,zabpehely,N,False,50.0,29.6,591.1,kg,KIFLI/1.35
+B13,okostanyer,B,breakfast,turo,E,False,50.0,62.8,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+B13,okostanyer,B,breakfast,tojas,E,False,55.0,49.5,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+B13,okostanyer,B,breakfast,viz,P,False,1.0,0.0,0,l,pantry
+B13,okostanyer,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+B13,okostanyer,B,breakfast,olaj,E,False,3.0,2.2,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+B13,okostanyer,B,breakfast,pulykasonka,E,False,45.0,143.5,3190.0,kg,GVH median of chain minima (6 chains); min Lidl 2890
+B13,okostanyer,B,breakfast,rukkola,N,False,30.0,150.0,5000,kg,EST
+B13,okostanyer,B,breakfast,tea,E,False,2.0,9.7,4825.2,kg,GVH median of chain minima (8 chains); min Spar 464
+B14,okostanyer,B,breakfast,csicseri,N,False,30.0,19.9,663.6,kg,KIFLI/1.35 per kg drained
+B14,okostanyer,B,breakfast,voroshagyma,E,False,10.0,2.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+B14,okostanyer,B,breakfast,joghurt,E,False,20.0,8.6,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+B14,okostanyer,B,breakfast,mustar,N,False,5.0,5.0,1000,kg,EST
+B14,okostanyer,B,breakfast,olivaolaj,E,False,13.0,47.0,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+B14,okostanyer,B,breakfast,friss_fuszernoveny,N,True,1.0,13.6,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+B14,okostanyer,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+B14,okostanyer,B,breakfast,sajt_light,S,False,30.0,65.5,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+B14,okostanyer,B,breakfast,kenyer_tk,E,False,60.0,30.3,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+B14,okostanyer,B,breakfast,ujhagyma,N,False,30.0,45.0,1500,kg,EST
+B15,okostanyer,B,breakfast,tortilla,N,False,60.0,108.0,1800,kg,EST
+B15,okostanyer,B,breakfast,sonka,E,False,50.0,103.8,2075.0,kg,GVH median of chain minima (6 chains); min Tesco 2075
+B15,okostanyer,B,breakfast,sajt_light,S,False,30.0,65.5,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+B15,okostanyer,B,breakfast,salata,N,False,20.0,44.4,2219.8,kg,KIFLI/1.35 (jégsaláta)
+B15,okostanyer,B,breakfast,kaliforniai,N,False,30.0,68.8,2294.8,kg,KIFLI/1.35
+B15,okostanyer,B,breakfast,sargarepa,E,False,30.0,14.7,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+B15,okostanyer,B,breakfast,tokmagolaj,N,False,10.0,60.0,6000,l,EST
+B16,okostanyer,B,breakfast,zabpehely,N,False,50.0,29.6,591.1,kg,KIFLI/1.35
+B16,okostanyer,B,breakfast,tej,E,False,200.0,53.0,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+B16,okostanyer,B,breakfast,alma,E,False,150.0,56.2,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+B16,okostanyer,B,breakfast,dio,K,False,5.0,30.9,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+B16,okostanyer,B,breakfast,mez,K,False,10.0,59.7,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+B16,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B17,okostanyer,B,breakfast,kenyer_graham,S,False,60.0,30.3,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+B17,okostanyer,B,breakfast,olivaolaj,E,False,10.0,36.2,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+B17,okostanyer,B,breakfast,pulykasonka,E,False,40.0,127.6,3190.0,kg,GVH median of chain minima (6 chains); min Lidl 2890
+B17,okostanyer,B,breakfast,sajt_light,S,False,20.0,43.7,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+B17,okostanyer,B,breakfast,friss_fuszernoveny,N,True,0.1,1.4,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+B17,okostanyer,B,breakfast,retek,N,False,50.0,75.0,1500,kg,EST
+B17,okostanyer,B,breakfast,tea,E,False,2.0,9.7,4825.2,kg,GVH median of chain minima (8 chains); min Spar 464
+B17,okostanyer,B,breakfast,cukor,E,False,8.0,2.4,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+B18,okostanyer,B,breakfast,padlizsan,N,False,80.0,88.0,1100,kg,EST
+B18,okostanyer,B,breakfast,olivaolaj,E,False,10.0,36.2,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+B18,okostanyer,B,breakfast,fokhagyma,E,False,1.0,1.5,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+B18,okostanyer,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+B18,okostanyer,B,breakfast,fuszer,P,False,1.0,12.0,12000,kg,pantry
+B18,okostanyer,B,breakfast,zsemle_egyeb,S,False,60.0,70.9,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+B18,okostanyer,B,breakfast,uborka,E,False,30.0,28.4,379.0,db,GVH median of chain minima (5 chains); min Spar 300
+B18,okostanyer,B,breakfast,tej,E,False,150.0,39.8,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+B18,okostanyer,B,breakfast,kave,E,False,7.0,29.7,4245.0,kg,GVH median of chain minima (9 chains); min Auchan 3756
+B18,okostanyer,B,breakfast,cukor,E,False,8.0,2.4,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+B19,okostanyer,B,breakfast,tonhal_konzerv,N,False,30.0,290.9,9695.8,kg,KIFLI/1.35 per kg drained
+B19,okostanyer,B,breakfast,margarin,E,False,10.0,7.0,699.0,kg,GVH median of chain minima (6 chains); min Penny 612
+B19,okostanyer,B,breakfast,majonez,N,False,10.0,15.0,1500,kg,EST
+B19,okostanyer,B,breakfast,lilahagyma,S,False,30.0,6.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+B19,okostanyer,B,breakfast,zoldpaprika,E,False,30.0,21.6,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+B19,okostanyer,B,breakfast,citrom,E,False,2.0,1.8,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+B19,okostanyer,B,breakfast,zsemle_egyeb,S,False,50.0,59.1,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+B19,okostanyer,B,breakfast,narancsle,E,False,200.0,128.8,644.0,l,GVH median of chain minima (8 chains); min Aldi 485
+B20,okostanyer,B,breakfast,repceolaj,S,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+B20,okostanyer,B,breakfast,voroshagyma,E,False,10.0,2.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+B20,okostanyer,B,breakfast,cukkini,N,False,30.0,35.5,1184.4,kg,KIFLI/1.35
+B20,okostanyer,B,breakfast,tojas,E,False,110.0,99.0,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+B20,okostanyer,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+B20,okostanyer,B,breakfast,paradicsom,E,False,50.0,41.5,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+B20,okostanyer,B,breakfast,salata,N,False,10.0,22.2,2219.8,kg,KIFLI/1.35 (jégsaláta)
+B20,okostanyer,B,breakfast,kenyer_felbarna,E,False,40.0,20.9,523.2,kg,GVH median of chain minima (6 chains); min Auchan 438
+B20,okostanyer,B,breakfast,tej,E,False,200.0,53.0,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+B21,okostanyer,B,breakfast,tojas,E,False,82.5,74.2,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+B21,okostanyer,B,breakfast,zabpehely,N,False,30.0,17.7,591.1,kg,KIFLI/1.35
+B21,okostanyer,B,breakfast,sutopor,P,False,0.2,2.0,8000,kg,pantry
+B21,okostanyer,B,breakfast,parmezan,N,False,20.0,103.6,5177.8,kg,KIFLI/1.35
+B21,okostanyer,B,breakfast,cukkini,N,False,50.0,59.2,1184.4,kg,KIFLI/1.35
+B21,okostanyer,B,breakfast,kaliforniai,N,False,50.0,114.7,2294.8,kg,KIFLI/1.35
+B21,okostanyer,B,breakfast,olivaolaj,E,False,6.5,23.5,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+B21,okostanyer,B,breakfast,so,P,False,0.2,0.1,266,kg,pantry
+B21,okostanyer,B,breakfast,fuszer,P,False,0.2,3.0,12000,kg,pantry
+B21,okostanyer,B,breakfast,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+B22,okostanyer,B,breakfast,cukkini,N,False,125.0,148.1,1184.4,kg,KIFLI/1.35
+B22,okostanyer,B,breakfast,tojas,E,False,27.5,24.7,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+B22,okostanyer,B,breakfast,finomliszt,E,False,37.5,6.8,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+B22,okostanyer,B,breakfast,trappista,E,False,25.0,54.6,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+B22,okostanyer,B,breakfast,tej,E,False,25.0,6.6,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+B22,okostanyer,B,breakfast,olaj,E,False,6.5,4.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+B22,okostanyer,B,breakfast,sutopor,P,False,0.2,2.0,8000,kg,pantry
+B22,okostanyer,B,breakfast,fokhagyma,E,False,1.2,1.9,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+B22,okostanyer,B,breakfast,so,P,False,0.2,0.1,266,kg,pantry
+B22,okostanyer,B,breakfast,fuszer,P,False,0.2,3.0,12000,kg,pantry
+B22,okostanyer,B,breakfast,friss_fuszernoveny,N,True,5.0,68.2,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+B23,okostanyer,B,breakfast,koles,N,False,50.0,45.0,900,kg,EST
+B23,okostanyer,B,breakfast,tej,E,False,200.0,53.0,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+B23,okostanyer,B,breakfast,cseresznye,N,False,75.0,165.0,2200,kg,EST
+B23,okostanyer,B,breakfast,mez,K,False,5.0,29.9,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+B23,okostanyer,B,breakfast,fuszer,P,False,0.2,3.0,12000,kg,pantry
+B24,okostanyer,B,breakfast,zabpehely,N,False,50.0,29.6,591.1,kg,KIFLI/1.35
+B24,okostanyer,B,breakfast,tej,E,False,200.0,53.0,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+B24,okostanyer,B,breakfast,eper,E,False,100.0,319.8,3198.0,kg,GVH median of chain minima (3 chains); min Auchan 3198
+B24,okostanyer,B,breakfast,fuszer,P,False,0.2,3.0,12000,kg,pantry
+B24,okostanyer,B,breakfast,mez,K,False,2.5,14.9,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+B25,okostanyer,B,breakfast,turo,E,False,100.0,125.6,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+B25,okostanyer,B,breakfast,joghurt,E,False,50.0,21.4,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+B25,okostanyer,B,breakfast,korte,E,False,85.0,51.7,608.5,kg,GVH median of chain minima (6 chains); min Spar 557
+B25,okostanyer,B,breakfast,mez,K,False,7.5,44.8,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+B25,okostanyer,B,breakfast,fuszer,P,False,0.2,3.0,12000,kg,pantry
+B25,okostanyer,B,breakfast,citrom,E,False,3.8,3.4,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+B25,okostanyer,B,breakfast,kenyer_tk,E,False,40.0,20.2,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+L01,okostanyer,L,main,zeller,N,False,6.2,5.0,800,kg,EST
+L01,okostanyer,L,main,voroshagyma,E,False,10.0,2.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L01,okostanyer,L,main,zoldpaprika,E,False,100.0,71.9,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+L01,okostanyer,L,main,paradicsompure,N,False,40.0,18.7,466.7,kg,KIFLI/1.35 (passata)
+L01,okostanyer,L,main,olaj,E,False,6.5,4.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L01,okostanyer,L,main,darált_csirke,S,False,80.0,157.1,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+L01,okostanyer,L,main,finomliszt,E,False,12.5,2.3,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L01,okostanyer,L,main,tojas,E,False,13.8,12.4,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L01,okostanyer,L,main,zabpehely,N,False,20.0,11.8,591.1,kg,KIFLI/1.35
+L01,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L01,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L01,okostanyer,L,main,cukor,E,False,1.2,0.4,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L01,okostanyer,L,main,burgonya,E,False,125.0,35.2,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+L02,okostanyer,L,main,csirkecombfile,S,False,110.0,93.3,848.0,kg,GVH median of chain minima (6 chains); min Lidl 755
+L02,okostanyer,L,main,zoldpaprika,E,False,100.0,71.9,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+L02,okostanyer,L,main,paradicsom,E,False,90.0,74.7,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+L02,okostanyer,L,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L02,okostanyer,L,main,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L02,okostanyer,L,main,bulgur,N,False,37.5,19.4,517.0,kg,KIFLI/1.35
+L02,okostanyer,L,main,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L02,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L02,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L02,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L03,okostanyer,L,main,csirkemell,E,False,62.5,122.7,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+L03,okostanyer,L,main,voroshagyma,E,False,5.0,1.0,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L03,okostanyer,L,main,fokhagyma,E,False,1.2,1.9,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L03,okostanyer,L,main,zsemle_egyeb,S,False,20.0,23.6,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+L03,okostanyer,L,main,tojas,E,False,11.2,10.1,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L03,okostanyer,L,main,olivaolaj,E,False,5.0,18.1,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+L03,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L03,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L03,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L03,okostanyer,L,main,fagy_zoldsegkeverek,S,False,37.5,28.2,753.3,kg,GVH median of chain minima (6 chains); min Spar 753
+L03,okostanyer,L,main,zsemlemorzsa,N,False,10.0,8.0,800,kg,EST
+L03,okostanyer,L,main,rizs,E,False,80.0,43.9,549.0,kg,GVH median of chain minima (6 chains); min Tesco 529
+L03,okostanyer,L,main,salata,N,False,50.0,111.0,2219.8,kg,KIFLI/1.35 (jégsaláta)
+L04,okostanyer,L,main,gomba,K,False,200.0,380.0,1900.0,kg,"KSH ara0044 2026-09 #14111 Gomba, kg"
+L04,okostanyer,L,main,feta,E,False,50.0,220.7,4413.5,kg,GVH median of chain minima (6 chains); min Tesco 3614
+L04,okostanyer,L,main,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L04,okostanyer,L,main,olivaolaj,E,False,2.5,9.0,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+L04,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L04,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L04,okostanyer,L,main,friss_fuszernoveny,N,True,10.0,136.5,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L05,okostanyer,L,soup,porehagyma,N,False,62.5,81.2,1300,kg,EST
+L05,okostanyer,L,soup,olivaolaj,E,False,2.5,9.0,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+L05,okostanyer,L,soup,gorog_joghurt,S,False,25.0,10.7,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+L05,okostanyer,L,soup,feherbor,N,False,12.5,15.0,1200,l,EST
+L05,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L05,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L05,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L05,okostanyer,L,soup,viz,P,False,0.2,0.0,0,l,pantry
+L05,okostanyer,L,soup,kenyer_feher,E,False,30.0,15.7,523.2,kg,GVH median of chain minima (6 chains); min Lidl 398
+L06,okostanyer,L,soup,fokhagyma,E,False,3.8,5.6,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L06,okostanyer,L,soup,petrezselyemgyoker,E,False,10.0,9.0,898.0,kg,GVH median of chain minima (6 chains); min Spar 689
+L06,okostanyer,L,soup,szarazbab,K,False,50.0,77.0,1540.0,kg,"KSH ara0044 2026-09 #14601 Szárazbab, csomagolt is, kg"
+L06,okostanyer,L,soup,sargarepa,E,False,10.0,4.9,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+L06,okostanyer,L,soup,voroshagyma,E,False,5.0,1.0,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L06,okostanyer,L,soup,olaj,E,False,6.5,4.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L06,okostanyer,L,soup,finomliszt,E,False,7.5,1.4,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L06,okostanyer,L,soup,tejfol12,E,False,30.0,23.9,797.8,kg,GVH median of chain minima (6 chains); min Spar 798
+L06,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L06,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L06,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L07,okostanyer,L,starter,csirkemell,E,False,50.0,98.2,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+L07,okostanyer,L,starter,cekla,N,False,20.0,10.0,500,kg,EST
+L07,okostanyer,L,starter,zeller,N,False,10.0,8.0,800,kg,EST
+L07,okostanyer,L,starter,narancs,E,False,25.0,14.4,574.5,kg,GVH median of chain minima (6 chains); min Tesco 549
+L07,okostanyer,L,starter,torma,N,False,5.0,12.5,2500,kg,EST
+L07,okostanyer,L,starter,gorog_joghurt,S,False,20.0,8.6,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+L07,okostanyer,L,starter,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L07,okostanyer,L,starter,citrom,E,False,1.2,1.1,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L07,okostanyer,L,starter,porcukor,E,False,0.8,0.4,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+L07,okostanyer,L,starter,so,P,False,0.2,0.1,266,kg,pantry
+L08,okostanyer,L,main,tonhal_friss,N,False,150.0,1350.0,9000,kg,EST
+L08,okostanyer,L,main,alaple,N,False,50.0,7.5,150,l,EST (stock cube per litre)
+L08,okostanyer,L,main,margarin,E,False,5.0,3.5,699.0,kg,GVH median of chain minima (6 chains); min Penny 612
+L08,okostanyer,L,main,aszalt_szilva,N,False,25.0,75.0,3000,kg,EST
+L08,okostanyer,L,main,tejfol12,E,False,30.0,23.9,797.8,kg,GVH median of chain minima (6 chains); min Spar 798
+L08,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L08,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L08,okostanyer,L,main,citrom,E,False,12.5,11.2,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L08,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L09,okostanyer,L,dessert,alma,E,False,150.0,56.2,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+L09,okostanyer,L,dessert,dio,K,False,10.0,61.8,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+L09,okostanyer,L,dessert,lekvar,K,False,10.0,29.1,2910.0,kg,"KSH ara0044 2026-09 #14508 Gyümölcslekvár, 250650 g, min. 50%, kg"
+L09,okostanyer,L,dessert,tej,E,False,100.0,26.5,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+L09,okostanyer,L,dessert,cukor,E,False,10.0,3.0,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L09,okostanyer,L,dessert,tojas,E,False,27.5,24.7,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L09,okostanyer,L,dessert,pudingpor,N,False,2.5,7.5,3000,kg,EST
+L09,okostanyer,L,dessert,vanilia,P,False,0.2,5.0,20000,kg,pantry
+L10,okostanyer,L,soup,lencse,E,False,50.0,38.4,768.0,kg,GVH median of chain minima (8 chains); min Tesco 738
+L10,okostanyer,L,soup,sargarepa,E,False,37.5,18.3,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+L10,okostanyer,L,soup,voroshagyma,E,False,3.8,0.8,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L10,okostanyer,L,soup,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L10,okostanyer,L,soup,suritett_paradicsom,N,False,12.5,18.8,1500,kg,EST
+L10,okostanyer,L,soup,olaj,E,False,2.5,1.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L10,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L10,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L11,okostanyer,L,main,busa,N,False,150.0,390.0,2600,kg,EST
+L11,okostanyer,L,main,olaj,E,False,2.5,1.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L11,okostanyer,L,main,citrom,E,False,12.5,11.2,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L11,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L11,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L11,okostanyer,L,main,porehagyma,N,False,25.0,32.5,1300,kg,EST
+L11,okostanyer,L,main,tk_liszt,S,False,2.5,0.5,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L11,okostanyer,L,main,fozotejszin,E,False,12.5,13.1,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+L11,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L11,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L11,okostanyer,L,main,cekla,N,False,100.0,50.0,500,kg,EST
+L11,okostanyer,L,main,edesburgonya,N,False,100.0,88.8,888.1,kg,KIFLI/1.35
+L11,okostanyer,L,main,alaple,N,False,50.0,7.5,150,l,EST (stock cube per litre)
+L11,okostanyer,L,main,olaj,E,False,2.5,1.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L11,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L12,okostanyer,L,dessert,korte,E,False,125.0,76.1,608.5,kg,GVH median of chain minima (6 chains); min Spar 557
+L12,okostanyer,L,dessert,alma,E,False,37.5,14.1,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+L12,okostanyer,L,dessert,fozotejszin,E,False,50.0,52.2,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+L12,okostanyer,L,dessert,keményítő,N,False,2.5,3.8,1500,kg,EST
+L12,okostanyer,L,dessert,cukor,E,False,12.5,3.7,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L12,okostanyer,L,dessert,citrom,E,False,12.5,11.2,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L12,okostanyer,L,dessert,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L12,okostanyer,L,dessert,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L13,okostanyer,L,main,pulykamell,E,False,200.0,599.8,2999.0,kg,GVH median of chain minima (6 chains); min Auchan 2998
+L13,okostanyer,L,main,aszalt_szilva,N,False,37.5,112.5,3000,kg,EST
+L13,okostanyer,L,main,kelbimbo,N,False,125.0,200.0,1600,kg,EST
+L13,okostanyer,L,main,burgonya,E,False,100.0,28.2,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+L13,okostanyer,L,main,gorog_joghurt,S,False,87.5,37.5,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+L13,okostanyer,L,main,lilahagyma,S,False,6.2,1.3,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L13,okostanyer,L,main,olaj,E,False,6.2,4.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L13,okostanyer,L,main,mustar,N,False,1.2,1.2,1000,kg,EST
+L13,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L13,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L13,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L14,okostanyer,L,main,edesburgonya,N,False,62.5,55.5,888.1,kg,KIFLI/1.35
+L14,okostanyer,L,main,finomliszt,E,False,25.0,4.5,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L14,okostanyer,L,main,tk_liszt,S,False,25.0,4.5,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L14,okostanyer,L,main,tojas,E,False,13.8,12.4,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L14,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L14,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L15,okostanyer,L,side,gomba,K,False,62.5,118.8,1900.0,kg,"KSH ara0044 2026-09 #14111 Gomba, kg"
+L15,okostanyer,L,side,viz,P,False,0.2,0.0,0,l,pantry
+L15,okostanyer,L,side,fozotejszin,E,False,37.5,39.2,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+L15,okostanyer,L,side,olaj,E,False,2.5,1.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L15,okostanyer,L,side,porehagyma,N,False,3.8,4.9,1300,kg,EST
+L15,okostanyer,L,side,so,P,False,0.2,0.1,266,kg,pantry
+L15,okostanyer,L,side,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L15,okostanyer,L,side,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L15,okostanyer,L,side,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L15,okostanyer,L,side,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L16,okostanyer,L,dessert,tk_liszt,S,False,10.0,1.8,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L16,okostanyer,L,dessert,finomliszt,E,False,10.0,1.8,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L16,okostanyer,L,dessert,tej,E,False,20.0,5.3,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+L16,okostanyer,L,dessert,olaj,E,False,0.5,0.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L16,okostanyer,L,dessert,tojas,E,False,11.0,9.9,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L16,okostanyer,L,dessert,cukor,E,False,0.5,0.1,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L16,okostanyer,L,dessert,viz,P,False,0.1,0.0,0,l,pantry
+L16,okostanyer,L,dessert,alma,E,False,25.0,9.4,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+L16,okostanyer,L,dessert,fuszer,P,False,0.1,1.2,12000,kg,pantry
+L16,okostanyer,L,dessert,citrom,E,False,0.5,0.4,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L16,okostanyer,L,dessert,tej,E,False,35.0,9.3,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+L16,okostanyer,L,dessert,pudingpor,N,False,2.5,7.5,3000,kg,EST
+L16,okostanyer,L,dessert,cukor,E,False,1.0,0.3,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L17,okostanyer,L,main,fozotok,N,False,250.0,175.0,700,kg,EST
+L17,okostanyer,L,main,daralt_sertes,E,False,75.0,131.2,1748.9,kg,GVH median of chain minima (6 chains); min Aldi 1299
+L17,okostanyer,L,main,arpagyongy,N,False,25.0,17.5,700,kg,EST
+L17,okostanyer,L,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L17,okostanyer,L,main,olaj,E,False,2.5,1.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L17,okostanyer,L,main,edami,E,False,37.5,88.3,2356.0,kg,GVH median of chain minima (6 chains); min Lidl 1799
+L17,okostanyer,L,main,friss_fuszernoveny,N,True,6.2,85.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L17,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L17,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L17,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L18,okostanyer,L,dessert,szilva,N,False,30.0,24.0,800,kg,EST
+L18,okostanyer,L,dessert,finomliszt,E,False,16.7,3.0,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L18,okostanyer,L,dessert,tk_liszt,S,False,16.7,3.0,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L18,okostanyer,L,dessert,vaj,E,False,8.3,16.9,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+L18,okostanyer,L,dessert,olaj,E,False,8.3,6.2,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L18,okostanyer,L,dessert,tojas,E,False,18.3,16.5,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L18,okostanyer,L,dessert,cukor,E,False,10.8,3.2,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L18,okostanyer,L,dessert,vanilia,P,False,0.2,3.3,20000,kg,pantry
+L18,okostanyer,L,dessert,citrom,E,False,1.7,1.5,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L19,okostanyer,L,soup,sutotok,N,False,100.0,50.0,500,kg,EST
+L19,okostanyer,L,soup,voroshagyma,E,False,10.0,2.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L19,okostanyer,L,soup,fokhagyma,E,False,2.0,3.0,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L19,okostanyer,L,soup,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L19,okostanyer,L,soup,fozotejszin,E,False,45.0,47.0,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+L19,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L19,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L19,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L19,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L19,okostanyer,L,soup,tokmag,N,False,15.0,75.0,5000,kg,EST
+L20,okostanyer,L,main,tokehal,E,False,150.0,394.5,2630.0,kg,GVH median of chain minima (6 chains); min Spar 2629
+L20,okostanyer,L,main,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L20,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L20,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L20,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L20,okostanyer,L,main,burgonya,E,False,200.0,56.4,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+L20,okostanyer,L,main,spenot_fagy,N,False,100.0,120.0,1200,kg,EST
+L20,okostanyer,L,main,sajt_light,S,False,30.0,65.5,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+L20,okostanyer,L,main,tej,E,False,50.0,13.2,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+L20,okostanyer,L,main,olaj,E,False,6.2,4.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L20,okostanyer,L,main,fokhagyma,E,False,2.0,3.0,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L20,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L20,okostanyer,L,main,citrom,E,False,1.2,1.1,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L21,okostanyer,L,main,csirkemell,E,False,100.0,196.4,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+L21,okostanyer,L,main,brokkoli,E,False,200.0,279.6,1398.0,kg,GVH median of chain minima (6 chains); min Lidl 1398
+L21,okostanyer,L,main,fozotejszin,E,False,50.0,52.2,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+L21,okostanyer,L,main,bulgur,N,False,80.0,41.4,517.0,kg,KIFLI/1.35
+L21,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L21,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L21,okostanyer,L,main,olaj,E,False,10.0,7.5,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L22,okostanyer,L,dessert,alma,E,False,100.0,37.5,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+L22,okostanyer,L,dessert,tej,E,False,150.0,39.8,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+L22,okostanyer,L,dessert,pudingpor,N,False,10.0,30.0,3000,kg,EST
+L22,okostanyer,L,dessert,cukor,E,False,5.0,1.5,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L22,okostanyer,L,dessert,zabpehely,N,False,20.0,11.8,591.1,kg,KIFLI/1.35
+L23,okostanyer,L,soup,szilva,N,False,80.0,64.0,800,kg,EST
+L23,okostanyer,L,soup,fozotejszin,E,False,30.0,31.3,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+L23,okostanyer,L,soup,aszalt_szilva,N,False,20.0,60.0,3000,kg,EST
+L23,okostanyer,L,soup,citrom,E,False,10.0,9.0,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L23,okostanyer,L,soup,finomliszt,E,False,10.0,1.8,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L23,okostanyer,L,soup,cukor,E,False,3.0,0.9,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L23,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L24,okostanyer,L,main,cukkini,N,False,250.0,296.1,1184.4,kg,KIFLI/1.35
+L24,okostanyer,L,main,darált_pulyka,S,False,80.0,239.9,2999.0,kg,GVH median of chain minima (6 chains); min Auchan 2998
+L24,okostanyer,L,main,barna_rizs,S,False,35.0,19.2,549.0,kg,GVH median of chain minima (6 chains); min Tesco 529
+L24,okostanyer,L,main,tojas,E,False,7.5,6.7,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L24,okostanyer,L,main,olaj,E,False,7.5,5.6,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L24,okostanyer,L,main,voroshagyma,E,False,5.0,1.0,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L24,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L24,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L24,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L24,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L25,okostanyer,L,side,tejfol12,E,False,30.0,23.9,797.8,kg,GVH median of chain minima (6 chains); min Spar 798
+L25,okostanyer,L,side,finomliszt,E,False,11.0,2.0,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L25,okostanyer,L,side,friss_fuszernoveny,N,True,7.0,95.5,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L25,okostanyer,L,side,olaj,E,False,6.0,4.5,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L25,okostanyer,L,side,voroshagyma,E,False,5.0,1.0,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L25,okostanyer,L,side,so,P,False,0.2,0.1,266,kg,pantry
+L26,okostanyer,L,soup,arpagyongy,N,False,10.0,7.0,700,kg,EST
+L26,okostanyer,L,soup,voroshagyma,E,False,2.5,0.5,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L26,okostanyer,L,soup,sargarepa,E,False,35.0,17.1,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+L26,okostanyer,L,soup,petrezselyemgyoker,E,False,25.0,22.5,898.0,kg,GVH median of chain minima (6 chains); min Spar 689
+L26,okostanyer,L,soup,zeller,N,False,20.0,16.0,800,kg,EST
+L26,okostanyer,L,soup,burgonya,E,False,25.0,7.1,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+L26,okostanyer,L,soup,gomba,K,False,25.0,47.5,1900.0,kg,"KSH ara0044 2026-09 #14111 Gomba, kg"
+L26,okostanyer,L,soup,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L26,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L26,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L26,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L26,okostanyer,L,soup,olaj,E,False,10.0,7.5,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L27,okostanyer,L,main,darált_pulyka,S,False,62.5,187.4,2999.0,kg,GVH median of chain minima (6 chains); min Auchan 2998
+L27,okostanyer,L,main,tojas,E,False,13.8,12.4,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L27,okostanyer,L,main,zsemlemorzsa,N,False,7.5,6.0,800,kg,EST
+L27,okostanyer,L,main,fokhagyma,E,False,3.0,4.5,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L27,okostanyer,L,main,voroshagyma,E,False,15.0,3.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L27,okostanyer,L,main,olaj,E,False,7.5,5.6,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L27,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L27,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L27,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L27,okostanyer,L,main,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L27,okostanyer,L,main,zoldbab,N,False,200.0,260.0,1300,kg,EST
+L27,okostanyer,L,main,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L27,okostanyer,L,main,finomliszt,E,False,12.5,2.3,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L27,okostanyer,L,main,voroshagyma,E,False,15.0,3.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L27,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L27,okostanyer,L,main,fokhagyma,E,False,2.0,3.0,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L27,okostanyer,L,main,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L27,okostanyer,L,main,tejfol12,E,False,30.0,23.9,797.8,kg,GVH median of chain minima (6 chains); min Spar 798
+L27,okostanyer,L,main,ecet,P,False,2.5,0.8,300,l,pantry
+L27,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L28,okostanyer,L,dessert,tokmag,N,False,30.0,150.0,5000,kg,EST
+L28,okostanyer,L,dessert,korte,E,False,20.0,12.2,608.5,kg,GVH median of chain minima (6 chains); min Spar 557
+L28,okostanyer,L,dessert,alma,E,False,20.0,7.5,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+L28,okostanyer,L,dessert,narancs,E,False,20.0,11.5,574.5,kg,GVH median of chain minima (6 chains); min Tesco 549
+L28,okostanyer,L,dessert,banan,E,False,20.0,14.0,699.0,kg,GVH median of chain minima (6 chains); min Lidl 379
+L28,okostanyer,L,dessert,friss_fuszernoveny,N,True,0.5,6.8,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L28,okostanyer,L,dessert,citrom,E,False,25.0,22.5,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L29,okostanyer,L,soup,voroshagyma,E,False,87.5,18.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L29,okostanyer,L,soup,margarin,E,False,6.2,4.4,699.0,kg,GVH median of chain minima (6 chains); min Penny 612
+L29,okostanyer,L,soup,alaple,N,False,375.0,56.2,150,l,EST (stock cube per litre)
+L29,okostanyer,L,soup,tej,E,False,75.0,19.9,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+L29,okostanyer,L,soup,finomliszt,E,False,12.5,2.3,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L29,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L29,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L30,okostanyer,L,main,marha,E,False,100.0,364.9,3649.0,kg,GVH median of chain minima (6 chains); min Auchan 3249
+L30,okostanyer,L,main,olaj,E,False,6.2,4.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L30,okostanyer,L,main,finomliszt,E,False,6.2,1.1,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L30,okostanyer,L,main,tejfol12,E,False,20.0,16.0,797.8,kg,GVH median of chain minima (6 chains); min Spar 798
+L30,okostanyer,L,main,sargarepa,E,False,37.5,18.3,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+L30,okostanyer,L,main,petrezselyemgyoker,E,False,25.0,22.5,898.0,kg,GVH median of chain minima (6 chains); min Spar 689
+L30,okostanyer,L,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L30,okostanyer,L,main,mustar,N,False,5.0,5.0,1000,kg,EST
+L30,okostanyer,L,main,cukor,E,False,1.2,0.4,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L30,okostanyer,L,main,citrom,E,False,12.5,11.2,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L30,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L30,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L30,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L30,okostanyer,L,main,teszta_tk,E,False,80.0,107.9,1349.0,kg,GVH median of chain minima (4 chains); min Aldi 798
+L30,okostanyer,L,main,olaj,E,False,2.5,1.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L31,okostanyer,L,soup,margarin,E,False,6.2,4.4,699.0,kg,GVH median of chain minima (6 chains); min Penny 612
+L31,okostanyer,L,soup,voroshagyma,E,False,20.0,4.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L31,okostanyer,L,soup,fokhagyma,E,False,3.0,4.5,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L31,okostanyer,L,soup,brokkoli,E,False,100.0,139.8,1398.0,kg,GVH median of chain minima (6 chains); min Lidl 1398
+L31,okostanyer,L,soup,fozotejszin,E,False,100.0,104.5,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+L31,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L31,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L31,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L32,okostanyer,L,main,csirkemell,E,False,100.0,196.4,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+L32,okostanyer,L,main,paradicsom,E,False,62.5,51.9,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+L32,okostanyer,L,main,trappista,E,False,25.0,54.6,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+L32,okostanyer,L,main,friss_fuszernoveny,N,True,0.5,6.8,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L32,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L32,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L32,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L32,okostanyer,L,main,burgonya,E,False,250.0,70.5,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+L32,okostanyer,L,main,tej,E,False,75.0,19.9,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+L32,okostanyer,L,main,margarin,E,False,10.0,7.0,699.0,kg,GVH median of chain minima (6 chains); min Penny 612
+L32,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L32,okostanyer,L,main,lilakaposzta,S,False,100.0,22.3,223.0,kg,GVH median of chain minima (5 chains); min Aldi 209
+L32,okostanyer,L,main,voroshagyma,E,False,10.0,2.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L32,okostanyer,L,main,ecet,P,False,2.5,0.8,300,l,pantry
+L32,okostanyer,L,main,cukor,E,False,3.8,1.1,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L32,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L33,okostanyer,L,soup,pulykacomb,S,False,60.0,179.9,2999.0,kg,GVH median of chain minima (6 chains); min Auchan 2998
+L33,okostanyer,L,soup,szarazbab,K,False,40.0,61.6,1540.0,kg,"KSH ara0044 2026-09 #14601 Szárazbab, csomagolt is, kg"
+L33,okostanyer,L,soup,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L33,okostanyer,L,soup,sargarepa,E,False,75.0,36.7,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+L33,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L33,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L33,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L33,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L33,okostanyer,L,soup,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L33,okostanyer,L,soup,fokhagyma,E,False,3.0,4.5,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L33,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L33,okostanyer,L,soup,finomliszt,E,False,7.5,1.4,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L33,okostanyer,L,soup,tejfol12,E,False,25.0,19.9,797.8,kg,GVH median of chain minima (6 chains); min Spar 798
+L33,okostanyer,L,soup,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L34,okostanyer,L,main,kefir,E,False,50.0,31.1,622.9,kg,GVH median of chain minima (6 chains); min Auchan 600
+L34,okostanyer,L,main,kapia,N,False,25.0,37.5,1500,kg,EST
+L34,okostanyer,L,main,karfiol,E,False,200.0,199.8,999.0,db,GVH median of chain minima (6 chains); min Auchan 399
+L34,okostanyer,L,main,fokhagyma,E,False,4.5,6.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L34,okostanyer,L,main,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L34,okostanyer,L,main,hajdina,N,False,62.5,112.5,1800,kg,EST
+L34,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L34,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L34,okostanyer,L,main,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L35,okostanyer,L,dessert,malna,N,False,50.0,300.0,6000,kg,EST
+L35,okostanyer,L,dessert,eper,E,False,25.0,80.0,3198.0,kg,GVH median of chain minima (3 chains); min Auchan 3198
+L35,okostanyer,L,dessert,afonya,N,False,25.0,150.0,6000,kg,EST
+L35,okostanyer,L,dessert,turo,E,False,60.0,75.4,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+L35,okostanyer,L,dessert,mez,K,False,12.5,74.6,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+L35,okostanyer,L,dessert,joghurt,E,False,50.0,21.4,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+L36,okostanyer,L,soup,sargarepa,E,False,25.0,12.2,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+L36,okostanyer,L,soup,zeller,N,False,25.0,20.0,800,kg,EST
+L36,okostanyer,L,soup,petrezselyemgyoker,E,False,20.0,18.0,898.0,kg,GVH median of chain minima (6 chains); min Spar 689
+L36,okostanyer,L,soup,karalabe,N,False,25.0,22.5,900,kg,EST
+L36,okostanyer,L,soup,zoldborso,E,False,20.0,15.1,753.3,kg,GVH median of chain minima (6 chains); min Spar 753
+L36,okostanyer,L,soup,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L36,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L36,okostanyer,L,soup,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L36,okostanyer,L,soup,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L36,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L36,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L37,okostanyer,L,main,harcsa,E,False,100.0,460.9,4608.9,kg,GVH median of chain minima (6 chains); min Lidl 4115
+L37,okostanyer,L,main,citrom,E,False,25.0,22.5,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L37,okostanyer,L,main,olaj,E,False,10.0,7.5,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L37,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L37,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L37,okostanyer,L,main,spenot_friss,N,False,100.0,207.3,2072.6,kg,KIFLI/1.35
+L37,okostanyer,L,main,koles,N,False,50.0,45.0,900,kg,EST
+L37,okostanyer,L,main,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L37,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L37,okostanyer,L,main,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L37,okostanyer,L,main,fokhagyma,E,False,50.0,74.8,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L37,okostanyer,L,main,margarin,E,False,12.5,8.7,699.0,kg,GVH median of chain minima (6 chains); min Penny 612
+L37,okostanyer,L,main,finomliszt,E,False,10.0,1.8,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L37,okostanyer,L,main,fozotejszin,E,False,200.0,209.0,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+L37,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L37,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L37,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L38,okostanyer,L,main,csirkemell,E,False,100.0,196.4,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+L38,okostanyer,L,main,sargabarack,N,False,50.0,60.0,1200,kg,EST
+L38,okostanyer,L,main,joghurt,E,False,50.0,21.4,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+L38,okostanyer,L,main,vaj,E,False,5.0,10.1,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+L38,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L38,okostanyer,L,main,citrom,E,False,2.5,2.2,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L38,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L38,okostanyer,L,main,ujburgonya,E,False,200.0,38.1,190.6,kg,GVH median of chain minima (2 chains); min Lidl 185
+L38,okostanyer,L,main,friss_fuszernoveny,N,True,2.5,34.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L38,okostanyer,L,main,olivaolaj,E,False,6.5,23.5,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+L39,okostanyer,L,main,paradicsom,E,False,150.0,124.5,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+L39,okostanyer,L,main,zoldpaprika,E,False,125.0,89.8,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+L39,okostanyer,L,main,voroshagyma,E,False,50.0,10.4,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L39,okostanyer,L,main,olaj,E,False,6.5,4.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L39,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L39,okostanyer,L,main,tojas,E,False,82.5,74.2,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L39,okostanyer,L,main,kenyer_feher,E,False,40.0,20.9,523.2,kg,GVH median of chain minima (6 chains); min Lidl 398
+L39,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L40,okostanyer,L,main,cukkini,N,False,200.0,236.9,1184.4,kg,KIFLI/1.35
+L40,okostanyer,L,main,daralt_sertes,E,False,100.0,174.9,1748.9,kg,GVH median of chain minima (6 chains); min Aldi 1299
+L40,okostanyer,L,main,rizs,E,False,37.5,20.6,549.0,kg,GVH median of chain minima (6 chains); min Tesco 529
+L40,okostanyer,L,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L40,okostanyer,L,main,olivaolaj,E,False,6.5,23.5,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+L40,okostanyer,L,main,paradicsompure,N,False,125.0,58.3,466.7,kg,KIFLI/1.35 (passata)
+L40,okostanyer,L,main,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L40,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L40,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L40,okostanyer,L,main,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L41,okostanyer,L,soup,sargarepa,E,False,60.0,29.3,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+L41,okostanyer,L,soup,petrezselyemgyoker,E,False,20.0,18.0,898.0,kg,GVH median of chain minima (6 chains); min Spar 689
+L41,okostanyer,L,soup,karalabe,N,False,50.0,45.0,900,kg,EST
+L41,okostanyer,L,soup,zoldborso,E,False,35.0,26.4,753.3,kg,GVH median of chain minima (6 chains); min Spar 753
+L41,okostanyer,L,soup,voroshagyma,E,False,17.5,3.6,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L41,okostanyer,L,soup,olaj,E,False,3.2,2.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L41,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L41,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L41,okostanyer,L,soup,friss_fuszernoveny,N,True,6.2,85.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L41,okostanyer,L,soup,teszta_egyeb,S,False,25.0,16.2,650.0,kg,GVH median of chain minima (8 chains); min Spar 588
+L41,okostanyer,L,soup,viz,P,False,0.2,0.0,0,l,pantry
+L42,okostanyer,L,main,csirkecombfile,S,False,200.0,169.6,848.0,kg,GVH median of chain minima (6 chains); min Lidl 755
+L42,okostanyer,L,main,mustar,N,False,7.5,7.5,1000,kg,EST
+L42,okostanyer,L,main,mez,K,False,5.0,29.9,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+L42,okostanyer,L,main,olaj,E,False,3.2,2.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L42,okostanyer,L,main,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L42,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L42,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L42,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L43,okostanyer,L,side,ujburgonya,E,False,225.0,42.9,190.6,kg,GVH median of chain minima (2 chains); min Lidl 185
+L43,okostanyer,L,side,olaj,E,False,3.2,2.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L43,okostanyer,L,side,friss_fuszernoveny,N,True,6.2,85.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L43,okostanyer,L,side,so,P,False,0.2,0.1,266,kg,pantry
+L44,okostanyer,L,side,salata,N,False,100.0,222.0,2219.8,kg,KIFLI/1.35 (jégsaláta)
+L44,okostanyer,L,side,ujhagyma,N,False,25.0,37.5,1500,kg,EST
+L44,okostanyer,L,side,viz,P,False,0.2,0.0,0,l,pantry
+L44,okostanyer,L,side,ecet,P,False,7.5,2.2,300,l,pantry
+L44,okostanyer,L,side,cukor,E,False,1.2,0.4,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+L44,okostanyer,L,side,so,P,False,0.2,0.1,266,kg,pantry
+L45,okostanyer,L,dessert,turo,E,False,62.5,78.5,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+L45,okostanyer,L,dessert,joghurt,E,False,60.0,25.7,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+L45,okostanyer,L,dessert,mez,K,False,12.5,74.6,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+L45,okostanyer,L,dessert,citrom,E,False,7.5,6.7,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L45,okostanyer,L,dessert,babapiskota,N,False,25.0,62.5,2500,kg,EST
+L45,okostanyer,L,dessert,lekvar,K,False,20.0,58.2,2910.0,kg,"KSH ara0044 2026-09 #14508 Gyümölcslekvár, 250650 g, min. 50%, kg"
+L46,okostanyer,L,main,kelkaposzta,E,False,300.0,179.7,599.0,kg,GVH median of chain minima (6 chains); min Auchan 599
+L46,okostanyer,L,main,burgonya,E,False,200.0,56.4,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+L46,okostanyer,L,main,tojas,E,False,55.0,49.5,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+L46,okostanyer,L,main,tejfol12,E,False,75.0,59.8,797.8,kg,GVH median of chain minima (6 chains); min Spar 798
+L46,okostanyer,L,main,trappista,E,False,25.0,54.6,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+L46,okostanyer,L,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L46,okostanyer,L,main,olaj,E,False,3.2,2.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L46,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L46,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L46,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L47,okostanyer,L,soup,csirkemell,E,False,75.0,147.3,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+L47,okostanyer,L,soup,sargarepa,E,False,40.0,19.6,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+L47,okostanyer,L,soup,petrezselyemgyoker,E,False,20.0,18.0,898.0,kg,GVH median of chain minima (6 chains); min Spar 689
+L47,okostanyer,L,soup,zeller,N,False,75.0,60.0,800,kg,EST
+L47,okostanyer,L,soup,zoldborso,E,False,25.0,18.8,753.3,kg,GVH median of chain minima (6 chains); min Spar 753
+L47,okostanyer,L,soup,gomba,K,False,25.0,47.5,1900.0,kg,"KSH ara0044 2026-09 #14111 Gomba, kg"
+L47,okostanyer,L,soup,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L47,okostanyer,L,soup,olaj,E,False,3.2,2.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+L47,okostanyer,L,soup,mustar,N,False,1.2,1.2,1000,kg,EST
+L47,okostanyer,L,soup,viz,P,False,0.2,0.0,0,l,pantry
+L47,okostanyer,L,soup,citrom,E,False,3.8,3.4,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L47,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L47,okostanyer,L,soup,joghurt,E,False,37.5,16.1,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+L47,okostanyer,L,soup,finomliszt,E,False,2.5,0.5,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+L47,okostanyer,L,soup,so,P,False,0.2,0.1,266,kg,pantry
+L47,okostanyer,L,soup,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L48,okostanyer,L,main,pisztrang,N,False,300.0,1140.0,3800,kg,EST
+L48,okostanyer,L,main,citrom,E,False,50.0,45.0,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L48,okostanyer,L,main,fokhagyma,E,False,5.0,7.5,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L48,okostanyer,L,main,olivaolaj,E,False,13.0,47.0,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+L48,okostanyer,L,main,friss_fuszernoveny,N,True,6.2,85.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+L48,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L48,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L48,okostanyer,L,main,sargarepa,E,False,60.0,29.3,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+L48,okostanyer,L,main,petrezselyemgyoker,E,False,40.0,35.9,898.0,kg,GVH median of chain minima (6 chains); min Spar 689
+L48,okostanyer,L,main,sutotok,N,False,150.0,75.0,500,kg,EST
+L49,okostanyer,L,starter,cekla,N,False,75.0,37.5,500,kg,EST
+L49,okostanyer,L,starter,alma,E,False,75.0,28.1,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+L49,okostanyer,L,starter,dio,K,False,10.0,61.8,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+L49,okostanyer,L,starter,rukkola,N,False,7.5,37.5,5000,kg,EST
+L49,okostanyer,L,starter,balzsamecet,N,False,7.5,15.0,2000,l,EST
+L49,okostanyer,L,starter,olivaolaj,E,False,3.2,11.8,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+L49,okostanyer,L,starter,mez,K,False,1.8,10.4,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+L49,okostanyer,L,starter,so,P,False,0.2,0.1,266,kg,pantry
+L49,okostanyer,L,starter,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L50,okostanyer,L,dessert,turo,E,False,62.5,78.5,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+L50,okostanyer,L,dessert,gorog_joghurt,S,False,50.0,21.4,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+L50,okostanyer,L,dessert,mez,K,False,10.0,59.7,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+L50,okostanyer,L,dessert,mak,N,False,10.0,26.0,2600,kg,EST
+L50,okostanyer,L,dessert,meggy,N,False,37.5,75.0,2000,kg,EST
+L50,okostanyer,L,dessert,citrom,E,False,7.5,6.7,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+L50,okostanyer,L,dessert,vanilia,P,False,0.2,5.0,20000,kg,pantry
+L51,okostanyer,L,main,sertescomb,E,False,100.0,145.2,1451.5,kg,GVH median of chain minima (6 chains); min Auchan 1199
+L51,okostanyer,L,main,olivaolaj,E,False,6.5,23.5,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+L51,okostanyer,L,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+L51,okostanyer,L,main,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+L51,okostanyer,L,main,mustar,N,False,5.5,5.5,1000,kg,EST
+L51,okostanyer,L,main,fozotejszin,E,False,50.0,52.2,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+L51,okostanyer,L,main,so,P,False,0.2,0.1,266,kg,pantry
+L51,okostanyer,L,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+L51,okostanyer,L,main,brokkoli,E,False,100.0,139.8,1398.0,kg,GVH median of chain minima (6 chains); min Lidl 1398
+L51,okostanyer,L,main,bulgur,N,False,60.0,31.0,517.0,kg,KIFLI/1.35
+L51,okostanyer,L,main,viz,P,False,0.2,0.0,0,l,pantry
+D01,okostanyer,D,main,csirkecomb,E,False,250.0,212.0,848.0,kg,GVH median of chain minima (6 chains); min Lidl 755
+D01,okostanyer,D,main,burgonya,E,False,62.5,17.6,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+D01,okostanyer,D,main,cekla,N,False,62.5,31.2,500,kg,EST
+D01,okostanyer,D,main,sargarepa,E,False,75.0,36.7,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+D01,okostanyer,D,main,lilahagyma,S,False,35.0,7.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+D01,okostanyer,D,main,fokhagyma,E,False,3.8,5.6,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+D01,okostanyer,D,main,friss_fuszernoveny,N,True,0.8,10.2,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+D01,okostanyer,D,main,olivaolaj,E,False,9.8,35.3,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+D01,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D01,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D02,okostanyer,D,main,camembert,E,False,60.0,199.5,3325.0,kg,GVH median of chain minima (6 chains); min Aldi 3320
+D02,okostanyer,D,main,salata,N,False,20.0,44.4,2219.8,kg,KIFLI/1.35 (jégsaláta)
+D02,okostanyer,D,main,szolo,N,False,100.0,130.0,1300,kg,EST
+D02,okostanyer,D,main,korte,E,False,85.0,51.7,608.5,kg,GVH median of chain minima (6 chains); min Spar 557
+D02,okostanyer,D,main,dio,K,False,37.5,231.8,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+D02,okostanyer,D,main,olivaolaj,E,False,13.0,47.0,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+D02,okostanyer,D,main,balzsamecet,N,False,7.5,15.0,2000,l,EST
+D02,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D02,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D02,okostanyer,D,main,kenyer_rozs,E,False,40.0,23.9,598.0,kg,GVH median of chain minima (5 chains); min Auchan 578
+D03,okostanyer,D,main,porehagyma,N,False,10.0,13.0,1300,kg,EST
+D03,okostanyer,D,main,repceolaj,S,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+D03,okostanyer,D,main,tej,E,False,20.0,5.3,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+D03,okostanyer,D,main,tojas,E,False,110.0,99.0,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+D03,okostanyer,D,main,joghurt,E,False,5.0,2.1,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+D03,okostanyer,D,main,paradicsom,E,False,100.0,83.0,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+D03,okostanyer,D,main,rukkola,N,False,25.0,125.0,5000,kg,EST
+D03,okostanyer,D,main,kenyer_graham,S,False,40.0,20.2,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+D04,okostanyer,D,main,turo,E,False,37.5,47.1,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+D04,okostanyer,D,main,tejfol12,E,False,25.0,19.9,797.8,kg,GVH median of chain minima (6 chains); min Spar 798
+D04,okostanyer,D,main,zeller,N,False,25.0,20.0,800,kg,EST
+D04,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D04,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D04,okostanyer,D,main,kenyer_felbarna,E,False,40.0,20.9,523.2,kg,GVH median of chain minima (6 chains); min Auchan 438
+D04,okostanyer,D,main,paradicsom,E,False,75.0,62.2,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+D05,okostanyer,D,main,csirkemell,E,False,100.0,196.4,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+D05,okostanyer,D,main,kuszkusz,N,False,50.0,45.0,900,kg,EST
+D05,okostanyer,D,main,rukkola,N,False,20.0,100.0,5000,kg,EST
+D05,okostanyer,D,main,korte,E,False,25.0,15.2,608.5,kg,GVH median of chain minima (6 chains); min Spar 557
+D05,okostanyer,D,main,mez,K,False,5.0,29.9,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+D05,okostanyer,D,main,mustar,N,False,1.2,1.2,1000,kg,EST
+D05,okostanyer,D,main,olaj,E,False,3.8,2.8,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+D05,okostanyer,D,main,citrom,E,False,12.5,11.2,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+D05,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D05,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D06,okostanyer,D,main,tej,E,False,200.0,53.0,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+D06,okostanyer,D,main,zabpehely,N,False,50.0,29.6,591.1,kg,KIFLI/1.35
+D06,okostanyer,D,main,dio,K,False,16.0,98.9,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+D06,okostanyer,D,main,mez,K,False,5.0,29.9,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+D06,okostanyer,D,main,aszalt_szilva,N,False,20.0,60.0,3000,kg,EST
+D06,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D07,okostanyer,D,main,burgonya,E,False,30.0,8.5,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+D07,okostanyer,D,main,alma,E,False,15.0,5.6,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+D07,okostanyer,D,main,csemegeuborka,E,False,15.0,20.0,1330.6,kg,GVH median of chain minima (6 chains); min Auchan 1140
+D07,okostanyer,D,main,sargarepa,E,False,15.0,7.3,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+D07,okostanyer,D,main,petrezselyemgyoker,E,False,15.0,13.5,898.0,kg,GVH median of chain minima (6 chains); min Spar 689
+D07,okostanyer,D,main,zoldborso,E,False,10.0,7.5,753.3,kg,GVH median of chain minima (6 chains); min Spar 753
+D07,okostanyer,D,main,joghurt,E,False,30.0,12.9,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+D07,okostanyer,D,main,majonez,N,False,10.0,15.0,1500,kg,EST
+D07,okostanyer,D,main,citrom,E,False,3.0,2.7,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+D07,okostanyer,D,main,so,P,False,1.0,0.3,266,kg,pantry
+D07,okostanyer,D,main,fuszer,P,False,1.0,12.0,12000,kg,pantry
+D07,okostanyer,D,main,csirkemell,E,False,100.0,196.4,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+D07,okostanyer,D,main,olaj,E,False,5.0,3.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+D07,okostanyer,D,main,so,P,False,1.0,0.3,266,kg,pantry
+D07,okostanyer,D,main,fuszer,P,False,1.0,12.0,12000,kg,pantry
+D07,okostanyer,D,main,kenyer_rozs,E,False,50.0,29.9,598.0,kg,GVH median of chain minima (5 chains); min Auchan 578
+D08,okostanyer,D,main,tojas,E,False,55.0,49.5,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+D08,okostanyer,D,main,spenot_friss,N,False,250.0,518.1,2072.6,kg,KIFLI/1.35
+D08,okostanyer,D,main,fozotejszin,E,False,75.0,78.4,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+D08,okostanyer,D,main,finomliszt,E,False,15.0,2.7,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+D08,okostanyer,D,main,olaj,E,False,7.5,5.6,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+D08,okostanyer,D,main,fokhagyma,E,False,5.0,7.5,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+D08,okostanyer,D,main,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+D08,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D08,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D08,okostanyer,D,main,viz,P,False,0.2,0.0,0,l,pantry
+D08,okostanyer,D,main,citrom,E,False,25.0,22.5,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+D08,okostanyer,D,main,friss_fuszernoveny,N,True,0.2,3.4,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+D08,okostanyer,D,main,alma,E,False,25.0,9.4,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+D09,okostanyer,D,main,turo,E,False,60.0,75.4,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+D09,okostanyer,D,main,tejfol12,E,False,30.0,23.9,797.8,kg,GVH median of chain minima (6 chains); min Spar 798
+D09,okostanyer,D,main,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+D09,okostanyer,D,main,kenyer_graham,S,False,62.5,31.6,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+D09,okostanyer,D,main,zoldpaprika,E,False,60.0,43.1,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+D09,okostanyer,D,main,tej,E,False,300.0,79.5,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+D10,okostanyer,D,main,sertescomb,E,False,100.0,145.2,1451.5,kg,GVH median of chain minima (6 chains); min Auchan 1199
+D10,okostanyer,D,main,zoldpaprika,E,False,25.0,18.0,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+D10,okostanyer,D,main,paradicsom,E,False,25.0,20.8,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+D10,okostanyer,D,main,cukkini,N,False,25.0,29.6,1184.4,kg,KIFLI/1.35
+D10,okostanyer,D,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+D10,okostanyer,D,main,lilahagyma,S,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+D10,okostanyer,D,main,mustar,N,False,15.0,15.0,1000,kg,EST
+D10,okostanyer,D,main,olaj,E,False,2.5,1.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+D10,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D10,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D10,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D10,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D10,okostanyer,D,main,barna_rizs,S,False,50.0,27.5,549.0,kg,GVH median of chain minima (6 chains); min Tesco 529
+D10,okostanyer,D,main,olaj,E,False,2.5,1.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+D10,okostanyer,D,main,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+D10,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D11,okostanyer,D,main,csirkemaj,N,False,60.0,66.0,1100,kg,EST
+D11,okostanyer,D,main,tojas,E,False,27.5,24.7,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+D11,okostanyer,D,main,voroshagyma,E,False,15.0,3.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+D11,okostanyer,D,main,olaj,E,False,10.0,7.5,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+D11,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D11,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D11,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D11,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D11,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D11,okostanyer,D,main,kenyer_felbarna,E,False,100.0,52.3,523.2,kg,GVH median of chain minima (6 chains); min Auchan 438
+D11,okostanyer,D,main,uborka,E,False,60.0,56.9,379.0,db,GVH median of chain minima (5 chains); min Spar 300
+D11,okostanyer,D,main,gyumolcstea,S,False,0.5,9.7,19473.3,kg,GVH median of chain minima (2 chains); min Rossmann 3980
+D11,okostanyer,D,main,viz,P,False,0.2,0.0,0,l,pantry
+D12,okostanyer,D,main,csirkemell,E,False,120.0,235.6,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+D12,okostanyer,D,main,szezammag,N,False,7.5,18.8,2500,kg,EST
+D12,okostanyer,D,main,olivaolaj,E,False,7.5,27.1,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+D12,okostanyer,D,main,mez,K,False,12.5,74.6,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+D12,okostanyer,D,main,salata,N,False,25.0,55.5,2219.8,kg,KIFLI/1.35 (jégsaláta)
+D12,okostanyer,D,main,kaposzta,E,False,25.0,5.6,223.0,kg,GVH median of chain minima (5 chains); min Aldi 209
+D12,okostanyer,D,main,paradicsom,E,False,75.0,62.2,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+D12,okostanyer,D,main,uborka,E,False,40.0,37.9,379.0,db,GVH median of chain minima (5 chains); min Spar 300
+D12,okostanyer,D,main,retek,N,False,30.0,45.0,1500,kg,EST
+D12,okostanyer,D,main,sargarepa,E,False,25.0,12.2,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+D12,okostanyer,D,main,lilahagyma,S,False,15.0,3.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+D12,okostanyer,D,main,tokmagolaj,N,False,10.0,60.0,6000,l,EST
+D12,okostanyer,D,main,citrom,E,False,25.0,22.5,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+D12,okostanyer,D,main,oszibarackle,N,False,200.0,180.0,900,l,EST
+D13,okostanyer,D,main,kuszkusz,N,False,62.5,56.2,900,kg,EST
+D13,okostanyer,D,main,viz,P,False,0.2,0.0,0,l,pantry
+D13,okostanyer,D,main,paradicsom,E,False,60.0,49.8,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+D13,okostanyer,D,main,kaliforniai,N,False,50.0,114.7,2294.8,kg,KIFLI/1.35
+D13,okostanyer,D,main,uborka,E,False,100.0,94.8,379.0,db,GVH median of chain minima (5 chains); min Spar 300
+D13,okostanyer,D,main,feta,E,False,30.0,132.4,4413.5,kg,GVH median of chain minima (6 chains); min Tesco 3614
+D13,okostanyer,D,main,csicseri,N,False,25.0,16.6,663.6,kg,KIFLI/1.35 per kg drained
+D13,okostanyer,D,main,olivaolaj,E,False,6.5,23.5,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+D13,okostanyer,D,main,citrom,E,False,12.5,11.2,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+D13,okostanyer,D,main,friss_fuszernoveny,N,True,2.0,27.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+D13,okostanyer,D,main,friss_fuszernoveny,N,True,0.5,6.8,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+D13,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D13,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D14,okostanyer,D,main,padlizsan,N,False,200.0,220.0,1100,kg,EST
+D14,okostanyer,D,main,gorog_joghurt,S,False,50.0,21.4,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+D14,okostanyer,D,main,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+D14,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D14,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D14,okostanyer,D,main,tortilla,N,False,60.0,108.0,1800,kg,EST
+D15,okostanyer,D,main,teszta,E,False,62.5,40.6,650.0,kg,GVH median of chain minima (8 chains); min Spar 588
+D15,okostanyer,D,main,paradicsom,E,False,60.0,49.8,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+D15,okostanyer,D,main,uborka,E,False,100.0,94.8,379.0,db,GVH median of chain minima (5 chains); min Spar 300
+D15,okostanyer,D,main,zoldpaprika,E,False,50.0,35.9,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+D15,okostanyer,D,main,feta,E,False,25.0,110.3,4413.5,kg,GVH median of chain minima (6 chains); min Tesco 3614
+D15,okostanyer,D,main,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+D15,okostanyer,D,main,gorog_joghurt,S,False,31.2,13.4,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+D15,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D16,okostanyer,D,main,joghurt,E,False,125.0,53.6,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+D16,okostanyer,D,main,uborka,E,False,100.0,94.8,379.0,db,GVH median of chain minima (5 chains); min Spar 300
+D16,okostanyer,D,main,fokhagyma,E,False,1.2,1.9,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+D16,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D16,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D16,okostanyer,D,main,friss_fuszernoveny,N,True,1.2,17.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+D16,okostanyer,D,main,kenyer_tk,E,False,40.0,20.2,505.2,kg,GVH median of chain minima (6 chains); min Aldi 448
+D17,okostanyer,D,main,csicseri,N,False,75.0,49.8,663.6,kg,KIFLI/1.35 per kg drained
+D17,okostanyer,D,main,sargarepa,E,False,60.0,29.3,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+D17,okostanyer,D,main,voroshagyma,E,False,15.0,3.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+D17,okostanyer,D,main,zabpehely,N,False,5.0,3.0,591.1,kg,KIFLI/1.35
+D17,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D17,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D17,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D17,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D17,okostanyer,D,main,olivaolaj,E,False,3.2,11.8,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+D18,okostanyer,D,main,csirkecombfile,S,False,100.0,84.8,848.0,kg,GVH median of chain minima (6 chains); min Lidl 755
+D18,okostanyer,D,main,burgonya,E,False,150.0,42.3,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+D18,okostanyer,D,main,kelbimbo,N,False,100.0,160.0,1600,kg,EST
+D18,okostanyer,D,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+D18,okostanyer,D,main,olivaolaj,E,False,9.8,35.3,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+D18,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D18,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D18,okostanyer,D,main,so,P,False,0.2,0.1,266,kg,pantry
+D18,okostanyer,D,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+D18,okostanyer,D,main,fokhagyma,E,False,1.2,1.9,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P01,penny,M,main,csulok,N,False,250.0,625.0,2500,kg,EST
+P01,penny,M,main,sor,N,False,125.0,87.5,700,l,EST
+P01,penny,M,main,alaple,N,False,50.0,7.5,150,l,EST (stock cube per litre)
+P01,penny,M,main,szojaszosz,N,False,3.2,9.8,3000,l,EST
+P01,penny,M,main,voroshagyma,E,False,50.0,10.4,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P01,penny,M,main,fokhagyma,E,False,5.0,7.5,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P01,penny,M,main,mustar,N,False,1.2,1.2,1000,kg,EST
+P01,penny,M,main,mez,K,False,1.2,7.5,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+P01,penny,M,main,fuszer,P,False,25.0,300.0,12000,kg,pantry
+P01,penny,M,main,fuszer,P,False,0.1,1.5,12000,kg,pantry
+P01,penny,M,main,friss_fuszernoveny,N,True,3.8,51.2,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P01,penny,M,main,friss_fuszernoveny,N,True,0.8,10.2,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P01,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P01,penny,M,main,savanyu_kaposzta,N,False,125.0,112.5,900,kg,EST
+P01,penny,M,main,burgonya,E,False,250.0,70.5,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+P01,penny,M,main,finomliszt,E,False,6.5,1.2,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P01,penny,M,main,zsir,E,False,6.5,5.3,814.0,kg,GVH median of chain minima (6 chains); min Tesco 798
+P01,penny,M,main,alma,E,False,80.0,30.0,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+P01,penny,M,main,mez,K,False,6.5,38.8,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+P01,penny,M,main,narancs,E,False,25.0,14.4,574.5,kg,GVH median of chain minima (6 chains); min Tesco 549
+P01,penny,M,main,friss_fuszernoveny,N,True,7.5,102.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P02,penny,M,main,cekla,N,False,75.0,37.5,500,kg,EST
+P02,penny,M,main,olaj,E,False,125.0,93.6,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P02,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P02,penny,M,main,edesburgonya,N,False,75.0,66.6,888.1,kg,KIFLI/1.35
+P02,penny,M,main,karfiol,E,False,250.0,249.8,999.0,db,GVH median of chain minima (6 chains); min Auchan 399
+P02,penny,M,main,alma,E,False,40.0,15.0,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+P02,penny,M,main,csirkemell,E,False,125.0,245.4,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+P02,penny,M,main,finomliszt,E,False,13.0,2.4,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P02,penny,M,main,tojas,E,False,41.2,37.1,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P02,penny,M,main,zsemlemorzsa,N,False,37.5,30.0,800,kg,EST
+P03,penny,B,breakfast,cekla,N,False,90.0,45.0,500,kg,EST
+P03,penny,B,breakfast,finomliszt,E,False,180.0,32.7,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P03,penny,B,breakfast,so,P,False,2.5,0.7,266,kg,pantry
+P03,penny,B,breakfast,elesztő,N,False,1.8,3.5,2000,kg,EST
+P03,penny,B,breakfast,olivaolaj,E,False,2.5,9.0,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P03,penny,B,breakfast,viz,P,False,25.0,0.0,0,l,pantry
+P03,penny,B,breakfast,dio,K,False,15.0,92.7,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+P03,penny,B,breakfast,olaj,E,False,3.2,2.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P04,penny,X,dessert,finomliszt,E,False,125.0,22.7,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P04,penny,X,dessert,tej,E,False,50.0,13.2,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P04,penny,X,dessert,vaj,E,False,25.0,50.6,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P04,penny,X,dessert,elesztő,N,False,1.8,3.5,2000,kg,EST
+P04,penny,X,dessert,barnacukor,S,False,20.0,5.9,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P04,penny,X,dessert,tojas,E,False,27.5,24.7,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P04,penny,X,dessert,narancs,E,False,50.0,28.7,574.5,kg,GVH median of chain minima (6 chains); min Tesco 549
+P04,penny,X,dessert,vanilia,P,False,2.0,40.0,20000,kg,pantry
+P04,penny,X,dessert,so,P,False,0.1,0.0,266,kg,pantry
+P04,penny,X,dessert,dio,K,False,25.0,154.5,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+P04,penny,X,dessert,kesudio,N,False,25.0,175.0,7000,kg,EST
+P04,penny,X,dessert,barnacukor,S,False,37.5,11.1,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P04,penny,X,dessert,vaj,E,False,25.0,50.6,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P04,penny,X,dessert,tej,E,False,125.0,33.1,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P04,penny,X,dessert,habtejszin,E,False,75.0,144.5,1926.5,l,GVH median of chain minima (4 chains); min Spar 1795
+P04,penny,X,dessert,tojas,E,False,110.0,99.0,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P04,penny,X,dessert,barnacukor,S,False,25.0,7.4,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P04,penny,X,dessert,vanilia,P,False,2.0,40.0,20000,kg,pantry
+P04,penny,X,dessert,fagylalt,N,False,2.5,5.0,2000,l,EST
+P04,penny,X,dessert,kesudio,N,False,2.5,17.5,7000,kg,EST
+P04,penny,X,dessert,dio,K,False,2.5,15.5,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+P04,penny,X,dessert,kesudio,N,False,2.5,17.5,7000,kg,EST
+P04,penny,X,dessert,mez,K,False,3.2,19.4,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+P05,penny,M,main,gm_liszt,E,False,75.0,104.8,1398.0,kg,GVH median of chain minima (9 chains); min Lidl 399
+P05,penny,M,main,sutotok,N,False,375.0,187.5,500,kg,EST
+P05,penny,M,main,zsemlemorzsa,N,False,100.0,80.0,800,kg,EST
+P05,penny,M,main,olivaolaj,E,False,50.0,180.9,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P05,penny,M,main,alma,E,False,160.0,60.0,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+P05,penny,M,main,fuszer,P,False,50.0,600.0,12000,kg,pantry
+P05,penny,M,main,fuszer,P,False,25.0,300.0,12000,kg,pantry
+P05,penny,M,main,fuszer,P,False,1.2,15.0,12000,kg,pantry
+P05,penny,M,main,fuszer,P,False,1.2,15.0,12000,kg,pantry
+P05,penny,M,main,egyeb_N,N,False,17.5,52.5,3000,kg,EST
+P05,penny,M,main,egyeb_N,N,False,6.5,19.5,3000,kg,EST
+P05,penny,M,main,citrom,E,False,0.4,0.3,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+P05,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P06,penny,B,breakfast,zoldpaprika,E,False,12.5,9.0,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+P06,penny,B,breakfast,ujhagyma,N,False,7.5,11.2,1500,kg,EST
+P06,penny,B,breakfast,olivabogyo,N,False,25.0,62.5,2500,kg,EST
+P06,penny,B,breakfast,kremsajt,S,False,37.5,50.6,1350.0,kg,GVH median of chain minima (6 chains); min Auchan 1350
+P06,penny,B,breakfast,tejfol20,E,False,50.0,49.9,997.8,kg,GVH median of chain minima (6 chains); min Aldi 887
+P06,penny,B,breakfast,fuszer,P,False,1.2,15.0,12000,kg,pantry
+P06,penny,B,breakfast,trappista,E,False,25.0,54.6,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+P06,penny,B,breakfast,tortilla,N,False,62.5,112.5,1800,kg,EST
+P07,penny,M,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P07,penny,M,main,fokhagyma,E,False,1.2,1.9,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P07,penny,M,main,kaliforniai,N,False,100.0,229.5,2294.8,kg,KIFLI/1.35
+P07,penny,M,main,zoldpaprika,E,False,50.0,35.9,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+P07,penny,M,main,lilahagyma,S,False,20.0,4.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P07,penny,M,main,kapia,N,False,12.5,18.8,1500,kg,EST
+P07,penny,M,main,csirkemell,E,False,100.0,196.4,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+P07,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P07,penny,M,main,olivaolaj,E,False,16.2,58.8,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P07,penny,M,main,fuszer,P,False,1.2,15.0,12000,kg,pantry
+P07,penny,M,main,citrom,E,False,12.5,11.2,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+P07,penny,M,main,fuszer,P,False,1.2,15.0,12000,kg,pantry
+P08,penny,M,main,gorogdinnye,K,False,200.0,71.0,355.0,kg,"KSH ara0044 2026-09 #14202 Görögdinnye, kg"
+P08,penny,M,main,kokusztej,N,False,25.0,78.7,3146.3,l,KIFLI/1.35
+P08,penny,M,main,lime,N,False,30.0,75.0,2500,kg,EST
+P08,penny,M,main,fuszer,P,False,2.5,30.0,12000,kg,pantry
+P08,penny,M,main,kokuszreszelek,N,False,3.2,9.8,3000,kg,EST
+P08,penny,M,main,olivaolaj,E,False,7.5,27.1,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P08,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P09,penny,M,main,dio,K,False,25.0,154.5,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+P09,penny,M,main,aszalt_gyumolcs,N,False,37.5,150.0,4000,kg,EST
+P09,penny,M,main,sargarepa,E,False,40.0,19.6,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+P09,penny,M,main,kokuszreszelek,N,False,45.0,135.0,3000,kg,EST
+P09,penny,M,main,kakaopor,E,False,1.2,5.6,4490.0,kg,GVH median of chain minima (8 chains); min Lidl 4475
+P09,penny,M,main,fuszer,P,False,0.6,7.5,12000,kg,pantry
+P09,penny,M,main,fuszer,P,False,0.6,7.5,12000,kg,pantry
+P10,penny,M,main,tokehal,E,False,125.0,328.8,2630.0,kg,GVH median of chain minima (6 chains); min Spar 2629
+P10,penny,M,main,finomliszt,E,False,87.5,15.9,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P10,penny,M,main,sor,N,False,125.0,87.5,700,l,EST
+P10,penny,M,main,sutopor,P,False,1.5,12.0,8000,kg,pantry
+P10,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P10,penny,M,main,fuszer,P,False,0.6,7.5,12000,kg,pantry
+P10,penny,M,main,fuszer,P,False,0.6,7.5,12000,kg,pantry
+P10,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P10,penny,M,main,citrom,E,False,50.0,45.0,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+P10,penny,M,main,olaj,E,False,250.0,187.2,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P10,penny,M,main,burgonya,E,False,250.0,70.5,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+P10,penny,M,main,olaj,E,False,250.0,187.2,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P10,penny,M,main,majonez,N,False,13.0,19.5,1500,kg,EST
+P10,penny,M,main,tejfol20,E,False,6.5,6.5,997.8,kg,GVH median of chain minima (6 chains); min Aldi 887
+P10,penny,M,main,mustar,N,False,3.2,3.2,1000,kg,EST
+P10,penny,M,main,porcukor,E,False,3.2,1.7,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P10,penny,M,main,csemegeuborka,E,False,87.5,116.4,1330.6,kg,GVH median of chain minima (6 chains); min Auchan 1140
+P10,penny,M,main,lilahagyma,S,False,20.0,4.1,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P10,penny,M,main,friss_fuszernoveny,N,True,6.2,85.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P10,penny,M,main,friss_fuszernoveny,N,True,6.2,85.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P10,penny,M,main,citrom,E,False,12.5,11.2,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+P10,penny,M,main,fuszer,P,False,0.1,1.5,12000,kg,pantry
+P10,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P11,penny,B,breakfast,tej,E,False,180.0,47.7,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P11,penny,B,breakfast,finomliszt,E,False,25.0,4.5,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P11,penny,B,breakfast,so,P,False,0.2,0.1,266,kg,pantry
+P11,penny,B,breakfast,kolbasz,E,False,62.5,220.4,3526.3,kg,GVH median of chain minima (6 chains); min Aldi 3197
+P11,penny,B,breakfast,zsemle_egyeb,S,False,125.0,147.7,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+P12,penny,X,dessert,feherbor,N,False,33.3,40.0,1200,l,EST
+P12,penny,X,dessert,cukor,E,False,8.3,2.5,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P12,penny,X,dessert,malna,N,False,58.3,350.0,6000,kg,EST
+P12,penny,X,dessert,habtejszin,E,False,66.7,128.4,1926.5,l,GVH median of chain minima (4 chains); min Spar 1795
+P12,penny,X,dessert,porcukor,E,False,11.7,6.0,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P12,penny,X,dessert,vanilia,P,False,0.8,16.7,20000,kg,pantry
+P12,penny,X,dessert,babapiskota,N,False,11.7,29.2,2500,kg,EST
+P12,penny,X,dessert,friss_fuszernoveny,N,True,0.2,2.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P13,penny,X,dessert,csokolade,N,False,25.0,100.0,4000,kg,EST
+P13,penny,X,dessert,alma,E,False,80.0,30.0,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+P13,penny,X,dessert,olaj,E,False,1.2,0.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P13,penny,X,dessert,dio,K,False,7.5,46.4,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+P13,penny,X,dessert,aszalt_gyumolcs,N,False,7.5,30.0,4000,kg,EST
+P14,penny,M,main,padlizsan,N,False,175.0,192.5,1100,kg,EST
+P14,penny,M,main,fokhagyma,E,False,3.8,5.6,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P14,penny,M,main,olivaolaj,E,False,6.5,23.5,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P14,penny,M,main,majonez,N,False,6.5,9.8,1500,kg,EST
+P14,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P14,penny,M,main,zsemle_egyeb,S,False,62.5,73.9,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+P15,penny,M,main,salata,N,False,70.0,155.4,2219.8,kg,KIFLI/1.35 (jégsaláta)
+P15,penny,M,main,sutotok,N,False,125.0,62.5,500,kg,EST
+P15,penny,M,main,olivaolaj,E,False,6.5,23.5,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P15,penny,M,main,mez,K,False,3.2,19.4,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+P15,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P15,penny,M,main,quinoa,N,False,25.0,37.0,1480.0,kg,KIFLI/1.35
+P15,penny,M,main,majonez,N,False,9.8,14.6,1500,kg,EST
+P15,penny,M,main,tokmag,N,False,16.2,81.2,5000,kg,EST
+P15,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P15,penny,M,main,olivaolaj,E,False,3.2,11.8,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P16,penny,X,dessert,tej,E,False,240.0,63.6,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P16,penny,X,dessert,csokolade,N,False,50.0,200.0,4000,kg,EST
+P16,penny,X,dessert,vanilia,P,False,1.2,25.0,20000,kg,pantry
+P16,penny,X,dessert,habtejszin,E,False,2.5,4.8,1926.5,l,GVH median of chain minima (4 chains); min Spar 1795
+P16,penny,X,dessert,csokolade,N,False,25.0,100.0,4000,kg,EST
+P17,penny,X,dessert,cukor,E,False,13.0,3.8,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P17,penny,X,dessert,finomliszt,E,False,125.0,22.7,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P17,penny,X,dessert,margarin,E,False,50.0,35.0,699.0,kg,GVH median of chain minima (6 chains); min Penny 612
+P17,penny,X,dessert,tej,E,False,125.0,33.1,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P17,penny,X,dessert,tojas,E,False,55.0,49.5,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P17,penny,X,dessert,vanilia,P,False,2.0,40.0,20000,kg,pantry
+P17,penny,X,dessert,sutopor,P,False,3.0,24.0,8000,kg,pantry
+P17,penny,X,dessert,olaj,E,False,3.8,2.8,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P17,penny,X,dessert,lekvar,K,False,2.5,7.3,2910.0,kg,"KSH ara0044 2026-09 #14508 Gyümölcslekvár, 250650 g, min. 50%, kg"
+P17,penny,X,dessert,tej,E,False,250.0,66.2,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P17,penny,X,dessert,pudingpor,N,False,10.0,30.0,3000,kg,EST
+P17,penny,X,dessert,pudingpor,N,False,10.0,30.0,3000,kg,EST
+P17,penny,X,dessert,cukor,E,False,26.0,7.7,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P18,penny,M,main,burgonya,E,False,250.0,70.5,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+P18,penny,M,main,finomliszt,E,False,62.5,11.3,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P18,penny,M,main,so,P,False,3.8,1.0,266,kg,pantry
+P18,penny,M,main,fuszer,P,False,0.4,4.5,12000,kg,pantry
+P18,penny,M,main,so,P,False,250.0,66.5,266,kg,pantry
+P18,penny,M,main,olaj,E,False,25.0,18.7,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P18,penny,M,main,voroshagyma,E,False,250.0,51.8,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P18,penny,M,main,szalonna,E,False,125.0,373.8,2990.0,kg,GVH median of chain minima (6 chains); min Lidl 2399
+P18,penny,M,main,tejfol20,E,False,82.5,82.3,997.8,kg,GVH median of chain minima (6 chains); min Aldi 887
+P18,penny,M,main,ujhagyma,N,False,3.1,4.7,1500,kg,EST
+P18,penny,M,main,friss_fuszernoveny,N,True,3.1,42.6,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P18,penny,M,main,friss_fuszernoveny,N,True,0.4,5.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P18,penny,M,main,fuszer,P,False,9.8,117.0,12000,kg,pantry
+P18,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P19,penny,X,dessert,finomliszt,E,False,58.3,10.6,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P19,penny,X,dessert,kakaopor,E,False,33.3,149.7,4490.0,kg,GVH median of chain minima (8 chains); min Lidl 4475
+P19,penny,X,dessert,porcukor,E,False,32.8,16.9,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P19,penny,X,dessert,barnacukor,S,False,25.0,7.4,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P19,penny,X,dessert,so,P,False,16.7,4.4,266,kg,pantry
+P19,penny,X,dessert,sutopor,P,False,1.2,9.3,8000,kg,pantry
+P19,penny,X,dessert,tojas,E,False,36.7,33.0,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P19,penny,X,dessert,vaj,E,False,25.0,50.6,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P19,penny,X,dessert,csokolade,N,False,24.8,99.3,4000,kg,EST
+P19,penny,X,dessert,porcukor,E,False,16.7,8.6,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P20,penny,X,dessert,csokolade,N,False,50.0,200.0,4000,kg,EST
+P20,penny,X,dessert,vaj,E,False,50.0,101.2,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P20,penny,X,dessert,cukor,E,False,41.7,12.3,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P20,penny,X,dessert,finomliszt,E,False,41.7,7.6,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P20,penny,X,dessert,gyumolcsbefott,N,False,58.3,87.5,1500,kg,EST
+P20,penny,X,dessert,sutopor,P,False,1.2,10.0,8000,kg,pantry
+P20,penny,X,dessert,tojas,E,False,45.8,41.2,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P20,penny,X,dessert,so,P,False,0.2,0.1,266,kg,pantry
+P21,penny,M,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P21,penny,M,main,fokhagyma,E,False,1.2,1.9,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P21,penny,M,main,paradicsom,E,False,30.0,24.9,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+P21,penny,M,main,salata,N,False,75.0,166.5,2219.8,kg,KIFLI/1.35 (jégsaláta)
+P21,penny,M,main,olivaolaj,E,False,13.0,47.0,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P21,penny,M,main,daralt_sertes,E,False,62.5,109.3,1748.9,kg,GVH median of chain minima (6 chains); min Aldi 1299
+P21,penny,M,main,fuszer,P,False,1.2,15.0,12000,kg,pantry
+P21,penny,M,main,pizzateszta,N,False,100.0,150.0,1500,kg,EST
+P21,penny,M,main,trappista,E,False,50.0,109.2,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+P21,penny,M,main,tejfol20,E,False,25.0,24.9,997.8,kg,GVH median of chain minima (6 chains); min Aldi 887
+P22,penny,M,main,csirkecombfile,S,False,250.0,212.0,848.0,kg,GVH median of chain minima (6 chains); min Lidl 755
+P22,penny,M,main,tojas,E,False,13.8,12.4,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P22,penny,M,main,mustar,N,False,6.5,6.5,1000,kg,EST
+P22,penny,M,main,ketchup,N,False,6.5,7.8,1200,kg,EST
+P22,penny,M,main,fuszer,P,False,1.2,15.0,12000,kg,pantry
+P22,penny,M,main,zsemlemorzsa,N,False,3.2,2.6,800,kg,EST
+P22,penny,M,main,paradicsom,E,False,60.0,49.8,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+P22,penny,M,main,uborka,E,False,100.0,94.8,379.0,db,GVH median of chain minima (5 chains); min Spar 300
+P22,penny,M,main,zsemle_egyeb,S,False,40.0,47.3,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+P22,penny,M,main,trappista,E,False,20.0,43.7,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+P22,penny,M,main,salata,N,False,5.0,11.1,2219.8,kg,KIFLI/1.35 (jégsaláta)
+P23,penny,X,dessert,finomliszt,E,False,125.0,22.7,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P23,penny,X,dessert,porcukor,E,False,87.5,45.0,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P23,penny,X,dessert,sutopor,P,False,1.5,12.0,8000,kg,pantry
+P23,penny,X,dessert,tejfol20,E,False,13.0,13.0,997.8,kg,GVH median of chain minima (6 chains); min Aldi 887
+P23,penny,X,dessert,friss_fuszernoveny,N,True,0.4,5.1,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P23,penny,X,dessert,so,P,False,0.1,0.0,266,kg,pantry
+P23,penny,X,dessert,vaj,E,False,62.5,126.5,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P23,penny,X,dessert,tojas,E,False,68.8,61.9,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P23,penny,X,dessert,citrom,E,False,50.0,45.0,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+P23,penny,X,dessert,turo,E,False,125.0,157.0,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+P23,penny,X,dessert,buzadara,N,False,13.0,6.5,500,kg,EST
+P24,penny,X,dessert,joghurt,E,False,112.5,48.2,428.8,kg,GVH median of chain minima (6 chains); min Aldi 429
+P24,penny,X,dessert,mez,K,False,15.0,89.5,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+P24,penny,X,dessert,afonya,N,False,62.5,375.0,6000,kg,EST
+P24,penny,X,dessert,afonya,N,False,25.0,150.0,6000,kg,EST
+P24,penny,X,dessert,habtejszin,E,False,62.5,120.4,1926.5,l,GVH median of chain minima (4 chains); min Spar 1795
+P25,penny,M,main,tojas,E,False,41.2,37.1,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P25,penny,M,main,daralt_sertes,E,False,150.0,262.3,1748.9,kg,GVH median of chain minima (6 chains); min Aldi 1299
+P25,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P25,penny,M,main,karfiol,E,False,75.0,74.9,999.0,db,GVH median of chain minima (6 chains); min Auchan 399
+P25,penny,M,main,zsemle,E,False,15.0,17.7,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+P25,penny,M,main,viz,P,False,275.0,0.0,0,l,pantry
+P25,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P25,penny,M,main,olaj,E,False,6.5,4.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P25,penny,M,main,zsemlemorzsa,N,False,25.0,20.0,800,kg,EST
+P25,penny,M,main,tejfol20,E,False,25.0,24.9,997.8,kg,GVH median of chain minima (6 chains); min Aldi 887
+P25,penny,M,main,trappista,E,False,25.0,54.6,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+P26,penny,B,breakfast,kalacs,N,False,100.0,150.0,1500,kg,EST
+P26,penny,B,breakfast,trappista,E,False,66.7,145.7,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+P26,penny,B,breakfast,torma,N,False,13.0,32.5,2500,kg,EST
+P26,penny,B,breakfast,kremsajt,S,False,41.7,56.2,1350.0,kg,GVH median of chain minima (6 chains); min Auchan 1350
+P26,penny,B,breakfast,sonka,E,False,66.7,138.3,2075.0,kg,GVH median of chain minima (6 chains); min Tesco 2075
+P26,penny,B,breakfast,vaj,E,False,4.3,8.8,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P27,penny,M,main,olaj,E,False,6.5,4.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P27,penny,M,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P27,penny,M,main,burgonya,E,False,125.0,35.2,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+P27,penny,M,main,kolbasz,E,False,75.0,264.5,3526.3,kg,GVH median of chain minima (6 chains); min Aldi 3197
+P27,penny,M,main,petrezselyemgyoker,E,False,12.5,11.2,898.0,kg,GVH median of chain minima (6 chains); min Spar 689
+P27,penny,M,main,sargarepa,E,False,12.5,6.1,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+P27,penny,M,main,tejfol20,E,False,37.5,37.4,997.8,kg,GVH median of chain minima (6 chains); min Aldi 887
+P27,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P27,penny,M,main,friss_fuszernoveny,N,True,3.1,42.6,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P28,penny,M,main,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P28,penny,M,main,fokhagyma,E,False,1.2,1.9,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P28,penny,M,main,salata,N,False,75.0,166.5,2219.8,kg,KIFLI/1.35 (jégsaláta)
+P28,penny,M,main,kaliforniai,N,False,50.0,114.7,2294.8,kg,KIFLI/1.35
+P28,penny,M,main,trappista,E,False,25.0,54.6,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+P28,penny,M,main,olivaolaj,E,False,9.8,35.3,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P28,penny,M,main,daralt_sertes,E,False,125.0,218.6,1748.9,kg,GVH median of chain minima (6 chains); min Aldi 1299
+P28,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P28,penny,M,main,fuszer,P,False,1.2,15.0,12000,kg,pantry
+P28,penny,M,main,tortilla,N,False,60.0,108.0,1800,kg,EST
+P29,penny,M,main,tojas,E,False,13.8,12.4,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P29,penny,M,main,kapia,N,False,25.0,37.5,1500,kg,EST
+P29,penny,M,main,csirkemell,E,False,25.0,49.1,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+P29,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P29,penny,M,main,pizzateszta,N,False,100.0,150.0,1500,kg,EST
+P29,penny,M,main,spenot_fagy,N,False,25.0,30.0,1200,kg,EST
+P29,penny,M,main,mozzarella,E,False,31.2,84.8,2712.0,kg,GVH median of chain minima (6 chains); min Aldi 2248
+P29,penny,M,main,paradicsom_konzerv,N,False,9.8,5.5,564.8,kg,KIFLI/1.35
+P29,penny,M,main,parmezan,N,False,5.0,25.9,5177.8,kg,KIFLI/1.35
+P30,penny,X,dessert,finomliszt,E,False,62.5,11.3,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P30,penny,X,dessert,vaj,E,False,40.0,81.0,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P30,penny,X,dessert,mandula,N,False,19.5,117.0,6000,kg,EST
+P30,penny,X,dessert,porcukor,E,False,30.0,15.4,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P30,penny,X,dessert,narancs,E,False,50.0,28.7,574.5,kg,GVH median of chain minima (6 chains); min Tesco 549
+P30,penny,X,dessert,tojas,E,False,27.5,24.7,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P30,penny,X,dessert,so,P,False,0.1,0.0,266,kg,pantry
+P30,penny,X,dessert,habtejszin,E,False,22.5,43.3,1926.5,l,GVH median of chain minima (4 chains); min Spar 1795
+P30,penny,X,dessert,csokolade,N,False,45.0,180.0,4000,kg,EST
+P30,penny,X,dessert,lekvar,K,False,30.0,87.3,2910.0,kg,"KSH ara0044 2026-09 #14508 Gyümölcslekvár, 250650 g, min. 50%, kg"
+P31,penny,M,main,kapia,N,False,250.0,375.0,1500,kg,EST
+P31,penny,M,main,paradicsom,E,False,250.0,207.5,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+P31,penny,M,main,voroshagyma,E,False,250.0,51.8,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P31,penny,M,main,fokhagyma,E,False,0.6,0.9,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P31,penny,M,main,alaple,N,False,125.0,18.8,150,l,EST (stock cube per litre)
+P31,penny,M,main,aszalt_paradicsom,N,False,25.0,125.0,5000,kg,EST
+P31,penny,M,main,paradicsom_konzerv,N,False,3.2,1.8,564.8,kg,KIFLI/1.35
+P31,penny,M,main,ketchup,N,False,0.6,0.8,1200,kg,EST
+P31,penny,M,main,olivaolaj,E,False,9.8,35.3,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P31,penny,M,main,fuszer,P,False,3.2,39.0,12000,kg,pantry
+P31,penny,M,main,so,P,False,3.2,0.9,266,kg,pantry
+P31,penny,M,main,fuszer,P,False,0.5,6.0,12000,kg,pantry
+P31,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P31,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P31,penny,M,main,fuszer,P,False,25.0,300.0,12000,kg,pantry
+P31,penny,M,main,kolbasz,E,False,62.5,220.4,3526.3,kg,GVH median of chain minima (6 chains); min Aldi 3197
+P31,penny,M,main,citrom,E,False,25.0,22.5,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+P31,penny,M,main,malna,N,False,25.0,150.0,6000,kg,EST
+P31,penny,M,main,malna,N,False,25.0,150.0,6000,kg,EST
+P31,penny,M,main,kapia,N,False,25.0,37.5,1500,kg,EST
+P31,penny,M,main,friss_fuszernoveny,N,True,6.2,85.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P31,penny,M,main,ujhagyma,N,False,3.1,4.7,1500,kg,EST
+P31,penny,M,main,zsemle_egyeb,S,False,45.0,53.2,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+P31,penny,M,main,kalacs,N,False,62.5,93.8,1500,kg,EST
+P32,penny,M,main,csirkemell,E,False,75.0,147.3,1963.5,kg,GVH median of chain minima (6 chains); min Lidl 1859
+P32,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P32,penny,M,main,olivaolaj,E,False,3.8,13.6,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P32,penny,M,main,teszta_egyeb,S,False,75.0,48.8,650.0,kg,GVH median of chain minima (8 chains); min Spar 588
+P32,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P32,penny,M,main,vaj,E,False,3.2,6.6,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P32,penny,M,main,fokhagyma,E,False,3.8,5.6,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P32,penny,M,main,fozotejszin,E,False,125.0,130.6,1045.0,l,GVH median of chain minima (5 chains); min Penny 1038
+P32,penny,M,main,parmezan,N,False,12.5,64.7,5177.8,kg,KIFLI/1.35
+P32,penny,M,main,friss_fuszernoveny,N,True,6.2,85.3,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P33,penny,M,main,gm_liszt,E,False,75.0,104.8,1398.0,kg,GVH median of chain minima (9 chains); min Lidl 399
+P33,penny,M,main,gm_liszt,E,False,31.2,43.7,1398.0,kg,GVH median of chain minima (9 chains); min Lidl 399
+P33,penny,M,main,elesztő,N,False,2.5,5.0,2000,kg,EST
+P33,penny,M,main,viz,P,False,62.5,0.0,0,l,pantry
+P33,penny,M,main,cukor,E,False,0.6,0.2,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P33,penny,M,main,olaj,E,False,3.2,2.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P33,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P33,penny,M,main,kolbasz,E,False,31.2,110.2,3526.3,kg,GVH median of chain minima (6 chains); min Aldi 3197
+P33,penny,M,main,lilahagyma,S,False,40.0,8.3,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P33,penny,M,main,szalonna,E,False,12.5,37.4,2990.0,kg,GVH median of chain minima (6 chains); min Lidl 2399
+P33,penny,M,main,tejfol20,E,False,37.5,37.4,997.8,kg,GVH median of chain minima (6 chains); min Aldi 887
+P33,penny,M,main,trappista,E,False,25.0,54.6,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+P33,penny,M,main,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P33,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P34,penny,B,breakfast,zsemle,E,False,60.0,70.9,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+P34,penny,B,breakfast,csirkesonka,S,False,100.0,319.0,3190.0,kg,GVH median of chain minima (6 chains); min Lidl 2890
+P34,penny,B,breakfast,tojas,E,False,55.0,49.5,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P34,penny,B,breakfast,tejfol20,E,False,39.0,38.9,997.8,kg,GVH median of chain minima (6 chains); min Aldi 887
+P34,penny,B,breakfast,trappista,E,False,80.0,174.8,2185.0,kg,GVH median of chain minima (6 chains); min Tesco 1874
+P34,penny,B,breakfast,so,P,False,1.0,0.3,266,kg,pantry
+P34,penny,B,breakfast,friss_fuszernoveny,N,True,10.0,136.5,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P35,penny,M,main,daralt_sertes,E,False,75.0,131.2,1748.9,kg,GVH median of chain minima (6 chains); min Aldi 1299
+P35,penny,M,main,rizs,E,False,20.0,11.0,549.0,kg,GVH median of chain minima (6 chains); min Tesco 529
+P35,penny,M,main,voroshagyma,E,False,50.0,10.4,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P35,penny,M,main,tojas,E,False,13.8,12.4,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P35,penny,M,main,olaj,E,False,12.5,9.4,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P35,penny,M,main,finomliszt,E,False,12.5,2.3,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P35,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P35,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P35,penny,M,main,zoldpaprika,E,False,50.0,35.9,718.5,kg,GVH median of chain minima (6 chains); min Spar 602
+P35,penny,M,main,paradicsom_konzerv,N,False,40.0,22.6,564.8,kg,KIFLI/1.35
+P35,penny,M,main,cukor,E,False,15.0,4.4,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P35,penny,M,main,zeller,N,False,50.0,40.0,800,kg,EST
+P36,penny,M,main,cukkini,N,False,75.0,88.8,1184.4,kg,KIFLI/1.35
+P36,penny,M,main,sargarepa,E,False,40.0,19.6,489.0,kg,GVH median of chain minima (6 chains); min Auchan 299
+P36,penny,M,main,voroshagyma,E,False,12.5,2.6,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P36,penny,M,main,kaliforniai,N,False,25.0,57.4,2294.8,kg,KIFLI/1.35
+P36,penny,M,main,kaliforniai,N,False,25.0,57.4,2294.8,kg,KIFLI/1.35
+P36,penny,M,main,kaliforniai,N,False,25.0,57.4,2294.8,kg,KIFLI/1.35
+P36,penny,M,main,rizsteszta,N,False,45.0,112.5,2500,kg,EST
+P36,penny,M,main,mogyoro,E,False,2.5,5.5,2195.0,kg,GVH median of chain minima (7 chains); min Spar 1998
+P36,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P36,penny,M,main,fokhagyma,E,False,2.5,3.7,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P36,penny,M,main,szojaszosz,N,False,6.5,19.5,3000,l,EST
+P36,penny,M,main,szojaszosz,N,False,6.5,19.5,3000,l,EST
+P36,penny,M,main,fuszer,P,False,0.4,4.5,12000,kg,pantry
+P36,penny,M,main,ketchup,N,False,2.5,3.0,1200,kg,EST
+P36,penny,M,main,lime,N,False,7.5,18.8,2500,kg,EST
+P36,penny,M,main,tojas,E,False,27.5,24.7,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P36,penny,M,main,olivaolaj,E,False,3.2,11.8,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P36,penny,M,main,mogyoro,E,False,17.5,38.4,2195.0,kg,GVH median of chain minima (7 chains); min Spar 1998
+P36,penny,M,main,barnacukor,S,False,2.5,0.7,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P37,penny,B,breakfast,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P37,penny,B,breakfast,sertesmaj,N,False,50.0,50.0,1000,kg,EST
+P37,penny,B,breakfast,olivaolaj,E,False,3.2,11.8,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P37,penny,B,breakfast,so,P,False,0.2,0.1,266,kg,pantry
+P37,penny,B,breakfast,kenyer_feher,E,False,40.0,20.9,523.2,kg,GVH median of chain minima (6 chains); min Lidl 398
+P38,penny,M,main,buzadara,N,False,15.0,7.5,500,kg,EST
+P38,penny,M,main,tej,E,False,62.5,16.6,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P38,penny,M,main,szalonna,E,False,75.0,224.2,2990.0,kg,GVH median of chain minima (6 chains); min Lidl 2399
+P38,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P38,penny,M,main,turo,E,False,62.5,78.5,1256.0,kg,GVH median of chain minima (6 chains); min Aldi 876
+P38,penny,M,main,olivaolaj,E,False,16.2,58.8,3618.5,l,GVH median of chain minima (8 chains); min Auchan 2400
+P38,penny,M,main,mozzarella,E,False,62.5,169.5,2712.0,kg,GVH median of chain minima (6 chains); min Aldi 2248
+P38,penny,M,main,kenyer_feher,E,False,20.0,10.5,523.2,kg,GVH median of chain minima (6 chains); min Lidl 398
+P38,penny,M,main,kaliforniai,N,False,50.0,114.7,2294.8,kg,KIFLI/1.35
+P38,penny,M,main,koktelparadicsom,S,False,37.5,31.1,830.0,kg,GVH median of chain minima (6 chains); min Lidl 429
+P38,penny,M,main,uborka,E,False,25.0,23.7,379.0,db,GVH median of chain minima (5 chains); min Spar 300
+P39,penny,M,main,finomliszt,E,False,125.0,22.7,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P39,penny,M,main,tojas,E,False,96.2,86.6,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P39,penny,M,main,viz,P,False,100.0,0.0,0,l,pantry
+P39,penny,M,main,vaj,E,False,17.5,35.4,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P39,penny,M,main,salata,N,False,75.0,166.5,2219.8,kg,KIFLI/1.35 (jégsaláta)
+P39,penny,M,main,cukor,E,False,1.9,0.6,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P39,penny,M,main,ecet,P,False,1.9,0.6,300,l,pantry
+P39,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P40,penny,X,dessert,narancs,E,False,100.0,57.5,574.5,kg,GVH median of chain minima (6 chains); min Tesco 549
+P40,penny,X,dessert,tojas,E,False,13.8,12.4,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P40,penny,X,dessert,olaj,E,False,22.5,16.9,749.0,l,GVH median of chain minima (7 chains); min Auchan 739
+P40,penny,X,dessert,kakaopor,E,False,25.0,112.2,4490.0,kg,GVH median of chain minima (8 chains); min Lidl 4475
+P40,penny,X,dessert,cukor,E,False,25.0,7.4,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P40,penny,X,dessert,sutopor,P,False,1.2,10.0,8000,kg,pantry
+P40,penny,X,dessert,finomliszt,E,False,62.5,11.3,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P40,penny,X,dessert,so,P,False,0.2,0.1,266,kg,pantry
+P41,penny,M,main,kacsa,N,False,200.0,600.0,3000,kg,EST
+P41,penny,M,main,kacsa,N,False,250.0,750.0,3000,kg,EST
+P41,penny,M,main,voroshagyma,E,False,50.0,10.4,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P41,penny,M,main,fokhagyma,E,False,5.0,7.5,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P41,penny,M,main,burgonya,E,False,150.0,42.3,282.0,kg,GVH median of chain minima (6 chains); min Lidl 194
+P41,penny,M,main,friss_fuszernoveny,N,True,1.5,20.5,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P41,penny,M,main,friss_fuszernoveny,N,True,4.5,61.4,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P41,penny,M,main,fuszer,P,False,25.0,300.0,12000,kg,pantry
+P41,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P41,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P41,penny,M,main,almale,E,False,250.0,106.0,424.0,l,GVH median of chain minima (8 chains); min Aldi 305
+P41,penny,M,main,mez,K,False,50.0,298.5,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+P41,penny,M,main,balzsamecet,N,False,25.0,50.0,2000,l,EST
+P41,penny,M,main,fokhagyma,E,False,1.2,1.9,1496.0,kg,GVH median of chain minima (5 chains); min Aldi 1465
+P41,penny,M,main,friss_fuszernoveny,N,True,0.8,10.2,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P41,penny,M,main,friss_fuszernoveny,N,True,1.5,20.5,13646.7,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+P41,penny,M,main,fuszer,P,False,1.0,12.0,12000,kg,pantry
+P41,penny,M,main,lilakaposzta,S,False,250.0,55.8,223.0,kg,GVH median of chain minima (5 chains); min Aldi 209
+P41,penny,M,main,narancs,E,False,50.0,28.7,574.5,kg,GVH median of chain minima (6 chains); min Tesco 549
+P41,penny,M,main,balzsamecet,N,False,25.0,50.0,2000,l,EST
+P41,penny,M,main,almale,E,False,50.0,21.2,424.0,l,GVH median of chain minima (8 chains); min Aldi 305
+P41,penny,M,main,alaple,N,False,50.0,7.5,150,l,EST (stock cube per litre)
+P41,penny,M,main,aszalt_gyumolcs,N,False,25.0,100.0,4000,kg,EST
+P41,penny,M,main,barnacukor,S,False,16.2,4.8,295.0,kg,GVH median of chain minima (6 chains); min Aldi 295
+P41,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P41,penny,M,main,fuszer,P,False,0.2,3.0,12000,kg,pantry
+P41,penny,M,main,leveles_teszta,N,False,62.5,93.8,1500,kg,EST
+P41,penny,M,main,vaj,E,False,25.0,50.6,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P41,penny,M,main,tojas,E,False,13.8,12.4,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P41,penny,M,main,so,P,False,0.2,0.1,266,kg,pantry
+P42,penny,M,main,zsemle_egyeb,S,False,62.5,73.9,1181.8,kg,GVH median of chain minima (3 chains); min Auchan 863
+P42,penny,M,main,brie,E,False,42.5,168.9,3975.0,kg,GVH median of chain minima (6 chains); min Aldi 2725
+P42,penny,M,main,alma,E,False,80.0,30.0,374.8,kg,GVH median of chain minima (6 chains); min Aldi 325
+P42,penny,M,main,citrom,E,False,25.0,22.5,899.0,kg,GVH median of chain minima (6 chains); min Spar 799
+P42,penny,M,main,dio,K,False,37.5,231.8,6180.0,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+P42,penny,M,main,mez,K,False,6.2,37.3,5970.0,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+P43,penny,X,dessert,finomliszt,E,False,50.0,9.1,181.5,kg,GVH median of chain minima (6 chains); min Lidl 178
+P43,penny,X,dessert,vaj,E,False,12.5,25.3,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P43,penny,X,dessert,tojas,E,False,55.0,49.5,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P43,penny,X,dessert,tej,E,False,75.0,19.9,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P43,penny,X,dessert,vanilia,P,False,4.0,80.0,20000,kg,pantry
+P43,penny,X,dessert,porcukor,E,False,3.2,1.7,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P43,penny,X,dessert,so,P,False,0.1,0.0,266,kg,pantry
+P43,penny,X,dessert,aszalt_gyumolcs,N,False,25.0,100.0,4000,kg,EST
+P43,penny,X,dessert,lekvar,K,False,2.5,7.3,2910.0,kg,"KSH ara0044 2026-09 #14508 Gyümölcslekvár, 250650 g, min. 50%, kg"
+P43,penny,X,dessert,mandula,N,False,25.0,150.0,6000,kg,EST
+P43,penny,X,dessert,porcukor,E,False,2.5,1.3,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P43,penny,X,dessert,fagylalt,N,False,2.5,5.0,2000,l,EST
+P44,penny,B,breakfast,tej,E,False,12.5,3.3,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P44,penny,B,breakfast,tojas,E,False,55.0,49.5,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P44,penny,B,breakfast,vaj,E,False,6.5,13.2,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P44,penny,B,breakfast,sonka,E,False,37.5,77.8,2075.0,kg,GVH median of chain minima (6 chains); min Tesco 2075
+P44,penny,B,breakfast,cheddar,E,False,12.5,47.4,3795.0,kg,GVH median of chain minima (6 chains); min Auchan 2530
+P44,penny,B,breakfast,so,P,False,0.2,0.1,266,kg,pantry
+P44,penny,B,breakfast,voroshagyma,E,False,25.0,5.2,207.0,kg,GVH median of chain minima (6 chains); min Lidl 190
+P44,penny,B,breakfast,kaliforniai,N,False,50.0,114.7,2294.8,kg,KIFLI/1.35
+P45,penny,X,dessert,tojas,E,False,68.8,61.9,49.5,db,GVH median of chain minima (6 chains); min Lidl 46
+P45,penny,X,dessert,porcukor,E,False,16.2,8.4,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P45,penny,X,dessert,retesliszt,E,False,13.0,2.7,209.0,kg,GVH median of chain minima (6 chains); min Lidl 205
+P45,penny,X,dessert,kakaopor,E,False,6.5,29.2,4490.0,kg,GVH median of chain minima (8 chains); min Lidl 4475
+P45,penny,X,dessert,sutopor,P,False,0.6,5.0,8000,kg,pantry
+P45,penny,X,dessert,vaj,E,False,37.5,75.9,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796
+P45,penny,X,dessert,porcukor,E,False,25.0,12.9,514.0,kg,GVH median of chain minima (6 chains); min Auchan 510
+P45,penny,X,dessert,kakaopor,E,False,7.5,33.7,4490.0,kg,GVH median of chain minima (8 chains); min Lidl 4475
+P45,penny,X,dessert,tej,E,False,62.5,16.6,265.0,l,GVH median of chain minima (7 chains); min Spar 155
+P45,penny,X,dessert,retesliszt,E,False,9.8,2.0,209.0,kg,GVH median of chain minima (6 chains); min Lidl 205
+P45,penny,X,dessert,gyumolcsbefott,N,False,37.5,56.2,1500,kg,EST
+P45,penny,X,dessert,feherbor,N,False,37.5,45.0,1200,l,EST
+P45,penny,X,dessert,vanilia,P,False,2.0,40.0,20000,kg,pantry
+P45,penny,X,dessert,gyumolcsbefott,N,False,12.5,18.8,1500,kg,EST
+P45,penny,X,dessert,csokolade,N,False,25.0,100.0,4000,kg,EST
+P45,penny,X,dessert,vaj,E,False,25.0,50.6,2024.0,kg,GVH median of chain minima (6 chains); min Aldi 1796

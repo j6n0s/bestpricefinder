@@ -1,0 +1,10 @@
+chain,rows,rows_min_lt_max,share_varying,avg_spread_when_varying,rows_in_ge80pct_stores,share_ge80pct,chain_store_count
+Aldi,729,0,0.0,0,729,1.0,188
+Auchan,5181,75,0.014,0.337,1444,0.279,26
+Lidl,637,6,0.009,0.386,557,0.874,222
+Müller,4176,0,0.0,0,3659,0.876,34
+Penny,662,0,0.0,0,625,0.944,248
+Rossmann,4227,0,0.0,0,2239,0.53,280
+Spar,3040,838,0.276,0.299,441,0.145,375
+Tesco,3993,1015,0.254,0.093,440,0.11,197
+dm,2755,0,0.0,0,2196,0.797,259

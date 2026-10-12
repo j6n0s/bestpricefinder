@@ -1,0 +1,12 @@
+chain,class,n
+Aldi,captured_NORMAL_at_promo_level,8
+Aldi,outside_definition,4
+Lidl,captured_DISCOUNTED_eq_promo,4
+Lidl,loyalty_app_not_reported,5
+Lidl,outside_definition,3
+Lidl,unclear,2
+Penny,captured_DISCOUNTED_eq_promo,13
+Penny,captured_NORMAL_at_promo_level,1
+Penny,outside_definition,9
+Penny,temporary_exempt,10
+Penny,unclear,2

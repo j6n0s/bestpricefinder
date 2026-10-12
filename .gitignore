@@ -1,0 +1,39 @@
+# secrets & local config
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# local database / runtime data (never commit)
+pgdata/
+.data/
+*.dump
+*.sql.gz
+logs/
+*.log
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# node / web
+node_modules/
+web/.svelte-kit/
+web/build/
+.vite/
+
+# os / editors
+.DS_Store
+.idea/
+.vscode/

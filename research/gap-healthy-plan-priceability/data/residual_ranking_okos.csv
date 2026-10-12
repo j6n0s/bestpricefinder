@@ -1,0 +1,82 @@
+key,cls,lines,recipes,cost_share_pct,price,unit,basis
+tonhal_friss,N,1,1,4.21,9000,kg,EST
+pisztrang,N,1,1,3.55,3800,kg,EST
+friss_fuszernoveny,N,33,29,3.43,13647,kg,KIFLI/1.35 (petrezselyemzöld csomós 26 g)
+spenot_friss,N,3,3,2.52,2073,kg,KIFLI/1.35
+cukkini,N,6,6,2.51,1184,kg,KIFLI/1.35
+gomba,K,5,5,2.44,1900,kg,"KSH ara0044 2026-09 #14111 Gomba, kg"
+salata,N,8,8,1.9,2220,kg,KIFLI/1.35 (jégsaláta)
+dio,K,7,7,1.69,6180,kg,"KSH ara0044 2026-09 #14701 Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg"
+darált_pulyka,S,2,2,1.33,2999,kg,GVH median of chain minima (6 chains); min Auchan 2998
+rukkola,N,4,4,1.29,5000,kg,EST
+mez,K,11,11,1.27,5970,kg,"KSH ara0044 2026-09 #13910 Akácméz, kg"
+busa,N,1,1,1.22,2600,kg,EST
+padlizsan,N,3,3,1.13,1100,kg,EST
+kelbimbo,N,2,2,1.12,1600,kg,EST
+sajt_light,S,5,5,1.09,2185,kg,GVH median of chain minima (6 chains); min Tesco 1874
+csirkecombfile,S,3,3,1.08,848,kg,GVH median of chain minima (6 chains); min Lidl 755
+tortilla,N,3,3,1.01,1800,kg,EST
+aszalt_szilva,N,4,4,0.96,3000,kg,EST
+kaliforniai,N,3,3,0.93,2295,kg,KIFLI/1.35
+tonhal_konzerv,N,1,1,0.91,9696,kg,KIFLI/1.35 per kg drained
+zoldbab,N,1,1,0.81,1300,kg,EST
+zsemle_egyeb,S,4,4,0.74,1182,kg,GVH median of chain minima (3 chains); min Auchan 863
+zabpehely,N,10,10,0.73,591,kg,KIFLI/1.35
+sutotok,N,3,3,0.59,500,kg,EST
+sargabarack,N,2,2,0.56,1200,kg,EST
+pulykacomb,S,1,1,0.56,2999,kg,GVH median of chain minima (6 chains); min Auchan 2998
+oszibarackle,N,1,1,0.56,900,l,EST
+fozotok,N,1,1,0.55,700,kg,EST
+cseresznye,N,1,1,0.51,2200,kg,EST
+darált_csirke,S,1,1,0.49,1964,kg,GVH median of chain minima (6 chains); min Lidl 1859
+csicseri,N,4,4,0.48,664,kg,KIFLI/1.35 per kg drained
+oszibarack,N,1,1,0.47,1000,kg,EST
+zeller,N,7,7,0.45,800,kg,EST
+edesburgonya,N,2,2,0.45,888,kg,KIFLI/1.35
+cekla,N,5,5,0.44,500,kg,EST
+szarazbab,K,2,2,0.43,1540,kg,"KSH ara0044 2026-09 #14601 Szárazbab, csomagolt is, kg"
+parmai_sonka,N,1,1,0.42,9000,kg,EST
+porehagyma,N,4,4,0.41,1300,kg,EST
+szolo,N,1,1,0.41,1300,kg,EST
+tokmagolaj,N,2,2,0.37,6000,l,EST
+retek,N,2,2,0.37,1500,kg,EST
+spenot_fagy,N,1,1,0.37,1200,kg,EST
+hajdina,N,1,1,0.35,1800,kg,EST
+kenyer_graham,S,4,4,0.32,505,kg,GVH median of chain minima (6 chains); min Aldi 448
+parmezan,N,1,1,0.32,5178,kg,KIFLI/1.35
+kuszkusz,N,2,2,0.32,900,kg,EST
+granola,N,1,1,0.31,2500,kg,EST
+meggy,N,1,1,0.31,2000,kg,EST
+bulgur,N,3,3,0.29,517,kg,KIFLI/1.35
+gorog_joghurt,S,5,5,0.29,429,kg,GVH median of chain minima (6 chains); min Aldi 429
+koles,N,2,2,0.28,900,kg,EST
+ujhagyma,N,2,2,0.26,1500,kg,EST
+paradicsompure,N,2,2,0.24,467,kg,KIFLI/1.35 (passata)
+tokmag,N,1,1,0.23,5000,kg,EST
+alaple,N,3,3,0.22,150,l,EST (stock cube per litre)
+karalabe,N,2,2,0.21,900,kg,EST
+csirkemaj,N,1,1,0.21,1100,kg,EST
+szilva,N,1,1,0.2,800,kg,EST
+mandula,N,1,1,0.19,6000,kg,EST
+kokuszreszelek,N,1,1,0.19,3000,kg,EST
+mustar,N,11,11,0.18,1000,kg,EST
+barna_rizs,S,2,2,0.15,549,kg,GVH median of chain minima (6 chains); min Tesco 529
+koktelparadicsom,S,1,1,0.13,830,kg,GVH median of chain minima (6 chains); min Lidl 429
+balzsamecet,N,3,3,0.12,2000,l,EST
+kapia,N,1,1,0.12,1500,kg,EST
+majonez,N,2,2,0.09,1500,kg,EST
+fagy_zoldsegkeverek,S,1,1,0.09,753,kg,GVH median of chain minima (6 chains); min Spar 753
+lilahagyma,S,6,6,0.08,207,kg,GVH median of chain minima (6 chains); min Lidl 190
+arpagyongy,N,2,2,0.08,700,kg,EST
+lilakaposzta,S,1,1,0.07,223,kg,GVH median of chain minima (5 chains); min Aldi 209
+suritett_paradicsom,N,1,1,0.06,1500,kg,EST
+szezammag,N,1,1,0.06,2500,kg,EST
+lenmag,N,1,1,0.05,1500,kg,EST
+feherbor,N,1,1,0.05,1200,l,EST
+teszta_egyeb,S,1,1,0.05,650,kg,GVH median of chain minima (8 chains); min Spar 588
+zsemlemorzsa,N,2,2,0.04,800,kg,EST
+torma,N,1,1,0.04,2500,kg,EST
+gyumolcstea,S,1,1,0.03,19473,kg,GVH median of chain minima (2 chains); min Rossmann 3980
+repceolaj,S,2,2,0.02,749,l,GVH median of chain minima (7 chains); min Auchan 739
+tk_liszt,S,2,2,0.02,182,kg,GVH median of chain minima (6 chains); min Lidl 178
+barnacukor,S,1,1,0.0,295,kg,GVH median of chain minima (6 chains); min Aldi 295

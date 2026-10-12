@@ -1,0 +1,29 @@
+metric,chain,monthly_basket_ft,imputed_categories
+min_normal,Lidl,29008,
+min_normal,Aldi,30387,Rice (kg)
+min_normal,Auchan,31197,White cabbage (kg)
+min_normal,Spar,32459,
+min_normal,Penny,33982,
+min_normal,Tesco,34061,
+min_normal,CHERRY_PICK_ALL_6,27085,
+min_eff,Lidl,29008,
+min_eff,Spar,29966,
+min_eff,Aldi,30387,Rice (kg)
+min_eff,Auchan,31165,White cabbage (kg)
+min_eff,Tesco,32954,
+min_eff,Penny,33982,
+min_eff,CHERRY_PICK_ALL_6,26103,
+min_loyal,Lidl,29008,
+min_loyal,Spar,29966,
+min_loyal,Aldi,30387,Rice (kg)
+min_loyal,Auchan,30981,White cabbage (kg)
+min_loyal,Tesco,32954,
+min_loyal,Penny,33982,
+min_loyal,CHERRY_PICK_ALL_6,26006,
+median_normal,Lidl,36067,
+median_normal,Penny,38694,
+median_normal,Aldi,39199,Rice (kg)
+median_normal,Auchan,43118,White cabbage (kg)
+median_normal,Tesco,43903,
+median_normal,Spar,46322,
+median_normal,CHERRY_PICK_ALL_6,34295,

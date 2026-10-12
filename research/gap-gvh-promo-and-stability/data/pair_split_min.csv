@@ -1,0 +1,10 @@
+date,best_single,single_cost,best_pair,pair_cost,pair_saving_pct,best_pair_with_cheapest,cherry6,cherry_saving_pct,worst_single,worst_vs_best_pct
+2024-09-05,Auchan,10915,Auchan+Tesco,10215,6.4,Auchan+Tesco,10096,7.5,Spar,13.8
+2024-12-17,Aldi,12413,Spar+Tesco,11562,6.9,Aldi+Tesco,11235,9.5,Penny,7.5
+2025-03-07,Lidl,12741,Aldi+Lidl,12465,2.2,Lidl+Aldi,12286,3.6,Auchan,15.9
+2025-03-13,Lidl,13026,Lidl+Penny,12468,4.3,Lidl+Penny,12005,7.8,Tesco,14.9
+2025-04-08,Lidl,12056,Aldi+Lidl,11690,3.0,Lidl+Aldi,11450,5.0,Tesco,27.4
+2025-04-09,Lidl,11992,Aldi+Lidl,11626,3.1,Lidl+Aldi,11410,4.9,Tesco,24.0
+2025-04-15,Lidl,12011,Auchan+Lidl,11636,3.1,Lidl+Auchan,11528,4.0,Tesco,28.2
+2026-10-11,Lidl,10218,Lidl+Spar,9717,4.9,Lidl+Spar,9370,8.3,Tesco,29.4
+2026-10-12,Lidl,10214,Lidl+Spar,9714,4.9,Lidl+Spar,9420,7.8,Tesco,29.5

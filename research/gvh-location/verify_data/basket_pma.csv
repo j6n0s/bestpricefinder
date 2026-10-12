@@ -1,0 +1,29 @@
+variant,chain,total,missing
+min_all,Aldi,14797,Rizs
+min_all,Auchan,14813,Uborka;Fejes káposzta
+min_all,Lidl,13530,Fokhagyma
+min_all,Penny,15446,
+min_all,Spar,14524,
+min_all,Tesco,16845,
+min_all,CHERRY,12204,
+min_daily,Aldi,14797,Rizs
+min_daily,Auchan,14813,Uborka;Fejes káposzta
+min_daily,Lidl,13530,Fokhagyma
+min_daily,Penny,15446,
+min_daily,Spar,14524,
+min_daily,Tesco,16845,
+min_daily,CHERRY,12204,
+pma,Aldi,14797,Rizs
+pma,Auchan,14813,Uborka;Fejes káposzta
+pma,Lidl,13530,Fokhagyma
+pma,Penny,15446,
+pma,Spar,15208,
+pma,Tesco,16855,
+pma,CHERRY,12395,
+pma_or_loyalty,Aldi,14797,Rizs
+pma_or_loyalty,Auchan,14813,Uborka;Fejes káposzta
+pma_or_loyalty,Lidl,13530,Fokhagyma
+pma_or_loyalty,Penny,15446,
+pma_or_loyalty,Spar,15208,
+pma_or_loyalty,Tesco,16855,
+pma_or_loyalty,CHERRY,12395,

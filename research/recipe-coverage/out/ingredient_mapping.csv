@@ -1,0 +1,82 @@
+ingredient_key,ingredient_name,"gvh_level(E=exact,S=substitute,N=not covered)",gvh_leaf_ids,gvh_leaf_names,name_include_regex,name_exclude_regex,substitute_used,n_matching_skus,grocery_chains_with_offer,gvh_min_unit_price_Ft_per_base,base_unit,gvh_min_chain,gvh_min_sku,kifli_product,kifli_regular_price_Ft,kifli_unit_price_Ft_per_base,kifli_url,uses_in_24_recipes,pantry
+lencse,lencse (száraz),E,96,Lencse,,,,24,Aldi;Auchan;Lidl;Penny;Spar;Tesco,738.0,kg,Tesco,5051007158954 TS LENCSE 500G,,,,,1,False
+voroshagyma,vöröshagyma,E,40,Vöröshagyma,,,,22,Aldi;Auchan;Lidl;Penny;Spar;Tesco,189.5,kg,Lidl,lidl-0083333 Vöröshagyma 2kg,,,,,11,False
+lilahagyma,lilahagyma,S,40,Vöröshagyma,,,vöröshagyma,22,Aldi;Auchan;Lidl;Penny;Spar;Tesco,189.5,kg,Lidl,lidl-0083333 Vöröshagyma 2kg,Lilahagyma lédig (Ft/kg),599,599,https://www.kifli.hu/26623-lilahagyma-ledig,2,False
+fokhagyma,fokhagyma,E,39,Fokhagyma,,,,16,Aldi;Auchan;Lidl;Penny;Spar;Tesco,1465.0,kg,Aldi,aldi-660628 Fokhagyma lédig,,,,,13,False
+napraforgo_olaj,napraforgó étolaj,E,51,"Étolaj, napraforgó",,sütőolaj|enerbio,,11,Aldi;Auchan;Lidl;Penny;Spar;Tesco,739.0,l,Auchan,5998017555239 Kunsági éden étolaj 1l,,,,,10,True
+finomliszt,búzafinomliszt BL55,E,52,Finomliszt,,teljes kiőrlés,,20,Aldi;Auchan;Lidl;Penny;Spar;Tesco,178.0,kg,Lidl,"lidl-0002118 Belbake Búzafinomliszt BL-55,  1kg",,,,,6,True
+kristalycukor,kristálycukor,E,54,Kristálycukor,,,,7,Aldi;Auchan;Lidl;Penny;Spar;Tesco,295.0,kg,Aldi,4008671013004 Sweet Family Kristálycukor 1kg,,,,,5,True
+tejfol12,tejföl 12%,E,6,Tejföl 12% zsírtart.,,,,18,Aldi;Auchan;Lidl;Penny;Spar;Tesco,797.8,kg,Spar,5999139403347 S-BUDGET félzsíros tejföl 12% 450 g,,,,,4,False
+tojas,tojás,E,14,Tojás,,,,89,Aldi;Auchan;Lidl;Penny;Spar;Tesco,45.5,db,Lidl,"5997877301505 Friss Tojás 10 db, S-es",,,,,6,False
+csirkecomb,csirkecomb (egész/alsó/felső),E,19,Csirkecomb,,filé|file,,23,Aldi;Auchan;Lidl;Penny;Spar;Tesco,755.0,kg,Lidl,"2895200000000 Friss csirkecomb , kg",,,,,1,False
+zoldpaprika,zöldpaprika (étkezési/TV/lecsó),E,35,Zöldpaprika,,,,19,Aldi;Auchan;Lidl;Penny;Spar;Tesco,602.0,kg,Spar,"5999139410222 S-budget xxl lecsópaprika 1,5kg",,,,,2,False
+tv_paprika,tölteni való (TV) paprika,E,35,Zöldpaprika,tv|étkezési|fehér|lédig,lecsó,,13,Aldi;Auchan;Lidl;Penny;Spar;Tesco,698.0,kg,Auchan,2182050000006 Étkezési paprika Ft/kg,,,,,1,False
+paradicsom,"paradicsom (friss, koktél is)",E,34,Paradicsom,,,,14,Aldi;Auchan;Lidl;Penny;Spar;Tesco,429.0,kg,Lidl,lidl-0082488 Paradicsom 1kg,,,,,5,False
+natur_joghurt,natúr joghurt,E,7,Natúr joghurt,,görög|gör|trappista|habart|krémes,,43,Aldi;Auchan;Lidl;Penny;Spar;Tesco,428.6,kg,Aldi,"aldi-320705 Milsani natúr joghurt 0,1% 175g",,,,,4,False
+gorog_joghurt,görög (típusú) joghurt,E,7,Natúr joghurt,görög|gör,,,4,Spar;Tesco,996.0,kg,Tesco,8586000513136 RN NATÚR GÖRÖG LIGHT JOGHURT 1 kg QQ,,,,,1,False
+rizs,"rizs (fehér, hosszú szemű)",E,95,Rizs,,basmati|enerbio,,8,Auchan;Lidl;Penny;Spar;Tesco,529.0,kg,Tesco,5051007090148 HEARTY FOOD RIZS 1KG,,,,,7,False
+karfiol,karfiol,E,45,Karfiol,,,,6,Aldi;Auchan;Lidl;Penny;Spar;Tesco,399.0,db,Auchan,2511400000005 Karfiol Ft/db,,,,,1,False
+darált_sertes_sovany,darált sertéshús max 20% zsír,E,85,Darált sertéshús,\b(7|10|20) ?%|light,30,,10,Aldi;Lidl;Penny;Tesco,1799.0,kg,Lidl,"lidl-6405201 Húsfarm Sertés darálthús 20 %, 1kg",,,,,2,False
+trappista,trappista sajt,E,10;105;106,Trappista tömbsajt;Trappista darabolt sajt;Trappista szeletelt sajt,trapp,light|füstölt|edami,,62,Aldi;Auchan;Lidl;Penny;Spar;Tesco,1990.0,kg,Aldi,aldi-321828 Kokárdás trappista sajt kg,,,,,1,False
+zoldborso_fagyasztott,gyorsfagyasztott zöldborsó,E,59,Gyorsfagyasztott zöldborsó,,,,10,Aldi;Auchan;Lidl;Penny;Spar;Tesco,753.3,kg,Spar,5999033896238 SPAR gyorsfagyasztott extra zsenge zöldborsó 450 g,,,,,2,False
+sargarepa,sárgarépa,E,36,Sárgarépa,,,,19,Aldi;Auchan;Lidl;Penny;Spar;Tesco,299.0,kg,Lidl,lidl-0082763 Sárgarépa 2kg,,,,,4,False
+petrezselyemgyoker,petrezselyemgyökér,E,37,Petrezselyemgyökér,,vegyeszöldség,,16,Aldi;Auchan;Lidl;Penny;Spar;Tesco,689.0,kg,Spar,45754005 Petrezselyemgyökér csomós,,,,,2,False
+teljes_kiorlesu_kenyer,teljes kiőrlésű kenyér,E,48,"Teljes kiőrlésű kenyér, cipó és vekni",,vagy|félbarna|rozs,,17,Aldi;Auchan;Penny;Spar;Tesco,447.5,kg,Aldi,5997427314450 Kemencés Kedvenc TK kenyér,,,,,3,False
+csirkemellfile,csirkemellfilé,E,18,Csirkemellfilé,,felezett,,36,Aldi;Auchan;Lidl;Penny;Spar;Tesco,1859.0,kg,Lidl,"2895800000000 Csirkemell tokány, kg",,,,,3,False
+brokkoli,brokkoli (friss),E,97,Brokkoli,,,,6,Aldi;Auchan;Lidl;Penny;Spar;Tesco,1398.0,kg,Lidl,"lidl-0082904 Brokkoli, 500g",,,,,2,False
+fozotejszin10,főzőtejszín 10%,E,81,Főzőtejszín,10 ?%,laktózmentes|\blm\b|free from,,12,Aldi;Auchan;Lidl;Penny;Spar;Tesco,1038.0,l,Penny,penny-1999 Milkeria UHT 10% főzőtejsz.,,,,,3,False
+citrom,citrom,E,32,Citrom,,,,17,Aldi;Auchan;Lidl;Penny;Spar;Tesco,799.0,kg,Spar,67302000 Citrom lédig,,,,,8,False
+burgonya,étkezési burgonya,E,41,Étkezési burgonya,,,,39,Aldi;Auchan;Lidl;Penny;Spar;Tesco,194.5,kg,Lidl,lidl-0083244 Burgonya 2kg hálós,,,,,3,False
+fejes_kaposzta,fejes káposzta,E,43,Fejes káposzta,,,,5,Aldi;Lidl;Penny;Spar;Tesco,209.0,kg,Aldi,aldi-513443 Fejes káposzta lédig,,,,,1,False
+teszta_kocka,nagykocka tészta,S,50,Száraztészta,tojásos|négytojásos,,4 tojásos száraztészta (makaróni/orsó/spagetti),31,Aldi;Auchan;Lidl;Penny;Spar;Tesco,638.0,kg,Spar,5998420701056 Tetővári spagetti 4 tojásos száraztészta 500 g,,,,,1,False
+teszta_csusza,csusza / széles metélt,S,50,Száraztészta,tojásos|négytojásos,,4 tojásos száraztészta,31,Aldi;Auchan;Lidl;Penny;Spar;Tesco,638.0,kg,Spar,5998420701056 Tetővári spagetti 4 tojásos száraztészta 500 g,,,,,1,False
+szarazkolbasz,szárazkolbász,E,88,Szárazkolbász,,,,60,Aldi;Auchan;Lidl;Penny;Spar;Tesco,3196.7,kg,Aldi,aldi-690385001 Parasztkolbász 300g,,,,,1,False
+vaj,vaj,E,12,Vaj,,laktózmentes,,51,Aldi;Auchan;Lidl;Penny;Spar;Tesco,1796.0,kg,Aldi,aldi-740220 Desira márkázott vaj 250g,,,,,2,False
+tehenturo,tehéntúró,E,9,Tehéntúró,,,,44,Aldi;Auchan;Lidl;Penny;Spar;Tesco,876.0,kg,Aldi,aldi-364640 Krém-tehéntúró 250g,,,,,1,False
+csaszarszalonna,császárszalonna / bacon,E,89,Császárszalonna,,,,33,Aldi;Auchan;Lidl;Penny;Spar;Tesco,2399.0,kg,Lidl,"lidl-0001632 Pikok Pure Füstölt  szalonna,  ca. 500g",,,,,1,False
+alma,alma,E,28,Alma,,,,19,Aldi;Auchan;Lidl;Penny;Spar;Tesco,325.0,kg,Lidl,"lidl-0080334 Alma, Shampion kg",,,,,2,False
+korte,körte,E,29,Körte,,,,22,Aldi;Auchan;Lidl;Penny;Spar;Tesco,557.0,kg,Spar,5999139401367 s-budget körte 1 kg,,,,,1,False
+pulykamellfile,pulykamellfilé,E,21,Pulykamellfilé,,,,11,Aldi;Auchan;Lidl;Penny;Spar;Tesco,2998.0,kg,Auchan,2000007457379 Pulykamellfilé 450 g,,,,,1,False
+olivaolaj,extra szűz olívaolaj,E,120,Extra szűz olívaolaj,extra|szűz|evo|virgin,spray|darabok|ízesít|zitrone|basilico|peperon|narancs|finomított,,52,Aldi;Auchan;Lidl;Penny;Spar;Tesco,2400.0,l,Auchan,9002859042508 Piacelli extra szűz olasz olívaolaj 500 ml,,,,,10,True
+tej15,"tej 1,5%",E,2;4,"Pasztőrözött ESL tej, 1,5% zsírtart.;UHT tej dobozban, 1,5% zsírtart.",,,,41,Aldi;Auchan;Lidl;Penny;Spar;Tesco,155.0,l,Spar,"5998200423925 Farmer UHT tej 1,5%, 1l",,,,,1,False
+banan,banán,E,31,Banán,,főzőbanán,,9,Aldi;Auchan;Lidl;Penny;Spar;Tesco,379.0,kg,Lidl,lidl-0080000 Banán kg,,,,,1,False
+kokusztej,kókusztej,S,83,Tejszín helyettesítésére szolgáló növényi krém,kókusz,hab,kókusz főzőtejszín/kókuszkrém,5,Auchan;Tesco,2795.0,l,Tesco,8019428005025 The Bridge UHT gluténmentes bio kókusz főzőtejszín 200 ml,Vifon kókusztej 17-19% 400 ml,1699,4247.5,https://www.kifli.hu/42722-vifon-kokusztej-zsirtartalom-17-19,1,False
+lazacfile,lazacfilé (natúr),E,93,Tengeri halfilé,lazac,fűszer|vaj|burger|pác|grill|fokhagym|zöldfűsz,,30,Aldi;Auchan;Lidl;Penny;Spar;Tesco,4796.0,kg,Aldi,aldi-285689 MSC vadlazac filé 250g,,,,,1,False
+uborka,kígyóuborka,E,38,Uborka,,,,8,Aldi;Lidl;Penny;Spar;Tesco,855.7,kg,Spar,5999559686658 Kígyóuborka,,,,,4,False
+feta,feta sajt,E,113,Feta,feta,trap,,12,Aldi;Auchan;Lidl;Penny;Spar;Tesco,4332.0,kg,Auchan,5202425000480 Hotos Feta P.D.O. sajt juh- és kecsketejből 600 g,,,,,3,False
+teljes_kiorlesu_teszta,teljes kiőrlésű száraztészta,E,50,Száraztészta,teljes ?ki[őö]rl|tel[j]?\.? ?ki[őöo]r|telj ?k|tejl\.kiörl|integrale|t\.ki[őö]r,tönköly,,18,Aldi;Auchan;Penny;Tesco,798.0,kg,Aldi,aldi-640866 Teljeskiőrlésű fusilli 500g,,,,,2,False
+csemegekukorica,csemegekukorica konzerv,E,56,Csemegekukorica-konzerv,,,,21,Aldi;Auchan;Lidl;Penny;Spar;Tesco,1049.1,kg,Spar,5999139408571 S-Budget morzsolt csemegekukorica 340 g,,,,,2,False
+pirospaprika,őrölt fűszerpaprika,N,,,,,,0,,,kg,,,Horváth Rozi édes őrölt paprika I. o. 100 g,879,8790.0,https://www.kifli.hu/101115-hodi-i-osztalyu-edes-fuszerpaprika-papirzacskoban,5,True
+baberlevel,babérlevél,N,,,,,,0,,,kg,,,Lucullus babérlevél egész 5 g,209,41800.0,https://www.kifli.hu/92645-lucullus-baberlevel-egesz,1,True
+ecet,ételecet 10%,N,,,,,,0,,,l,,,Kitchin Ételecet 10% 1 l,295,295.0,https://www.kifli.hu/123592-kitchin-etelecet-10,1,True
+passata,passata / paradicsompüré,N,,,,,,0,,,kg,,,Kitchin Paradicsompüré 500 g,315,630.0,https://www.kifli.hu/98066-kitchin-paradicsompuere,1,False
+petrezselyemzold,petrezselyemzöld (friss),N,,,,,,0,,,kg,,,Petrezselyemzöld csomós 26 g,479,18423.1,https://www.kifli.hu/24244-petrezselyemzoeld-csomos,5,False
+csiperke,csiperkegomba,N,,,,,,0,,,kg,,,Gourmet fehér csiperkegomba 500 g,999,1998.0,https://www.kifli.hu/36235-gourmet-feher-csiperkegomba,2,False
+fahej,őrölt fahéj,N,,,,,,0,,,kg,,,Lucullus fahéj őrölt 20 g,159,7950.0,https://www.kifli.hu/92659-lucullus-fahej-oroelt,2,True
+rozmaring,rozmaring (szárított),N,,,,,,0,,,kg,,,Lucullus morzsolt rozmaring 5 g,309,61800.0,https://www.kifli.hu/92653-lucullus-morzsolt-rozmaring,1,True
+zabpehely,zabpehely,N,,,,,,0,,,kg,,,YUTTO Finom zabpehely 500 g,399,798.0,https://www.kifli.hu/27667-cerbona-zabpehely-nagy-szemu-lapitott,1,False
+mez,méz,N,,,,,,0,,,kg,,,"Ezercsepp Vegyes virágméz 0,95 kg",3199,3367.4,https://www.kifli.hu/73781-mmm-retro-maci-viragmez,1,True
+dio,dióbél,N,,,,,,0,,,kg,,,Kalifa étkezési dióbél 200 g,1639,8195.0,https://www.kifli.hu/35905-kalifa-etkezesi-diobel,1,False
+csicseri_konzerv,csicseriborsó konzerv,N,,,,,,0,,,db,,,Kitchin csicseriborsó enyhén sós lében 420 g (240 g töltőtömeg),215,215.0,https://www.kifli.hu/91722-kitchin-csicseriborso-enyhen-sos-leben-420-g,2,False
+paradicsom_konzerv,aprított/hámozott paradicsom konzerv,N,,,,,,0,,,kg,,,Kitchin apróra vágott hámozott paradicsom 400 g,305,762.5,https://www.kifli.hu/91724-kitchin-aprora-vagott-hamozott-paradicsom-paradicsomleben-400-g,3,False
+gyomber,friss gyömbér,N,,,,,,0,,,kg,,,Titbit gyömbér csomagolt 300 g,899,2996.7,https://www.kifli.hu/103909-titbit-gyoember-csomagolt,1,False
+curry,currypor,N,,,,,,0,,,kg,,,Kotányi currypor 27 g,539,19963.0,https://www.kifli.hu/5200-kotanyi-currypor-fuszerkeverek,1,True
+spenot,friss spenót,N,,,,,,0,,,kg,,,"Spenót, csomagolt 500 g",1399,2798.0,https://www.kifli.hu/36793-spenot-csomagolt,3,False
+edesburgonya,édesburgonya,N,,,,,,0,,,kg,,,Édesburgonya lédig (Ft/kg),1199,1199,https://www.kifli.hu/11602-edesburgonya-ledig,2,False
+quinoa,quinoa,N,,,,,,0,,,kg,,,Prémium Natura Quinoa 500 g,999,1998.0,https://www.kifli.hu/114052-premium-natura-quinoa,1,False
+kaliforniai_paprika,kaliforniai (piros) paprika,N,,,,,,0,,,kg,,,Trikolor kaliforniai paprika csomagolt 500 g,1549,3098.0,https://www.kifli.hu/72883-etkezesi-paprika-ledig,3,False
+parmezan,parmezán / grana típusú kemény sajt,N,,,,,,0,,,kg,,,Miil olasz reszelt félzsíros kemény sajt 100 g,699,6990.0,https://www.kifli.hu/82069-miil-olasz-reszelt-felzsiros-kemeny-sajt,2,False
+szerecsendio,szerecsendió,N,,,,,,0,,,kg,,,Lucullus szerecsendió őrölt 13 g,399,30692.3,https://www.kifli.hu/92657-lucullus-szerecsendio-oroelt,1,True
+arborio,arborio rizottó rizs,N,,,,,,0,,,kg,,,KITCHIN Arborio rizs 500 g,949,1898.0,https://www.kifli.hu/124278-kitchin-arborio-rizs,1,False
+alaple_kocka,zöldség leveskocka,N,,,,,,0,,,db,,,Maggi zöldségleveskocka 120 g (12 kocka),879,73.2,https://www.kifli.hu/122377-maggi-zoeldsegleveskocka,1,True
+vorosbab_konzerv,vörösbab konzerv,N,,,,,,0,,,db,,,Kitchin vörös vesebab enyhén sós lében 430 g (240 g töltőtömeg),249,249.0,https://www.kifli.hu/76195-happy-frucht-voeroesbab-400-g,1,False
+chili,őrölt chili,N,,,,,,0,,,kg,,,Kotányi Chili Cayenne őrölt 20 g,485,24250.0,https://www.kifli.hu/5215-kotanyi-chili-cayenne-oroelt,1,True
+komeny,őrölt római kömény,N,,,,,,0,,,kg,,,Lucullus római kömény őrölt 15 g,249,16600.0,https://www.kifli.hu/92655-lucullus-romai-koemeny-oroelt,2,True
+barna_rizs,barna rizs,N,,,,,,0,,,kg,,,Valoryz barna rizs 1 kg,1199,1199.0,https://www.kifli.hu/80595-valoryz-barna-rizs,1,False
+avokado,avokádó,N,,,,,,0,,,db,,,BIO avokádó 1 db (kb. 150 g),559,559.0,https://www.kifli.hu/105048-bio-avokado-valtozo-erettseg,1,False
+tahini,tahini,N,,,,,,0,,,kg,,,Nuts&Berries Tahini 500 g,3149,6298.0,https://www.kifli.hu/103155-nuts-berries-tahini,1,False
+tonhal_konzerv,tonhal konzerv (natúr),N,,,,,,0,,,db,,,Twist tonhal natúr lében 240 g (168 g töltőtömeg),2199,2199.0,https://www.kifli.hu/103715-twist-tonhal-natur-leben-240-g,1,False
+jegsalata,jégsaláta,N,,,,,,0,,,kg,,,Jégsaláta csomagolt 300 g,899,2996.7,https://www.kifli.hu/36793-spenot-csomagolt,1,False
+cukkini,cukkini,N,,,,,,0,,,kg,,,Hazai sárga cukkini lédig (Ft/kg),1599,1599,https://www.kifli.hu/46673-hazai-sarga-cukkini-ledig,1,False
+oregano,oregánó,N,,,,,,0,,,kg,,,Lucullus oregánó morzsolt 5 g,199,39800.0,https://www.kifli.hu/92663-lucullus-oregano-morzsolt,1,True
+bulgur,bulgur,N,,,,,,0,,,kg,,,Kitchin Bulgur 500 g,349,698.0,https://www.kifli.hu/97108-kitchin-bulgur,1,False

@@ -1,0 +1,247 @@
+recipe_id,ingredient_key,qty,unit,level,pantry,price_source,used_cost_cheapest_chain_or_kifli_Ft,cheapest_chain_for_recipe,sku_used_at_that_chain,sku_unitTitle,pack_cost_at_that_chain_Ft,sku_bought_for_pack_cost,packs_bought,leftover_base_units,gvh_min_any_chain_used_cost_Ft,gvh_min_chain,kifli_true_item_used_cost_Ft,source_url
+T01,lencse,200,g,E,False,GVH Árfigyelő API (NORMAL price),147.6,Lidl,"lidl-0139825 Campo Largo Zöld lencse, 500g",csomag,369.0,"lidl-0139825 Campo Largo Zöld lencse, 500g",1,0.3,147.6,Tesco,,https://arfigyelo.gvh.hu/api/products-by-category/96
+T01,voroshagyma,80,g,E,False,GVH Árfigyelő API (NORMAL price),15.2,Lidl,lidl-0083333 Vöröshagyma 2kg,csomag,16.4,lidl-0083325 Vöröshagyma lédig,,0.0,15.2,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+T01,fokhagyma,10,g,E,False,GVH Árfigyelő API (NORMAL price),15.4,Lidl,lidl-0082711 Fokhagyma 200g,csomag,17.8,lidl-0082706 Fokhagyma db,,0.0,14.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+T01,napraforgo_olaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),11.2,Lidl,lidl-0002076 Vita D'or Napraforgóolaj 1l,db,749.0,lidl-0002076 Vita D'or Napraforgóolaj 1l,1,0.985,11.1,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+T01,finomliszt,20,g,E,True,GVH Árfigyelő API (NORMAL price),3.6,Lidl,"lidl-0002118 Belbake Búzafinomliszt BL-55,  1kg",csomag,178.0,"lidl-0002118 Belbake Búzafinomliszt BL-55,  1kg",1,0.98,3.6,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/52
+T01,pirospaprika,2,g,N,True,kifli.hu public product page (regular price),17.6,,Horváth Rozi édes őrölt paprika I. o. 100 g,,879,Horváth Rozi édes őrölt paprika I. o. 100 g,1,,,,,https://www.kifli.hu/101115-hodi-i-osztalyu-edes-fuszerpaprika-papirzacskoban
+T01,baberlevel,0.4,g,N,True,kifli.hu public product page (regular price),16.7,,Lucullus babérlevél egész 5 g,,209,Lucullus babérlevél egész 5 g,1,,,,,https://www.kifli.hu/92645-lucullus-baberlevel-egesz
+T01,ecet,10,ml,N,True,kifli.hu public product page (regular price),3.0,,Kitchin Ételecet 10% 1 l,,295,Kitchin Ételecet 10% 1 l,1,,,,,https://www.kifli.hu/123592-kitchin-etelecet-10
+T01,kristalycukor,5,g,E,True,GVH Árfigyelő API (NORMAL price),1.5,Lidl,"5906340630622 Kristálycukor , 1kg",csomag,295.0,"5906340630622 Kristálycukor , 1kg",1,0.995,1.5,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/54
+T01,tejfol12,60,g,E,False,GVH Árfigyelő API (NORMAL price),47.9,Lidl,"lidl-0001532 Pilos Tejföl 12%,  450g",db,149.0,"lidl-0001767 Pilos Tejföl 12%,  175g",1,0.115,47.9,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/6
+T01,tojas,2,db,E,False,GVH Árfigyelő API (NORMAL price),91.0,Lidl,"5997877301505 Friss Tojás 10 db, S-es",doboz,455.0,"5997877301505 Friss Tojás 10 db, S-es",1,8.0,91.0,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/14
+T01,so,4,g,excluded,,,,,,,,,,,,,,
+T01,bors,0.5,g,excluded,,,,,,,,,,,,,,
+T02,csirkecomb,600,g,E,False,GVH Árfigyelő API (NORMAL price),453.0,Lidl,"2895200000000 Friss csirkecomb , kg",kg,453.0,"2895200000000 Friss csirkecomb , kg",,0.0,453.0,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/19
+T02,voroshagyma,120,g,E,False,GVH Árfigyelő API (NORMAL price),22.7,Lidl,lidl-0083333 Vöröshagyma 2kg,csomag,24.6,lidl-0083325 Vöröshagyma lédig,,0.0,22.7,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+T02,zoldpaprika,110,g,E,False,GVH Árfigyelő API (NORMAL price),86.4,Lidl,lidl-0082651 Lecsópaprika 750g,csomag,91.2,lidl-0082535 Hazai TV paprika kg,,0.0,66.2,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/35
+T02,paradicsom,100,g,E,False,GVH Árfigyelő API (NORMAL price),42.9,Lidl,lidl-0082488 Paradicsom 1kg,kg,42.9,lidl-0082488 Paradicsom 1kg,,0.0,42.9,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/34
+T02,napraforgo_olaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),11.2,Lidl,lidl-0002076 Vita D'or Napraforgóolaj 1l,db,749.0,lidl-0002076 Vita D'or Napraforgóolaj 1l,1,0.985,11.1,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+T02,pirospaprika,8,g,N,True,kifli.hu public product page (regular price),70.3,,Horváth Rozi édes őrölt paprika I. o. 100 g,,879,Horváth Rozi édes őrölt paprika I. o. 100 g,1,,,,,https://www.kifli.hu/101115-hodi-i-osztalyu-edes-fuszerpaprika-papirzacskoban
+T02,natur_joghurt,150,g,E,False,GVH Árfigyelő API (NORMAL price),64.3,Lidl,"lidl-6418141 Pilos Natúr joghurt 0,1% , 175g",db,75.0,"lidl-6418141 Pilos Natúr joghurt 0,1% , 175g",1,0.025,64.3,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/7
+T02,finomliszt,10,g,E,True,GVH Árfigyelő API (NORMAL price),1.8,Lidl,"lidl-0002118 Belbake Búzafinomliszt BL-55,  1kg",csomag,178.0,"lidl-0002118 Belbake Búzafinomliszt BL-55,  1kg",1,0.99,1.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/52
+T02,rizs,140,g,E,False,GVH Árfigyelő API (NORMAL price),76.9,Lidl,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",csomag,549.0,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",1,0.86,74.1,Tesco,,https://arfigyelo.gvh.hu/api/products-by-category/95
+T02,so,5,g,excluded,,,,,,,,,,,,,,
+T02,bors,0.5,g,excluded,,,,,,,,,,,,,,
+T03,karfiol,1,db,E,False,GVH Árfigyelő API (NORMAL price),999.0,Lidl,lidl-0082876 Karfiol db,db,999.0,lidl-0082876 Karfiol db,1,0.0,399.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/45
+T03,darált_sertes_sovany,250,g,E,False,GVH Árfigyelő API (NORMAL price),449.8,Lidl,"lidl-6405201 Húsfarm Sertés darálthús 20 %, 1kg",kg,449.8,"lidl-6405201 Húsfarm Sertés darálthús 20 %, 1kg",,0.0,449.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/85
+T03,rizs,60,g,E,False,GVH Árfigyelő API (NORMAL price),32.9,Lidl,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",csomag,549.0,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",1,0.94,31.7,Tesco,,https://arfigyelo.gvh.hu/api/products-by-category/95
+T03,voroshagyma,80,g,E,False,GVH Árfigyelő API (NORMAL price),15.2,Lidl,lidl-0083333 Vöröshagyma 2kg,csomag,16.4,lidl-0083325 Vöröshagyma lédig,,0.0,15.2,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+T03,fokhagyma,5,g,E,False,GVH Árfigyelő API (NORMAL price),7.7,Lidl,lidl-0082711 Fokhagyma 200g,csomag,8.9,lidl-0082706 Fokhagyma db,,0.0,7.3,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+T03,tejfol12,200,g,E,False,GVH Árfigyelő API (NORMAL price),159.6,Lidl,"lidl-0001532 Pilos Tejföl 12%,  450g",db,298.0,"lidl-0001767 Pilos Tejföl 12%,  175g",2,0.15,159.6,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/6
+T03,tojas,1,db,E,False,GVH Árfigyelő API (NORMAL price),45.5,Lidl,"5997877301505 Friss Tojás 10 db, S-es",doboz,455.0,"5997877301505 Friss Tojás 10 db, S-es",1,9.0,45.5,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/14
+T03,trappista,40,g,E,False,GVH Árfigyelő API (NORMAL price),92.0,Lidl,4000436506066 Ammerländer szeletelt trappista sajt 1000 g,db,639.0,"lidl-6413215 Pilos Trappista sajt szeletelt, natúr , 200g",1,0.16,79.6,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/10;105;106
+T03,napraforgo_olaj,10,ml,E,True,GVH Árfigyelő API (NORMAL price),7.5,Lidl,lidl-0002076 Vita D'or Napraforgóolaj 1l,db,749.0,lidl-0002076 Vita D'or Napraforgóolaj 1l,1,0.99,7.4,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+T03,pirospaprika,2,g,N,True,kifli.hu public product page (regular price),17.6,,Horváth Rozi édes őrölt paprika I. o. 100 g,,879,Horváth Rozi édes őrölt paprika I. o. 100 g,1,,,,,https://www.kifli.hu/101115-hodi-i-osztalyu-edes-fuszerpaprika-papirzacskoban
+T03,so,4,g,excluded,,,,,,,,,,,,,,
+T03,bors,0.5,g,excluded,,,,,,,,,,,,,,
+T04,zoldborso_fagyasztott,300,g,E,False,GVH Árfigyelő API (NORMAL price),226.0,Spar,5999033896238 SPAR gyorsfagyasztott extra zsenge zöldborsó 450 g,csomag,339.0,5999033896238 SPAR gyorsfagyasztott extra zsenge zöldborsó 450 g,1,0.15,226.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/59
+T04,sargarepa,100,g,E,False,GVH Árfigyelő API (NORMAL price),48.9,Spar,5999139402890 S-Budget sárgarépa 1 kg,kg,48.9,5999139402890 S-Budget sárgarépa 1 kg,,0.0,29.9,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/36
+T04,petrezselyemgyoker,80,g,E,False,GVH Árfigyelő API (NORMAL price),55.1,Spar,45754005 Petrezselyemgyökér csomós,kg,55.1,45754005 Petrezselyemgyökér csomós,,0.0,55.1,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/37
+T04,napraforgo_olaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),11.2,Spar,9100000009421 S-Budget 100% finomított napraforgó-étolaj 1 l,db,749.0,9100000009421 S-Budget 100% finomított napraforgó-étolaj 1 l,1,0.985,11.1,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+T04,finomliszt,20,g,E,True,GVH Árfigyelő API (NORMAL price),3.7,Spar,5999033897754 S-Budget búzafinomliszt BL 55 1 kg,csomag,183.0,5999033897754 S-Budget búzafinomliszt BL 55 1 kg,1,0.98,3.6,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/52
+T04,petrezselyemzold,10,g,N,False,kifli.hu public product page (regular price),184.2,,Petrezselyemzöld csomós 26 g,,479,Petrezselyemzöld csomós 26 g,1,,,,,https://www.kifli.hu/24244-petrezselyemzoeld-csomos
+T04,kristalycukor,3,g,E,True,GVH Árfigyelő API (NORMAL price),0.9,Spar,5999139407475 S-BUDGET Kristálycukor 1kg,csomag,295.0,5999139407475 S-BUDGET Kristálycukor 1kg,1,0.997,0.9,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/54
+T04,teljes_kiorlesu_kenyer,120,g,E,False,GVH Árfigyelő API (NORMAL price),61.5,Spar,5998704301095 Teljes kiőrlésű kenyér 400 g,db,205.0,5998704301095 Teljes kiőrlésű kenyér 400 g,1,0.28,53.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/48
+T04,so,5,g,excluded,,,,,,,,,,,,,,
+T04,viz,1000,ml,excluded,,,,,,,,,,,,,,
+T05,csirkemellfile,300,g,E,False,GVH Árfigyelő API (NORMAL price),557.7,Lidl,"2895800000000 Csirkemell tokány, kg",kg,557.7,"2895800000000 Csirkemell tokány, kg",,0.0,557.7,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/18
+T05,brokkoli,400,g,E,False,GVH Árfigyelő API (NORMAL price),559.2,Lidl,"lidl-0082904 Brokkoli, 500g",csomag,699.0,"lidl-0082904 Brokkoli, 500g",1,0.1,559.2,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/97
+T05,fokhagyma,10,g,E,False,GVH Árfigyelő API (NORMAL price),15.4,Lidl,lidl-0082711 Fokhagyma 200g,csomag,17.8,lidl-0082706 Fokhagyma db,,0.0,14.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+T05,fozotejszin10,100,ml,E,False,GVH Árfigyelő API (NORMAL price),104.5,Lidl,lidl-6413058 Pilos UHT Főzőtejszín 10%  200ml,db,209.0,lidl-6413058 Pilos UHT Főzőtejszín 10%  200ml,1,0.1,103.8,Penny,,https://arfigyelo.gvh.hu/api/products-by-category/81
+T05,napraforgo_olaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),11.2,Lidl,lidl-0002076 Vita D'or Napraforgóolaj 1l,db,749.0,lidl-0002076 Vita D'or Napraforgóolaj 1l,1,0.985,11.1,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+T05,citrom,50,g,E,False,GVH Árfigyelő API (NORMAL price),45.0,Lidl,lidl-0080160 Citrom lédig,kg,45.0,lidl-0080160 Citrom lédig,,0.0,40.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/32
+T05,rizs,140,g,E,False,GVH Árfigyelő API (NORMAL price),76.9,Lidl,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",csomag,549.0,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",1,0.86,74.1,Tesco,,https://arfigyelo.gvh.hu/api/products-by-category/95
+T05,so,4,g,excluded,,,,,,,,,,,,,,
+T05,bors,0.5,g,excluded,,,,,,,,,,,,,,
+T06,tv_paprika,440,g,E,False,GVH Árfigyelő API (NORMAL price),353.3,Lidl,lidl-0082547 Hazai TV paprika 3db,csomag,364.8,lidl-0082535 Hazai TV paprika kg,,0.0,307.1,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/35
+T06,darált_sertes_sovany,250,g,E,False,GVH Árfigyelő API (NORMAL price),449.8,Lidl,"lidl-6405201 Húsfarm Sertés darálthús 20 %, 1kg",kg,449.8,"lidl-6405201 Húsfarm Sertés darálthús 20 %, 1kg",,0.0,449.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/85
+T06,rizs,50,g,E,False,GVH Árfigyelő API (NORMAL price),27.5,Lidl,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",csomag,549.0,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",1,0.95,26.5,Tesco,,https://arfigyelo.gvh.hu/api/products-by-category/95
+T06,tojas,1,db,E,False,GVH Árfigyelő API (NORMAL price),45.5,Lidl,"5997877301505 Friss Tojás 10 db, S-es",doboz,455.0,"5997877301505 Friss Tojás 10 db, S-es",1,9.0,45.5,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/14
+T06,voroshagyma,60,g,E,False,GVH Árfigyelő API (NORMAL price),11.4,Lidl,lidl-0083333 Vöröshagyma 2kg,csomag,12.3,lidl-0083325 Vöröshagyma lédig,,0.0,11.4,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+T06,fokhagyma,5,g,E,False,GVH Árfigyelő API (NORMAL price),7.7,Lidl,lidl-0082711 Fokhagyma 200g,csomag,8.9,lidl-0082706 Fokhagyma db,,0.0,7.3,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+T06,passata,500,g,N,False,kifli.hu public product page (regular price),315.0,,Kitchin Paradicsompüré 500 g,,315,Kitchin Paradicsompüré 500 g,1,,,,,https://www.kifli.hu/98066-kitchin-paradicsompuere
+T06,kristalycukor,15,g,E,True,GVH Árfigyelő API (NORMAL price),4.4,Lidl,"5906340630622 Kristálycukor , 1kg",csomag,295.0,"5906340630622 Kristálycukor , 1kg",1,0.985,4.4,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/54
+T06,finomliszt,15,g,E,True,GVH Árfigyelő API (NORMAL price),2.7,Lidl,"lidl-0002118 Belbake Búzafinomliszt BL-55,  1kg",csomag,178.0,"lidl-0002118 Belbake Búzafinomliszt BL-55,  1kg",1,0.985,2.7,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/52
+T06,napraforgo_olaj,10,ml,E,True,GVH Árfigyelő API (NORMAL price),7.5,Lidl,lidl-0002076 Vita D'or Napraforgóolaj 1l,db,749.0,lidl-0002076 Vita D'or Napraforgóolaj 1l,1,0.99,7.4,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+T06,pirospaprika,2,g,N,True,kifli.hu public product page (regular price),17.6,,Horváth Rozi édes őrölt paprika I. o. 100 g,,879,Horváth Rozi édes őrölt paprika I. o. 100 g,1,,,,,https://www.kifli.hu/101115-hodi-i-osztalyu-edes-fuszerpaprika-papirzacskoban
+T06,burgonya,400,g,E,False,GVH Árfigyelő API (NORMAL price),77.8,Lidl,lidl-0083244 Burgonya 2kg hálós,csomag,107.6,lidl-0083235 Piros burgonya kg,,0.0,77.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/41
+T06,so,5,g,excluded,,,,,,,,,,,,,,
+T06,bors,0.5,g,excluded,,,,,,,,,,,,,,
+T07,fejes_kaposzta,500,g,E,False,GVH Árfigyelő API (NORMAL price),104.5,Aldi,aldi-513443 Fejes káposzta lédig,kg,104.5,aldi-513443 Fejes káposzta lédig,,0.0,104.5,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/43
+T07,teszta_kocka,160,g,S,False,GVH Árfigyelő API (NORMAL price),113.6,Aldi,aldi-320865 Császár spagetti 4 tojásos 500g,csomag,355.0,aldi-320865 Császár spagetti 4 tojásos 500g,1,0.34,102.1,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/50
+T07,voroshagyma,80,g,E,False,GVH Árfigyelő API (NORMAL price),16.4,Aldi,aldi-329601 Vöröshagyma lédig,kg,16.4,aldi-329601 Vöröshagyma lédig,,0.0,15.2,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+T07,napraforgo_olaj,20,ml,E,True,GVH Árfigyelő API (NORMAL price),15.0,Aldi,aldi-627450 Bellasan napraforgó étolaj 1l,db,749.0,aldi-627450 Bellasan napraforgó étolaj 1l,1,0.98,14.8,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+T07,kristalycukor,5,g,E,True,GVH Árfigyelő API (NORMAL price),1.5,Aldi,4008671013004 Sweet Family Kristálycukor 1kg,csomag,295.0,4008671013004 Sweet Family Kristálycukor 1kg,1,0.995,1.5,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/54
+T07,so,4,g,excluded,,,,,,,,,,,,,,
+T07,bors,1,g,excluded,,,,,,,,,,,,,,
+T08,burgonya,600,g,E,False,GVH Árfigyelő API (NORMAL price),116.7,Lidl,lidl-0083244 Burgonya 2kg hálós,csomag,161.4,lidl-0083235 Piros burgonya kg,,0.0,116.7,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/41
+T08,tojas,4,db,E,False,GVH Árfigyelő API (NORMAL price),182.0,Lidl,"5997877301505 Friss Tojás 10 db, S-es",doboz,455.0,"5997877301505 Friss Tojás 10 db, S-es",1,6.0,182.0,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/14
+T08,tejfol12,200,g,E,False,GVH Árfigyelő API (NORMAL price),159.6,Lidl,"lidl-0001532 Pilos Tejföl 12%,  450g",db,298.0,"lidl-0001767 Pilos Tejföl 12%,  175g",2,0.15,159.6,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/6
+T08,natur_joghurt,100,g,E,False,GVH Árfigyelő API (NORMAL price),42.9,Lidl,"lidl-6418141 Pilos Natúr joghurt 0,1% , 175g",db,75.0,"lidl-6418141 Pilos Natúr joghurt 0,1% , 175g",1,0.075,42.9,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/7
+T08,szarazkolbasz,50,g,E,False,GVH Árfigyelő API (NORMAL price),163.2,Lidl,5998001794590 MECOM PARASZTKOLBÁSZ 300 g,csomag,499.0,"lidl-6400050 Pikok Szeletelt paprikás szárazkolbász,  100g",1,0.05,159.8,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/88
+T08,vaj,10,g,E,False,GVH Árfigyelő API (NORMAL price),20.0,Lidl,"lidl-0059587 Pilos vaj,  250g",db,375.0,"lidl-6411395 Pilos Teavaj, 82% , 125g",1,0.115,18.0,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/12
+T08,so,5,g,excluded,,,,,,,,,,,,,,
+T08,bors,0.5,g,excluded,,,,,,,,,,,,,,
+T09,csirkemellfile,300,g,E,False,GVH Árfigyelő API (NORMAL price),557.7,Lidl,"2895800000000 Csirkemell tokány, kg",kg,557.7,"2895800000000 Csirkemell tokány, kg",,0.0,557.7,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/18
+T09,sargarepa,150,g,E,False,GVH Árfigyelő API (NORMAL price),44.9,Lidl,lidl-0082763 Sárgarépa 2kg,csomag,73.3,lidl-0082761 Sárgarépa 1kg,,0.0,44.9,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/36
+T09,petrezselyemgyoker,100,g,E,False,GVH Árfigyelő API (NORMAL price),89.8,Lidl,lidl-0082804 Petrezselyemgyökér 500g,csomag,129.9,lidl-0082800 Petrezselyemgyökér lédig,,0.0,68.9,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/37
+T09,zoldborso_fagyasztott,150,g,E,False,GVH Árfigyelő API (NORMAL price),113.0,Lidl,"lidl-0001082 Freshona Extra zsenge zöldborsó, gyf. , 450g,",csomag,339.0,"lidl-0001082 Freshona Extra zsenge zöldborsó, gyf. , 450g,",1,0.3,113.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/59
+T09,csiperke,150,g,N,False,kifli.hu public product page (regular price),299.7,,Gourmet fehér csiperkegomba 500 g,,999,Gourmet fehér csiperkegomba 500 g,1,,,,,https://www.kifli.hu/36235-gourmet-feher-csiperkegomba
+T09,voroshagyma,80,g,E,False,GVH Árfigyelő API (NORMAL price),15.2,Lidl,lidl-0083333 Vöröshagyma 2kg,csomag,16.4,lidl-0083325 Vöröshagyma lédig,,0.0,15.2,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+T09,fozotejszin10,100,ml,E,False,GVH Árfigyelő API (NORMAL price),104.5,Lidl,lidl-6413058 Pilos UHT Főzőtejszín 10%  200ml,db,209.0,lidl-6413058 Pilos UHT Főzőtejszín 10%  200ml,1,0.1,103.8,Penny,,https://arfigyelo.gvh.hu/api/products-by-category/81
+T09,finomliszt,10,g,E,True,GVH Árfigyelő API (NORMAL price),1.8,Lidl,"lidl-0002118 Belbake Búzafinomliszt BL-55,  1kg",csomag,178.0,"lidl-0002118 Belbake Búzafinomliszt BL-55,  1kg",1,0.99,1.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/52
+T09,napraforgo_olaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),11.2,Lidl,lidl-0002076 Vita D'or Napraforgóolaj 1l,db,749.0,lidl-0002076 Vita D'or Napraforgóolaj 1l,1,0.985,11.1,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+T09,petrezselyemzold,5,g,N,False,kifli.hu public product page (regular price),92.1,,Petrezselyemzöld csomós 26 g,,479,Petrezselyemzöld csomós 26 g,1,,,,,https://www.kifli.hu/24244-petrezselyemzoeld-csomos
+T09,rizs,140,g,E,False,GVH Árfigyelő API (NORMAL price),76.9,Lidl,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",csomag,549.0,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",1,0.86,74.1,Tesco,,https://arfigyelo.gvh.hu/api/products-by-category/95
+T09,so,4,g,excluded,,,,,,,,,,,,,,
+T09,bors,0.5,g,excluded,,,,,,,,,,,,,,
+T10,teszta_csusza,200,g,S,False,GVH Árfigyelő API (NORMAL price),142.0,Lidl,"lidl-0003919 Combino Spagetti, 4 tojásos száraztészta, 500g,",csomag,355.0,"lidl-0003919 Combino Spagetti, 4 tojásos száraztészta, 500g,",1,0.3,127.6,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/50
+T10,tehenturo,250,g,E,False,GVH Árfigyelő API (NORMAL price),219.0,Lidl,"lidl-0072115 Pilos Tehéntúró 0% , 250g",csomag,219.0,"lidl-0072115 Pilos Tehéntúró 0% , 250g",1,0.0,219.0,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/9
+T10,tejfol12,150,g,E,False,GVH Árfigyelő API (NORMAL price),119.7,Lidl,"lidl-0001532 Pilos Tejföl 12%,  450g",db,149.0,"lidl-0001767 Pilos Tejföl 12%,  175g",1,0.025,119.7,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/6
+T10,csaszarszalonna,40,g,E,False,GVH Árfigyelő API (NORMAL price),96.0,Lidl,"lidl-0001632 Pikok Pure Füstölt  szalonna,  ca. 500g",kg,96.0,"lidl-0001632 Pikok Pure Füstölt  szalonna,  ca. 500g",,0.0,96.0,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/89
+T10,so,3,g,excluded,,,,,,,,,,,,,,
+T11,alma,300,g,E,False,GVH Árfigyelő API (NORMAL price),105.1,Spar,5999033881913 S-Budget piros alma 2 kg,csomag,139.5,66573005 Idared alma lédig,,0.0,97.5,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/28
+T11,korte,200,g,E,False,GVH Árfigyelő API (NORMAL price),111.4,Spar,5999139401367 s-budget körte 1 kg,kg,111.4,5999139401367 s-budget körte 1 kg,,0.0,111.4,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/29
+T11,kristalycukor,30,g,E,True,GVH Árfigyelő API (NORMAL price),8.8,Spar,5999139407475 S-BUDGET Kristálycukor 1kg,csomag,295.0,5999139407475 S-BUDGET Kristálycukor 1kg,1,0.97,8.8,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/54
+T11,citrom,30,g,E,False,GVH Árfigyelő API (NORMAL price),24.0,Spar,67302000 Citrom lédig,kg,24.0,67302000 Citrom lédig,,0.0,24.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/32
+T11,fahej,2,g,N,True,kifli.hu public product page (regular price),15.9,,Lucullus fahéj őrölt 20 g,,159,Lucullus fahéj őrölt 20 g,1,,,,,https://www.kifli.hu/92659-lucullus-fahej-oroelt
+T11,natur_joghurt,150,g,E,False,GVH Árfigyelő API (NORMAL price),65.7,Spar,5999033885652 S-Budget Light natúr joghurt 500 g,db,85.0,5999033889292 S-Budget natúr joghurt 175 g,1,0.025,64.3,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/7
+T11,finomliszt,10,g,E,True,GVH Árfigyelő API (NORMAL price),1.8,Spar,5999033897754 S-Budget búzafinomliszt BL 55 1 kg,csomag,183.0,5999033897754 S-Budget búzafinomliszt BL 55 1 kg,1,0.99,1.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/52
+T11,viz,800,ml,excluded,,,,,,,,,,,,,,
+T12,pulykamellfile,300,g,E,False,GVH Árfigyelő API (NORMAL price),899.7,Lidl,2884940000000 Pulykamell  kg,kg,899.7,2884940000000 Pulykamell  kg,,0.0,899.4,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/21
+T12,burgonya,400,g,E,False,GVH Árfigyelő API (NORMAL price),77.8,Lidl,lidl-0083244 Burgonya 2kg hálós,csomag,107.6,lidl-0083235 Piros burgonya kg,,0.0,77.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/41
+T12,sargarepa,150,g,E,False,GVH Árfigyelő API (NORMAL price),44.9,Lidl,lidl-0082763 Sárgarépa 2kg,csomag,73.3,lidl-0082761 Sárgarépa 1kg,,0.0,44.9,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/36
+T12,voroshagyma,100,g,E,False,GVH Árfigyelő API (NORMAL price),18.9,Lidl,lidl-0083333 Vöröshagyma 2kg,csomag,20.5,lidl-0083325 Vöröshagyma lédig,,0.0,18.9,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+T12,zoldpaprika,110,g,E,False,GVH Árfigyelő API (NORMAL price),86.4,Lidl,lidl-0082651 Lecsópaprika 750g,csomag,91.2,lidl-0082535 Hazai TV paprika kg,,0.0,66.2,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/35
+T12,olivaolaj,20,ml,E,True,GVH Árfigyelő API (NORMAL price),89.7,Lidl,"lidl-0068400 Primadonna Extra szűz olívaolaj, 750ml",db,3365.0,"lidl-0068400 Primadonna Extra szűz olívaolaj, 750ml",1,0.73,48.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+T12,fokhagyma,10,g,E,False,GVH Árfigyelő API (NORMAL price),15.4,Lidl,lidl-0082711 Fokhagyma 200g,csomag,17.8,lidl-0082706 Fokhagyma db,,0.0,14.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+T12,rozmaring,1,g,N,True,kifli.hu public product page (regular price),61.8,,Lucullus morzsolt rozmaring 5 g,,309,Lucullus morzsolt rozmaring 5 g,1,,,,,https://www.kifli.hu/92653-lucullus-morzsolt-rozmaring
+T12,so,4,g,excluded,,,,,,,,,,,,,,
+T12,bors,0.5,g,excluded,,,,,,,,,,,,,,
+M01,zabpehely,100,g,N,False,kifli.hu public product page (regular price),79.8,,YUTTO Finom zabpehely 500 g,,399,YUTTO Finom zabpehely 500 g,1,,,,,https://www.kifli.hu/27667-cerbona-zabpehely-nagy-szemu-lapitott
+M01,tej15,400,ml,E,False,GVH Árfigyelő API (NORMAL price),106.0,Lidl,"5998200423925 Farmer UHT tej 1,5%, 1l",db,265.0,"5998200423925 Farmer UHT tej 1,5%, 1l",1,0.6,62.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/2;4
+M01,banan,170,g,E,False,GVH Árfigyelő API (NORMAL price),64.4,Lidl,lidl-0080000 Banán kg,kg,64.4,lidl-0080000 Banán kg,,0.0,64.4,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/31
+M01,alma,180,g,E,False,GVH Árfigyelő API (NORMAL price),58.5,Lidl,"lidl-0080334 Alma, Shampion kg",kg,58.5,"lidl-0080334 Alma, Shampion kg",,0.0,58.5,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/28
+M01,mez,20,g,N,True,kifli.hu public product page (regular price),67.3,,"Ezercsepp Vegyes virágméz 0,95 kg",,3199,"Ezercsepp Vegyes virágméz 0,95 kg",1,,,,,https://www.kifli.hu/73781-mmm-retro-maci-viragmez
+M01,fahej,2,g,N,True,kifli.hu public product page (regular price),15.9,,Lucullus fahéj őrölt 20 g,,159,Lucullus fahéj őrölt 20 g,1,,,,,https://www.kifli.hu/92659-lucullus-fahej-oroelt
+M01,dio,20,g,N,False,kifli.hu public product page (regular price),163.9,,Kalifa étkezési dióbél 200 g,,1639,Kalifa étkezési dióbél 200 g,1,,,,,https://www.kifli.hu/35905-kalifa-etkezesi-diobel
+M02,csicseri_konzerv,1,db,N,False,kifli.hu public product page (regular price),215.0,,Kitchin csicseriborsó enyhén sós lében 420 g (240 g töltőtömeg),,215,Kitchin csicseriborsó enyhén sós lében 420 g (240 g töltőtömeg),1,,,,,https://www.kifli.hu/91722-kitchin-csicseriborso-enyhen-sos-leben-420-g
+M02,kokusztej,200,ml,S,False,GVH Árfigyelő API (NORMAL price),559.0,Tesco,8019428005025 The Bridge UHT gluténmentes bio kókusz főzőtejszín 200 ml,db,559.0,8019428005025 The Bridge UHT gluténmentes bio kókusz főzőtejszín 200 ml,1,0.0,559.0,Tesco,849.5,https://arfigyelo.gvh.hu/api/products-by-category/83
+M02,paradicsom_konzerv,400,g,N,False,kifli.hu public product page (regular price),305.0,,Kitchin apróra vágott hámozott paradicsom 400 g,,305,Kitchin apróra vágott hámozott paradicsom 400 g,1,,,,,https://www.kifli.hu/91724-kitchin-aprora-vagott-hamozott-paradicsom-paradicsomleben-400-g
+M02,voroshagyma,100,g,E,False,GVH Árfigyelő API (NORMAL price),20.9,Tesco,2860520000000 VÖRÖSHAGYMA LÉDIG QQ,kg,20.9,2860520000000 VÖRÖSHAGYMA LÉDIG QQ,,0.0,18.9,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+M02,fokhagyma,10,g,E,False,GVH Árfigyelő API (NORMAL price),15.0,Tesco,2822680000000 FOKHAGYMA LÉDIG QQ,kg,15.0,2822680000000 FOKHAGYMA LÉDIG QQ,,0.0,14.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+M02,gyomber,10,g,N,False,kifli.hu public product page (regular price),30.0,,Titbit gyömbér csomagolt 300 g,,899,Titbit gyömbér csomagolt 300 g,1,,,,,https://www.kifli.hu/103909-titbit-gyoember-csomagolt
+M02,curry,8,g,N,True,kifli.hu public product page (regular price),159.7,,Kotányi currypor 27 g,,539,Kotányi currypor 27 g,1,,,,,https://www.kifli.hu/5200-kotanyi-currypor-fuszerkeverek
+M02,spenot,100,g,N,False,kifli.hu public product page (regular price),279.8,,"Spenót, csomagolt 500 g",,1399,"Spenót, csomagolt 500 g",1,,,,,https://www.kifli.hu/36793-spenot-csomagolt
+M02,napraforgo_olaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),11.2,Tesco,6420155000092 GOLDEN IMPERIAL NAPRAFORGÓ ÉTOLAJ 1 L QQ,db,745.0,6420155000092 GOLDEN IMPERIAL NAPRAFORGÓ ÉTOLAJ 1 L QQ,1,0.985,11.1,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+M02,rizs,140,g,E,False,GVH Árfigyelő API (NORMAL price),74.1,Tesco,5051007090148 HEARTY FOOD RIZS 1KG,csomag,529.0,5051007090148 HEARTY FOOD RIZS 1KG,1,0.86,74.1,Tesco,,https://arfigyelo.gvh.hu/api/products-by-category/95
+M02,so,3,g,excluded,,,,,,,,,,,,,,
+M03,lazacfile,300,g,E,False,GVH Árfigyelő API (NORMAL price),1438.8,Aldi,aldi-285689 MSC vadlazac filé 250g,csomag,2209.0,aldi-276454 Friss norvég lazacfilé 300,1,0.0,1438.8,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/93
+M03,edesburgonya,500,g,N,False,kifli.hu public product page (regular price),599.5,,Édesburgonya lédig (Ft/kg),,599.5,Édesburgonya lédig (Ft/kg),,,,,,https://www.kifli.hu/11602-edesburgonya-ledig
+M03,brokkoli,250,g,E,False,GVH Árfigyelő API (NORMAL price),349.5,Aldi,aldi-166850 Brokkoli 500g,csomag,699.0,aldi-166850 Brokkoli 500g,1,0.25,349.5,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/97
+M03,olivaolaj,20,ml,E,True,GVH Árfigyelő API (NORMAL price),78.3,Aldi,aldi-200140 Olívaolaj extra szűz 750,db,2199.0,aldi-656776 Tesoros del Sur extra szűz olívaolaj 500ml,1,0.48,48.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+M03,citrom,50,g,E,False,GVH Árfigyelő API (NORMAL price),45.0,Aldi,aldi-572871 Citrom lédig,kg,45.0,aldi-572871 Citrom lédig,,0.0,40.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/32
+M03,fokhagyma,5,g,E,False,GVH Árfigyelő API (NORMAL price),7.3,Aldi,aldi-660628 Fokhagyma lédig,kg,7.3,aldi-660628 Fokhagyma lédig,,0.0,7.3,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+M03,so,3,g,excluded,,,,,,,,,,,,,,
+M03,bors,0.5,g,excluded,,,,,,,,,,,,,,
+M04,quinoa,120,g,N,False,kifli.hu public product page (regular price),239.8,,Prémium Natura Quinoa 500 g,,999,Prémium Natura Quinoa 500 g,1,,,,,https://www.kifli.hu/114052-premium-natura-quinoa
+M04,uborka,300,g,E,False,GVH Árfigyelő API (NORMAL price),256.7,Lidl,lidl-0083592 Kígyóuborka 2db,db,399.0,"lidl-0082231 Kígyóuborka db, min. 300g",1,0.05,256.7,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/38
+M04,paradicsom,200,g,E,False,GVH Árfigyelő API (NORMAL price),85.8,Lidl,lidl-0082488 Paradicsom 1kg,kg,85.8,lidl-0082488 Paradicsom 1kg,,0.0,85.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/34
+M04,kaliforniai_paprika,150,g,N,False,kifli.hu public product page (regular price),464.7,,Trikolor kaliforniai paprika csomagolt 500 g,,1549,Trikolor kaliforniai paprika csomagolt 500 g,1,,,,,https://www.kifli.hu/72883-etkezesi-paprika-ledig
+M04,feta,100,g,E,False,GVH Árfigyelő API (NORMAL price),449.5,Lidl,"lidl-0048087 Milbona Görög feta sajt,  200g, ,",db,899.0,"lidl-0048087 Milbona Görög feta sajt,  200g, ,",1,0.1,433.2,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/113
+M04,lilahagyma,50,g,S,False,GVH Árfigyelő API (NORMAL price),9.5,Lidl,lidl-0083333 Vöröshagyma 2kg,csomag,10.2,lidl-0083325 Vöröshagyma lédig,,0.0,9.5,Lidl,30.0,https://arfigyelo.gvh.hu/api/products-by-category/40
+M04,olivaolaj,20,ml,E,True,GVH Árfigyelő API (NORMAL price),89.7,Lidl,"lidl-0068400 Primadonna Extra szűz olívaolaj, 750ml",db,3365.0,"lidl-0068400 Primadonna Extra szűz olívaolaj, 750ml",1,0.73,48.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+M04,citrom,50,g,E,False,GVH Árfigyelő API (NORMAL price),45.0,Lidl,lidl-0080160 Citrom lédig,kg,45.0,lidl-0080160 Citrom lédig,,0.0,40.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/32
+M04,petrezselyemzold,10,g,N,False,kifli.hu public product page (regular price),184.2,,Petrezselyemzöld csomós 26 g,,479,Petrezselyemzöld csomós 26 g,1,,,,,https://www.kifli.hu/24244-petrezselyemzoeld-csomos
+M04,so,2,g,excluded,,,,,,,,,,,,,,
+M04,bors,0.5,g,excluded,,,,,,,,,,,,,,
+M05,tojas,4,db,E,False,GVH Árfigyelő API (NORMAL price),196.0,Auchan,5998171700025 Szijártó friss tojás A osztály S méret 30 db,doboz,501.0,5999086450890 Auchan Tipp friss tojás A osztály S méret 10 db,1,6.0,182.0,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/14
+M05,paradicsom_konzerv,400,g,N,False,kifli.hu public product page (regular price),305.0,,Kitchin apróra vágott hámozott paradicsom 400 g,,305,Kitchin apróra vágott hámozott paradicsom 400 g,1,,,,,https://www.kifli.hu/91724-kitchin-aprora-vagott-hamozott-paradicsom-paradicsomleben-400-g
+M05,kaliforniai_paprika,150,g,N,False,kifli.hu public product page (regular price),464.7,,Trikolor kaliforniai paprika csomagolt 500 g,,1549,Trikolor kaliforniai paprika csomagolt 500 g,1,,,,,https://www.kifli.hu/72883-etkezesi-paprika-ledig
+M05,voroshagyma,100,g,E,False,GVH Árfigyelő API (NORMAL price),25.0,Auchan,2182420000001 Vöröshagyma Ft/kg,kg,25.0,2182420000001 Vöröshagyma Ft/kg,,0.0,18.9,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+M05,fokhagyma,10,g,E,False,GVH Árfigyelő API (NORMAL price),16.1,Auchan,2182440000005 Fokhagyma lédig Ft/kg,kg,16.1,2182440000005 Fokhagyma lédig Ft/kg,,0.0,14.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+M05,komeny,2,g,N,True,kifli.hu public product page (regular price),33.2,,Lucullus római kömény őrölt 15 g,,249,Lucullus római kömény őrölt 15 g,1,,,,,https://www.kifli.hu/92655-lucullus-romai-koemeny-oroelt
+M05,pirospaprika,3,g,N,True,kifli.hu public product page (regular price),26.4,,Horváth Rozi édes őrölt paprika I. o. 100 g,,879,Horváth Rozi édes őrölt paprika I. o. 100 g,1,,,,,https://www.kifli.hu/101115-hodi-i-osztalyu-edes-fuszerpaprika-papirzacskoban
+M05,olivaolaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),36.0,Auchan,9002859042508 Piacelli extra szűz olasz olívaolaj 500 ml,db,1200.0,9002859042508 Piacelli extra szűz olasz olívaolaj 500 ml,1,0.485,36.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+M05,feta,50,g,E,False,GVH Árfigyelő API (NORMAL price),216.6,Auchan,5202425000480 Hotos Feta P.D.O. sajt juh- és kecsketejből 600 g,db,1039.0,5201083350531 Mevgal Feta sajt natúr 150 g,1,0.1,216.6,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/113
+M05,teljes_kiorlesu_kenyer,120,g,E,False,GVH Árfigyelő API (NORMAL price),59.8,Auchan,2000002745891 Auchan Kedvenc teljes kiőrlésű kenyér 400 g,db,199.0,2000002745891 Auchan Kedvenc teljes kiőrlésű kenyér 400 g,1,0.28,53.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/48
+M05,petrezselyemzold,5,g,N,False,kifli.hu public product page (regular price),92.1,,Petrezselyemzöld csomós 26 g,,479,Petrezselyemzöld csomós 26 g,1,,,,,https://www.kifli.hu/24244-petrezselyemzoeld-csomos
+M05,so,2,g,excluded,,,,,,,,,,,,,,
+M05,bors,0.5,g,excluded,,,,,,,,,,,,,,
+M06,teljes_kiorlesu_teszta,180,g,E,False,GVH Árfigyelő API (NORMAL price),143.6,Aldi,aldi-640866 Teljeskiőrlésű fusilli 500g,csomag,399.0,aldi-640866 Teljeskiőrlésű fusilli 500g,1,0.32,143.6,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/50
+M06,spenot,250,g,N,False,kifli.hu public product page (regular price),699.5,,"Spenót, csomagolt 500 g",,1399,"Spenót, csomagolt 500 g",1,,,,,https://www.kifli.hu/36793-spenot-csomagolt
+M06,fokhagyma,10,g,E,False,GVH Árfigyelő API (NORMAL price),14.7,Aldi,aldi-660628 Fokhagyma lédig,kg,14.7,aldi-660628 Fokhagyma lédig,,0.0,14.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+M06,fozotejszin10,150,ml,E,False,GVH Árfigyelő API (NORMAL price),156.8,Aldi,aldi-681985 Kokárdás főzőtejsz.10% 200ml,db,209.0,aldi-681985 Kokárdás főzőtejsz.10% 200ml,1,0.05,155.7,Penny,,https://arfigyelo.gvh.hu/api/products-by-category/81
+M06,parmezan,30,g,N,False,kifli.hu public product page (regular price),209.7,,Miil olasz reszelt félzsíros kemény sajt 100 g,,699,Miil olasz reszelt félzsíros kemény sajt 100 g,1,,,,,https://www.kifli.hu/82069-miil-olasz-reszelt-felzsiros-kemeny-sajt
+M06,olivaolaj,10,ml,E,True,GVH Árfigyelő API (NORMAL price),39.1,Aldi,aldi-200140 Olívaolaj extra szűz 750,db,2199.0,aldi-656776 Tesoros del Sur extra szűz olívaolaj 500ml,1,0.49,24.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+M06,szerecsendio,0.5,g,N,True,kifli.hu public product page (regular price),15.3,,Lucullus szerecsendió őrölt 13 g,,399,Lucullus szerecsendió őrölt 13 g,1,,,,,https://www.kifli.hu/92657-lucullus-szerecsendio-oroelt
+M06,so,4,g,excluded,,,,,,,,,,,,,,
+M06,bors,0.5,g,excluded,,,,,,,,,,,,,,
+M07,arborio,160,g,N,False,kifli.hu public product page (regular price),303.7,,KITCHIN Arborio rizs 500 g,,949,KITCHIN Arborio rizs 500 g,1,,,,,https://www.kifli.hu/124278-kitchin-arborio-rizs
+M07,csiperke,300,g,N,False,kifli.hu public product page (regular price),599.4,,Gourmet fehér csiperkegomba 500 g,,999,Gourmet fehér csiperkegomba 500 g,1,,,,,https://www.kifli.hu/36235-gourmet-feher-csiperkegomba
+M07,voroshagyma,80,g,E,False,GVH Árfigyelő API (NORMAL price),16.4,Aldi,aldi-329601 Vöröshagyma lédig,kg,16.4,aldi-329601 Vöröshagyma lédig,,0.0,15.2,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+M07,fokhagyma,5,g,E,False,GVH Árfigyelő API (NORMAL price),7.3,Aldi,aldi-660628 Fokhagyma lédig,kg,7.3,aldi-660628 Fokhagyma lédig,,0.0,7.3,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+M07,alaple_kocka,1,db,N,True,kifli.hu public product page (regular price),73.2,,Maggi zöldségleveskocka 120 g (12 kocka),,879,Maggi zöldségleveskocka 120 g (12 kocka),1,,,,,https://www.kifli.hu/122377-maggi-zoeldsegleveskocka
+M07,vaj,20,g,E,False,GVH Árfigyelő API (NORMAL price),35.9,Aldi,aldi-740220 Desira márkázott vaj 250g,db,299.0,aldi-320465 Milsani/Milfina teavaj 100g,1,0.08,35.9,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/12
+M07,parmezan,30,g,N,False,kifli.hu public product page (regular price),209.7,,Miil olasz reszelt félzsíros kemény sajt 100 g,,699,Miil olasz reszelt félzsíros kemény sajt 100 g,1,,,,,https://www.kifli.hu/82069-miil-olasz-reszelt-felzsiros-kemeny-sajt
+M07,olivaolaj,10,ml,E,True,GVH Árfigyelő API (NORMAL price),39.1,Aldi,aldi-200140 Olívaolaj extra szűz 750,db,2199.0,aldi-656776 Tesoros del Sur extra szűz olívaolaj 500ml,1,0.49,24.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+M07,petrezselyemzold,5,g,N,False,kifli.hu public product page (regular price),92.1,,Petrezselyemzöld csomós 26 g,,479,Petrezselyemzöld csomós 26 g,1,,,,,https://www.kifli.hu/24244-petrezselyemzoeld-csomos
+M07,so,2,g,excluded,,,,,,,,,,,,,,
+M07,bors,0.5,g,excluded,,,,,,,,,,,,,,
+M07,viz,900,ml,excluded,,,,,,,,,,,,,,
+M08,vorosbab_konzerv,1,db,N,False,kifli.hu public product page (regular price),249.0,,Kitchin vörös vesebab enyhén sós lében 430 g (240 g töltőtömeg),,249,Kitchin vörös vesebab enyhén sós lében 430 g (240 g töltőtömeg),1,,,,,https://www.kifli.hu/76195-happy-frucht-voeroesbab-400-g
+M08,csemegekukorica,140,g,E,False,GVH Árfigyelő API (NORMAL price),146.9,Lidl,"lidl-6410435 Freshona Csemege Kukorica  (285g), 425ml",db,299.0,"lidl-6410435 Freshona Csemege Kukorica  (285g), 425ml",1,0.145,146.9,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/56
+M08,paradicsom_konzerv,400,g,N,False,kifli.hu public product page (regular price),305.0,,Kitchin apróra vágott hámozott paradicsom 400 g,,305,Kitchin apróra vágott hámozott paradicsom 400 g,1,,,,,https://www.kifli.hu/91724-kitchin-aprora-vagott-hamozott-paradicsom-paradicsomleben-400-g
+M08,voroshagyma,100,g,E,False,GVH Árfigyelő API (NORMAL price),18.9,Lidl,lidl-0083333 Vöröshagyma 2kg,csomag,20.5,lidl-0083325 Vöröshagyma lédig,,0.0,18.9,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/40
+M08,fokhagyma,10,g,E,False,GVH Árfigyelő API (NORMAL price),15.4,Lidl,lidl-0082711 Fokhagyma 200g,csomag,17.8,lidl-0082706 Fokhagyma db,,0.0,14.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+M08,kaliforniai_paprika,150,g,N,False,kifli.hu public product page (regular price),464.7,,Trikolor kaliforniai paprika csomagolt 500 g,,1549,Trikolor kaliforniai paprika csomagolt 500 g,1,,,,,https://www.kifli.hu/72883-etkezesi-paprika-ledig
+M08,chili,1,g,N,True,kifli.hu public product page (regular price),24.2,,Kotányi Chili Cayenne őrölt 20 g,,485,Kotányi Chili Cayenne őrölt 20 g,1,,,,,https://www.kifli.hu/5215-kotanyi-chili-cayenne-oroelt
+M08,komeny,2,g,N,True,kifli.hu public product page (regular price),33.2,,Lucullus római kömény őrölt 15 g,,249,Lucullus római kömény őrölt 15 g,1,,,,,https://www.kifli.hu/92655-lucullus-romai-koemeny-oroelt
+M08,napraforgo_olaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),11.2,Lidl,lidl-0002076 Vita D'or Napraforgóolaj 1l,db,749.0,lidl-0002076 Vita D'or Napraforgóolaj 1l,1,0.985,11.1,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/51
+M08,rizs,140,g,E,False,GVH Árfigyelő API (NORMAL price),76.9,Lidl,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",csomag,549.0,"lidl-6402831 Golden Sun Hosszú szemű \""B\"" rizs, 1kg",1,0.86,74.1,Tesco,,https://arfigyelo.gvh.hu/api/products-by-category/95
+M08,natur_joghurt,100,g,E,False,GVH Árfigyelő API (NORMAL price),42.9,Lidl,"lidl-6418141 Pilos Natúr joghurt 0,1% , 175g",db,75.0,"lidl-6418141 Pilos Natúr joghurt 0,1% , 175g",1,0.075,42.9,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/7
+M08,so,3,g,excluded,,,,,,,,,,,,,,
+M09,barna_rizs,120,g,N,False,kifli.hu public product page (regular price),143.9,,Valoryz barna rizs 1 kg,,1199,Valoryz barna rizs 1 kg,1,,,,,https://www.kifli.hu/80595-valoryz-barna-rizs
+M09,edesburgonya,300,g,N,False,kifli.hu public product page (regular price),359.7,,Édesburgonya lédig (Ft/kg),,359.7,Édesburgonya lédig (Ft/kg),,,,,,https://www.kifli.hu/11602-edesburgonya-ledig
+M09,csicseri_konzerv,1,db,N,False,kifli.hu public product page (regular price),215.0,,Kitchin csicseriborsó enyhén sós lében 420 g (240 g töltőtömeg),,215,Kitchin csicseriborsó enyhén sós lében 420 g (240 g töltőtömeg),1,,,,,https://www.kifli.hu/91722-kitchin-csicseriborso-enyhen-sos-leben-420-g
+M09,avokado,1,db,N,False,kifli.hu public product page (regular price),559.0,,BIO avokádó 1 db (kb. 150 g),,559,BIO avokádó 1 db (kb. 150 g),1,,,,,https://www.kifli.hu/105048-bio-avokado-valtozo-erettseg
+M09,sargarepa,100,g,E,False,GVH Árfigyelő API (NORMAL price),29.9,Lidl,lidl-0082763 Sárgarépa 2kg,csomag,48.9,lidl-0082761 Sárgarépa 1kg,,0.0,29.9,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/36
+M09,uborka,150,g,E,False,GVH Árfigyelő API (NORMAL price),128.4,Lidl,lidl-0083592 Kígyóuborka 2db,db,399.0,"lidl-0082231 Kígyóuborka db, min. 300g",1,0.2,128.4,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/38
+M09,spenot,60,g,N,False,kifli.hu public product page (regular price),167.9,,"Spenót, csomagolt 500 g",,1399,"Spenót, csomagolt 500 g",1,,,,,https://www.kifli.hu/36793-spenot-csomagolt
+M09,tahini,30,g,N,False,kifli.hu public product page (regular price),188.9,,Nuts&Berries Tahini 500 g,,3149,Nuts&Berries Tahini 500 g,1,,,,,https://www.kifli.hu/103155-nuts-berries-tahini
+M09,citrom,30,g,E,False,GVH Árfigyelő API (NORMAL price),27.0,Lidl,lidl-0080160 Citrom lédig,kg,27.0,lidl-0080160 Citrom lédig,,0.0,24.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/32
+M09,olivaolaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),67.3,Lidl,"lidl-0068400 Primadonna Extra szűz olívaolaj, 750ml",db,3365.0,"lidl-0068400 Primadonna Extra szűz olívaolaj, 750ml",1,0.735,36.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+M09,so,2,g,excluded,,,,,,,,,,,,,,
+M10,tonhal_konzerv,1,db,N,False,kifli.hu public product page (regular price),2199.0,,Twist tonhal natúr lében 240 g (168 g töltőtömeg),,2199,Twist tonhal natúr lében 240 g (168 g töltőtömeg),1,,,,,https://www.kifli.hu/103715-twist-tonhal-natur-leben-240-g
+M10,jegsalata,200,g,N,False,kifli.hu public product page (regular price),599.3,,Jégsaláta csomagolt 300 g,,899,Jégsaláta csomagolt 300 g,1,,,,,https://www.kifli.hu/36793-spenot-csomagolt
+M10,paradicsom,200,g,E,False,GVH Árfigyelő API (NORMAL price),172.6,Spar,5999559680304 Fürtös paradicsom lédig,kg,172.6,5999559680304 Fürtös paradicsom lédig,,0.0,85.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/34
+M10,uborka,150,g,E,False,GVH Árfigyelő API (NORMAL price),128.4,Spar,5999559686658 Kígyóuborka,db,399.0,8436014822000 Kígyóuborka db,1,0.2,128.4,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/38
+M10,tojas,2,db,E,False,GVH Árfigyelő API (NORMAL price),101.6,Spar,5999139409493 S-budget tojás 10db ¨s¨,doboz,508.0,5999139409493 S-budget tojás 10db ¨s¨,1,8.0,91.0,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/14
+M10,csemegekukorica,100,g,E,False,GVH Árfigyelő API (NORMAL price),104.9,Spar,5999139408571 S-Budget morzsolt csemegekukorica 340 g,db,299.0,5999139408571 S-Budget morzsolt csemegekukorica 340 g,1,0.185,104.9,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/56
+M10,lilahagyma,40,g,S,False,GVH Árfigyelő API (NORMAL price),9.4,Spar,28306009 Vöröshagyma lédig,kg,9.4,28306009 Vöröshagyma lédig,,0.0,7.6,Lidl,24.0,https://arfigyelo.gvh.hu/api/products-by-category/40
+M10,olivaolaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),79.5,Spar,8001300243441 DESPAR extraszűz olívaolaj 1 l,db,1749.0,8000606000130 Bertolli Originale extra szűz olívaolaj 250 ml,1,0.235,36.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+M10,citrom,30,g,E,False,GVH Árfigyelő API (NORMAL price),24.0,Spar,67302000 Citrom lédig,kg,24.0,67302000 Citrom lédig,,0.0,24.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/32
+M10,teljes_kiorlesu_kenyer,100,g,E,False,GVH Árfigyelő API (NORMAL price),51.2,Spar,5998704301095 Teljes kiőrlésű kenyér 400 g,db,205.0,5998704301095 Teljes kiőrlésű kenyér 400 g,1,0.3,44.8,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/48
+M10,so,2,g,excluded,,,,,,,,,,,,,,
+M10,bors,0.5,g,excluded,,,,,,,,,,,,,,
+M11,cukkini,400,g,N,False,kifli.hu public product page (regular price),639.6,,Hazai sárga cukkini lédig (Ft/kg),,639.6,Hazai sárga cukkini lédig (Ft/kg),,,,,,https://www.kifli.hu/46673-hazai-sarga-cukkini-ledig
+M11,teljes_kiorlesu_teszta,160,g,E,False,GVH Árfigyelő API (NORMAL price),246.1,Auchan,5997490115367 Don Francesco Integrale fusilli teljes kiőrlésű durum száraztészta 500 g,csomag,769.0,5997490115367 Don Francesco Integrale fusilli teljes kiőrlésű durum száraztészta 500 g,1,0.34,127.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/50
+M11,paradicsom,200,g,E,False,GVH Árfigyelő API (NORMAL price),86.6,Auchan,5998985599686 Paradicsom 1 kg,csomag,173.2,2182560000008 Fürtös paradicsom Ft/kg,,0.0,85.8,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/34
+M11,fokhagyma,10,g,E,False,GVH Árfigyelő API (NORMAL price),16.1,Auchan,2182440000005 Fokhagyma lédig Ft/kg,kg,16.1,2182440000005 Fokhagyma lédig Ft/kg,,0.0,14.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+M11,olivaolaj,20,ml,E,True,GVH Árfigyelő API (NORMAL price),48.0,Auchan,9002859042508 Piacelli extra szűz olasz olívaolaj 500 ml,db,1200.0,9002859042508 Piacelli extra szűz olasz olívaolaj 500 ml,1,0.48,48.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+M11,feta,60,g,E,False,GVH Árfigyelő API (NORMAL price),259.9,Auchan,5202425000480 Hotos Feta P.D.O. sajt juh- és kecsketejből 600 g,db,1039.0,5201083350531 Mevgal Feta sajt natúr 150 g,1,0.09,259.9,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/113
+M11,citrom,20,g,E,False,GVH Árfigyelő API (NORMAL price),18.0,Auchan,2188440000007 Citrom Ft/kg,kg,18.0,2188440000007 Citrom Ft/kg,,0.0,16.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/32
+M11,so,4,g,excluded,,,,,,,,,,,,,,
+M11,bors,0.5,g,excluded,,,,,,,,,,,,,,
+M12,csirkemellfile,350,g,E,False,GVH Árfigyelő API (NORMAL price),685.6,Tesco,2856090000000 CSIRKE MELLFILÉ VÁKUMCS Ft/kg,kg,685.6,2856090000000 CSIRKE MELLFILÉ VÁKUMCS Ft/kg,,0.0,650.6,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/18
+M12,gorog_joghurt,200,g,E,False,GVH Árfigyelő API (NORMAL price),199.2,Tesco,8586000513136 RN NATÚR GÖRÖG LIGHT JOGHURT 1 kg QQ,db,476.0,5990031647471 DANONE GÖRÖG STILUSU JOGHURT 375 g QQ,1,0.175,199.2,Tesco,,https://arfigyelo.gvh.hu/api/products-by-category/7
+M12,uborka,150,g,E,False,GVH Árfigyelő API (NORMAL price),183.9,Tesco,0000000023214 Kígyóuborka db,db,429.0,0000000023214 Kígyóuborka db,1,0.2,128.4,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/38
+M12,fokhagyma,10,g,E,False,GVH Árfigyelő API (NORMAL price),15.0,Tesco,2822680000000 FOKHAGYMA LÉDIG QQ,kg,15.0,2822680000000 FOKHAGYMA LÉDIG QQ,,0.0,14.7,Aldi,,https://arfigyelo.gvh.hu/api/products-by-category/39
+M12,citrom,50,g,E,False,GVH Árfigyelő API (NORMAL price),45.0,Tesco,2850160000000 Citrom lédig,kg,45.0,2850160000000 Citrom lédig,,0.0,40.0,Spar,,https://arfigyelo.gvh.hu/api/products-by-category/32
+M12,oregano,1,g,N,True,kifli.hu public product page (regular price),39.8,,Lucullus oregánó morzsolt 5 g,,199,Lucullus oregánó morzsolt 5 g,1,,,,,https://www.kifli.hu/92663-lucullus-oregano-morzsolt
+M12,olivaolaj,15,ml,E,True,GVH Árfigyelő API (NORMAL price),67.4,Tesco,5051007099684 TS EXTRA VIRGIN OLIVE OIL 750 ml,db,2999.0,5051007099158 TS EXTRA VIRGIN OLIVE OIL 500 ml,1,0.485,36.0,Auchan,,https://arfigyelo.gvh.hu/api/products-by-category/120
+M12,bulgur,120,g,N,False,kifli.hu public product page (regular price),83.8,,Kitchin Bulgur 500 g,,349,Kitchin Bulgur 500 g,1,,,,,https://www.kifli.hu/97108-kitchin-bulgur
+M12,paradicsom,150,g,E,False,GVH Árfigyelő API (NORMAL price),119.5,Tesco,2809140000000 FÜRTÖS PARADICSOM LÉDIG QQ,kg,119.5,2809140000000 FÜRTÖS PARADICSOM LÉDIG QQ,,0.0,64.3,Lidl,,https://arfigyelo.gvh.hu/api/products-by-category/34
+M12,so,3,g,excluded,,,,,,,,,,,,,,
+M12,bors,0.5,g,excluded,,,,,,,,,,,,,,

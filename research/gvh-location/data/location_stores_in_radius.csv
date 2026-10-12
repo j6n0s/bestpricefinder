@@ -1,0 +1,219 @@
+point,radius_km,store,chain,address,dist_km
+Határ út (XIX/IX/X),1.0,spar-8202,Spar,1191 Üllői u. 201.,0.216
+Határ út (XIX/IX/X),1.0,dm-385,dm,1193 Üllői út 201.,0.265
+Határ út (XIX/IX/X),1.0,aldi-J066,Aldi,1191 Szalay utca 7-17.,0.525
+Határ út (XIX/IX/X),1.0,rossmann-216,Rossmann,1191 Szalay utca 7-17.,0.626
+Határ út (XIX/IX/X),1.0,lidl-391,Lidl,1191 XIX. Szalay utca 14.,0.632
+Határ út (XIX/IX/X),1.0,penny-57,Penny,1191 Ady E. út 32-40.,0.656
+Határ út (XIX/IX/X),1.0,spar-109,Spar,1098 Lobogó utca 14.,0.931
+Határ út (XIX/IX/X),1.0,dm-178,dm,1098 Napfény utca 7.,0.947
+Határ út (XIX/IX/X),1.0,lidl-235,Lidl,1098 Lobogó u. 12,0.974
+Határ út (XIX/IX/X),2.0,spar-8202,Spar,1191 Üllői u. 201.,0.216
+Határ út (XIX/IX/X),2.0,dm-385,dm,1193 Üllői út 201.,0.265
+Határ út (XIX/IX/X),2.0,aldi-J066,Aldi,1191 Szalay utca 7-17.,0.525
+Határ út (XIX/IX/X),2.0,rossmann-216,Rossmann,1191 Szalay utca 7-17.,0.626
+Határ út (XIX/IX/X),2.0,lidl-391,Lidl,1191 XIX. Szalay utca 14.,0.632
+Határ út (XIX/IX/X),2.0,penny-57,Penny,1191 Ady E. út 32-40.,0.656
+Határ út (XIX/IX/X),2.0,spar-109,Spar,1098 Lobogó utca 14.,0.931
+Határ út (XIX/IX/X),2.0,dm-178,dm,1098 Napfény utca 7.,0.947
+Határ út (XIX/IX/X),2.0,lidl-235,Lidl,1098 Lobogó u. 12,0.974
+Határ út (XIX/IX/X),2.0,spar-8256,Spar,1091 Üllöi Út 147,1.291
+Határ út (XIX/IX/X),2.0,spar-102,Spar,1191 Eötvös u. 5.,1.445
+Határ út (XIX/IX/X),2.0,lidl-232,Lidl,1101 Üllői út 112.,1.476
+Határ út (XIX/IX/X),2.0,dm-418,dm,1191 Vak Bottyán u. 75.,1.513
+Határ út (XIX/IX/X),2.0,tesco-1059,Tesco,1191 Vak Bottyán u. 75 B,1.67
+Határ út (XIX/IX/X),2.0,lidl-325,Lidl,1191 Báthory u. 6.,1.693
+Határ út (XIX/IX/X),2.0,rossmann-331,Rossmann,1191 Áruház köz 1-3.,1.758
+Határ út (XIX/IX/X),2.0,rossmann-205,Rossmann,1191 Vak Bottyán utca 75/A-C,1.771
+Határ út (XIX/IX/X),2.0,spar-8258,Spar,1191 Áruház köz 1-3.,1.796
+Határ út (XIX/IX/X),2.0,penny-285,Penny,1102 Liget tér 1.,1.904
+Határ út (XIX/IX/X),2.0,spar-26,Spar,1102 Liget tér 5.,1.995
+Móricz Zsigmond körtér (XI),1.0,lidl-335,Lidl,1114 Bartók Béla út 47.,0.162
+Móricz Zsigmond körtér (XI),1.0,rossmann-52,Rossmann,1111 Bartók Béla út 48.,0.222
+Móricz Zsigmond körtér (XI),1.0,dm-233,dm,1117 Október huszonharmadika utca 8-10.,0.376
+Móricz Zsigmond körtér (XI),1.0,spar-8244,Spar,1117 Október 23. utca,0.391
+Móricz Zsigmond körtér (XI),1.0,spar-32,Spar,1117 Irinyi J. u.34.,0.671
+Móricz Zsigmond körtér (XI),1.0,spar-156,Spar,1119 Fehérvári út 45,0.842
+Móricz Zsigmond körtér (XI),1.0,tesco-4079,Tesco,1116 Fehérvári út 45-47.,0.874
+Móricz Zsigmond körtér (XI),2.0,lidl-335,Lidl,1114 Bartók Béla út 47.,0.162
+Móricz Zsigmond körtér (XI),2.0,rossmann-52,Rossmann,1111 Bartók Béla út 48.,0.222
+Móricz Zsigmond körtér (XI),2.0,dm-233,dm,1117 Október huszonharmadika utca 8-10.,0.376
+Móricz Zsigmond körtér (XI),2.0,spar-8244,Spar,1117 Október 23. utca,0.391
+Móricz Zsigmond körtér (XI),2.0,spar-32,Spar,1117 Irinyi J. u.34.,0.671
+Móricz Zsigmond körtér (XI),2.0,spar-156,Spar,1119 Fehérvári út 45,0.842
+Móricz Zsigmond körtér (XI),2.0,tesco-4079,Tesco,1116 Fehérvári út 45-47.,0.874
+Móricz Zsigmond körtér (XI),2.0,tesco-4042,Tesco,1115 Bartok Bela u. 105-113,1.314
+Móricz Zsigmond körtér (XI),2.0,spar-155,Spar,1117 Dombóvári út 27.,1.345
+Móricz Zsigmond körtér (XI),2.0,aldi-J064,Aldi,1093 Vámház körút 1-3.,1.385
+Móricz Zsigmond körtér (XI),2.0,aldi-J233,Aldi,1113 Karolina út 17.,1.387
+Móricz Zsigmond körtér (XI),2.0,spar-35,Spar,1119 Tétényi u. 31,1.49
+Móricz Zsigmond körtér (XI),2.0,rossmann-297,Rossmann,1117 Bíró László József körút 17. fszt 4.,1.518
+Móricz Zsigmond körtér (XI),2.0,spar-135,Spar,1095 Soroksári út. 1,1.537
+Móricz Zsigmond körtér (XI),2.0,spar-161,Spar,1119 Fehérvári u. 97-99,1.591
+Móricz Zsigmond körtér (XI),2.0,dm-80,dm,1053 Királyi Pál utca 20.,1.604
+Móricz Zsigmond körtér (XI),2.0,dm-20,dm,1092 Ferenc körút 2-4.,1.607
+Móricz Zsigmond körtér (XI),2.0,spar-24,Spar,1092 Rádai u. 32,1.627
+Móricz Zsigmond körtér (XI),2.0,spar-168,Spar,1095 Mester utca 1.,1.647
+Móricz Zsigmond körtér (XI),2.0,rossmann-296,Rossmann,1091 Kálvin tér 7. (Városkapu üzletház),1.648
+Móricz Zsigmond körtér (XI),2.0,tesco-4067,Tesco,1091 Kalvin ter 7.,1.65
+Móricz Zsigmond körtér (XI),2.0,rossmann-25,Rossmann,1094 Ferenc körút 23.,1.771
+Móricz Zsigmond körtér (XI),2.0,aldi-J045,Aldi,1116 Sopron út 56.,1.779
+Móricz Zsigmond körtér (XI),2.0,rossmann-234,Rossmann,1095 Soroksári út 30-34.,1.78
+Móricz Zsigmond körtér (XI),2.0,aldi-J190,Aldi,1085 Üllői út 14.,1.795
+Móricz Zsigmond körtér (XI),2.0,tesco-1009,Tesco,1117 Hengermalom utca 19-21.,1.828
+Móricz Zsigmond körtér (XI),2.0,spar-129,Spar,1095 Mester u. 30-32,1.85
+Móricz Zsigmond körtér (XI),2.0,lidl-355,Lidl,1053 Ferenciek tere 2.,1.856
+Móricz Zsigmond körtér (XI),2.0,dm-205,dm,1117 Hengermalom út 19-21.,1.881
+Móricz Zsigmond körtér (XI),2.0,dm-362,dm,1052 Petőfi Sándor utca 3.,1.905
+Móricz Zsigmond körtér (XI),2.0,aldi-J179,Aldi,1016 Mészáros utca 56/A,1.937
+Móricz Zsigmond körtér (XI),2.0,mueller-5253,Müller,1052 Váci utca 16,1.938
+Móricz Zsigmond körtér (XI),2.0,dm-144,dm,1094 Mester utca 40-44.,1.963
+Móricz Zsigmond körtér (XI),2.0,aldi-J056,Aldi,1094 Tűzoltó utca 10-16.,2.0
+Nyugati tér (VI/XIII),1.0,dm-380,dm,1066 Nyugati tér 1-2.,0.044
+Nyugati tér (VI/XIII),1.0,spar-8251,Spar,1066 Nyugati tér 1-2.,0.052
+Nyugati tér (VI/XIII),1.0,tesco-4062,Tesco,1062 Terez krt. 55-57.,0.096
+Nyugati tér (VI/XIII),1.0,rossmann-91,Rossmann,"1062 Westend, Váci út 1-3.",0.13
+Nyugati tér (VI/XIII),1.0,lidl-274,Lidl,1065 Bajcsy-Zsilinszky út 61.,0.146
+Nyugati tér (VI/XIII),1.0,spar-172,Spar,1062 Véáci út 1-3,0.263
+Nyugati tér (VI/XIII),1.0,aldi-J067,Aldi,1132 Váci út 14.,0.334
+Nyugati tér (VI/XIII),1.0,rossmann-304,Rossmann,1066 Teréz körút 46.,0.34
+Nyugati tér (VI/XIII),1.0,dm-48,dm,1055 Szent István körút 11.,0.45
+Nyugati tér (VI/XIII),1.0,dm-343,dm,1062 Váci út 1-3.,0.462
+Nyugati tér (VI/XIII),1.0,dm-325,dm,1132 Váci út 20-26.,0.519
+Nyugati tér (VI/XIII),1.0,spar-169,Spar,1066 Teréz krt 28,0.595
+Nyugati tér (VI/XIII),1.0,rossmann-202,Rossmann,1137 Szent István körút 4.,0.628
+Nyugati tér (VI/XIII),1.0,aldi-J063,Aldi,1054 Báthory u. 8.,0.629
+Nyugati tér (VI/XIII),1.0,spar-189,Spar,1132 Váci út 34.,0.634
+Nyugati tér (VI/XIII),1.0,rossmann-32,Rossmann,1132 Váci út 36-38.,0.673
+Nyugati tér (VI/XIII),1.0,rossmann-203,Rossmann,1067 Teréz körút 19.,0.709
+Nyugati tér (VI/XIII),1.0,spar-165,Spar,1054 Vértanúk tere 1.,0.795
+Nyugati tér (VI/XIII),1.0,spar-193,Spar,1061 Andrássy út 30.,0.835
+Nyugati tér (VI/XIII),1.0,lidl-339,Lidl,1132 Victor Hugo u.11-15.,0.844
+Nyugati tér (VI/XIII),1.0,dm-332,dm,1061 Andrássy út 35.,0.857
+Nyugati tér (VI/XIII),1.0,dm-53,dm,1051 Arany János utca 30.,0.89
+Nyugati tér (VI/XIII),1.0,lidl-357,Lidl,1051 Arany János utca 27-29,0.903
+Nyugati tér (VI/XIII),1.0,penny-293,Penny,1137 Szent István krt. 30,0.969
+Nyugati tér (VI/XIII),2.0,dm-380,dm,1066 Nyugati tér 1-2.,0.044
+Nyugati tér (VI/XIII),2.0,spar-8251,Spar,1066 Nyugati tér 1-2.,0.052
+Nyugati tér (VI/XIII),2.0,tesco-4062,Tesco,1062 Terez krt. 55-57.,0.096
+Nyugati tér (VI/XIII),2.0,rossmann-91,Rossmann,"1062 Westend, Váci út 1-3.",0.13
+Nyugati tér (VI/XIII),2.0,lidl-274,Lidl,1065 Bajcsy-Zsilinszky út 61.,0.146
+Nyugati tér (VI/XIII),2.0,spar-172,Spar,1062 Véáci út 1-3,0.263
+Nyugati tér (VI/XIII),2.0,aldi-J067,Aldi,1132 Váci út 14.,0.334
+Nyugati tér (VI/XIII),2.0,rossmann-304,Rossmann,1066 Teréz körút 46.,0.34
+Nyugati tér (VI/XIII),2.0,dm-48,dm,1055 Szent István körút 11.,0.45
+Nyugati tér (VI/XIII),2.0,dm-343,dm,1062 Váci út 1-3.,0.462
+Nyugati tér (VI/XIII),2.0,dm-325,dm,1132 Váci út 20-26.,0.519
+Nyugati tér (VI/XIII),2.0,spar-169,Spar,1066 Teréz krt 28,0.595
+Nyugati tér (VI/XIII),2.0,rossmann-202,Rossmann,1137 Szent István körút 4.,0.628
+Nyugati tér (VI/XIII),2.0,aldi-J063,Aldi,1054 Báthory u. 8.,0.629
+Nyugati tér (VI/XIII),2.0,spar-189,Spar,1132 Váci út 34.,0.634
+Nyugati tér (VI/XIII),2.0,rossmann-32,Rossmann,1132 Váci út 36-38.,0.673
+Nyugati tér (VI/XIII),2.0,rossmann-203,Rossmann,1067 Teréz körút 19.,0.709
+Nyugati tér (VI/XIII),2.0,spar-165,Spar,1054 Vértanúk tere 1.,0.795
+Nyugati tér (VI/XIII),2.0,spar-193,Spar,1061 Andrássy út 30.,0.835
+Nyugati tér (VI/XIII),2.0,lidl-339,Lidl,1132 Victor Hugo u.11-15.,0.844
+Nyugati tér (VI/XIII),2.0,dm-332,dm,1061 Andrássy út 35.,0.857
+Nyugati tér (VI/XIII),2.0,dm-53,dm,1051 Arany János utca 30.,0.89
+Nyugati tér (VI/XIII),2.0,lidl-357,Lidl,1051 Arany János utca 27-29,0.903
+Nyugati tér (VI/XIII),2.0,penny-293,Penny,1137 Szent István krt. 30,0.969
+Nyugati tér (VI/XIII),2.0,penny-252,Penny,1134 Váci út 9-15.,1.024
+Nyugati tér (VI/XIII),2.0,spar-121,Spar,1066 Teréz krt. 2.,1.063
+Nyugati tér (VI/XIII),2.0,rossmann-13,Rossmann,1077 Király utca 51.,1.068
+Nyugati tér (VI/XIII),2.0,aldi-J052,Aldi,1133 Pannónia utca 59-63.,1.089
+Nyugati tér (VI/XIII),2.0,penny-233,Penny,1068 Király utca 82.,1.091
+Nyugati tér (VI/XIII),2.0,dm-21,dm,1061 Király utca 34.,1.177
+Nyugati tér (VI/XIII),2.0,lidl-299,Lidl,1061 VI. Király u. 112.,1.247
+Nyugati tér (VI/XIII),2.0,spar-8252,Spar,1072 Akácfa utca 42-48,1.295
+Nyugati tér (VI/XIII),2.0,spar-157,Spar,1133 Bessenyei u. 8.,1.353
+Nyugati tér (VI/XIII),2.0,dm-220,dm,1011 Batthyány tér 5-6.,1.408
+Nyugati tér (VI/XIII),2.0,spar-110,Spar,1011 Batthyány tér 5-6,1.415
+Nyugati tér (VI/XIII),2.0,spar-114,Spar,1073 Erzsébet krt. 27..,1.445
+Nyugati tér (VI/XIII),2.0,rossmann-222,Rossmann,1027 Margit körút 3.,1.462
+Nyugati tér (VI/XIII),2.0,spar-21,Spar,1073 Erzsébet krt. 24,1.488
+Nyugati tér (VI/XIII),2.0,rossmann-305,Rossmann,1075 Károly krt. 11.,1.489
+Nyugati tér (VI/XIII),2.0,dm-334,dm,1052 Sütő utca 2.,1.518
+Nyugati tér (VI/XIII),2.0,rossmann-85,Rossmann,1073 Erzsébet körút 19.,1.554
+Nyugati tér (VI/XIII),2.0,dm-5,dm,1052 Károly körút 26.,1.566
+Nyugati tér (VI/XIII),2.0,dm-140,dm,1071 Dembinszky utca 12.,1.582
+Nyugati tér (VI/XIII),2.0,spar-166,Spar,1052 Károly krt 22-24,1.609
+Nyugati tér (VI/XIII),2.0,spar-8263,Spar,1071 Dembinszky u 12.,1.671
+Nyugati tér (VI/XIII),2.0,rossmann-113,Rossmann,1133 Dráva utca 18-20.,1.708
+Nyugati tér (VI/XIII),2.0,tesco-4054,Tesco,1074 Rákóczi út 20.,1.755
+Nyugati tér (VI/XIII),2.0,dm-115,dm,1027 Margit körút 50-52.,1.772
+Nyugati tér (VI/XIII),2.0,mueller-5253,Müller,1052 Váci utca 16,1.782
+Nyugati tér (VI/XIII),2.0,spar-119,Spar,1088 Rákóczi u. 19.,1.797
+Nyugati tér (VI/XIII),2.0,dm-386,dm,1134 Váci út 35.,1.816
+Nyugati tér (VI/XIII),2.0,tesco-4080,Tesco,1088 Rákóczi út 1-3.,1.826
+Nyugati tér (VI/XIII),2.0,lidl-356,Lidl,1074 Rákóczi út 48-50.,1.828
+Nyugati tér (VI/XIII),2.0,lidl-316,Lidl,1027 Csalogány u. 43,1.837
+Nyugati tér (VI/XIII),2.0,spar-8259,Spar,1085 Blaha Lujza tér 1-2.,1.844
+Nyugati tér (VI/XIII),2.0,aldi-J065,Aldi,1053 Kossuth Lajos u. 13.,1.848
+Nyugati tér (VI/XIII),2.0,spar-167,Spar,1134 Váci út 37.,1.848
+Nyugati tér (VI/XIII),2.0,dm-362,dm,1052 Petőfi Sándor utca 3.,1.857
+Nyugati tér (VI/XIII),2.0,dm-416,dm,1085 Blaha Lujza tér 1.,1.861
+Nyugati tér (VI/XIII),2.0,lidl-355,Lidl,1053 Ferenciek tere 2.,1.92
+Nyugati tér (VI/XIII),2.0,mueller-5244,Müller,1085 József krt. 5,1.921
+Örs vezér tere (X/XIV),1.0,spar-8219,Spar,1106 Kerepesi út 61,0.017
+Örs vezér tere (X/XIV),1.0,spar-171,Spar,1106 Örs vezér tere 25.,0.069
+Örs vezér tere (X/XIV),1.0,rossmann-213,Rossmann,1106 Örs vezér tere 25.,0.082
+Örs vezér tere (X/XIV),1.0,spar-190,Spar,1148 Örs Vezér tere 24,0.158
+Örs vezér tere (X/XIV),1.0,dm-319,dm,1148 Örs vezér tere 24.,0.183
+Örs vezér tere (X/XIV),1.0,mueller-5245,Müller,1106 Kerepesi út 61,0.195
+Örs vezér tere (X/XIV),1.0,dm-420,dm,1106 Örs vezér tere 25. Árkád,0.245
+Örs vezér tere (X/XIV),1.0,spar-41,Spar,1144 Ond Vezér u. 34,0.859
+Örs vezér tere (X/XIV),1.0,spar-42,Spar,1144 Vezér u.39-41,0.921
+Örs vezér tere (X/XIV),2.0,spar-8219,Spar,1106 Kerepesi út 61,0.017
+Örs vezér tere (X/XIV),2.0,spar-171,Spar,1106 Örs vezér tere 25.,0.069
+Örs vezér tere (X/XIV),2.0,rossmann-213,Rossmann,1106 Örs vezér tere 25.,0.082
+Örs vezér tere (X/XIV),2.0,spar-190,Spar,1148 Örs Vezér tere 24,0.158
+Örs vezér tere (X/XIV),2.0,dm-319,dm,1148 Örs vezér tere 24.,0.183
+Örs vezér tere (X/XIV),2.0,mueller-5245,Müller,1106 Kerepesi út 61,0.195
+Örs vezér tere (X/XIV),2.0,dm-420,dm,1106 Örs vezér tere 25. Árkád,0.245
+Örs vezér tere (X/XIV),2.0,spar-41,Spar,1144 Ond Vezér u. 34,0.859
+Örs vezér tere (X/XIV),2.0,spar-42,Spar,1144 Vezér u.39-41,0.921
+Örs vezér tere (X/XIV),2.0,penny-4,Penny,1144 Füredi út 37.,1.029
+Örs vezér tere (X/XIV),2.0,aldi-J055,Aldi,1106 Kerepesi út 71.,1.084
+Örs vezér tere (X/XIV),2.0,dm-4,dm,1106 Kerepesi út 73.,1.132
+Örs vezér tere (X/XIV),2.0,spar-8254,Spar,1106 Kerepesi út 73.,1.161
+Örs vezér tere (X/XIV),2.0,spar-40,Spar,1144 Szentmihályi u. 23,1.206
+Örs vezér tere (X/XIV),2.0,penny-39,Penny,1102 Kolozsvári utca 55.,1.3
+Örs vezér tere (X/XIV),2.0,tesco-4083,Tesco,1142 Nagy Lajos király útja 73-77,1.33
+Örs vezér tere (X/XIV),2.0,rossmann-324,Rossmann,1149 Pillangó u. 15.,1.48
+Örs vezér tere (X/XIV),2.0,dm-393,dm,1149 Pillangó utca 16-20.,1.491
+Örs vezér tere (X/XIV),2.0,tesco-1400,Tesco,1149 Pillangó utca 15.,1.498
+Örs vezér tere (X/XIV),2.0,spar-27,Spar,1102 Kőrösi Csoma S. út 35-37,1.625
+Örs vezér tere (X/XIV),2.0,lidl-167,Lidl,1149 Mogyoródi út 23-29,1.654
+Újpest-Központ (IV),1.0,spar-17,Spar,1042 István u. 10,0.139
+Újpest-Központ (IV),1.0,spar-136,Spar,1045 Nap. u. 16.,0.636
+Újpest-Központ (IV),1.0,dm-404,dm,1041 Görgey A. Út 14-20.,0.693
+Újpest-Központ (IV),1.0,lidl-358,Lidl,1041 Görgey Artúr u. 14-20,0.694
+Újpest-Központ (IV),1.0,penny-265,Penny,1042 Rózsa u. 20-22.,0.728
+Újpest-Központ (IV),1.0,spar-105,Spar,1045 Rózsa u. 18.,0.77
+Újpest-Központ (IV),1.0,dm-6,dm,1045 Rózsa utca 16-18.,0.792
+Újpest-Központ (IV),1.0,spar-16,Spar,1041 Rózsa u. 77.,0.822
+Újpest-Központ (IV),1.0,spar-8255,Spar,1046 Görgey Artúr út 22.,0.848
+Újpest-Központ (IV),1.0,lidl-346,Lidl,1138 Váci út 201,0.966
+Újpest-Központ (IV),1.0,rossmann-254,Rossmann,1138 Váci út 201.,0.973
+Újpest-Központ (IV),2.0,spar-17,Spar,1042 István u. 10,0.139
+Újpest-Központ (IV),2.0,spar-136,Spar,1045 Nap. u. 16.,0.636
+Újpest-Központ (IV),2.0,dm-404,dm,1041 Görgey A. Út 14-20.,0.693
+Újpest-Központ (IV),2.0,lidl-358,Lidl,1041 Görgey Artúr u. 14-20,0.694
+Újpest-Központ (IV),2.0,penny-265,Penny,1042 Rózsa u. 20-22.,0.728
+Újpest-Központ (IV),2.0,spar-105,Spar,1045 Rózsa u. 18.,0.77
+Újpest-Központ (IV),2.0,dm-6,dm,1045 Rózsa utca 16-18.,0.792
+Újpest-Központ (IV),2.0,spar-16,Spar,1041 Rózsa u. 77.,0.822
+Újpest-Központ (IV),2.0,spar-8255,Spar,1046 Görgey Artúr út 22.,0.848
+Újpest-Központ (IV),2.0,lidl-346,Lidl,1138 Váci út 201,0.966
+Újpest-Központ (IV),2.0,rossmann-254,Rossmann,1138 Váci út 201.,0.973
+Újpest-Központ (IV),2.0,dm-321,dm,1138 Gács utca 3.,1.014
+Újpest-Központ (IV),2.0,penny-11,Penny,1047 Baross utca 6.,1.016
+Újpest-Központ (IV),2.0,spar-19,Spar,1045 Árpád út 183-185.,1.178
+Újpest-Központ (IV),2.0,dm-361,dm,1042 Árpád út 183-185.,1.223
+Újpest-Központ (IV),2.0,tesco-1046,Tesco,1044 Garam u. 3.,1.486
+Újpest-Központ (IV),2.0,rossmann-326,Rossmann,1044 Garam u. 3.,1.497
+Újpest-Központ (IV),2.0,spar-36,Spar,1131 Gyöngyösi sétány 2,1.571
+Újpest-Központ (IV),2.0,rossmann-228,Rossmann,1046 Corvin utca 14.,1.582
+Újpest-Központ (IV),2.0,rossmann-255,Rossmann,1138 Váci út 178.,1.651
+Újpest-Központ (IV),2.0,spar-154,Spar,1138 Váci út 178.,1.781
+Újpest-Központ (IV),2.0,dm-162,dm,1138 Váci út 178.,1.802

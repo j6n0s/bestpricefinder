@@ -1,0 +1,451 @@
+mode,chain,item,qty,unit,modal_unit_price,cost,product,avail_share
+all,Aldi,Csirkemellfilé,0.8,kg,1979.0,1583.2,Húsmester csirkemellfilé kg vákuumcsomagolt,1.0
+all,Aldi,Pulykamellfilé,0.5,kg,2999.0,1499.5,Húsmester pulykamellfilé kg vákuumcsomagolt,1.0
+all,Aldi,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2630.53,1052.2,MSC al.tőkehalfilé natúr,1.0
+all,Aldi,Tojás,10,db,49.97,499.7,Ketreces tojás 30 db S,1.0
+all,Aldi,Natúr joghurt,1.0,kg,428.57,428.6,"Milsani natúr joghurt 0,1% 175g",1.0
+all,Aldi,Tehéntúró,0.5,kg,876.0,438.0,Krém-tehéntúró 250g,1.0
+all,Aldi,"ESL tej 1,5%",2.0,l,279.0,558.0,"ESL tej 1,5 % 1L",1.0
+all,Aldi,Trappista tömbsajt,0.2,kg,1990.0,398.0,Kokárdás trappista sajt kg,1.0
+all,Aldi,Teljes kiőrlésű kenyér,1.5,kg,447.5,671.2,Kemencés Kedvenc TK kenyér,1.0
+all,Aldi,Rizs,0.5,kg,,,,
+all,Aldi,Száraztészta,0.5,kg,629.0,314.5,Cucina spagetti durum 1kg,1.0
+all,Aldi,Lencse,0.5,kg,738.0,369.0,BON-RI zöld lencse/vörös lencse 500g,1.0
+all,Aldi,Extra szűz olívaolaj,0.25,l,3913.33,978.3,Olívaolaj extra szűz 750,1.0
+all,Aldi,Paradicsom,1.0,kg,879.0,879.0,Paradicsom fürtös lédig,1.0
+all,Aldi,Zöldpaprika,0.6,kg,679.0,407.4,Paprika lecsó 1kg,1.0
+all,Aldi,Uborka (kígyóuborka),2,db,399.0,798.0,Kígyóuborka,1.0
+all,Aldi,Sárgarépa,1.0,kg,489.0,489.0,Sárgarépa 1kg,1.0
+all,Aldi,Vöröshagyma,1.0,kg,205.0,205.0,Vöröshagyma lédig,1.0
+all,Aldi,Fokhagyma,0.1,kg,1465.0,146.5,Fokhagyma lédig,1.0
+all,Aldi,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500g,1.0
+all,Aldi,Étkezési burgonya,1.5,kg,249.0,373.5,Burgonya étkezési lédig,1.0
+all,Aldi,Fejes káposzta,1.0,kg,209.0,209.0,Fejes káposzta lédig,1.0
+all,Aldi,Alma,1.5,kg,325.0,487.5,Alma piros lédig,1.0
+all,Aldi,Banán,1.0,kg,699.0,699.0,Banán lédig,1.0
+all,Aldi,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,Zöldborsó extra zsenge 450g,1.0
+all,Auchan,Csirkemellfilé,0.8,kg,1926.0,1540.8,"Székely Csürke csirkemellfilé ""A"" osztály vákuumcsomagolt Ft/kg",0.69
+all,Auchan,Pulykamellfilé,0.5,kg,2998.0,1499.0,Pulykamellfilé 450 g,0.65
+all,Auchan,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,3574.0,1429.6,Delforg gyorsfagyasztott alaszkai tőkehalfilé 800 g,0.73
+all,Auchan,Tojás,10,db,68.0,680.0,Farm Tojás Farm Prémium farm tojás M 10 db,0.73
+all,Auchan,Natúr joghurt,1.0,kg,429.0,429.0,"Auchan Tipp natúr joghurt 0,1% 175 g",0.92
+all,Auchan,Tehéntúró,0.5,kg,1356.0,678.0,Auchan Kedvenc félzsíros tehéntúró 250 g,0.92
+all,Auchan,"ESL tej 1,5%",2.0,l,279.0,558.0,"Auchan Kedvenc pasztőrözött tej 1,5% 1 l",0.92
+all,Auchan,Trappista tömbsajt,0.2,kg,2389.0,477.8,Auchan Kedvenc trappista sajt Ft/kg,0.92
+all,Auchan,Teljes kiőrlésű kenyér,1.5,kg,887.0,1330.5,Teljes kiőrlésű kovászos vekni 450 g,0.5
+all,Auchan,Rizs,0.5,kg,599.0,299.5,"Auchan Tipp ""B"" minőségű rizs 1 kg",0.92
+all,Auchan,Száraztészta,0.5,kg,730.0,365.0,Auchan Kedvenc spagetti száraztészta 4 tojásos 500 g,0.92
+all,Auchan,Lencse,0.5,kg,998.0,499.0,Kalifa lencse 500 g,0.92
+all,Auchan,Extra szűz olívaolaj,0.25,l,4492.0,1123.0,Auchan Kedvenc extra szűz olívaolaj 750 ml,0.92
+all,Auchan,Paradicsom,1.0,kg,433.0,433.0,Paradicsom 1 kg,0.77
+all,Auchan,Zöldpaprika,0.6,kg,698.0,418.8,Étkezési paprika Ft/kg,1.0
+all,Auchan,Uborka (kígyóuborka),2,db,,,,
+all,Auchan,Sárgarépa,1.0,kg,299.0,299.0,Sárgarépa 2 kg,0.65
+all,Auchan,Vöröshagyma,1.0,kg,250.0,250.0,Vöröshagyma Ft/kg,1.0
+all,Auchan,Fokhagyma,0.1,kg,1606.0,160.6,Fokhagyma lédig Ft/kg,1.0
+all,Auchan,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500 g,0.92
+all,Auchan,Étkezési burgonya,1.5,kg,314.0,471.0,Piros burgonya 10 kg,0.73
+all,Auchan,Fejes káposzta,1.0,kg,,,,
+all,Auchan,Alma,1.5,kg,399.0,598.5,Idared alma Ft/kg,1.0
+all,Auchan,Banán,1.0,kg,749.0,749.0,Banán Ft/kg,1.0
+all,Auchan,Gyorsfagyasztott zöldborsó,0.45,kg,2248.0,1011.6,FRoSTA zöldborsó zsenge gyorsfagyasztott 400 g,0.69
+all,Lidl,Csirkemellfilé,0.8,kg,1859.0,1487.2,"Csirkemell tokány, kg ",1.0
+all,Lidl,Pulykamellfilé,0.5,kg,2999.0,1499.5,"Húsfarm Friss pulykamellfilé csont és bőr nélkül , kg ",0.77
+all,Lidl,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2629.47,1051.8,"Ocean Sea Alaszkai tőkehalfilé, MSC,( 475) 500g ",1.0
+all,Lidl,Tojás,10,db,45.5,455.0,"Friss Tojás 10 db, S-es ",1.0
+all,Lidl,Natúr joghurt,1.0,kg,428.57,428.6,"Pilos Natúr joghurt 0,1% , 175g",0.54
+all,Lidl,Tehéntúró,0.5,kg,876.0,438.0,"Pilos Tehéntúró 0% , 250g",1.0
+all,Lidl,"ESL tej 1,5%",2.0,l,279.0,558.0,"Pilos Friss Tej 1,5%,  1l, ",1.0
+all,Lidl,Trappista tömbsajt,0.2,kg,2390.0,478.0,"Pilos Trappista sajt   ca1,4kg ",1.0
+all,Lidl,Teljes kiőrlésű kenyér,1.5,kg,447.5,671.2,"Kemencés kedvencek  (teljes kiőrlésű kenyér és félbarna kenyér) vegyes karton, 400g",1.0
+all,Lidl,Rizs,0.5,kg,549.0,274.5,"Golden Sun Hosszú szemű \""B\"" rizs, 1kg",1.0
+all,Lidl,Száraztészta,0.5,kg,629.0,314.5,"Combino Spagetti durum, 1kg ",1.0
+all,Lidl,Lencse,0.5,kg,738.0,369.0,"Campo Largo Zöld lencse, 500g ",1.0
+all,Lidl,Extra szűz olívaolaj,0.25,l,4486.67,1121.7,"Primadonna Extra szűz olívaolaj, 750ml ",1.0
+all,Lidl,Paradicsom,1.0,kg,429.0,429.0,Paradicsom 1kg,0.77
+all,Lidl,Zöldpaprika,0.6,kg,785.33,471.2,Lecsópaprika 750g,1.0
+all,Lidl,Uborka (kígyóuborka),2,db,299.5,599.0,Kígyóuborka 2db,1.0
+all,Lidl,Sárgarépa,1.0,kg,299.0,299.0,Sárgarépa 2kg,1.0
+all,Lidl,Vöröshagyma,1.0,kg,189.5,189.5,Vöröshagyma 2kg,1.0
+all,Lidl,Fokhagyma,0.1,kg,,,,
+all,Lidl,Brokkoli (friss),0.5,kg,998.0,499.0,"Brokkoli, 500g",1.0
+all,Lidl,Étkezési burgonya,1.5,kg,194.5,291.8,Burgonya 2kg hálós,1.0
+all,Lidl,Fejes káposzta,1.0,kg,249.0,249.0,"Fejeskáposzta, 1kg",1.0
+all,Lidl,Alma,1.5,kg,325.0,487.5,"Alma, Shampion kg",1.0
+all,Lidl,Banán,1.0,kg,699.0,699.0,Banán kg,1.0
+all,Lidl,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,"Freshona Extra zsenge zöldborsó, gyf. , 450g, ",1.0
+all,Penny,Csirkemellfilé,0.8,kg,1979.0,1583.2,Kedvenc Hentese friss csirkemellfilé kg,1.0
+all,Penny,Pulykamellfilé,0.5,kg,2999.0,1499.5,Kedvenc Hentese friss pulykamellfilé kg,1.0
+all,Penny,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2629.47,1051.8,Alaszkai tőkehalfilé,1.0
+all,Penny,Tojás,10,db,45.63,456.3,Tálcás tojás s méretű 30db,1.0
+all,Penny,Natúr joghurt,1.0,kg,428.57,428.6,"Sissy natúr joghurt 0,1% ",1.0
+all,Penny,Tehéntúró,0.5,kg,1156.0,578.0,Sissy krémes zsírszeg. túró,1.0
+all,Penny,"ESL tej 1,5%",2.0,l,279.0,558.0,"Sissy ESL tej 1,5% 1l",1.0
+all,Penny,Trappista tömbsajt,0.2,kg,2390.0,478.0,Sissy trappista sajt egész kg,0.64
+all,Penny,Teljes kiőrlésű kenyér,1.5,kg,598.0,897.0,Teljes kiőrlésű rozsos kenyér,1.0
+all,Penny,Rizs,0.5,kg,549.0,274.5,B rizs,1.0
+all,Penny,Száraztészta,0.5,kg,650.0,325.0,San fabio fusilli durumtészta,1.0
+all,Penny,Lencse,0.5,kg,798.0,399.0,Pure land lencse 500gr,1.0
+all,Penny,Extra szűz olívaolaj,0.25,l,4492.0,1123.0,Frantó extra sz.olívaolaj750ml,1.0
+all,Penny,Paradicsom,1.0,kg,879.0,879.0,Magyar fürtös paradicsom lé kg,1.0
+all,Penny,Zöldpaprika,0.6,kg,826.67,496.0,Hazai lecsópaprika 750gr,1.0
+all,Penny,Uborka (kígyóuborka),2,db,219.0,438.0,Kígyóuborka db,1.0
+all,Penny,Sárgarépa,1.0,kg,499.0,499.0,Sárgarépa 1kg-os,1.0
+all,Penny,Vöröshagyma,1.0,kg,205.0,205.0,Vöröshagyma lédig kg,1.0
+all,Penny,Fokhagyma,0.1,kg,1550.0,155.0,Fokhagyma lédig kg,1.0
+all,Penny,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500g,1.0
+all,Penny,Étkezési burgonya,1.5,kg,285.0,427.5,Piros burgonya lédig kg,1.0
+all,Penny,Fejes káposzta,1.0,kg,209.0,209.0,Fejes káposzta lédig kg,1.0
+all,Penny,Alma,1.5,kg,499.0,748.5,Idared alma lédig kg,1.0
+all,Penny,Banán,1.0,kg,699.0,699.0,Banán lédig kg,1.0
+all,Penny,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,Zöldségeskert  extra zsenge zöldborsó,1.0
+all,Spar,Csirkemellfilé,0.8,kg,1699.0,1359.2,Csirkemell filé lédig,0.73
+all,Spar,Pulykamellfilé,0.5,kg,3117.78,1558.9,Gallio pulykamellfilé 450 g,0.56
+all,Spar,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,3516.67,1406.7,Classic gyorsfagyasztott alaszkai tőkehalfilé 540 g,0.97
+all,Spar,Tojás,10,db,50.8,508.0,S-budget tojás 10db ¨s¨,0.91
+all,Spar,Natúr joghurt,1.0,kg,438.0,438.0,S-Budget Light natúr joghurt 500 g,0.99
+all,Spar,Tehéntúró,0.5,kg,1356.0,678.0,S-Budget félzsíros rögös túró 250 g,0.99
+all,Spar,"ESL tej 1,5%",2.0,l,279.0,558.0,"S-Budget ESL zsírszegény tej 1,5% 1 l",1.0
+all,Spar,Trappista tömbsajt,0.2,kg,1990.0,398.0,"Tolle zsíros, félkemény trappista sajt",0.97
+all,Spar,Teljes kiőrlésű kenyér,1.5,kg,,,,
+all,Spar,Rizs,0.5,kg,549.0,274.5,S-Budget ¨B¨ minőségű rizs 1 kg,0.99
+all,Spar,Száraztészta,0.5,kg,629.0,314.5,S-Budget Spagetti durum száraztészta 1000 g,0.94
+all,Spar,Lencse,0.5,kg,738.0,369.0,S-Budget lencse 500 g,0.99
+all,Spar,Extra szűz olívaolaj,0.25,l,5299.0,1324.8,DESPAR extraszűz olívaolaj 1 l,0.86
+all,Spar,Paradicsom,1.0,kg,863.0,863.0,Fürtös paradicsom lédig,0.95
+all,Spar,Zöldpaprika,0.6,kg,797.33,478.4,S-Budget lecsópaprika,0.86
+all,Spar,Uborka (kígyóuborka),2,db,399.0,798.0,Kígyóuborka db,1.0
+all,Spar,Sárgarépa,1.0,kg,489.0,489.0,S-Budget sárgarépa 1 kg,0.92
+all,Spar,Vöröshagyma,1.0,kg,236.0,236.0,Vöröshagyma lédig,0.99
+all,Spar,Fokhagyma,0.1,kg,1490.0,149.0,Fokhagyma lédig,0.99
+all,Spar,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500 g,0.58
+all,Spar,Étkezési burgonya,1.5,kg,259.8,389.7,S-budget burgonya 5kg,0.91
+all,Spar,Fejes káposzta,1.0,kg,257.0,257.0,Fejeskáposzta,0.89
+all,Spar,Alma,1.5,kg,350.5,525.8,S-Budget piros alma 2 kg,0.59
+all,Spar,Banán,1.0,kg,699.0,699.0,Banán lédig,0.99
+all,Spar,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,SPAR gyorsfagyasztott extra zsenge zöldborsó 450 g,0.92
+all,Tesco,Csirkemellfilé,0.8,kg,1699.0,1359.2,14. FRISS CSIRKEMELL FILE PULTOS QQ,0.62
+all,Tesco,Pulykamellfilé,0.5,kg,3000.0,1500.0,TESCO FRISS PULYAKMELLFILÉ 450 g QQ,0.93
+all,Tesco,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2861.05,1144.4,TESCO ALAS. TOK EHAL FILE 475G ,0.56
+all,Tesco,Tojás,10,db,57.1667,571.7,MU 30DB TOJÁS 1290G S MÉRET QQ,0.75
+all,Tesco,Natúr joghurt,1.0,kg,506.667,506.7,SZENTKÚTI-TEJ NAT. JOG. LIGHT ÉLŐ. 150 g QQ,0.8
+all,Tesco,Tehéntúró,0.5,kg,1358.0,679.0,Tesco félzsíros túró 500 g QQ,0.7
+all,Tesco,"ESL tej 1,5%",2.0,l,261.0,522.0,Kunsági ESL tej 1.5% 1 L QQ,0.76
+all,Tesco,Trappista tömbsajt,0.2,kg,2427.14,485.4,LECKER TRAPPISTA SAJT FELEZETT 700 g,0.55
+all,Tesco,Teljes kiőrlésű kenyér,1.5,kg,1778.0,2667.0,TELJ.K.TÖBBMAGV. KENYÉR 500G ,0.68
+all,Tesco,Rizs,0.5,kg,549.0,274.5,HEARTY FOOD RIZS 1KG ,0.75
+all,Tesco,Száraztészta,0.5,kg,650.0,325.0,TS SPAGETTI DURU M TESZT 500G ,0.85
+all,Tesco,Lencse,0.5,kg,738.0,369.0,TS LENCSE 500G  ,0.74
+all,Tesco,Extra szűz olívaolaj,0.25,l,4492.0,1123.0,TS EXTRA VIRGIN OLIVE OIL 750 ml,0.75
+all,Tesco,Paradicsom,1.0,kg,797.0,797.0,FÜRTÖS PARADICSOM LÉDIG QQ,0.89
+all,Tesco,Zöldpaprika,0.6,kg,739.0,443.4,PAPRIKA LÉDIG QQ,0.93
+all,Tesco,Uborka (kígyóuborka),2,db,219.0,438.0,Kígyóuborka db    ,0.99
+all,Tesco,Sárgarépa,1.0,kg,245.0,245.0,Sárgarépa lédig    ,0.94
+all,Tesco,Vöröshagyma,1.0,kg,209.0,209.0,VÖRÖSHAGYMA LÉDIG QQ,0.99
+all,Tesco,Fokhagyma,0.1,kg,1496.0,149.6,FOKHAGYMA LÉDIG QQ,0.98
+all,Tesco,Brokkoli (friss),0.5,kg,1438.0,719.0,TS BROCCOLI 500 G ,0.76
+all,Tesco,Étkezési burgonya,1.5,kg,279.0,418.5,SÁRGA BURGONYA LÉDIG QQ,0.99
+all,Tesco,Fejes káposzta,1.0,kg,223.0,223.0,FEHÉR FEJESKÁPOSZTA lédig QQ,0.96
+all,Tesco,Alma,1.5,kg,432.0,648.0,IDARED ALMA LÉDIG QQ,0.99
+all,Tesco,Banán,1.0,kg,699.0,699.0,Banán lédig    ,0.95
+all,Tesco,Gyorsfagyasztott zöldborsó,0.45,kg,753.333,339.0,Tesco gyorsfagyasztott zöldborsó 450 g,0.96
+no_loyalty,Aldi,Csirkemellfilé,0.8,kg,1979.0,1583.2,Húsmester csirkemellfilé kg vákuumcsomagolt,1.0
+no_loyalty,Aldi,Pulykamellfilé,0.5,kg,2999.0,1499.5,Húsmester pulykamellfilé kg vákuumcsomagolt,1.0
+no_loyalty,Aldi,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2630.53,1052.2,MSC al.tőkehalfilé natúr,1.0
+no_loyalty,Aldi,Tojás,10,db,49.97,499.7,Ketreces tojás 30 db S,1.0
+no_loyalty,Aldi,Natúr joghurt,1.0,kg,428.57,428.6,"Milsani natúr joghurt 0,1% 175g",1.0
+no_loyalty,Aldi,Tehéntúró,0.5,kg,876.0,438.0,Krém-tehéntúró 250g,1.0
+no_loyalty,Aldi,"ESL tej 1,5%",2.0,l,279.0,558.0,"ESL tej 1,5 % 1L",1.0
+no_loyalty,Aldi,Trappista tömbsajt,0.2,kg,1990.0,398.0,Kokárdás trappista sajt kg,1.0
+no_loyalty,Aldi,Teljes kiőrlésű kenyér,1.5,kg,447.5,671.2,Kemencés Kedvenc TK kenyér,1.0
+no_loyalty,Aldi,Rizs,0.5,kg,,,,
+no_loyalty,Aldi,Száraztészta,0.5,kg,629.0,314.5,Cucina spagetti durum 1kg,1.0
+no_loyalty,Aldi,Lencse,0.5,kg,738.0,369.0,BON-RI zöld lencse/vörös lencse 500g,1.0
+no_loyalty,Aldi,Extra szűz olívaolaj,0.25,l,3913.33,978.3,Olívaolaj extra szűz 750,1.0
+no_loyalty,Aldi,Paradicsom,1.0,kg,879.0,879.0,Paradicsom fürtös lédig,1.0
+no_loyalty,Aldi,Zöldpaprika,0.6,kg,679.0,407.4,Paprika lecsó 1kg,1.0
+no_loyalty,Aldi,Uborka (kígyóuborka),2,db,399.0,798.0,Kígyóuborka,1.0
+no_loyalty,Aldi,Sárgarépa,1.0,kg,489.0,489.0,Sárgarépa 1kg,1.0
+no_loyalty,Aldi,Vöröshagyma,1.0,kg,205.0,205.0,Vöröshagyma lédig,1.0
+no_loyalty,Aldi,Fokhagyma,0.1,kg,1465.0,146.5,Fokhagyma lédig,1.0
+no_loyalty,Aldi,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500g,1.0
+no_loyalty,Aldi,Étkezési burgonya,1.5,kg,249.0,373.5,Burgonya étkezési lédig,1.0
+no_loyalty,Aldi,Fejes káposzta,1.0,kg,209.0,209.0,Fejes káposzta lédig,1.0
+no_loyalty,Aldi,Alma,1.5,kg,325.0,487.5,Alma piros lédig,1.0
+no_loyalty,Aldi,Banán,1.0,kg,699.0,699.0,Banán lédig,1.0
+no_loyalty,Aldi,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,Zöldborsó extra zsenge 450g,1.0
+no_loyalty,Auchan,Csirkemellfilé,0.8,kg,1926.0,1540.8,"Székely Csürke csirkemellfilé ""A"" osztály vákuumcsomagolt Ft/kg",0.69
+no_loyalty,Auchan,Pulykamellfilé,0.5,kg,2998.0,1499.0,Pulykamellfilé 450 g,0.65
+no_loyalty,Auchan,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,3574.0,1429.6,Delforg gyorsfagyasztott alaszkai tőkehalfilé 800 g,0.73
+no_loyalty,Auchan,Tojás,10,db,68.0,680.0,Farm Tojás Farm Prémium farm tojás M 10 db,0.73
+no_loyalty,Auchan,Natúr joghurt,1.0,kg,429.0,429.0,"Auchan Tipp natúr joghurt 0,1% 175 g",0.92
+no_loyalty,Auchan,Tehéntúró,0.5,kg,1356.0,678.0,Auchan Kedvenc félzsíros tehéntúró 250 g,0.92
+no_loyalty,Auchan,"ESL tej 1,5%",2.0,l,279.0,558.0,"Auchan Kedvenc pasztőrözött tej 1,5% 1 l",0.92
+no_loyalty,Auchan,Trappista tömbsajt,0.2,kg,2389.0,477.8,Auchan Kedvenc trappista sajt Ft/kg,0.92
+no_loyalty,Auchan,Teljes kiőrlésű kenyér,1.5,kg,887.0,1330.5,Teljes kiőrlésű kovászos vekni 450 g,0.5
+no_loyalty,Auchan,Rizs,0.5,kg,599.0,299.5,"Auchan Tipp ""B"" minőségű rizs 1 kg",0.92
+no_loyalty,Auchan,Száraztészta,0.5,kg,730.0,365.0,Auchan Kedvenc spagetti száraztészta 4 tojásos 500 g,0.92
+no_loyalty,Auchan,Lencse,0.5,kg,998.0,499.0,Kalifa lencse 500 g,0.92
+no_loyalty,Auchan,Extra szűz olívaolaj,0.25,l,4492.0,1123.0,Auchan Kedvenc extra szűz olívaolaj 750 ml,0.92
+no_loyalty,Auchan,Paradicsom,1.0,kg,433.0,433.0,Paradicsom 1 kg,0.77
+no_loyalty,Auchan,Zöldpaprika,0.6,kg,698.0,418.8,Étkezési paprika Ft/kg,1.0
+no_loyalty,Auchan,Uborka (kígyóuborka),2,db,,,,
+no_loyalty,Auchan,Sárgarépa,1.0,kg,299.0,299.0,Sárgarépa 2 kg,0.65
+no_loyalty,Auchan,Vöröshagyma,1.0,kg,250.0,250.0,Vöröshagyma Ft/kg,1.0
+no_loyalty,Auchan,Fokhagyma,0.1,kg,1606.0,160.6,Fokhagyma lédig Ft/kg,1.0
+no_loyalty,Auchan,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500 g,0.92
+no_loyalty,Auchan,Étkezési burgonya,1.5,kg,314.0,471.0,Piros burgonya 10 kg,0.73
+no_loyalty,Auchan,Fejes káposzta,1.0,kg,,,,
+no_loyalty,Auchan,Alma,1.5,kg,399.0,598.5,Idared alma Ft/kg,1.0
+no_loyalty,Auchan,Banán,1.0,kg,749.0,749.0,Banán Ft/kg,1.0
+no_loyalty,Auchan,Gyorsfagyasztott zöldborsó,0.45,kg,2509.0,1129.0,Iglo gyorsfagyasztott zsenge zöldborsó 450 g,0.77
+no_loyalty,Lidl,Csirkemellfilé,0.8,kg,1859.0,1487.2,"Csirkemell tokány, kg ",1.0
+no_loyalty,Lidl,Pulykamellfilé,0.5,kg,2999.0,1499.5,"Húsfarm Friss pulykamellfilé csont és bőr nélkül , kg ",0.77
+no_loyalty,Lidl,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2629.47,1051.8,"Ocean Sea Alaszkai tőkehalfilé, MSC,( 475) 500g ",1.0
+no_loyalty,Lidl,Tojás,10,db,45.5,455.0,"Friss Tojás 10 db, S-es ",1.0
+no_loyalty,Lidl,Natúr joghurt,1.0,kg,428.57,428.6,"Pilos Natúr joghurt 0,1% , 175g",0.54
+no_loyalty,Lidl,Tehéntúró,0.5,kg,876.0,438.0,"Pilos Tehéntúró 0% , 250g",1.0
+no_loyalty,Lidl,"ESL tej 1,5%",2.0,l,279.0,558.0,"Pilos Friss Tej 1,5%,  1l, ",1.0
+no_loyalty,Lidl,Trappista tömbsajt,0.2,kg,2390.0,478.0,"Pilos Trappista sajt   ca1,4kg ",1.0
+no_loyalty,Lidl,Teljes kiőrlésű kenyér,1.5,kg,447.5,671.2,"Kemencés kedvencek  (teljes kiőrlésű kenyér és félbarna kenyér) vegyes karton, 400g",1.0
+no_loyalty,Lidl,Rizs,0.5,kg,549.0,274.5,"Golden Sun Hosszú szemű \""B\"" rizs, 1kg",1.0
+no_loyalty,Lidl,Száraztészta,0.5,kg,629.0,314.5,"Combino Spagetti durum, 1kg ",1.0
+no_loyalty,Lidl,Lencse,0.5,kg,738.0,369.0,"Campo Largo Zöld lencse, 500g ",1.0
+no_loyalty,Lidl,Extra szűz olívaolaj,0.25,l,4486.67,1121.7,"Primadonna Extra szűz olívaolaj, 750ml ",1.0
+no_loyalty,Lidl,Paradicsom,1.0,kg,429.0,429.0,Paradicsom 1kg,0.77
+no_loyalty,Lidl,Zöldpaprika,0.6,kg,785.33,471.2,Lecsópaprika 750g,1.0
+no_loyalty,Lidl,Uborka (kígyóuborka),2,db,299.5,599.0,Kígyóuborka 2db,1.0
+no_loyalty,Lidl,Sárgarépa,1.0,kg,299.0,299.0,Sárgarépa 2kg,1.0
+no_loyalty,Lidl,Vöröshagyma,1.0,kg,189.5,189.5,Vöröshagyma 2kg,1.0
+no_loyalty,Lidl,Fokhagyma,0.1,kg,,,,
+no_loyalty,Lidl,Brokkoli (friss),0.5,kg,998.0,499.0,"Brokkoli, 500g",1.0
+no_loyalty,Lidl,Étkezési burgonya,1.5,kg,194.5,291.8,Burgonya 2kg hálós,1.0
+no_loyalty,Lidl,Fejes káposzta,1.0,kg,249.0,249.0,"Fejeskáposzta, 1kg",1.0
+no_loyalty,Lidl,Alma,1.5,kg,325.0,487.5,"Alma, Shampion kg",1.0
+no_loyalty,Lidl,Banán,1.0,kg,699.0,699.0,Banán kg,1.0
+no_loyalty,Lidl,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,"Freshona Extra zsenge zöldborsó, gyf. , 450g, ",1.0
+no_loyalty,Penny,Csirkemellfilé,0.8,kg,1979.0,1583.2,Kedvenc Hentese friss csirkemellfilé kg,1.0
+no_loyalty,Penny,Pulykamellfilé,0.5,kg,2999.0,1499.5,Kedvenc Hentese friss pulykamellfilé kg,1.0
+no_loyalty,Penny,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2629.47,1051.8,Alaszkai tőkehalfilé,1.0
+no_loyalty,Penny,Tojás,10,db,45.63,456.3,Tálcás tojás s méretű 30db,1.0
+no_loyalty,Penny,Natúr joghurt,1.0,kg,428.57,428.6,"Sissy natúr joghurt 0,1% ",1.0
+no_loyalty,Penny,Tehéntúró,0.5,kg,1156.0,578.0,Sissy krémes zsírszeg. túró,1.0
+no_loyalty,Penny,"ESL tej 1,5%",2.0,l,279.0,558.0,"Sissy ESL tej 1,5% 1l",1.0
+no_loyalty,Penny,Trappista tömbsajt,0.2,kg,2390.0,478.0,Sissy trappista sajt egész kg,0.64
+no_loyalty,Penny,Teljes kiőrlésű kenyér,1.5,kg,598.0,897.0,Teljes kiőrlésű rozsos kenyér,1.0
+no_loyalty,Penny,Rizs,0.5,kg,549.0,274.5,B rizs,1.0
+no_loyalty,Penny,Száraztészta,0.5,kg,650.0,325.0,San fabio fusilli durumtészta,1.0
+no_loyalty,Penny,Lencse,0.5,kg,798.0,399.0,Pure land lencse 500gr,1.0
+no_loyalty,Penny,Extra szűz olívaolaj,0.25,l,4492.0,1123.0,Frantó extra sz.olívaolaj750ml,1.0
+no_loyalty,Penny,Paradicsom,1.0,kg,879.0,879.0,Magyar fürtös paradicsom lé kg,1.0
+no_loyalty,Penny,Zöldpaprika,0.6,kg,826.67,496.0,Hazai lecsópaprika 750gr,1.0
+no_loyalty,Penny,Uborka (kígyóuborka),2,db,219.0,438.0,Kígyóuborka db,1.0
+no_loyalty,Penny,Sárgarépa,1.0,kg,499.0,499.0,Sárgarépa 1kg-os,1.0
+no_loyalty,Penny,Vöröshagyma,1.0,kg,205.0,205.0,Vöröshagyma lédig kg,1.0
+no_loyalty,Penny,Fokhagyma,0.1,kg,1550.0,155.0,Fokhagyma lédig kg,1.0
+no_loyalty,Penny,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500g,1.0
+no_loyalty,Penny,Étkezési burgonya,1.5,kg,285.0,427.5,Piros burgonya lédig kg,1.0
+no_loyalty,Penny,Fejes káposzta,1.0,kg,209.0,209.0,Fejes káposzta lédig kg,1.0
+no_loyalty,Penny,Alma,1.5,kg,499.0,748.5,Idared alma lédig kg,1.0
+no_loyalty,Penny,Banán,1.0,kg,699.0,699.0,Banán lédig kg,1.0
+no_loyalty,Penny,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,Zöldségeskert  extra zsenge zöldborsó,1.0
+no_loyalty,Spar,Csirkemellfilé,0.8,kg,1699.0,1359.2,Csirkemell filé lédig,0.73
+no_loyalty,Spar,Pulykamellfilé,0.5,kg,3117.78,1558.9,Gallio pulykamellfilé 450 g,0.56
+no_loyalty,Spar,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,3516.67,1406.7,Classic gyorsfagyasztott alaszkai tőkehalfilé 540 g,0.97
+no_loyalty,Spar,Tojás,10,db,50.8,508.0,S-budget tojás 10db ¨s¨,0.91
+no_loyalty,Spar,Natúr joghurt,1.0,kg,438.0,438.0,S-Budget Light natúr joghurt 500 g,0.99
+no_loyalty,Spar,Tehéntúró,0.5,kg,1356.0,678.0,S-Budget félzsíros rögös túró 250 g,0.99
+no_loyalty,Spar,"ESL tej 1,5%",2.0,l,279.0,558.0,"S-Budget ESL zsírszegény tej 1,5% 1 l",1.0
+no_loyalty,Spar,Trappista tömbsajt,0.2,kg,1990.0,398.0,"Tolle zsíros, félkemény trappista sajt",0.97
+no_loyalty,Spar,Teljes kiőrlésű kenyér,1.5,kg,,,,
+no_loyalty,Spar,Rizs,0.5,kg,549.0,274.5,S-Budget ¨B¨ minőségű rizs 1 kg,0.99
+no_loyalty,Spar,Száraztészta,0.5,kg,629.0,314.5,S-Budget Spagetti durum száraztészta 1000 g,0.94
+no_loyalty,Spar,Lencse,0.5,kg,738.0,369.0,S-Budget lencse 500 g,0.99
+no_loyalty,Spar,Extra szűz olívaolaj,0.25,l,5299.0,1324.8,DESPAR extraszűz olívaolaj 1 l,0.86
+no_loyalty,Spar,Paradicsom,1.0,kg,863.0,863.0,Fürtös paradicsom lédig,0.95
+no_loyalty,Spar,Zöldpaprika,0.6,kg,797.33,478.4,S-Budget lecsópaprika,0.86
+no_loyalty,Spar,Uborka (kígyóuborka),2,db,399.0,798.0,Kígyóuborka db,1.0
+no_loyalty,Spar,Sárgarépa,1.0,kg,489.0,489.0,S-Budget sárgarépa 1 kg,0.92
+no_loyalty,Spar,Vöröshagyma,1.0,kg,236.0,236.0,Vöröshagyma lédig,0.99
+no_loyalty,Spar,Fokhagyma,0.1,kg,1490.0,149.0,Fokhagyma lédig,0.99
+no_loyalty,Spar,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500 g,0.58
+no_loyalty,Spar,Étkezési burgonya,1.5,kg,259.8,389.7,S-budget burgonya 5kg,0.91
+no_loyalty,Spar,Fejes káposzta,1.0,kg,257.0,257.0,Fejeskáposzta,0.89
+no_loyalty,Spar,Alma,1.5,kg,350.5,525.8,S-Budget piros alma 2 kg,0.59
+no_loyalty,Spar,Banán,1.0,kg,699.0,699.0,Banán lédig,0.99
+no_loyalty,Spar,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,SPAR gyorsfagyasztott extra zsenge zöldborsó 450 g,0.92
+no_loyalty,Tesco,Csirkemellfilé,0.8,kg,1699.0,1359.2,14. FRISS CSIRKEMELL FILE PULTOS QQ,0.62
+no_loyalty,Tesco,Pulykamellfilé,0.5,kg,3000.0,1500.0,TESCO FRISS PULYAKMELLFILÉ 450 g QQ,0.93
+no_loyalty,Tesco,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2861.05,1144.4,TESCO ALAS. TOK EHAL FILE 475G ,0.56
+no_loyalty,Tesco,Tojás,10,db,57.1667,571.7,MU 30DB TOJÁS 1290G S MÉRET QQ,0.75
+no_loyalty,Tesco,Natúr joghurt,1.0,kg,506.667,506.7,SZENTKÚTI-TEJ NAT. JOG. LIGHT ÉLŐ. 150 g QQ,0.8
+no_loyalty,Tesco,Tehéntúró,0.5,kg,1358.0,679.0,Tesco félzsíros túró 500 g QQ,0.7
+no_loyalty,Tesco,"ESL tej 1,5%",2.0,l,261.0,522.0,Kunsági ESL tej 1.5% 1 L QQ,0.76
+no_loyalty,Tesco,Trappista tömbsajt,0.2,kg,2427.14,485.4,LECKER TRAPPISTA SAJT FELEZETT 700 g,0.55
+no_loyalty,Tesco,Teljes kiőrlésű kenyér,1.5,kg,1778.0,2667.0,TELJ.K.TÖBBMAGV. KENYÉR 500G ,0.68
+no_loyalty,Tesco,Rizs,0.5,kg,549.0,274.5,HEARTY FOOD RIZS 1KG ,0.75
+no_loyalty,Tesco,Száraztészta,0.5,kg,650.0,325.0,TS SPAGETTI DURU M TESZT 500G ,0.85
+no_loyalty,Tesco,Lencse,0.5,kg,738.0,369.0,TS LENCSE 500G  ,0.74
+no_loyalty,Tesco,Extra szűz olívaolaj,0.25,l,4492.0,1123.0,TS EXTRA VIRGIN OLIVE OIL 750 ml,0.75
+no_loyalty,Tesco,Paradicsom,1.0,kg,797.0,797.0,FÜRTÖS PARADICSOM LÉDIG QQ,0.89
+no_loyalty,Tesco,Zöldpaprika,0.6,kg,739.0,443.4,PAPRIKA LÉDIG QQ,0.93
+no_loyalty,Tesco,Uborka (kígyóuborka),2,db,219.0,438.0,Kígyóuborka db    ,0.99
+no_loyalty,Tesco,Sárgarépa,1.0,kg,245.0,245.0,Sárgarépa lédig    ,0.94
+no_loyalty,Tesco,Vöröshagyma,1.0,kg,209.0,209.0,VÖRÖSHAGYMA LÉDIG QQ,0.99
+no_loyalty,Tesco,Fokhagyma,0.1,kg,1496.0,149.6,FOKHAGYMA LÉDIG QQ,0.98
+no_loyalty,Tesco,Brokkoli (friss),0.5,kg,1438.0,719.0,TS BROCCOLI 500 G ,0.76
+no_loyalty,Tesco,Étkezési burgonya,1.5,kg,279.0,418.5,SÁRGA BURGONYA LÉDIG QQ,0.99
+no_loyalty,Tesco,Fejes káposzta,1.0,kg,223.0,223.0,FEHÉR FEJESKÁPOSZTA lédig QQ,0.96
+no_loyalty,Tesco,Alma,1.5,kg,432.0,648.0,IDARED ALMA LÉDIG QQ,0.99
+no_loyalty,Tesco,Banán,1.0,kg,699.0,699.0,Banán lédig    ,0.95
+no_loyalty,Tesco,Gyorsfagyasztott zöldborsó,0.45,kg,753.333,339.0,Tesco gyorsfagyasztott zöldborsó 450 g,0.96
+normal,Aldi,Csirkemellfilé,0.8,kg,1979.0,1583.2,Húsmester csirkemellfilé kg vákuumcsomagolt,1.0
+normal,Aldi,Pulykamellfilé,0.5,kg,2999.0,1499.5,Húsmester pulykamellfilé kg vákuumcsomagolt,1.0
+normal,Aldi,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2630.53,1052.2,MSC al.tőkehalfilé natúr,1.0
+normal,Aldi,Tojás,10,db,49.97,499.7,Ketreces tojás 30 db S,1.0
+normal,Aldi,Natúr joghurt,1.0,kg,428.57,428.6,"Milsani natúr joghurt 0,1% 175g",1.0
+normal,Aldi,Tehéntúró,0.5,kg,876.0,438.0,Krém-tehéntúró 250g,1.0
+normal,Aldi,"ESL tej 1,5%",2.0,l,279.0,558.0,"ESL tej 1,5 % 1L",1.0
+normal,Aldi,Trappista tömbsajt,0.2,kg,1990.0,398.0,Kokárdás trappista sajt kg,1.0
+normal,Aldi,Teljes kiőrlésű kenyér,1.5,kg,447.5,671.2,Kemencés Kedvenc TK kenyér,1.0
+normal,Aldi,Rizs,0.5,kg,,,,
+normal,Aldi,Száraztészta,0.5,kg,629.0,314.5,Cucina spagetti durum 1kg,1.0
+normal,Aldi,Lencse,0.5,kg,738.0,369.0,BON-RI zöld lencse/vörös lencse 500g,1.0
+normal,Aldi,Extra szűz olívaolaj,0.25,l,3913.33,978.3,Olívaolaj extra szűz 750,1.0
+normal,Aldi,Paradicsom,1.0,kg,879.0,879.0,Paradicsom fürtös lédig,1.0
+normal,Aldi,Zöldpaprika,0.6,kg,679.0,407.4,Paprika lecsó 1kg,1.0
+normal,Aldi,Uborka (kígyóuborka),2,db,399.0,798.0,Kígyóuborka,1.0
+normal,Aldi,Sárgarépa,1.0,kg,489.0,489.0,Sárgarépa 1kg,1.0
+normal,Aldi,Vöröshagyma,1.0,kg,205.0,205.0,Vöröshagyma lédig,1.0
+normal,Aldi,Fokhagyma,0.1,kg,1465.0,146.5,Fokhagyma lédig,1.0
+normal,Aldi,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500g,1.0
+normal,Aldi,Étkezési burgonya,1.5,kg,249.0,373.5,Burgonya étkezési lédig,1.0
+normal,Aldi,Fejes káposzta,1.0,kg,209.0,209.0,Fejes káposzta lédig,1.0
+normal,Aldi,Alma,1.5,kg,325.0,487.5,Alma piros lédig,1.0
+normal,Aldi,Banán,1.0,kg,699.0,699.0,Banán lédig,1.0
+normal,Aldi,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,Zöldborsó extra zsenge 450g,1.0
+normal,Auchan,Csirkemellfilé,0.8,kg,1926.0,1540.8,"Székely Csürke csirkemellfilé ""A"" osztály vákuumcsomagolt Ft/kg",0.69
+normal,Auchan,Pulykamellfilé,0.5,kg,2998.0,1499.0,Pulykamellfilé 450 g,0.65
+normal,Auchan,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,3574.0,1429.6,Delforg gyorsfagyasztott alaszkai tőkehalfilé 800 g,0.73
+normal,Auchan,Tojás,10,db,68.0,680.0,Farm Tojás Farm Prémium farm tojás M 10 db,0.73
+normal,Auchan,Natúr joghurt,1.0,kg,429.0,429.0,"Auchan Tipp natúr joghurt 0,1% 175 g",0.92
+normal,Auchan,Tehéntúró,0.5,kg,1356.0,678.0,Auchan Kedvenc félzsíros tehéntúró 250 g,0.92
+normal,Auchan,"ESL tej 1,5%",2.0,l,279.0,558.0,"Auchan Kedvenc pasztőrözött tej 1,5% 1 l",0.92
+normal,Auchan,Trappista tömbsajt,0.2,kg,2389.0,477.8,Auchan Kedvenc trappista sajt Ft/kg,0.92
+normal,Auchan,Teljes kiőrlésű kenyér,1.5,kg,887.0,1330.5,Teljes kiőrlésű kovászos vekni 450 g,0.5
+normal,Auchan,Rizs,0.5,kg,599.0,299.5,"Auchan Tipp ""B"" minőségű rizs 1 kg",0.92
+normal,Auchan,Száraztészta,0.5,kg,730.0,365.0,Auchan Kedvenc spagetti száraztészta 4 tojásos 500 g,0.92
+normal,Auchan,Lencse,0.5,kg,1198.0,599.0,Kalifa lencse 500 g,0.92
+normal,Auchan,Extra szűz olívaolaj,0.25,l,4492.0,1123.0,Auchan Kedvenc extra szűz olívaolaj 750 ml,0.92
+normal,Auchan,Paradicsom,1.0,kg,433.0,433.0,Paradicsom 1 kg,0.77
+normal,Auchan,Zöldpaprika,0.6,kg,698.0,418.8,Étkezési paprika Ft/kg,1.0
+normal,Auchan,Uborka (kígyóuborka),2,db,,,,
+normal,Auchan,Sárgarépa,1.0,kg,299.0,299.0,Sárgarépa 2 kg,0.65
+normal,Auchan,Vöröshagyma,1.0,kg,250.0,250.0,Vöröshagyma Ft/kg,1.0
+normal,Auchan,Fokhagyma,0.1,kg,1606.0,160.6,Fokhagyma lédig Ft/kg,1.0
+normal,Auchan,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500 g,0.92
+normal,Auchan,Étkezési burgonya,1.5,kg,314.0,471.0,Piros burgonya 10 kg,0.73
+normal,Auchan,Fejes káposzta,1.0,kg,,,,
+normal,Auchan,Alma,1.5,kg,399.0,598.5,Idared alma Ft/kg,1.0
+normal,Auchan,Banán,1.0,kg,749.0,749.0,Banán Ft/kg,1.0
+normal,Auchan,Gyorsfagyasztott zöldborsó,0.45,kg,2509.0,1129.0,Iglo gyorsfagyasztott zsenge zöldborsó 450 g,0.77
+normal,Lidl,Csirkemellfilé,0.8,kg,1859.0,1487.2,"Csirkemell tokány, kg ",1.0
+normal,Lidl,Pulykamellfilé,0.5,kg,2999.0,1499.5,"Húsfarm Friss pulykamellfilé csont és bőr nélkül , kg ",0.77
+normal,Lidl,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2629.47,1051.8,"Ocean Sea Alaszkai tőkehalfilé, MSC,( 475) 500g ",1.0
+normal,Lidl,Tojás,10,db,45.5,455.0,"Friss Tojás 10 db, S-es ",1.0
+normal,Lidl,Natúr joghurt,1.0,kg,428.57,428.6,"Pilos Natúr joghurt 0,1% , 175g",0.54
+normal,Lidl,Tehéntúró,0.5,kg,876.0,438.0,"Pilos Tehéntúró 0% , 250g",1.0
+normal,Lidl,"ESL tej 1,5%",2.0,l,279.0,558.0,"Pilos Friss Tej 1,5%,  1l, ",1.0
+normal,Lidl,Trappista tömbsajt,0.2,kg,2390.0,478.0,"Pilos Trappista sajt   ca1,4kg ",1.0
+normal,Lidl,Teljes kiőrlésű kenyér,1.5,kg,447.5,671.2,"Kemencés kedvencek  (teljes kiőrlésű kenyér és félbarna kenyér) vegyes karton, 400g",1.0
+normal,Lidl,Rizs,0.5,kg,549.0,274.5,"Golden Sun Hosszú szemű \""B\"" rizs, 1kg",1.0
+normal,Lidl,Száraztészta,0.5,kg,629.0,314.5,"Combino Spagetti durum, 1kg ",1.0
+normal,Lidl,Lencse,0.5,kg,738.0,369.0,"Campo Largo Zöld lencse, 500g ",1.0
+normal,Lidl,Extra szűz olívaolaj,0.25,l,4486.67,1121.7,"Primadonna Extra szűz olívaolaj, 750ml ",1.0
+normal,Lidl,Paradicsom,1.0,kg,429.0,429.0,Paradicsom 1kg,0.77
+normal,Lidl,Zöldpaprika,0.6,kg,785.33,471.2,Lecsópaprika 750g,1.0
+normal,Lidl,Uborka (kígyóuborka),2,db,299.5,599.0,Kígyóuborka 2db,1.0
+normal,Lidl,Sárgarépa,1.0,kg,299.0,299.0,Sárgarépa 2kg,1.0
+normal,Lidl,Vöröshagyma,1.0,kg,189.5,189.5,Vöröshagyma 2kg,1.0
+normal,Lidl,Fokhagyma,0.1,kg,,,,
+normal,Lidl,Brokkoli (friss),0.5,kg,1398.0,699.0,"Brokkoli, 500g",1.0
+normal,Lidl,Étkezési burgonya,1.5,kg,194.5,291.8,Burgonya 2kg hálós,1.0
+normal,Lidl,Fejes káposzta,1.0,kg,249.0,249.0,"Fejeskáposzta, 1kg",1.0
+normal,Lidl,Alma,1.5,kg,325.0,487.5,"Alma, Shampion kg",1.0
+normal,Lidl,Banán,1.0,kg,699.0,699.0,Banán kg,1.0
+normal,Lidl,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,"Freshona Extra zsenge zöldborsó, gyf. , 450g, ",1.0
+normal,Penny,Csirkemellfilé,0.8,kg,1979.0,1583.2,Kedvenc Hentese friss csirkemellfilé kg,1.0
+normal,Penny,Pulykamellfilé,0.5,kg,2999.0,1499.5,Kedvenc Hentese friss pulykamellfilé kg,1.0
+normal,Penny,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2629.47,1051.8,Alaszkai tőkehalfilé,1.0
+normal,Penny,Tojás,10,db,45.63,456.3,Tálcás tojás s méretű 30db,1.0
+normal,Penny,Natúr joghurt,1.0,kg,428.57,428.6,"Sissy natúr joghurt 0,1% ",1.0
+normal,Penny,Tehéntúró,0.5,kg,1156.0,578.0,Sissy krémes zsírszeg. túró,1.0
+normal,Penny,"ESL tej 1,5%",2.0,l,279.0,558.0,"Sissy ESL tej 1,5% 1l",1.0
+normal,Penny,Trappista tömbsajt,0.2,kg,2390.0,478.0,Sissy trappista sajt egész kg,0.64
+normal,Penny,Teljes kiőrlésű kenyér,1.5,kg,598.0,897.0,Teljes kiőrlésű rozsos kenyér,1.0
+normal,Penny,Rizs,0.5,kg,549.0,274.5,B rizs,1.0
+normal,Penny,Száraztészta,0.5,kg,650.0,325.0,San fabio fusilli durumtészta,1.0
+normal,Penny,Lencse,0.5,kg,798.0,399.0,Pure land lencse 500gr,1.0
+normal,Penny,Extra szűz olívaolaj,0.25,l,4492.0,1123.0,Frantó extra sz.olívaolaj750ml,1.0
+normal,Penny,Paradicsom,1.0,kg,879.0,879.0,Magyar fürtös paradicsom lé kg,1.0
+normal,Penny,Zöldpaprika,0.6,kg,826.67,496.0,Hazai lecsópaprika 750gr,1.0
+normal,Penny,Uborka (kígyóuborka),2,db,379.0,758.0,Kígyóuborka db,1.0
+normal,Penny,Sárgarépa,1.0,kg,499.0,499.0,Sárgarépa 1kg-os,1.0
+normal,Penny,Vöröshagyma,1.0,kg,205.0,205.0,Vöröshagyma lédig kg,1.0
+normal,Penny,Fokhagyma,0.1,kg,1550.0,155.0,Fokhagyma lédig kg,1.0
+normal,Penny,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500g,1.0
+normal,Penny,Étkezési burgonya,1.5,kg,285.0,427.5,Piros burgonya lédig kg,1.0
+normal,Penny,Fejes káposzta,1.0,kg,209.0,209.0,Fejes káposzta lédig kg,1.0
+normal,Penny,Alma,1.5,kg,499.0,748.5,Idared alma lédig kg,1.0
+normal,Penny,Banán,1.0,kg,699.0,699.0,Banán lédig kg,1.0
+normal,Penny,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,Zöldségeskert  extra zsenge zöldborsó,1.0
+normal,Spar,Csirkemellfilé,0.8,kg,1968.0,1574.4,S-Budget friss csirkemellfilé,0.79
+normal,Spar,Pulykamellfilé,0.5,kg,3117.78,1558.9,Gallio pulykamellfilé 450 g,0.56
+normal,Spar,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,3516.67,1406.7,Classic gyorsfagyasztott alaszkai tőkehalfilé 540 g,0.97
+normal,Spar,Tojás,10,db,50.8,508.0,S-budget tojás 10db ¨s¨,0.91
+normal,Spar,Natúr joghurt,1.0,kg,438.0,438.0,S-Budget Light natúr joghurt 500 g,0.99
+normal,Spar,Tehéntúró,0.5,kg,1356.0,678.0,S-Budget félzsíros rögös túró 250 g,0.99
+normal,Spar,"ESL tej 1,5%",2.0,l,279.0,558.0,"S-Budget ESL zsírszegény tej 1,5% 1 l",1.0
+normal,Spar,Trappista tömbsajt,0.2,kg,2390.0,478.0,"S-Budget félzsíros, félkemény trappista sajt ",0.82
+normal,Spar,Teljes kiőrlésű kenyér,1.5,kg,,,,
+normal,Spar,Rizs,0.5,kg,549.0,274.5,S-Budget ¨B¨ minőségű rizs 1 kg,0.99
+normal,Spar,Száraztészta,0.5,kg,629.0,314.5,S-Budget Spagetti durum száraztészta 1000 g,0.94
+normal,Spar,Lencse,0.5,kg,738.0,369.0,S-Budget lencse 500 g,0.99
+normal,Spar,Extra szűz olívaolaj,0.25,l,5299.0,1324.8,DESPAR extraszűz olívaolaj 1 l,0.86
+normal,Spar,Paradicsom,1.0,kg,863.0,863.0,Fürtös paradicsom lédig,0.95
+normal,Spar,Zöldpaprika,0.6,kg,797.33,478.4,S-Budget lecsópaprika,0.86
+normal,Spar,Uborka (kígyóuborka),2,db,399.0,798.0,Kígyóuborka db,1.0
+normal,Spar,Sárgarépa,1.0,kg,489.0,489.0,S-Budget sárgarépa 1 kg,0.92
+normal,Spar,Vöröshagyma,1.0,kg,236.0,236.0,Vöröshagyma lédig,0.99
+normal,Spar,Fokhagyma,0.1,kg,1490.0,149.0,Fokhagyma lédig,0.99
+normal,Spar,Brokkoli (friss),0.5,kg,1398.0,699.0,Brokkoli 500 g,0.58
+normal,Spar,Étkezési burgonya,1.5,kg,288.0,432.0,Burgonya piros lédig,0.99
+normal,Spar,Fejes káposzta,1.0,kg,257.0,257.0,Fejeskáposzta,0.89
+normal,Spar,Alma,1.5,kg,350.5,525.8,S-Budget piros alma 2 kg,0.59
+normal,Spar,Banán,1.0,kg,699.0,699.0,Banán lédig,0.99
+normal,Spar,Gyorsfagyasztott zöldborsó,0.45,kg,753.33,339.0,SPAR gyorsfagyasztott extra zsenge zöldborsó 450 g,0.92
+normal,Tesco,Csirkemellfilé,0.8,kg,1959.0,1567.2,CSIRKE MELLFILÉ VÁKUMCS Ft/kg,0.73
+normal,Tesco,Pulykamellfilé,0.5,kg,3000.0,1500.0,TESCO FRISS PULYAKMELLFILÉ 450 g QQ,0.93
+normal,Tesco,Tengeri halfilé (pl. alaszkai tőkehal),0.4,kg,2861.05,1144.4,TESCO ALAS. TOK EHAL FILE 475G ,0.56
+normal,Tesco,Tojás,10,db,57.1667,571.7,MU 30DB TOJÁS 1290G S MÉRET QQ,0.75
+normal,Tesco,Natúr joghurt,1.0,kg,506.667,506.7,SZENTKÚTI-TEJ NAT. JOG. LIGHT ÉLŐ. 150 g QQ,0.8
+normal,Tesco,Tehéntúró,0.5,kg,1358.0,679.0,Tesco félzsíros túró 500 g QQ,0.7
+normal,Tesco,"ESL tej 1,5%",2.0,l,261.0,522.0,Kunsági ESL tej 1.5% 1 L QQ,0.76
+normal,Tesco,Trappista tömbsajt,0.2,kg,2570.0,514.0,LECKER TRAPPISTA SAJT FELEZETT 700 g,0.55
+normal,Tesco,Teljes kiőrlésű kenyér,1.5,kg,1778.0,2667.0,TELJ.K.TÖBBMAGV. KENYÉR 500G ,0.68
+normal,Tesco,Rizs,0.5,kg,549.0,274.5,HEARTY FOOD RIZS 1KG ,0.75
+normal,Tesco,Száraztészta,0.5,kg,650.0,325.0,TS SPAGETTI DURU M TESZT 500G ,0.85
+normal,Tesco,Lencse,0.5,kg,738.0,369.0,TS LENCSE 500G  ,0.74
+normal,Tesco,Extra szűz olívaolaj,0.25,l,4492.0,1123.0,TS EXTRA VIRGIN OLIVE OIL 750 ml,0.75
+normal,Tesco,Paradicsom,1.0,kg,797.0,797.0,FÜRTÖS PARADICSOM LÉDIG QQ,0.89
+normal,Tesco,Zöldpaprika,0.6,kg,739.0,443.4,PAPRIKA LÉDIG QQ,0.93
+normal,Tesco,Uborka (kígyóuborka),2,db,399.0,798.0,Kígyóuborka db    ,0.99
+normal,Tesco,Sárgarépa,1.0,kg,489.0,489.0,TS sárgarépa 1 kg ,0.76
+normal,Tesco,Vöröshagyma,1.0,kg,209.0,209.0,VÖRÖSHAGYMA LÉDIG QQ,0.99
+normal,Tesco,Fokhagyma,0.1,kg,1496.0,149.6,FOKHAGYMA LÉDIG QQ,0.98
+normal,Tesco,Brokkoli (friss),0.5,kg,1438.0,719.0,TS BROCCOLI 500 G ,0.76
+normal,Tesco,Étkezési burgonya,1.5,kg,279.0,418.5,SÁRGA BURGONYA LÉDIG QQ,0.99
+normal,Tesco,Fejes káposzta,1.0,kg,223.0,223.0,FEHÉR FEJESKÁPOSZTA lédig QQ,0.96
+normal,Tesco,Alma,1.5,kg,432.0,648.0,IDARED ALMA LÉDIG QQ,0.99
+normal,Tesco,Banán,1.0,kg,699.0,699.0,Banán lédig    ,0.95
+normal,Tesco,Gyorsfagyasztott zöldborsó,0.45,kg,753.333,339.0,Tesco gyorsfagyasztott zöldborsó 450 g,0.96

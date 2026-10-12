@@ -1,0 +1,106 @@
+product_id,name,category,n_chains,min_eff_unit,max_eff_unit,spread_pct_eff,spread_pct_normal
+5997490112823,Don Francesco spagetti durum száraztészta 500 g,szarazteszta,2,588.0,1430.0,58.9,58.9
+5998420700134,DURILLO SPAGHET. DURUM SZÁRAZ TÉSZTA 500 g,szarazteszta,2,678.0,1498.0,54.7,54.7
+5998304295442,Globus párolt szuperédes csemegekukorica 340 g,csemegekukoricakonzerv,2,1136.84,2418.0,53.0,53.0
+5998304241111,Globus párolt csemegekukorica 340 g,csemegekukoricakonzerv,3,1119.3,2312.28,51.6,51.6
+3083681129885,Bonduelle Gold Prémium szuperédes csemegekukorica 340 g,csemegekukoricakonzerv,3,1926.32,3540.0,45.6,45.6
+8000606000130,Bertolli Originale extra szűz olívaolaj 250 ml,extraszuzolivaolaj,2,6996.0,12836.0,45.5,45.5
+5999560375015,Selfish lazacfilé natúr 160 g,tengeri_halfile,2,9838.0,17493.75,43.8,43.8
+8008343200035,Rummo spaghetti durum száraztészta 500 g,szarazteszta,3,1178.0,1998.0,41.0,41.0
+8008343200486,Rummo Fusilli tojás nélküli durum száraztészta 500 g,szarazteszta,3,1178.0,1998.0,41.0,41.0
+8008343200660,Rummo Penne Rigate tojás nélküli durum száraztészta 500 g,szarazteszta,3,1178.0,1998.0,41.0,41.0
+5410603017117,Les Grands Pres vaj 250 g,vaj,2,3248.0,5348.0,39.3,39.3
+8076800105735,Barilla Penne Rigate apró durum száraztészta 1 kg,szarazteszta,3,869.0,1429.0,39.2,39.2
+8076800105056,Barilla Spaghetti szálas durum száraztészta 1000 g,szarazteszta,3,869.0,1429.0,39.2,39.2
+8076800105988,Barilla Fusilli apró durum száraztészta 1 kg,szarazteszta,3,869.0,1429.0,39.2,39.2
+8041790200203,Bertolli Originale extra szűz olívaolaj 500 ml,extraszuzolivaolaj,3,5998.0,9838.0,39.0,39.0
+5997132559016,Gyermelyi Vita Pasta Spaghetti durum száraztészta 500 g,szarazteszta,3,868.0,1418.0,38.8,38.8
+5997132501862,Gyermelyi Expressz Fusilli durum száraztészta 500 g,szarazteszta,2,1018.0,1658.0,38.6,38.6
+5997132559061,Gyermelyi Vita Pasta penne durum száraztészta 500 g,szarazteszta,3,898.0,1418.0,36.7,36.7
+8006830260500,Mantova extra szűz olívaolaj 250 ml,extraszuzolivaolaj,2,11996.0,18716.0,35.9,35.9
+3083680002875,Bonduelle morzsolt csemegekukorica 340 g,csemegekukoricakonzerv,3,1821.05,2803.51,35.0,20.0
+5410603015588,Camargue belga vaj 250 g,vaj,2,3880.0,5892.0,34.1,34.1
+8076800195033,Barilla Spaghettini szálas durum száraztészta 500 g,szarazteszta,3,1398.0,2038.0,31.4,29.4
+8076802085981,Barilla Fusilli apró durum száraztészta 500 g,szarazteszta,3,1398.0,2038.0,31.4,29.4
+8076808050440,Barilla Maccheroni apró durum száraztészta 500 g,szarazteszta,2,1398.0,2038.0,31.4,29.4
+5998200564338,"Riska UHT tej 2,8% 1 l",uht_28,3,199.0,289.0,31.1,31.1
+5998200557033,"Magyar Tej UHT tej 2,8% 1 l",uht_28,3,299.0,399.0,25.1,1.0
+5998200485633,HAZAI TEJ 2.8% 1 L ,esl_28,2,265.0,349.0,24.1,24.1
+5998201200907,Tolle teavaj 100g,vaj,2,4490.0,5870.0,23.5,23.5
+5998216703431,"Magyar és Finom tej 2,8% 1 l",esl_28,2,396.0,514.0,23.0,23.0
+5997536115177,"Danone Activia Pille élőflórás, natúr joghurt 4 x 125 g (500 g)",natur_joghurt,3,790.0,1010.0,21.8,21.8
+5997132506416,Gyermelyi makaróni 4 tojásos száraztészta 500 g,szarazteszta,3,1188.0,1498.0,20.7,11.8
+5997132506423,Gyermelyi spagetti 4 tojásos száraztészta 500 g,szarazteszta,3,1188.0,1498.0,20.7,11.8
+5997132506614,Gyermelyi orsó 4 tojásos száraztészta 500 g,szarazteszta,3,1188.0,1498.0,20.7,11.8
+3083680053303,Bonduelle Gold morzsolt csemegekukorica 340 g,csemegekukoricakonzerv,3,2522.81,3154.39,20.0,20.0
+5999548675618,Classic gyorsfagyasztott alaszkai tőkehalfilé 540 g,tengeri_halfile,2,3516.67,4350.0,19.2,19.2
+5998200557088,Magyar Vaj teavaj 100 g,vaj,3,3690.0,4490.0,17.8,17.6
+5998200558269,Magyar Tejföl tejföl 20% 330 g,tejfol_20,3,1118.0,1360.61,17.8,17.8
+4000436150368,Ammerländer márkázott vaj 250 g,vaj,2,1996.0,2388.0,16.4,8.9
+5997132559023,Gyermelyi Vita Pasta Fusilli durum száraztészta 500 g,szarazteszta,3,1378.0,1638.0,15.9,15.9
+5998200100819,Mizo vaj 82% 100 g,vaj,3,4160.0,4940.0,15.8,15.8
+5999508554021,Tellér nagymagvú étkezési lencse 500 g,lencse,2,1898.0,2238.0,15.2,15.2
+5998706900012,Fehér kenyér 1 kg,feherkenyer_cipo,2,599.0,699.0,14.3,14.3
+4014500034300,Zott Primo tejföl 20% 330 g,tejfol_20,3,1330.3,1530.3,13.1,13.1
+5998202942431,Nádudvari élőflórás natúr joghurt 330 g,natur_joghurt,3,778.788,893.94,12.9,12.9
+3083681036800,Bonduelle Vapeur gyorsfagyasztott zöldborsó 400 g,gyorsfagyasztott_zoldborso,3,2247.5,2548.0,11.8,2.0
+5998200462344,Mizo tejföl 20% 330 g,tejfol_20,3,1360.61,1539.39,11.6,11.6
+5998200487064,Mizo tejföl 20% 400 g,tejfol_20,2,997.5,1123.0,11.2,0.0
+5998115700869,Meggle márkázott vaj 200 g,vaj,2,4800.0,5385.0,10.9,10.9
+5998571525020,Diamant Kristálycukor 1kg,kristalycukor,3,295.0,329.0,10.3,10.3
+5998202940260,Nádudvari félzsíros túró 250 g,tehenturo,3,2208.0,2456.0,10.1,10.1
+80053828,Monini Classico extra szűz olívaolaj 500 ml,extraszuzolivaolaj,3,9198.0,9998.0,8.0,8.0
+5998200750847,Milli félzsíros rögös túró 250 g,tehenturo,2,2568.0,2780.0,7.6,7.6
+5997132501879,Gyermelyi Expressz Spaghetti durum száraztészta 500 g,szarazteszta,2,1538.0,1658.0,7.2,7.2
+5998200469053,Mizo félzsíros rögös túró 450 g,tehenturo,3,1664.44,1787.0,6.9,6.9
+8005510001136,Monini Classico extra szűz olívaolaj 1 l,extraszuzolivaolaj,2,9499.0,10199.0,6.9,6.9
+5998400562240,Nagyi titka búzafinomliszt BL 55 1 kg,finomliszt,3,289.0,310.0,6.8,6.8
+5998400762244,Komáromi búzafinomliszt BL-55 1 kg,finomliszt,2,289.0,310.0,6.8,6.8
+5201330336905,Orfeas extra szűz olíva olaj 500 ml,extraszuzolivaolaj,2,6998.0,7498.0,6.7,6.7
+5999548674888,Classic gyorsfagyasztott csendes-óceáni lazac 540 g,tengeri_halfile,3,8701.85,9313.0,6.6,6.6
+5907627470306,Dublin dairy ir natur vaj 200 g QQ,vaj,2,5220.0,5580.0,6.5,6.5
+5998017555239,Kunsági éden étolaj 1l,etolaj,3,739.0,789.0,6.3,6.3
+5998200462382,Mizo natúr joghurt 330 g,natur_joghurt,2,815.0,863.636,5.6,5.6
+5998200138607,"Mizo ESL félzsíros tej 2,8% 1 l",esl_28,3,369.0,389.0,5.1,5.1
+5998200140181,"Mizo UHT félzsíros tej 2,8% 1 l",uht_28,3,379.0,399.0,5.0,5.0
+5997132559030,Gyermelyi Vita Pasta Fusilli Tricolore durum száraztészta 500 g,szarazteszta,2,1658.0,1738.0,4.6,4.6
+5999882015019,FUCHS MA 10DB TOJÁS 630G L MÉRET QQ,tojas,2,116.5,122.0,4.5,4.5
+5998999201308,Cserpes Sajtműhely natúr joghurt élőflórás 250 g,natur_joghurt,2,1440.0,1508.0,4.5,4.5
+5998202941458,Nádudvari félzsíros tehéntúró 450 g,tehenturo,2,1997.78,2091.0,4.5,4.5
+5997536112961,Danone natúr joghurt 4 x 130 g,natur_joghurt,3,846.154,884.62,4.3,4.3
+5998501325027,Koronás kristálycukor 1 kg,kristalycukor,3,321.0,335.0,4.2,4.2
+5997536302058,Danone Activia krémes joghurt 4x125g,natur_joghurt,3,1128.0,1178.0,4.2,4.2
+5998202942424,"Nádudvari zsírszegény, élőflórás natúr joghurt 150 g",natur_joghurt,2,626.667,653.0,4.0,4.0
+8424536921462,Floriol extraszűz olívaolaj 500 ml,extraszuzolivaolaj,2,7898.0,8218.0,3.9,3.9
+5997003581139,Vénusz napraforgó-étolaj 1l,etolaj,3,879.0,909.0,3.3,3.3
+5998202943964,Nádudvari tejföl 20% 150 g,tejfol_20,2,1253.33,1293.0,3.1,3.1
+5997877300201,Farm Tojás Farm Prémium farm tojás M 10 db,tojas,2,68.0,70.0,2.9,2.9
+5996037061587,Iglo gyorsfagyasztott zsenge zöldborsó 450 g,gyorsfagyasztott_zoldborso,2,2442.22,2509.0,2.7,2.7
+5998398312346,"Nagykun „B"" minőségű rizs 1 kg",rizs,2,779.0,799.0,2.5,2.5
+5998200448812,Mizo natúr joghurt 150 g,natur_joghurt,2,793.33,813.0,2.4,2.4
+5740900400016,Lurpak dán vaj 200 g,vaj,2,5745.0,5880.0,2.3,2.3
+5997490112809,Don Francesco fusilli durum száraztészta 500 g,szarazteszta,2,1398.0,1430.0,2.2,2.2
+8076800105032,Barilla Spaghettini szálas durum száraztészta 1000 g,szarazteszta,2,1399.0,1429.0,2.1,2.1
+8076808150072,Barilla Spaghettoni szálas durum száraztészta 500 g,szarazteszta,2,1998.0,2038.0,2.0,2.0
+8076809521581,Barilla Piccolini Mini Penne Rigate apró durum száraztészta 500 g,szarazteszta,2,1998.0,2038.0,2.0,2.0
+5990031647471,DANONE GÖRÖG STILUSU JOGHURT 375 g QQ,natur_joghurt,2,1269.33,1293.33,1.9,1.9
+5999882015996,Fuchs extra sárga tojás M-L 10 db,tojas,3,119.8,122.0,1.8,1.8
+5998403162249,Hajdú búzafinomliszt BL 55 1 kg,finomliszt,2,216.0,218.0,0.9,0.9
+5997132505006,Gyermelyi búzafinomliszt BL 55 1 kg,finomliszt,2,229.0,231.0,0.9,0.9
+5997877322166,Farm Tojás Farm Prémium GMO mentes farm tojás M 10 db,tojas,3,87.0,87.5,0.6,0.6
+5998200569623,Magyar Túró félzsíros rögös tehéntúró 400 g,tehenturo,2,1872.5,1880.0,0.4,0.4
+5998200557682,"Magyar Tej ESL tej 2,8% 1 l",esl_28,3,389.0,390.0,0.3,0.3
+5998200559754,Magyar Vaj teavaj 200 g,vaj,3,4395.0,4405.0,0.2,0.2
+5998200562617,Magyar Joghurt natúr joghurt 140 g,natur_joghurt,2,771.0,771.429,0.1,0.1
+4008671013004,Sweet Family Kristálycukor 1kg,kristalycukor,2,295.0,295.0,0.0,0.0
+5998171757685,"Szíjártó Jumbo +  mélyalmos tojás L-XL, 10db",tojas,2,91.9,91.9,0.0,0.0
+5998201222503,"Tolle ESL tej 2,8% 1 l",esl_28,2,389.0,389.0,0.0,0.0
+5998202940123,Nádudvari élőflórás natúr joghurt 150 g,natur_joghurt,2,773.0,773.333,0.0,0.0
+3228022910023,Président vaj 200 g,vaj,3,5735.0,5735.0,0.0,0.0
+4001954160266,Kerrygold eredeti ír vaj 200 g,vaj,2,6480.0,6480.0,0.0,0.0
+8076800195057,Barilla Spaghetti szálas durum száraztészta 500 g,szarazteszta,3,1398.0,1398.0,0.0,2.8
+8076802085738,Barilla Penne Rigate apró durum száraztészta 500 g,szarazteszta,3,1398.0,1398.0,0.0,2.8
+8008343200066,Rummo Bucatini durum száraztészta 500 g,szarazteszta,2,1998.0,1998.0,0.0,0.0
+5998200558276,Magyar Tejföl 20%-os tejföl 140 g,tejfol_20,2,1421.0,1421.43,0.0,0.0
+5998207700425,"Dunatej UHT tej 2,8% 1l",uht_28,2,285.0,285.0,0.0,0.0
+3083681036770,Bonduelle Vapeur gyorsfagyasztott brokkoli rózsák 400 g,fagyasztott_brokkoli,2,2422.5,2423.0,0.0,0.0

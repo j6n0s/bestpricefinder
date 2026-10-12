@@ -1,0 +1,163 @@
+category_id,label,unit,monthly_qty_2.1p_budapest,chain,n_products,min_normal_unit_price,min_normal_or_discount_unit_price,min_incl_loyalty_unit_price,median_normal_unit_price
+1,ESL milk 2.8% (l),l,9.258,Aldi,2,295.0,295.0,295.0,342.0
+1,ESL milk 2.8% (l),l,9.258,Auchan,14,271.0,271.0,271.0,387.0
+1,ESL milk 2.8% (l),l,9.258,Lidl,3,295.0,295.0,295.0,349.0
+1,ESL milk 2.8% (l),l,9.258,Penny,3,295.0,295.0,295.0,349.0
+1,ESL milk 2.8% (l),l,9.258,Spar,6,265.0,265.0,265.0,379.0
+1,ESL milk 2.8% (l),l,9.258,Tesco,7,281.0,279.0,279.0,369.0
+7,Natural yoghurt (kg),kg,1.155,Aldi,4,428.57,428.57,428.57,477.395
+7,Natural yoghurt (kg),kg,1.155,Auchan,21,429.0,429.0,429.0,815.0
+7,Natural yoghurt (kg),kg,1.155,Lidl,6,428.57,428.57,428.57,456.5
+7,Natural yoghurt (kg),kg,1.155,Penny,6,428.57,428.57,428.57,477.29999999999995
+7,Natural yoghurt (kg),kg,1.155,Spar,16,438.0,438.0,438.0,911.47
+7,Natural yoghurt (kg),kg,1.155,Tesco,14,506.667,506.667,506.667,772.381
+5,Sour cream 20% (kg),kg,1.155,Aldi,3,886.67,886.67,886.67,1022.86
+5,Sour cream 20% (kg),kg,1.155,Auchan,21,998.0,998.0,929.0,1361.0
+5,Sour cream 20% (kg),kg,1.155,Lidl,2,997.78,997.78,997.78,1010.3199999999999
+5,Sour cream 20% (kg),kg,1.155,Penny,4,997.78,997.78,997.78,1176.58
+5,Sour cream 20% (kg),kg,1.155,Spar,9,997.78,997.5,997.5,1360.61
+5,Sour cream 20% (kg),kg,1.155,Tesco,10,1000.0,1000.0,1000.0,1225.0
+10,Trappista block cheese (kg),kg,0.858,Aldi,3,1990.0,1990.0,1990.0,2750.0
+10,Trappista block cheese (kg),kg,0.858,Auchan,8,2141.0,2141.0,2141.0,2809.0
+10,Trappista block cheese (kg),kg,0.858,Lidl,1,2390.0,2390.0,2390.0,2390.0
+10,Trappista block cheese (kg),kg,0.858,Penny,2,2390.0,2390.0,2390.0,2570.0
+10,Trappista block cheese (kg),kg,0.858,Spar,12,2390.0,1990.0,1990.0,2870.0
+10,Trappista block cheese (kg),kg,0.858,Tesco,2,2570.0,2427.14,2427.14,2580.0
+9,Cottage cheese turo (kg),kg,0.858,Aldi,6,876.0,876.0,876.0,1327.0
+9,Cottage cheese turo (kg),kg,0.858,Auchan,16,1356.0,1356.0,1356.0,1985.5
+9,Cottage cheese turo (kg),kg,0.858,Lidl,5,876.0,876.0,876.0,1298.0
+9,Cottage cheese turo (kg),kg,0.858,Penny,6,1156.0,1156.0,1156.0,1364.25
+9,Cottage cheese turo (kg),kg,0.858,Spar,8,1356.0,1356.0,1356.0,1720.0
+9,Cottage cheese turo (kg),kg,0.858,Tesco,10,1358.0,1358.0,1358.0,1899.1100000000001
+14,Eggs (piece),db,24.325,Aldi,5,49.97,49.97,49.97,69.9
+14,Eggs (piece),db,24.325,Auchan,30,49.0,49.0,49.0,72.5
+14,Eggs (piece),db,24.325,Lidl,9,45.5,45.5,45.5,69.9
+14,Eggs (piece),db,24.325,Penny,6,45.63,45.63,45.63,69.1
+14,Eggs (piece),db,24.325,Spar,27,50.8,50.8,50.8,87.5
+14,Eggs (piece),db,24.325,Tesco,19,57.1667,57.1667,57.1667,83.7
+12,Butter (kg),kg,0.35,Aldi,4,1796.0,1796.0,1796.0,2693.0
+12,Butter (kg),kg,0.35,Auchan,29,2388.0,2388.0,2388.0,5348.0
+12,Butter (kg),kg,0.35,Lidl,4,1996.0,1996.0,1996.0,2416.0
+12,Butter (kg),kg,0.35,Penny,2,1796.0,1796.0,1796.0,2393.0
+12,Butter (kg),kg,0.35,Spar,14,2052.0,1996.0,1996.0,3721.0
+12,Butter (kg),kg,0.35,Tesco,14,2395.0,2395.0,2395.0,4672.5
+18,Chicken breast fillet (kg),kg,2.074,Aldi,3,1979.0,1979.0,1979.0,2199.0
+18,Chicken breast fillet (kg),kg,2.074,Auchan,12,1926.0,1926.0,1926.0,2105.0
+18,Chicken breast fillet (kg),kg,2.074,Lidl,5,1859.0,1859.0,1859.0,1979.0
+18,Chicken breast fillet (kg),kg,2.074,Penny,2,1979.0,1979.0,1979.0,2088.5
+18,Chicken breast fillet (kg),kg,2.074,Spar,4,1968.0,1699.0,1699.0,2403.5
+18,Chicken breast fillet (kg),kg,2.074,Tesco,11,1959.0,1699.0,1699.0,2304.0
+19,Chicken leg (kg),kg,2.074,Aldi,1,848.0,848.0,848.0,848.0
+19,Chicken leg (kg),kg,2.074,Auchan,7,881.0,881.0,881.0,999.0
+19,Chicken leg (kg),kg,2.074,Lidl,1,755.0,755.0,755.0,755.0
+19,Chicken leg (kg),kg,2.074,Penny,1,848.0,848.0,848.0,848.0
+19,Chicken leg (kg),kg,2.074,Spar,5,787.0,599.0,599.0,952.0
+19,Chicken leg (kg),kg,2.074,Tesco,10,859.0,859.0,859.0,899.0
+85,Minced pork (kg),kg,1.085,Aldi,5,1299.0,1299.0,1299.0,2078.0
+85,Minced pork (kg),kg,1.085,Auchan,4,1699.0,1699.0,1699.0,1796.0
+85,Minced pork (kg),kg,1.085,Lidl,6,1749.0,1749.0,1749.0,1938.5
+85,Minced pork (kg),kg,1.085,Penny,5,1749.0,1749.0,1749.0,1799.0
+85,Minced pork (kg),kg,1.085,Spar,3,1954.44,1954.44,1954.44,1998.0
+85,Minced pork (kg),kg,1.085,Tesco,6,1748.75,1748.75,1748.75,2038.0
+15,Pork leg (kg),kg,1.085,Aldi,1,1465.0,1465.0,1465.0,1465.0
+15,Pork leg (kg),kg,1.085,Auchan,8,1199.0,1199.0,1199.0,1419.0
+15,Pork leg (kg),kg,1.085,Lidl,1,1465.0,1465.0,1465.0,1465.0
+15,Pork leg (kg),kg,1.085,Penny,1,1465.0,1465.0,1465.0,1465.0
+15,Pork leg (kg),kg,1.085,Spar,3,1438.0,1438.0,1438.0,1440.0
+15,Pork leg (kg),kg,1.085,Tesco,2,1293.0,1199.0,1199.0,1294.0
+93,Sea fish fillet (kg),kg,0.368,Aldi,10,2630.53,2630.53,2630.53,7281.0
+93,Sea fish fillet (kg),kg,0.368,Auchan,22,3574.0,3574.0,3574.0,9575.5
+93,Sea fish fillet (kg),kg,0.368,Lidl,8,2629.47,2629.47,2629.47,5997.5
+93,Sea fish fillet (kg),kg,0.368,Penny,4,2629.47,2629.47,2629.47,6622.71
+93,Sea fish fillet (kg),kg,0.368,Spar,12,2629.47,2629.47,2629.47,9694.0
+93,Sea fish fillet (kg),kg,0.368,Tesco,11,2861.05,2861.05,2861.05,5554.44
+41,Potatoes (kg),kg,4.48,Aldi,3,249.0,249.0,249.0,287.8
+41,Potatoes (kg),kg,4.48,Auchan,9,314.0,314.0,314.0,342.0
+41,Potatoes (kg),kg,4.48,Lidl,4,194.5,194.5,194.5,274.0
+41,Potatoes (kg),kg,4.48,Penny,4,285.0,285.0,285.0,313.5
+41,Potatoes (kg),kg,4.48,Spar,10,288.0,259.8,259.8,470.16499999999996
+41,Potatoes (kg),kg,4.48,Tesco,9,279.0,279.0,279.0,352.0
+40,Onion (kg),kg,1.733,Aldi,2,205.0,205.0,205.0,222.0
+40,Onion (kg),kg,1.733,Auchan,5,250.0,250.0,250.0,279.0
+40,Onion (kg),kg,1.733,Lidl,3,189.5,189.5,189.5,205.0
+40,Onion (kg),kg,1.733,Penny,3,205.0,205.0,205.0,254.0
+40,Onion (kg),kg,1.733,Spar,3,236.0,236.0,236.0,268.0
+40,Onion (kg),kg,1.733,Tesco,3,209.0,209.0,209.0,212.0
+36,Carrot (kg),kg,1.33,Aldi,2,489.0,489.0,489.0,494.0
+36,Carrot (kg),kg,1.33,Auchan,3,299.0,299.0,299.0,479.0
+36,Carrot (kg),kg,1.33,Lidl,3,299.0,299.0,299.0,489.0
+36,Carrot (kg),kg,1.33,Penny,2,499.0,499.0,499.0,499.0
+36,Carrot (kg),kg,1.33,Spar,2,489.0,489.0,489.0,494.0
+36,Carrot (kg),kg,1.33,Tesco,2,489.0,245.0,245.0,509.0
+34,Tomato (kg),kg,1.593,Aldi,2,879.0,879.0,879.0,997.0
+34,Tomato (kg),kg,1.593,Auchan,2,433.0,433.0,433.0,649.5
+34,Tomato (kg),kg,1.593,Lidl,2,429.0,429.0,429.0,654.0
+34,Tomato (kg),kg,1.593,Penny,1,879.0,879.0,879.0,879.0
+34,Tomato (kg),kg,1.593,Spar,6,863.0,699.0,699.0,1128.0
+34,Tomato (kg),kg,1.593,Tesco,1,797.0,797.0,797.0,797.0
+35,Green pepper (kg),kg,0.998,Aldi,2,679.0,679.0,679.0,747.0
+35,Green pepper (kg),kg,0.998,Auchan,3,698.0,698.0,698.0,726.0
+35,Green pepper (kg),kg,0.998,Lidl,2,785.33,785.33,785.33,807.165
+35,Green pepper (kg),kg,0.998,Penny,2,826.67,826.67,826.67,835.835
+35,Green pepper (kg),kg,0.998,Spar,4,602.0,399.0,399.0,806.165
+35,Green pepper (kg),kg,0.998,Tesco,3,739.0,739.0,739.0,1396.0
+43,White cabbage (kg),kg,0.858,Aldi,1,209.0,209.0,209.0,209.0
+43,White cabbage (kg),kg,0.858,Auchan,0,,,,
+43,White cabbage (kg),kg,0.858,Lidl,1,249.0,249.0,249.0,249.0
+43,White cabbage (kg),kg,0.858,Penny,1,209.0,209.0,209.0,209.0
+43,White cabbage (kg),kg,0.858,Spar,1,257.0,257.0,257.0,257.0
+43,White cabbage (kg),kg,0.858,Tesco,1,223.0,223.0,223.0,223.0
+28,Apple (kg),kg,2.013,Aldi,4,325.0,325.0,325.0,359.33
+28,Apple (kg),kg,2.013,Auchan,3,399.0,399.0,399.0,405.0
+28,Apple (kg),kg,2.013,Lidl,4,325.0,325.0,325.0,379.16499999999996
+28,Apple (kg),kg,2.013,Penny,1,499.0,499.0,499.0,499.0
+28,Apple (kg),kg,2.013,Spar,4,350.5,299.0,299.0,568.5
+28,Apple (kg),kg,2.013,Tesco,1,432.0,432.0,432.0,432.0
+31,Banana (kg),kg,1.628,Aldi,1,699.0,699.0,699.0,699.0
+31,Banana (kg),kg,1.628,Auchan,1,749.0,749.0,749.0,749.0
+31,Banana (kg),kg,1.628,Lidl,1,379.0,379.0,379.0,379.0
+31,Banana (kg),kg,1.628,Penny,1,699.0,699.0,699.0,699.0
+31,Banana (kg),kg,1.628,Spar,2,699.0,399.0,399.0,1199.0
+31,Banana (kg),kg,1.628,Tesco,1,699.0,699.0,699.0,699.0
+46,White bread (kg),kg,4.463,Aldi,4,447.5,447.5,447.5,993.5
+46,White bread (kg),kg,4.463,Auchan,17,398.0,398.0,398.0,699.0
+46,White bread (kg),kg,4.463,Lidl,6,397.5,397.5,397.5,923.5
+46,White bread (kg),kg,4.463,Penny,4,849.0,849.0,849.0,978.0
+46,White bread (kg),kg,4.463,Spar,8,599.0,599.0,599.0,898.0
+46,White bread (kg),kg,4.463,Tesco,5,799.0,799.0,799.0,1146.81
+52,Plain flour (kg),kg,2.618,Aldi,1,183.0,183.0,183.0,183.0
+52,Plain flour (kg),kg,2.618,Auchan,9,181.0,181.0,141.0,217.0
+52,Plain flour (kg),kg,2.618,Lidl,1,178.0,178.0,178.0,178.0
+52,Plain flour (kg),kg,2.618,Penny,1,178.0,178.0,178.0,178.0
+52,Plain flour (kg),kg,2.618,Spar,11,183.0,183.0,183.0,225.0
+52,Plain flour (kg),kg,2.618,Tesco,3,182.0,182.0,182.0,227.0
+50,Dry pasta (kg),kg,1.964,Aldi,10,629.0,629.0,629.0,754.0
+50,Dry pasta (kg),kg,1.964,Auchan,65,730.0,730.0,730.0,1538.0
+50,Dry pasta (kg),kg,1.964,Lidl,10,629.0,629.0,629.0,754.0
+50,Dry pasta (kg),kg,1.964,Penny,10,650.0,650.0,650.0,798.0
+50,Dry pasta (kg),kg,1.964,Spar,43,588.0,588.0,588.0,1178.0
+50,Dry pasta (kg),kg,1.964,Tesco,41,650.0,650.0,650.0,1399.0
+95,Rice (kg),kg,0.655,Aldi,0,,,,
+95,Rice (kg),kg,0.655,Auchan,2,599.0,599.0,599.0,699.0
+95,Rice (kg),kg,0.655,Lidl,1,549.0,549.0,549.0,549.0
+95,Rice (kg),kg,0.655,Penny,1,549.0,549.0,549.0,549.0
+95,Rice (kg),kg,0.655,Spar,3,549.0,549.0,549.0,619.0
+95,Rice (kg),kg,0.655,Tesco,2,529.0,529.0,529.0,564.0
+96,Lentils (kg),kg,0.158,Aldi,5,738.0,738.0,738.0,738.0
+96,Lentils (kg),kg,0.158,Auchan,5,1198.0,998.0,998.0,2238.0
+96,Lentils (kg),kg,0.158,Lidl,1,738.0,738.0,738.0,738.0
+96,Lentils (kg),kg,0.158,Penny,1,798.0,798.0,798.0,798.0
+96,Lentils (kg),kg,0.158,Spar,4,738.0,738.0,738.0,1548.0
+96,Lentils (kg),kg,0.158,Tesco,4,738.0,738.0,738.0,1198.0
+51,Sunflower oil (l),l,1.715,Aldi,3,749.0,749.0,749.0,789.0
+51,Sunflower oil (l),l,1.715,Auchan,3,739.0,739.0,739.0,750.0
+51,Sunflower oil (l),l,1.715,Lidl,1,749.0,749.0,749.0,749.0
+51,Sunflower oil (l),l,1.715,Penny,1,749.0,749.0,749.0,749.0
+51,Sunflower oil (l),l,1.715,Spar,2,749.0,749.0,749.0,857.0
+51,Sunflower oil (l),l,1.715,Tesco,6,745.0,745.0,745.0,854.0
+54,Sugar (kg),kg,1.243,Aldi,2,295.0,295.0,295.0,312.0
+54,Sugar (kg),kg,1.243,Auchan,2,295.0,295.0,295.0,315.0
+54,Sugar (kg),kg,1.243,Lidl,2,295.0,295.0,295.0,295.0
+54,Sugar (kg),kg,1.243,Penny,1,295.0,295.0,295.0,295.0
+54,Sugar (kg),kg,1.243,Spar,3,295.0,295.0,295.0,321.0
+54,Sugar (kg),kg,1.243,Tesco,2,323.0,323.0,323.0,327.0

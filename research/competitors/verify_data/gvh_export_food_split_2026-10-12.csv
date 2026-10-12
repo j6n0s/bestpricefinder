@@ -1,0 +1,100 @@
+chain,group,rows,share_min_lt_max,share_ge80pct_stores
+ALL,Baba,2800,0.0493,0.5114
+ALL,FOOD,5561,0.1122,0.4951
+ALL,Háztartás,4084,0.094,0.3952
+ALL,"Hús, hal, felvágott",871,0.0631,0.3927
+ALL,NONFOOD,19839,0.066,0.4827
+ALL,Pékáru,140,0.0571,0.3357
+ALL,Speciális étrend,819,0.105,0.5849
+ALL,Szépség és higiénia,12955,0.0608,0.5041
+ALL,"Tartós élelmiszerek, italok",1465,0.1945,0.5365
+ALL,"Tejtermék, sajt, tojás",1939,0.0779,0.4605
+ALL,"Zöldség, gyümölcs",327,0.1193,0.63
+Aldi,Baba,32,0.0,1.0
+Aldi,FOOD,425,0.0,1.0
+Aldi,Háztartás,65,0.0,1.0
+Aldi,"Hús, hal, felvágott",86,0.0,1.0
+Aldi,NONFOOD,304,0.0,1.0
+Aldi,Pékáru,15,0.0,1.0
+Aldi,Speciális étrend,45,0.0,1.0
+Aldi,Szépség és higiénia,207,0.0,1.0
+Aldi,"Tartós élelmiszerek, italok",69,0.0,1.0
+Aldi,"Tejtermék, sajt, tojás",175,0.0,1.0
+Aldi,"Zöldség, gyümölcs",35,0.0,1.0
+Auchan,Baba,514,0.0058,0.2121
+Auchan,FOOD,1620,0.0204,0.4346
+Auchan,Háztartás,885,0.0429,0.3051
+Auchan,"Hús, hal, felvágott",268,0.0149,0.2575
+Auchan,NONFOOD,3561,0.0118,0.2078
+Auchan,Pékáru,54,0.0,0.0185
+Auchan,Speciális étrend,180,0.0278,0.6111
+Auchan,Szépség és higiénia,2162,0.0005,0.167
+Auchan,"Tartós élelmiszerek, italok",425,0.0306,0.4824
+Auchan,"Tejtermék, sajt, tojás",618,0.0113,0.4434
+Auchan,"Zöldség, gyümölcs",75,0.0533,0.6
+Lidl,Baba,34,0.0,0.9118
+Lidl,FOOD,410,0.0146,0.8659
+Lidl,Háztartás,93,0.0,0.8495
+Lidl,"Hús, hal, felvágott",93,0.0215,0.7849
+Lidl,NONFOOD,227,0.0,0.8899
+Lidl,Pékáru,18,0.0,0.9444
+Lidl,Speciális étrend,43,0.0,0.907
+Lidl,Szépség és higiénia,100,0.0,0.92
+Lidl,"Tartós élelmiszerek, italok",72,0.0,0.8889
+Lidl,"Tejtermék, sajt, tojás",132,0.0227,0.8409
+Lidl,"Zöldség, gyümölcs",52,0.0192,0.9808
+Müller,Baba,454,0.0,0.9493
+Müller,FOOD,243,0.0,0.8354
+Müller,Háztartás,563,0.0,0.8242
+Müller,NONFOOD,3933,0.0,0.8787
+Müller,Speciális étrend,143,0.0,0.8182
+Müller,Szépség és higiénia,2916,0.0,0.8783
+Müller,"Tartós élelmiszerek, italok",99,0.0,0.8586
+Müller,"Tejtermék, sajt, tojás",1,0.0,1.0
+Penny,Baba,18,0.0,1.0
+Penny,FOOD,349,0.0,0.9054
+Penny,Háztartás,92,0.0,1.0
+Penny,"Hús, hal, felvágott",65,0.0,0.9231
+Penny,NONFOOD,313,0.0,0.9872
+Penny,Pékáru,14,0.0,0.7857
+Penny,Speciális étrend,25,0.0,0.96
+Penny,Szépség és higiénia,203,0.0,0.9803
+Penny,"Tartós élelmiszerek, italok",72,0.0,0.9167
+Penny,"Tejtermék, sajt, tojás",137,0.0,0.8686
+Penny,"Zöldség, gyümölcs",36,0.0,1.0
+Rossmann,Baba,613,0.0,0.6166
+Rossmann,FOOD,181,0.0,0.4751
+Rossmann,Háztartás,623,0.0,0.4591
+Rossmann,NONFOOD,4046,0.0,0.5321
+Rossmann,Speciális étrend,67,0.0,0.4627
+Rossmann,Szépség és higiénia,2810,0.0,0.5299
+Rossmann,"Tartós élelmiszerek, italok",114,0.0,0.4825
+Spar,Baba,153,0.2941,0.0392
+Spar,FOOD,1104,0.1105,0.2889
+Spar,Háztartás,554,0.2906,0.0975
+Spar,"Hús, hal, felvágott",171,0.0292,0.1637
+Spar,NONFOOD,1936,0.3698,0.063
+Spar,Pékáru,30,0.0,0.0
+Spar,Speciális étrend,122,0.1393,0.2131
+Spar,Szépség és higiénia,1229,0.415,0.0504
+Spar,"Tartós élelmiszerek, italok",283,0.2862,0.4452
+Spar,"Tejtermék, sajt, tojás",422,0.0213,0.2891
+Spar,"Zöldség, gyümölcs",76,0.1316,0.2237
+Tesco,Baba,523,0.1721,0.0612
+Tesco,FOOD,1161,0.3988,0.2489
+Tesco,Háztartás,753,0.2457,0.0797
+Tesco,"Hús, hal, felvágott",188,0.234,0.1383
+Tesco,NONFOOD,2832,0.1949,0.0533
+Tesco,Pékáru,9,0.8889,0.3333
+Tesco,Speciális étrend,150,0.4267,0.2933
+Tesco,Szépség és higiénia,1556,0.178,0.0379
+Tesco,"Tartós élelmiszerek, italok",307,0.6221,0.3355
+Tesco,"Tejtermék, sajt, tojás",454,0.2907,0.2004
+Tesco,"Zöldség, gyümölcs",53,0.4528,0.4151
+dm,Baba,459,0.0,0.8606
+dm,FOOD,68,0.0,0.8235
+dm,Háztartás,456,0.0,0.5351
+dm,NONFOOD,2687,0.0,0.7964
+dm,Speciális étrend,44,0.0,0.9773
+dm,Szépség és higiénia,1772,0.0,0.8471
+dm,"Tartós élelmiszerek, italok",24,0.0,0.5417

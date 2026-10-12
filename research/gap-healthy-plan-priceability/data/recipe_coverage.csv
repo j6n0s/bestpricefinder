@@ -1,0 +1,140 @@
+id,src,meal,role,title,url,servings,n_lines,n_pantry,n_E,n_S,n_K,n_N,n_herb,cost_serv,cost_E,cost_S,cost_K,cost_N,full_gvh,full_gvh_ksh,full_gvh_ksh_noherb
+B01,okostanyer,B,breakfast,Gombás-sajtos melegszendvics,https://www.okostanyer.hu/receptek-reggeli/,1,8,2,3,1,1,3,1,512.2,68.1,109.2,190.0,144.8,False,False,False
+B02,okostanyer,B,breakfast,Sütőtökös zabkása,https://www.okostanyer.hu/receptek-reggeli/,1,6,2,1,0,2,3,0,253.8,53.0,0.0,91.2,109.6,False,False,False
+B03,okostanyer,B,breakfast,Céklás túrókrém,https://www.okostanyer.hu/receptek-reggeli/,4,6,1,3,1,1,1,0,221.4,142.3,20.2,46.4,12.5,False,False,False
+B04,okostanyer,B,breakfast,Sárgabarackos-túrós zabkása,https://www.okostanyer.hu/receptek-reggeli/,1,6,3,2,0,1,3,0,334.7,89.3,0.0,41.8,203.6,False,False,False
+B05,okostanyer,B,breakfast,Granola meggyel és natúr joghurttal,https://www.okostanyer.hu/receptek-reggeli/,4,3,0,1,0,0,2,0,242.9,42.9,0.0,0.0,200.0,False,False,False
+B06,okostanyer,B,breakfast,"Padlizsánkrém paradicsommal, purpur kenyérrel",https://www.okostanyer.hu/receptek-reggeli/,1,7,2,5,0,0,2,0,195.3,135.3,0.0,0.0,60.0,False,False,False
+B07,okostanyer,B,breakfast,Caprese tükörtojás,https://www.okostanyer.hu/receptek-reggeli/,1,6,2,3,1,0,2,1,458.6,254.8,41.5,0.0,162.3,False,False,False
+B08,okostanyer,B,breakfast,Spenótos omlett tortillában,https://www.okostanyer.hu/receptek-reggeli/,1,4,3,2,0,0,2,0,297.4,106.5,0.0,0.0,190.9,False,False,False
+B09,okostanyer,B,breakfast,Csicseriborsókrémes szendvics,https://www.okostanyer.hu/receptek-reggeli/,1,8,2,2,2,0,4,0,235.9,17.2,86.9,0.0,131.8,False,False,False
+B10,okostanyer,B,breakfast,Őszibarackos granola,https://www.okostanyer.hu/receptek-reggeli/,4,6,1,1,1,1,3,0,272.8,9.4,0.7,23.2,239.6,False,False,False
+B11,okostanyer,B,breakfast,Tojáskrémes szendvics,https://www.okostanyer.hu/receptek-reggeli/,4,7,2,5,0,0,2,1,203.5,191.6,0.0,0.0,11.8,False,False,False
+B12,okostanyer,B,breakfast,Caprese szendvics,https://www.okostanyer.hu/receptek-reggeli/,4,5,1,4,0,0,1,1,390.0,376.3,0.0,0.0,13.6,False,False,True
+B13,okostanyer,B,breakfast,"Reggeli menü: zabpelyhes-túrós lepény, pulykasonka, rukkola, zöld tea",https://www.okostanyer.hu/receptek-reggeli/,1,7,2,5,0,0,2,0,447.3,267.7,0.0,0.0,179.6,False,False,False
+B14,okostanyer,B,breakfast,"Reggeli menü: csicseriborsókrém, light sajt, tk. kenyér, újhagyma",https://www.okostanyer.hu/receptek-reggeli/,1,9,1,4,1,0,4,1,237.1,88.0,65.5,0.0,83.6,False,False,False
+B15,okostanyer,B,breakfast,Teljes kiőrlésű tortillatekercs,https://www.okostanyer.hu/receptek-reggeli/,1,7,0,2,1,0,4,0,465.2,118.4,65.5,0.0,281.2,False,False,False
+B16,okostanyer,B,breakfast,Almás-diós zabpehely tejjel,https://www.okostanyer.hu/receptek-reggeli/,1,5,1,2,0,2,1,0,229.4,109.2,0.0,90.6,29.6,False,False,False
+B17,okostanyer,B,breakfast,"Reggeli menü: Graham kenyér, pulykasonka, óvári sajt, retek, tea",https://www.okostanyer.hu/receptek-reggeli/,1,8,0,4,2,0,2,1,326.2,175.8,74.0,0.0,76.4,False,False,False
+B18,okostanyer,B,breakfast,"Reggeli menü: sült padlizsán, szezámos zsemle, uborka, tejeskávé",https://www.okostanyer.hu/receptek-reggeli/,1,8,2,6,1,0,1,0,296.8,137.9,70.9,0.0,88.0,False,False,False
+B19,okostanyer,B,breakfast,"Reggeli menü: tonhalkrém, korpás kifli, narancslé",https://www.okostanyer.hu/receptek-reggeli/,1,8,0,4,2,0,2,0,530.3,159.1,65.3,0.0,305.9,False,False,False
+B20,okostanyer,B,breakfast,"Reggeli menü: zöldséges tojás, félbarna kenyér, tej",https://www.okostanyer.hu/receptek-reggeli/,1,8,1,5,1,0,2,0,277.9,216.5,3.7,0.0,57.7,False,False,False
+B21,okostanyer,B,breakfast,Tojásos-zabpelyhes muffin,https://www.okostanyer.hu/wp-content/uploads/2026/09/2026_09.pdf,4,7,3,2,0,0,5,1,410.1,97.7,0.0,0.0,312.3,False,False,False
+B22,okostanyer,B,breakfast,Cukkinis-sajtos gofri,https://www.okostanyer.hu/wp-content/uploads/2026/08/2026_08.pdf,4,8,3,6,0,0,2,1,315.8,99.5,0.0,0.0,216.3,False,False,False
+B23,okostanyer,B,breakfast,Cseresznyés köleskása,https://www.okostanyer.hu/wp-content/uploads/2026/06/2026_06.pdf,4,4,1,1,0,1,2,0,292.9,53.0,0.0,29.9,210.0,False,False,False
+B24,okostanyer,B,breakfast,Epres zabkása,https://www.okostanyer.hu/wp-content/uploads/2026/05/2026_05.pdf,4,4,1,2,0,1,1,0,417.3,372.8,0.0,14.9,29.6,False,False,False
+B25,okostanyer,B,breakfast,Körtés túrókrém teljes kiőrlésű pirítóssal,https://www.okostanyer.hu/wp-content/uploads/2025/11/2025_november-jav.pdf,4,6,1,5,0,1,0,0,267.1,222.3,0.0,44.8,0.0,False,True,True
+L01,okostanyer,L,main,Zabpelyhes töltött paprika,https://www.okostanyer.hu/receptek-ebed/,4,11,2,7,1,0,3,0,321.6,129.0,157.1,0.0,35.5,False,False,False
+L02,okostanyer,L,main,Grillezett csirkecombfilé lecsós bulgurral,https://www.okostanyer.hu/receptek-ebed/,4,7,3,5,1,0,1,0,271.9,159.2,93.3,0.0,19.4,False,False,False
+L03,okostanyer,L,main,Vagdalt pogácsa csirkemellből basmati rizzsel,https://www.okostanyer.hu/receptek-ebed/,4,10,3,6,2,0,2,0,368.6,197.8,51.9,0.0,119.0,False,False,False
+L04,okostanyer,L,main,Fetával töltött gombafejek,https://www.okostanyer.hu/receptek-ebed/,4,5,2,3,0,1,1,1,749.9,233.5,0.0,380.0,136.5,False,False,True
+L05,okostanyer,L,soup,Kakukkfüves póréhagymaleves,https://www.okostanyer.hu/receptek-ebed/,4,5,4,2,1,0,2,0,131.7,24.7,10.7,0.0,96.2,False,False,False
+L06,okostanyer,L,soup,Fejtett bableves,https://www.okostanyer.hu/receptek-ebed/,4,8,3,7,0,1,0,0,127.7,50.7,0.0,77.0,0.0,False,True,True
+L07,okostanyer,L,starter,Jércesaláta gazdagon,https://www.okostanyer.hu/receptek-ebed/,4,8,2,4,1,0,3,0,153.1,114.0,8.6,0.0,30.5,False,False,False
+L08,okostanyer,L,main,"Tonhal aszalt szilvával, burgonyapürével",https://www.okostanyer.hu/receptek-ebed/,4,6,3,3,0,0,3,0,1471.2,38.7,0.0,0.0,1432.5,False,False,False
+L09,okostanyer,L,dessert,Sült alma vaníliasodóval,https://www.okostanyer.hu/receptek-ebed/,4,7,1,4,0,2,1,0,208.8,110.4,0.0,90.9,7.5,False,False,False
+L10,okostanyer,L,soup,Indiai vöröslencseleves,https://www.okostanyer.hu/receptek-ebed/,4,6,2,5,0,0,1,0,81.9,63.1,0.0,0.0,18.8,False,False,False
+L11,okostanyer,L,main,"Busafilé póréhagymamártással, sült céklás édesburgonyával",https://www.okostanyer.hu/receptek-ebed/,4,10,5,4,1,0,5,0,597.3,28.0,0.5,0.0,568.8,False,False,False
+L12,okostanyer,L,dessert,Körtés-almás gyümölcsleves,https://www.okostanyer.hu/receptek-ebed/,4,6,2,5,0,0,1,0,161.0,157.3,0.0,0.0,3.8,False,False,False
+L13,okostanyer,L,main,"Aszalt szilvával töltött pulykamell, kelbimbó, burgonyasaláta",https://www.okostanyer.hu/receptek-ebed/,4,8,3,3,2,0,3,0,985.2,632.7,38.8,0.0,313.8,False,False,False
+L14,okostanyer,L,main,Édesburgonya gnocchi,https://www.okostanyer.hu/receptek-ebed/,4,4,2,2,1,0,1,0,77.0,16.9,4.5,0.0,55.5,False,False,False
+L15,okostanyer,L,side,Tejszínes gombamártás,https://www.okostanyer.hu/receptek-ebed/,4,4,6,2,0,1,1,0,164.7,41.1,0.0,118.8,4.9,False,False,False
+L16,okostanyer,L,dessert,Almás-vaníliapudingos palacsinta,https://www.okostanyer.hu/receptek-ebed/,10,11,2,9,1,0,1,0,46.2,36.9,1.8,0.0,7.5,False,False,False
+L17,okostanyer,L,main,Kapros töltött tök,https://www.okostanyer.hu/receptek-ebed/,4,7,3,4,0,0,3,1,504.4,226.6,0.0,0.0,277.8,False,False,False
+L18,okostanyer,L,dessert,Szilvás galette,https://www.okostanyer.hu/receptek-ebed/,6,8,1,6,1,0,1,0,74.3,47.3,3.0,0.0,24.0,False,False,False
+L19,okostanyer,L,soup,Sütőtökkrémleves tökmaggal,https://www.okostanyer.hu/receptek-ebed/,4,6,4,4,0,0,2,0,180.8,55.8,0.0,0.0,125.0,False,False,False
+L20,okostanyer,L,main,"Sült tőkehalfilé, spenóttal töltött burgonya",https://www.okostanyer.hu/receptek-ebed/,4,9,4,7,1,0,1,0,662.2,476.7,65.5,0.0,120.0,False,False,False
+L21,okostanyer,L,main,Sült csirkemell tejszínes brokkolival és bulgurral,https://www.okostanyer.hu/receptek-ebed/,4,5,2,4,0,0,1,0,577.1,535.7,0.0,0.0,41.4,False,False,False
+L22,okostanyer,L,dessert,Almás vaníliapuding zabpehellyel,https://www.okostanyer.hu/receptek-ebed/,4,5,0,3,0,0,2,0,120.5,78.7,0.0,0.0,41.8,False,False,False
+L23,okostanyer,L,soup,Szilvakrémleves,https://www.okostanyer.hu/receptek-ebed/,4,6,1,4,0,0,2,0,167.0,43.0,0.0,0.0,124.0,False,False,False
+L24,okostanyer,L,main,Töltött cukkini barna rizzsel,https://www.okostanyer.hu/receptek-ebed/,4,6,4,3,2,0,1,0,568.6,13.4,259.1,0.0,296.1,False,False,False
+L25,okostanyer,L,side,Kapormártás,https://www.okostanyer.hu/receptek-ebed/,4,5,1,4,0,0,1,1,127.0,31.5,0.0,0.0,95.5,False,False,True
+L26,okostanyer,L,soup,Árpagyöngyleves,https://www.okostanyer.hu/receptek-ebed/,4,9,3,5,0,1,3,1,142.2,54.6,0.0,47.5,40.1,False,False,False
+L27,okostanyer,L,main,Baromfivagdalt zöldbabfőzelékkel,https://www.okostanyer.hu/receptek-ebed/,4,14,6,9,1,0,4,2,549.2,61.6,187.4,0.0,300.1,False,False,False
+L28,okostanyer,L,dessert,Gyümölcskehely tökmaggal,https://www.okostanyer.hu/receptek-ebed/,4,7,0,5,0,0,2,1,224.4,67.6,0.0,0.0,156.8,False,False,False
+L29,okostanyer,L,soup,Hagymaleves,https://www.okostanyer.hu/receptek-ebed/,4,5,2,4,0,0,1,0,100.9,44.6,0.0,0.0,56.2,False,False,False
+L30,okostanyer,L,main,Vadas marha teljes kiőrlésű spagettivel,https://www.okostanyer.hu/receptek-ebed/,4,12,3,11,0,0,1,0,559.0,554.0,0.0,0.0,5.0,False,False,False
+L31,okostanyer,L,soup,Brokkolikrémleves,https://www.okostanyer.hu/receptek-ebed/,4,5,3,5,0,0,0,0,257.3,257.3,0.0,0.0,0.0,True,True,True
+L32,okostanyer,L,main,"Paradicsommal sült csirkemell, burgonyapüré, vöröskáposzta-saláta",https://www.okostanyer.hu/receptek-ebed/,4,10,6,8,1,0,1,1,432.5,403.4,22.3,0.0,6.8,False,False,True
+L33,okostanyer,L,soup,Tárkonyos pulykaraguleves gyöngybabbal,https://www.okostanyer.hu/receptek-ebed/,4,9,5,6,1,1,1,1,330.0,71.4,179.9,61.6,17.1,False,False,True
+L34,okostanyer,L,main,Hajdinás rakott karfiol,https://www.okostanyer.hu/receptek-ebed/,4,7,2,4,0,0,3,1,408.5,241.4,0.0,0.0,167.1,False,False,False
+L35,okostanyer,L,dessert,Erdei gyümölcsös túrókrém,https://www.okostanyer.hu/receptek-ebed/,4,6,0,3,0,1,2,0,701.4,176.7,0.0,74.6,450.0,False,False,False
+L36,okostanyer,L,soup,Zöldségleves,https://www.okostanyer.hu/receptek-ebed/,4,8,3,4,0,0,4,2,125.6,49.0,0.0,0.0,76.6,False,False,False
+L37,okostanyer,L,main,"Roston harcsa, spenótlevelek, párolt köles, fokhagymamártás",https://www.okostanyer.hu/receptek-ebed/,4,11,6,8,0,0,3,1,1058.3,789.0,0.0,0.0,269.3,False,False,False
+L38,okostanyer,L,main,Sárgabarackos csirkemell petrezselymes újburgonyával,https://www.okostanyer.hu/receptek-ebed/,4,8,2,6,0,0,2,1,385.9,291.8,0.0,0.0,94.1,False,False,False
+L39,okostanyer,L,main,Tojásos lecsó,https://www.okostanyer.hu/wp-content/uploads/2026/08/2026_08.pdf,4,6,2,6,0,0,0,0,324.7,324.7,0.0,0.0,0.0,True,True,True
+L40,okostanyer,L,main,Töltött cukkini darált hússal és rizzsel,https://www.okostanyer.hu/wp-content/uploads/2026/07/2026_07.pdf,4,8,2,5,0,0,3,1,540.2,227.9,0.0,0.0,312.3,False,False,False
+L41,okostanyer,L,soup,Tavaszi zöldségleves csigatésztával,https://www.okostanyer.hu/wp-content/uploads/2026/04/2026_04_jav.pdf,4,8,3,5,1,0,2,1,226.3,79.7,16.2,0.0,130.3,False,False,False
+L42,okostanyer,L,main,Mézes-mustáros csirkecombfilé,https://www.okostanyer.hu/wp-content/uploads/2026/04/2026_04_jav.pdf,4,5,3,2,1,1,1,0,213.1,6.2,169.6,29.9,7.5,False,False,False
+L43,okostanyer,L,side,Petrezselymes újburgonya,https://www.okostanyer.hu/wp-content/uploads/2026/04/2026_04_jav.pdf,4,3,1,2,0,0,1,1,130.6,45.3,0.0,0.0,85.3,False,False,True
+L44,okostanyer,L,side,Ecetes fejes saláta újhagymával,https://www.okostanyer.hu/wp-content/uploads/2026/04/2026_04_jav.pdf,4,3,3,1,0,0,2,0,259.8,0.4,0.0,0.0,259.5,False,False,False
+L45,okostanyer,L,dessert,Könnyített túrós pohárdesszert,https://www.okostanyer.hu/wp-content/uploads/2026/04/2026_04_jav.pdf,4,6,0,3,0,2,1,0,306.3,111.0,0.0,132.8,62.5,False,False,False
+L46,okostanyer,L,main,Kelkáposztás-burgonyás rakottas,https://www.okostanyer.hu/wp-content/uploads/2026/02/2026_februar-1.pdf,4,7,3,7,0,0,0,0,407.7,407.7,0.0,0.0,0.0,True,True,True
+L47,okostanyer,L,soup,Tárkonyos csirkeraguleves zöldségekkel,https://www.okostanyer.hu/wp-content/uploads/2025/12/2025_december.pdf,4,12,4,9,0,1,2,0,339.9,231.1,0.0,47.5,61.2,False,False,False
+L48,okostanyer,L,main,Sült pisztráng sült zöldségekkel,https://www.okostanyer.hu/wp-content/uploads/2025/12/2025_december.pdf,4,8,2,5,0,0,3,1,1465.0,164.7,0.0,0.0,1300.3,False,False,False
+L49,okostanyer,L,starter,Céklás-almás-diós saláta,https://www.okostanyer.hu/wp-content/uploads/2025/12/2025_december.pdf,4,7,2,2,0,2,3,0,202.1,39.9,0.0,72.2,90.0,False,False,False
+L50,okostanyer,L,dessert,Mákos-meggyes pohárkrém,https://www.okostanyer.hu/wp-content/uploads/2025/12/2025_december.pdf,4,6,1,2,1,1,2,0,267.4,85.2,21.4,59.7,101.0,False,False,False
+L51,okostanyer,L,main,Mustáros-tejszínes sertésragu brokkolival és bulgurral,https://www.okostanyer.hu/wp-content/uploads/2025/11/2025_november-jav.pdf,4,8,3,6,0,0,2,0,406.2,369.6,0.0,0.0,36.5,False,False,False
+D01,okostanyer,D,main,Sütőben sült rozmaringos csirke zöldségekkel,https://www.okostanyer.hu/receptek-vacsora/,4,8,2,5,1,0,2,1,355.9,307.2,7.2,0.0,41.5,False,False,False
+D02,okostanyer,D,main,Őszi saláta grillezett camemberttel,https://www.okostanyer.hu/receptek-vacsora/,4,8,2,4,0,1,3,0,743.3,322.2,0.0,231.8,189.4,False,False,False
+D03,okostanyer,D,main,Póréhagymás tojásomlett,https://www.okostanyer.hu/receptek-vacsora/,4,8,0,4,2,0,2,0,351.4,189.4,24.0,0.0,138.0,False,False,False
+D04,okostanyer,D,main,Zelleres túrókrém kovászolt kenyérrel,https://www.okostanyer.hu/receptek-vacsora/,4,5,2,4,0,0,1,0,170.2,150.2,0.0,0.0,20.0,False,False,False
+D05,okostanyer,D,main,Csirkemellfilé körtés-rukkolás salátával és kuszkusszal,https://www.okostanyer.hu/receptek-vacsora/,4,8,2,4,0,1,3,0,401.7,225.6,0.0,29.9,146.2,False,False,False
+D06,okostanyer,D,main,Szilvás-diós zabkása,https://www.okostanyer.hu/receptek-vacsora/,4,5,1,1,0,2,2,0,271.3,53.0,0.0,128.7,89.6,False,False,False
+D07,okostanyer,D,main,"Vacsora menü: burgonyasaláta, csirkemell, rozsos kenyér",https://www.okostanyer.hu/receptek-vacsora/,1,12,4,11,0,0,1,0,322.9,307.9,0.0,0.0,15.0,False,False,False
+D08,okostanyer,D,main,"Vacsora menü: főtt tojás, parajkrém, almás limonádé",https://www.okostanyer.hu/receptek-vacsora/,4,10,3,7,0,0,3,2,714.1,175.5,0.0,0.0,538.6,False,False,False
+D09,okostanyer,D,main,"Vacsora menü: kapros túrókrém, graham kenyér, paprika, tej",https://www.okostanyer.hu/receptek-vacsora/,4,6,0,4,1,0,1,1,270.5,221.9,31.6,0.0,17.1,False,False,True
+D10,okostanyer,D,main,"Vacsora menü: mustáros-zöldséges sertéstokány, barna rizs",https://www.okostanyer.hu/receptek-vacsora/,4,11,5,6,2,0,3,1,287.1,192.8,32.6,0.0,61.7,False,False,False
+D11,okostanyer,D,main,"Vacsora menü: szárnyas májpástétom, barna kenyér, uborka, gyümölcstea",https://www.okostanyer.hu/receptek-vacsora/,4,7,6,5,1,0,1,0,220.2,144.5,9.7,0.0,66.0,False,False,False
+D12,okostanyer,D,main,"Vacsora menü: szezámos csirkemell, vegyes saláta, őszibaracklé",https://www.okostanyer.hu/receptek-vacsora/,4,14,0,7,1,1,5,0,840.2,403.2,3.1,74.6,359.2,False,False,False
+D13,okostanyer,D,main,Zöldséges kuszkusz saláta,https://www.okostanyer.hu/wp-content/uploads/2026/09/2026_09.pdf,4,10,3,5,0,0,5,2,533.4,311.7,0.0,0.0,221.7,False,False,False
+D14,okostanyer,D,main,Sült padlizsán saláta tortilla ropogóssal,https://www.okostanyer.hu/wp-content/uploads/2026/08/2026_08.pdf,4,4,2,1,1,0,2,0,353.2,3.7,21.4,0.0,328.0,False,False,False
+D15,okostanyer,D,main,Hideg tésztasaláta zöldségekkel,https://www.okostanyer.hu/wp-content/uploads/2026/07/2026_07.pdf,4,7,1,6,1,0,0,0,348.6,335.2,13.4,0.0,0.0,True,True,True
+D16,okostanyer,D,main,Hideg joghurtos uborkaleves pirítóssal,https://www.okostanyer.hu/wp-content/uploads/2026/06/2026_06.pdf,4,5,2,4,0,0,1,1,187.5,170.4,0.0,0.0,17.1,False,False,True
+D17,okostanyer,D,main,Sült sárgarépás-csicseriborsós falatok,https://www.okostanyer.hu/wp-content/uploads/2026/02/2026_februar-1.pdf,4,5,4,3,0,0,2,0,96.9,44.2,0.0,0.0,52.7,False,False,False
+D18,okostanyer,D,main,Tepsis csirke kelbimbóval és burgonyával,https://www.okostanyer.hu/wp-content/uploads/2025/11/2025_november-jav.pdf,4,6,4,4,1,0,1,0,329.4,84.6,84.8,0.0,160.0,False,False,False
+P01,penny,M,main,"Sörös csülök, savanyú káposztás burgonya tócsni, mézes alma",https://www.penny.hu/receptek/soros-csulok-savanyu-kaposztas-burgonya-tocsni-mezes-alma,4.0,18,3,7,0,2,9,3,1192.7,139.1,0.0,46.3,1007.3,False,False,False
+P02,penny,M,main,Almás csirkenyárs sült zöldségekkel,https://www.penny.hu/receptek/almas-csirkenyars-sult-zoldsegekkel,4.0,9,1,6,0,0,3,0,777.4,643.3,0.0,0.0,134.1,False,False,False
+P03,penny,B,breakfast,Céklás-diós kenyér,https://www.penny.hu/receptek/ceklas-dios-kenyer,4.0,6,2,3,0,1,2,0,185.4,44.2,0.0,92.7,48.5,False,False,False
+P04,penny,X,dessert,A legdiósabb aranygaluska vaníliasodóval,https://www.penny.hu/receptek/a-legdiosabb-aranygaluska-vaniliasodoval,4.0,20,3,9,3,3,5,0,899.4,467.2,24.3,189.4,218.5,False,False,False
+P05,penny,M,main,Bundázott sütőtök fahéjas almacsatnival,https://www.penny.hu/receptek/bundazott-sutotok-fahejas-almacsatnival,4.0,8,5,4,0,0,4,0,685.6,346.1,0.0,0.0,339.5,False,False,False
+P06,penny,B,breakfast,Zöldséges tortilla tekercs,https://www.penny.hu/receptek/zoldseges-tortilla-tekercs,4.0,7,1,3,1,0,3,0,350.4,113.5,50.6,0.0,186.2,False,False,False
+P07,penny,M,main,Csirkés fajitas,https://www.penny.hu/receptek/csirkes-fajitas,4.0,9,3,6,1,0,2,0,561.7,309.4,4.1,0.0,248.2,False,False,False
+P08,penny,M,main,Kókuszos görögdinnye-krémleves,https://www.penny.hu/receptek/kokuszos-gorogdinnye-kremleves,4.0,5,2,1,0,1,3,0,261.5,27.1,0.0,71.0,163.4,False,False,False
+P09,penny,M,main,Sárgarépás vendégváró golyó,https://www.penny.hu/receptek/sargarepas-vendegvaro-golyo,4.0,5,2,2,0,1,2,0,464.7,25.2,0.0,154.5,285.0,False,False,False
+P10,penny,M,main,Hekk & chips,https://www.penny.hu/receptek/hekk-chips,4.0,16,7,10,1,0,5,2,1255.4,970.4,4.1,0.0,280.8,False,False,False
+P11,penny,B,breakfast,Kolbászos gravy-krém baguette-n,https://www.penny.hu/receptek/kolbaszos-gravy-krem-baguette-n,4.0,4,1,3,1,0,0,0,420.4,272.6,147.7,0.0,0.0,True,True,True
+P12,penny,X,dessert,Könnyed nyári málnás pohárkrém,https://www.penny.hu/receptek/konnyed-nyari-malnas-poharkrem,6.0,7,1,3,0,0,4,1,558.3,136.9,0.0,0.0,421.4,False,False,False
+P13,penny,X,dessert,Csokiba mártott alma,https://www.penny.hu/receptek/csokiba-martott-alma,4.0,5,0,2,0,1,2,0,207.3,30.9,0.0,46.4,130.0,False,False,False
+P14,penny,M,main,Padlizsánkrém baguette-n,https://www.penny.hu/receptek/padlizsankrem-baguette-n,4.0,5,1,2,1,0,2,0,305.2,29.1,73.9,0.0,202.2,False,False,False
+P15,penny,M,main,Sütőtökös quinoa saláta fűszeres tökmaggal,https://www.penny.hu/receptek/sutotokos-quinoa-salata-fuszeres-tokmaggal,4.0,8,2,2,0,1,5,0,405.4,35.3,0.0,19.4,350.8,False,False,False
+P16,penny,X,dessert,Forró fehércsokoládé pillecukorral,https://www.penny.hu/receptek/forro-fehercsokolade-pillecukorral,4.0,4,1,2,0,0,2,0,368.4,68.4,0.0,0.0,300.0,False,False,False
+P17,penny,X,dessert,Gofri vanília-  és csokipudinggal,https://www.penny.hu/receptek/gofri-vanilia-es-csokipudinggal,4.0,11,2,8,0,1,2,0,288.1,220.8,0.0,7.3,60.0,False,False,False
+P18,penny,M,main,Dödölle ropogós szalonnával és fokhagymás tejföllel,https://www.penny.hu/receptek/dodolle-ropogos-szalonnaval-es-fokhagymas-tejfollel,4.0,9,5,6,0,0,3,2,660.8,608.4,0.0,0.0,52.5,False,False,False
+P19,penny,X,dessert,Pöfeteg keksz,https://www.penny.hu/receptek/pofeteg-keksz,6.0,8,2,6,1,0,1,0,376.0,269.3,7.4,0.0,99.3,False,False,False
+P20,penny,X,dessert,Meggyes brownie,https://www.penny.hu/receptek/meggyes-brownie,6.0,6,2,4,0,0,2,0,449.8,162.3,0.0,0.0,287.5,False,False,False
+P21,penny,M,main,Taco Pizza,https://www.penny.hu/receptek/taco-pizza,4.0,9,1,7,0,0,2,0,639.0,322.5,0.0,0.0,316.5,False,False,False
+P22,penny,M,main,Csirkeburger Air-Fryerben,https://www.penny.hu/receptek/csirkeburger-air-fryerben,4.0,10,1,4,2,0,4,0,487.9,200.6,259.3,0.0,28.0,False,False,False
+P23,penny,X,dessert,Nagyiféle kapros-túrós pite,https://www.penny.hu/receptek/nagyifele-kapros-turos-pite,4.0,9,2,7,0,0,2,1,482.6,470.9,0.0,0.0,11.6,False,False,False
+P24,penny,X,dessert,Erdei gyümölcsös fagylalt,https://www.penny.hu/receptek/erdei-gyumolcsos-fagylalt,4.0,5,0,2,0,1,2,0,783.2,168.6,0.0,89.5,525.0,False,False,False
+P25,penny,M,main,Egyben sült fasírt karfiollal,https://www.penny.hu/receptek/egyben-sult-fasirt-karfiollal,4.0,8,3,7,0,0,1,0,496.5,476.5,0.0,0.0,20.0,False,False,False
+P26,penny,B,breakfast,Sajtos-tormás-sonkás kalácsszendvics,https://www.penny.hu/receptek/sajtos-tormas-sonkas-kalacsszendvics,3.0,6,0,3,1,0,2,0,531.5,292.8,56.2,0.0,182.5,False,False,False
+P27,penny,M,main,Tejfölös krumplileves kolbásszal,https://www.penny.hu/receptek/tejfolos-krumplileves-kolbasszal,4.0,8,1,7,0,0,1,1,407.2,364.5,0.0,0.0,42.6,False,False,True
+P28,penny,M,main,Pirított tortilla darált hússal és sajttal,https://www.penny.hu/receptek/piritott-tortilla-daralt-hussal-es-sajttal,4.0,8,2,5,0,0,3,0,704.8,315.6,0.0,0.0,389.2,False,False,False
+P29,penny,M,main,Csirkés pizzabatyu,https://www.penny.hu/receptek/csirkes-pizzabatyu,4.0,8,1,3,0,0,5,0,395.1,146.2,0.0,0.0,248.9,False,False,False
+P30,penny,X,dessert,Narancsos csokis isler,https://www.penny.hu/receptek/narancsos-csokis-isler,4.0,9,1,6,0,1,2,0,588.8,204.5,0.0,87.3,297.0,False,False,False
+P31,penny,M,main,Bográcsos piros lecsó,https://www.penny.hu/receptek/bogracsos-piros-lecso,4.0,18,6,6,1,0,11,1,1634.1,538.3,53.2,0.0,1042.6,False,False,False
+P32,penny,M,main,Alfredo tejszínes tészta,https://www.penny.hu/receptek/alfredo-tejszines-teszta,4.0,8,2,5,1,0,2,1,502.4,303.6,48.8,0.0,150.0,False,False,False
+P33,penny,M,main,Gluténmentes magyaros kenyérlángos,https://www.penny.hu/receptek/glutenmentes-magyaros-kenyerlangos,4.0,11,3,9,1,0,1,0,407.8,394.5,8.3,0.0,5.0,False,False,False
+P34,penny,B,breakfast,Sonkával töltött sült zsemle,https://www.penny.hu/receptek/sonkaval-toltott-sult-zsemle,1.0,6,1,4,1,0,1,1,789.6,334.1,319.0,0.0,136.5,False,False,True
+P35,penny,M,main,Paradicsomos húsgombóc,https://www.penny.hu/receptek/paradicsomos-husgomboc,4.0,10,2,8,0,0,2,0,279.4,216.8,0.0,0.0,62.6,False,False,False
+P36,penny,M,main,Zöldséges pirított tészta,https://www.penny.hu/receptek/zoldseges-piritott-teszta,4.0,17,2,7,1,0,9,0,541.2,106.3,0.7,0.0,434.2,False,False,False
+P37,penny,B,breakfast,Hagymás-májas pirítós,https://www.penny.hu/receptek/hagymas-majas-piritos,4.0,4,1,3,0,0,1,0,87.9,37.9,0.0,0.0,50.0,False,False,False
+P38,penny,M,main,Sós túrógombócnyárs sajttal és zöldségekkel,https://www.penny.hu/receptek/sos-turogombocnyars-sajttal-es-zoldsegekkel,4.0,10,1,7,1,0,2,0,735.1,581.8,31.1,0.0,122.2,False,False,False
+P39,penny,M,main,Tojásos nokedli fejessalátával,https://www.penny.hu/receptek/tojasos-nokedli-fejessalataval,4.0,5,3,4,0,0,1,0,311.7,145.3,0.0,0.0,166.5,False,False,False
+P40,penny,X,dessert,Narancsos-csokoládés muffin,https://www.penny.hu/receptek/narancsos-csokolades-muffin,4.0,6,2,6,0,0,0,0,217.6,217.6,0.0,0.0,0.0,True,True,True
+P41,penny,M,main,Konfitált kacsacomb lilakáposztás rétessel,https://www.penny.hu/receptek/konfitalt-kacsacomb-lilakaposztas-retessel,4.0,23,7,9,2,1,11,4,2403.8,280.9,60.5,298.5,1763.8,False,False,False
+P42,penny,M,main,Bruschetta téli kiadásban,https://www.penny.hu/receptek/bruschetta-teli-kiadasban,4.0,6,0,3,1,2,0,0,564.3,221.4,73.9,269.1,0.0,False,True,True
+P43,penny,X,dessert,Smarni avagy császármorzsa,https://www.penny.hu/receptek/smarni-avagy-csaszarmorzsa,4.0,10,2,6,0,1,3,0,369.0,106.7,0.0,7.3,255.0,False,False,False
+P44,penny,B,breakfast,Western omlett,https://www.penny.hu/receptek/western-omlett,4.0,7,1,6,0,0,1,0,311.1,196.4,0.0,0.0,114.7,False,False,False
+P45,penny,X,dessert,Lúdláb torta,https://www.penny.hu/receptek/ludlab-torta,4.0,14,2,10,0,0,4,0,513.7,293.7,0.0,0.0,220.0,False,False,False

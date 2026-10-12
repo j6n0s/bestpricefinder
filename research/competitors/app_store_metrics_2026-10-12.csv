@@ -1,0 +1,42 @@
+app,publisher,segment,store,store_id,rating,ratings_or_reviews,downloads_band,first_release,last_update,source_url,basis
+NomNom: Budget Meal Planner,Z Gen Kibernetika Kft (dev name Neo App Labs),meal plan + GVH prices (direct competitor),App Store HU,6788049718,4.82,703 ratings (9 with text),,2026-07-23,2026-10-11,https://itunes.apple.com/lookup?id=6788049718&country=hu,VERIFIED iTunes Lookup API 2026-10-12
+NomNom Meal Planner,Neo App Labs,meal plan + GVH prices (direct competitor),Google Play,com.nomnomplanner,4.7,n/a,1K+,,2026-10-08,https://play.google.com/store/apps/details?id=com.nomnomplanner,VERIFIED Play page 2026-10-12
+Lefozlek: receptek etrend,Business Gravity Kft,recipe saver + weekly plan + per-portion price,App Store HU,6763793215,5,1 rating,,2026-10-01,2026-10-09,https://itunes.apple.com/lookup?id=6763793215&country=hu,VERIFIED iTunes Lookup API 2026-10-12
+Cashmap,Cashmap Kft,price comparison 9+ chains (paid),App Store HU,6463898604,4.36,137 ratings,,2023-09-10,2026-07-03,https://itunes.apple.com/lookup?id=6463898604&country=hu,VERIFIED
+Cashmap,Cashmap Kft,price comparison 9+ chains (paid),Google Play,hu.kiwisoft.cashmap,4.5,278 reviews,5K+,,2026-07-02,https://play.google.com/store/apps/details?id=hu.kiwisoft.cashmap,VERIFIED
+Mizu - Arfigyelo,MizuAPP,community price comparison,Google Play,hu.mizu.app,n/a,n/a,100+,,2026-09-17,https://play.google.com/store/apps/details?id=hu.mizu.app,VERIFIED
+Arneni,Arneni.com (Arvago Systems),price comparison web (no native app),web only,arneni.com,,,,domain created 2026-03-13,,https://arneni.com/terms,VERIFIED (whois + site)
+Akciovadasz,Loginet Systems Kft,leaflets,App Store HU,1668798567,4.7,70 ratings,,2023-02-15,2026-10-07,https://itunes.apple.com/lookup?id=1668798567&country=hu,VERIFIED
+Akciovadasz,Loginet Systems Kft,leaflets,Google Play,hu.loginet.unicatalog,4.5,109 reviews,10K+,,2026-10-05,https://play.google.com/store/apps/details?id=hu.loginet.unicatalog,VERIFIED
+Ajanlatok.hu,Kingbee B.V.,leaflets,App Store HU,6469340340,4.74,159 ratings,,2023-11-01,2026-10-06,https://itunes.apple.com/lookup?id=6469340340&country=hu,VERIFIED
+Ajanlatok.hu,Kingbee,leaflets,Google Play,hu.ajanlatok.app,4.6,629 reviews,10K+,,2026-10-07,https://play.google.com/store/apps/details?id=hu.ajanlatok.app,VERIFIED
+Prospecto.hu,ProspectoGroup JSC,leaflets,Google Play,hu.prospecto.m,3.9,2.26K reviews,500K+,,2025-12-09,https://play.google.com/store/apps/details?id=hu.prospecto.m,VERIFIED
+PromoAkcios,individual developer,leaflets,App Store HU,6778514936,4.81,64 ratings,,2026-06-12,2026-08-10,https://itunes.apple.com/lookup?id=6778514936&country=hu,VERIFIED
+Kimbino,Kimbino Green s.r.o,leaflets,App Store HU,6444317791,4.69,435 ratings,,2023-03-07,2026-09-25,https://itunes.apple.com/search?term=akci%C3%B3s%20%C3%BAjs%C3%A1g&country=hu&entity=software,VERIFIED
+Nosalty,Central Mediacsoport Zrt,recipe media,App Store HU,1397911524,4.69,510 ratings,,2018-11-05,2023-01-12,https://itunes.apple.com/lookup?id=1397911524&country=hu,VERIFIED
+Nosalty,Central Mediacsoport Zrt,recipe media,Google Play,hu.centralmediacsoport.nosalty,3.9,2.18K reviews,100K+,,2026-08-11,https://play.google.com/store/apps/details?id=hu.centralmediacsoport.nosalty,VERIFIED
+Street Kitchen,Lunchbox Produkcios Kft,recipe media,App Store HU,6751809018,4.75,456 ratings,,2026-02-04,2026-10-01,https://itunes.apple.com/lookup?id=6751809018&country=hu,VERIFIED
+Street Kitchen,streetkitchen.hu,recipe media,Google Play,hu.streetkitchen.app,4.8,356 reviews,10K+,,2026-09-30,https://play.google.com/store/apps/details?id=hu.streetkitchen.app,VERIFIED
+Kisfazek,Kisfazek.hu (individual developer),recipe community,Google Play,com.lonalore.kisfazek,4.3,21 reviews,1K+,,2026-10-11,https://play.google.com/store/apps/details?id=com.lonalore.kisfazek,VERIFIED
+Myreset,individual developer,healthy meal plan (women),App Store HU,6759920267,4.71,7 ratings,,2026-05-12,2026-05-20,https://itunes.apple.com/lookup?id=6759920267&country=hu,VERIFIED
+Smartlyst,unknown,shopping list + recipe import,App Store,1435072793,,,,,,https://apps.apple.com/hu/app/smartlyst/id1435072793,VERIFIED removed (lookup 0 results; page 404)
+Kifli.hu,Velka Pecka SRO / Rohlik,online grocery with recipe->cart,App Store HU,1521445846,4.96,18959 ratings,,,2026-10-12,https://itunes.apple.com/search?term=kifli&country=hu&entity=software,VERIFIED
+Kifli.hu,Rohlik skillz s.r.o.,online grocery with recipe->cart,Google Play,hu.kifli.app,4.9,18.2K reviews,100K+,,2026-10-12,https://play.google.com/store/apps/details?id=hu.kifli.app,VERIFIED
+MySPAR,SPAR Magyarorszag Kft,retailer loyalty,App Store HU,1438523115,4.71,75320 ratings,,,2026-08-25,https://itunes.apple.com/search?term=myspar&country=hu&entity=software,VERIFIED
+MySPAR,SPAR Magyarorszag,retailer loyalty,Google Play,hu.spar.mobile,4.7,103K reviews,1M+,,2026-08-28,https://play.google.com/store/apps/details?id=hu.spar.mobile,VERIFIED
+Lidl Plus,Lidl Digital International,retailer loyalty,App Store HU,1238611143,4.36,6206 ratings,,,2026-10-06,https://itunes.apple.com/search?term=myspar&country=hu&entity=software,VERIFIED
+Clubcard Tesco Magyarorszag,Tesco Stores CR a.s.,retailer loyalty,App Store HU,1033587426,4.46,11870 ratings,,,2026-09-12,https://itunes.apple.com/search?term=tesco%20clubcard&country=hu&entity=software,VERIFIED
+Clubcard Tesco Hungary,Tesco Stores,retailer loyalty,Google Play,hu.tesco.clubcard,4.6,84.8K reviews,1M+,,2026-08-27,https://play.google.com/store/apps/details?id=hu.tesco.clubcard,VERIFIED
+Tesco Online,Tesco Stores,online grocery,Google Play,hu.bitnet.tesco,4.6,5.59K reviews,500K+,,2026-09-30,https://play.google.com/store/apps/details?id=hu.bitnet.tesco,VERIFIED
+OkAuchan,MH Magyarorszag Kft,retailer loyalty,App Store HU,1633448692,4.78,27299 ratings,,,2026-10-12,https://itunes.apple.com/search?term=auchan&country=hu&entity=software,VERIFIED
+Auchan Online Store,MH Magyarorszag Kft,online grocery,Google Play,hu.loginet.android.loginetwebshop.auchan.online,4.6,5.36K reviews,100K+,,2026-04-27,https://play.google.com/store/apps/details?id=hu.loginet.android.loginetwebshop.auchan.online,VERIFIED
+ALDI Magyarorszag,ALDI International Services,retailer app,Google Play,de.apptiv.business.android.aldi_hu,4.5,6.34K reviews,500K+,,2026-10-05,https://play.google.com/store/apps/details?id=de.apptiv.business.android.aldi_hu,VERIFIED
+PENNY Magyarorszag,PENNY GmbH,retailer app,Google Play,hu.penny.app,3.8,3.05K reviews,1M+,,2026-09-22,https://play.google.com/store/apps/details?id=hu.penny.app,VERIFIED
+COOP Klub,CO-OP Hungary Zrt,retailer loyalty,Google Play,hu.coop.app,3.1,1.28K reviews,100K+,,2026-04-17,https://play.google.com/store/apps/details?id=hu.coop.app,VERIFIED
+Usporedi cijene (HR),NVTEH d.o.o.,price comparison on mandated HR data,Google Play,info.usporedicijene.usporedicijene,4.2,105 reviews,10K+,,2026-04-12,https://play.google.com/store/apps/details?id=info.usporedicijene.usporedicijene,VERIFIED
+Moje Cijene (HR),Artemis Alfa,price comparison by address/distance,Google Play,co.median.android.epmypr,4.6,143 reviews,10K+,,2026-07-31,https://play.google.com/store/apps/details?id=co.median.android.epmypr,VERIFIED
+Kosarica (HR),codingforfun,price comparison + list,Google Play,com.cjenoteka,4.3,7 reviews,1K+,,2026-05-23,https://play.google.com/store/apps/details?id=com.cjenoteka,VERIFIED
+Usporedi Me (HR),individual developer,price comparison nearby stores,Google Play,com.kgt.usporedime,4.6,5 reviews,500+,,2025-05-22,https://play.google.com/store/apps/details?id=com.kgt.usporedime,VERIFIED
+PosoKanei (GR gov),Hellenic Republic,government price comparison,App Store GR,6771420085,3.12,60 ratings,,2026-06-02,,https://itunes.apple.com/search?term=posokanei&country=gr&entity=software,VERIFIED
+Jow (FR),Jow,recipe->retailer cart,App Store FR,1301257625,4.81,47518 ratings,,2018-03-19,,https://itunes.apple.com/search?term=jow&country=fr&entity=software,VERIFIED
+Kupi.cz (CZ),Kupi.cz retail s.r.o.,leaflets,App Store CZ,1230343927,4.71,11598 ratings,,2017-10-26,,https://itunes.apple.com/search?term=kupi&country=cz&entity=software,VERIFIED

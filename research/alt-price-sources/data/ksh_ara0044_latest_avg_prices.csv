@@ -1,0 +1,176 @@
+ksh_code,item,avg_price_huf,month
+10001,"Rövidkaraj, kg",2070,2026-09
+10003,"Sertéshús, comb (csont és csülök nélkül), kg",1670,2026-09
+10103,"Marhahús, rostélyos, csontos vagy csont nélküli, kga",5900,2026-09
+10401,"Bontott csirke, kg",1310,2026-09
+10405,"Csirkecomb, kg",1070,2026-09
+10407,"Csirkeszárny, kg",1020,2026-09
+10408,"Pulykamellfilé, kg",3280,2026-09
+10409,"Csirkemellfilé (csont és bőr nélkül), kg",2460,2026-09
+10501,"Szárazkolbász, kg",5830,2026-09
+10502,"Téliszalámi, kgb",10060,2026-09
+10506,"Pulykamell sonka, szeletelt, kg",5000,2026-09
+10601,"Párizsi felvágott, kg",1990,2026-09
+10602,"Virsli, sertés vagy baromfi, kgc",3200,2026-09
+10603,"Olasz felvágott, kg",3070,2026-09
+10801,"Pontyszelet vagy filé, kgd",4710,2026-09
+11001,"Tojás, 10 darab",814,2026-09
+11101,"Pasztőrözött ESL tej, 2,8%, litere",349,2026-09
+11103,"Pasztőrözött ESL tej, 1,5%, literf",335,2026-09
+11104,"UHT tartós tej dobozban, 2,8% zsírtartalom, liter",346,2026-09
+11209,"Sajt, trappista, tömb, kg",2660,2026-09
+11301,"Tejföl, 20% zsírtartalom, kgg",1220,2026-09
+11306,"Gyümölcsjoghurt, 125–150 g-os, db",148,2026-09
+11311,"Tejföl 12% zsírtartalommal, 300–450 g-os, kgh",1050,2026-09
+12001,"Vaj, legalább 80% zsírtartalom, 100–125 g-os csomagolásban, dbi",414,2026-09
+12101,"Sertészsír, 400–500 g (kivéve mangalica)",522,2026-09
+12201,"Csemegeszalonna, füstölt (előre csomagolt is), kg",3240,2026-09
+12301,"Napraforgó-étolaj, liter",874,2026-09
+12402,"Tejes margarin, 200–250 g, db",376,2026-09
+13002,"Liszt, finomliszt, kg",232,2026-09
+13003,"Rétesliszt, kg",258,2026-09
+13101,"Rizs, hántolt, fényezetlen, kg",676,2026-09
+13201,"Kenyér, fehér, kg",905,2026-09
+13206,"Félbarna kenyér, kg",857,2026-09
+13301,"Zsemle, 1 db",70,2026-09
+13305,"Kakaós csiga, db",238,2026-09
+13404,"Spagetti, 4 tojásos, gyári készítésű, 400–500 g-os, dbj",607,2026-09
+13501,"Kristálycukor, kg",324,2026-09
+13601,"Kakaópor, 70–200 g-os, kgk",9060,2026-09
+13617,"Mogyorós tejcsokoládé, 80–100 g, egész- vagy törtmogyorós tábla, dbl",711,2026-09
+13711,"Jégkrém, dobozos, literm",2180,2026-09
+13801,"Háztartási keksz, csomagolt 800–1000 g, csomag",1370,2026-09
+13910,"Akácméz, kgn",5970,2026-09
+14001,"Korai burgonya, kg",439,2026-07
+14002,"Kései burgonya, kgo",393,2026-09
+14101,"Sárgarépa, kg",535,2026-09
+14103,"Vöröshagyma, kg",332,2026-09
+14104,"Fejes káposzta, kg",375,2026-09
+14107,"Paradicsom, kg",956,2026-09
+14108,"Zöldpaprika (szántóföldi és primőr együtt), kg",917,2026-09
+14110,"Uborka, kg",1110,2026-09
+14111,"Gomba, kg",1900,2026-09
+14201,"Alma, kg",600,2026-09
+14202,"Görögdinnye, kg",355,2026-09
+14209,"Körte, kg",1100,2026-09
+14221,"Citrom, kg",1300,2026-09
+14222,"Banán, kg",739,2026-09
+14224,"Narancs, kg",894,2026-09
+14310,"Dobozos narancslé, 100%-os gyümölcstartalom, 1 l, doboz",1050,2026-09
+14401,"Gyorsfagyasztott zöldborsó, kg",1180,2026-09
+14425,"Csemegekukorica-konzerv, dobozp",525,2026-09
+14508,"Gyümölcslekvár, 250–650 g, min. 50%, kgq",2910,2026-09
+14601,"Szárazbab, csomagolt is, kg",1540,2026-09
+14701,"Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg",6180,2026-09
+15101,"Hasábburgonya, gyorsfagyasztott, félkész, 750–1000 g, csomag",1010,2026-09
+15201,"Bors, fekete, őrölt, 16–25 g, csomagr",242,2026-09
+15202,"Fűszerpaprika, csemege, 75–100 g-os tasakból 1 kg-ra számítva",8840,2026-09
+15204,"Só, étkezési, finomított, 1 kg (kivéve tengeri só), kg",266,2026-09
+16041,"Napi menü, 2 fogásos, adag",2490,2026-09
+16201,"Iskolai ebéd, adag",718,2026-09
+16407,"Hamburger, db",2140,2026-09
+17011,"Őrölt kávé 200–250 g, csomag",1620,2026-09
+17101,"Eszpresszókávé, vendéglátóhelyen, db",647,2026-09
+17305,"Ásványvíz, 1,5 literes, műanyag palackbans",189,2026-09
+17308,"Ásványvíz, szénsavmentes, 1,5 literes, eldobható műanyag palackban, palack",186,2023-12
+17309,"Coca Cola vagy Pepsi 1–2,5 l-es palackban, litert",430,2026-09
+18001,"Földrajzi jelzés nélküli (FN) fehér bor, 1–2 l, literu",620,2026-09
+18002,"Földrajzi jelzés nélküli (FN) vörös bor, 1–2 l, literv",607,2026-09
+18007,"Tankpezsgő, 0,75 literes, palackw",1860,2026-09
+18101,"Sör, világos, lager típusú, 0,33–0,5 l, literx",782,2026-09
+18102,"Sör, felsőerjesztésű (IPA, APA vagy ale) vagy búza, 0,33–0,5 l, litery",912,2026-09
+18204,"Vodka, szeszes ital, 0,5–1 literes palackban, literz",7370,2026-09
+18205,"Unicum, 0,5 literes (ízesített is), nem díszdobozos kivitel, palack",5550,2026-09
+18211,"Likőr 0,5–0,7 literes, 20–35% alkoholtartalomaa",8320,2026-09
+19002,"Cigaretta, Sopianae, multifilteres, rövid, 20 db, csomagab",2640,2026-09
+19005,"Multifilter cigaretta, 20 db, csomagab",2680,2026-09
+19015,"Pall Mall cigarettadohány (blue), 50 g, csomagac",4570,2026-09
+31071,"Férfi átmeneti kabát, műselyem vagy szintetikus selyem béléssel, 100 cm-es háthossznál hosszabb, db",28280,2026-09
+31085,"Férfifarmernadrág, db",13940,2026-09
+31095,"Férfiing, hosszú ujjú, minimum 65%-os pamuttartalomad",10540,2026-09
+31506,"Férfi félcipő, bőr, ragasztott műtalp, pár",24350,2026-09
+31508,"Férfi-szabadidőcipő, bőr, műbőr-, textil kombinációval is, ragasztott műtalp, pár",20040,2026-09
+32071,"Női átmeneti kabát, műselyem vagy szintetikus selyembéléssel, 100–115 cm-es háthosszal, db",24140,2026-09
+32086,"Női farmernadrág, db",10690,2026-09
+32089,"Női pulóver, akril, vékony, hosszú ujjú, db",8330,2026-09
+32503,"Női félcipő, bőr, ragasztott műtalp, pár",21870,2026-09
+32507,"Női szandál, műbőr, ragasztott műtalp, pár",12970,2026-09
+33501,"Gyerek száras cipő, bőr, ragasztott műtalp, 23–26, párae",14580,2026-09
+34208,"Gurulós bőrönd, kb. 55x40x20 cm, db",21010,2026-09
+34275,"Hátizsák, űrtartalom kb. 30 l, db",13540,2026-09
+40049,"Telekárpitozott sarok ülőgarnitúra, nyitható ágyszerkezettel, 260–300 cm x 140–180 cm, garnitúra",325680,2026-09
+40101,"Konyhaszekrény alsórész elem, 80–90 cm, 2 részes rozsdamentes mosogatóval szerelt, db",72250,2026-09
+40103,"Étkezőasztal 70–90x110–140 cm, dbaf",70990,2026-09
+40142,"Gyermekkocsi, mély-vagy variálható (ikerkocsi kivételével), db",143860,2026-09
+40207,"Hűtőszekrény, egyajtós, kb. 75–150 l, dbag",90640,2026-09
+40302,"Automata mosógép 6–8 kg, db",153430,2026-09
+40402,"Olajtöltésű villamos radiátor, 2000–2600 W teljesítményah",28820,2026-09
+40442,"Gáztűzhely 3–4 főzőhelyes, db",120660,2026-09
+40502,"Porszívó, 650–900 W-os, porzsák nélküliai",36450,2026-09
+41303,"Felnőtt kerékpár, 26–28"", 3–24 sebességaj",142350,2026-09
+42107,"LCD-LED televízió (76–82 cm), Full HD, db",78940,2026-09
+42431,"Férfi kvarcóra, analóg, márkás, db",36990,2026-09
+42433,"Női kvarcóra, analóg, márkás, db",30160,2026-09
+42463,"Tanuló gitár, akusztikus, műanyaghúros is, db",38350,2026-09
+43101,"Karikagyűrű, 14 karátos aranyból, sima és mintás, g",62770,2026-09
+50102,"Szénbrikett, 100 kgak",19980,2026-09
+50202,"Egységes fűrészelt tűzifa, 100 kg",8200,2026-09
+50501,"Villamos energia, általános, 10 kWhal",459,2026-09
+50502,"Villamos energia, vezérelt, 10 kWhal",346,2026-09
+50601,"Vezetékes gáz, 1 m³al",155,2026-09
+50701,"Propán-butángáz 10,9–11,5 kg palack, cseredíj, palackam",8520,2026-09
+51016,"Csempe, falburkoló, fehér és egyszínű színes, m²",5900,2026-09
+51033,"Laminált parketta, 7–9 mm-es (HDF vagy SPAN alapú), m²",5260,2026-09
+51073,"Diszperziós falfesték, beltéri használatra, 8–15 l-es kiszerelésben (Diszperzit, Tilatex, Diszkrilát stb.), 10 lan",9640,2026-09
+52112,"Ágynemű-garnitúra, krepp, (nagypárna, paplan, kispárnahuzattal vagy anélkül), garnitúra",10180,2026-09
+52119,"Szintetikus takaró, 130–150x170–220 cm, dbao",9260,2026-09
+52124,"Frottírtörülköző, 70x140 cm, db",4420,2026-09
+52544,"Ceruzaelem, tartós, LR6-1,5V, 4 darabos csomag",1340,2026-09
+52602,"Mosogatószer, szintetikus folyékony, koncentrátum, literap",1270,2026-09
+52605,"Öblítőszer koncentrátum, 1600–2000 mlaq",1840,2026-09
+52619,"Mosópor, 1,35–3,75 kg-os kiszerelésből átszámolva, kgar",1630,2026-09
+52621,"Általános folyékony tisztítószer, 750–1000 ml",975,2026-09
+53002,"Tusfürdő, 250 ml-es, műanyag flakonban",789,2026-09
+53005,"Fogkrém, 75 ml-es, db",895,2026-09
+53007,"Sampon, 200–250 g, vagy ml",1150,2026-09
+53020,"Folyékony szappan, 250–300 ml, utántöltő kivételével",687,2026-09
+53021,"Egészségügyi papír, 3 rétegű, 8–16 darabos kiszerelésas",1690,2026-09
+53022,"Papírzsebkendő, 90–100 db-os (4 rétegű)at",458,2026-09
+53174,"Digitális lázmérő, hónaljban mérő",2380,2026-09
+53188,"Vérnyomásmérő, digitális, felkaros, elemmel működő, LCD kijelzőau",16420,2026-09
+53192,"Szemüvegkeret, fém vagy nikkelezett",28160,2026-09
+53193,"Lágy kontaktlencse, + - 6D, szférikus (SPF), 30 napos viseletre",7410,2026-09
+53194,"Szemüveglencse, műanyag, + - 6D, antireflex réteg és felület keményítés nélkül",17740,2026-09
+54042,"Akkumulátor személygépkocsihoz, 12 V-os, 54–56 Amperórás (AH)",39590,2026-09
+54104,"Autóbenzin, ólommentes, 95 oktánszámú, liter",619,2026-09
+54131,"Gázolaj, liter",694,2026-09
+55004,"Nemzeti Sport, 1 db",390,2026-09
+55045,"Magyar Nők Lapja, 1 db",839,2026-09
+56104,"Macskaeledel, 400–415 g-os konzervdobozban, dobozav",497,2026-09
+56153,"Száraz kutyatáp, 2,5–5 kg, kgaw",1370,2026-09
+61001,"Önkormányzati összkomfortos lakás, havi bér, m²",571,2026-09
+61202,"Társasház közös költsége, 50–60 m²",13280,2026-09
+61504,"Szemétszállítás (saját kuka, 110–120 literes), 1 ürítés díjaax",496,2026-09
+61601,"Vízdíj, m³",297,2026-09
+61701,"Csatornadíj, m³",363,2026-09
+63003,"Férfi hajvágás, fő",4480,2026-09
+63005,"Női hosszú haj mosása, vágása, szárítása",8360,2026-09
+64211,"Parkolás, óraay",493,2026-09
+64304,"Vonaljegy, db",433,2026-09
+64305,"Tanuló havibérlet (Budapest nélkül), dbaz",1950,2026-09
+64306,"Általános havibérlet (Budapest nélkül), dbaz",5610,2026-09
+64310,"Nyugdíjas havibérlet (Budapest nélkül), dbaz",2230,2026-09
+64402,"Taxi (km-díj), km",524,2026-09
+64632,"Teljesárú menetjegy, busz, dbba",500,2026-09
+64633,"Teljesárú menetjegy gyorsvonat, dbba",3410,2026-09
+65101,"Szabványméretű levél belföldre, db",160,2022-12
+66105,"Személygépjármű vezető tanfolyam, tanfolyam",388970,2026-09
+66303,"Multiplex mozi, szombat este, db",3050,2026-09
+66501,"Múzeumba belépőjegy, db",2260,2026-09
+66502,"Állatkertbe belépőjegy, 1 gyermek részére, vasárnap, db",3850,2026-09
+68122,"Apartman, 30–40 m² körüli, 2 főre, 1 éjszaka, hétvége, önellátás, IFA nélkül,szoba",28070,2026-09
+68191,"Szálloda 3 csillagos, 2 ágyas szoba, reggelivel, 2 főre, hétvégén, 1 éj, idegenforgalmi adó nélkül, szoba",37630,2026-09
+68192,"Szálloda 4 csillagos, 2 ágyas szoba, félpanzióval, 2 főre, hétköznap, 1 éj, idegenforgalmi adó nélkül, szobabb",63400,2026-09
+68193,"Panzió, zuhanyzós/fürdőszobás, 2 ágyas szoba, reggelivel, 2 főre, hétköznap, idegenforgalmi adó nélkül, szoba",31890,2026-09
+69131,"Temetési szolgáltatás, egyedi megrendelésre (alapszolgáltatás: sírásás, ravatalozás, temetés levezetése, gyászkocsi stb.), fő",540570,2026-09
+69132,"Temetési szolgáltatás, hamvasztás (alapszolgáltatás: ravatalozás, áldozati láng, temetés levezetése, gyászkocsi stb.), fő",386400,2026-09

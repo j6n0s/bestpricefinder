@@ -1,0 +1,5 @@
+week,recipes,primary_chain,n_fill_in_items_from_other_chain,used_cost,separate_recipe_pack_cost,week_aggregated_pack_cost,used_cost_nonpantry,separate_pack_nonpantry,week_pack_nonpantry,saving_aggregation_nonpantry_pct,leftover_value_nonpantry,leftover_share_nonpantry_pct
+W1,"T01,T02,T05,M03,M10,M01",Auchan,1,9294,26661,21823,8979,15767,14667,7.0,5688,38.8
+W2,"T03,T07,T11,M02,M06,M12",Auchan,4,6355,20280,15309,6001,12717,10719,15.7,4718,44.0
+W3,"T04,T06,T10,M04,M08,M11",Spar,2,7357,22510,15279,7028,14196,10690,24.7,3661,34.3
+W4,"T08,T09,T12,M05,M07,M09",Auchan,1,8280,29372,23028,7928,21336,18592,12.9,10664,57.4

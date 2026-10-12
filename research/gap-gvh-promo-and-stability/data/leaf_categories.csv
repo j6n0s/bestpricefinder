@@ -1,0 +1,162 @@
+leaf_id,leaf,l2_id,l2,top_id,top
+1,"Pasztőrözött ESL tej, 2,8% zsírtart.",2001,Tej,1001,"Tejtermék, sajt, tojás"
+2,"Pasztőrözött ESL tej, 1,5% zsírtart.",2001,Tej,1001,"Tejtermék, sajt, tojás"
+3,"UHT tej dobozban, 2,8% zsírtart.",2001,Tej,1001,"Tejtermék, sajt, tojás"
+4,"UHT tej dobozban, 1,5% zsírtart.",2001,Tej,1001,"Tejtermék, sajt, tojás"
+5,Tejföl 20% zsírtart.,2005,Tejföl,1001,"Tejtermék, sajt, tojás"
+6,Tejföl 12% zsírtart.,2005,Tejföl,1001,"Tejtermék, sajt, tojás"
+7,Natúr joghurt,2007,"Joghurt, túró, kefír",1001,"Tejtermék, sajt, tojás"
+8,Kefir és kaukázusi kefir,2007,"Joghurt, túró, kefír",1001,"Tejtermék, sajt, tojás"
+9,Tehéntúró,2007,"Joghurt, túró, kefír",1001,"Tejtermék, sajt, tojás"
+84,Gyümölcsjoghurt,2007,"Joghurt, túró, kefír",1001,"Tejtermék, sajt, tojás"
+10,Trappista tömbsajt,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+105,Trappista darabolt sajt,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+106,Trappista szeletelt sajt,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+107,Ementáli,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+108,Cheddar,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+109,Gouda,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+110,Edami,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+111,Camambert,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+112,Brie,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+113,Feta,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+114,Mozzarella,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+115,Ömlesztett sajtok,2010,Sajt,1001,"Tejtermék, sajt, tojás"
+11,Margarin,2011,"Vajak, vajkrém, margarin",1001,"Tejtermék, sajt, tojás"
+12,Vaj,2011,"Vajak, vajkrém, margarin",1001,"Tejtermék, sajt, tojás"
+13,Vajkrém,2011,"Vajak, vajkrém, margarin",1001,"Tejtermék, sajt, tojás"
+63,Sütőmargarin,2011,"Vajak, vajkrém, margarin",1001,"Tejtermék, sajt, tojás"
+14,Tojás,2014,Tojás,1001,"Tejtermék, sajt, tojás"
+81,Főzőtejszín,2081,Tejszín,1001,"Tejtermék, sajt, tojás"
+82,Habtejszín,2081,Tejszín,1001,"Tejtermék, sajt, tojás"
+116,Túródesszert,2116,Tejdesszert,1001,"Tejtermék, sajt, tojás"
+15,Sertéscomb,2015,Sertés,1015,"Hús, hal, felvágott"
+16,Sertéskaraj,2015,Sertés,1015,"Hús, hal, felvágott"
+85,Darált sertéshús,2015,Sertés,1015,"Hús, hal, felvágott"
+118,Sertésoldalas,2015,Sertés,1015,"Hús, hal, felvágott"
+119,Sertéstarja,2015,Sertés,1015,"Hús, hal, felvágott"
+17,Egész csirke és tyúk,2017,Szárnyasok,1015,"Hús, hal, felvágott"
+18,Csirkemellfilé,2017,Szárnyasok,1015,"Hús, hal, felvágott"
+19,Csirkecomb,2017,Szárnyasok,1015,"Hús, hal, felvágott"
+20,Csirkeszárny,2017,Szárnyasok,1015,"Hús, hal, felvágott"
+21,Pulykamellfilé,2017,Szárnyasok,1015,"Hús, hal, felvágott"
+64,Marhalábszár,2064,Marha,1015,"Hús, hal, felvágott"
+86,Darált marhahús,2064,Marha,1015,"Hús, hal, felvágott"
+87,Fehérpecsenye,2064,Marha,1015,"Hús, hal, felvágott"
+22,Sertészsír,2022,Egyéb húskészítmények,1015,"Hús, hal, felvágott"
+23,Virsli,2022,Egyéb húskészítmények,1015,"Hús, hal, felvágott"
+24,Párizsi,2024,Felvágottak,1015,"Hús, hal, felvágott"
+25,Téliszalámi,2024,Felvágottak,1015,"Hús, hal, felvágott"
+26,Pulykamell sonka,2024,Felvágottak,1015,"Hús, hal, felvágott"
+27,"Sonka, sertéscombból",2024,Felvágottak,1015,"Hús, hal, felvágott"
+88,Szárazkolbász,2088,Kolbász,1015,"Hús, hal, felvágott"
+89,Császárszalonna,2089,Szalonna,1015,"Hús, hal, felvágott"
+90,Kolozsvári szalonna,2089,Szalonna,1015,"Hús, hal, felvágott"
+91,Pontyszelet,2091,Halak,1015,"Hús, hal, felvágott"
+92,Harcsafilé,2091,Halak,1015,"Hús, hal, felvágott"
+93,Tengeri halfilé,2091,Halak,1015,"Hús, hal, felvágott"
+28,Alma,2028,Gyümölcs,1028,"Zöldség, gyümölcs"
+29,Körte,2028,Gyümölcs,1028,"Zöldség, gyümölcs"
+30,Földieper,2028,Gyümölcs,1028,"Zöldség, gyümölcs"
+31,Banán,2028,Gyümölcs,1028,"Zöldség, gyümölcs"
+32,Citrom,2028,Gyümölcs,1028,"Zöldség, gyümölcs"
+33,Narancs,2028,Gyümölcs,1028,"Zöldség, gyümölcs"
+34,Paradicsom,2034,Zöldség,1028,"Zöldség, gyümölcs"
+35,Zöldpaprika,2034,Zöldség,1028,"Zöldség, gyümölcs"
+36,Sárgarépa,2034,Zöldség,1028,"Zöldség, gyümölcs"
+37,Petrezselyemgyökér,2034,Zöldség,1028,"Zöldség, gyümölcs"
+38,Uborka,2034,Zöldség,1028,"Zöldség, gyümölcs"
+39,Fokhagyma,2034,Zöldség,1028,"Zöldség, gyümölcs"
+40,Vöröshagyma,2034,Zöldség,1028,"Zöldség, gyümölcs"
+41,Étkezési burgonya,2034,Zöldség,1028,"Zöldség, gyümölcs"
+42,Étkezési újburgonya,2034,Zöldség,1028,"Zöldség, gyümölcs"
+43,Fejes káposzta,2034,Zöldség,1028,"Zöldség, gyümölcs"
+44,Kelkáposzta,2034,Zöldség,1028,"Zöldség, gyümölcs"
+45,Karfiol,2034,Zöldség,1028,"Zöldség, gyümölcs"
+97,Brokkoli,2034,Zöldség,1028,"Zöldség, gyümölcs"
+59,Gyorsfagyasztott zöldborsó,2059,Fagyasztott zöldségek,1028,"Zöldség, gyümölcs"
+60,Hasábburgonya,2059,Fagyasztott zöldségek,1028,"Zöldség, gyümölcs"
+98,Fagyasztott brokkoli,2059,Fagyasztott zöldségek,1028,"Zöldség, gyümölcs"
+46,"Fehér kenyér, cipó és vekni",2046,Kenyérfélék,1046,Pékáru
+47,"Félbarna kenyér, cipó és vekni",2046,Kenyérfélék,1046,Pékáru
+48,"Teljes kiőrlésű kenyér, cipó és vekni",2046,Kenyérfélék,1046,Pékáru
+49,"Rozsos kenyér, cipó és vekni",2046,Kenyérfélék,1046,Pékáru
+94,Zsemle,2094,Zsemle,1046,Pékáru
+50,Száraztészta,2050,"Tészta, háztartási keksz",1050,"Tartós élelmiszerek, italok"
+58,Háztartási keksz,2050,"Tészta, háztartási keksz",1050,"Tartós élelmiszerek, italok"
+51,"Étolaj, napraforgó",2051,"Liszt, cukor, olaj",1050,"Tartós élelmiszerek, italok"
+52,Finomliszt,2051,"Liszt, cukor, olaj",1050,"Tartós élelmiszerek, italok"
+53,Rétesliszt,2051,"Liszt, cukor, olaj",1050,"Tartós élelmiszerek, italok"
+54,Kristálycukor,2051,"Liszt, cukor, olaj",1050,"Tartós élelmiszerek, italok"
+55,Porcukor,2051,"Liszt, cukor, olaj",1050,"Tartós élelmiszerek, italok"
+120,Extra szűz olívaolaj,2051,"Liszt, cukor, olaj",1050,"Tartós élelmiszerek, italok"
+121,Olívapogácsa olaj,2051,"Liszt, cukor, olaj",1050,"Tartós élelmiszerek, italok"
+56,Csemegekukorica-konzerv,2056,"Konzervek, savanyúságok",1050,"Tartós élelmiszerek, italok"
+57,Csemegeuborka,2056,"Konzervek, savanyúságok",1050,"Tartós élelmiszerek, italok"
+61,Narancslé,2061,"Víz, gyümölcslé",1050,"Tartós élelmiszerek, italok"
+62,Almalé,2061,"Víz, gyümölcslé",1050,"Tartós élelmiszerek, italok"
+67,Ásványvíz,2061,"Víz, gyümölcslé",1050,"Tartós élelmiszerek, italok"
+95,Rizs,2095,Rizs,1050,"Tartós élelmiszerek, italok"
+96,Lencse,2096,"Hüvelyesek, magvak",1050,"Tartós élelmiszerek, italok"
+100,Földimogyoró,2096,"Hüvelyesek, magvak",1050,"Tartós élelmiszerek, italok"
+101,Őrölt kávé,2101,Tea és kávé,1050,"Tartós élelmiszerek, italok"
+102,Tea,2101,Tea és kávé,1050,"Tartós élelmiszerek, italok"
+122,Szemes kávé,2101,Tea és kávé,1050,"Tartós élelmiszerek, italok"
+103,Kakaópor 10-12% kakaóvajjal,2103,Kakaó,1050,"Tartós élelmiszerek, italok"
+104,Kakaópor 20-22% kakaóvajjal,2103,Kakaó,1050,"Tartós élelmiszerek, italok"
+68,Növényi italok,2068,Növényi termékek,1068,Speciális étrend
+78,Tejföl helyettesítésére szolgáló vegán növényi krém,2068,Növényi termékek,1068,Speciális étrend
+83,Tejszín helyettesítésére szolgáló növényi krém,2068,Növényi termékek,1068,Speciális étrend
+69,Laktózmentes tej,2069,Laktózmentes termékek,1068,Speciális étrend
+70,Laktózmentes tejföl,2069,Laktózmentes termékek,1068,Speciális étrend
+71,Laktózmentes natúr joghurt,2069,Laktózmentes termékek,1068,Speciális étrend
+72,Laktózmentes kefir,2069,Laktózmentes termékek,1068,Speciális étrend
+73,Laktózmentes túró,2069,Laktózmentes termékek,1068,Speciális étrend
+74,Laktózmentes trappista sajt,2069,Laktózmentes termékek,1068,Speciális étrend
+75,Laktózmentes margarin és sütőmargarin,2069,Laktózmentes termékek,1068,Speciális étrend
+76,Laktózmentes vaj,2069,Laktózmentes termékek,1068,Speciális étrend
+77,Laktózmentes vajkrém,2069,Laktózmentes termékek,1068,Speciális étrend
+79,"Gluténmentes kenyér, cipó és vekni",2079,Gluténmentes termékek,1068,Speciális étrend
+80,Gluténmentes száraztészta,2079,Gluténmentes termékek,1068,Speciális étrend
+99,Gluténmentes liszt,2079,Gluténmentes termékek,1068,Speciális étrend
+117,Laktózmentes túródesszert,2117,Laktózmentes tejdesszert,1068,Speciális étrend
+123,Pépes bébiétel,2123,"Bébiétel, tápszer",1123,Baba
+124,Tej- és gabonapép,2123,"Bébiétel, tápszer",1123,Baba
+125,Tápszer,2123,"Bébiétel, tápszer",1123,Baba
+142,Babasampon,2142,Babaápolás,1123,Baba
+144,Babatusfürdő és fürdető,2142,Babaápolás,1123,Baba
+150,Babatestápló,2142,Babaápolás,1123,Baba
+163,Hintőpor,2142,Babaápolás,1123,Baba
+161,Nadrágpelenka,2161,Eldobható pelenka,1123,Baba
+162,Bugyipelenka,2161,Eldobható pelenka,1123,Baba
+126,Toalettpapír,2126,Háztartási papíráru és csomagoló,1126,Háztartás
+127,Papír kéztörlő henger,2126,Háztartási papíráru és csomagoló,1126,Háztartás
+128,Papír zsebkendő,2126,Háztartási papíráru és csomagoló,1126,Háztartás
+129,Alufólia,2126,Háztartási papíráru és csomagoló,1126,Háztartás
+130,Mosópor,2130,Ruhatisztítás,1126,Háztartás
+131,Folyékony mosószer,2130,Ruhatisztítás,1126,Háztartás
+132,Mosókapszula,2130,Ruhatisztítás,1126,Háztartás
+133,Öblítő,2130,Ruhatisztítás,1126,Háztartás
+134,Mosogatószer,2134,Tisztítószer,1126,Háztartás
+135,Gépi mosogató tabletta,2134,Tisztítószer,1126,Háztartás
+136,Folyékony súrolószer,2134,Tisztítószer,1126,Háztartás
+137,Általános tisztítószer,2134,Tisztítószer,1126,Háztartás
+138,Folyékony szappan,2138,Tisztálkodás,1138,Szépség és higiénia
+139,Szappan,2138,Tisztálkodás,1138,Szépség és higiénia
+140,Kézfertőtlenítő gél,2138,Tisztálkodás,1138,Szépség és higiénia
+141,Sampon,2138,Tisztálkodás,1138,Szépség és higiénia
+143,Tusfürdő,2138,Tisztálkodás,1138,Szépség és higiénia
+145,Fogkrém,2138,Tisztálkodás,1138,Szépség és higiénia
+146,Gyermek fogkrém,2138,Tisztálkodás,1138,Szépség és higiénia
+147,Fogkefe,2138,Tisztálkodás,1138,Szépség és higiénia
+148,Gyermek fogkefe,2138,Tisztálkodás,1138,Szépség és higiénia
+149,Testápoló,2149,Szépségápolás,1138,Szépség és higiénia
+151,Golyós dezodor,2149,Szépségápolás,1138,Szépség és higiénia
+152,Izzadásgátló stift,2149,Szépségápolás,1138,Szépség és higiénia
+153,Dezodor,2149,Szépségápolás,1138,Szépség és higiénia
+154,Eldobható borotva,2149,Szépségápolás,1138,Szépség és higiénia
+155,Utántöltő borotvafej,2149,Szépségápolás,1138,Szépség és higiénia
+156,Borotvahab,2149,Szépségápolás,1138,Szépség és higiénia
+157,Borotvazselé,2149,Szépségápolás,1138,Szépség és higiénia
+158,Egészségügyi betét,2158,Intim higiénia,1138,Szépség és higiénia
+159,Tisztasági betét,2158,Intim higiénia,1138,Szépség és higiénia
+160,Tampon,2158,Intim higiénia,1138,Szépség és higiénia

@@ -1,0 +1,71 @@
+code,sample,gvh_top,gvh_cat,gvh_name,chains,http,off_found,energy_per100g,full7_per100g,tagged_hungary
+5051007166737,full_random,"Hús, hal, felvágott",Tengeri halfilé,TS Atlantic salmon fillet portions 250 g,Tesco,200,True,True,False,False
+3850355005635,full_random,"Tejtermék, sajt, tojás",Ömlesztett sajtok,Président füst ízű kenhető zsíros ömlesztett sajtkészítmény 8 db 140 g,Auchan,200,True,True,True,False
+5997754105820,full_random,"Tejtermék, sajt, tojás",Ömlesztett sajtok,"Kisteleki metélőhagymás kenhető, félzsíros ömlesztett sajt 90 g",Auchan,200,True,True,False,True
+5999086458179,full_random,"Tartós élelmiszerek, italok",Száraztészta,"Auchan Kedvenc orsó száraztészta, 4 tojásos 500 g",Auchan,404,False,False,False,False
+5999086455109,full_random,"Tejtermék, sajt, tojás",Tojás,Auchan Kedvenc friss tojás A osztály M méret 10 db,Auchan,404,False,False,False,False
+5999883744505,full_random,"Tartós élelmiszerek, italok",Szemes kávé,Cafe Frei  Mandula-szemes kávé ausztrál ízei ihlették 1 kg,Auchan,404,False,False,False,False
+5998202943353,full_random,"Tejtermék, sajt, tojás",Natúr joghurt,"NÁDUDVARI JOGH. ÉLŐFLÓRÁS, NATÚR 1.4% 350 g QQ",Tesco,200,True,True,True,True
+5999538341158,full_random,"Zöldség, gyümölcs",Földieper,Tesco édes földieper 500 g  ,Tesco,404,False,False,False,False
+5999033810241,full_random,"Hús, hal, felvágott",Darált sertéshús,S-Budget sertés darálthús 900 g,Spar,404,False,False,False,False
+9020200023327,full_random,Speciális étrend,Növényi italok,Joya Zab 0% Cukor UHT 1 l ,Auchan,200,True,True,False,False
+5998017500291,full_random,"Tartós élelmiszerek, italok","Étolaj, napraforgó",Kunsági Éden szuper finomít. étolaj 1 L QQ,Tesco,200,True,False,False,True
+9001810000212,full_random,"Tartós élelmiszerek, italok",Őrölt kávé,Espresso Organico őrölt aludobozos kávé 250 g,Auchan,404,False,False,False,False
+8711000499184,full_random,"Tartós élelmiszerek, italok",Szemes kávé,PALOMA CLASSIC VACUM KÁVÉ 450G,Tesco,404,False,False,False,False
+5998207943716,full_random,"Tejtermék, sajt, tojás",Vajkrém,CAMPING VAJKRÉM NATÚR 150 g ,Tesco,404,False,False,False,False
+5411188112549,full_random,Speciális étrend,Növényi italok,Alpro növényi ital (pörkölt mandula / rizs / kókusz / cm kókusz) 1 l,Aldi|Tesco|Spar,200,True,True,True,True
+5998207943013,full_random,"Tejtermék, sajt, tojás",Ömlesztett sajtok,Camping natúr kenhető félzsíros ömlesztett sajt 8 db 140 g,Tesco|Spar|Auchan,404,False,False,False,False
+5999139407475,full_random,"Tartós élelmiszerek, italok",Kristálycukor,S-BUDGET Kristálycukor 1kg,Spar,200,True,False,False,True
+4104420236943,full_random,"Tartós élelmiszerek, italok",Száraztészta,ALNATURA BIO PENNE 500 g,Müller,200,True,True,True,False
+5997534107587,full_random,"Tejtermék, sajt, tojás","Pasztőrözött ESL tej, 1,5% zsírtart.","Abaúj dobozos tej 1,5% 1L",Auchan,404,False,False,False,False
+5999033879835,full_random,"Tartós élelmiszerek, italok",Száraztészta,SPAR makaróni négytojásos száraztészta 500 g,Spar,200,True,True,True,True
+5206953002725,full_random,"Tartós élelmiszerek, italok",Extra szűz olívaolaj,Korvel extra szűz olívaolaj 500 ml,Auchan,404,False,False,False,False
+9100000055237,full_random,"Tejtermék, sajt, tojás",Gouda,"S-Budget Gouda osztrák, zsíros, félkemény, darabolt sajt pasztőrözött tejből 450 g",Spar,200,True,True,True,False
+9100000947440,full_random,"Tartós élelmiszerek, italok",Almalé,SPAR Natur*pur Bio 100% almalé 1 l,Spar,200,True,False,False,False
+9100100128770,full_random,"Tartós élelmiszerek, italok",Szemes kávé,SPAR PREMIUM Caffé Crema pörkölt szemes kávé 1000 g,Spar,200,True,False,False,False
+5999139403897,full_random,"Tejtermék, sajt, tojás",Főzőtejszín,"SPAR free from UHT laktózmentes hab- és főzőtejszín 30% 0,5 l",Spar,404,False,False,False,False
+5998791319416,full_random,Pékáru,"Teljes kiőrlésű kenyér, cipó és vekni",Teljes kiőrlésű kenyér 400 g,Auchan,404,False,False,False,False
+5999545594523,full_random,"Tartós élelmiszerek, italok",Ásványvíz,"Zafír szénsavmentes természetes ásványvíz 1,5 l",Auchan,404,False,False,False,False
+5997465370388,full_random,Speciális étrend,Gluténmentes liszt,RL RIZSLISZT 1kg BARNA  ,Tesco,200,True,False,False,False
+5999863235078,full_random,"Zöldség, gyümölcs",Étkezési burgonya,Piros burgonya 10 kg,Auchan,404,False,False,False,False
+5997684502034,full_random,"Tejtermék, sajt, tojás",Ömlesztett sajtok,"Mackó kenhető, félzsíros ömlesztett sajt 6 db 200 g",Spar,200,True,True,True,True
+5999887122200,full_random,"Tejtermék, sajt, tojás",Tojás,JóHázi extrasárga tojás A osztály M-L méret 30 db,Auchan,404,False,False,False,False
+4061445363286,full_random,"Tartós élelmiszerek, italok",Szemes kávé,"Tchibo Barista Espresso szemes, pörkölt kávé 1000 g",Auchan,200,True,False,False,False
+5999508470307,full_random,Pékáru,"Teljes kiőrlésű kenyér, cipó és vekni",Teljes kiőrlésű forma kenyér 750 g,Auchan,404,False,False,False,False
+0070177010652,full_random,"Tartós élelmiszerek, italok",Tea,Twinings Earl Grey bergamott ízű fekete tea 100 g,Spar,200,True,True,True,False
+5998201223616,full_random,"Tejtermék, sajt, tojás",Feta,TOLLE LIGHT TRAP .FÉL SAJT 700 g QQ,Tesco,200,True,True,True,True
+5999545594431,full_random,"Tartós élelmiszerek, italok",Ásványvíz,"Mizse szén-dioxiddal dúsított természetes ásványvíz 1,5 l",Auchan|Tesco|Spar,200,True,False,False,False
+4104420253742,full_random,Speciális étrend,Növényi italok,ALNATURA BIO TELJES ZABITAL 1 L,Müller,200,True,True,True,False
+4012824401969,full_random,"Tartós élelmiszerek, italok",Tea,"Yogi Tea BIO energizáló zöld tea 17 filter 30,6 g",Spar,200,True,False,False,False
+5992734100413,full_random,"Hús, hal, felvágott",Virsli,Gierlinger Premium Bacon roppanós sajtos virsli baconbe göngyölve 300 g,Spar,200,True,True,True,True
+5999139406218,full_random,"Tejtermék, sajt, tojás",Főzőtejszín,SPAR free from UHT laktózmentes főzőtejszín 10% 200 ml,Spar,404,False,False,False,False
+5999544964617,full_random,"Tejtermék, sajt, tojás",Gouda,Reszelt Gouda sajt 500g,Auchan,404,False,False,False,False
+5999542646386,full_random,Speciális étrend,Gluténmentes liszt,BENEFITT KÓKUSZLISZT GM 500 g,Tesco,404,False,False,False,False
+3228022960066,full_random,"Tejtermék, sajt, tojás",Ömlesztett sajtok,Président zsírszegény ömlesztett sajt 200 g,Auchan,200,True,True,True,False
+5998207771661,full_random,"Tejtermék, sajt, tojás","Pasztőrözött ESL tej, 2,8% zsírtart.","Tarka ESL félzsíros tej 2,8% 1 l",Auchan,200,True,True,False,True
+5999886075149,full_random,"Hús, hal, felvágott",Sertészsír,Régimódi sertés zsír (sült) 500 g,Auchan,404,False,False,False,False
+5997239310060,full_random,Speciális étrend,Gluténmentes száraztészta,Barbara gluténmentes apró cérnametélt 10 tojásos száraztészta 200 g,Auchan,404,False,False,False,False
+5998999201391,full_random,"Tejtermék, sajt, tojás",Gyümölcsjoghurt,Cserpes Sajtműhely ribizlis joghurt 250 g,Auchan,200,True,True,True,True
+9100100131756,full_random,"Tartós élelmiszerek, italok",Őrölt kávé,"REGIO Bon Aroma őrölt, pörkölt kávé 250 g",Spar,404,False,False,False,False
+5998201211521,full_random,"Tejtermék, sajt, tojás",Tehéntúró,TOLLE RÖGÖS TÚRÓ FÉLZSÍROS 450 g QQ,Tesco,200,True,True,True,True
+5051007122948,full_random,"Tartós élelmiszerek, italok",Földimogyoró,TD PÖRKÖLT SÓS FÖLDIM. 500 g,Tesco,200,True,True,True,True
+5998207944898,full_random,"Tejtermék, sajt, tojás",Ömlesztett sajtok,"Camping sajtos snack, sajtkrém ropogós pálcikával 35 g",Auchan,404,False,False,False,False
+5999860766186,full_random,"Zöldség, gyümölcs",Karfiol,Karfiol db,Spar,404,False,False,False,False
+5999073304359,full_random,"Tejtermék, sajt, tojás",Vajkrém,IRISH VAJKRÉM NATÚR 140 g ,Tesco,404,False,False,False,False
+5999139407109,full_random,"Tejtermék, sajt, tojás",Tojás,Spar szabadtart.tojás l 6db hazai szeretem,Spar,404,False,False,False,False
+4014500519630,full_random,"Tejtermék, sajt, tojás",Gyümölcsjoghurt,Zott Jogobella élőflórás joghurt 150 g,Tesco|Auchan,200,True,True,True,False
+8719200307834,full_random,"Tejtermék, sajt, tojás",Margarin,DELMA CHOCO KENHETŐ KRÉM KAKAÓS 200 g,Tesco,404,False,False,False,False
+4067796001983,full_random,Speciális étrend,Növényi italok,"Bio natúr kókuszital, 1 l",dm,200,True,True,True,False
+8003410311089,full_random,"Tartós élelmiszerek, italok",Szemes kávé,Segafredo Zanetti Espresso Casa szemes pörkölt kávé 1000 g,Spar,200,True,False,False,False
+5999882347592,full_random,"Tejtermék, sajt, tojás",Túródesszert,Placcs túródesszert natúr 30 g,Auchan,404,False,False,False,False
+5997100012758,full_random,"Tartós élelmiszerek, italok",Őrölt kávé,Omnia classic,Penny|Lidl,404,False,False,False,False
+8719200283411,stream_recheck_True,Speciális étrend,Laktózmentes margarin és sütőmargarin,Liga laktózmentes csökkentett zsírtartalmú margarin 250 g,,200,True,True,True,True
+5051007166867,stream_recheck_True,"Tejtermék, sajt, tojás",Camambert,TS CAMEMBERT FOKHAGYMÁS 120g ,,200,True,True,True,False
+5999086449108,stream_recheck_True,"Tejtermék, sajt, tojás",Tejföl 12% zsírtart.,"Auchan Kedvenc tejföl pasztőrözött, homogénezett 12% 175 g",,200,True,True,True,True
+5999885485314,stream_recheck_True,Speciális étrend,Gluténmentes száraztészta,CIVITA FUSILI 450g,,200,True,True,True,True
+5998001794590,stream_recheck_True,"Hús, hal, felvágott",Szárazkolbász,MECOM PARASZTKOLBÁSZ 300 g,,200,True,True,True,True
+5995885820407,stream_recheck_False,"Hús, hal, felvágott",Pulykamellfilé,TESCO FRISS PULYAKMELLFILÉ 450 g QQ,,404,False,False,False,False
+5051007104500,stream_recheck_False,"Zöldség, gyümölcs",Körte,TS KÖRTE 4db  ,,404,False,False,False,False
+5999086469502,stream_recheck_False,"Zöldség, gyümölcs",Fagyasztott brokkoli,Auchan Kedvenc brokkoli gyorsfagyasztott 900 g,,404,False,False,False,False
+5999139408014,stream_recheck_False,Speciális étrend,Laktózmentes tej,"SPAR free from ESL laktózmentes, zsírszegény tej 1,5% 1 l",,404,False,False,False,False
+8586003449357,stream_recheck_False,"Hús, hal, felvágott",Párizsi,Finonimo pulyka párizsi 1000 g,,404,False,False,False,False
