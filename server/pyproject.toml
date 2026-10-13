@@ -14,6 +14,7 @@ dependencies = [
     "psycopg-pool==3.3.3",
     "httpx==0.28.1",
     "openpyxl==3.1.5",
+    "defusedxml==0.7.1",  # openpyxl parses untrusted XLSX safely only when this is installed
 ]
 
 [project.scripts]

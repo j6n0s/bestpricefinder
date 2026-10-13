@@ -20,11 +20,13 @@ from __future__ import annotations
 import io
 import re
 import unicodedata
+import zipfile
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal, InvalidOperation
 
 import openpyxl
+from openpyxl.xml import DEFUSEDXML
 
 from bpf.gvh.errors import GvhError, GvhSchemaError, StaleXlsxError
 
@@ -249,11 +251,36 @@ def _read_sheet(workbook: openpyxl.Workbook, expected_date: date) -> DailyXlsx:
     return DailyXlsx(data_date=day, sheet_name=_norm(name), rows=rows, drift=tuple(drift))
 
 
+XLSX_MAX_ENTRIES = 200
+XLSX_MAX_UNPACKED_BYTES = 256 * 1024 * 1024  # the real file unpacks to about 12.6 MB
+
+
+def _require_hardened_xml() -> None:
+    """The XLSX comes from a CDN, i.e. it is untrusted input: refuse to parse it unless openpyxl uses
+    defusedxml (entity-expansion and external-entity protection). defusedxml is a runtime dependency."""
+    if not DEFUSEDXML:
+        raise GvhError("daily XLSX: openpyxl is not using defusedxml; refusing to parse untrusted XML")
+
+
+def _check_archive(content: bytes) -> None:
+    """Reject zip bombs before openpyxl touches the archive. zipfile never inflates a member beyond its
+    declared size, so bounding the declared sizes bounds the work."""
+    try:
+        with zipfile.ZipFile(io.BytesIO(content)) as archive:
+            infos = archive.infolist()
+    except Exception as exc:  # untrusted bytes: any failure means "not a readable XLSX"
+        raise GvhSchemaError(f"daily XLSX: not a readable XLSX file ({type(exc).__name__})") from None
+    if len(infos) > XLSX_MAX_ENTRIES or sum(info.file_size for info in infos) > XLSX_MAX_UNPACKED_BYTES:
+        raise GvhSchemaError("daily XLSX: archive too large when unpacked")
+
+
 def parse_daily_xlsx(content: bytes, expected_date: date) -> DailyXlsx:
     """Parse the daily XLSX; raise StaleXlsxError unless its sheet date equals ``expected_date``.
 
     Anything openpyxl cannot read (not a zip, corrupt XML, read lazily while iterating) is a GvhSchemaError
     naming only the exception type: the input is untrusted and its content is never echoed."""
+    _require_hardened_xml()
+    _check_archive(content)
     try:
         workbook = openpyxl.load_workbook(io.BytesIO(content), read_only=True, data_only=True)
     except Exception as exc:  # any parser failure on untrusted bytes means "not a readable XLSX"

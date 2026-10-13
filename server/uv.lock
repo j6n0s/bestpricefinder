@@ -50,6 +50,7 @@ name = "bpf"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "defusedxml" },
     { name = "fastapi" },
     { name = "httpx" },
     { name = "openpyxl" },
@@ -70,6 +71,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "defusedxml", specifier = "==0.7.1" },
     { name = "fastapi", specifier = "==0.143.0" },
     { name = "httpx", specifier = "==0.28.1" },
     { name = "openpyxl", specifier = "==3.1.5" },

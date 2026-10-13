@@ -280,3 +280,98 @@ def test_the_fake_daily_file_round_trips() -> None:
     assert (spar.min_price, spar.max_price) == (Decimal(294), Decimal(699))  # single-store minimum (trap 1)
     loyalty = next(r for r in sheet.rows if r.product_id == world.special["penny_loyalty"])
     assert loyalty.min_price == loyalty.max_price == Decimal(899)  # the XLSX excludes LOYALTY prices
+
+
+# ───────────────────────────── untrusted-input hardening ─────────────────────────────
+
+
+def _rewrite_member(content: bytes, member: str, transform: object) -> bytes:
+    """Copy an XLSX zip, passing one member's bytes through ``transform``."""
+    src = zipfile.ZipFile(io.BytesIO(content))
+    out = io.BytesIO()
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst:
+        for info in src.infolist():
+            data = src.read(info.filename)
+            if info.filename == member:
+                data = transform(data)  # type: ignore[operator]
+            dst.writestr(info, data)
+    return out.getvalue()
+
+
+def _first_sheet_member(content: bytes) -> str:
+    names = zipfile.ZipFile(io.BytesIO(content)).namelist()
+    return next(n for n in names if n.startswith("xl/worksheets/") and n.endswith(".xml"))
+
+
+def test_entity_expansion_bomb_is_rejected_without_expanding() -> None:
+    """A 'billion laughs' DTD placed before the sheet's root element must never be expanded: defusedxml
+    forbids entity declarations, so openpyxl fails with EntitiesForbidden as the cause, and our parser
+    reports a schema error that echoes nothing of the input."""
+    import re
+
+    import defusedxml
+
+    world = build_world()
+    good = xlsx_bytes(world, DAY)
+    member = _first_sheet_member(good)
+    bomb_dtd = (
+        b'<!DOCTYPE worksheet [<!ENTITY lol "lol">'
+        + b"".join(
+            b'<!ENTITY lol%d "%s">' % (i, (b"&lol%d;" % (i - 1) if i > 1 else b"&lol;") * 10)
+            for i in range(1, 10)
+        )
+        + b"]>"
+    )
+
+    def inject(xml: bytes) -> bytes:  # after an optional XML declaration, before the root element
+        match = re.match(rb"\s*(<\?xml[^>]*\?>)?", xml)
+        assert match is not None
+        return xml[: match.end()] + bomb_dtd + xml[match.end() :]
+
+    bad = _rewrite_member(good, member, inject)
+    caught: BaseException | None = None
+    try:  # the mechanism: defusedxml stops the bomb at its first entity declaration
+        workbook_ = openpyxl.load_workbook(io.BytesIO(bad), read_only=True, data_only=True)
+        for _ in workbook_.worksheets[0].iter_rows(values_only=True):
+            pass
+    except ValueError as exc:
+        caught = exc.__cause__ or exc
+    assert isinstance(caught, defusedxml.DefusedXmlException)
+    with pytest.raises(GvhSchemaError) as excinfo:
+        parse_daily_xlsx(bad, DAY)
+    assert "lol" not in str(excinfo.value)
+
+
+def test_parser_refuses_to_run_without_defusedxml(monkeypatch: pytest.MonkeyPatch) -> None:
+    import bpf.gvh.xlsx as xlsx_module
+    from bpf.gvh import GvhError
+
+    monkeypatch.setattr(xlsx_module, "DEFUSEDXML", False)
+    with pytest.raises(GvhError, match="defusedxml"):
+        parse_daily_xlsx(xlsx_bytes(build_world(), DAY), DAY)
+
+
+def test_defusedxml_is_active_in_this_environment() -> None:
+    from openpyxl.xml import DEFUSEDXML
+
+    assert DEFUSEDXML is True
+
+
+def test_zip_bomb_limits(monkeypatch: pytest.MonkeyPatch) -> None:
+    import bpf.gvh.xlsx as xlsx_module
+
+    good = xlsx_bytes(build_world(), DAY)
+    assert parse_daily_xlsx(good, DAY).rows  # within the real limits
+    monkeypatch.setattr(xlsx_module, "XLSX_MAX_UNPACKED_BYTES", 1000)
+    with pytest.raises(GvhSchemaError, match="too large"):
+        parse_daily_xlsx(good, DAY)
+    monkeypatch.setattr(xlsx_module, "XLSX_MAX_UNPACKED_BYTES", 256 * 1024 * 1024)
+    monkeypatch.setattr(xlsx_module, "XLSX_MAX_ENTRIES", 2)
+    with pytest.raises(GvhSchemaError, match="too large"):
+        parse_daily_xlsx(good, DAY)
+
+
+@pytest.mark.parametrize("content", [b"", b"not a zip", b"PK\x03\x04" + b"\x00" * 40])
+def test_non_zip_bytes_are_a_schema_error(content: bytes) -> None:
+    with pytest.raises(GvhSchemaError, match="not a readable XLSX"):
+        parse_daily_xlsx(content, DAY)
