@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-from bpf.pricing._num import exact, is_positive
+from bpf.pricing._num import is_positive
 from bpf.pricing.model import Catalogue, ChainPrice, PriceType, Product, ResolvedPrice, Store, StorePrice
 
 # Preference when two price types have the same amount: report the plainer one.
@@ -54,11 +54,12 @@ def _store_row_price(sp: StorePrice, include_loyalty: bool) -> tuple[Decimal, Pr
     return min(usable, key=lambda offer: (offer[0], _TYPE_ORDER[offer[1]]))
 
 
-@exact
 def resolve_price(
     product: Product, store: Store, cat: Catalogue, *, include_loyalty: bool = False
 ) -> ResolvedPrice | None:
-    """The price of ``product`` at ``store`` after the store-vs-chain rule; None when not carried/priced."""
+    """The price of ``product`` at ``store`` after the store-vs-chain rule; None when not carried/priced.
+
+    Only comparisons, no arithmetic: the result does not depend on the decimal context."""
     if not store.has_data:
         return None
     sp = cat.store_prices.get((product.id, store.id))

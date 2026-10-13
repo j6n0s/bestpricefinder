@@ -24,7 +24,8 @@ _MEMO_LIMIT = 200_000  # per rule set; far above the ~4,300 food SKUs, only a gu
 
 
 @functools.lru_cache(maxsize=65_536)
-def _folded(name: str) -> str:
+def folded_name(name: str) -> str:
+    """Memoised :func:`fold_name` (product names and unit titles repeat across calls)."""
     return fold_name(name)
 
 
@@ -54,7 +55,7 @@ class _Matcher:
             return False
         if not is_convertible(unit, self._ing):
             return False
-        folded = _folded(name)
+        folded = folded_name(name)
         if self._include and not any(p.search(folded) for p in self._include):
             return False
         return not any(p.search(folded) for p in self._exclude)
@@ -89,11 +90,6 @@ def _matcher(ing: Ingredient) -> _Matcher:
         matcher = _Matcher(ing)
         _matchers[key] = matcher
     return matcher
-
-
-def product_matches(ing: Ingredient, product: Product) -> bool:
-    """True when ``product`` passes the ingredient's name and unit rules (leaf membership not checked)."""
-    return _matcher(ing).accepts(product)
 
 
 def candidate_products(ing: Ingredient, cat: Catalogue) -> tuple[Product, ...]:

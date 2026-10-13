@@ -331,7 +331,7 @@ class StoreQuote:
     checkout_total: Decimal  # sum over priced lines
     used_total: Decimal
     missing: tuple[str, ...]  # ingredient ids with status unavailable
-    assumed_count: int  # priced lines whose availability is only assumed
+    assumed_count: int  # priced lines with at least one pick whose availability is only "assumed"
     ksh_estimate_total: Decimal  # sum of KSH estimates (labelled separately, never added to checkout_total)
 
 

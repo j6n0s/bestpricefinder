@@ -14,23 +14,48 @@ from decimal import Decimal
 from bpf.pricing._num import div, exact, is_positive
 from bpf.pricing.model import Ingredient
 
+_BRIDGED = ({"db", "kg"}, {"l", "kg"})
 
-def _factor(ing: Ingredient, product_unit: str) -> Decimal | None:
-    """kg per one ``product_unit`` for the cross-unit cases (None when the bridge value is missing)."""
-    if product_unit == "db" or ing.unit == "db":
-        bridge = ing.piece_weight_kg
-    else:
-        bridge = ing.density_kg_per_l
+
+def _bridge(
+    from_unit: str, to_unit: str, piece_weight: Decimal | None, density: Decimal | None
+) -> Decimal | None:
+    """kg per one db (piece weight) or per one l (density) for a cross-unit pair; None when missing."""
+    if {from_unit, to_unit} not in _BRIDGED:
+        return None
+    bridge = piece_weight if "db" in (from_unit, to_unit) else density
     return bridge if is_positive(bridge) else None
+
+
+def units_convertible(
+    from_unit: str, to_unit: str, piece_weight: Decimal | None, density: Decimal | None
+) -> bool:
+    """True when quantities in ``from_unit`` can be expressed in ``to_unit``."""
+    return from_unit == to_unit or _bridge(from_unit, to_unit, piece_weight, density) is not None
+
+
+def convert_units(
+    qty: Decimal, from_unit: str, to_unit: str, piece_weight: Decimal | None, density: Decimal | None
+) -> Decimal | None:
+    """Engine-internal conversion (call inside ``exact``): multiply into kg, divide out of kg."""
+    if from_unit == to_unit:
+        return qty
+    bridge = _bridge(from_unit, to_unit, piece_weight, density)
+    if bridge is None:
+        return None
+    if to_unit == "kg":  # db -> kg or l -> kg
+        return qty * bridge
+    return div(qty, bridge)  # kg -> db or kg -> l
 
 
 def is_convertible(product_unit: str, ing: Ingredient) -> bool:
     """True when :func:`to_canonical` can convert ``product_unit`` quantities for this ingredient."""
-    if product_unit == ing.unit:
-        return True
-    if {product_unit, ing.unit} not in ({"db", "kg"}, {"l", "kg"}):
-        return False
-    return _factor(ing, product_unit) is not None
+    return units_convertible(product_unit, ing.unit, ing.piece_weight_kg, ing.density_kg_per_l)
+
+
+def convert(qty: Decimal, product_unit: str, ing: Ingredient) -> Decimal | None:
+    """Engine-internal :func:`to_canonical` without the context switch: call it inside ``exact``."""
+    return convert_units(qty, product_unit, ing.unit, ing.piece_weight_kg, ing.density_kg_per_l)
 
 
 @exact
@@ -39,13 +64,4 @@ def to_canonical(qty: Decimal, product_unit: str, ing: Ingredient) -> Decimal | 
 
     db -> kg multiplies by the piece weight, kg -> db divides by it; l -> kg multiplies by the density,
     kg -> l divides by it. Multiplications are exact; divisions round to 28 significant digits."""
-    if product_unit == ing.unit:
-        return qty
-    if not is_convertible(product_unit, ing):
-        return None
-    factor = _factor(ing, product_unit)
-    if factor is None:  # pragma: no cover - is_convertible checked it
-        return None
-    if ing.unit == "kg":  # db -> kg or l -> kg
-        return qty * factor
-    return div(qty, factor)  # kg -> db or kg -> l
+    return convert(qty, product_unit, ing)

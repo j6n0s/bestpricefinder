@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import functools
 from collections.abc import Callable, Sequence
-from typing import TypeGuard
 from decimal import (
     ROUND_HALF_EVEN,
     Context,
@@ -20,6 +19,7 @@ from decimal import (
     Overflow,
     localcontext,
 )
+from typing import TypeGuard
 
 _TRAPS = [InvalidOperation, DivisionByZero, Overflow]
 _EXACT = Context(prec=100, rounding=ROUND_HALF_EVEN, Emax=999_999, Emin=-999_999, traps=_TRAPS)
