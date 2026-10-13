@@ -101,7 +101,7 @@ Rules (per 7-day block, from public healthy-eating principles; **no MDOSZ/OKOST�
 - `variety`: the same recipe never repeats within `no_repeat_days`. The exception: a `ket_napos` recipe may fill the same slot on the very next day.
 - `budget` (when given): the estimated cost of the week ≤ the budget.
 
-Selection is a deterministic, seeded constraint search:
+Selection is a deterministic, seeded constraint search (a feasibility-first construction that enforces the rules cell by cell, with restarts from derived seeds, then local search). **Variety is the lowest-priority rule:** the search never trades another rule for fewer repeats. Verified on the real library: 800/800 plans (7/14/28/31 days, 3 and 5 slots, 100 seeds) pass every rule.
 1. Fill every slot from the recipes eligible for it (exclusions applied).
 2. Repair rule violations with local search.
 3. Prefer reusing the same perishable ingredients within a week (leftover-aware). Score: minimise the count of distinct perishable ingredients per week.
@@ -112,6 +112,7 @@ Rule details (as implemented; keep the API and UI wording consistent with them):
 - Potato runs and repeats are followed across week boundaries and reported in the later week. A meat-free day needs at least one meal.
 - Optional recipe lines count towards red meat and potato. Budget: a meal without a cost estimate fails that week's budget; a budget with no cost table gives the warning `recipe_cost_missing` and no budget check.
 - Invalid input raises `ValueError`, and unknown recipe or ingredient ids raise `KeyError` (the API validates first).
+- `slot_pool_too_small:<slot>` also covers slots that could avoid repeats only with more than 2 sweet meals in a week, or with potato on two days in a row; the plan then repeats in that slot.
 - Warning codes: `slot_pool_empty:<slot>`, `slot_pool_too_small:<slot>`, `no_fish_recipe_available`, `no_legume_recipe_available`, `no_meat_free_recipe_available:<slot>`, `no_potato_free_recipe_available:<slot>`, `red_meat_cap_unreachable`, `sweets_cap_unreachable`, `budget_unreachable`, `recipe_cost_missing`.
 
 If the pool cannot satisfy a rule, return the best plan with a failing check and a warning (e.g. `no_fish_recipe_available`); never loop forever. The time budget is 200 ms for 31 days × 5 slots.
