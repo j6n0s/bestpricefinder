@@ -16,6 +16,7 @@
     "check": "npm run gen:api:check && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
     "test": "vitest run",
     "test:e2e": "vite build && playwright test",
+    "test:fullstack": "vite build && playwright test --config playwright.fullstack.config.ts",
     "gen:api": "openapi-typescript ../docs/openapi.json --default-non-nullable false --array-length -o src/lib/api/schema.d.ts",
     "gen:api:check": "npm run gen:api -- --check",
     "gen:districts": "node scripts/gen-districts.mjs",

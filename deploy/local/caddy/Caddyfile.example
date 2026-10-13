@@ -1,0 +1,68 @@
+# Caddy in front of bestpricefinder, for HTTPS. Step by step: deploy/local/caddy/README.md.
+#
+# Phones need HTTPS: browsers allow geolocation only in a secure context, and http://127.0.0.1 counts as
+# secure only on the machine itself. Caddy terminates TLS and proxies to the app, which listens on
+# 127.0.0.1:8000 only (deploy/local/run-api.sh).
+#
+# Pick ONE option:
+#   (a) LAN, for your own phone on your home network (active below): a certificate from Caddy's internal CA
+#       ("tls internal"). Install Caddy's root certificate on the phone once. Set BPF_LAN_ADDRESS to this
+#       machine's LAN IP address when you start Caddy.
+#   (b) A real domain with an automatic Let's Encrypt certificate: delete the two (a) lines in the global
+#       options and the (a) site, uncomment (b), and put your domain (and e-mail) in.
+#
+# Headers: the app sends its own security headers (Content-Security-Policy with script hashes,
+# X-Frame-Options, Referrer-Policy, Permissions-Policy, ...). Caddy passes them through and adds none, so
+# nothing is duplicated or overridden. HSTS also comes from the app: set BPF_HSTS=true in the env file only
+# with (b). With either option set BPF_TRUST_PROXY_HEADERS=true in the env file, so that the per-IP rate
+# limit sees the phone's address instead of Caddy's. Restart deploy/local/run-api.sh after changing them.
+#
+# Run (from the repository root):
+#   BPF_LAN_ADDRESS=192.168.1.20 caddy run --config deploy/local/caddy/Caddyfile.example --adapter caddyfile
+# or copy this file to .data/caddy/Caddyfile (git-ignored) and edit the copy.
+{
+	# (a) only: do not add Caddy's root certificate to this machine's trust stores (here you use
+	# http://127.0.0.1:8000 directly), and do not listen on port 80 (no HTTP->HTTPS redirect for :8443).
+	skip_install_trust
+	auto_https disable_redirects
+	# (b) only, optional: the address Let's Encrypt writes to about your certificate.
+	# email you@example.org
+}
+
+# Shared by both options.
+(bpf_app) {
+	# Compress text responses (JSON, HTML, JS, CSS). The app has no cookies or secrets, so compression
+	# cannot leak any (BREACH).
+	encode zstd gzip
+	# The app refuses bodies above BPF_API_MAX_BODY_BYTES (64 KiB) itself; Caddy stops bigger ones earlier.
+	request_body {
+		max_size 64KiB
+	}
+	# Do not advertise the server software.
+	header -Server
+	reverse_proxy 127.0.0.1:8000
+	# No access log: it would record every visitor's IP address. To debug, uncomment this one, which masks
+	# the addresses (IPv4 to /16, IPv6 to /32) and keeps 30 days. Use an absolute path.
+	# log {
+	# 	output file /absolute/path/to/bestpricefinder/.data/logs/caddy-access.log {
+	# 		roll_keep_for 720h
+	# 	}
+	# 	format filter {
+	# 		request>remote_ip ip_mask 16 32
+	# 		request>client_ip ip_mask 16 32
+	# 		request>headers>X-Forwarded-For delete
+	# 	}
+	# }
+}
+
+# (a) LAN: open https://<BPF_LAN_ADDRESS>:8443 on the phone.
+{$BPF_LAN_ADDRESS:192.168.1.20}:8443 {
+	tls internal
+	import bpf_app
+}
+
+# (b) A real domain: ports 80 and 443 must reach this machine from the internet. Read the README first:
+# this makes the app public.
+# bpf.example.org {
+# 	import bpf_app
+# }

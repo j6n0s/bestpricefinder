@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  bestpricefinder: the daily GVH price ingest at 04:30 and 05:30 (the Mac's local time, which must be
+  Europe/Budapest; install-macos.sh checks it). The 05:30 run does nothing when the 04:30 run finished ok
+  (run-ingest.sh scheduled mode).
+-->
+<!-- TEMPLATE: install-macos.sh fills in the placeholders and installs the result in ~/Library/LaunchAgents/.
+     Do not load this file as it is. -->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.bestpricefinder.ingest-daily</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>__BPF_REPO__/deploy/local/run-ingest.sh</string>
+		<string>--scheduled</string>
+		<string>daily</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>__BPF_PATH__</string>
+		<key>LANG</key>
+		<string>en_US.UTF-8</string>
+		<!-- __BPF_EXTRA_ENV__ -->
+	</dict>
+	<key>StartCalendarInterval</key>
+	<array>
+		<dict>
+			<key>Hour</key>
+			<integer>4</integer>
+			<key>Minute</key>
+			<integer>30</integer>
+		</dict>
+		<dict>
+			<key>Hour</key>
+			<integer>5</integer>
+			<key>Minute</key>
+			<integer>30</integer>
+		</dict>
+	</array>
+	<key>StandardOutPath</key>
+	<string>__BPF_LOG_DIR__/launchd-ingest-daily.log</string>
+	<key>StandardErrorPath</key>
+	<string>__BPF_LOG_DIR__/launchd-ingest-daily.log</string>
+	<key>ProcessType</key>
+	<string>Background</string>
+</dict>
+</plist>

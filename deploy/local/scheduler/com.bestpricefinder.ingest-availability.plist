@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  bestpricefinder: the weekly GVH availability ingest (which stores carry which product), Sundays at 05:00
+  (the Mac's local time, which must be Europe/Budapest; install-macos.sh checks it). If the daily ingest
+  still runs then, it waits for it (one ingest at a time).
+-->
+<!-- TEMPLATE: install-macos.sh fills in the placeholders and installs the result in ~/Library/LaunchAgents/.
+     Do not load this file as it is. -->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.bestpricefinder.ingest-availability</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>__BPF_REPO__/deploy/local/run-ingest.sh</string>
+		<string>--scheduled</string>
+		<string>availability</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>__BPF_PATH__</string>
+		<key>LANG</key>
+		<string>en_US.UTF-8</string>
+		<!-- __BPF_EXTRA_ENV__ -->
+	</dict>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Weekday</key>
+		<integer>0</integer>
+		<key>Hour</key>
+		<integer>5</integer>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
+	<key>StandardOutPath</key>
+	<string>__BPF_LOG_DIR__/launchd-ingest-availability.log</string>
+	<key>StandardErrorPath</key>
+	<string>__BPF_LOG_DIR__/launchd-ingest-availability.log</string>
+	<key>ProcessType</key>
+	<string>Background</string>
+</dict>
+</plist>
