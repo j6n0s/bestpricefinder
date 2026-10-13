@@ -8,7 +8,8 @@
    propagation and seeded restarts fills every cell so that every rule not proven impossible holds (the
    fish, legume and meat-free-day rules are propagated per block, so their cells are placed as soon as a
    block runs out of alternatives). If its node budget runs out, a second search drops the variety rule
-   (the value order still avoids repeats), and if that fails too, a random fill starts the local search.
+   (the value order still avoids repeats), and if that fails too, one pass that enforces nothing (guided by
+   the same value order) starts the local search.
 4. Local search with a move budget proportional to the plan size (never a clock, so results are
    reproducible): random reassignments, same-slot swaps between days, ``ket_napos`` next-day copies,
    leftover-aware reassignments, targeted repairs of failing rules (rules the pools make impossible are not
@@ -17,14 +18,19 @@
    than variety, then variety repeats, then the distance to feasibility, then the number of distinct
    perishable ingredients (``perishable_days <= 7``) per 7-day block (leftover-aware grouping). So the plan
    never trades another rule for variety, and leftovers only count among plans that are equal on the rules.
-   A feasible construction only needs a short polish; a plan that still breaks a rule gets the full budget.
+   Budgets: a plan that meets every rule gets a short leftover polish (``POLISH_MOVES_PER_CELL``); one that
+   breaks only rules the analysis proved impossible gets ``SETTLE_MOVES_PER_CELL`` to break them as little as
+   possible (both at least ``MIN_MOVES``); one whose feasibility-first construction failed gets the repair
+   budget. A per-plan random preference per recipe (``PREFERENCE``) steers the construction, so that each
+   plan reuses its own favourites and different seeds use different recipes.
 5. The returned checks are computed from scratch with the same code as ``check_plan``.
 
 Warnings (machine codes, in this order):
 * ``slot_pool_empty:<slot>``: no eligible recipe; that slot's meals are ``None``.
 * ``slot_pool_too_small:<slot>``: the variety rule cannot hold for this slot (alone, or with the other slots
   that share its recipes) within one no-repeat window, or it can hold only with more than ``SWEETS_MAX``
-  sweet meals in some block. The planner then keeps the other rules and lets this slot repeat.
+  sweet meals in some block or with potato on two days in a row. The planner then keeps the other rules and
+  lets this slot repeat (variety is the lowest-priority rule).
 * ``no_fish_recipe_available`` / ``no_legume_recipe_available``: no eligible recipe for that count rule.
 * ``no_meat_free_recipe_available:<slot>``: this slot has recipes, but none is ``husmentes``.
 * ``no_potato_free_recipe_available:<slot>``: every recipe of this main slot contains potato.
@@ -86,11 +92,17 @@ GUIDE_CAP = 10**6
 # (5 blocks) stays below one VIOLATION, and the distinct perishables of a block stay far below one GUIDE.
 
 STRICT_NODES_PER_CELL = 20
-"""Node budget of the feasibility-first construction, per plan cell (one node per cell without backtracking)."""
+"""Node budget of the feasibility-first construction per plan cell (no backtracking = one node per cell)."""
 RELAXED_NODES_PER_CELL = 8
 """Node budget of the construction without the variety rule, per plan cell."""
 POLISH_MOVES_PER_CELL = 8
 """Local-search moves per plan cell after a construction that meets every rule (leftover polish only)."""
+SETTLE_MOVES_PER_CELL = 12
+"""Local-search moves per plan cell after a construction that meets every rule the pool analysis did not rule
+out: only the degree of the impossible rules (repeats in too-small slots, sweets, red meat, cost...) is left
+to reduce."""
+MIN_MOVES = 600
+"""Floor of the polish and settle budgets, so that short plans also get enough leftover moves."""
 REPAIR_MOVES_PER_CELL = 20
 REPAIR_MIN_MOVES = 1000
 ITERATIONS = 6000
@@ -105,6 +117,11 @@ STEEPEST_MAX_RECIPES = 40
 REPAIR_SHARE = 0.4
 SWAP_REPAIR_SHARE = 0.5
 """Share of variety and potato repairs that swap the cell with another day instead of replacing it."""
+PREFERENCE = 0.6
+"""Spread of the per-plan random preference for each recipe in the construction's value order: within a plan
+the same recipes are favoured (good for leftovers), across seeds different ones, so every recipe gets used.
+On the real library, 200 four-week plans have about one distinct perishable a week fewer than with the
+previous planner, and their rarest lunch/dinner recipe appears at least as often."""
 LEFTOVER_SHARE = 0.25
 """Share of plain moves that reassign a cell to a meal adding no perishable ingredient to its block."""
 
@@ -296,19 +313,6 @@ class _Search:
 
     # ── construction and search ──
 
-    def construct(self, rng: random.Random) -> None:
-        """Random fill (the fallback start): day by day, preferring recipes not used within the window."""
-        last_day = [-(10**9)] * len(self.meals)
-        window = max(self.lim.main_window, 1)
-        for day in range(self.n):
-            for pos in self.active:
-                pool = self.pools[pos]
-                fresh = [m for m in pool if day - last_day[m] >= window]
-                pick = rng.choice(fresh or pool)
-                self._set(day, pos, pick)
-                last_day[pick] = day
-        self.recompute()
-
     def optimise(self, rng: random.Random, iterations: int = ITERATIONS, patience: int = PATIENCE) -> None:
         """Keep every move that does not worsen the score (so the current plan is always the best seen).
         Every ``DEEP_AFTER`` moves without progress, run a steepest-descent step on one cell (one involved
@@ -401,23 +405,41 @@ class _Search:
         return self._replace(day, pos, self.pools[pos], rng)
 
     def _leftover(self, rng: random.Random) -> list[Change] | None:
-        """Reassign a random cell to a meal whose perishable ingredients its block already uses (so the move
-        never adds a distinct perishable and may remove some)."""
+        """In a random block, take a meal whose cells alone bring some perishable ingredient into the block,
+        and reassign each of those cells to a meal whose perishable ingredients the rest of the block already
+        uses (the move never adds a distinct perishable and removes at least one)."""
         if not self.multi:
             return None
-        pos = self.multi[rng.randrange(len(self.multi))]
-        day = rng.randrange(self.n)
-        current = self.grid[day][pos]
-        perish = self.blocks[day // WEEK_DAYS].perish
-        own = self.meals[current].perish_bits
-        covered = [
+        week = rng.randrange(len(self.blocks))
+        block = self.blocks[week]
+        perish = block.perish
+        start = week * WEEK_DAYS
+        cells_of: dict[int, list[tuple[int, int]]] = {}
+        for day in range(start, start + block.days):
+            for pos in self.multi:
+                cells_of.setdefault(self.grid[day][pos], []).append((day, pos))
+        lonely = [
             m
-            for m in self.pools[pos]
-            if m != current and all(perish[x] - (x in own) > 0 for x in self.meals[m].perish_bits)
+            for m, cells in cells_of.items()
+            if any(perish[x] == len(cells) for x in self.meals[m].perish_bits)
         ]
-        if not covered:
+        if not lonely:
             return None
-        return [(day, pos, covered[rng.randrange(len(covered))])]
+        current = lonely[rng.randrange(len(lonely))]
+        own = self.meals[current].perish_bits
+        cells = cells_of[current]
+        changes: list[Change] = []
+        for day, pos in cells:
+            covered = [
+                m
+                for m in self.pools[pos]
+                if m != current
+                and all(perish[x] - (len(cells) if x in own else 0) > 0 for x in self.meals[m].perish_bits)
+            ]
+            if not covered:
+                return None
+            changes.append((day, pos, covered[rng.randrange(len(covered))]))
+        return changes
 
     def _replace(self, day: int, pos: int, choices: Sequence[int], rng: random.Random) -> list[Change] | None:
         """Change cell ``(day, pos)`` to a uniformly random member of ``choices`` (distinct recipe indexes)
@@ -589,6 +611,8 @@ class _Search:
 
 @dataclass(frozen=True, slots=True)
 class PoolAnalysis:
+    """What the pools alone prove about a request (``analyse_pools``)."""
+
     warnings: tuple[str, ...]
     hopeless: tuple[frozenset[str], ...]  # per block: block rules no plan can satisfy
     too_small: frozenset[int]  # slot positions whose variety rule is given up (slot_pool_too_small)
@@ -826,40 +850,42 @@ def build_plan(
     analysis: PoolAnalysis,
     rng: random.Random,
 ) -> None:
-    """Construct (feasibility first, then without the variety rule, then randomly) and optimise ``search``."""
+    """Construct ``search``'s plan (feasibility first; then without the variety rule; then guided only) and
+    optimise it with the move budget that fits the start (see the module docstring)."""
     if not search.active:
         search.recompute()
         return
     cells = search.n * len(search.active)
-    strict = Construct(
-        search.n,
-        search.active,
-        pools,
-        meals,
-        lim,
-        hopeless=analysis.hopeless,
-        relaxed=analysis.too_small,
-        enforce_potato=not analysis.potato_hopeless,
-    )
-    found = strict.solve(rng, STRICT_NODES_PER_CELL * cells)
-    if found is None:
-        loose = Construct(
+    preference = [PREFERENCE * rng.random() for _ in meals]
+
+    def construction(relaxed: frozenset[int], *, enforce: bool = True) -> Construct:
+        return Construct(
             search.n,
             search.active,
             pools,
             meals,
             lim,
             hopeless=analysis.hopeless,
-            relaxed=frozenset(search.active),
+            relaxed=relaxed,
             enforce_potato=not analysis.potato_hopeless,
+            enforce=enforce,
+            preference=preference,
         )
-        found = loose.solve(rng, RELAXED_NODES_PER_CELL * cells)
+
+    found = construction(analysis.too_small).solve(rng, STRICT_NODES_PER_CELL * cells)
+    settled = found is not None
     if found is None:
-        search.construct(rng)
-    else:
-        search.load(found)
+        found = construction(frozenset(search.active)).solve(rng, RELAXED_NODES_PER_CELL * cells)
+    if found is None:
+        found = construction(frozenset(search.active), enforce=False).solve(rng, cells)
+    if found is None:  # pragma: no cover - a construction that enforces nothing cannot fail
+        raise AssertionError("the guided construction failed")
+    search.load(found)
     if search.total < VIOLATION:  # every rule holds: only the leftover score can improve
-        search.optimise(rng, POLISH_MOVES_PER_CELL * cells, POLISH_MOVES_PER_CELL * cells)
+        moves = max(MIN_MOVES, POLISH_MOVES_PER_CELL * cells)
+        search.optimise(rng, moves, moves)
+    elif settled:  # only rules the analysis proved impossible fail: reduce how much they fail
+        search.optimise(rng, max(MIN_MOVES, SETTLE_MOVES_PER_CELL * cells), PATIENCE)
     else:
         search.optimise(rng, min(ITERATIONS, max(REPAIR_MIN_MOVES, REPAIR_MOVES_PER_CELL * cells)), PATIENCE)
 

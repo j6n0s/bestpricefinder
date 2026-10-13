@@ -1,8 +1,8 @@
 """Feasibility-first construction for ``suggest_plan``: a randomised depth-first search with constraint
 propagation and restarts (a small CSP solver). Pure: no I/O, no clock; randomness only from the ``rng`` given.
 
-Variables are the plan cells (day x requested slot); a cell's domain is a bit mask over meal indexes. Assigning a
-meal propagates every enforced rule (see ``Construct.assign``):
+Variables are the plan cells (day x requested slot); a cell's domain is a bit mask over meal indexes.
+Assigning a meal propagates every enforced rule (see ``Construct.assign``):
 
 * ``variety``: the meal leaves the domains of the cells inside the no-repeat window. A ``ket_napos`` meal may
   stay in the same slot on the next day; runs of three are cut (the rule pairs days greedily).
@@ -11,21 +11,25 @@ meal propagates every enforced rule (see ``Construct.assign``):
 * ``fish`` / ``legume`` / ``meat_free_day``: a block fails as soon as no cell (no day) can still satisfy the
   rule; when exactly one cell (day) can, its domain is restricted (unit propagation).
 
-The next cell is the one with the fewest values left (ties: earliest day, then slot order). Values are tried in a
-seeded random order biased towards the rules the block still needs, towards ``ket_napos`` next-day pairs and
-towards meals that add no new perishable ingredient to the block (leftover-aware, docs/ENGINE.md). Each attempt
-has a node budget; a failed attempt restarts with a larger budget and fresh random choices from the same
-generator, so the result depends only on the input and the seed.
+The next cell is the one with the fewest values left (ties: earliest day, then slot order). Values are tried
+in a seeded random order (plus the caller's per-plan ``preference`` per meal) biased towards the rules the
+block still needs, towards ``ket_napos`` next-day pairs and towards meals that add no new perishable
+ingredient to the block (leftover-aware, docs/ENGINE.md). Each attempt has a node budget; a failed attempt
+restarts with a larger budget and fresh random choices from the same generator, so the result depends only
+on the input and the seed.
 
 Rules that the pool analysis proved impossible are not enforced (the local search minimises them later), and
 the variety rule is not enforced for slots marked ``relaxed``: there the value order only avoids repeats.
+With ``enforce=False`` nothing is enforced: one pass, never failing, guided only by the value order (avoid
+repeats, prefer light, cheap, non-sweet and potato-free meals and the fish / legume meals a block lacks); it
+starts the local search when the enforcing constructions run out of nodes.
 """
 
 from __future__ import annotations
 
 import random
-from bisect import bisect_right
-from collections.abc import Callable, Mapping, Sequence
+from bisect import bisect_left, bisect_right
+from collections.abc import Mapping, Sequence
 from decimal import Decimal
 
 from .facts import MAIN_POS
@@ -35,17 +39,21 @@ NEED_BONUS = 0.5
 """Order bonus for a meal that gives the block a fish / legume meal it still lacks."""
 PAIR_BONUS = 0.5
 """Order bonus for the second day of a ``ket_napos`` meal (cook once, eat twice)."""
-PERISHABLE_PENALTY = 1.0
-"""Order penalty per perishable ingredient the meal would add to its block (dominates the random part), plus
-the same penalty over the number of meals that use the ingredient: of two new perishables, the one more
-meals share is preferred, since later cells of the block can reuse it."""
+PERISHABLE_PENALTY = 0.25
+"""Order penalty per perishable ingredient the meal would add to its block, plus the same penalty over the
+number of meals that use the ingredient (of two new perishables, the one more meals share is preferred, since
+later cells of the block can reuse it). A mild bias: the random part keeps every recipe in use across seeds,
+and the local search's leftover moves do the rest (with 1.0, five of the 25 real lunch/dinner recipes never
+appeared in 20 four-week plans)."""
 REPEAT_PENALTY = 4.0
 """Order penalty per repeat, in slots where the variety rule is relaxed."""
 HOPELESS_PENALTY = 4.0
-"""For a rule the pool analysis proved impossible in the block: order penalty for a sweet meal (``sweets``), a
-main-slot potato meal (``potato``) and, scaled by the meal's rank from lightest / cheapest (0) to heaviest /
-most expensive or unpriced (1), for red meat (``red_meat``) and cost (``budget``). The plan then breaks those
-rules as little as it can; the local search finishes the job."""
+"""For a rule not enforced in the block (proved impossible, or ``enforce=False``): order penalty for a sweet
+meal (``sweets``), a main-slot potato meal (``potato``) and, scaled by the meal's rank from lightest /
+cheapest (0) to heaviest / most expensive or unpriced (1), for red meat (``red_meat``) and cost (``budget``).
+The plan then breaks those rules as little as it can; the local search finishes the job."""
+GUIDED_RULES = frozenset({"red_meat", "sweets", "budget"})
+"""The bounded block rules, which ``enforce=False`` only follows through the value order."""
 CONSTRAINING_PENALTY = 1.0
 """From the second attempt on: order penalty per open neighbour cell that still has the meal, weighted by one
 over that cell's number of values (least-constraining value first; helps where the first attempt failed)."""
@@ -68,9 +76,9 @@ def mask_values(mask: int) -> list[int]:
     return values
 
 
-def _prefix_masks(items: Sequence[tuple[int, int]] | Sequence[tuple[Decimal, int]]) -> tuple[list, list[int]]:
+def _prefix_masks[K: (int, Decimal)](items: Sequence[tuple[K, int]]) -> tuple[list[K], list[int]]:
     """For ``(key, meal)`` pairs sorted by key: the distinct keys and, per key, the mask of meals <= key."""
-    keys: list = []
+    keys: list[K] = []
     masks: list[int] = []
     acc = 0
     for key, m in items:
@@ -84,7 +92,7 @@ def _prefix_masks(items: Sequence[tuple[int, int]] | Sequence[tuple[Decimal, int
 
 
 class Construct:
-    """CSP over ``n_days x active`` cells. ``solve`` returns one meal index per cell (day-major) or ``None``."""
+    """CSP over ``n_days x active`` cells; ``solve`` returns one meal index per cell (day-major) or None."""
 
     def __init__(
         self,
@@ -97,6 +105,8 @@ class Construct:
         hopeless: Sequence[frozenset[str]],
         relaxed: frozenset[int],
         enforce_potato: bool,
+        enforce: bool = True,
+        preference: Sequence[float] = (),
     ) -> None:
         width = len(active)
         cells = n_days * width
@@ -125,7 +135,10 @@ class Construct:
         self.sweet_mask = mask("sweet")
         self.potato_mask = mask("potato")
         self.priced_mask = sum(1 << m for m, meal in enumerate(meals) if meal.cost is not None)
-        self.enforce_potato = enforce_potato
+        self.enforce = enforce
+        self.enforce_potato = enforce and enforce_potato
+        self.no_preference = [0.0] * len(meals)
+        self.preference = list(preference) or self.no_preference  # first attempt only: then feasibility first
         self.retry = False  # set by ``solve`` from the second attempt on
         self.nodes = 0
         self.node_limit = 0
@@ -134,7 +147,8 @@ class Construct:
             for x in meals[m].perish_bits:
                 users[x] = users.get(x, 0) + 1
         self.new_perishable_cost = {x: PERISHABLE_PENALTY * (1 + 1 / count) for x, count in users.items()}
-        self._build_hopeless_penalties(meals, lim, hopeless)
+        unenforced = [dead if enforce else dead | GUIDED_RULES for dead in hopeless]
+        self._build_penalties(meals, lim, unenforced)
 
         self.need_fish: list[bool] = []
         self.need_legume: list[bool] = []
@@ -143,7 +157,7 @@ class Construct:
         self.cap_sweets: list[bool] = []
         self.cap_budget: list[bool] = []
         for b, days in enumerate(self.block_days):
-            dead = hopeless[b]
+            dead = unenforced[b]
             counted = len(days) >= COUNT_RULE_MIN_DAYS
             self.need_fish.append(counted and "fish" not in dead)
             self.need_legume.append(counted and "legume" not in dead)
@@ -156,9 +170,9 @@ class Construct:
             Decimal(0) if lim.budget is None else lim.budget_limit(len(days)) for days in self.block_days
         ]
         self.red_min: dict[int, int] = {}
-        self.red_steps: dict[int, tuple[list, list[int]]] = {}
+        self.red_steps: dict[int, tuple[list[int], list[int]]] = {}
         self.cost_min: dict[int, Decimal | None] = {}
-        self.cost_steps: dict[int, tuple[list, list[int]]] = {}
+        self.cost_steps: dict[int, tuple[list[Decimal], list[int]]] = {}
         for pos in active:
             reds = sorted((meals[m].red_units, m) for m in pools[pos])
             self.red_min[pos] = reds[0][0]
@@ -166,28 +180,27 @@ class Construct:
             costs = sorted((c, m) for m in pools[pos] if (c := meals[m].cost) is not None)
             self.cost_min[pos] = costs[0][0] if costs else None
             self.cost_steps[pos] = _prefix_masks(costs)
-        self._build_neighbours(active, lim, relaxed)
+        self._build_neighbours(active, lim, relaxed if enforce else frozenset(active))
+        self._reset()
 
-    def _build_hopeless_penalties(
-        self, meals: Sequence[Meal], lim: Limits, hopeless: Sequence[frozenset[str]]
+    def _build_penalties(
+        self, meals: Sequence[Meal], lim: Limits, unenforced: Sequence[frozenset[str]]
     ) -> None:
-        """Per block: the order penalty of each meal for the impossible rules of that block (see
+        """Per block: the order penalty of each meal for the bounded rules not enforced in that block (see
         ``HOPELESS_PENALTY``), as ``(any cell, extra in a main cell)``; ``None`` when there is nothing to
         prefer. Ranks, not amounts, keep money out of float arithmetic."""
         count = len(meals)
 
-        def rank(key: Callable[[int], object]) -> list[float]:
-            order = sorted(range(count), key=lambda m: (key(m), m))
-            ranks = [0.0] * count
-            for r, m in enumerate(order):
-                ranks[m] = r / count
-            return ranks
+        def rank(keys: list[tuple[int, Decimal]]) -> list[float]:
+            """Share of the meals with a strictly smaller key (equal keys share a rank)."""
+            ordered = sorted(keys)
+            return [bisect_left(ordered, key) / count for key in keys]
 
-        red_rank = rank(lambda m: meals[m].red_units)
-        cost_rank = rank(lambda m: (meals[m].cost is None, meals[m].cost or 0))
-        self.hopeless_penalty: list[tuple[list[float], list[float]] | None] = []
+        red_rank = rank([(0, Decimal(meal.red_units)) for meal in meals])
+        cost_rank = rank([(0, meal.cost) if meal.cost is not None else (1, Decimal(0)) for meal in meals])
+        self.penalty: list[tuple[list[float], list[float]] | None] = []
         for b in range(self.n_blocks):
-            dead = hopeless[b]
+            dead = unenforced[b]
             anywhere = [0.0] * count
             in_main = [0.0] * count
             for m, meal in enumerate(meals):
@@ -200,12 +213,12 @@ class Construct:
                 if not self.enforce_potato and meal.potato:
                     in_main[m] += HOPELESS_PENALTY
             useful = any(anywhere) or any(in_main)
-            self.hopeless_penalty.append((anywhere, in_main) if useful else None)
+            self.penalty.append((anywhere, in_main) if useful else None)
 
     def _build_neighbours(self, active: Sequence[int], lim: Limits, relaxed: frozenset[int]) -> None:
-        """Per cell: the cells it may not share a meal with (``hard``; same slot on the next / previous day are
-        ``left`` / ``right`` instead, because ``ket_napos`` meals may pair there) and, for relaxed slots, the
-        cells whose repeats only the value order avoids (``soft``)."""
+        """Per cell: the cells it may not share a meal with (``hard``; the same slot on the previous / next
+        day is ``left`` / ``right`` instead, because ``ket_napos`` meals may pair there) and, for relaxed
+        slots, the cells whose repeats only the value order avoids (``soft``)."""
         width = self.width
         hard: list[tuple[int, ...]] = []
         soft: list[tuple[int, ...]] = []
@@ -238,6 +251,7 @@ class Construct:
     # ───────────────────────────── state ─────────────────────────────
 
     def _reset(self) -> None:
+        """Empty assignment: every cell open with its slot's whole pool, all counters zero."""
         self.val = [-1] * self.cells
         self.dom = [self.pool_mask[pos] for pos in self.pos]
         n_blocks = self.n_blocks
@@ -285,8 +299,8 @@ class Construct:
         return True
 
     def _fit_red(self, b: int) -> bool:
-        """Red meat: the block's assigned grams plus the lightest choice of every open cell must fit; remove the
-        values that no longer fit."""
+        """Red meat: the block's assigned grams plus the lightest choice of every open cell must fit; remove
+        the values that no longer fit."""
         slack = self.red_limit[b] - self.b_red[b] - self.b_red_rest[b]
         if slack < 0:
             return False
@@ -317,7 +331,9 @@ class Construct:
         return True
 
     def _block_feasible(self, b: int) -> bool:
-        """Count rules of block ``b``: some cell (day) must still be able to satisfy each; force the last one."""
+        """Count rules of block ``b``: some cell (day) must still be able to satisfy each; force the last."""
+        if not self.enforce:
+            return True
         val, dom = self.val, self.dom
         for needed, have, rule_mask in (
             (self.need_fish[b], self.b_fish[b], self.fish_mask),
@@ -388,9 +404,8 @@ class Construct:
 
         touched = [b]
         for j in self.hard[i]:
-            if dom[j] & bit:
-                if val[j] >= 0 or not self._restrict(j, ~bit, touched):
-                    return False
+            if dom[j] & bit and (val[j] >= 0 or not self._restrict(j, ~bit, touched)):
+                return False
         if not self._propagate_pairs(i, m, bit, touched):
             return False
         if first_potato and self.enforce_potato:
@@ -504,11 +519,12 @@ class Construct:
         val, dom = self.val, self.dom
         new_cost = self.new_perishable_cost
         sizes = [(dom[j], dom[j].bit_count()) for j in self.hard[i] if val[j] < 0] if self.retry else []
-        penalty = self.hopeless_penalty[b]
+        penalty = self.penalty[b]
         keyed: list[tuple[float, int]] = []
+        preference = self.no_preference if self.retry else self.preference
         for m in mask_values(dom[i]):
             meal = self.meals[m]
-            key = rng.random()
+            key = rng.random() + preference[m]
             if penalty is not None:
                 key += penalty[0][m] + (penalty[1][m] if self.is_main[i] else 0.0)
             if (need_fish and meal.fish) or (need_legume and meal.legume):

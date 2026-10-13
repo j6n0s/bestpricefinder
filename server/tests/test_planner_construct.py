@@ -19,10 +19,15 @@ import pytest
 
 from bpf.planner import check_plan, suggest_plan
 from bpf.planner.construct import Construct, mask_values
-from bpf.planner.facts import recipe_facts, validate_costs
+from bpf.planner.facts import MAIN_POS, recipe_facts, validate_costs
 from bpf.planner.rules import Limits, Meal, compile_meals, make_limits
-from bpf.planner.facts import MAIN_POS
-from bpf.planner.search import PoolAnalysis, _potato_free_slots, _sweets_floor, _too_small_slots, analyse_pools
+from bpf.planner.search import (
+    PoolAnalysis,
+    _potato_free_slots,
+    _sweets_floor,
+    _too_small_slots,
+    analyse_pools,
+)
 from bpf.pricing.model import SLOTS_5, PlanDay, PlanRequest, Recipe, RuleCheck, Slot
 from tests.test_planner_synth import INGREDIENTS, by_id, random_costs, recipe, seeded
 
@@ -63,7 +68,9 @@ class Setup:
         """Slots the plain variety check (Hall's condition, no other rule) flags."""
         main = [pos for pos in self.active if pos in MAIN_POS]
         flagged = _too_small_slots(main, self.pools, self.meals, self.lim.main_window, self.req.days)
-        return flagged | _too_small_slots(self.active, self.pools, self.meals, self.lim.snack_window, self.req.days)
+        return flagged | _too_small_slots(
+            self.active, self.pools, self.meals, self.lim.snack_window, self.req.days
+        )
 
     def plan_days(self, cells: Sequence[int]) -> tuple[PlanDay, ...]:
         """The plan of ``cells`` (day-major over the active slots; a prefix gives the first days only)."""
@@ -147,7 +154,7 @@ def test_two_day_meals_are_paired_when_the_pool_needs_it() -> None:
     s = setup(lib, request(14, ("ebed",)))
     assert s.analysis.warnings == ()
     for seed in range(10):
-        cells = s.construct().solve(random.Random(seed), UNLIMITED)
+        cells = s.construct().solve(seeded(seed), UNLIMITED)
         assert cells is not None
         days = s.plan_days(cells)
         assert all(c.ok for c in s.checks(days))
@@ -163,7 +170,7 @@ def test_a_two_day_meal_never_fills_three_days_in_a_row() -> None:
     ]
     s = setup(lib, request(7, ("uzsonna",)))
     for seed in range(10):
-        cells = s.construct().solve(random.Random(seed), UNLIMITED)
+        cells = s.construct().solve(seeded(seed), UNLIMITED)
         assert cells is not None
         days = s.plan_days(cells)
         assert all(c.ok for c in s.checks(days))
@@ -176,24 +183,28 @@ def test_no_potato_on_consecutive_days() -> None:
     lentil = [recipe("lencse", ("ebed", "vacsora"), [("lencse", "0.4")])]
     s = setup(potato + other + lentil, request(14, ("ebed", "vacsora")))
     for seed in range(5):
-        cells = s.construct().solve(random.Random(seed), UNLIMITED)
+        cells = s.construct().solve(seeded(seed), UNLIMITED)
         assert cells is not None
         assert all(c.ok for c in s.checks(s.plan_days(cells)))
 
 
 def test_hall_infeasible_pool_is_proved_by_exhausting_the_search() -> None:
-    lib = [recipe(f"fo-{i}", ("ebed",), [(p, "0.4")]) for i, p in enumerate(("hal", "lencse", "tejfol", "rizs"))]
+    lib = [
+        recipe(f"fo-{i}", ("ebed",), [(p, "0.4")]) for i, p in enumerate(("hal", "lencse", "tejfol", "rizs"))
+    ]
     s = setup(lib, request(7, ("ebed",)))
     assert s.analysis.warnings == ("slot_pool_too_small:ebed",)
     builder = s.construct()
-    assert builder.solve(random.Random(0), UNLIMITED) is None
+    assert builder.solve(seeded(0), UNLIMITED) is None
     assert builder.nodes < builder.node_limit  # the tree was exhausted, not cut off
 
 
 def test_out_of_nodes_returns_none_and_respects_the_budget() -> None:
-    lib = [recipe(f"fo-{i}", ("ebed",), [(p, "0.4")]) for i, p in enumerate(("hal", "lencse", "tejfol", "rizs"))]
+    lib = [
+        recipe(f"fo-{i}", ("ebed",), [(p, "0.4")]) for i, p in enumerate(("hal", "lencse", "tejfol", "rizs"))
+    ]
     builder = setup(lib, request(28, ("ebed",))).construct()
-    assert builder.solve(random.Random(0), 10) is None
+    assert builder.solve(seeded(0), 10) is None
     assert builder.nodes <= 10
 
 
@@ -202,12 +213,14 @@ def test_construction_is_deterministic() -> None:
     lib = [
         recipe(f"r-{i}", ("ebed", "vacsora"), [(p, "2" if p == "tojas" else "0.3"), (side, "0.2")])
         for i, (p, side) in enumerate(itertools.product(proteins, ("paradicsom", "paprika")))
-    ] + [recipe(f"b-{i}", ("reggeli",), [("kenyer", "0.2"), (p, "0.1")]) for i, p in enumerate(("turo", "tej"))]
+    ] + [
+        recipe(f"b-{i}", ("reggeli",), [("kenyer", "0.2"), (p, "0.1")]) for i, p in enumerate(("turo", "tej"))
+    ]
     lib += [recipe(f"b-x{i}", ("reggeli",), [("kenyer", "0.2"), ("tojas", str(i + 1))]) for i in range(4)]
     s = setup(lib, request(21, ("reggeli", "ebed", "vacsora")))
-    first = s.construct().solve(random.Random(42), UNLIMITED)
+    first = s.construct().solve(seeded(42), UNLIMITED)
     assert first is not None
-    assert s.construct().solve(random.Random(42), UNLIMITED) == first
+    assert s.construct().solve(seeded(42), UNLIMITED) == first
     assert all(c.ok for c in s.checks(s.plan_days(first)))
 
 
@@ -228,7 +241,7 @@ def test_budget_and_red_meat_bounds_are_propagated() -> None:
     s = setup([meaty, plain], req)
     assert s.analysis.warnings == ()
     for seed in range(5):
-        cells = s.construct().solve(random.Random(seed), UNLIMITED)
+        cells = s.construct().solve(seeded(seed), UNLIMITED)
         assert cells is not None
         days = s.plan_days(cells)
         assert all(c.ok for c in s.checks(days))
@@ -236,8 +249,69 @@ def test_budget_and_red_meat_bounds_are_propagated() -> None:
     tighter = setup([meaty, plain], replace(req, weekly_budget=Decimal(11671)))  # 5001 Ft for 3 days
     assert tighter.analysis.warnings == ()  # each rule alone is satisfiable, the pair is not
     builder = tighter.construct()
-    assert builder.solve(random.Random(0), UNLIMITED) is None
+    assert builder.solve(seeded(0), UNLIMITED) is None
     assert builder.nodes < builder.node_limit
+
+
+@pytest.mark.parametrize("seed", range(40))
+def test_guided_construction_never_fails(seed: int) -> None:
+    """``enforce=False`` fills every cell in one pass (one node per cell), even where no plan meets a rule."""
+    rng = seeded(80_000 + seed)
+    recipes: list[Recipe] = []
+    s = setup(recipes, tiny_request(rng, recipes))
+    builder = Construct(
+        s.req.days,
+        s.active,
+        s.pools,
+        s.meals,
+        s.lim,
+        hopeless=list(s.analysis.hopeless),
+        relaxed=frozenset(),
+        enforce_potato=True,
+        enforce=False,
+    )
+    cells = builder.solve(seeded(seed), builder.cells)
+    assert cells is not None
+    assert builder.nodes == builder.cells
+    assert all(m in s.pools[s.active[i % len(s.active)]] for i, m in enumerate(cells))
+
+
+def test_guided_construction_avoids_repeats_and_prefers_light_meals() -> None:
+    light = [recipe(f"konnyu-{i}", ("ebed",), [("sertes", "0.04"), ("rizs", "0.3")]) for i in range(5)]
+    heavy = [recipe(f"nehez-{i}", ("ebed",), [("marha", "0.8")]) for i in range(5)]
+    s = setup(light + heavy, request(5, ("ebed",), red_meat_g_per_person_week=0))
+    assert "red_meat_cap_unreachable" in s.analysis.warnings
+    builder = Construct(
+        5,
+        s.active,
+        s.pools,
+        s.meals,
+        s.lim,
+        hopeless=list(s.analysis.hopeless),
+        relaxed=frozenset(),
+        enforce_potato=True,
+        enforce=False,
+    )
+    for seed in range(5):
+        cells = builder.solve(seeded(seed), builder.cells)
+        assert cells is not None
+        assert sorted(s.used[m].id for m in cells) == [f"konnyu-{i}" for i in range(5)]
+
+
+def test_slots_sharing_recipes_across_main_and_snack_are_checked_together() -> None:
+    # window 2: any 2 days hold 2 reggeli and 2 tizorai meals, which must be 4 different recipes
+    shared = [
+        recipe(f"kozos-{i}", ("reggeli", "tizorai"), [(p, "0.2")]) for i, p in enumerate(("turo", "alma"))
+    ]
+    breakfast = recipe("reggeli", ("reggeli",), [("joghurt", "0.2")])
+    snack = recipe("tizorai", ("tizorai",), [("banan", "0.2")])
+    enough = setup([*shared, breakfast, snack], request(3, ("reggeli", "tizorai"), no_repeat_days=2))
+    assert [len(enough.pools[pos]) for pos in enough.active] == [3, 3]
+    assert enough.too_small_warnings() == ()  # 4 recipes for the 4 cells
+    short = setup([*shared, breakfast], request(3, ("reggeli", "tizorai"), no_repeat_days=2))
+    assert [len(short.pools[pos]) for pos in short.active] == [3, 2]  # each slot alone has enough
+    assert short.too_small_warnings() == ("slot_pool_too_small:reggeli", "slot_pool_too_small:tizorai")
+    assert not brute_force(short, frozenset({"variety"}))
 
 
 # ───────────────────────────── joint pool analysis ─────────────────────────────
@@ -306,7 +380,8 @@ def tiny_request(rng: random.Random, recipes_out: list[Recipe]) -> PlanRequest:
         own = tuple(s for s in slots if rng.random() < 0.6) or (rng.choice(slots),)
         chosen = rng.sample(ids, rng.randint(1, 3))
         lines = [
-            (iid, "2" if INGREDIENTS[iid].unit == "db" else rng.choice(("0.1", "0.3", "0.6"))) for iid in chosen
+            (iid, "2" if INGREDIENTS[iid].unit == "db" else rng.choice(("0.1", "0.3", "0.6")))
+            for iid in chosen
         ]
         extra = [tag for tag, p in (("edes", 0.25), ("ket_napos", 0.3)) if rng.random() < p]
         recipes_out.append(recipe(f"t-{i}", own, lines, extra_tags=extra, servings=rng.randint(1, 4)))
@@ -355,7 +430,7 @@ def test_construction_finds_a_plan_exactly_when_one_exists(seed: int) -> None:
     recipes: list[Recipe] = []
     req = tiny_request(rng, recipes)
     s = setup(recipes, req)
-    cells = s.construct().solve(random.Random(seed), UNLIMITED)
+    cells = s.construct().solve(seeded(seed), UNLIMITED)
     exists = brute_force(s)
     assert (cells is not None) == exists, (req, [r.id for r in recipes])
     if cells is not None:
@@ -364,8 +439,8 @@ def test_construction_finds_a_plan_exactly_when_one_exists(seed: int) -> None:
 
 @pytest.mark.parametrize("seed", range(160))
 def test_too_small_warnings_are_right(seed: int) -> None:
-    """A slot_pool_too_small warning claims that no plan keeps the variety rule together with the sweets cap and
-    the potato rule (each counted only where the analysis does not already call it impossible)."""
+    """A slot_pool_too_small warning claims that no plan keeps the variety rule together with the sweets cap
+    and the potato rule (each counted only where the analysis does not already call it impossible)."""
     rng = seeded(60_000 + seed)
     recipes: list[Recipe] = []
     req = tiny_request(rng, recipes)
@@ -381,8 +456,8 @@ def test_too_small_warnings_are_right(seed: int) -> None:
 
 
 def near_floor_request(rng: random.Random, recipes_out: list[Recipe]) -> PlanRequest:
-    """A one-slot request near the sweets floor (a snack slot, a few plain and some sweet recipes) or the potato
-    floor (a main slot, a few potato-free and some potato recipes)."""
+    """A one-slot request near the sweets floor (a snack slot, a few plain and some sweet recipes) or the
+    potato floor (a main slot, a few potato-free and some potato recipes)."""
     days = rng.randint(4, 7)
     if rng.random() < 0.5:
         slot: Slot = rng.choice(("tizorai", "uzsonna"))
@@ -401,6 +476,15 @@ def near_floor_request(rng: random.Random, recipes_out: list[Recipe]) -> PlanReq
     return request(days, (slot,), no_repeat_days=window, seed=rng.randint(0, 999))
 
 
+@pytest.mark.parametrize("seed", range(40))
+def test_construction_near_the_joint_floors_finds_a_plan_exactly_when_one_exists(seed: int) -> None:
+    rng = seeded(70_000 + seed)
+    recipes: list[Recipe] = []
+    s = setup(recipes, near_floor_request(rng, recipes))
+    cells = s.construct().solve(seeded(seed), UNLIMITED)
+    assert (cells is not None) == brute_force(s), (s.req, [r.id for r in recipes])
+
+
 @pytest.mark.parametrize("seed", range(120))
 def test_too_small_warnings_near_the_joint_floors_are_right(seed: int) -> None:
     rng = seeded(70_000 + seed)
@@ -411,8 +495,7 @@ def test_too_small_warnings_near_the_joint_floors_are_right(seed: int) -> None:
 
 
 def test_brute_force_cases_cover_the_joint_warnings() -> None:
-    """The near-floor requests do reach the sweets and potato floors, not only the plain Hall check, and most of
-    the plans the floors rule out are ruled out by them alone."""
+    """The near-floor requests do reach the sweets and potato floors, not only the plain Hall check."""
     joint = 0
     for seed in range(120):
         rng = seeded(70_000 + seed)
