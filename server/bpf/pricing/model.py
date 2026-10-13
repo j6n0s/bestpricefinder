@@ -29,23 +29,55 @@ PriceType = Literal["NORMAL", "DISCOUNTED", "LOYALTY"]
 PriceScope = Literal["store", "chain"]
 Availability = Literal["confirmed", "assumed"]
 """``confirmed``: the store is in the product's latest ``availableInShops`` list or has a store price row.
-``assumed``: no availability data for this product × chain; the chain sells it, so we assume the store does."""
+``assumed``: no availability data for this product × chain; the chain sells it, so we assume the store
+does."""
 
 Slot = Literal["reggeli", "tizorai", "ebed", "uzsonna", "vacsora"]
 SLOTS_3: tuple[Slot, ...] = ("reggeli", "ebed", "vacsora")
 SLOTS_5: tuple[Slot, ...] = ("reggeli", "tizorai", "ebed", "uzsonna", "vacsora")
 
 IngredientTag = Literal[
-    "red_meat", "processed_meat", "poultry", "fish", "egg", "dairy", "legume",
-    "vegetable", "fruit", "potato", "grain", "wholegrain", "nut_seed", "fat_oil",
-    "sweet", "spice", "condiment",
+    "red_meat",
+    "processed_meat",
+    "poultry",
+    "fish",
+    "egg",
+    "dairy",
+    "legume",
+    "vegetable",
+    "fruit",
+    "potato",
+    "grain",
+    "wholegrain",
+    "nut_seed",
+    "fat_oil",
+    "sweet",
+    "spice",
+    "condiment",
 ]
 """Closed vocabulary, mirrored by the CHECK constraint in db/migrations/0002_ingredient_attrs.sql."""
 
 RecipeTag = Literal[
-    "leves", "fozelek", "foetel", "koret", "salata", "reggeli_hideg", "reggeli_meleg", "snack",
-    "husmentes", "vegetarianus", "hal", "huvelyes", "baromfi", "sertes", "marha",
-    "edes", "gyors", "ket_napos", "olcso", "gyerekbarat",
+    "leves",
+    "fozelek",
+    "foetel",
+    "koret",
+    "salata",
+    "reggeli_hideg",
+    "reggeli_meleg",
+    "snack",
+    "husmentes",
+    "vegetarianus",
+    "hal",
+    "huvelyes",
+    "baromfi",
+    "sertes",
+    "marha",
+    "edes",
+    "gyors",
+    "ket_napos",
+    "olcso",
+    "gyerekbarat",
 ]
 """Closed vocabulary for ``Recipe.tags`` (validated by bpf.content). Descriptive only — never health claims.
 ``husmentes`` = contains no meat or fish ingredient (derived and checked by the content loader).
@@ -120,7 +152,7 @@ class Chain:
 
 @dataclass(frozen=True, slots=True)
 class Store:
-    """Row of ``api.store`` plus the derived ``has_data`` (store carried ≥1 product on the latest data date)."""
+    """Row of ``api.store`` plus the derived ``has_data`` (see docs/ENGINE.md for the rule)."""
 
     id: str
     chain_id: str
@@ -271,7 +303,7 @@ class PackOption:
 
 @dataclass(frozen=True, slots=True)
 class LinePick:
-    """``count`` packs of one option (for variable weight: ``count`` is 1 and ``qty`` is the weight bought)."""
+    """``count`` packs of one option (variable weight: ``count`` is 1 and ``qty`` is the weight bought)."""
 
     option: PackOption
     count: int

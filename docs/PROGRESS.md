@@ -26,7 +26,7 @@ The user relays anything urgent.
 - [x] Python 3.14 dependency check: fastapi 0.143.0, starlette 1.7.0, uvicorn 0.54.0, pydantic 2.14.1, pydantic-settings 2.15.0, psycopg[binary,pool] 3.3.6 / psycopg-pool 3.3.3, httpx 0.28.1, openpyxl 3.1.5 and pytest 9.1.1 all install and import on macOS arm64.
 
 ## Next steps (in order). Tick them off here.
-- [ ] **1. Local DB tooling**: `deploy/local/db-init.sh`, `db-start.sh`, `db-stop.sh`, `.env.example`. Follow ARCHITECTURE.md "Database security model":
+- [x] **1. Local DB tooling** _(done 2026-10-13 by the cloud agent: `deploy/local/`, `.env.example`; 58 tests pass on PostgreSQL 16.15 and 18.6, incl. automated role-privilege tests; see `deploy/local/README.md`)_: `deploy/local/db-init.sh`, `db-start.sh`, `db-stop.sh`, `.env.example`. Follow ARCHITECTURE.md "Database security model":
   - a dedicated cluster on port 5544, listening on localhost only;
   - `initdb --auth-local=scram-sha-256 --auth-host=scram-sha-256 --locale-provider=builtin --builtin-locale=C.UTF-8`;
   - a strict `pg_hba.conf`;
@@ -35,7 +35,7 @@ The user relays anything urgent.
   - random passwords written to `.env.local` with chmod 600. Pass them via `\getenv`, never on the command line.
 
   ⚠️ On macOS, `export LC_ALL=en_US.UTF-8` before `pg_ctl start`, or the postmaster aborts with "became multithreaded during startup". Unix socket paths must be under 103 bytes. In a cloud container, use the distro's PostgreSQL 16+ or a `postgres:18` container.
-- [ ] **2. `server/` skeleton**: `pyproject.toml` with pinned deps; `bpf/config.py` (pydantic-settings reading `.env.local`); `bpf/db.py` (psycopg_pool, one pool per role); `bpf/migrate.py`, which:
+- [x] **2. `server/` skeleton** _(done 2026-10-13 by the cloud agent: `server/pyproject.toml` + `uv.lock`, `bpf/config.py`, `bpf/db.py`, `bpf/migrate.py`, test harness `server/tests/pgcluster.py`)_: `pyproject.toml` with pinned deps; `bpf/config.py` (pydantic-settings reading `.env.local`); `bpf/db.py` (psycopg_pool, one pool per role); `bpf/migrate.py`, which:
   - applies `db/migrations/*.sql` in order inside one transaction each, prefixed with `SET ROLE bpf_owner`;
   - records version and sha256 in `public.schema_migrations`;
   - refuses to run if an applied file's checksum changed.

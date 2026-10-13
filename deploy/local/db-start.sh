@@ -4,7 +4,7 @@
 set -euo pipefail
 umask 077
 
-# shellcheck source=_common.sh
+# shellcheck source-path=SCRIPTDIR source=_common.sh
 . "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
 
 bpf_refuse_root

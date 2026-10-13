@@ -15,8 +15,8 @@ Rules
 
 from __future__ import annotations
 
-import math
 import datetime as dt
+import math
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from typing import Annotated, Literal
 
@@ -35,9 +35,26 @@ PriceScope = Literal["store", "chain"]
 AvailabilityKind = Literal["confirmed", "assumed"]
 LineStatus = Literal["priced", "pantry", "unavailable", "ksh_estimate", "unpriced"]
 RecipeTag = Literal[
-    "leves", "fozelek", "foetel", "koret", "salata", "reggeli_hideg", "reggeli_meleg", "snack",
-    "husmentes", "vegetarianus", "hal", "huvelyes", "baromfi", "sertes", "marha",
-    "edes", "gyors", "ket_napos", "olcso", "gyerekbarat",
+    "leves",
+    "fozelek",
+    "foetel",
+    "koret",
+    "salata",
+    "reggeli_hideg",
+    "reggeli_meleg",
+    "snack",
+    "husmentes",
+    "vegetarianus",
+    "hal",
+    "huvelyes",
+    "baromfi",
+    "sertes",
+    "marha",
+    "edes",
+    "gyors",
+    "ket_napos",
+    "olcso",
+    "gyerekbarat",
 ]
 RuleName = Literal["fish", "legume", "meat_free_day", "red_meat", "potato", "sweets", "variety", "budget"]
 
@@ -75,8 +92,14 @@ class _Out(BaseModel):
 # ───────────────────────────── errors ─────────────────────────────
 
 ErrorCode = Literal[
-    "invalid_request", "not_found", "payload_too_large", "unsupported_media_type",
-    "rate_limited", "no_data", "internal", "method_not_allowed",
+    "invalid_request",
+    "not_found",
+    "payload_too_large",
+    "unsupported_media_type",
+    "rate_limited",
+    "no_data",
+    "internal",
+    "method_not_allowed",
 ]
 
 
@@ -179,10 +202,14 @@ class RecipeSummary(_Out):
     tags: list[str]
     tested: bool
     cost_per_serving_from: float | None = Field(
-        description="cheapest chain-typical used cost per serving across grocery chains (HUF); null if unpriced"
+        description=(
+            "cheapest chain-typical used cost per serving across grocery chains (HUF); null if unpriced"
+        )
     )
     cheapest_chain: ChainSlug | None
-    priced_share: float = Field(ge=0, le=1, description="share of cost covered by priced lines at cheapest_chain")
+    priced_share: float = Field(
+        ge=0, le=1, description="share of cost covered by priced lines at cheapest_chain"
+    )
 
 
 class RecipesResponse(_Out):
@@ -350,7 +377,9 @@ class QuoteResponse(_Out):
     stores: list[StoreQuoteOut]
     ranking: list[RankOut]
     split: SplitOut | None
-    scope_note_hu: str = Field(description='e.g. "a kiválasztott boltok közül, a 2026-10-13-i GVH-adatok alapján"')
+    scope_note_hu: str = Field(
+        description='e.g. "a kiválasztott boltok közül, a 2026-10-13-i GVH-adatok alapján"'
+    )
     scope_note_en: str
     attribution: AttributionSet
 

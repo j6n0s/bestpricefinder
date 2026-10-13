@@ -20,7 +20,7 @@
 set -euo pipefail
 umask 077
 
-# shellcheck source=_common.sh
+# shellcheck source-path=SCRIPTDIR source=_common.sh
 . "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
 
 bpf_refuse_root
@@ -124,13 +124,14 @@ log_statement = 'ddl'
 EOF
 printf "\n# bestpricefinder (deploy/local/db-init.sh)\ninclude_if_exists = 'bpf.conf'\n" >>"$PGDATA_DIR/postgresql.conf"
 
+db_col=$(printf '%-12s' "$DB_NAME") # keeps the columns below aligned
 cat >"$PGDATA_DIR/pg_hba.conf" <<EOF
 # bestpricefinder pg_hba.conf, written by deploy/local/db-init.sh. First match wins.
 # scram-sha-256 only. No trust, peer, ident, md5 or password lines, ever.
 # TYPE  DATABASE     USER                                ADDRESS        METHOD
-local   $DB_NAME     bpf_migrator,bpf_ingest,bpf_api                    scram-sha-256
-host    $DB_NAME     bpf_migrator,bpf_ingest,bpf_api     127.0.0.1/32   scram-sha-256
-host    $DB_NAME     bpf_migrator,bpf_ingest,bpf_api     ::1/128        scram-sha-256
+local   ${db_col} bpf_migrator,bpf_ingest,bpf_api                    scram-sha-256
+host    ${db_col} bpf_migrator,bpf_ingest,bpf_api     127.0.0.1/32   scram-sha-256
+host    ${db_col} bpf_migrator,bpf_ingest,bpf_api     ::1/128        scram-sha-256
 local   all          bpf_admin                                          scram-sha-256
 host    all          bpf_admin                           127.0.0.1/32   scram-sha-256
 host    all          bpf_admin                           ::1/128        scram-sha-256

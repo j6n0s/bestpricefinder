@@ -7,11 +7,11 @@
 # the plaintext never touches the disk. If the recipient is set but `age` is not installed, nothing is
 # dumped. Encrypt anything that leaves this machine.
 #
-# Restore (into an empty database owned by bpf_owner):  pg_restore -d bpf --no-owner --role=bpf_owner FILE
+# Restore: see deploy/local/README.md.
 set -euo pipefail
 umask 077
 
-# shellcheck source=_common.sh
+# shellcheck source-path=SCRIPTDIR source=_common.sh
 . "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
 
 bpf_refuse_root

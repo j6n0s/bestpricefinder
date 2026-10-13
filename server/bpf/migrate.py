@@ -11,17 +11,20 @@ pending migrations.
 
 Rules enforced here:
 
-- File names match ``^\\d{4}_[a-z0-9_]+\\.sql$``; versions are unique and start at 0001. Dotfiles and ``*.md``
-  are ignored; anything else in the directory is an error, so a misnamed migration is never skipped silently.
-- ``public.schema_migrations`` records version, file name and the sha256 of the exact file bytes. If an applied
-  file changed, was renamed or is missing, nothing runs: never edit an applied migration, add a new one.
+- File names match ``^\\d{4}_[a-z0-9_]+\\.sql$``; versions are unique and start at 0001. Dotfiles and
+  ``*.md`` are ignored; anything else in the directory is an error, so a misnamed migration is never skipped
+  silently.
+- ``public.schema_migrations`` records version, file name and the sha256 of the exact file bytes. If an
+  applied file changed, was renamed or is missing, nothing runs: never edit an applied migration, add a new
+  one.
 - A pending migration numbered below the latest applied one is an error (renumber it).
 - Each migration runs in its own transaction: ``SET LOCAL ROLE bpf_owner``, the file as one multi-statement
   script, the bookkeeping row, ``COMMIT``. Files must not contain ``BEGIN``/``COMMIT``/``ROLLBACK`` or
   statements that cannot run in a transaction (``CREATE INDEX CONCURRENTLY``, ``VACUUM``...).
 - A session-level advisory lock serialises concurrent runs (``lock_timeout`` of bpf_migrator is 10 s).
 
-Logged: file names, checksums, durations, error codes and messages. Never logged: SQL text, conninfo, passwords.
+Logged: file names, checksums, durations, error codes and messages.
+Never logged: SQL text, conninfo, passwords.
 """
 
 from __future__ import annotations
@@ -112,7 +115,9 @@ def discover(directory: Path) -> list[Migration]:
         if version == 0:
             raise MigrationError(f"{name}: migration versions start at 0001")
         if version in by_version:
-            raise MigrationError(f"duplicate migration version {version:04d}: {by_version[version].filename}, {name}")
+            raise MigrationError(
+                f"duplicate migration version {version:04d}: {by_version[version].filename}, {name}"
+            )
         data = entry.read_bytes()
         try:
             text = data.decode("utf-8")
@@ -132,7 +137,9 @@ def plan(migrations: Sequence[Migration], applied: Sequence[AppliedRow]) -> tupl
     for row in applied:
         m = files.get(row.version)
         if m is None:
-            problems.append(f"applied migration {row.filename} (version {row.version:04d}) is missing from disk")
+            problems.append(
+                f"applied migration {row.filename} (version {row.version:04d}) is missing from disk"
+            )
         elif m.filename != row.filename:
             problems.append(f"applied migration {row.filename} was renamed to {m.filename}; restore its name")
         elif m.sha256 != row.sha256:
@@ -143,7 +150,8 @@ def plan(migrations: Sequence[Migration], applied: Sequence[AppliedRow]) -> tupl
     latest = max(done, default=0)
     pending = [m for m in migrations if m.version not in done]
     problems.extend(
-        f"pending migration {m.filename} is numbered below the latest applied version {latest:04d}; renumber it"
+        f"pending migration {m.filename} is numbered below the latest applied version {latest:04d}; "
+        "renumber it"
         for m in pending
         if m.version < latest
     )
@@ -181,7 +189,8 @@ def _apply_one(conn: psycopg.Connection, m: Migration) -> float:
     started = time.monotonic()
     try:
         conn.execute(_SET_OWNER)
-        conn.execute(m.sql)  # no parameters: sent as one simple-protocol script, so several statements are fine
+        # No parameters: psycopg sends the file as one simple-protocol script, so it may hold many statements.
+        conn.execute(m.sql)
         if conn.info.transaction_status != TransactionStatus.INTRANS:
             raise MigrationError(
                 f"{m.filename} ended the migration transaction itself; remove BEGIN/COMMIT/ROLLBACK from it"
@@ -191,7 +200,9 @@ def _apply_one(conn: psycopg.Connection, m: Migration) -> float:
         conn.commit()
     except psycopg.Error as exc:
         conn.rollback()
-        raise MigrationError(f"{m.filename} failed and was rolled back: {_describe_db_error(exc, m)}") from None
+        raise MigrationError(
+            f"{m.filename} failed and was rolled back: {_describe_db_error(exc, m)}"
+        ) from None
     except BaseException:
         conn.rollback()
         raise
@@ -214,7 +225,9 @@ def run(directory: Path = DEFAULT_DIR, *, settings: Settings | None = None, chec
             conn.execute(b"SELECT pg_advisory_lock(%s)", (LOCK_KEY,))
             conn.commit()  # the advisory lock is session-level: it survives the commit
         except psycopg.errors.LockNotAvailable:
-            raise MigrationError("another bpf-migrate run holds the migration lock; try again later") from None
+            raise MigrationError(
+                "another bpf-migrate run holds the migration lock; try again later"
+            ) from None
         try:
             applied = _read_applied(conn, create=not check)
         except psycopg.Error as exc:
@@ -253,11 +266,16 @@ def main(argv: Sequence[str] | None = None, *, settings: Settings | None = None)
     except (MigrationError, MissingCredentialsError) as exc:
         log.error("%s", exc)
         return 1
+    except psycopg.Error as exc:  # e.g. the connection dropped between migrations
+        log.error("database error: %s", _describe_db_error(exc))
+        return 1
     if args.check:
         for m in result.pending:
             log.warning("pending %s sha256=%s", m.filename, m.sha256)
         if result.pending:
-            log.warning("%d migration(s) pending; database at version %04d", len(result.pending), result.version)
+            log.warning(
+                "%d migration(s) pending; database at version %04d", len(result.pending), result.version
+            )
             return 2
         log.info("up to date at version %04d", result.version)
         return 0
