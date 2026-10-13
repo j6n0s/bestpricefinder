@@ -14,7 +14,6 @@ from pathlib import Path
 from typing import Any
 
 from bpf.api.app import create_app
-from bpf.api.options import ApiOptions
 from bpf.config import REPO_ROOT, Settings
 
 DEFAULT_OUTPUT = REPO_ROOT / "docs" / "openapi.json"
@@ -22,10 +21,12 @@ DEFAULT_OUTPUT = REPO_ROOT / "docs" / "openapi.json"
 
 def openapi_document() -> dict[str, Any]:
     """The OpenAPI document, built from an app that has no environment, database or static site."""
-    # model_construct: defaults only, nothing read from the environment or an env file
-    settings = Settings.model_construct(web_build_dir=Path("/nonexistent/bpf-openapi"))
-    options = ApiOptions.model_construct(hsts=False, enable_docs=False)
-    return create_app(settings, options=options).openapi()
+    # model_construct: defaults only, nothing read from the environment or an env file. The docs switch is
+    # off explicitly: the exported document never depends on BPF_ENABLE_DOCS.
+    settings = Settings.model_construct(
+        web_build_dir=Path("/nonexistent/bpf-openapi"), hsts=False, enable_docs=False
+    )
+    return create_app(settings).openapi()
 
 
 def render() -> str:

@@ -17,7 +17,8 @@ first access (PEP 562), so importing this module never reads settings or touches
 
 FastAPI's OpenTelemetry integration is switched off: it can record validation failures with request bodies.
 The interactive docs (``/api/docs``, ``/api/redoc``, ``/api/openapi.json``) exist only with
-``BPF_ENABLE_DOCS=true``; ``python -m bpf.api.openapi`` writes the document to docs/openapi.json instead.
+``BPF_ENABLE_DOCS=true`` (``Settings.enable_docs``); ``python -m bpf.api.openapi`` writes the document to
+docs/openapi.json instead. ``BPF_HSTS=true`` (``Settings.hsts``) adds ``Strict-Transport-Security``.
 """
 
 from __future__ import annotations
@@ -36,7 +37,6 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.cors import CORSMiddleware
 
 from bpf.api.errors import ApiError, api_error_handler, http_error_handler, validation_error_handler
-from bpf.api.options import ApiOptions, load_options
 from bpf.api.repo import CONNECTION_TIMEOUT_S, CatalogueProvider, DataUnavailable
 from bpf.api.routes import register_routes
 from bpf.api.security import (
@@ -54,7 +54,7 @@ from bpf.db import open_pool
 log = logging.getLogger("bpf.api")
 
 API_TITLE = "Heti kosár API"
-API_VERSION = "1.1"
+API_VERSION = "1.2"
 POOL_MIN_SIZE = 1
 POOL_MAX_SIZE = 4
 DOCS_URL = "/api/docs"
@@ -104,13 +104,11 @@ def create_app(
     settings: Settings | None = None,
     *,
     catalogue_provider: CatalogueProvider | None = None,
-    options: ApiOptions | None = None,
 ) -> FastAPI:
-    """Build the application. ``catalogue_provider`` replaces the database-backed one (tests); ``options``
-    defaults to the environment (``BPF_HSTS``, ``BPF_ENABLE_DOCS``)."""
+    """Build the application from ``settings`` (default: :func:`bpf.config.get_settings`, i.e. the environment
+    and the env file). ``catalogue_provider`` replaces the database-backed one (tests)."""
     settings = settings if settings is not None else get_settings()
-    options = options if options is not None else load_options()
-    docs = options.enable_docs
+    docs = settings.enable_docs
     app = FastAPI(
         title=API_TITLE,
         version=API_VERSION,
@@ -158,7 +156,7 @@ def create_app(
         )
     app.add_middleware(
         SecurityHeadersMiddleware,
-        hsts=options.hsts,
+        hsts=settings.hsts,
         csp_overrides={DOCS_URL: DOCS_CSP, REDOC_URL: DOCS_CSP} if docs else None,
     )
     return app

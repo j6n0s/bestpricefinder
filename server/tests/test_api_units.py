@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import contextlib
+import dataclasses
+import decimal
 import json
 import threading
 import time
@@ -11,25 +13,30 @@ from decimal import Decimal
 from typing import Any
 
 import pytest
+from pydantic import BaseModel, ValidationError
 from starlette.datastructures import Headers
 
-from bpf.api import present
+from bpf.api import present, schemas
 from bpf.api.caching import etag_matches, make_etag
 from bpf.api.errors import MAX_FIELDS, field_path, field_paths
 from bpf.api.repo import (
     CatalogueProvider,
     DataUnavailable,
     RawData,
+    _ksh,
     assemble_snapshot,
+    availability_recent,
     store_has_data,
     summarise_costs,
 )
 from bpf.api.routes import is_stale
+from bpf.api.schemas import ListRequest, QuoteRequest
 from bpf.api.security import TokenBucketLimiter, client_key, declared_length, is_json_content_type
 from bpf.api.static import STRICT_HTML_POLICY, header_policy, meta_csp
 from bpf.api.strictjson import strict_json_loads
 from bpf.api.texts import nutrition_attribution
 from bpf.pricing import ChainRecipeCost, Ingredient, KshPrice
+from bpf.pricing.quote import ksh_estimate
 from tests.fixtures.api.asgi import JSON_HEADERS, raw_request
 from tests.fixtures.api.memory import MemorySource, app_with, client_with, memory_raw
 from tests.fixtures.api.seed import FakeClock, TestClient
@@ -137,8 +144,8 @@ def test_strict_json_accepts_plain_json() -> None:
     ],
 )
 def test_huge_and_odd_quantities_are_422_not_500(body: dict[str, Any], field: str) -> None:
-    """Regression (found by the fuzz test): schemas._to_qty quantizes in the ambient decimal context, where
-    1e308 raises decimal.InvalidOperation; validation must report it as an invalid field."""
+    """Regression (found by the fuzz test): 1e308 used to make quantize raise decimal.InvalidOperation, a
+    500. Quantities must be JSON numbers (strings are 422 too, contract v1.2) within the bounds."""
     client = client_with()
     response = client.post("/api/quote", json=body)
     assert (response.status_code, response.json()) == (422, {"error": "invalid_request", "fields": [field]})
@@ -148,6 +155,80 @@ def test_huge_and_odd_quantities_are_422_not_500(body: dict[str, Any], field: st
         "/api/quote", json={"lines": [{"ingredient_id": "rizs", "qty": 1}], "store_ids": ["alfa-1"]}
     )
     assert ok.json()["stores"][0]["checkout_total"] == 499.0  # computing is unaffected
+
+
+HUGE_QUANTITIES: list[object] = [1e308, -1e308, 1e300, 1.7976931348623157e308, 10**30, 10**7, 1e7, 5e-324]
+
+
+@pytest.mark.parametrize("value", HUGE_QUANTITIES)
+@pytest.mark.parametrize(
+    "context",
+    [decimal.DefaultContext, decimal.BasicContext, decimal.ExtendedContext],
+    ids=["default", "basic", "extended"],
+)
+def test_huge_quantities_are_validation_errors_in_any_decimal_context(
+    value: object, context: decimal.Context
+) -> None:
+    """The models alone (no route, no special context) turn huge or tiny magnitudes into a validation error
+    (422) in the DEFAULT decimal context, where InvalidOperation is trapped, and in the others too: never an
+    ArithmeticError."""
+    requests: list[tuple[type[BaseModel], dict[str, Any], tuple[object, ...]]] = [
+        (
+            QuoteRequest,
+            {"lines": [{"ingredient_id": "rizs", "qty": value}], "store_ids": ["alfa-1"]},
+            ("lines", 0, "qty"),
+        ),
+        (ListRequest, {"items": [{"recipe_id": "zz-porkolt", "servings": value}]}, ("items", 0, "servings")),
+        (
+            ListRequest,
+            {
+                "items": [{"recipe_id": "zz-porkolt", "servings": 1}],
+                "on_hand": [{"ingredient_id": "rizs", "qty": value}],
+            },
+            ("on_hand", 0, "qty"),
+        ),
+    ]
+    with decimal.localcontext(context):
+        if context is decimal.DefaultContext:
+            assert decimal.getcontext().traps[decimal.InvalidOperation]
+        for model, body, loc in requests:
+            with pytest.raises(ValidationError) as caught:
+                model.model_validate(body)
+            assert [error["loc"] for error in caught.value.errors()] == [loc]
+
+
+def test_request_validation_runs_in_the_ordinary_decimal_context(monkeypatch: pytest.MonkeyPatch) -> None:
+    """The route sets no trap-free context: quantities are validated in the ambient (default) context, where
+    InvalidOperation is trapped, and 1e308 is still a 422 (never a 500)."""
+    traps: list[bool] = []
+    original = schemas._to_qty
+
+    def spy(value: object, *, low: Decimal, high: Decimal) -> Decimal:
+        traps.append(bool(decimal.getcontext().traps[decimal.InvalidOperation]))
+        return original(value, low=low, high=high)
+
+    monkeypatch.setattr(schemas, "_to_qty", spy)
+    body = {"lines": [{"ingredient_id": "rizs", "qty": 1e308}], "store_ids": ["alfa-1"]}
+    response = client_with().post("/api/quote", json=body)
+    assert (response.status_code, response.json()) == (
+        422,
+        {"error": "invalid_request", "fields": ["lines.0.qty"]},
+    )
+    assert traps == [True]
+
+
+def test_string_quantities_are_rejected_by_the_models() -> None:
+    """Contract v1.2: quantities must be JSON numbers; a numeric string is not accepted either."""
+    for value in ("1", "0.5", "1e100", "NaN", ""):
+        with pytest.raises(ValidationError) as caught:
+            QuoteRequest.model_validate(
+                {"lines": [{"ingredient_id": "rizs", "qty": value}], "store_ids": ["a"]}
+            )
+        assert [error["loc"] for error in caught.value.errors()] == [("lines", 0, "qty")]
+    ok = QuoteRequest.model_validate(
+        {"lines": [{"ingredient_id": "rizs", "qty": 0.0005}], "store_ids": ["a"]}
+    )
+    assert ok.lines[0].qty == D("0.001")  # half-up to 0.001
 
 
 # ───────────────────────────── caching ─────────────────────────────
@@ -208,32 +289,191 @@ def _cost(chain: str, value: str | None, share: str = "1") -> ChainRecipeCost:
     return ChainRecipeCost(chain, None if value is None else D(value), D(share), ())
 
 
+def _summary(costs: list[ChainRecipeCost]) -> tuple[Decimal | None, tuple[str, ...], Decimal]:
+    summary = summarise_costs(costs)
+    return summary.cost_per_serving_from, summary.cheapest_chain_ids, summary.priced_share
+
+
 def test_summarise_costs_keeps_every_whole_forint_tie() -> None:
     summary = summarise_costs(
         [
             _cost("a", "412.45", "0.9"),
             _cost("b", "412.40", "1"),
-            _cost("c", "412.49", "0.8"),
+            _cost("c", "412.49", "0.95"),
             _cost("d", "412.50"),
         ]
     )
     # 412.40 is the minimum; 412.45 and 412.49 round to 412 as well (tied); 412.50 rounds to 413
     assert summary.cost_per_serving_from == D("412.40")
     assert summary.cheapest_chain_ids == ("a", "b", "c")
-    assert summary.priced_share == D("0.8")  # the lowest share of the tie group
+    assert summary.priced_share == D("0.9")  # the lowest share of the tie group
     assert summarise_costs([_cost("a", None), _cost("b", None)]).cost_per_serving_from is None
     assert summarise_costs([]).cheapest_chain_ids == ()
 
 
+def test_summarise_costs_ignores_a_chain_that_prices_only_a_cheap_subset() -> None:
+    """docs/ENGINE.md: only chains with priced_share >= 0.9 are candidates. 'cheap' prices one cheap line
+    (share 0.3) and must never be called the cheapest, however low its partial cost."""
+    costs = [
+        _cost("cheap", "50", "0.3"),
+        _cost("full", "400", "1"),
+        _cost("most", "390.40", "0.9"),  # exactly 0.9 qualifies
+        _cost("almost", "100", "0.8999999999999999999999999999"),  # just below 0.9 does not
+    ]
+    assert _summary(costs) == (D("390.40"), ("most",), D("0.9"))
+    # whole-forint ties inside the candidates only: 390.40 and 390.49 both round to 390
+    tied = [*costs, _cost("other", "390.49", "0.97")]
+    assert _summary(tied) == (D("390.40"), ("most", "other"), D("0.9"))
+    # the same cost at a non-candidate is not part of the tie group
+    assert _summary([*costs, _cost("partial", "390.40", "0.5")]) == (D("390.40"), ("most",), D("0.9"))
+
+
+def test_summarise_costs_falls_back_to_the_best_covered_chains() -> None:
+    """When no chain reaches 0.9, the candidates are the chains with the highest share (ties included)."""
+    costs = [
+        _cost("a", "100", "0.5"),
+        _cost("b", "300", "0.8"),
+        _cost("c", "250", "0.8"),
+        _cost("d", None, "0"),
+    ]
+    assert _summary(costs) == (D("250"), ("c",), D("0.8"))  # 'a' is cheaper but covers less
+    assert _summary([*costs, _cost("e", "250.4", "0.8")]) == (D("250"), ("c", "e"), D("0.8"))
+    assert _summary([_cost("a", "100", "0.5"), _cost("b", "300", "0.8")]) == (D("300"), ("b",), D("0.8"))
+    # nothing priced anywhere: no cost, no chains, share 0
+    assert _summary([_cost("a", None, "0"), _cost("b", None, "0")]) == (None, (), D(0))
+
+
+def test_availability_recent() -> None:
+    def at(day: date, hour: int, minute: int = 0) -> datetime:
+        return datetime(day.year, day.month, day.day, hour, minute, tzinfo=UTC)
+
+    assert availability_recent(DAY, None) is False  # never ran (or never finished ok/partial)
+    assert availability_recent(DAY, at(DAY, 2)) is True
+    assert availability_recent(DAY, at(DAY + timedelta(days=3), 2)) is True  # after the data date
+    assert availability_recent(DAY, at(DAY - timedelta(days=8), 2)) is True  # 8 days: still recent
+    assert availability_recent(DAY, at(DAY - timedelta(days=9), 21, 59)) is False  # 23:59 Budapest (CEST)
+    # 22:30 UTC on day -9 is 00:30 on day -8 in Budapest (CEST): the Budapest calendar decides
+    assert availability_recent(DAY, at(DAY - timedelta(days=9), 22, 30)) is True
+    winter = date(2026, 12, 20)  # CET (UTC+1): 23:30 UTC is 00:30 the next day in Budapest
+    assert availability_recent(winter, at(winter - timedelta(days=9), 23, 30)) is True
+    assert availability_recent(winter, at(winter - timedelta(days=9), 22, 30)) is False
+    naive = datetime(2026, 10, 4, 2, 0)  # treated as UTC
+    assert availability_recent(DAY, naive) is True
+
+
 def test_store_has_data_rule() -> None:
-    fresh = DAY - timedelta(days=2)
-    assert store_has_data(DAY, None, fresh) is False  # no data date at all
-    assert store_has_data(None, DAY, None) is True  # no availability refresh ever
-    assert store_has_data(None, DAY, DAY - timedelta(days=9)) is True  # the last refresh is too old
-    assert store_has_data(None, DAY, DAY - timedelta(days=8)) is False  # a refresh 8 days ago still counts
+    fresh = datetime(2026, 10, 10, 2, 45, tzinfo=UTC)  # an availability run 2 days before the data date
+    stale = datetime(2026, 10, 3, 2, 45, tzinfo=UTC)  # 9 days before
+    eight = datetime(2026, 10, 4, 2, 45, tzinfo=UTC)  # 8 days before
+    # no data date at all: no store has data, whatever else is known
+    assert store_has_data(DAY, None, fresh) is False
+    assert store_has_data(None, None, None) is False
+    # no recent availability run: every store has data, even one never seen
+    assert store_has_data(None, DAY, None) is True
+    assert store_has_data(None, DAY, stale) is True
+    assert store_has_data(DAY - timedelta(days=30), DAY, stale) is True
+    # a recent availability run: has_data_date decides (at most 8 days old)
+    assert store_has_data(None, DAY, eight) is False  # a run 8 days ago still counts as recent
+    assert store_has_data(None, DAY, fresh) is False
+    assert store_has_data(DAY, DAY, fresh) is True
     assert store_has_data(DAY - timedelta(days=8), DAY, fresh) is True
     assert store_has_data(DAY - timedelta(days=9), DAY, fresh) is False
     assert store_has_data(DAY + timedelta(days=1), DAY, fresh) is True  # marked by a newer run
+
+
+def test_snapshot_applies_the_has_data_rule_to_every_store() -> None:
+    """assemble_snapshot uses the availability run's finish time (never the availability lists' as_of)."""
+
+    def has_data(raw: RawData) -> dict[str, bool]:
+        snap = assemble_snapshot(raw)
+        assert {s.id: s.has_data for s in snap.catalogue.stores.values()} == {
+            s.id: s.has_data for s in snap.stores
+        }
+        return {s.id: s.has_data for s in snap.stores}
+
+    recent = has_data(memory_raw())  # seed: run 2 days before; gamma-2 20 days old, delta-1 never
+    assert recent == {
+        "alfa-1": True,
+        "beta-1": True,
+        "beta-2": True,
+        "delta-1": False,
+        "gamma-1": True,
+        "gamma-2": False,
+    }
+    assert set(has_data(memory_raw(availability_finished_at=None)).values()) == {True}
+    old = datetime(2026, 10, 3, 21, 59, tzinfo=UTC)  # 23:59 on 2026-10-03 in Budapest: 9 days before
+    assert set(has_data(memory_raw(availability_finished_at=old)).values()) == {True}
+    assert has_data(memory_raw(availability_finished_at=old + timedelta(minutes=2))) == recent
+    assert set(has_data(memory_raw(data_date=None)).values()) == {False}
+
+
+def _recipe_rows(client: TestClient) -> dict[str, tuple[float | None, list[str], float]]:
+    return {
+        r["id"]: (r["cost_per_serving_from"], r["cheapest_chains"], r["priced_share"])
+        for r in client.get("/api/recipes").json()["recipes"]
+    }
+
+
+def test_recipe_cheapest_chain_needs_coverage_end_to_end() -> None:
+    """Without beta's chicken, beta prices only the rice of zz-csirkes-rizs: 0.4 x 549 / 4 = 54.90 per
+    serving, far below every other chain, but its share is 219.6 / (219.6 + median(1494, 1434) = 1464) =
+    0.1304, so it can never be the cheapest; gamma (408.40, share 1) stays. zz-paprikas-csirke is then not
+    priceable at beta at all (null cost, never a candidate)."""
+    raw = memory_raw()
+    chain_prices = [
+        cp for cp in raw.chain_prices if (cp.product_id, cp.chain_id) != ("zz-p-csm-b", "zz-chain-beta")
+    ]
+    store_prices = [sp for sp in raw.store_prices if sp.product_id != "zz-p-csm-b"]
+    source = MemorySource(dataclasses.replace(raw, chain_prices=chain_prices, store_prices=store_prices))
+    client = client_with(provider=CatalogueProvider(source))
+    detail = client.get("/api/recipes/zz-csirkes-rizs").json()
+    beta = next(c for c in detail["chain_costs"] if c["chain"] == "beta")
+    assert beta == {
+        "chain": "beta",
+        "cost_per_serving": 54.9,
+        "priced_share": 0.1304,
+        "missing": ["csirkemell"],
+    }
+    rows = _recipe_rows(client)
+    assert rows["zz-csirkes-rizs"] == (408.4, ["gamma"], 1.0)
+    assert (detail["cost_per_serving_from"], detail["cheapest_chains"]) == (408.4, ["gamma"])
+    assert rows["zz-paprikas-csirke"] == (597.5, ["gamma"], 0.9676)
+    assert rows["zz-rizs-koret"] == (49.9, ["alfa", "gamma"], 1.0)  # the whole-forint tie is kept
+
+
+def test_recipe_cheapest_chain_falls_back_to_the_best_covered_end_to_end() -> None:
+    """A dearer synthetic KSH paprika (40,000 Ft/kg: 400 Ft for 0.01 kg) pushes every chain of
+    zz-paprikas-csirke below 0.9: alfa 1245 / 1645 = 0.7568, beta 1490 / 1890 = 0.7883, gamma 1195 / 1595 =
+    0.7492. The candidates are then the best-covered chain(s) only: beta at 1490 / 2 = 745 per serving, not
+    gamma's cheaper 597.50."""
+    raw = memory_raw()
+    ksh = [dataclasses.replace(k, price=D(40000)) for k in raw.ksh]
+    client = client_with(provider=CatalogueProvider(MemorySource(dataclasses.replace(raw, ksh=ksh))))
+    shares = {
+        c["chain"]: c["priced_share"]
+        for c in client.get("/api/recipes/zz-paprikas-csirke").json()["chain_costs"]
+    }
+    assert shares == {"alfa": 0.7568, "beta": 0.7883, "gamma": 0.7492}
+    assert _recipe_rows(client)["zz-paprikas-csirke"] == (745.0, ["beta"], 0.7883)
+
+
+def test_ksh_rows_are_per_one_unit() -> None:
+    """docs/DATA.md: api.ksh_latest.price is HUF per ONE unit (the loader divides by unit_qty), so the repo
+    builds unit_qty=1 and keeps the price: eggs 814 Ft / 10 db are stored as 81.40 Ft/db, and 10 eggs are
+    estimated at 814 Ft (not 81.40)."""
+    row = (date(2026, 9, 1), "zz-tojas", "Szintetikus tojás, 10 darab", "db", D("81.40"))
+    ksh = _ksh(row)
+    assert ksh == KshPrice(
+        "zz-tojas", "Szintetikus tojás, 10 darab", "db", D(1), D("81.40"), date(2026, 9, 1)
+    )
+    eggs = Ingredient("kshtojas", "tojás", "tejtermek_tojas", "db", ksh_code="zz-tojas")
+    raw = memory_raw()
+    cat = assemble_snapshot(
+        dataclasses.replace(raw, ksh=[*raw.ksh, ksh], ingredients=[*raw.ingredients, eggs])
+    ).catalogue
+    assert ksh_estimate(eggs, D(10), cat) == D("814")
+    assert ksh_estimate(eggs, D(1), cat) == D("81.40")
+    assert _ksh((date(2026, 9, 1), "zz-par", "Szintetikus, 1 pár", "pár", D(100))) is None  # not kg/l/db
 
 
 def test_is_stale() -> None:

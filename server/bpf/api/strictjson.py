@@ -7,29 +7,21 @@ FastAPI would report as a 400 or a 500. :class:`StrictJsonRoute` parses every JS
 then reports a ``json_invalid`` validation error, which the error handler maps to 422 ``invalid_request``
 with the single field ``body``. The body itself is never logged or echoed.
 
-Decimal traps during validation: ``schemas._to_qty`` quantizes in the ambient decimal context, where a huge
-quantity (``1e308``, or the string ``"1e100"``) makes ``quantize`` raise ``decimal.InvalidOperation``, an
-``ArithmeticError`` that pydantic does not turn into a validation error (it would be a 500). The route
-therefore validates in a context without traps: the result is NaN, and the schema's own range check rejects
-it with a ``ValueError`` (422). Handlers that compute must set their own context
-(:data:`COMPUTE_DECIMAL_CONTEXT`; the engine always uses its own exact one).
+Request models are validated in the ordinary decimal context: ``schemas._to_qty`` (contract v1.2) accepts only
+JSON numbers and rejects huge magnitudes before it quantizes, so no quantity can raise an ``ArithmeticError``
+(which pydantic would not turn into a 422). A trap-free validation context therefore adds no protection, and
+it is not used: it would also silence decimal errors in everything that runs inside the request.
 """
 
 from __future__ import annotations
 
 import json
 from collections.abc import Callable, Coroutine
-from decimal import ROUND_HALF_EVEN, Context, localcontext
 from typing import Any
 
 from fastapi.routing import APIRoute
 from starlette.requests import Request
 from starlette.responses import Response
-
-VALIDATION_DECIMAL_CONTEXT = Context(prec=28, rounding=ROUND_HALF_EVEN, traps=[])
-"""Request validation: invalid decimal operations give NaN instead of raising (see the module docstring)."""
-COMPUTE_DECIMAL_CONTEXT = Context(prec=28, rounding=ROUND_HALF_EVEN)
-"""The ordinary context (InvalidOperation, DivisionByZero and Overflow trapped) for the handlers' own work."""
 
 
 def _reject_constant(name: str) -> Any:
@@ -69,20 +61,12 @@ class StrictJsonRequest(Request):
 
 
 class StrictJsonRoute(APIRoute):
-    """``APIRoute`` that hands FastAPI a :class:`StrictJsonRequest` (OpenAPI generation is unchanged); routes
-    with a request body are validated in :data:`VALIDATION_DECIMAL_CONTEXT`."""
+    """``APIRoute`` that hands FastAPI a :class:`StrictJsonRequest` (OpenAPI generation is unchanged)."""
 
     def get_route_handler(self) -> Callable[[Request], Coroutine[Any, Any, Response]]:
         handler = super().get_route_handler()
-        if self.body_field is None:
 
-            async def plain_handler(request: Request) -> Response:
-                return await handler(StrictJsonRequest(request.scope, request.receive))
+        async def strict_handler(request: Request) -> Response:
+            return await handler(StrictJsonRequest(request.scope, request.receive))
 
-            return plain_handler
-
-        async def body_handler(request: Request) -> Response:
-            with localcontext(VALIDATION_DECIMAL_CONTEXT):
-                return await handler(StrictJsonRequest(request.scope, request.receive))
-
-        return body_handler
+        return strict_handler

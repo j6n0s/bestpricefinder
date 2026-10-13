@@ -22,12 +22,14 @@ import httpx
 import pytest
 import uvicorn
 from fastapi import FastAPI
+from pydantic import ValidationError
 
-from bpf.api.options import ApiOptions
+from bpf.api.app import create_app
 from bpf.api.repo import CatalogueProvider
 from bpf.api.security import API_CSP
+from bpf.config import Settings, get_settings
 from tests.fixtures.api.asgi import JSON_HEADERS, raw_request
-from tests.fixtures.api.memory import MemorySource, app_with, client_with
+from tests.fixtures.api.memory import MemorySource, app_with, client_with, memory_provider
 from tests.fixtures.api.seed import FakeClock, TestClient
 from tests.pgcluster import free_port
 
@@ -235,6 +237,44 @@ def test_path_traversal_never_escapes_the_build(build: Path, path: str) -> None:
     if status == 200:  # only ever the SPA page itself
         assert body == INDEX_HTML.encode()
     assert headers["x-content-type-options"] == "nosniff"
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/.",
+        "/..",
+        "/./index.html",
+        "/terv/./x",
+        "/icons/../index.html",
+        "/.well-known/security.txt",
+        "/terv\\x",
+        "/terv\x00",
+        "/" + "a" * 1024,  # 1,025 characters
+    ],
+)
+def test_dot_segments_backslashes_nul_and_long_paths_are_404(build: Path, path: str) -> None:
+    """docs/API.md implementation decisions: such paths are a JSON 404, never the SPA page."""
+    status, headers, body = raw_request(app_with(web_build_dir=build), path)
+    assert (status, json.loads(body)) == (404, {"error": "not_found", "fields": []})
+    assert headers["content-security-policy"] == API_CSP
+
+
+def test_a_path_of_exactly_1024_characters_still_gets_the_spa(build: Path) -> None:
+    status, _, body = raw_request(app_with(web_build_dir=build), "/" + "a" * 1023)
+    assert (status, body) == (200, INDEX_HTML.encode())
+
+
+@pytest.mark.parametrize(
+    "path",
+    ["/api/health", "/api/stores", "/api/recipes/zz-porkolt", "/api/ingredients/rizs/history", "/api/quote"],
+)
+def test_head_on_api_endpoints_is_405(path: str) -> None:
+    """docs/API.md implementation decisions: HEAD on API endpoints is 405 (static paths accept it)."""
+    response = client_with().head(path)
+    assert response.status_code == 405
+    assert response.headers["allow"] == ("POST" if path == "/api/quote" else "GET")
+    assert_common_headers(response.headers)
 
 
 @pytest.mark.parametrize(
@@ -493,7 +533,7 @@ def test_docs_disabled_by_default() -> None:
 
 
 def test_docs_enabled_on_request() -> None:
-    client = client_with(options=ApiOptions(_env_file=None, enable_docs=True))
+    client = client_with(enable_docs=True)
     spec = client.get("/api/openapi.json")
     assert spec.status_code == 200
     assert "/api/quote" in spec.json()["paths"]
@@ -504,8 +544,42 @@ def test_docs_enabled_on_request() -> None:
     assert client.get("/api/redoc").status_code == 200
 
 
+def test_switches_are_settings_read_from_the_environment(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """BPF_HSTS and BPF_ENABLE_DOCS are bpf.config.Settings fields: off by default, read from the env file
+    with the real environment winning, validated without echoing the input, frozen; create_app() without
+    settings takes them from get_settings()."""
+    for name in ("BPF_HSTS", "BPF_ENABLE_DOCS"):
+        monkeypatch.delenv(name, raising=False)
+    defaults = Settings(_env_file=None)  # type: ignore[call-arg]
+    assert (defaults.hsts, defaults.enable_docs) == (False, False)
+    env_file = tmp_path / "env"
+    env_file.write_text("BPF_HSTS=true\nBPF_ENABLE_DOCS=1\n", encoding="utf-8")
+    from_file = Settings(_env_file=env_file)  # type: ignore[call-arg]
+    assert (from_file.hsts, from_file.enable_docs) == (True, True)
+    monkeypatch.setenv("BPF_HSTS", "false")
+    assert Settings(_env_file=env_file).hsts is False  # type: ignore[call-arg]  # the environment wins
+    with pytest.raises(ValidationError) as caught:
+        Settings(_env_file=None, enable_docs="zzSENTINEL")  # type: ignore[call-arg]
+    assert "zzSENTINEL" not in str(caught.value)
+    with pytest.raises(ValidationError):
+        from_file.hsts = False  # type: ignore[misc]  # frozen
+    monkeypatch.delenv("BPF_HSTS")
+    monkeypatch.setenv("BPF_ENV_FILE", str(env_file))
+    monkeypatch.setenv("BPF_WEB_BUILD_DIR", str(tmp_path / "no-build"))
+    get_settings.cache_clear()
+    try:
+        client = TestClient(create_app(catalogue_provider=memory_provider()))
+        assert client.get("/api/openapi.json").status_code == 200
+        hsts = client.get("/api/health").headers["strict-transport-security"]
+        assert hsts == "max-age=31536000; includeSubDomains"
+    finally:
+        get_settings.cache_clear()
+
+
 def test_hsts_on_static_and_errors(build: Path) -> None:
-    client = client_with(web_build_dir=build, options=ApiOptions(_env_file=None, hsts=True))
+    client = client_with(web_build_dir=build, hsts=True)
     for path in ("/", "/service-worker.js", "/api/meta", "/api/nope", "/_app/missing"):
         assert client.get(path).headers["strict-transport-security"] == "max-age=31536000; includeSubDomains"
 

@@ -12,7 +12,9 @@ source.
     written out in the test docstrings and comments);
   - a fictional KSH row (`zz-paprika`, 4,000 Ft/kg) and one fictional nutrition row (`zz-nut-rizs`,
     round made-up values, source label `ciqual` only to exercise the attribution code path);
-  - five short recipes whose step texts were written for these tests (they are not recipes to cook).
+  - five short recipes whose step texts were written for these tests (they are not recipes to cook);
+  - two `ops.ingest_run` rows: the daily run of the data date (2026-10-12) and an availability run two days
+    earlier, so the `Store.has_data` rule (docs/ENGINE.md, read through `api.ingest_latest`) applies.
 - `memory.py` builds the same synthetic catalogue in memory (no database) for the middleware, static-file
   and unit tests; the DB tests compare it with what the API loads from the views.
 - `asgi.py` calls the app with an exact ASGI scope and raw body chunks (traversal paths, chunked bodies).

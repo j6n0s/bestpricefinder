@@ -26,7 +26,7 @@ import functools
 import re
 from collections.abc import Callable
 from datetime import date, timedelta
-from decimal import Decimal, localcontext
+from decimal import ROUND_HALF_EVEN, Context, Decimal, localcontext
 from typing import Annotated, Any
 
 import anyio
@@ -64,7 +64,6 @@ from bpf.api.schemas import (
     Slot,
     StoresResponse,
 )
-from bpf.api.strictjson import COMPUTE_DECIMAL_CONTEXT
 from bpf.planner import check_plan, suggest_plan
 from bpf.pricing import (
     SLOTS_3,
@@ -81,6 +80,9 @@ from bpf.pricing import (
 )
 
 HEAVY_CONCURRENCY = 4
+COMPUTE_DECIMAL_CONTEXT = Context(prec=28, rounding=ROUND_HALF_EVEN)
+"""The POST handlers' own work runs in this ordinary context (InvalidOperation, DivisionByZero and Overflow
+trapped), whatever the worker thread had; the engine always switches to its own exact context."""
 INGREDIENT_ID_RE = re.compile(r"[a-z0-9_]{2,40}")
 RECIPE_ID_RE = re.compile(r"[a-z0-9-]{2,60}")
 CHAIN_SLUG_PATTERN = r"^[a-z0-9-]{1,30}$"

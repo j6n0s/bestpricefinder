@@ -17,7 +17,6 @@ from typing import Any
 import psycopg
 
 from bpf.api.app import create_app
-from bpf.api.options import ApiOptions
 from bpf.api.repo import CatalogueProvider
 from bpf.config import Settings
 from bpf.db import open_pool
@@ -31,6 +30,7 @@ DATA_DATE = date(2026, 10, 12)
 TODAY = date(2026, 10, 13)  # the injected "today" (Europe/Budapest): data of yesterday is not stale
 NOW = datetime(2026, 10, 13, 8, 0, tzinfo=UTC)
 FIRST_SEEN = date(2026, 9, 1)
+AVAILABILITY_DATE = DATA_DATE - timedelta(days=2)  # the seeded availability refresh: recent (<= 8 days)
 NO_BUILD = Path("/nonexistent/bpf-test-web-build")
 
 LEAF_CHICKEN, LEAF_EGG, LEAF_RICE, LEAF_OIL = 99001, 99002, 99003, 99004
@@ -396,6 +396,14 @@ def seed_availability(conn: psycopg.Connection, as_of: date) -> None:
     )
 
 
+def run_finished_at(data_date: date) -> datetime:
+    """The finish time ``add_run`` records by default: 02:45 UTC on the data date."""
+    return datetime(data_date.year, data_date.month, data_date.day, 2, 45, tzinfo=UTC)
+
+
+AVAILABILITY_FINISHED_AT = run_finished_at(AVAILABILITY_DATE)  # the seeded availability run
+
+
 def add_run(
     conn: psycopg.Connection,
     data_date: date,
@@ -404,7 +412,8 @@ def add_run(
     status: str = "ok",
     finished_at: datetime | None = None,
 ) -> None:
-    finished = finished_at or datetime(data_date.year, data_date.month, data_date.day, 2, 45, tzinfo=UTC)
+    """An ``ops.ingest_run`` row (``finished_at`` is set whatever the status; the views filter by status)."""
+    finished = finished_at or run_finished_at(data_date)
     conn.execute(
         "INSERT INTO ops.ingest_run (kind, status, started_at, finished_at, data_date) "
         "VALUES (%s, %s, %s, %s, %s)",
@@ -417,7 +426,8 @@ def seed_all(conn: psycopg.Connection) -> None:
     seed_content(conn)
     seed_day_prices(conn)
     seed_history(conn)
-    seed_availability(conn, DATA_DATE - timedelta(days=2))
+    seed_availability(conn, AVAILABILITY_DATE)
+    add_run(conn, AVAILABILITY_DATE, kind="availability")
     add_run(conn, DATA_DATE)
 
 
@@ -452,19 +462,17 @@ def api_settings(base: Settings, **overrides: Any) -> Settings:
     return base.model_copy(update=values)
 
 
-def make_client(
-    settings: Settings, provider: CatalogueProvider, *, options: ApiOptions | None = None
-) -> TestClient:
-    app = create_app(settings, catalogue_provider=provider, options=options or ApiOptions(_env_file=None))
+def make_client(settings: Settings, provider: CatalogueProvider) -> TestClient:
+    app = create_app(settings, catalogue_provider=provider)
     return TestClient(app, raise_server_exceptions=False)
 
 
 @contextmanager
 def client_for(
-    settings: Settings, *, clock: Callable[[], float] | None = None, options: ApiOptions | None = None
+    settings: Settings, *, clock: Callable[[], float] | None = None
 ) -> Iterator[tuple[TestClient, CatalogueProvider]]:
     provider = db_provider(settings, clock=clock)
     try:
-        yield make_client(settings, provider, options=options), provider
+        yield make_client(settings, provider), provider
     finally:
         provider.close()

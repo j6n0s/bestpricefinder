@@ -14,7 +14,6 @@ from typing import Any
 from fastapi import FastAPI
 
 from bpf.api.app import create_app
-from bpf.api.options import ApiOptions
 from bpf.api.repo import (
     AvailabilityRow,
     CatalogueProvider,
@@ -40,7 +39,12 @@ from tests.fixtures.api import seed
 from tests.fixtures.api.seed import TestClient
 
 
-def memory_raw(key: Key = ("memory",), data_date: date | None = seed.DATA_DATE) -> RawData:
+def memory_raw(
+    key: Key = ("memory",),
+    data_date: date | None = seed.DATA_DATE,
+    *,
+    availability_finished_at: datetime | None = seed.AVAILABILITY_FINISHED_AT,
+) -> RawData:
     has_prices = data_date is not None
     chains = [Chain(cid, slug, name, grocery) for cid, name, slug, grocery in seed.CHAINS]
     stores = [
@@ -93,7 +97,7 @@ def memory_raw(key: Key = ("memory",), data_date: date | None = seed.DATA_DATE) 
         if has_prices
         else []
     )
-    as_of = seed.DATA_DATE - timedelta(days=2)
+    as_of = seed.AVAILABILITY_DATE
     availability = [
         AvailabilityRow("zz-p-tojas-6", "zz-chain-beta", as_of, ("beta-1",)),
         AvailabilityRow("zz-p-rizs-1", "zz-chain-alfa", as_of, ("alfa-1",)),
@@ -121,6 +125,7 @@ def memory_raw(key: Key = ("memory",), data_date: date | None = seed.DATA_DATE) 
         key=key,
         data_date=data_date,
         ingested_at=datetime(2026, 10, 12, 2, 45, tzinfo=UTC) if has_prices else None,
+        availability_finished_at=availability_finished_at,
         chains=chains,
         stores=stores,
         ingredients=ingredients,
@@ -184,15 +189,9 @@ def memory_settings(**overrides: Any) -> Settings:
     return Settings(_env_file=None, **values)  # type: ignore[call-arg]
 
 
-def app_with(
-    *, provider: CatalogueProvider | None = None, options: ApiOptions | None = None, **overrides: Any
-) -> FastAPI:
-    """An app on the in-memory catalogue; ``overrides`` are Settings fields."""
-    return create_app(
-        memory_settings(**overrides),
-        catalogue_provider=provider or memory_provider(),
-        options=options or ApiOptions(_env_file=None),
-    )
+def app_with(*, provider: CatalogueProvider | None = None, **overrides: Any) -> FastAPI:
+    """An app on the in-memory catalogue; ``overrides`` are Settings fields (e.g. ``hsts=True``)."""
+    return create_app(memory_settings(**overrides), catalogue_provider=provider or memory_provider())
 
 
 def client_with(**kwargs: Any) -> TestClient:

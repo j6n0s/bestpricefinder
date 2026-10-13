@@ -5,8 +5,10 @@
 precomputed from it) and is the only way the request handlers reach the database:
 
 * **Cache key and refresh.** A snapshot is valid for a key made of ``api.latest`` (data date and ingest time,
-  so a re-run of the same day's ingest is picked up too) and a fingerprint of the content and store views
-  (ingredients, recipes, recipe lines, KSH, nutrition, stores; a few thousand rows hashed by PostgreSQL).
+  so a re-run of the same day's ingest is picked up too), the latest successful ``availability`` run from
+  ``api.ingest_latest`` (data date and finish time), and a fingerprint of the content and store views
+  (ingredients, recipes, recipe lines, KSH, nutrition, stores, chains; a few thousand rows hashed by
+  PostgreSQL).
   The key is re-checked at most once every ``recheck_interval_s`` (60 s); the catalogue is reloaded only when
   it changed. Loading runs in ONE ``REPEATABLE READ, READ ONLY`` transaction, so a daily ingest committing
   meanwhile can never mix two data dates.
@@ -19,14 +21,14 @@ precomputed from it) and is the only way the request handlers reach the database
 * **Scope.** Only products in GVH leaves referenced by some ingredient are loaded, with their latest chain
   prices, per-store prices and latest availability lists.
 * **``Store.has_data``** (docs/ENGINE.md): with no data date at all, no store has data. Otherwise, while no
-  availability refresh is recent (the newest ``availableInShops`` list loaded is more than 8 days older than
-  the data date, or there is none), every store has data; else a store has data when its ``has_data_date``
-  is at most 8 days before the data date. ``bpf_api`` cannot read ``ops.ingest_run``, so "an availability
-  run finished within the last 8 days" is approximated by the newest ``as_of`` loaded from
-  ``api.product_availability_latest`` (a view of the latest successful run per kind would make it exact).
-  Availability changes alone do not change the cache key; they are picked up with the next daily run.
-* **Recipe costs** (``recipe_chain_costs``) are precomputed per snapshot, with the tie-aware summary used by
-  the recipe list (``cost_per_serving_from`` / ``cheapest_chains`` / ``priced_share``).
+  ``availability`` run (status ok or partial) has finished within the last 8 days of the data date, every
+  store has data; else a store has data when its ``has_data_date`` is at most 8 days before the data date.
+  The finish time comes from ``api.ingest_latest`` (migration 0003) and is compared as a Europe/Budapest
+  calendar date, so the rule depends on the data, never on the wall clock.
+* **Recipe costs** (``recipe_chain_costs``) are precomputed per snapshot, with the summary used by the recipe
+  list (``cost_per_serving_from`` / ``cheapest_chains`` / ``priced_share``, see :func:`summarise_costs`).
+* **KSH rows**: ``api.ksh_latest.price`` is HUF per ONE ``unit`` (the content loader stores the CSV price
+  divided by ``unit_qty``), so every row becomes ``KshPrice(unit_qty=1, price=row.price)``.
 """
 
 from __future__ import annotations
@@ -64,6 +66,7 @@ log = logging.getLogger("bpf.api")
 
 BUDAPEST = ZoneInfo("Europe/Budapest")
 HAS_DATA_WINDOW = timedelta(days=8)
+MIN_CHEAPEST_SHARE = Decimal("0.9")  # docs/ENGINE.md: only chains pricing >= 90 % can be "the cheapest"
 RECHECK_INTERVAL_S = 60.0
 FIRST_LOAD_WAIT_S = 60.0
 FAILURE_BACKOFF_S = 5.0
@@ -113,6 +116,8 @@ class RawData:
     key: Key
     data_date: date | None
     ingested_at: datetime | None
+    availability_finished_at: datetime | None
+    """Finish time of the latest ``availability`` run with status ok or partial (``api.ingest_latest``)."""
     chains: Sequence[Chain]
     stores: Sequence[StoreRow]
     ingredients: Sequence[Ingredient]
@@ -141,7 +146,8 @@ class StoreInfo:
 
 @dataclass(frozen=True, slots=True)
 class RecipeCostSummary:
-    """Tie-aware cheapest chain-typical cost per serving of one recipe (docs/API.md ``GET /api/recipes``)."""
+    """Cheapest chain-typical cost per serving of one recipe among the well-covered chains, with every chain
+    tied at it (docs/API.md ``GET /api/recipes``, docs/ENGINE.md "Cheapest chain of a recipe")."""
 
     cost_per_serving_from: Decimal | None
     cheapest_chain_ids: tuple[str, ...]
@@ -186,26 +192,49 @@ def whole_forints(amount: Decimal) -> Decimal:
 
 
 def summarise_costs(costs: Sequence[ChainRecipeCost]) -> RecipeCostSummary:
-    """The minimum cost per serving, EVERY chain tied with it in whole forints (never broken by name), and
-    the lowest priced share inside that tie group."""
+    """docs/ENGINE.md "Cheapest chain of a recipe".
+
+    The candidates are the chains with ``priced_share >= 0.9`` or, when none reaches it, the chains with the
+    highest share (so a chain that prices only a cheap subset of the lines is never "the cheapest").
+    ``cost_per_serving_from`` is the lowest cost per serving among the candidates; the tie group is EVERY
+    candidate at that cost in whole forints (never broken by name); ``priced_share`` is the lowest share in
+    the group. Chains without a cost (nothing priced, share 0) are never candidates."""
     priced = [c for c in costs if c.cost_per_serving is not None]
     if not priced:
         return RecipeCostSummary(None, (), Decimal(0))
-    best = min(c.cost_per_serving for c in priced if c.cost_per_serving is not None)
+    candidates = [c for c in priced if c.priced_share >= MIN_CHEAPEST_SHARE]
+    if not candidates:
+        top = max(c.priced_share for c in priced)
+        candidates = [c for c in priced if c.priced_share == top]
+    best = min(c.cost_per_serving for c in candidates if c.cost_per_serving is not None)
     target = whole_forints(best)
     tied = [
-        c for c in priced if c.cost_per_serving is not None and whole_forints(c.cost_per_serving) == target
+        c
+        for c in candidates
+        if c.cost_per_serving is not None and whole_forints(c.cost_per_serving) == target
     ]
     return RecipeCostSummary(best, tuple(c.chain_id for c in tied), min(c.priced_share for c in tied))
 
 
+def availability_recent(data_date: date, availability_finished_at: datetime | None) -> bool:
+    """Whether an ``availability`` run finished within the last 8 days of ``data_date`` (or after it); the
+    finish time is compared as a Europe/Budapest calendar date, the data-date calendar."""
+    if availability_finished_at is None:
+        return False
+    finished = availability_finished_at
+    if finished.tzinfo is None:  # timestamptz always carries a zone; be safe with a naive value
+        finished = finished.replace(tzinfo=UTC)
+    return data_date - finished.astimezone(BUDAPEST).date() <= HAS_DATA_WINDOW
+
+
 def store_has_data(
-    has_data_date: date | None, data_date: date | None, availability_as_of: date | None
+    has_data_date: date | None, data_date: date | None, availability_finished_at: datetime | None
 ) -> bool:
-    """The ``Store.has_data`` rule of docs/ENGINE.md (see the module docstring for the proxy used)."""
+    """The ``Store.has_data`` rule of docs/ENGINE.md: with no data date, False; while no availability run is
+    recent (:func:`availability_recent`), True; else ``has_data_date`` at most 8 days before the data date."""
     if data_date is None:
         return False
-    if availability_as_of is None or data_date - availability_as_of > HAS_DATA_WINDOW:
+    if not availability_recent(data_date, availability_finished_at):
         return True
     return has_data_date is not None and data_date - has_data_date <= HAS_DATA_WINDOW
 
@@ -218,14 +247,13 @@ def assemble_snapshot(raw: RawData) -> Snapshot:
 
 def _assemble(raw: RawData) -> Snapshot:
     chains = {c.id: c for c in raw.chains}
-    newest_list = max((row.as_of for row in raw.availability), default=None)
     stores: dict[str, Store] = {}
     infos: list[StoreInfo] = []
     for row in sorted(raw.stores, key=lambda s: s.id):
         chain = chains.get(row.chain_id)
         if chain is None:  # pragma: no cover - api.store joins core.chain
             continue
-        has_data = store_has_data(row.has_data_date, raw.data_date, newest_list)
+        has_data = store_has_data(row.has_data_date, raw.data_date, raw.availability_finished_at)
         stores[row.id] = Store(row.id, row.chain_id, row.lat, row.lon, row.format, has_data)
         infos.append(
             StoreInfo(
@@ -308,9 +336,12 @@ class CatalogueSource(Protocol):
     def close(self) -> None: ...
 
 
-# The cache key: api.latest plus an md5 fingerprint of every content/store view (a few thousand rows).
+# The cache key: api.latest, the latest successful availability run, and an md5 fingerprint of every
+# content/store view (a few thousand rows).
 KEY_SQL = (
     "SELECT l.data_date, l.ingested_at, "
+    "(SELECT a.data_date FROM api.ingest_latest a WHERE a.kind = 'availability'), "
+    "(SELECT a.finished_at FROM api.ingest_latest a WHERE a.kind = 'availability'), "
     "(SELECT md5(coalesce(string_agg(t::text, '|' ORDER BY t::text), '')) FROM api.ingredient t), "
     "(SELECT md5(coalesce(string_agg(t::text, '|' ORDER BY t::text), '')) FROM api.recipe t), "
     "(SELECT md5(coalesce(string_agg(t::text, '|' ORDER BY t::text), '')) FROM api.recipe_line t), "
@@ -321,6 +352,7 @@ KEY_SQL = (
     "FROM api.latest l"
 )
 LATEST_SQL = "SELECT data_date, ingested_at FROM api.latest"
+AVAILABILITY_RUN_SQL = "SELECT finished_at FROM api.ingest_latest WHERE kind = 'availability'"
 CHAINS_SQL = "SELECT id, slug, name, is_grocery FROM api.chain"
 STORES_SQL = (
     "SELECT id, chain_id, postal_code, city, address, lat, lon, format, is_budapest, has_data_date "
@@ -462,6 +494,8 @@ def _load_raw(conn: psycopg.Connection) -> RawData:
     key = _key(conn.execute(KEY_SQL).fetchone())
     data_date = key[0]
     ingested_at = key[1].astimezone(UTC) if isinstance(key[1], datetime) else None
+    run = conn.execute(AVAILABILITY_RUN_SQL).fetchone()  # one row per kind at most (GROUP BY kind)
+    availability_finished_at = run[0].astimezone(UTC) if run and isinstance(run[0], datetime) else None
     chains = [Chain(str(r[0]), str(r[1]), str(r[2]), bool(r[3])) for r in conn.execute(CHAINS_SQL)]
     stores = [
         StoreRow(
@@ -538,6 +572,7 @@ def _load_raw(conn: psycopg.Connection) -> RawData:
         key=key,
         data_date=data_date,
         ingested_at=ingested_at,
+        availability_finished_at=availability_finished_at,
         chains=chains,
         stores=stores,
         ingredients=ingredients,

@@ -35,9 +35,9 @@ from pathlib import Path
 from typing import Any
 
 import httpx
+import psycopg
 import pytest
 
-from bpf.api.options import ApiOptions
 from bpf.api.repo import CatalogueProvider, assemble_snapshot
 from bpf.api.texts import DISCLAIMER_EN, DISCLAIMER_HU
 from bpf.planner import suggest_plan
@@ -113,9 +113,29 @@ def test_views_load_exactly_the_seeded_catalogue(api: tuple[TestClient, Catalogu
         assert getattr(loaded.catalogue, name) == getattr(expected.catalogue, name), name
     assert loaded.stores == expected.stores
     assert loaded.recipe_costs == expected.recipe_costs
+    assert loaded.recipe_summaries == expected.recipe_summaries
     assert loaded.ingested_at == expected.ingested_at
     assert loaded.ksh_period == date(2026, 9, 1)
     assert loaded.nutrition_sources == frozenset({"ciqual"})
+    raw = provider.source.load()  # the availability run comes from api.ingest_latest (migration 0003)
+    assert raw.availability_finished_at == seed.AVAILABILITY_FINISHED_AT
+    assert raw.availability_finished_at == memory_raw().availability_finished_at
+    availability_key = (seed.AVAILABILITY_DATE, seed.AVAILABILITY_FINISHED_AT)
+    assert loaded.key[2:4] == availability_key  # part of the cache key
+
+
+def test_api_role_reads_ingest_latest_not_ingest_run(cluster: PgCluster) -> None:
+    """bpf_api reads kind, data date and finish time from api.ingest_latest (never ops.ingest_run itself)."""
+    with cluster.connect("api") as conn:
+        rows = conn.execute(
+            "SELECT kind, data_date, finished_at FROM api.ingest_latest ORDER BY kind"
+        ).fetchall()
+        assert rows == [
+            ("availability", seed.AVAILABILITY_DATE, seed.AVAILABILITY_FINISHED_AT),
+            ("daily", seed.DATA_DATE, seed.run_finished_at(seed.DATA_DATE)),
+        ]
+        with pytest.raises(psycopg.errors.InsufficientPrivilege):
+            conn.execute("SELECT 1 FROM ops.ingest_run")
 
 
 def test_api_session_is_bpf_api_and_read_only(api: tuple[TestClient, CatalogueProvider]) -> None:
@@ -200,8 +220,9 @@ def _store(sid: str, chain: str, postal: str, city: str, fmt: str | None, has_da
 
 
 def test_stores_and_has_data_rule(client: TestClient) -> None:
-    """An availability refresh is recent (2 days before the data date), so has_data follows has_data_date:
-    beta-2 (1 day old) has data, gamma-2 (20 days old) and delta-1 (never) have none."""
+    """An availability run finished 2 days before the data date (api.ingest_latest), so has_data follows
+    has_data_date: beta-2 (1 day old) has data, gamma-2 (20 days old) and delta-1 (never) have none.
+    Without a recent availability run every store has data (tests/test_api_refresh.py)."""
     response = client.get("/api/stores")
     assert response.status_code == 200
     assert response.headers["cache-control"] == "public, max-age=3600"
@@ -1171,8 +1192,8 @@ def test_cors_only_when_configured(cluster: PgCluster) -> None:
 
 
 def test_hsts_when_enabled(cluster: PgCluster) -> None:
-    settings = seed.api_settings(cluster.settings())
-    with seed.client_for(settings, options=ApiOptions(_env_file=None, hsts=True)) as (client, _):
+    settings = seed.api_settings(cluster.settings(), hsts=True)
+    with seed.client_for(settings) as (client, _):
         for path in ("/api/health", "/api/nope"):
             assert (
                 client.get(path).headers["strict-transport-security"] == "max-age=31536000; includeSubDomains"

@@ -1,16 +1,19 @@
 """Catalogue cache life cycle against a real cluster (SYNTHETIC data, tests/fixtures/api/seed.py): no data
-yet, the first successful ingest, the 60 s re-check, re-runs, failed runs, content changes, and a database
-that goes away after the catalogue was loaded. Each test uses a cluster of its own (it commits data, and one
+yet, the first successful ingest, the 60 s re-check, availability runs (the Store.has_data rule), re-runs,
+failed runs, content changes (incl. a KSH row stored by the content loader), and a database that goes away
+after the catalogue was loaded. Each test uses a cluster of its own (it commits data, and one
 stops the server)."""
 
 from __future__ import annotations
 
 from collections.abc import Callable
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
 
 import pytest
 
+from bpf.content.writer import sync_ksh
+from bpf.pricing import KshPrice
 from tests.fixtures.api import seed
 from tests.fixtures.api.seed import DATA_DATE, FakeClock
 from tests.pgcluster import PgCluster
@@ -18,6 +21,7 @@ from tests.pgcluster import PgCluster
 pytestmark = pytest.mark.db
 
 NEXT_DATE = DATA_DATE + timedelta(days=1)
+KSH_PERIOD = date(2026, 9, 1)
 QUOTE = {"lines": [{"ingredient_id": "rizs", "qty": 1}], "store_ids": ["alfa-1"]}
 
 
@@ -95,12 +99,25 @@ def test_from_no_data_to_refreshed_catalogue(pg_factory: Callable[..., PgCluster
         clock.advance(61)
         assert provider.snapshot() is loaded  # re-checked, unchanged: not reloaded
 
-        # ── 4. an availability refresh and a re-run of the same day ──
+        # ── 4. availability: only a finished ok/partial run within 8 days of the data date counts ──
         with cluster.connect("ingest") as conn:
-            seed.seed_availability(conn, DATA_DATE - timedelta(days=2))
-            seed.add_run(conn, DATA_DATE, finished_at=datetime(2026, 10, 12, 5, 0, tzinfo=UTC))
+            seed.seed_availability(conn, seed.AVAILABILITY_DATE)  # lists alone are not a finished run
+            seed.add_run(conn, seed.AVAILABILITY_DATE, kind="availability", status="failed")
+            seed.add_run(conn, seed.AVAILABILITY_DATE, kind="availability", status="running")
         clock.advance(61)
-        assert has_data(client) == {
+        assert provider.snapshot() is loaded  # api.ingest_latest has no availability row: same key
+        assert set(has_data(client).values()) == {True}
+        with cluster.connect("ingest") as conn:  # ok, but finished 9 days before the data date
+            seed.add_run(conn, DATA_DATE - timedelta(days=9), kind="availability")
+        clock.advance(61)
+        assert provider.snapshot() is not loaded  # the availability run is part of the cache key
+        assert set(has_data(client).values()) == {True}
+        with cluster.connect("ingest") as conn:  # 23:59 Budapest on day -9 (CEST): still 9 days
+            late = datetime(2026, 10, 3, 21, 59, tzinfo=UTC)
+            seed.add_run(conn, DATA_DATE - timedelta(days=9), kind="availability", finished_at=late)
+        clock.advance(61)
+        assert set(has_data(client).values()) == {True}
+        recent = {
             "alfa-1": True,
             "beta-1": True,
             "beta-2": True,
@@ -108,7 +125,18 @@ def test_from_no_data_to_refreshed_catalogue(pg_factory: Callable[..., PgCluster
             "gamma-1": True,
             "gamma-2": False,
         }
+        with cluster.connect("ingest") as conn:  # a partial run 2 days before: recent, has_data_date decides
+            seed.add_run(conn, seed.AVAILABILITY_DATE, kind="availability", status="partial")
+        clock.advance(61)
+        assert has_data(client) == recent
+        quote = client.post("/api/quote", json={**QUOTE, "store_ids": ["gamma-2"]}).json()
+        assert quote["stores"][0]["lines"][0]["status"] == "unavailable"  # no data: never a chain price
+        # ── 4b. a re-run of the same day's daily ingest is picked up ──
+        with cluster.connect("ingest") as conn:
+            seed.add_run(conn, DATA_DATE, finished_at=datetime(2026, 10, 12, 5, 0, tzinfo=UTC))
+        clock.advance(61)
         assert client.get("/api/meta").json()["ingested_at"] == "2026-10-12T05:00:00Z"
+        assert has_data(client) == recent
 
         # ── 5. a newer data date: ignored while its run is failed or running, used once it is ok ──
         with cluster.connect("ingest") as conn:
@@ -136,6 +164,28 @@ def test_from_no_data_to_refreshed_catalogue(pg_factory: Callable[..., PgCluster
             )
         clock.advance(61)
         assert costs(client)["zz-uj-recept"] == 45.9  # 0.1 x 459
+
+        # ── 7. a KSH row written by the content loader is per ONE unit (docs/DATA.md) ──
+        # SYNTHETIC egg row as the CSV carries it: 814 Ft for unit_qty 10 db; sync_ksh stores 81.40 Ft/db.
+        eggs = KshPrice(
+            "zz-tojas-ksh", "Szintetikus tojás, 10 darab", "db", Decimal(10), Decimal(814), KSH_PERIOD
+        )
+        with cluster.connect("ingest") as conn:
+            sync_ksh(conn, [eggs])
+            conn.execute(
+                "INSERT INTO app.ingredient (id, name_hu, list_group, unit, piece_weight_kg, pantry, "
+                "ksh_code, tags) VALUES ('zz_ksh_tojas', 'szintetikus KSH-tojás', 'tejtermek_tojas', 'db', "
+                "0.06, false, 'zz-tojas-ksh', ARRAY['egg'])"
+            )
+        clock.advance(61)
+        stored = provider.snapshot().catalogue.ksh["zz-tojas-ksh"]
+        assert (stored.unit, stored.unit_qty, stored.price) == ("db", Decimal(1), Decimal("81.40"))
+        ten = {"lines": [{"ingredient_id": "zz_ksh_tojas", "qty": 10}], "store_ids": ["alfa-1"]}
+        store = client.post("/api/quote", json=ten).json()["stores"][0]
+        assert (store["lines"][0]["status"], store["lines"][0]["ksh_estimate"]) == ("ksh_estimate", 814.0)
+        assert (store["ksh_estimate_total"], store["checkout_total"]) == (814.0, 0.0)  # never added
+        priced_by = {i["id"]: i["priced_by"] for i in client.get("/api/ingredients").json()["ingredients"]}
+        assert priced_by["zz_ksh_tojas"] == "ksh"
 
 
 def test_database_down_after_loading(pg_factory: Callable[..., PgCluster]) -> None:

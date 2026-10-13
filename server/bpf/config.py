@@ -75,6 +75,12 @@ class Settings(BaseSettings):
     # JSON list. Empty = same origin only.
     allowed_origins: Annotated[list[str], NoDecode] = Field(default_factory=list)
     trust_proxy_headers: bool = False
+    # Send Strict-Transport-Security on every response. Only behind TLS (e.g. Caddy): browsers then refuse
+    # plain HTTP to this host for a year.
+    hsts: bool = False
+    # Serve the interactive OpenAPI docs at /api/docs, /api/redoc and /api/openapi.json, with a
+    # development-only CSP that loads Swagger UI / ReDoc from a CDN. Off in production.
+    enable_docs: bool = False
 
     @field_validator("allowed_origins", mode="before")
     @classmethod
