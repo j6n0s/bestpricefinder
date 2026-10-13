@@ -716,7 +716,8 @@ def test_has_data_date_never_moves_backwards(conn: psycopg.Connection, admin: ps
 
 def test_runs_of_the_same_kind_do_not_overlap(conn: psycopg.Connection, cluster: PgCluster) -> None:
     with cluster.connect("ingest", autocommit=True) as other:
-        other.execute("SELECT pg_advisory_lock(727100, 2)")
+        # Exactly what a concurrent daily run does (bpf_ingest may use only the try-lock variant).
+        assert other.execute("SELECT pg_try_advisory_lock(727100, 2)").fetchone() == (True,)
         with pytest.raises(IngestBusyError):
             daily(conn, FakeGvh(WORLD, data_date=TODAY))
         other.execute("SELECT pg_advisory_unlock(727100, 2)")

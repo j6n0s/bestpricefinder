@@ -129,7 +129,7 @@ Rule details (as implemented; keep the API and UI wording consistent with them):
 If the pool cannot satisfy a rule, return the best plan with a failing check and a warning (e.g. `no_fish_recipe_available`); never loop forever. The time budget is 200 ms for 31 days × 5 slots.
 
 ## `bpf.gvh` (HTTP client, the only module that talks to GVH)
-`GvhClient(settings, *, transport: httpx.BaseTransport | None = None, clock=..., sleep=..., max_requests=None, max_retries=3, backoff_s=..., timeout_s=30)`. It is synchronous and uses `httpx.Client`. Throttle: ≤1 req/s (`gvh_min_interval_s`), 30 s timeout, at most 3 retries with backoff on 5xx and connection errors (never on 4xx). The UA comes from settings and must contain a contact address. Methods return validated pydantic models and raise `GvhSchemaError` on unexpected shapes:
+`GvhClient(settings, *, transport: httpx.BaseTransport | None = None, clock=..., sleep=..., max_requests=None, max_retries=3, backoff_s=..., timeout_s=30)`. It is synchronous and uses `httpx.Client`. Throttle: ≤1 req/s (`gvh_min_interval_s`). Timeouts: 30 s per socket operation, and a wall-clock budget per response (120 s for API calls, 300 s for the XLSX), so a trickling response cannot hold the ingest lock indefinitely. At most 3 retries with backoff on 5xx and connection errors (never on 4xx). The UA comes from settings and must contain a contact address. Methods return validated pydantic models and raise `GvhSchemaError` on unexpected shapes:
 - `categories()`, `chain_stores()`, `shops()`;
 - `products_by_category(leaf_id, *, shop_ids=None)`, which iterates every page with `limit=48` and returns a `CategoryListing` (`count`, `pages`, `duplicates`, `count_changed`, the validated products);
 - `product(product_id)`;

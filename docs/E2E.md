@@ -75,7 +75,7 @@ One flow per project, `phone-390` (390×844, touch) and `desktop-1280` (1280×80
 - **c. "Hol a legolcsóbb a közelben?":**
   - The consent card comes first, and nothing is fetched and no position is asked for before the click.
   - "Saját helyzetem használata" then calls geolocation exactly once.
-  - The test recomputes the store ids sent, independently, from `/api/stores` and `/api/meta`: grocery chains, `has_data`, within 1.5 km of the rounded position, the nearest 3 per chain, nearest first.
+  - The test recomputes the store ids sent, independently, from `/api/stores` and `/api/meta`: grocery chains, `has_data`, within 1.5 km of the rounded position, the nearest 3 per chain, sent sorted by store id (never nearest first, which would reveal the position).
   - Each id sent is checked against the research CSV: a real Budapest store with the same coordinates. Nearby grocery stores without data (in the fake world `spar-193`, Andrássy út 30) are left out, and the page says how many.
   - The **rendered ranking equals the captured `/api/quote` response**: the same stores, ranks, whole-forint totals, tie labels exactly where a rank is shared, missing counts and penalized totals.
   - Competition ranks are consistent, a tie is ordered by distance, and at least one tie exists (in the fake world Aldi, Lidl and Penny charge one price in every store).
@@ -184,7 +184,7 @@ The API reads `web/build/index.html` and its CSP once, at start-up. After a new 
 
 - **Sparse prices.** There is one synthetic product per leaf, and 78% of the fake's products are sold by one chain only (84% of real food SKUs are, BUILD-BRIEF §4.1 trap 7). So each store carries only some of a week's ingredients: at the cheapest store near Nyugati tér, 5 of the 29 lines are priced and 23 are "nincs ebben a boltban". The ranking therefore leans on the missing-line penalty. That is enough for the plumbing. `FULLSTACK_PER_LEAF=3` gives a denser world, at the cost of a longer ingest.
 - **No KSH line in the browser.** Six ingredients are KSH-priced (`dio`, `gomba`, `gorogdinnye`, `lekvar`, `mez`, `szarazbab`), but no recipe uses one. Pantry spices with KSH data (`pirospaprika`, `so`) come back as `pantry`, which docs/API.md specifies. So no planned week has a KSH line. The browser test checks the KSH labels whenever such a line exists, and the API test checks the KSH estimate directly.
-- **The week is fixed.** The page asks for seed 0, and the planner is deterministic. A planner or content change changes the week, and the test follows it (nothing in it names a recipe).
+- **The week is fixed.** The page asks for a fresh random seed, which the full-stack spec pins to 0 through `Math.random`, and the planner is deterministic. A planner or content change changes the week, and the test follows it (nothing in it names a recipe).
 - **Data date = today (Budapest).** The ingest gets `--date` explicitly, so a run that crosses midnight does not break the ingest. The plan page itself starts "today" in the browser.
 - **A killed launcher** (SIGKILL) cannot clean up. Its throwaway cluster is left under `/tmp/bpfpg-*`. Stop it with `pg_ctl -D /tmp/bpfpg-…/pg stop` as the cluster's owner, then delete the directory.
 - **PostgreSQL version.** `pgcluster.py` uses whatever `deploy/local/_common.sh` discovers; `BPF_PG_BIN` overrides it. The scripts support 16 to 18. The cloud container has 16.

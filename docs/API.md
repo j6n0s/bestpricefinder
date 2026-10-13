@@ -23,7 +23,7 @@
 | Caching | GET responses carry `ETag` (a hash of data date + payload) and honour `If-None-Match` with 304. `Cache-Control`: `/api/stores` and `/api/ingredients` `public, max-age=3600`; `/api/meta`, `/api/recipes*` and history `public, max-age=300`; `/api/health` `no-store`. POST responses: `no-store`. |
 | Security headers | On every response: `Content-Security-Policy` (see "Static hosting"), `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, `X-Frame-Options: DENY`, `Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Resource-Policy: same-origin`, `Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=()`. Behind TLS (`BPF_HSTS=true`): `Strict-Transport-Security: max-age=31536000; includeSubDomains`. |
 | Methods | Only the methods listed below; everything else is 405. `OPTIONS` is 405 unless CORS is configured. |
-| Database | The API connects only as `bpf_api`: SELECT on `api.*` views, read-only transactions, 3 s statement timeout. |
+| Database | The API connects only as `bpf_api`: SELECT on `api.*` views only (enforced by grants). Read-only transactions and the 3 s statement timeout are session *defaults* the API relies on, not enforcement; what defaults cannot stop is closed in the database itself (`deploy/local/sql/harden-functions.sql`): no large objects, no advisory locks, `temp_file_limit` 64 MB, set by the superuser. |
 
 ## Endpoints
 

@@ -285,6 +285,49 @@ def test_api_role_limits_and_session_defaults(connect_as: Connect) -> None:
     fails(api, "SELECT pg_sleep(5)", error=pgerr.QueryCanceled, match="statement timeout")
 
 
+def test_api_session_defaults_are_not_the_only_barrier(connect_as: Connect) -> None:
+    """read_only and statement_timeout are user-settable session defaults, so they are not enforcement.
+    deploy/local/sql/harden-functions.sql closes what table GRANTs do not cover: large objects (writes no
+    GRANT controls), advisory locks (bpf_api could block the ingest's lock) and temp files."""
+    api = connect_as("api", autocommit=True)
+    api.execute("SET default_transaction_read_only = off")
+    api.execute("SET statement_timeout = 0")
+    for statement in (
+        "SELECT lo_from_bytea(0, '\\x00'::bytea)",
+        "SELECT lo_creat(-1)",
+        "SELECT lo_create(0)",
+        "SELECT pg_try_advisory_lock(727100, 2)",
+        "SELECT pg_advisory_lock(1::bigint)",
+        "SELECT pg_try_advisory_xact_lock(1::bigint)",
+        "SELECT pg_advisory_lock_shared(1::bigint)",
+    ):
+        fails(api, statement, error=pgerr.InsufficientPrivilege, match="permission denied for function")
+    assert setting(api, "temp_file_limit") == "64MB"
+    fails(api, "SET temp_file_limit = '1GB'", error=pgerr.InsufficientPrivilege, match="temp_file_limit")
+
+
+def test_only_the_advisory_locks_the_code_uses_are_granted(connect_as: Connect) -> None:
+    ingest = connect_as("ingest", autocommit=True)
+    assert ingest.execute("SELECT pg_try_advisory_lock(727199, 9)").fetchone() == (True,)
+    assert ingest.execute("SELECT pg_advisory_unlock(727199, 9)").fetchone() == (True,)
+    with ingest.transaction():
+        ingest.execute("SELECT pg_advisory_xact_lock(727199::bigint)")
+    fails(ingest, "SELECT pg_advisory_lock(727199::bigint)", error=pgerr.InsufficientPrivilege)
+    fails(ingest, "SELECT lo_from_bytea(0, '\\x00'::bytea)", error=pgerr.InsufficientPrivilege)
+    migrator = connect_as("migrator", autocommit=True)
+    migrator.execute("SELECT pg_advisory_lock(727198::bigint)")
+    assert migrator.execute("SELECT pg_advisory_unlock(727198::bigint)").fetchone() == (True,)
+    fails(migrator, "SELECT pg_try_advisory_lock(727100, 2)", error=pgerr.InsufficientPrivilege)
+    fails(migrator, "SELECT lo_from_bytea(0, '\\x00'::bytea)", error=pgerr.InsufficientPrivilege)
+
+
+def test_db_harden_script_is_idempotent(pg: PgCluster, connect_as: Connect) -> None:
+    pg.script("db-harden.sh")
+    pg.script("db-harden.sh")
+    api = connect_as("api", autocommit=True)
+    fails(api, "SELECT pg_try_advisory_lock(727100, 2)", error=pgerr.InsufficientPrivilege)
+
+
 # ── bpf_ingest ──────────────────────────────────────────────────────────────────────────────────────
 
 

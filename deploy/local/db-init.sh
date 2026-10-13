@@ -226,6 +226,8 @@ BEGIN
 END $$;
 SQL
 
+admin_psql "$DB_NAME" <"$(dirname "${BASH_SOURCE[0]}")/sql/harden-functions.sql"
+
 # ── credentials files (created with noclobber, mode 600) ──────────────────────────────────────────
 created_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 (

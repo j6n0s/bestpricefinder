@@ -132,9 +132,9 @@ deploy/local/build-web.sh
 ```
 
 This runs `npm ci` (it needs the network), then `npm run check` (types and accessibility rules) and `npm run
-build`, which writes `web/build/`. `npm ci` prints an `npm audit` summary: those advisories concern
-development-only packages (the test runner, and SvelteKit's server runtime, which this static app does not
-ship), not the built app; see "Known issues" in [`web/README.md`](../web/README.md).
+build`, which writes `web/build/`. `npm ci` prints an `npm audit` summary: only 3 low advisories remain,
+all for `cookie` in SvelteKit's server runtime, which this static app does not ship (`npm audit --omit=dev`
+reports 0). See "Known issues" in [`web/README.md`](../web/README.md).
 
 ## 8. Start the app
 

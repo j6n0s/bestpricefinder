@@ -35,6 +35,7 @@ from bpf.content.vocab import (
     RECIPE_ID_RE,
     RECIPE_TAGS,
     SLOTS,
+    TAG_FORBIDS_REQUIRED_LINE,
     TAG_REQUIRES_LINE,
     health_claim_stems,
 )
@@ -138,6 +139,11 @@ def _check_tags(
             problems.add(
                 f"{where}.tags",
                 f"{tag!r} needs a required line whose ingredient is tagged {ingredient_tag!r}",
+            )
+    for tag, ingredient_tag in TAG_FORBIDS_REQUIRED_LINE.items():
+        if tag in tags and any(ingredient_tag in t for t in required_tags):
+            problems.add(
+                f"{where}.tags", f"{tag!r} is not allowed with a required line tagged {ingredient_tag!r}"
             )
     if "gyors" in tags and is_int(minutes) and cast(int, minutes) > GYORS_MAX_MINUTES:
         problems.add(f"{where}.tags", f"'gyors' needs minutes <= {GYORS_MAX_MINUTES} (minutes is {minutes})")

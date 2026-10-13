@@ -9,9 +9,16 @@
 pgdata/
 .data/
 *.dump
+*.dump.age
 *.sql.gz
 logs/
 *.log
+# deploy/local writes these next to BPF_PGDATA (default .data/); ignore them wherever that points
+pg-admin.env
+/backups/
+/locks/
+/log/
+/sock/
 
 # python
 __pycache__/

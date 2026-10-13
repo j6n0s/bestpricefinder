@@ -329,20 +329,24 @@ def test_summarise_costs_ignores_a_chain_that_prices_only_a_cheap_subset() -> No
     assert _summary([*costs, _cost("partial", "390.40", "0.5")]) == (D("390.40"), ("most",), D("0.9"))
 
 
-def test_chain_cost_ranks_match_the_cheapest_group_and_rank_on_unrounded_costs() -> None:
-    """The recipe page's per-chain ranks come from the server (the client must not re-derive them from the
-    2-decimal JSON money: 412.495 shows as 412.50 but is 412 Ft whole). Rank 1 == cheapest_chains."""
+def test_chain_cost_ranks_match_the_cheapest_group_and_use_the_displayed_whole_forints() -> None:
+    """The recipe page's per-chain ranks come from the server and are computed on the whole-forint amount the
+    user SEES: the JSON carries money rounded half-up to 0.01 Ft and the UI rounds that half-up to whole
+    forints, so 412.495 is shown as 413 Ft (412.50 -> 413), not 412. Rank 1 == cheapest_chains."""
     costs = [
-        _cost("a", "412.495", "0.95"),  # whole 412 (unrounded half-up), JSON would show 412.50
-        _cost("b", "412.40", "1"),  # whole 412
-        _cost("c", "413.20", "1"),  # whole 413
+        _cost("a", "412.495", "0.95"),  # JSON 412.50 -> shown 413 Ft
+        _cost("b", "412.40", "1"),  # shown 412 Ft
+        _cost("c", "413.20", "1"),  # shown 413 Ft: tied with a
         _cost("d", "50", "0.3"),  # not comparable: unranked
         _cost("e", None, "0"),  # unpriced: unranked
     ]
     ranks = chain_cost_ranks(costs)
-    assert ranks == {"a": 1, "b": 1, "c": 3}
+    assert ranks == {"b": 1, "a": 2, "c": 2}
     summary = summarise_costs(costs)
+    assert summary.cheapest_chain_ids == ("b",)
     assert set(summary.cheapest_chain_ids) == {chain for chain, rank in ranks.items() if rank == 1}
+    # the tie group of the summary uses the same displayed amounts
+    assert summarise_costs([_cost("a", "412.494"), _cost("b", "412.40")]).cheapest_chain_ids == ("a", "b")
     assert chain_cost_ranks([]) == {}
     assert chain_cost_ranks([_cost("a", None, "0")]) == {}
     # fallback group (nobody reaches 0.9): only the best-covered chains are ranked

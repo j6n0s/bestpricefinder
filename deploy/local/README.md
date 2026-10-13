@@ -15,6 +15,7 @@ cd server && uv run bpf-migrate  # apply db/migrations (uv run bpf-migrate --che
 deploy/local/db-stop.sh          # stop  (idempotent)
 deploy/local/db-start.sh         # start (idempotent)
 deploy/local/db-backup.sh        # pg_dump -Fc into .data/backups/ (mode 600)
+deploy/local/db-harden.sh        # re-apply sql/harden-functions.sql (no large objects, advisory locks only where used, temp_file_limit for bpf_api); db-init.sh already does this for new clusters
 ```
 
 ## What you get

@@ -205,6 +205,27 @@ def test_tag_consistency(overrides: dict[str, Any], expected: str) -> None:
     assert_problem(expected, recipe(**overrides))
 
 
+@pytest.mark.parametrize(
+    ("optional", "flagged"),
+    [(False, True), (True, False)],  # a required nut line is refused; an optional topping is allowed
+)
+def test_gyerekbarat_is_refused_with_a_required_nut_or_seed_line(optional: bool, flagged: bool) -> None:
+    from bpf.content.recipes import _check_tags
+    from bpf.pricing.model import Ingredient, RecipeLine
+
+    ingredients = {
+        "tojas": Ingredient("tojas", "tojás", "tejtermek_tojas", "db", tags=("egg",)),
+        "foldimogyoro": Ingredient("foldimogyoro", "földimogyoró", "szaraz_tartos", "kg", tags=("nut_seed",)),
+    }
+    lines = [
+        RecipeLine(1, "tojas", Decimal(2), "2 db"),
+        RecipeLine(2, "foldimogyoro", Decimal("0.02"), "2 dkg", optional=optional),
+    ]
+    problems = Problems()
+    _check_tags(["husmentes", "gyerekbarat"], lines, 10, ingredients, "r", problems)
+    assert any("'gyerekbarat' is not allowed" in item for item in problems.items) is flagged
+
+
 # ───────────────────────────── health claims ─────────────────────────────
 
 CLAIMS = ["egészséges", "Fogyaszt", "diétás", "méregtelenítő", "immunerősítő", "gyógyhatású", "betegség"]

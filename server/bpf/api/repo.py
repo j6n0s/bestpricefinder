@@ -39,7 +39,7 @@ import time
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, date, datetime, timedelta
-from decimal import ROUND_HALF_UP, Context, Decimal, localcontext
+from decimal import Context, Decimal, localcontext
 from typing import Any, Protocol
 from zoneinfo import ZoneInfo
 
@@ -60,6 +60,7 @@ from bpf.pricing import (
     Store,
     StorePrice,
     recipe_chain_costs,
+    whole_forints,
 )
 
 log = logging.getLogger("bpf.api")
@@ -185,10 +186,6 @@ class Snapshot:
 
 
 _CONTEXT = Context(prec=60)  # ordinary traps; whole forints of any stored amount fit easily
-
-
-def whole_forints(amount: Decimal) -> Decimal:
-    return amount.quantize(Decimal(1), rounding=ROUND_HALF_UP, context=_CONTEXT)
 
 
 def _comparable(costs: Sequence[ChainRecipeCost]) -> list[ChainRecipeCost]:

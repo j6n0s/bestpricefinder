@@ -41,6 +41,12 @@ TAG_REQUIRES_LINE: dict[str, str] = {
 """Recipe tag -> ingredient tag that at least one required (non-optional) line must carry. The vocabulary
 has no separate pork or beef tag, so ``sertes`` and ``marha`` both need a ``red_meat`` line."""
 
+TAG_FORBIDS_REQUIRED_LINE: dict[str, str] = {
+    "gyerekbarat": "nut_seed",
+}
+"""Recipe tag -> ingredient tag that no required (non-optional) line may carry. Whole or chopped nuts and
+seeds do not belong in a recipe labelled for children; an optional topping is allowed."""
+
 GYORS_MAX_MINUTES = 25
 COMPUTED_RECIPE_TAGS: frozenset[str] = frozenset({"olcso"})
 """Recipe tags that are computed by the app and must never be set by hand."""
