@@ -31,6 +31,10 @@ BPF_SOCKET_PATH_MAX=103   # sun_path is 104 bytes on macOS (108 on Linux) includ
 # set for one command only.
 unset PGHOST PGHOSTADDR PGPORT PGDATABASE PGUSER PGPASSWORD PGPASSFILE PGSERVICE PGSERVICEFILE \
     PGOPTIONS PGSSLMODE PGREQUIRESSL PGTARGETSESSIONATTRS PGAPPNAME PGDATA PGCLIENTENCODING
+# Our pg_hba.conf allows scram-sha-256 only, so a server asking for anything else (a cleartext or md5
+# password, trust) is an impostor on the port or in the socket directory: make psql, pg_dump and the app
+# (bpf.db pins the same) refuse it instead of sending it a password. libpq >= 16; older ones ignore it.
+export PGREQUIREAUTH=scram-sha-256
 
 bpf_info() { printf '%s\n' "$*"; }
 bpf_warn() { printf 'warning: %s\n' "$*" >&2; }

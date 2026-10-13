@@ -2,7 +2,8 @@
 
 Handlers reach the database only through the :class:`~bpf.api.repo.CatalogueProvider`. GET handlers are
 plain ``def`` (FastAPI runs them in its thread pool); the CPU-bound POST computations (quote, plan, list) run
-in worker threads behind a small capacity limiter, so a burst of large quotes cannot take every thread.
+in a few worker threads of their own, shared fairly between clients (:class:`HeavyRunner`), so a burst of
+large quotes can neither take every thread nor make other clients wait behind it.
 
 Data availability (no successful daily ingest yet, ``api.latest`` empty):
 
@@ -22,9 +23,10 @@ chain-typical cost per serving of each recipe (``cost_per_serving_from``), passe
 
 from __future__ import annotations
 
-import functools
 import re
 from collections.abc import Callable
+from contextlib import AsyncExitStack
+from dataclasses import dataclass
 from datetime import date, timedelta
 from decimal import ROUND_HALF_EVEN, Context, Decimal, localcontext
 from typing import Annotated, Any
@@ -36,7 +38,7 @@ from fastapi.responses import JSONResponse, Response
 
 from bpf.api import present, texts
 from bpf.api.caching import CACHE_NONE, CACHE_SHORT, CACHE_STATIC_DATA, cached_json, model_body, no_store_json
-from bpf.api.errors import InvalidRequest, NoData, NotFound
+from bpf.api.errors import NO_STORE, InvalidRequest, NoData, NotFound, error_response
 from bpf.api.repo import CatalogueProvider, DataUnavailable, Snapshot
 from bpf.api.schemas import (
     ChainOut,
@@ -64,6 +66,7 @@ from bpf.api.schemas import (
     Slot,
     StoresResponse,
 )
+from bpf.api.security import client_key
 from bpf.planner import check_plan, suggest_plan
 from bpf.pricing import (
     SLOTS_3,
@@ -80,6 +83,16 @@ from bpf.pricing import (
 )
 
 HEAVY_CONCURRENCY = 4
+"""POST computations (quote, list, plan) running at a time, in worker threads; the rest wait in line."""
+HEAVY_PER_CLIENT = 2
+"""Of those, at most this many for one client (the rate-limit key); its others wait in a line of their own."""
+HEAVY_PER_CLIENT_PENDING = 8
+"""Requests of one client running or waiting; one more is a 429 at once."""
+HEAVY_WAIT_S = 10.0
+"""The longest a request waits for a worker; then 429 (the server is busy)."""
+HEAVY_RETRY_AFTER = "1"
+CLIENT_CLOSED_REQUEST = 499
+"""Status of a request dropped because its client hung up while it waited (nginx's code; nobody sees it)."""
 COMPUTE_DECIMAL_CONTEXT = Context(prec=28, rounding=ROUND_HALF_EVEN)
 """The POST handlers' own work runs in this ordinary context (InvalidOperation, DivisionByZero and Overflow
 trapped), whatever the worker thread had; the engine always switches to its own exact context."""
@@ -135,23 +148,95 @@ def is_stale(data_date: date | None, today: date) -> bool:
     return data_date is None or data_date < today - timedelta(days=1)
 
 
+@dataclass(slots=True)
+class _ClientLine:
+    limiter: anyio.CapacityLimiter
+    pending: int = 0
+
+
+def _busy() -> Response:
+    return error_response(429, "rate_limited", headers={"Retry-After": HEAVY_RETRY_AFTER})
+
+
 class HeavyRunner:
-    """Runs CPU-bound work in worker threads, at most ``tokens`` at a time (created lazily in the loop)."""
+    """Runs the CPU-bound POST work in worker threads so that no client can starve the others (docs/API.md
+    "Common behaviour"). Every request costs one rate-limit token whatever its size, so the work is bounded
+    here:
 
-    def __init__(self, tokens: int = HEAVY_CONCURRENCY) -> None:
-        self.tokens = tokens
-        self._limiter: anyio.CapacityLimiter | None = None
+    * at most ``slots`` computations run at a time; other requests wait in line (first come, first served);
+    * at most ``per_client`` of them belong to one client (:func:`bpf.api.security.client_key`); its further
+      requests wait in a line of their own without holding a place in the shared one;
+    * at most ``per_client_pending`` requests of one client may run or wait: the next one is a 429 at once;
+    * a request waits at most ``wait_s`` seconds in all, then gets a 429 with ``Retry-After``;
+    * a request whose client hung up while it waited is dropped before any work is done (a computation that
+      has started cannot be interrupted; it is short).
 
-    async def run[T](self, fn: Callable[..., T], *args: Any) -> T:
-        if self._limiter is None:
-            self._limiter = anyio.CapacityLimiter(self.tokens)
-        return await anyio.to_thread.run_sync(functools.partial(fn, *args), limiter=self._limiter)
+    The limiters are created lazily in the event loop; the bookkeeping is touched only from the loop.
+    """
+
+    def __init__(
+        self,
+        slots: int = HEAVY_CONCURRENCY,
+        *,
+        per_client: int = HEAVY_PER_CLIENT,
+        per_client_pending: int = HEAVY_PER_CLIENT_PENDING,
+        wait_s: float = HEAVY_WAIT_S,
+        trust_proxy_headers: bool = False,
+    ) -> None:
+        if not 1 <= per_client <= slots or per_client_pending < per_client or wait_s <= 0:
+            raise ValueError("need 1 <= per_client <= slots, per_client_pending >= per_client, wait_s > 0")
+        self.slots = slots
+        self.per_client = per_client
+        self.per_client_pending = per_client_pending
+        self.wait_s = wait_s
+        self.trust_proxy_headers = trust_proxy_headers
+        self._slots: anyio.CapacityLimiter | None = None
+        self._threads: anyio.CapacityLimiter | None = None
+        self._clients: dict[str, _ClientLine] = {}
+
+    def pending(self) -> dict[str, int]:
+        """Requests running or waiting, per client key."""
+        return {key: line.pending for key, line in self._clients.items()}
+
+    async def run(self, request: Request, work: Callable[[], bytes]) -> Response:
+        """``work()`` in a worker thread, as a no-store JSON response (or 429 when the client or server is
+        busy). Exceptions raised by ``work`` propagate."""
+        key = client_key(request.scope, trust_proxy_headers=self.trust_proxy_headers)
+        line = self._clients.get(key)
+        if line is None:
+            line = self._clients[key] = _ClientLine(anyio.CapacityLimiter(self.per_client))
+        elif line.pending >= self.per_client_pending:
+            return _busy()
+        line.pending += 1
+        try:
+            return await self._run(request, line.limiter, work)
+        finally:
+            line.pending -= 1
+            if line.pending == 0:
+                del self._clients[key]
+
+    async def _run(self, request: Request, own: anyio.CapacityLimiter, work: Callable[[], bytes]) -> Response:
+        if self._slots is None or self._threads is None:
+            self._slots = anyio.CapacityLimiter(self.slots)
+            # The work runs on a thread limiter of the same size, so a slot holder never waits for a thread.
+            self._threads = anyio.CapacityLimiter(self.slots)
+        async with AsyncExitStack() as held:
+            with anyio.move_on_after(self.wait_s) as waiting:
+                await held.enter_async_context(own)
+                await held.enter_async_context(self._slots)
+            if waiting.cancelled_caught:
+                return _busy()
+            if await request.is_disconnected():
+                return Response(status_code=CLIENT_CLOSED_REQUEST, headers={"Cache-Control": NO_STORE})
+            body = await anyio.to_thread.run_sync(work, limiter=self._threads)
+        return no_store_json(body)
 
 
 def heavy(request: Request) -> HeavyRunner:
     runner = getattr(request.app.state, "heavy", None)
     if runner is None:
-        runner = HeavyRunner()
+        settings = getattr(request.app.state, "settings", None)
+        runner = HeavyRunner(trust_proxy_headers=bool(getattr(settings, "trust_proxy_headers", False)))
         request.app.state.heavy = runner
     return runner  # type: ignore[no-any-return]
 
@@ -434,7 +519,7 @@ async def _post(
         with localcontext(COMPUTE_DECIMAL_CONTEXT):
             return fn(current_snapshot(provider), req)
 
-    return no_store_json(await heavy(request).run(work))
+    return await heavy(request).run(request, work)
 
 
 async def post_list(request: Request, provider: Provider, body: ListRequest) -> Response:

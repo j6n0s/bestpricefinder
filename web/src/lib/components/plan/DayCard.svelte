@@ -40,7 +40,7 @@
 					{#if meal.recipeId === null}
 						<span class="muted">{t('plan.meal_empty')}</span>
 					{:else if recipe}
-						<a class="title" href="/receptek/{encodeURIComponent(recipe.id)}">{recipe.title}</a>
+						<a class="title" href="/receptek/{encodeURIComponent(recipe.id)}" lang="hu">{recipe.title}</a>
 						{#if !recipe.tested}
 							<Badge kind="untested" />
 						{/if}

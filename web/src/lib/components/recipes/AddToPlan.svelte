@@ -4,6 +4,7 @@
 	starts a 7-day plan from today with every other meal empty.
 -->
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { RecipeSummary, Slot } from '$lib/api/types';
 	import { i18n, t } from '$lib/i18n';
 	import { slotLabelLower } from '$lib/plan/checks';
@@ -19,7 +20,7 @@
 		slotsFor,
 		type SlotCount
 	} from '$lib/plan/plan';
-	import { isPersistent, load, update, type StoredPlan } from '$lib/storage';
+	import { isPersistent, load, onExternalChange, update, type StoredPlan } from '$lib/storage';
 
 	interface Props {
 		recipe: Pick<RecipeSummary, 'id' | 'slots'>;
@@ -30,6 +31,14 @@
 	let stored = $state(load());
 	let persistent = $state(isPersistent());
 	let done = $state<{ day: string; slot: string } | null>(null);
+
+	// Another tab changed or deleted the plan: show what is stored now (adding always starts from load()).
+	onMount(() =>
+		onExternalChange((next) => {
+			stored = next;
+			persistent = isPersistent();
+		})
+	);
 
 	function newPlan(slots: SlotCount, createdAt: string): StoredPlan {
 		return emptyPlan(

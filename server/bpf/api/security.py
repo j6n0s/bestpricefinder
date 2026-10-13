@@ -145,27 +145,40 @@ def _parse_ip(text: str) -> ipaddress.IPv4Address | ipaddress.IPv6Address | None
         return None
 
 
+def _unmapped(
+    ip: ipaddress.IPv4Address | ipaddress.IPv6Address,
+) -> ipaddress.IPv4Address | ipaddress.IPv6Address:
+    """IPv4-mapped IPv6 (``::ffff:a.b.c.d``) as the IPv4 address; anything else unchanged."""
+    if isinstance(ip, ipaddress.IPv6Address) and ip.ipv4_mapped is not None:
+        return ip.ipv4_mapped
+    return ip
+
+
 def client_key(scope: Scope, *, trust_proxy_headers: bool) -> str:
-    """Rate-limit key: the socket peer, or (behind a trusted proxy) the right-most X-Forwarded-For entry.
+    """Rate-limit key: the socket peer, or the right-most X-Forwarded-For entry when proxy headers are trusted
+    AND the peer is a loopback address (the local reverse proxy). A header sent by any other peer is ignored,
+    so a client reaching a server bound to a public address cannot pick its own key.
+
+    Under ``python -m bpf.api`` uvicorn has usually already replaced the peer with the forwarded client
+    (``proxy_headers``, ``FORWARDED_ALLOW_IPS``); that client is not loopback, so it is the key.
 
     IPv6 clients are grouped by /64 (one subscriber usually owns a whole /64); IPv4-mapped IPv6 is IPv4."""
-    if trust_proxy_headers:
+    client = scope.get("client")
+    host = str(client[0]) if client else "unknown"
+    peer = _parse_ip(host)
+    if trust_proxy_headers and peer is not None and _unmapped(peer).is_loopback:
         values = [value for name, value in scope.get("headers", []) if name.lower() == b"x-forwarded-for"]
         if values:
             last = b",".join(values).decode("latin-1").split(",")[-1]
             ip = _parse_ip(last)
             if ip is not None:
                 return _ip_key(ip)
-    client = scope.get("client")
-    host = str(client[0]) if client else "unknown"
-    ip = _parse_ip(host)
-    return _ip_key(ip) if ip is not None else host[:100]
+    return _ip_key(peer) if peer is not None else host[:100]
 
 
 def _ip_key(ip: ipaddress.IPv4Address | ipaddress.IPv6Address) -> str:
+    ip = _unmapped(ip)
     if isinstance(ip, ipaddress.IPv6Address):
-        if ip.ipv4_mapped is not None:
-            return str(ip.ipv4_mapped)
         return str(ipaddress.IPv6Network((ip, 64), strict=False))
     return str(ip)
 

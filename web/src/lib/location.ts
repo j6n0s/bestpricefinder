@@ -113,6 +113,21 @@ export function originFromLocation(location: StoredLocation): Origin | null {
 	return null;
 }
 
+/** A stored device position older than this is shown as out of date (the list offers to update it). */
+export const POSITION_STALE_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * True when a stored position is more than POSITION_STALE_MS old, or its time is missing or invalid. A
+ * position "from the future" (a wrong device clock) is not stale. The position is still used until the user
+ * acts: the browser is never asked again without a click.
+ */
+export function isStale(approx: { at: string } | null | undefined, now: Date = new Date()): boolean {
+	if (!approx) return false;
+	const at = Date.parse(approx.at);
+	if (Number.isNaN(at)) return true;
+	return now.getTime() - at > POSITION_STALE_MS;
+}
+
 /** The stored location after the user granted access and the browser returned `position`. */
 export function grantedLocation(previous: StoredLocation, position: LatLon, now: Date = new Date()): StoredLocation {
 	return {

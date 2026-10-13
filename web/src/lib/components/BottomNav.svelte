@@ -1,8 +1,12 @@
 <!--
 	Main navigation: a fixed bottom tab bar on narrow screens, a plain row under the header on wide ones.
 	Icons are simple original line drawings; every tab has a visible text label.
+	While the bar is fixed, its real height (it grows when the user enlarges text or spacing) is published as
+	`--nav-reserved` on <html>, so the layout's bottom padding and scroll padding keep content clear of it.
+	(A CSSOM write, which the CSP allows; no style attribute in the markup.)
 -->
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { t, type PlainKey } from '$lib/i18n';
 
@@ -29,13 +33,35 @@
 		}
 	];
 
+	let nav = $state<HTMLElement>();
+
+	onMount(() => {
+		const element = nav;
+		if (!element || typeof ResizeObserver === 'undefined') return;
+		const root = document.documentElement;
+		const publish = (): void => {
+			if (getComputedStyle(element).position === 'fixed') {
+				root.style.setProperty('--nav-reserved', `${Math.ceil(element.getBoundingClientRect().height)}px`);
+			} else {
+				root.style.removeProperty('--nav-reserved');
+			}
+		};
+		const observer = new ResizeObserver(publish);
+		observer.observe(element);
+		publish();
+		return () => {
+			observer.disconnect();
+			root.style.removeProperty('--nav-reserved');
+		};
+	});
+
 	function isActive(href: string, pathname: string): boolean {
 		if (href === '/') return pathname === '/';
 		return pathname === href || pathname.startsWith(`${href}/`);
 	}
 </script>
 
-<nav class="nav" aria-label={t('core.nav_label')}>
+<nav class="nav" aria-label={t('core.nav_label')} bind:this={nav}>
 	<ul>
 		{#each ITEMS as item (item.href)}
 			{@const active = isActive(item.href, page.url.pathname)}
@@ -109,10 +135,15 @@
 		flex: none;
 	}
 
-	/* Labels may wrap between words but never inside one (the e2e test checks they fit). */
+	/*
+	 * Labels wrap between words. A word breaks (hyphenated where the browser can, html lang="hu") only when it
+	 * cannot fit its cell at all: with user text spacing (WCAG 1.4.12) or text-only zoom, "Beállítások" must
+	 * not be cut off or run into the next tab. At default metrics every word fits (the e2e tests check both).
+	 */
 	.label {
 		max-width: 100%;
-		overflow-wrap: normal;
+		overflow-wrap: anywhere;
+		hyphens: auto;
 	}
 
 	@media (max-width: 22.49rem) {

@@ -108,7 +108,14 @@ export function roundScaled(value: number): number {
 	return Math.max(0.01, Math.round((value + 1e-9) * 100) / 100);
 }
 
-const WORD_NUMBERS: Readonly<Record<string, number>> = { fél: 0.5, másfél: 1.5 };
+/** Hungarian number words used as amounts in recipe displays ("egy kisebb fej", "negyed kígyóuborka"). */
+const WORD_NUMBERS: Readonly<Record<string, number>> = {
+	egy: 1,
+	fél: 0.5,
+	másfél: 1.5,
+	negyed: 0.25,
+	háromnegyed: 0.75
+};
 
 function parseAmount(token: string): number {
 	const word = WORD_NUMBERS[token.toLocaleLowerCase('hu-HU')];
@@ -116,16 +123,23 @@ function parseAmount(token: string): number {
 }
 
 /**
- * A number ("40", "1,5"), "fél" (½) or "másfél" (1½), optionally a range ("1–2"); not inside a word or
- * another number, and not a percentage or a suffixed number ("2,8%", "2-es").
+ * A number ("40", "1,5") or a number word ("egy" 1, "fél" ½, "másfél" 1½, "negyed" ¼, "háromnegyed" ¾),
+ * optionally a range ("1–2"); not inside a word or another number, and not a percentage or a suffixed number
+ * ("2,8%", "2-es"). Longer words come first, and the look-behind keeps "negyed" from matching inside
+ * "háromnegyed" (and "egy" inside "negyed").
  */
-const AMOUNT = /(?<![\p{L}\p{N},.])(\d+(?:,\d+)?|másfél|fél)(?:(\s*[–-]\s*)(\d+(?:,\d+)?|másfél|fél))?(?![\p{N}%]|,\d|-\p{L})/giu;
+const NUMBER_WORDS = 'háromnegyed|negyed|másfél|fél|egy';
+const AMOUNT = new RegExp(
+	`(?<![\\p{L}\\p{N},.])(\\d+(?:,\\d+)?|${NUMBER_WORDS})(?:(\\s*[–-]\\s*)(\\d+(?:,\\d+)?|${NUMBER_WORDS}))?(?![\\p{N}%]|,\\d|-\\p{L})`,
+	'giu'
+);
 
 /**
  * Scales every amount in a recipe line's display text ("40 dkg" × 0.5 -> "20 dkg", "3 evőkanál (1 a rizshez,
- * 2 a mártáshoz)" × 2 -> "6 evőkanál (2 a rizshez, 4 a mártáshoz)", "másfél fej" × 2 -> "3 fej"). Text
- * without a number ("ízlés szerint") stays as it is. With factor 1 (or an invalid factor) the text is
- * returned unchanged.
+ * 2 a mártáshoz)" × 2 -> "6 evőkanál (2 a rizshez, 4 a mártáshoz)", "másfél fej" × 2 -> "3 fej", "negyed fej"
+ * × 2 -> "0,5 fej", "1 kg (egy kisebb fej)" × 2 -> "2 kg (2 kisebb fej)"). Number words count only as whole
+ * words ("egyszerű", "negyedelt", "félbevágott" stay). Text without an amount ("ízlés szerint") stays as it
+ * is. With factor 1 (or an invalid factor) the text is returned unchanged.
  */
 export function scaleDisplay(display: string, factor: number): string {
 	if (!Number.isFinite(factor) || factor <= 0 || factor === 1) return display;
@@ -134,8 +148,12 @@ export function scaleDisplay(display: string, factor: number): string {
 		(match: string, first: string, separator: string | undefined, second: string | undefined, offset: number) => {
 			const last = second ?? first;
 			const next = display.charAt(offset + match.length);
-			// "fél" / "másfél" must be whole words ("félbevágott" is not an amount).
+			// Number words must be whole words ("félbevágott", "egyszerű", "negyedelt" are not amounts).
 			if (/^\D/u.test(last) && /\p{L}/u.test(next)) return match;
+			// "egy-egy", "fél-fél" mean "one/half each", not a range.
+			if (second !== undefined && /^\D/u.test(first) && first.toLocaleLowerCase('hu-HU') === second.toLocaleLowerCase('hu-HU')) {
+				return match;
+			}
 			const scaled = formatNumber(roundScaled(parseAmount(first) * factor));
 			if (second === undefined || separator === undefined) return scaled;
 			return `${scaled}${separator}${formatNumber(roundScaled(parseAmount(second) * factor))}`;

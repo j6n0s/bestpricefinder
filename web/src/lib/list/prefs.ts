@@ -1,11 +1,12 @@
 /**
- * Shopping-list choices: the chosen range, and per list (plan + range, see `listKey`) the lines removed by
- * hand and the store the user picked.
+ * Shopping-list choices: the chosen range, and per list (plan + range, see `listKey`) the ticked lines, the
+ * lines removed by hand, the excluded lines bought anyway and the store the user picked.
  *
  * They are part of the ONE stored document of $lib/storage (`StoredState.list`, key `hetikosar.state`), so
- * they share its validation (key ≤ 80 printable ASCII characters, ≤ 12 lists, removed ids and store ids
- * matching the API's id patterns, ≤ 200 removed ids per list), its in-memory fallback when the browser
- * refuses storage, and "minden adat törlése". Nothing here is ever sent to the server.
+ * they share its validation (key ≤ 80 printable ASCII characters, ≤ 12 lists, ticked, removed and included
+ * ids and store ids matching the API's id patterns, ≤ 500 ticked and ≤ 200 removed ids per list), its
+ * in-memory fallback when the browser refuses storage, and "minden adat törlése". Nothing here is ever sent
+ * to the server.
  *
  * The separate `hetikosar.list` document of earlier builds is retired; it was never shipped to users, and
  * `clearAll` removes any leftover copy with the rest of the `hetikosar.` keys.
@@ -27,7 +28,16 @@ export function defaultListPrefs(): ListPrefs {
  * structured-cloned (DataCloneError).
  */
 function copyEntry(entry: ListEntry): ListEntry {
-	return { key: entry.key, removed: [...entry.removed], storeId: entry.storeId };
+	// Tolerates entries shaped by an older build (no `checked` / `included`): the storage module validates
+	// whatever is saved, so a missing list simply becomes [].
+	const ids = (value: readonly string[] | undefined): string[] => (Array.isArray(value) ? [...value] : []);
+	return {
+		key: entry.key,
+		checked: ids(entry.checked),
+		removed: ids(entry.removed),
+		included: ids(entry.included),
+		storeId: entry.storeId
+	};
 }
 
 /** The current list choices (a fresh copy). Never throws. */
@@ -43,7 +53,7 @@ export function saveListPrefs(prefs: ListPrefs): boolean {
 /** The remembered entry of a list (an empty one when the list is new). */
 export function listEntry(prefs: ListPrefs, key: string): ListEntry {
 	const found = prefs.entries.find((entry) => entry.key === key);
-	return found ? copyEntry(found) : { key, removed: [], storeId: null };
+	return found ? copyEntry(found) : { key, checked: [], removed: [], included: [], storeId: null };
 }
 
 /** The choices with `entry` stored as the most recently used list (the input is never changed). */

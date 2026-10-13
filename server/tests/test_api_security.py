@@ -5,13 +5,17 @@ Covers: security headers on every kind of response (incl. static files, 404, 405
 SPA's CSP header = the HTML meta policy + ``frame-ancestors 'none'``; path traversal (dot segments, encoded
 slashes and backslashes, absolute paths, NUL, symlinks) never leaving the build; static caching; the body
 limit for declared, streamed and chunked bodies (also through a real uvicorn server); the rate limiter with
-and without trusted proxy headers; generic 500s that log no request body; the docs UI switch.
+and without trusted proxy headers; the bounds on the heavy POST work (per-client share, bounded wait, no work
+for a client that hung up); generic 500s that log no request body; WebSocket upgrades that log no client
+address; the docs UI switch.
 """
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
+import socket
 import threading
 import time
 from collections.abc import Iterator
@@ -24,11 +28,14 @@ import uvicorn
 from fastapi import FastAPI
 from pydantic import ValidationError
 
+import bpf.api.__main__ as api_main
+from bpf.api import routes
 from bpf.api.app import create_app
 from bpf.api.repo import CatalogueProvider
+from bpf.api.routes import HeavyRunner
 from bpf.api.security import API_CSP
 from bpf.config import Settings, get_settings
-from tests.fixtures.api.asgi import JSON_HEADERS, raw_request
+from tests.fixtures.api.asgi import JSON_HEADERS, raw_request, request_async
 from tests.fixtures.api.memory import MemorySource, app_with, client_with, memory_provider
 from tests.fixtures.api.seed import FakeClock, TestClient
 from tests.pgcluster import free_port
@@ -131,6 +138,50 @@ def test_spa_index_and_fallback(site: TestClient) -> None:
     cached = site.get("/terv", headers={"If-None-Match": etag})
     assert (cached.status_code, cached.content) == (304, b"")
     assert cached.headers["content-security-policy"] == HTML_POLICY
+
+
+def test_service_worker_is_the_startup_snapshot_like_the_page(build: Path) -> None:
+    """A new build written while the server runs (build-web.sh before the restart) must not pair the NEW
+    worker (new precache list) with the OLD in-memory page: the worker would cache the old shell under the
+    new version and keep it after the restart. Both are read at startup, so they come from one build."""
+    (build / "service-worker.js").write_text("/* synthetic worker v1 */\n")
+    client = client_with(web_build_dir=build)
+    first = client.get("/service-worker.js")
+    assert (first.status_code, first.text) == (200, "/* synthetic worker v1 */\n")
+    assert first.headers["content-type"] == "text/javascript; charset=utf-8"
+    assert first.headers["cache-control"] == "no-cache"
+    assert first.headers["content-security-policy"] == HTML_POLICY
+    assert_common_headers(first.headers)
+    etag = first.headers["etag"]
+    # a new build lands on disk (new content, size and mtime); the running server keeps its pair
+    (build / "service-worker.js").write_text("/* synthetic worker v2, a longer file */\n")
+    (build / "index.html").write_text(INDEX_HTML.replace("SPA-FALLBACK-PAGE", "NEW-BUILD-PAGE"))
+    again = client.get("/service-worker.js")
+    assert (again.status_code, again.text, again.headers["etag"]) == (
+        200,
+        "/* synthetic worker v1 */\n",
+        etag,
+    )
+    cached = client.get("/service-worker.js", headers={"If-None-Match": etag})
+    assert (cached.status_code, cached.content) == (304, b"")
+    assert cached.headers["content-security-policy"] == HTML_POLICY
+    head = client.head("/service-worker.js")
+    assert (head.status_code, head.content, head.headers["etag"]) == (200, b"", etag)
+    page = client.get("/")
+    assert (page.text, page.headers["content-security-policy"]) == (INDEX_HTML, HTML_POLICY)
+    # after the restart: the new pair
+    restarted = client_with(web_build_dir=build)
+    assert restarted.get("/service-worker.js").text == "/* synthetic worker v2, a longer file */\n"
+    assert "NEW-BUILD-PAGE" in restarted.get("/").text
+
+
+def test_build_without_a_service_worker(build: Path) -> None:
+    (build / "service-worker.js").unlink()
+    client = client_with(web_build_dir=build)
+    response = client.get("/service-worker.js")  # a client-side route, like any other unknown path
+    assert (response.status_code, response.text) == (200, INDEX_HTML)
+    (build / "service-worker.js").write_text("/* appeared after startup */\n")
+    assert client.get("/service-worker.js").text == "/* appeared after startup */\n"  # served from disk
 
 
 def test_csp_header_is_the_meta_policy_plus_frame_ancestors(build: Path, tmp_path: Path) -> None:
@@ -474,16 +525,30 @@ def test_forwarded_for_ignored_unless_trusted() -> None:
 
 def test_forwarded_for_rightmost_entry_when_trusted() -> None:
     app, _ = limited(trust=True)
+    proxy = "127.0.0.1"  # the local reverse proxy
     # the right-most entry (the one the trusted proxy appended) is the client, whatever the client put first
     for i in range(30):
-        assert hit(app, xff=[f"10.0.0.{i}, 203.0.113.5"]) == 200
-    assert hit(app, xff=["10.9.9.9, 203.0.113.5"]) == 429
-    assert hit(app, xff=["203.0.113.5", "203.0.113.6"]) == 200  # several headers: the last value counts
-    assert hit(app, xff=["203.0.113.6"]) == 200
+        assert hit(app, peer=proxy, xff=[f"10.0.0.{i}, 203.0.113.5"]) == 200
+    assert hit(app, peer=proxy, xff=["10.9.9.9, 203.0.113.5"]) == 429
+    # several headers: the last value counts
+    assert hit(app, peer=proxy, xff=["203.0.113.5", "203.0.113.6"]) == 200
+    assert hit(app, peer=proxy, xff=["203.0.113.6"]) == 200
     # an unparsable entry falls back to the socket peer
     for _ in range(30):
-        assert hit(app, peer="198.51.100.50", xff=["not-an-ip"]) == 200
-    assert hit(app, peer="198.51.100.50", xff=["garbage"]) == 429
+        assert hit(app, peer="::1", xff=["not-an-ip"]) == 200
+    assert hit(app, peer="::1", xff=["garbage"]) == 429
+
+
+def test_forwarded_for_ignored_from_untrusted_peer_even_when_trusted() -> None:
+    """BPF_TRUST_PROXY_HEADERS=true with the server bound to a LAN address: a client that is not the local
+    proxy cannot get a fresh bucket per request by rotating X-Forwarded-For."""
+    app, _ = limited(trust=True)
+    for i in range(30):
+        assert hit(app, peer="198.51.100.8", xff=[f"203.0.113.{i}"]) == 200
+    assert hit(app, peer="198.51.100.8", xff=["203.0.113.200"]) == 429
+    assert hit(app, peer="198.51.100.8", xff=["10.0.0.1, 203.0.113.201"]) == 429
+    assert hit(app, peer="::ffff:198.51.100.8", xff=["203.0.113.202"]) == 429  # IPv4-mapped: the same client
+    assert hit(app, peer="127.0.0.1", xff=["203.0.113.203"]) == 200  # the proxy's header still counts
 
 
 def test_ipv6_clients_are_grouped_by_64() -> None:
@@ -493,6 +558,245 @@ def test_ipv6_clients_are_grouped_by_64() -> None:
     assert hit(app, peer="2001:db8:1:2:ffff::1") == 429
     assert hit(app, peer="2001:db8:1:3::1") == 200
     assert hit(app, peer="::ffff:198.51.100.99") == 200  # IPv4-mapped: the IPv4 address
+
+
+# ───────────────────────────── heavy POST work ─────────────────────────────
+
+RATE_LIMITED = {"error": "rate_limited", "fields": []}
+
+
+class SlowQuotes:
+    """Patches ``compute_quote``: a quote with ``include_loyalty: true`` blocks its worker thread until
+    :attr:`release` is set (a stand-in for a maximum quote); every computation is counted."""
+
+    def __init__(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        self.release = threading.Event()
+        self._lock = threading.Lock()
+        self._started = 0
+        real = routes.compute_quote
+
+        def compute(snap: Any, req: Any) -> bytes:
+            with self._lock:
+                self._started += 1
+            if req.include_loyalty and not self.release.wait(30):
+                raise RuntimeError("never released")
+            return real(snap, req)
+
+        monkeypatch.setattr(routes, "compute_quote", compute)
+
+    @property
+    def started(self) -> int:
+        with self._lock:
+            return self._started
+
+
+async def post_quote(
+    app: FastAPI, peer: str, *, slow: bool, disconnect: bool = False
+) -> tuple[int, dict[str, str], bytes]:
+    body = {"lines": [{"ingredient_id": "rizs", "qty": 1}], "store_ids": ["alfa-1"], "include_loyalty": slow}
+    return await request_async(
+        app,
+        "/api/quote",
+        method="POST",
+        headers=JSON_HEADERS,
+        chunks=[json.dumps(body).encode()],
+        client=(peer, 40000),
+        disconnect=disconnect,
+    )
+
+
+async def until(condition: Any, timeout: float = 5.0) -> None:
+    deadline = time.monotonic() + timeout
+    while not condition():
+        if time.monotonic() > deadline:
+            raise AssertionError("condition not reached in time")
+        await asyncio.sleep(0.01)
+
+
+def test_one_client_cannot_take_every_heavy_worker(monkeypatch: pytest.MonkeyPatch) -> None:
+    """One client floods maximum quotes (well inside the rate limit's burst): it gets at most 2 of the 4
+    workers, 6 more of its requests wait in its own line, the rest are refused at once, and another
+    client's quote is answered straight away while the flood is still computing."""
+    slow = SlowQuotes(monkeypatch)
+    app = app_with()
+    flooder, other = "198.51.100.20", "198.51.100.21"
+
+    async def scenario() -> None:
+        flood = [asyncio.create_task(post_quote(app, flooder, slow=True)) for _ in range(12)]
+        await until(lambda: slow.started >= 2 and sum(task.done() for task in flood) >= 4)
+        await asyncio.sleep(0.1)  # nothing else of the flood starts or finishes
+        assert (slow.started, sum(task.done() for task in flood)) == (2, 4)
+        for task in flood:
+            if task.done():
+                status, headers, body = task.result()
+                assert (status, headers["retry-after"], json.loads(body)) == (429, "1", RATE_LIMITED)
+        started = time.monotonic()
+        status, _, body = await asyncio.wait_for(post_quote(app, other, slow=False), 5)
+        assert status == 200
+        assert json.loads(body)["stores"][0]["store_id"] == "alfa-1"
+        assert time.monotonic() - started < 3
+        assert app.state.heavy.pending() == {flooder: 8}
+        slow.release.set()
+        results = await asyncio.wait_for(asyncio.gather(*flood), 30)
+        assert sorted(status for status, _, _ in results) == [200] * 8 + [429] * 4
+        assert slow.started == 2 + 1 + 6
+        assert app.state.heavy.pending() == {}
+
+    asyncio.run(scenario())
+
+
+def test_a_request_whose_client_hung_up_is_dropped_before_the_work(monkeypatch: pytest.MonkeyPatch) -> None:
+    slow = SlowQuotes(monkeypatch)
+    app = app_with()
+
+    async def scenario() -> None:
+        peers = ["198.51.100.30", "198.51.100.30", "198.51.100.31", "198.51.100.31"]
+        holders = [asyncio.create_task(post_quote(app, peer, slow=True)) for peer in peers]
+        await until(lambda: slow.started == 4)  # every worker is busy
+        gone = asyncio.create_task(post_quote(app, "198.51.100.32", slow=False, disconnect=True))
+        await until(lambda: app.state.heavy.pending().get("198.51.100.32") == 1)
+        slow.release.set()
+        results = await asyncio.wait_for(asyncio.gather(*holders), 30)
+        assert [status for status, _, _ in results] == [200] * 4
+        status, _, body = await asyncio.wait_for(gone, 30)
+        assert (status, body) == (499, b"")
+        assert slow.started == 4  # nothing was computed for the client that hung up
+        assert app.state.heavy.pending() == {}
+
+    asyncio.run(scenario())
+
+
+def test_the_wait_for_a_worker_is_bounded(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Many clients (say, many IPv6 /64s) keep every worker busy: a request waits at most ``wait_s`` and is
+    then refused with Retry-After instead of queueing without end."""
+    slow = SlowQuotes(monkeypatch)
+    app = app_with()
+    app.state.heavy = HeavyRunner(wait_s=0.3)
+
+    async def scenario() -> None:
+        peers = ["198.51.100.40", "198.51.100.40", "198.51.100.41", "198.51.100.41"]
+        holders = [asyncio.create_task(post_quote(app, peer, slow=True)) for peer in peers]
+        await until(lambda: slow.started == 4)
+        started = time.monotonic()
+        status, headers, body = await asyncio.wait_for(post_quote(app, "198.51.100.42", slow=False), 5)
+        waited = time.monotonic() - started
+        assert (status, headers["retry-after"], json.loads(body)) == (429, "1", RATE_LIMITED)
+        assert headers["cache-control"] == "no-store"
+        assert 0.25 <= waited < 3
+        slow.release.set()
+        results = await asyncio.wait_for(asyncio.gather(*holders), 30)
+        assert [status for status, _, _ in results] == [200] * 4
+        assert slow.started == 4
+        assert app.state.heavy.pending() == {}
+        status, _, _ = await asyncio.wait_for(post_quote(app, "198.51.100.42", slow=False), 5)
+        assert status == 200  # served again once a worker is free
+
+    asyncio.run(scenario())
+
+
+def test_heavy_runner_shares_the_rate_limit_key(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Behind the local proxy the share is per forwarded client, not one share for the proxy."""
+    assert app_with().state.heavy.trust_proxy_headers is False
+    app = app_with(trust_proxy_headers=True)
+    assert app.state.heavy.trust_proxy_headers is True
+    slow = SlowQuotes(monkeypatch)
+
+    async def via_proxy(client: str) -> tuple[int, dict[str, str], bytes]:
+        body = {
+            "lines": [{"ingredient_id": "rizs", "qty": 1}],
+            "store_ids": ["alfa-1"],
+            "include_loyalty": True,
+        }
+        return await request_async(
+            app,
+            "/api/quote",
+            method="POST",
+            headers=[*JSON_HEADERS, (b"x-forwarded-for", client.encode())],
+            chunks=[json.dumps(body).encode()],
+            client=("127.0.0.1", 50000),
+        )
+
+    async def scenario() -> None:
+        tasks = [asyncio.create_task(via_proxy(c)) for c in ("203.0.113.1", "203.0.113.1", "203.0.113.2")]
+        await until(lambda: slow.started == 3)  # three running: two clients, not one proxy
+        assert app.state.heavy.pending() == {"203.0.113.1": 2, "203.0.113.2": 1}
+        slow.release.set()
+        assert [r[0] for r in await asyncio.wait_for(asyncio.gather(*tasks), 30)] == [200] * 3
+
+    asyncio.run(scenario())
+
+
+def test_heavy_runner_rejects_inconsistent_bounds() -> None:
+    for kwargs in ({"per_client": 0}, {"per_client": 5}, {"per_client_pending": 1}, {"wait_s": 0}):
+        with pytest.raises(ValueError, match="per_client"):
+            HeavyRunner(**kwargs)  # type: ignore[arg-type]
+
+
+def test_hung_up_client_through_a_real_server(monkeypatch: pytest.MonkeyPatch) -> None:
+    """uvicorn does not cancel the app when the client hangs up; the runner sees the disconnect through
+    ``receive`` once its turn comes, and skips the work."""
+    slow = SlowQuotes(monkeypatch)
+    app = app_with()
+    runner = HeavyRunner(per_client=4)  # every request here comes from 127.0.0.1
+    app.state.heavy = runner
+    port = free_port()
+    config = uvicorn.Config(
+        app, host="127.0.0.1", port=port, log_level="warning", lifespan="off", server_header=False
+    )
+    server = uvicorn.Server(config)
+    thread = threading.Thread(target=server.run, daemon=True)
+    thread.start()
+    wait_for(lambda: server.started, "uvicorn did not start")
+    quote = {"lines": [{"ingredient_id": "rizs", "qty": 1}], "store_ids": ["alfa-1"]}
+    statuses: list[int] = []
+
+    def hold() -> None:
+        response = httpx.post(
+            f"http://127.0.0.1:{port}/api/quote", json={**quote, "include_loyalty": True}, timeout=30
+        )
+        statuses.append(response.status_code)
+
+    def pending() -> int:
+        # read from this thread while the server's loop updates it: retry a torn read
+        for _ in range(100):
+            try:
+                return sum(runner.pending().values())
+            except RuntimeError:  # pragma: no cover - dictionary changed size during iteration
+                continue
+        raise AssertionError("could not read the runner's state")
+
+    holders = [threading.Thread(target=hold) for _ in range(4)]
+    try:
+        for holder in holders:
+            holder.start()
+        wait_for(lambda: slow.started == 4, "the holders did not start")
+        body = json.dumps(quote).encode()
+        with socket.create_connection(("127.0.0.1", port), timeout=5) as sock:
+            sock.sendall(
+                b"POST /api/quote HTTP/1.1\r\nHost: 127.0.0.1\r\nContent-Type: application/json\r\n"
+                + f"Content-Length: {len(body)}\r\n\r\n".encode()
+                + body
+            )
+            wait_for(lambda: pending() == 5, "the request did not reach the runner")
+        time.sleep(0.5)  # the server notices the closed connection
+        slow.release.set()
+        for holder in holders:
+            holder.join(30)
+        wait_for(lambda: pending() == 0, "the dropped request did not finish")
+        assert statuses == [200] * 4
+        assert slow.started == 4  # the request of the client that hung up was never computed
+    finally:
+        slow.release.set()
+        server.should_exit = True
+        thread.join(timeout=10)
+
+
+def wait_for(condition: Any, message: str, timeout: float = 10.0) -> None:
+    deadline = time.monotonic() + timeout
+    while not condition():
+        if time.monotonic() > deadline:
+            raise AssertionError(message)
+        time.sleep(0.02)
 
 
 # ───────────────────────────── errors ─────────────────────────────
@@ -524,6 +828,79 @@ def test_unexpected_error_is_a_generic_500_without_body_logging(caplog: pytest.L
     assert "unhandled error in POST /api/quote" in caplog.text
     assert "boom (synthetic failure)" in caplog.text  # the exception itself is logged server-side
     assert sentinel not in caplog.text  # never the query string, the headers or the body
+
+
+def main_options(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, *argv: str) -> dict[str, Any]:
+    """The keyword arguments ``python -m bpf.api`` passes to ``uvicorn.run`` (with proxy headers trusted)."""
+    captured: dict[str, Any] = {}
+
+    def run(target: str, **kwargs: Any) -> None:
+        captured.update(kwargs, target=target)
+
+    env_file = tmp_path / "env"
+    env_file.write_text("BPF_TRUST_PROXY_HEADERS=true\n", encoding="utf-8")
+    monkeypatch.delenv("BPF_TRUST_PROXY_HEADERS", raising=False)
+    monkeypatch.setenv("BPF_ENV_FILE", str(env_file))
+    monkeypatch.setattr(api_main.uvicorn, "run", run)
+    get_settings.cache_clear()
+    try:
+        assert api_main.main(list(argv)) == 0
+    finally:
+        get_settings.cache_clear()
+    return captured
+
+
+def test_main_turns_websockets_and_the_access_log_off(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    options = main_options(monkeypatch, tmp_path)
+    assert (options["target"], options["factory"]) == ("bpf.api.app:create_app", True)
+    assert (options["host"], options["port"]) == ("127.0.0.1", 8000)
+    assert options["ws"] == "none"
+    assert options["access_log"] is False
+    assert options["server_header"] is False
+    assert options["proxy_headers"] is True
+    assert main_options(monkeypatch, tmp_path, "--access-log")["access_log"] is True
+
+
+def test_websocket_upgrades_log_no_client_address(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, caplog: pytest.LogCaptureFixture
+) -> None:
+    """With the options of ``python -m bpf.api`` (access log off, proxy headers trusted, log level info), an
+    ``Upgrade: websocket`` request must not make uvicorn log the client's address or the query string: it is
+    served as plain HTTP, with the security headers (uvicorn's own WebSocket rejection logs both at INFO)."""
+    port = free_port()
+    options = main_options(monkeypatch, tmp_path, "--port", str(port))
+    del options["target"], options["factory"]
+    config = uvicorn.Config(app_with(trust_proxy_headers=True), log_config=None, **options)
+    server = uvicorn.Server(config)
+    thread = threading.Thread(target=server.run, daemon=True)
+    with caplog.at_level(logging.DEBUG):
+        thread.start()
+        try:
+            wait_for(lambda: server.started, "uvicorn did not start")
+            response = httpx.get(
+                f"http://127.0.0.1:{port}/api/health?marker=zz9wsmarker",
+                headers={
+                    "Connection": "Upgrade",
+                    "Upgrade": "websocket",
+                    "Sec-WebSocket-Version": "13",
+                    "Sec-WebSocket-Key": "c3ludGhldGljLWtleS0xNg==",
+                    "X-Forwarded-For": "203.0.113.77",
+                },
+                timeout=5,
+            )
+        finally:
+            server.should_exit = True
+            thread.join(timeout=10)
+    server_lines = [r.getMessage() for r in caplog.records if r.name.startswith(("uvicorn", "bpf"))]
+    assert any("Uvicorn running" in line for line in server_lines)  # INFO lines were captured
+    for line in server_lines:
+        assert "203.0.113.77" not in line, line
+        assert "zz9wsmarker" not in line, line
+        assert "WebSocket /" not in line, line
+    assert response.status_code == 200  # plain HTTP, not a 101 or uvicorn's bare 403
+    assert_common_headers(response.headers)
 
 
 def test_docs_disabled_by_default() -> None:

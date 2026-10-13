@@ -20,6 +20,13 @@ Usage::
         conn.execute("SELECT data_date FROM api.latest").fetchone()
 
 A conninfo string contains a password: never log it, put it in an exception message or return it to a client.
+
+Every connection pins ``require_auth=scram-sha-256`` (libpq >= 16; psycopg[binary] ships 18). The cluster's
+pg_hba.conf accepts nothing else, so a server asking for any other method (a cleartext or md5 password, trust,
+peer) is an impostor, e.g. a process that bound the port or pre-created the socket while the cluster was
+down: libpq then refuses without sending the password. An impostor that does ask for SCRAM only sees a salted
+proof (useless against the 256-bit random passwords db-init.sh generates), and SCRAM makes the server prove it
+holds the role's verifier, so an impostor cannot complete the login and serve fake rows either.
 """
 
 from __future__ import annotations
@@ -34,6 +41,7 @@ from bpf.config import Settings, get_settings
 
 Role = Literal["api", "ingest", "migrator"]
 ROLES: tuple[Role, ...] = get_args(Role)
+REQUIRE_AUTH = "scram-sha-256"  # the only method deploy/local/db-init.sh's pg_hba.conf allows
 
 
 class MissingCredentialsError(RuntimeError):
@@ -61,6 +69,7 @@ def conninfo(role: Role, settings: Settings | None = None) -> str:
         dbname=s.db_name,
         user=f"bpf_{role}",
         password=password.get_secret_value(),
+        require_auth=REQUIRE_AUTH,  # never answer a cleartext/md5 request with the password
         application_name=f"bpf-{role}",
         connect_timeout=5,
     )

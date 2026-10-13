@@ -62,10 +62,21 @@ afterEach(() => {
 const sample = (): ListPrefs => ({
 	range: 'next_week',
 	entries: [
-		{ key: '2026-10-13T08:00:00.000Z|next_week', removed: ['repa', 'rizs'], storeId: 'synthetic-lidl-1' },
-		{ key: '2026-10-13T08:00:00.000Z|whole', removed: [], storeId: null }
+		{
+			key: '2026-10-13T08:00:00.000Z|next_week',
+			checked: ['voroshagyma'],
+			removed: ['repa', 'rizs'],
+			included: ['tojas'],
+			storeId: 'synthetic-lidl-1'
+		},
+		{ key: '2026-10-13T08:00:00.000Z|whole', checked: [], removed: [], included: [], storeId: null }
 	]
 });
+
+/** An entry with no ticks, removed or included lines unless given. */
+function entryOf(key: string, extra: Partial<ListPrefs['entries'][number]> = {}): ListPrefs['entries'][number] {
+	return { key, checked: [], removed: [], included: [], storeId: null, ...extra };
+}
 
 function storedList(): unknown {
 	const raw = fake.map.get(STORAGE_KEY);
@@ -81,11 +92,11 @@ describe('list choices in the one stored document', () => {
 	});
 
 	it('round-trip and keep the rest of the state', () => {
-		update({ people: 4, checkedItems: ['repa'] });
+		update({ people: 4, pantry: { notAtHome: ['so'] } });
 		saveListPrefs(sample());
 		resetForTests();
 		expect(loadListPrefs()).toEqual(sample());
-		expect(load()).toMatchObject({ people: 4, checkedItems: ['repa'] });
+		expect(load()).toMatchObject({ people: 4, pantry: { notAtHome: ['so'] } });
 	});
 
 	it('are the defaults when nothing is stored', () => {
@@ -131,16 +142,20 @@ describe('list choices in the one stored document', () => {
 	it('are validated on save like everything in the document', () => {
 		const dirty = {
 			range: 'month',
-			entries: [{ key: 'ok', removed: ['repa', 'BAD!', 'repa'], storeId: 'bad id!' }, { key: '', removed: [], storeId: null }]
+			entries: [
+				{ key: 'ok', checked: ['BAD!', 'so', 'so'], removed: ['repa', 'BAD!', 'repa'], storeId: 'bad id!' },
+				{ key: '', removed: [], storeId: null }
+			]
 		} as unknown as ListPrefs;
 		saveListPrefs(dirty);
-		expect(loadListPrefs()).toEqual({ range: 'this_week', entries: [{ key: 'ok', removed: ['repa'], storeId: null }] });
+		expect(loadListPrefs()).toEqual({ range: 'this_week', entries: [entryOf('ok', { checked: ['so'], removed: ['repa'] })] });
 	});
 
 	it('returns copies that callers cannot use to change the stored choices', () => {
 		saveListPrefs(sample());
 		const loaded = loadListPrefs();
 		loaded.entries[0]?.removed.push('hacked');
+		loaded.entries[0]?.checked.push('hacked');
 		expect(loadListPrefs()).toEqual(sample());
 	});
 });
@@ -149,16 +164,21 @@ describe('listEntry / withListEntry', () => {
 	it('accept Proxy objects such as Svelte $state (which structuredClone cannot copy)', () => {
 		const proxied = new Proxy(sample(), {});
 		const entry = listEntry(proxied, '2026-10-13T08:00:00.000Z|next_week');
-		const proxyEntry = new Proxy({ ...entry, removed: new Proxy([...entry.removed], {}) }, {});
+		const proxyEntry = new Proxy(
+			{ ...entry, removed: new Proxy([...entry.removed], {}), checked: new Proxy([...entry.checked], {}) },
+			{}
+		);
 		const next = withListEntry(proxied, proxyEntry);
-		expect(next.entries[0]).toEqual({ key: '2026-10-13T08:00:00.000Z|next_week', removed: ['repa', 'rizs'], storeId: 'synthetic-lidl-1' });
+		expect(next.entries[0]).toEqual(sample().entries[0]);
 		expect(saveListPrefs(new Proxy(next, {}))).toBe(true);
 		expect(update({ list: new Proxy(next, {}) }).list.entries[0]?.removed).toEqual(['repa', 'rizs']);
 		expect(loadListPrefs().entries[0]?.removed).toEqual(['repa', 'rizs']);
 	});
 
-	it('gives an empty entry for a new list', () => {
-		expect(listEntry(sample(), 'new')).toEqual({ key: 'new', removed: [], storeId: null });
+	it('gives an empty entry for a new list: no ticks (a new plan or range never starts ticked)', () => {
+		expect(listEntry(sample(), 'new')).toEqual({ key: 'new', checked: [], removed: [], included: [], storeId: null });
+		expect(listEntry(sample(), '2026-10-13T08:00:00.000Z|whole').checked).toEqual([]);
+		expect(listEntry(sample(), '2026-10-13T08:00:00.000Z|next_week').checked).toEqual(['voroshagyma']);
 	});
 
 	it('finds an entry and returns a copy', () => {
@@ -166,19 +186,23 @@ describe('listEntry / withListEntry', () => {
 		const entry = listEntry(prefs, '2026-10-13T08:00:00.000Z|next_week');
 		expect(entry.storeId).toBe('synthetic-lidl-1');
 		entry.removed.push('x');
-		expect(prefs.entries[0]?.removed).toEqual(['repa', 'rizs']);
+		entry.checked.push('x');
+		entry.included.push('x');
+		expect(prefs).toEqual(sample());
 	});
 
 	it('stores an entry as the most recent, replacing the old one, and forgets the oldest', () => {
 		const prefs = sample();
-		const next = withListEntry(prefs, { key: '2026-10-13T08:00:00.000Z|whole', removed: ['so'], storeId: 'x-1' });
+		const whole = entryOf('2026-10-13T08:00:00.000Z|whole', { checked: ['so'], removed: ['so'], storeId: 'x-1' });
+		const next = withListEntry(prefs, whole);
 		expect(next.entries.map((l) => l.key)).toEqual(['2026-10-13T08:00:00.000Z|whole', '2026-10-13T08:00:00.000Z|next_week']);
-		expect(next.entries[0]).toEqual({ key: '2026-10-13T08:00:00.000Z|whole', removed: ['so'], storeId: 'x-1' });
+		expect(next.entries[0]).toEqual(whole);
+		expect(next.entries[1]).toEqual(sample().entries[0]);
 		expect(next.range).toBe('next_week');
 		expect(prefs).toEqual(sample());
 
 		let many = defaultListPrefs();
-		for (let i = 0; i < MAX_REMEMBERED_LISTS + 3; i += 1) many = withListEntry(many, { key: `k${i}`, removed: [], storeId: null });
+		for (let i = 0; i < MAX_REMEMBERED_LISTS + 3; i += 1) many = withListEntry(many, entryOf(`k${i}`));
 		expect(many.entries).toHaveLength(MAX_REMEMBERED_LISTS);
 		expect(MAX_REMEMBERED_LISTS).toBe(12);
 		expect(many.entries[0]?.key).toBe(`k${MAX_REMEMBERED_LISTS + 2}`);

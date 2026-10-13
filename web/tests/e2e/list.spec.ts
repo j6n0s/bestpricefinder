@@ -317,7 +317,14 @@ function json(status: number, body: unknown): MockResult {
 	return { status, body };
 }
 
-async function harness(page: Page): Promise<Recorder> {
+interface HarnessOptions {
+	/** The /api/list answer (default LIST_LINES). */
+	listLines?: ListLineOut[];
+	/** Changes the synthetic /api/quote answer (for states the default data does not produce). */
+	quote?: (quote: QuoteResponse) => QuoteResponse;
+}
+
+async function harness(page: Page, options: HarnessOptions = {}): Promise<Recorder> {
 	const rec: Recorder = {
 		consoleErrors: [],
 		pageErrors: [],
@@ -372,11 +379,12 @@ async function harness(page: Page): Promise<Recorder> {
 			result = json(200, { ingredients: [...MOCK_INGREDIENTS, ...EXTRA_INGREDIENTS] });
 		} else if (method === 'POST' && url.pathname === '/api/list') {
 			rec.listBodies.push(JSON.parse(body) as unknown);
-			result = json(200, { lines: LIST_LINES });
+			result = json(200, { lines: options.listLines ?? LIST_LINES });
 		} else if (method === 'POST' && url.pathname === '/api/quote') {
 			const parsed = JSON.parse(body) as QuoteRequest;
 			rec.quoteBodies.push(parsed);
-			result = json(200, mockQuote(parsed));
+			const quote = mockQuote(parsed);
+			result = json(200, options.quote ? options.quote(quote) : quote);
 		} else {
 			result = handleMockApi(method, `${url.pathname}${url.search}`, body);
 		}
@@ -454,7 +462,6 @@ function seededState(extra: Record<string, unknown> = {}): Record<string, unknow
 		pantry: { notAtHome: [] },
 		exclusions: { tags: [], ingredients: [] },
 		location: { consent: 'unset', source: 'none', districtId: null, approx: null },
-		checkedItems: [],
 		...extra
 	};
 }
@@ -529,7 +536,10 @@ for (const viewport of VIEWPORTS) {
 			// Tick a line: stored on the device.
 			await page.getByRole('checkbox', { name: /^vöröshagyma/ }).check();
 			await expect(page.getByText('Kipipálva: 1 / 8')).toBeVisible();
-			expect(await storedJson(page, STORAGE_KEY)).toMatchObject({ checkedItems: ['voroshagyma'] });
+			// Ticks belong to this list (plan + range), not to every list.
+			expect(await storedJson(page, STORAGE_KEY)).toMatchObject({
+				list: { entries: [{ key: '2026-10-11T18:00:00.000Z|this_week', checked: ['voroshagyma'] }] }
+			});
 
 			// Remove a line by hand: it leaves the list (and the quote), focus stays on the list.
 			await page.getByRole('button', { name: 'kenyér eltávolítása a listáról' }).click();
@@ -553,7 +563,9 @@ for (const viewport of VIEWPORTS) {
 			await page.screenshot({ path: screenshotPath(`list-${viewport.name}-before-location`), fullPage: true });
 
 			await page.getByRole('button', { name: 'Saját helyzetem használata' }).click();
-			await expect(page.getByTestId('origin')).toContainText('Kiindulási pont: a készülék hozzávetőleges helyzete.');
+			await expect(page.getByTestId('origin')).toContainText(
+				`Kiindulási pont: a készülék hozzávetőleges helyzete (${sp('2026. 10. 13. 10:00')} állapot szerint).`
+			);
 			await expect(page.getByTestId('origin')).toBeFocused();
 			expect(await page.evaluate(() => window.__geoCalls)).toEqual([{ enableHighAccuracy: false, timeout: 10_000, maximumAge: 600_000 }]);
 			expect(await storedJson(page, STORAGE_KEY)).toMatchObject({
@@ -567,7 +579,8 @@ for (const viewport of VIEWPORTS) {
 			expect(rec.quoteBodies).toHaveLength(1);
 			const sent = rec.quoteBodies[0];
 			expect(Object.keys(sent ?? {}).sort()).toEqual(['include_loyalty', 'lines', 'store_ids']);
-			expect(sent?.store_ids).toEqual(DEVICE_CANDIDATES);
+			// Only the set of the nearest stores, sorted by id: the order must not reveal the distances.
+			expect(sent?.store_ids).toEqual([...DEVICE_CANDIDATES].sort());
 			expect(sent?.include_loyalty).toBe(false);
 			expect(sent?.lines).toEqual([
 				{ ingredient_id: 'gomba', qty: 0.25 },
@@ -649,11 +662,17 @@ for (const viewport of VIEWPORTS) {
 			await page.screenshot({ path: screenshotPath(`list-${viewport.name}-store`), fullPage: true });
 			await expectTouchTargets(page);
 			await expectAccessible(page, `list ${viewport.name} store list`);
+			// The store list's sections are not landmarks of their own: one "Zöldség, gyümölcs" region only.
+			await expect(page.getByRole('region', { name: 'Zöldség, gyümölcs', exact: true })).toHaveCount(1);
+			// Every priced line is a whole forint at Lidl: no rounding note.
+			await expect(storeList.getByTestId('store-total-rounding')).toHaveCount(0);
 
-			// At Spar the lentils are not available.
+			// At Spar the lentils are not available, and the weighed chicken costs a fraction of a forint: the
+			// rounded lines may not add up to the exact total, and the view says so.
 			await chooseButton(page, 'Spar', 'synthetic-spar-a').click();
 			await expect(storeList.getByRole('heading', { level: 3 })).toHaveText('Lista: Spar');
 			await expect(line('voros_lencse')).toContainText('nincs ebben a boltban');
+			await expect(storeList.getByTestId('store-total-rounding')).toContainText('egész forintra kerekítve');
 			await chooseButton(page, 'Lidl', 'synthetic-lidl-a').click();
 
 			// The chosen store is remembered for this list, in the one stored document (no key of its own); after
@@ -662,7 +681,15 @@ for (const viewport of VIEWPORTS) {
 				version: 1,
 				list: {
 					range: 'this_week',
-					entries: [{ key: '2026-10-11T18:00:00.000Z|this_week', removed: ['kenyer'], storeId: 'synthetic-lidl-a' }]
+					entries: [
+						{
+							key: '2026-10-11T18:00:00.000Z|this_week',
+							checked: ['voroshagyma'],
+							removed: ['kenyer'],
+							included: [],
+							storeId: 'synthetic-lidl-a'
+						}
+					]
 				}
 			});
 			expect(await page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith('hetikosar.')))).toEqual([
@@ -691,11 +718,19 @@ for (const viewport of VIEWPORTS) {
 			await page.goto('/lista');
 			await expect(page.getByRole('heading', { level: 2, name: 'Hol a legolcsóbb a közelben?' })).toBeVisible();
 
+			// One status region exists before anything happens, so screen readers announce what follows.
+			const status = page.getByTestId('nearby-status');
+			await expect(status).toHaveAttribute('role', 'status');
+			await expect(status).toHaveText('');
+
 			await page.getByLabel('Budapesti kerület').selectOption('11');
 			await expect(page.getByTestId('origin')).toContainText('Kiindulási pont: XI. kerület.');
 			await expect(page.getByTestId('too-few')).toContainText(
 				sp('1,5 km távolságon belül csak 1 bolt van, így nincs mivel összehasonlítani.')
 			);
+			await expect(status).toContainText(sp('1 bolt 1,5 km távolságon belül'));
+			await expect(status).toContainText('csak 1 bolt van');
+			await expect(status).toContainText('Legolcsóbb a kiválasztott boltok közül');
 			await expect(page.getByTestId('rank-row')).toHaveCount(1);
 			expect(rec.quoteBodies.at(-1)?.store_ids).toEqual(['synthetic-aldi-xi']);
 			expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
@@ -703,6 +738,9 @@ for (const viewport of VIEWPORTS) {
 			await page.getByRole('button', { name: /^Keresés 2,0\skm távolságon belül$/ }).click();
 			await expect(page.getByTestId('rank-row')).toHaveCount(2);
 			await expect(page.getByTestId('too-few')).toHaveCount(0);
+			await expect(status).toContainText(sp('2 bolt 2,0 km távolságon belül'));
+			await expect(status).not.toContainText('csak 1 bolt van');
+			await expect(status).toContainText(`Legolcsóbb a kiválasztott boltok közül, a ${DATA_DATE}-i GVH-adatok alapján: Aldi`);
 			expect(rec.quoteBodies.at(-1)?.store_ids).toEqual(['synthetic-aldi-xi', 'synthetic-penny-xi']);
 			expect(await storedJson(page, STORAGE_KEY)).toMatchObject({
 				radiusKm: 2,
@@ -731,6 +769,235 @@ for (const viewport of VIEWPORTS) {
 		});
 	});
 }
+
+
+// ───────────────────────────── per-list ticks, other tabs, exclusions, split, position age ─────────────────────────────
+
+const DEVICE_LOCATION = { consent: 'granted', source: 'device', districtId: null, approx: { lat: 47.496, lon: 19.054, at: NOW.toISOString() } };
+
+test.describe('ticks per list', () => {
+	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
+
+	test('a new plan or another range starts with no ticks; undoing a new plan brings them back', async ({ page }) => {
+		const rec = await harness(page);
+		await seed(page, seededState());
+		await page.goto('/lista');
+		const onion = page.getByRole('checkbox', { name: /^vöröshagyma/ });
+		await onion.check();
+		await expect(page.getByText('Kipipálva: 1 / 8')).toBeVisible();
+
+		// Another range of the same plan: another list, no ticks; back: the tick is there.
+		await page.getByRole('radio', { name: /Jövő hét/ }).check();
+		await expect(page.getByText('Kipipálva: 0 / 8')).toBeVisible();
+		await expect(onion).not.toBeChecked();
+		await page.getByRole('radio', { name: /Ez a hét/ }).check();
+		await expect(page.getByText('Kipipálva: 1 / 8')).toBeVisible();
+		await expect(onion).toBeChecked();
+
+		// "Új javaslat", undone: the same plan again, with its ticks.
+		const nav = page.getByRole('navigation', { name: 'Fő navigáció' });
+		await nav.getByRole('link', { name: 'Heti terv' }).click();
+		await page.getByRole('button', { name: 'Új javaslat' }).click();
+		await expect(page.getByText('Elkészült az új terv.')).toBeVisible();
+		await page.getByRole('button', { name: 'Visszavonás' }).click();
+		await expect(page.getByText('Visszaállítottuk az előző tervet.')).toBeVisible();
+		await nav.getByRole('link', { name: 'Lista' }).click();
+		await expect(page.getByText('Kipipálva: 1 / 8')).toBeVisible();
+
+		// Next week's routine: delete the plan and make a new one. Its list starts with no ticks.
+		await nav.getByRole('link', { name: 'Heti terv' }).click();
+		await page.getByRole('button', { name: 'Terv törlése' }).click();
+		await page.getByRole('button', { name: 'Terv készítése' }).click();
+		await expect(page.getByRole('heading', { level: 2, name: 'A terved' })).toBeFocused();
+		await nav.getByRole('link', { name: 'Lista' }).click();
+		await expect(page.getByText(/Kipipálva: 0 \/ \d+/)).toBeVisible();
+		await expect(page.getByRole('checkbox', { checked: true })).toHaveCount(0);
+
+		// "Pipák törlése" removes itself: focus goes to the first line, never to <body>.
+		await onion.check();
+		await page.getByRole('button', { name: 'Pipák törlése' }).click();
+		await expect(page.getByText(/Kipipálva: 0 \/ \d+/)).toBeVisible();
+		await expect(page.locator('input[data-line-check]').first()).toBeFocused();
+		expect(await page.evaluate(() => document.activeElement !== document.body)).toBe(true);
+		await expectClean(page, rec);
+	});
+});
+
+test.describe('another tab', () => {
+	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
+
+	test('revoking the position in another tab reaches the list, which never writes it back', async ({ page, context }) => {
+		const rec = await harness(page);
+		await seed(page, seededState({ location: DEVICE_LOCATION }));
+		await page.goto('/lista');
+		await expect(page.getByTestId('origin')).toContainText('a készülék hozzávetőleges helyzete');
+		await expect(page.getByTestId('rank-row').first()).toBeVisible();
+
+		const settings = await context.newPage();
+		const other = await harness(settings);
+		await settings.goto('/beallitasok');
+		await settings.getByRole('button', { name: 'Engedély visszavonása' }).click();
+		await expect(settings.getByTestId('location-status')).toContainText('Nincs engedélyezve.');
+
+		// The list tab learns about it: the deleted position is no longer used, and the chooser is open again.
+		await expect(page.getByTestId('origin')).toHaveCount(0);
+		await expect(page.getByRole('heading', { name: 'Honnan keressük a boltokat?' })).toBeVisible();
+		await page.getByLabel('Budapesti kerület').selectOption('11');
+		await expect(page.getByTestId('origin')).toContainText('Kiindulási pont: XI. kerület.');
+		const stored = await storedJson(page, STORAGE_KEY);
+		expect(stored).toMatchObject({ location: { consent: 'unset', source: 'district', districtId: '11', approx: null } });
+		await expectClean(page, rec);
+		await expectClean(settings, other);
+	});
+
+	test('a tab that missed the change still builds the new location from what is stored', async ({ page, context }) => {
+		// This tab never hears about the other tab (as if the browser had not delivered the storage event).
+		await page.addInitScript(() => {
+			window.addEventListener('storage', (event) => event.stopImmediatePropagation(), true);
+		});
+		const rec = await harness(page);
+		await seed(page, seededState({ location: DEVICE_LOCATION }));
+		await page.goto('/lista');
+		await expect(page.getByTestId('origin')).toContainText('a készülék hozzávetőleges helyzete');
+
+		const settings = await context.newPage();
+		const other = await harness(settings);
+		await settings.goto('/beallitasok');
+		await settings.getByRole('button', { name: 'Engedély visszavonása' }).click();
+		await expect(settings.getByTestId('location-status')).toContainText('Nincs engedélyezve.');
+
+		// The stale tab still shows the old origin; choosing a district must not bring the position back.
+		await page.getByRole('button', { name: 'Másik kiindulási pont' }).click();
+		await page.getByLabel('Budapesti kerület').selectOption('11');
+		await expect.poll(async () => (await storedJson(page, STORAGE_KEY))?.location).toEqual({
+			consent: 'unset',
+			source: 'district',
+			districtId: '11',
+			approx: null
+		});
+		await expectClean(page, rec);
+		await expectClean(settings, other);
+	});
+
+	test('"Minden adat törlése" in another tab empties the list tab, which writes nothing back', async ({ page, context }) => {
+		const rec = await harness(page);
+		await seed(page, seededState({ location: DEVICE_LOCATION }));
+		await page.goto('/lista');
+		await page.getByRole('checkbox', { name: /^vöröshagyma/ }).check();
+		await expect(page.getByText('Kipipálva: 1 / 8')).toBeVisible();
+
+		const settings = await context.newPage();
+		const other = await harness(settings);
+		await settings.goto('/beallitasok');
+		await settings.getByRole('button', { name: 'Minden adat törlése' }).click();
+		await settings.getByRole('dialog').getByRole('button', { name: 'Igen, mindent törlök' }).click();
+		await expect(settings.getByText('Minden adat törölve.')).toBeVisible();
+
+		await expect(page.getByText('Még nincs heti terved')).toBeVisible();
+		await expect(page.getByTestId('origin')).toHaveCount(0);
+		expect(await page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith('hetikosar.')))).toEqual([]);
+		await expectClean(page, rec);
+		await expectClean(settings, other);
+	});
+});
+
+test.describe('excluded ingredients and tap water', () => {
+	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
+
+	test('an excluded ingredient is not bought or priced unless the user buys it anyway; water is never bought', async ({ page }) => {
+		const water = listLine('viz', 'víz', 4.832, 'l', 'egyeb', true);
+		const rec = await harness(page, { listLines: [...LIST_LINES, water] });
+		await seed(page, seededState({ exclusions: { tags: [], ingredients: ['natur_joghurt'] } }));
+		await page.goto('/lista');
+
+		const excluded = page.getByTestId('excluded-lines');
+		await expect(excluded.getByRole('heading', { level: 2 })).toHaveText('Kizárt alapanyagok');
+		await expect(excluded).toContainText('natúr joghurt');
+		await expect(page.getByText('7 tétel a listán')).toBeVisible();
+		await expect(page.getByRole('checkbox', { name: /^natúr joghurt/ })).toHaveCount(0);
+
+		// The pantry note no longer promises a price for every staple; water has no "nincs otthon" switch.
+		await expect(page.getByText('ha van rá bolti ár', { exact: false })).toBeVisible();
+		await expect(page.getByRole('checkbox', { name: 'Nincs otthon: víz' })).toHaveCount(0);
+		await expect(page.getByRole('checkbox', { name: 'Nincs otthon: napraforgóolaj' })).toBeVisible();
+
+		await page.getByLabel('Budapesti kerület').selectOption('05');
+		await expect(page.getByTestId('rank-row').first()).toBeVisible();
+		expect(rec.quoteBodies.at(-1)?.lines.map((line) => line.ingredient_id)).not.toContain('natur_joghurt');
+		expect(rec.quoteBodies.at(-1)?.lines.map((line) => line.ingredient_id)).not.toContain('viz');
+
+		await excluded.getByRole('button', { name: 'Mégis megveszem: natúr joghurt' }).click();
+		const yoghurt = page.getByRole('checkbox', { name: /^natúr joghurt/ });
+		await expect(yoghurt).toBeFocused();
+		await expect(page.getByText('8 tétel a listán')).toBeVisible();
+		await expect(page.locator('li').filter({ has: yoghurt })).toContainText('kizárt alapanyag');
+		await expect(page.getByTestId('excluded-lines')).toHaveCount(0);
+		await expect.poll(() => rec.quoteBodies.at(-1)?.lines.map((line) => line.ingredient_id)).toContain('natur_joghurt');
+		expect(await storedJson(page, STORAGE_KEY)).toMatchObject({
+			list: { entries: [{ key: '2026-10-11T18:00:00.000Z|this_week', included: ['natur_joghurt'] }] }
+		});
+		await expectAccessible(page, 'list excluded ingredients');
+		await expectClean(page, rec);
+	});
+});
+
+test.describe('the 2-store split', () => {
+	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
+
+	test('names the lines neither store sells and says the total leaves them out', async ({ page }) => {
+		const unavailableAtSplit = (quote: QuoteResponse): QuoteResponse => ({
+			...quote,
+			stores: quote.stores.map((store) =>
+				store.store_id === 'synthetic-lidl-a' || store.store_id === 'synthetic-tesco-a'
+					? {
+							...store,
+							missing: [...store.missing, 'friss_bazsalikom'],
+							lines: store.lines.map((line) =>
+								line.ingredient_id === 'friss_bazsalikom' ? emptyLine(line.ingredient_id, line.qty, line.unit, 'unavailable') : line
+							)
+						}
+					: store
+			)
+		});
+		const rec = await harness(page, { quote: unavailableAtSplit });
+		await seed(page, seededState());
+		await page.goto('/lista');
+		await page.getByLabel('Budapesti kerület').selectOption('05');
+		const split = page.getByTestId('split');
+		await expect(split).toContainText(sp('Két boltban'));
+		await expect(split.getByTestId('split-missing')).toContainText('1 tétel egyik boltban sem kapható:');
+		await expect(split.getByTestId('split-missing')).toContainText('friss bazsalikom');
+		await expect(split).toContainText('A fizetendő összeg ezt a tételt nem tartalmazza.');
+		await expectAccessible(page, 'list split with missing lines');
+		await expectClean(page, rec);
+	});
+});
+
+test.describe('a stored device position', () => {
+	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
+
+	test('shows when it was taken, flags one over a day old, and asks the browser only on a click', async ({ page }) => {
+		const rec = await harness(page);
+		const old = { ...DEVICE_LOCATION, approx: { ...DEVICE_LOCATION.approx, at: '2026-10-10T08:00:00.000Z' } };
+		await seed(page, seededState({ location: old }));
+		await page.goto('/lista');
+
+		await expect(page.getByTestId('origin')).toContainText(
+			`Kiindulási pont: a készülék hozzávetőleges helyzete (${sp('2026. 10. 10. 10:00')} állapot szerint).`
+		);
+		await expect(page.getByTestId('position-stale')).toContainText('több mint egy napja');
+		// The chooser is open so the position can be updated, but the stored one is still used meanwhile.
+		await expect(page.getByRole('heading', { name: 'Honnan keressük a boltokat?' })).toBeVisible();
+		await expect(page.getByTestId('rank-row').first()).toBeVisible();
+		expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
+
+		await page.getByRole('button', { name: 'Kész' }).click();
+		await page.getByRole('button', { name: 'Helyzet frissítése' }).click();
+		await expect(page.getByRole('heading', { name: 'Honnan keressük a boltokat?' })).toBeFocused();
+		expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
+		await expectClean(page, rec);
+	});
+});
 
 // ───────────────────────────── other states ─────────────────────────────
 

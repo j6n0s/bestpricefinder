@@ -4,7 +4,10 @@
  * - every visible control has an accessible name, and nothing uses a positive tabindex (focus order = DOM);
  * - text contrast as rendered: 4.5:1, or 3:1 for large text (WCAG 1.4.3), against the first opaque
  *   background behind it (src/lib/contrast.test.ts checks the colour tokens themselves);
- * - touch targets of at least 44×44 px.
+ * - touch targets of at least 44×44 px;
+ * - no two landmarks with the same role and name (screen-reader landmark lists must tell them apart).
+ * Plus `expectFocusNotObscured`: tabbing through a page, no focused control is hidden behind the fixed
+ * bottom navigation (WCAG 2.4.7 / 2.4.11).
  */
 import { expect, type Page } from '@playwright/test';
 
@@ -129,10 +132,103 @@ export async function expectTouchTargets(page: Page, where: string): Promise<voi
 	expect(small, `${where}: touch targets under 44×44 px`).toEqual([]);
 }
 
-/** All four checks. */
+/** Named landmarks (regions, navigation, forms, …) must have unique role + name pairs; one main. */
+export async function expectUniqueLandmarks(page: Page, where: string): Promise<void> {
+	const duplicates = await page.evaluate(() => {
+		const clean = (text: string | null | undefined): string => (text ?? '').replace(/\s+/g, ' ').trim();
+		const nameOf = (el: Element): string => {
+			const byIds = (el.getAttribute('aria-labelledby') ?? '')
+				.split(/\s+/)
+				.filter(Boolean)
+				.map((id) => clean(document.getElementById(id)?.textContent))
+				.join(' ');
+			return clean(el.getAttribute('aria-label')) || clean(byIds);
+		};
+		const roleOf = (el: Element): string | null => {
+			const explicit = el.getAttribute('role');
+			if (explicit) return ['region', 'navigation', 'complementary', 'search', 'form', 'main'].includes(explicit) ? explicit : null;
+			switch (el.tagName) {
+				case 'MAIN':
+					return 'main';
+				case 'NAV':
+					return 'navigation';
+				case 'ASIDE':
+					return 'complementary';
+				case 'SECTION':
+					return nameOf(el) ? 'region' : null;
+				case 'FORM':
+					return nameOf(el) ? 'form' : null;
+				default:
+					return null;
+			}
+		};
+		const seen = new Map<string, number>();
+		for (const el of document.querySelectorAll('main, nav, aside, section, form, [role]')) {
+			if (!el.checkVisibility()) continue;
+			const role = roleOf(el);
+			if (!role) continue;
+			const key = `${role} "${nameOf(el)}"`;
+			seen.set(key, (seen.get(key) ?? 0) + 1);
+		}
+		return [...seen].filter(([, count]) => count > 1).map(([key, count]) => `${key} ×${count}`);
+	});
+	expect(duplicates, `${where}: landmarks with the same role and name`).toEqual([]);
+}
+
+/** All five checks. */
 export async function expectAccessible(page: Page, where: string): Promise<void> {
 	await expectHeadingOrder(page, where);
 	await expectNamedControls(page, where);
 	await expectTextContrast(page, where);
 	await expectTouchTargets(page, where);
+	await expectUniqueLandmarks(page, where);
+}
+
+/**
+ * Tabs through the page from the top (until focus comes back round, at most `maxStops` stops) and lists every
+ * focused control that the fixed bottom navigation covers: its centre or a corner hits the bar. On wide
+ * screens the bar is not fixed, so nothing can be covered.
+ */
+export async function expectFocusNotObscured(page: Page, where: string, maxStops = 200): Promise<void> {
+	await page.evaluate(() => {
+		(document.activeElement as HTMLElement | null)?.blur?.();
+		for (const el of document.querySelectorAll('[data-focus-seen]')) el.removeAttribute('data-focus-seen');
+		window.scrollTo(0, 0);
+	});
+	const covered: string[] = [];
+	let stops = 0;
+	for (; stops < maxStops; stops += 1) {
+		await page.keyboard.press('Tab');
+		const step = await page.evaluate(() => {
+			const el = document.activeElement as HTMLElement | null;
+			if (!el || el === document.body) return { done: false, hit: null as string | null };
+			if (el.hasAttribute('data-focus-seen')) return { done: true, hit: null };
+			el.setAttribute('data-focus-seen', '');
+			const bar = [...document.querySelectorAll('nav')].find((nav) => getComputedStyle(nav).position === 'fixed');
+			if (!bar || bar.contains(el)) return { done: false, hit: null };
+			const rect = el.getBoundingClientRect();
+			const inset = 2;
+			const points: [number, number][] = [
+				[rect.left + rect.width / 2, rect.top + rect.height / 2],
+				[rect.left + inset, rect.top + inset],
+				[rect.right - inset, rect.top + inset],
+				[rect.left + inset, rect.bottom - inset],
+				[rect.right - inset, rect.bottom - inset]
+			];
+			const hidden = points.some(([x, y]) => {
+				if (x < 0 || y < 0 || x >= window.innerWidth || y >= window.innerHeight) return false;
+				const hit = document.elementFromPoint(x, y);
+				return hit !== null && bar.contains(hit);
+			});
+			const label = `${el.tagName.toLowerCase()} "${(el.getAttribute('aria-label') ?? el.textContent ?? '').replace(/\s+/g, ' ').trim().slice(0, 50)}"`;
+			return { done: false, hit: hidden ? label : null };
+		});
+		if (step.done) break;
+		if (step.hit) covered.push(step.hit);
+	}
+	await page.evaluate(() => {
+		for (const el of document.querySelectorAll('[data-focus-seen]')) el.removeAttribute('data-focus-seen');
+	});
+	expect(stops, `${where}: tabbed through the page`).toBeGreaterThan(1);
+	expect(covered, `${where}: focused controls hidden behind the bottom navigation`).toEqual([]);
 }

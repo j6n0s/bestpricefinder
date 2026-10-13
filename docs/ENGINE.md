@@ -38,7 +38,12 @@ pack_options(ing: Ingredient, store: Store, cat: Catalogue, *, include_loyalty: 
 optimise_packs(qty: Decimal, options: Sequence[PackOption]) -> tuple[LinePick, ...] | None
     # Minimise checkout cost to cover >= qty with whole packs (combinations of different options allowed)
     # or exact weight for variable-weight options. Ties: less leftover, then fewer packs, then product id.
-    # None if options is empty. Must be exact (no greedy) and fast: <= 2 ms typical per call.
+    # None if options is empty. Must be exact (no greedy) and fast: <= 2 ms typical per call. Search (module
+    # docstring of bpf/pricing/packs.py): labels = multisets of the non-best packs, taken in increasing covered
+    # quantity, dropped when dominated within their residue class modulo the best-unit-price pack's size.
+    # Safety cap: one call stops after MAX_SEARCH_STEPS (200,000) steps and returns the best purchase found so
+    # far (always covers qty, never worse than the best-unit-price pack alone); real catalogues stay far below
+    # it (tests: 14 near-proportional options at 25.6 kg in a few ms, exact against a DP reference).
 
 quote_store(lines: Sequence[tuple[str, Decimal]], store: Store, cat: Catalogue, *, include_loyalty: bool = False) -> StoreQuote
     # lines = (ingredient_id, canonical qty); unknown ids raise KeyError (the API validates first).
@@ -49,7 +54,7 @@ quote_store(lines: Sequence[tuple[str, Decimal]], store: Store, cat: Catalogue, 
 rank_stores(quotes: Sequence[StoreQuote]) -> tuple[StoreRank, ...]
     # penalized_total = checkout_total + sum over missing lines of the median checkout_cost of that
     # ingredient across the OTHER quotes that priced it (if no other store has it: no penalty, but
-    # missing_count still counts). Sort by whole-forint penalized_total, then missing_count. Ties share a
+    # missing_count still counts). Sort by whole_forints(penalized_total), then missing_count. Ties share a
     # rank (competition ranking 1, 1, 3) and are never broken by chain or store name (trap 13); store id
     # orders a tie group only for determinism.
 
@@ -80,6 +85,12 @@ ingredient_history(ing: Ingredient, cat: Catalogue,
 nutrition_per_serving(recipe: Recipe, cat: Catalogue) -> NutritionPerServing | None
     # Mass per line in kg (db via piece_weight_kg, l via density or 1.0 for water-like liquids ONLY when
     # density is set); per-100 g rows from cat.nutrition. None when coverage < 0.8 or no data.
+
+whole_forints(amount: Decimal) -> Decimal
+    # The whole-forint amount the user sees: half-up to 0.01 (the API's money precision), then half-up to
+    # 1 Ft (the client's Intl rounding of that JSON number). 504.495 -> 505 (not 504), 504.494 -> 504.
+    # Every "equal in whole forints" tie rule (rank_stores, cheapest chain of a recipe) uses this key, so a
+    # tie group is exactly the amounts that are displayed the same. Independent of the decimal context.
 ```
 
 ## `bpf.planner`
@@ -134,7 +145,7 @@ See docs/DATA.md.
 ## `bpf.api`
 **`Store.has_data` rule (repo):** while no `availability` run (status ok or partial) has finished within the last 8 days (read from the view `api.ingest_latest`, migration 0003), every store is `has_data=True` (per-store rows alone exist only for Budapest stores of chains whose prices vary, so they cannot tell which stores have data). Otherwise `has_data = has_data_date is not None and data_date - has_data_date <= 8 days`. The ingest sets `has_data_date` to the data date for every store that appears in that day's `store_price_day` rows or in a fresh `availableInShops` list.
 
-**Cheapest chain of a recipe (repo, for `cost_per_serving_from` / `cheapest_chains`):** the candidates are the grocery chains whose `priced_share` ≥ 0.9 for the recipe; if no chain reaches 0.9, the chains with the highest `priced_share`. `cost_per_serving_from` is the lowest whole-forint `cost_per_serving` among the candidates. `cheapest_chains` lists every candidate at that cost (a tie group). `priced_share` is the lowest share in that group. A chain that prices only a cheap subset of the lines can therefore never be called the cheapest.
+**Cheapest chain of a recipe (repo, for `cost_per_serving_from` / `cheapest_chains`):** the candidates are the grocery chains whose `priced_share` ≥ 0.9 for the recipe; if no chain reaches 0.9, the chains with the highest `priced_share`. `cost_per_serving_from` is the lowest `cost_per_serving` among the candidates (sent at 2 decimals like all money). `cheapest_chains` lists every candidate whose `cost_per_serving` shows as the same whole forints, by `bpf.pricing.whole_forints` (a tie group); chain ranks compare the same key. `priced_share` is the lowest share in that group. A chain that prices only a cheap subset of the lines can therefore never be called the cheapest.
 
 **KSH rows (repo):** `api.ksh_latest.price` is HUF per ONE `unit` (the loader divides the CSV price by `unit_qty`), so the repo builds `KshPrice(unit_qty=Decimal(1), price=row.price)`.
 

@@ -3,9 +3,15 @@
 	1. the explanation card first, then the device's approximate position or a Budapest district;
 	2. GET /api/stores once (kept in memory) and, ON THE DEVICE, the nearest grocery stores with price data
 	   within the radius (at most 3 per chain, 25 in all); fewer than 2: suggest a wider radius;
-	3. POST /api/quote with the bought lines and the store ids ONLY (never coordinates);
+	3. POST /api/quote with the bought lines and the store ids ONLY (never coordinates; sorted by id, so their
+	   order says nothing about distances);
 	4. the ranking with the scope note and the source, the optional 2-store split, and the list for the chosen
-	   store.
+	   store. Without a connection, the chosen store's last list ($lib/list/offline), dated.
+
+	Screen readers: one status region that always exists (`nearby-status`) says what happened after each step
+	(how many stores, too few stores, the cheapest stores, prices updating), WCAG 4.1.3. The stored device
+	position is shown with its time, and one over a day old is flagged; the browser is never asked again
+	without a click.
 -->
 <script lang="ts">
 	import { tick, untrack } from 'svelte';
@@ -15,17 +21,18 @@
 	import ErrorState from '$lib/components/ErrorState.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { districtById } from '$lib/districts';
-	import { formatDistance } from '$lib/format';
+	import { formatDateTime, formatDistance, formatMoney } from '$lib/format';
 	import { groceryChainSet } from '$lib/geo';
-	import { t, tp } from '$lib/i18n';
+	import { i18n, t, tp } from '$lib/i18n';
 	import { loadStores } from '$lib/list/data';
 	import { buildQuoteRequest } from '$lib/list/lines';
-	import { rankingRows } from '$lib/list/ranking';
+	import { saveLastQuote, savedQuoteFor } from '$lib/list/offline';
+	import { rankingRows, scopeNote } from '$lib/list/ranking';
 	import { chainLabel, chainNames, distanceMap, nearbyCandidates, storeAddress, widerRadius } from '$lib/list/stores';
 	import { validQuote, validStores } from '$lib/list/validate';
-	import { originFromLocation } from '$lib/location';
+	import { isStale, originFromLocation } from '$lib/location';
 	import { getMeta } from '$lib/meta.svelte';
-	import type { StoredLocation } from '$lib/storage';
+	import type { SavedQuote, StoredLocation } from '$lib/storage';
 	import OriginChooser from './OriginChooser.svelte';
 	import SplitSuggestion from './SplitSuggestion.svelte';
 	import StoreList from './StoreList.svelte';
@@ -68,7 +75,11 @@
 	const QUOTE_DEBOUNCE_MS = 300;
 
 	const origin = $derived(originFromLocation(location));
-	let choosing = $state(untrack(() => originFromLocation(location) === null));
+	/** A device position over a day old: shown as such, and the chooser opens so it can be updated. */
+	const stale = $derived(origin?.source === 'device' && isStale(location.approx));
+	let choosing = $state(
+		untrack(() => originFromLocation(location) === null || (location.source === 'device' && isStale(location.approx)))
+	);
 	let originHeading = $state<HTMLHeadingElement>();
 	let originLine = $state<HTMLParagraphElement>();
 	let storeHeading = $state<HTMLHeadingElement>();
@@ -116,11 +127,13 @@
 	const requestBody = $derived(request ? JSON.stringify(request) : null);
 
 	interface QuoteState {
-		status: 'idle' | 'loading' | 'ready' | 'error';
+		status: 'idle' | 'loading' | 'ready' | 'error' | 'offline';
 		quote: QuoteResponse | null;
 		/** The request the shown quote answers (it is outdated while this differs from `requestBody`). */
 		body: string | null;
 		error: unknown;
+		/** status 'offline': the chosen store's last list for this very request. */
+		saved?: SavedQuote | null;
 	}
 	let quoteState = $state<QuoteState>({ status: 'idle', quote: null, body: null, error: null });
 	let quoteAttempt = $state(0);
@@ -147,7 +160,11 @@
 				})
 				.catch((error: unknown) => {
 					if (controller.signal.aborted) return;
-					quoteState = { status: 'error', quote: null, body: null, error };
+					// No connection (in the shop): the chosen store's list as last loaded, with its data date.
+					const saved = savedQuoteFor(body, error);
+					quoteState = saved
+						? { status: 'offline', quote: null, body, error, saved }
+						: { status: 'error', quote: null, body: null, error };
 				});
 		}, QUOTE_DEBOUNCE_MS);
 		return () => {
@@ -163,6 +180,50 @@
 		quote && chosenStoreId ? (quote.stores.find((store) => store.store_id === chosenStoreId) ?? null) : null
 	);
 	const lineNames = $derived(new Map(listLines.map((line) => [line.ingredient_id, line.name_hu])));
+	const savedQuote = $derived(quoteState.status === 'offline' ? (quoteState.saved ?? null) : null);
+
+	// Keep the chosen store's list of the current quote on the device, for the shop without a signal.
+	$effect(() => {
+		const current = quoteState;
+		const store = chosenStore;
+		if (current.status !== 'ready' || !current.quote || current.body === null || current.body !== requestBody || !store) {
+			return;
+		}
+		const body = current.body;
+		const dataDate = current.quote.data_date;
+		untrack(() => saveLastQuote(body, dataDate, $state.snapshot(store)));
+	});
+
+	/** What the status region says: the outcome of the last step, never a price the server did not send. */
+	const statusText = $derived.by(() => {
+		if (origin === null) return '';
+		if (storesState.status === 'idle' || storesState.status === 'loading') return t('list.stores_loading');
+		if (storesState.status === 'error' || !candidates) return '';
+		const parts = [tp('list.candidates', candidates.picks.length, { radius: radiusText })];
+		if (candidates.withoutData > 0) parts.push(tp('list.without_data', candidates.withoutData));
+		if (candidates.tooFew) {
+			parts.push(
+				candidates.picks.length === 0
+					? t('list.no_stores_in_range', { radius: radiusText })
+					: t('list.one_store_in_range', { radius: radiusText })
+			);
+		}
+		if (quoteState.status === 'offline' && savedQuote) {
+			parts.push(t('list.offline_quote', { time: formatDateTime(savedQuote.savedAt) }));
+		} else if (quoteState.status !== 'error' && quote && request) {
+			if (updating) {
+				parts.push(t('list.quote_updating'));
+			} else {
+				// Every store of the first tie group, in the shown order (by distance), never one chain alone.
+				const first = rows.filter((row) => row.rank === rows[0]?.rank);
+				const stores = first.map((row) => `${storeLabel(row.storeId)} (${formatMoney(row.checkoutTotal)})`).join('; ');
+				if (stores) parts.push(t('list.status_cheapest', { note: scopeNote(quote, i18n.lang), stores }));
+			}
+		} else if (quoteState.status !== 'error' && request) {
+			parts.push(t('list.quote_loading'));
+		}
+		return parts.join(' ');
+	});
 	const district = $derived(origin?.source === 'district' ? districtById(origin.districtId) : null);
 	const districtName = $derived(district ? t('core.district_name', { roman: district.roman }) : '');
 
@@ -202,6 +263,7 @@
 
 <section class="nearby" aria-labelledby="{id}-title">
 	<h2 id="{id}-title">{t('list.nearby_title')}</h2>
+	<p class="visually-hidden" role="status" data-testid="nearby-status">{statusText}</p>
 
 	{#if choosing || origin === null}
 		<OriginChooser
@@ -216,11 +278,19 @@
 	{#if origin}
 		<div class="origin">
 			<p tabindex="-1" bind:this={originLine} data-testid="origin">
-				{origin.source === 'device' ? t('list.origin_device') : t('list.origin_district', { district: districtName })}
+				{origin.source === 'device'
+					? t('list.origin_device', { time: formatDateTime(location.approx?.at) })
+					: t('list.origin_district', { district: districtName })}
 				{t('list.radius_info', { radius: radiusText })}
 			</p>
+			{#if stale}
+				<p class="notice notice-warning" data-testid="position-stale">{t('list.position_stale')}</p>
+			{/if}
 			<div class="btn-row">
 				{#if !choosing}
+					{#if origin.source === 'device'}
+						<button type="button" class="btn btn-secondary" onclick={openChooser}>{t('list.refresh_position')}</button>
+					{/if}
 					<button type="button" class="btn btn-secondary" onclick={openChooser}>{t('list.change_origin')}</button>
 				{/if}
 				<a class="btn btn-secondary" href="/beallitasok">{t('list.radius_settings')}</a>
@@ -228,7 +298,7 @@
 		</div>
 
 		{#if storesState.status === 'idle' || storesState.status === 'loading'}
-			<Spinner label={t('list.stores_loading')} showLabel />
+			<Spinner label={t('list.stores_loading')} showLabel announce={false} />
 		{:else if storesState.status === 'error'}
 			<ErrorState error={storesState.error} title={t('list.stores_error_title')} onretry={fetchStores} />
 		{:else if candidates}
@@ -265,14 +335,32 @@
 
 			{#if quoteState.status === 'error'}
 				<ErrorState error={quoteState.error} title={t('list.quote_error_title')} onretry={retryQuote} />
+			{:else if savedQuote}
+				<div class="notice notice-warning offline-copy" data-testid="quote-offline">
+					<p>{t('list.offline_quote', { time: formatDateTime(savedQuote.savedAt) })}</p>
+					<button type="button" class="btn btn-secondary" onclick={retryQuote}>{t('core.retry')}</button>
+				</div>
+				<StoreList
+					store={savedQuote.store}
+					storeInfo={storesById.get(savedQuote.store.store_id)}
+					chainName={chainLabel(savedQuote.store.chain, names)}
+					distanceKm={distances.get(savedQuote.store.store_id) ?? null}
+					{listLines}
+					{checked}
+					{ontogglecheck}
+					dataDate={savedQuote.dataDate}
+					kshPeriod={meta.data?.ksh_period ?? null}
+					kshUrl={meta.data?.attribution.ksh.url ?? null}
+					bind:heading={storeHeading}
+				/>
 			{:else if quote && request}
 				{#if updating}
-					<Spinner label={t('list.quote_updating')} showLabel />
+					<Spinner label={t('list.quote_updating')} showLabel announce={false} />
 				{/if}
 				<div class="results" aria-busy={updating}>
 					<StoreRanking {quote} {rows} stores={storesById} {names} {chosenStoreId} onchoose={chooseStore} />
 					{#if quote.split}
-						<SplitSuggestion split={quote.split} {storeLabel} {lineName} />
+						<SplitSuggestion split={quote.split} stores={quote.stores} {storeLabel} {lineName} />
 					{/if}
 					<Attribution dataDate={quote.data_date} />
 					{#if chosenStore}
@@ -292,7 +380,7 @@
 					{/if}
 				</div>
 			{:else if request}
-				<Spinner label={t('list.quote_loading')} showLabel />
+				<Spinner label={t('list.quote_loading')} showLabel announce={false} />
 			{/if}
 		{/if}
 	{/if}
@@ -323,6 +411,18 @@
 
 	.notice p {
 		margin: 0 0 var(--space-2);
+	}
+
+	.offline-copy {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-2) var(--space-3);
+	}
+
+	.offline-copy p {
+		margin: 0;
 	}
 
 	.results > :global(* + *) {

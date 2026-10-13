@@ -13,7 +13,7 @@ Spec: [../BUILD-BRIEF.md](../BUILD-BRIEF.md). Every component is free, open-sour
  FastAPI (Python 3.14, uvicorn)          ── read-only public data + stateless computation
    ├─ /api/*  JSON (docs/API.md)            no accounts, no cookies, no personal data
    └─ /*      static SPA build (web/build)
-   │  psycopg 3 pool, role bpf_api (SELECT-only, read-only transactions, statement timeout)
+   │  psycopg 3 pool, role bpf_api (SELECT-only; read-only transactions, statement timeout by default)
    ▼ localhost / private unix socket only
  PostgreSQL 18 (dedicated cluster for this app)
    ▲  role bpf_ingest (INSERT/UPDATE on data tables only)
@@ -40,6 +40,7 @@ Spec: [../BUILD-BRIEF.md](../BUILD-BRIEF.md). Every component is free, open-sour
    - `bpf_migrator` (LOGIN, member of the owner) runs migrations only.
    - `bpf_ingest` gets INSERT/UPDATE/SELECT on data tables only. It has no DDL and no DELETE on price history.
    - `bpf_api` gets SELECT on the `api` schema views only, with `default_transaction_read_only = on`, `statement_timeout = 3s` and a connection limit.
+   - The read-only mode and the timeouts are per-role session defaults (`ALTER ROLE … SET`). They catch mistakes in our code, but a session can `SET` them differently, so they are not a security boundary. The boundary is the privileges (no write privilege on any table for `bpf_api`) and the connection limit.
    - `PUBLIC` has no CONNECT, no CREATE and no default schema access.
 4. **Secrets:** random 32-byte passwords are generated at init and stored in `.env.local` (chmod 600, git-ignored). They are never in code or logs.
 5. **Integrity:** price history is append-only (no UPDATE or DELETE grants for app roles), with CHECK constraints on units and prices and foreign keys everywhere.

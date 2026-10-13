@@ -5,6 +5,7 @@
  */
 import type { IngredientOut, RecipeTag } from '../api/types';
 import type { PlainKey } from '../i18n/messages';
+import { canBeBought } from './lines';
 
 /** Recipe tags that make sense to exclude, in display order (descriptive tags only, no health wording). */
 export const EXCLUDABLE_TAGS = [
@@ -71,9 +72,14 @@ export function uniqueIngredients<T extends Pick<IngredientOut, 'id'>>(items: re
 	});
 }
 
-/** The pantry staples ("valószínűleg otthon van"), each once, sorted by name. */
+/**
+ * The pantry staples ("valószínűleg otthon van") that can be marked "nincs otthon", each once, sorted by
+ * name. Tap water is left out: it is never bought (`NEVER_BOUGHT` in ./lines).
+ */
 export function pantryIngredients(ingredients: readonly IngredientOut[]): IngredientOut[] {
-	return byName(uniqueIngredients(ingredients.filter((ingredient) => ingredient.pantry === true)));
+	return byName(
+		uniqueIngredients(ingredients.filter((ingredient) => ingredient.pantry === true && canBeBought(ingredient.id)))
+	);
 }
 
 export const SEARCH_MIN_CHARS = 2;

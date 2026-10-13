@@ -6,7 +6,7 @@ API at `/api` (docs/ARCHITECTURE.md, docs/API.md "Static hosting").
 
 Pinned toolchain (exact versions, `package-lock.json` committed): @sveltejs/kit 2.70.3, svelte 5.57.2,
 @sveltejs/adapter-static 3.0.10, @sveltejs/vite-plugin-svelte 6.2.4, vite 7.3.7, typescript 5.9.3,
-svelte-check 4.7.6, vitest 3.2.7, @playwright/test 1.56.1 (matches the preinstalled Chromium build 1194),
+svelte-check 4.7.6, vitest 4.1.11, @playwright/test 1.56.1 (matches the preinstalled Chromium build 1194),
 @types/node 22.20.4, openapi-typescript 7.13.0. Node ≥ 22.12.
 
 ## Commands
@@ -87,7 +87,9 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list), a1
 | Kamra, kizárások (settings) | `src/routes/beallitasok` | `src/lib/components/settings/` (PantrySettings, ExclusionSettings) | `src/lib/list/settings.ts` | `tests/e2e/list.spec.ts`, `smoke.spec.ts` |
 
 - **Plan:** POST /api/plan/suggest makes the plan, POST /api/plan/check re-checks it after every edit (with the
-  plan's own `no_repeat_days`). The rule results are shown as neutral facts; warnings are mapped from the
+  plan's own `no_repeat_days`). "Terv készítése" asks with a fresh random seed (`freshSeed`, never the current
+  plan's): the planner is deterministic and gets no date, so a fixed seed would repeat the same week every
+  week. "Új javaslat" asks with the next seed; the seed is stored with the plan (retry, undo). The rule results are shown as neutral facts; warnings are mapped from the
   server's codes. The plan is `StoredState.plan`.
 - **Recipes:** the list and the recipe detail. The recipe title is the detail page's `h1` (the small "Recept"
   label above it is a `p`; while loading or on an error the `h1` is "Recept"), every section an `h2`. Filters
@@ -98,18 +100,38 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list), a1
   "részleges ár", with a note. `priced_share < 1` always comes with a caveat (`compact` = short form in the
   plan cards and the meal picker).
 - **List:** the plan's range ("Ez a hét" / "Jövő hét" / "Az egész terv") -> POST /api/list; pantry staples are
-  "valószínűleg otthon van" unless marked "nincs otthon"; lines can be removed per list; then "Hol a
-  legolcsóbb a közelben?": stores chosen ON THE DEVICE, POST /api/quote with store ids only, the ranking
-  (competition ranks, a tie ordered by distance, never by name), the optional 2-store split and the list for
-  the chosen store. `DISCOUNTED` is the plain text "kedvezményes ár (GVH-jelölés)", never a deal badge.
+  "valószínűleg otthon van" unless marked "nincs otthon" (tap water never: `NEVER_BOUGHT`); ingredients
+  excluded in the settings are kept off the list and out of the prices (an optional recipe line or a
+  hand-picked recipe can bring them back) unless the user chooses "mégis megveszem" for that list; ticks,
+  removed lines, "mégis megveszem" and the chosen store are kept per list (plan + range), so a new plan or
+  range starts with no ticks; then "Hol a legolcsóbb a közelben?": stores chosen ON THE DEVICE, POST
+  /api/quote with store ids only (sorted by id: their order must not reveal the distances), the ranking
+  (competition ranks, a tie ordered by distance, never by name), the optional 2-store split (naming the lines
+  neither store sells, which its total leaves out) and the list for the chosen store (with a note when
+  weighed lines are fractions of a forint, so the rounded lines need not add up to the exact total).
+  `DISCOUNTED` is the plain text "kedvezményes ár (GVH-jelölés)", never a deal badge. The device position is
+  shown with its time; one over a day old is flagged and the chooser opens (the browser is asked only on a
+  click). A status region (`nearby-status`) announces the store count, too few stores, the cheapest stores and
+  price updates.
+- **Offline in the shop:** the last list POST /api/list returned and the chosen store's part of the last
+  quote are kept in the storage document (`lastList`, `lastQuote`, `$lib/list/offline`). When a request fails
+  for lack of a connection and the request body is the same, the page shows that copy, dated ("a legutóbb
+  betöltött listát látod"), with every price's GVH date. Ticks keep working. They are personal data: never in
+  the service worker's caches, and wiped by "Minden adat törlése".
+- **Other tabs:** pages subscribe to `onExternalChange` (the `storage` event) and reload the document when
+  another tab changes or deletes it; every change is built from a fresh `load()`, so a stale tab never writes
+  deleted data (a revoked position, cleared data) back.
 
 ### Storage (one key)
 
 Everything personal is ONE versioned JSON document under `hetikosar.state` (`$lib/storage`, `StoredState`):
 `language`, `people`, `slots`, `radiusKm`, `plan`, `pantry.notAtHome`, `exclusions` (tags, ingredients),
-`location` (consent, source, district, rounded position), `checkedItems`, and `list` (`range`, and per list
-`entries[]` of `{key, removed, storeId}`: key ≤ 80 printable ASCII characters, ≤ 12 lists, ≤ 200 removed ids
-per list, ids checked against the API's id patterns). Every field is validated on every read and write.
+`location` (consent, source, district, rounded position with its time), `list` (`range`, and per list
+`entries[]` of `{key, checked, removed, included, storeId}`: key ≤ 80 printable ASCII characters, ≤ 12 lists,
+≤ 500 ticked and ≤ 200 removed ids per list, ids checked against the API's id patterns), and the offline
+copies `lastList` (`{body, savedAt, lines}`, ≤ 500 lines) and `lastQuote` (`{body, savedAt, dataDate, store}`,
+the chosen store only). Every field is validated on every read and write. The global `checkedItems` of
+earlier builds is dropped on read (ticks belong to one list; no version bump needed).
 There is no other key: the separate `hetikosar.list` document of earlier builds is retired (it never
 shipped; `clearAll` removes any `hetikosar.` key). "Minden adat törlése" deletes the stored copy AND resets
 everything held in memory (the storage module's session copy, the language, the recipe filters); when the
@@ -139,7 +161,9 @@ with every `/api` call answered by synthetic data: `smoke.spec.ts` (every route 
 texts, CSP, settings, location consent, offline), `plan.spec.ts`, `recipes.spec.ts`, `list.spec.ts`. Every
 route and the main feature states run `tests/e2e/a11y.ts`: heading order (one `h1`, no skipped level),
 accessible names and no positive `tabindex`, rendered text contrast (4.5:1, 3:1 for large text; light and
-dark), and 44×44 px touch targets. `src/lib/i18n/usage.test.ts` fails on a dictionary key that nothing uses.
+dark), 44×44 px touch targets, and unique landmark names. `smoke.spec.ts` also tabs through every route at
+320, 360 and 640×400 (200% zoom) and fails when the fixed bottom bar covers a focused control
+(`expectFocusNotObscured`), and checks the tab labels with WCAG 1.4.12 text spacing and 200% text. `src/lib/i18n/usage.test.ts` fails on a dictionary key that nothing uses.
 
 ## Rules for anyone extending the app
 
@@ -173,6 +197,10 @@ dark), and 44×44 px touch targets. `src/lib/i18n/usage.test.ts` fails on a dict
   external requests or fonts. SvelteKit's route announcer has an inline style in its generated root
   component; `vite.config.ts` (`cspSafeAnnouncer`) swaps it for the `.sveltekit-announcer` class and fails
   the build if a SvelteKit upgrade changes that markup.
+- **Language of parts:** recipe titles, summaries, steps, amounts, ingredient and product names come from the
+  Hungarian-only content: render them with `lang="hu"` (WCAG 3.1.2), never inside a translated `t()` string.
+- **Focus:** a control that disables or removes itself when pressed must move focus somewhere sensible (or use
+  `aria-disabled` plus a guard instead of `disabled`); focus must never drop to `<body>`.
 - **Accessibility:** one `h1` per page and no skipped heading level, touch targets ≥ 44 px (`.btn`, `.choice`,
   `.input`, `.select` already are), visible focus (global `:focus-visible`), labels for every control, no
   positive `tabindex`, modal dialogs as native `<dialog>` + `showModal()` (Escape closes, focus returns to the
@@ -189,7 +217,7 @@ deleted on activation.
 | Build output, static files, `/` (the app shell) | precached on install; cache first |
 | `GET /api/meta`, `GET /api/health` | network first, cached copy when offline (`no-store` answers are not stored) |
 | `GET /api/stores`, `/api/ingredients`, `/api/recipes*` | stale-while-revalidate |
-| Other `/api` requests, every `POST` | network only, never cached |
+| Other `/api` requests, every `POST` | network only, never cached (the offline list lives in `$lib/storage`) |
 | Navigations | network first, the cached app shell when offline |
 
 The caches hold public data only.
@@ -197,10 +225,13 @@ The caches hold public data only.
 ## Known issues
 
 - `npm audit --omit=dev` reports 0 vulnerabilities (the app has no runtime dependency: everything is compiled
-  into `build/`). `npm audit` reports advisories in development-only packages, none with a non-major fix:
-  `vitest` / `@vitest/mocker` / `tinypool` (the test runner; fixed only from vitest 4.1.11, and 3.2.7 is the
-  last 3.x) and `cookie` (via `@sveltejs/kit`'s server runtime, which this static SPA does not ship; fixed only
-  in SvelteKit 3 / adapter-static 4, and kit 2.70.3 is the last 2.x). `openapi-typescript` adds none.
+  into `build/`), and `npm audit --audit-level=moderate` passes. `npm audit` still reports 3 low advisories,
+  all for `cookie` (via `@sveltejs/kit`'s server runtime, which this static SPA does not ship; fixed only in
+  SvelteKit 3 / adapter-static 4, and kit 2.70.3 is the last 2.x): accepted as development-only. vitest is
+  pinned to 4.1.11, the first release outside the `tinypool` / `@vitest/mocker` advisories (it no longer uses
+  tinypool). `openapi-typescript` adds none. npm 10.9.4 crashes in `npm install` while walking vite 7's
+  optional peer chain (`Cannot read properties of null (reading 'edgesOut')`): regenerate the lockfile with
+  `npm install --legacy-peer-deps`; the result installs with a plain `npm ci`.
 - `docs/openapi.json` still describes request quantities (`QtyLineIn.qty`, `ListItemIn.servings`) as
   `number | string`, because the server types them as Decimal, although contract v1.2 rejects strings.
   `src/lib/api/types.ts` narrows them to `number` (checked to stay assignable to the generated type), and the

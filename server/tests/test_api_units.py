@@ -532,14 +532,23 @@ def scope(peer: str | None, *xff: str) -> dict[str, Any]:
 def test_client_key() -> None:
     assert client_key(scope("198.51.100.7"), trust_proxy_headers=False) == "198.51.100.7"
     assert client_key(scope("198.51.100.7", "203.0.113.1"), trust_proxy_headers=False) == "198.51.100.7"
+    assert client_key(scope("127.0.0.1", "203.0.113.1"), trust_proxy_headers=False) == "127.0.0.1"
+    # trusted: the right-most entry, but only from a loopback peer (the local reverse proxy)
+    assert client_key(scope("127.0.0.1", "1.1.1.1, 203.0.113.1"), trust_proxy_headers=True) == "203.0.113.1"
     assert (
-        client_key(scope("198.51.100.7", "1.1.1.1, 203.0.113.1"), trust_proxy_headers=True) == "203.0.113.1"
+        client_key(scope("127.0.0.1", "1.1.1.1", " 203.0.113.2 "), trust_proxy_headers=True) == "203.0.113.2"
     )
-    assert (
-        client_key(scope("198.51.100.7", "1.1.1.1", " 203.0.113.2 "), trust_proxy_headers=True)
-        == "203.0.113.2"
-    )
-    assert client_key(scope("198.51.100.7", "1.1.1.1, bogus"), trust_proxy_headers=True) == "198.51.100.7"
+    assert client_key(scope("127.0.0.1", "1.1.1.1, bogus"), trust_proxy_headers=True) == "127.0.0.1"
+    assert client_key(scope("127.8.9.10", "203.0.113.4"), trust_proxy_headers=True) == "203.0.113.4"
+    assert client_key(scope("::1", "203.0.113.5"), trust_proxy_headers=True) == "203.0.113.5"
+    assert client_key(scope("::ffff:127.0.0.1", "203.0.113.6"), trust_proxy_headers=True) == "203.0.113.6"
+    assert client_key(scope("127.0.0.1", "2001:db8:5::9"), trust_proxy_headers=True) == "2001:db8:5::/64"
+    # any other peer's header is ignored, even when proxy headers are trusted
+    assert client_key(scope("198.51.100.7", "203.0.113.1"), trust_proxy_headers=True) == "198.51.100.7"
+    assert client_key(scope("10.0.0.2", "1.1.1.1, 203.0.113.1"), trust_proxy_headers=True) == "10.0.0.2"
+    assert client_key(scope("::ffff:198.51.100.8", "203.0.113.1"), trust_proxy_headers=True) == "198.51.100.8"
+    assert client_key(scope(None, "203.0.113.1"), trust_proxy_headers=True) == "unknown"
+    assert client_key(scope("testclient", "203.0.113.1"), trust_proxy_headers=True) == "testclient"
     assert client_key(scope("2001:db8::1"), trust_proxy_headers=False) == "2001:db8::/64"
     assert client_key(scope("::ffff:203.0.113.3"), trust_proxy_headers=False) == "203.0.113.3"
     assert client_key(scope(None), trust_proxy_headers=False) == "unknown"

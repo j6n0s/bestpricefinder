@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
+	POSITION_STALE_MS,
+	isStale,
 	GEO_MAX_AGE_MS,
 	GEO_TIMEOUT_MS,
 	declinedLocation,
@@ -142,5 +144,26 @@ describe('stored location transitions', () => {
 		expect(
 			originFromLocation({ consent: 'declined', source: 'device', districtId: null, approx: { lat: 47.5, lon: 19, at: '' } })
 		).toBeNull();
+	});
+});
+
+describe('isStale (a stored device position)', () => {
+	const now = new Date('2026-10-13T08:00:00.000Z');
+	const at = (ms: number) => ({ at: new Date(now.getTime() - ms).toISOString() });
+
+	it('is fresh up to 24 hours, stale after', () => {
+		expect(POSITION_STALE_MS).toBe(86_400_000);
+		expect(isStale(at(0), now)).toBe(false);
+		expect(isStale(at(POSITION_STALE_MS), now)).toBe(false);
+		expect(isStale(at(POSITION_STALE_MS + 1), now)).toBe(true);
+		expect(isStale(at(3 * POSITION_STALE_MS), now)).toBe(true);
+	});
+
+	it('treats a missing or invalid time as stale, a future time as fresh, no position as not stale', () => {
+		expect(isStale({ at: 'yesterday' }, now)).toBe(true);
+		expect(isStale({ at: '' }, now)).toBe(true);
+		expect(isStale(at(-60_000), now)).toBe(false);
+		expect(isStale(null, now)).toBe(false);
+		expect(isStale(undefined, now)).toBe(false);
 	});
 });

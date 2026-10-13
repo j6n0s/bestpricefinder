@@ -14,15 +14,16 @@
 
 	interface Props {
 		onchange?: (location: StoredLocation) => void;
+		/** The "Helyzet használata…" button, bound by a page that moves focus to it. */
+		openButton?: HTMLButtonElement;
 	}
 
-	let { onchange }: Props = $props();
+	let { onchange, openButton = $bindable() }: Props = $props();
 	const id = $props.id();
 
 	type Phase = 'closed' | 'explain' | 'pending' | 'done' | 'failed';
 	let phase = $state<Phase>('closed');
 	let failure = $state<LocateFailure | null>(null);
-	let openButton = $state<HTMLButtonElement>();
 	let heading = $state<HTMLHeadingElement>();
 
 	const FAILURE_KEYS: Record<LocateFailure, PlainKey> = {

@@ -14,7 +14,7 @@
 	import { toggleId } from '$lib/list/lines';
 	import { EXCLUDABLE_TAGS, excludableTagKey, otherExcludedTags, searchIngredients } from '$lib/list/settings';
 	import { validIngredients } from '$lib/list/validate';
-	import { isPersistent, load, update, type StoredState } from '$lib/storage';
+	import { isPersistent, load, onExternalChange, update, type StoredState } from '$lib/storage';
 
 	const id = $props.id();
 
@@ -41,7 +41,14 @@
 			});
 	}
 
-	onMount(fetchIngredients);
+	onMount(() => {
+		fetchIngredients();
+		// Another tab changed or deleted the data: show what is stored now.
+		return onExternalChange((next) => {
+			settings = next;
+			persistent = isPersistent();
+		});
+	});
 
 	const tags = $derived(new Set<string>(settings.exclusions.tags));
 	const otherTags = $derived(otherExcludedTags(settings.exclusions.tags));
@@ -119,7 +126,7 @@
 			<ul class="excluded" bind:this={excludedList}>
 				{#each excludedIds as ingredientId (ingredientId)}
 					<li>
-						<span>{nameOf(ingredientId)}</span>
+						<span lang={names.has(ingredientId) ? 'hu' : undefined}>{nameOf(ingredientId)}</span>
 						<button
 							type="button"
 							class="btn btn-secondary"
@@ -162,7 +169,7 @@
 				<ul class="results">
 					{#each results as ingredient (ingredient.id)}
 						<li>
-							<span>{ingredient.name_hu}</span>
+							<span lang="hu">{ingredient.name_hu}</span>
 							<button
 								type="button"
 								class="btn btn-secondary"

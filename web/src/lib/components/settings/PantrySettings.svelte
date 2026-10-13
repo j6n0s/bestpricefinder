@@ -13,7 +13,7 @@
 	import { toggleId } from '$lib/list/lines';
 	import { pantryIngredients } from '$lib/list/settings';
 	import { validIngredients } from '$lib/list/validate';
-	import { isPersistent, load, update, type StoredState } from '$lib/storage';
+	import { isPersistent, load, onExternalChange, update, type StoredState } from '$lib/storage';
 
 	let settings = $state<StoredState>(load());
 	let persistent = $state(isPersistent());
@@ -35,7 +35,14 @@
 			});
 	}
 
-	onMount(fetchIngredients);
+	onMount(() => {
+		fetchIngredients();
+		// Another tab changed or deleted the data: show what is stored now.
+		return onExternalChange((next) => {
+			settings = next;
+			persistent = isPersistent();
+		});
+	});
 
 	const notAtHome = $derived(new Set(settings.pantry.notAtHome));
 
@@ -72,7 +79,7 @@
 							checked={!notAtHome.has(ingredient.id)}
 							onchange={(event) => setAtHome(ingredient.id, event.currentTarget.checked)}
 						/>
-						<span>{ingredient.name_hu}</span>
+						<span lang="hu">{ingredient.name_hu}</span>
 					</label>
 				{/each}
 			</div>

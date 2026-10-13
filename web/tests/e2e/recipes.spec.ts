@@ -290,9 +290,15 @@ for (const viewport of VIEWPORTS) {
 			await search.fill('lencse');
 			await expect(page.getByText('Nincs a szűrőknek megfelelő recept.')).toBeVisible();
 			await expect(page.getByTestId('recipe-count')).toHaveText('0 recept');
+			// Both "Szűrők törlése" buttons remove themselves: focus continues at the search field.
 			await page.getByRole('button', { name: 'Szűrők törlése' }).first().click();
 			await expect(page.getByTestId('recipe-count')).toHaveText('5 recept');
 			await expect(search).toHaveValue('');
+			await expect(search).toBeFocused();
+			await search.fill('nincs ilyen recept');
+			await page.getByRole('button', { name: 'Szűrők törlése' }).last().click();
+			await expect(page.getByTestId('recipe-count')).toHaveText('5 recept');
+			await expect(search).toBeFocused();
 
 			// The filters live in memory only: "back" from a recipe shows the same list, the URL stays clean.
 			await page.getByLabel('Étkezés').selectOption({ label: 'Ebéd' });
@@ -593,6 +599,10 @@ test.describe('English at 320 px', () => {
 		await expect(card(page, LENCSE.title)).toContainText('the price covers 94% of the ingredients');
 		await expect(card(page, CSIRKE.title)).toContainText('no price');
 		await expect(card(page, TUROS.title)).toContainText('untested recipe');
+		const langOf = (locator: ReturnType<Page['locator']>) => locator.evaluate((el) => el.closest('[lang]')?.getAttribute('lang'));
+		// Hungarian content inside the English page is marked as Hungarian (WCAG 3.1.2), the UI as English.
+		expect(await langOf(page.getByRole('link', { name: LENCSE.title }))).toBe('hu');
+		expect(await langOf(page.getByRole('heading', { level: 1 }))).toBe('en');
 		await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(`Source: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`);
 		await expectNoHorizontalScroll(page);
 		await expectTouchTargets(page);
@@ -601,6 +611,19 @@ test.describe('English at 320 px', () => {
 		await page.goto(`/receptek/${HARCSA.id}`);
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText(HARCSA.title);
 		await expect(page.locator('main .intro .kind')).toHaveText('Recipe');
+		expect(await langOf(page.getByRole('heading', { level: 1 }))).toBe('hu');
+		expect(await langOf(page.locator('main .intro .kind'))).toBe('en');
+		const steps = page.locator('ol.steps li');
+		expect(await steps.count()).toBeGreaterThan(0);
+		expect(await steps.evaluateAll((items) => items.map((li) => li.closest('[lang]')?.getAttribute('lang')))).toEqual(
+			Array.from({ length: await steps.count() }, () => 'hu')
+		);
+		const quantities = page.getByTestId('ingredient-qty');
+		expect(await quantities.evaluateAll((items) => items.map((el) => el.closest('[lang]')?.getAttribute('lang')))).toEqual(
+			Array.from({ length: await quantities.count() }, () => 'hu')
+		);
+		expect(await langOf(page.locator('ul.ingredients .name').first())).toBe('hu');
+		expect(await langOf(page.getByRole('heading', { level: 2, name: 'Method' }))).toBe('en');
 		await expect(page.getByTestId('chain-cost-auchan').getByRole('rowheader')).toHaveText('Auchan partial price');
 		await expect(page.getByRole('table').first().locator('caption')).toHaveText('Chain-typical price per serving, from lowest to highest');
 		await expect(page.getByTestId('chain-cost-aldi').getByRole('rowheader')).toHaveText('1. Aldi tie');

@@ -47,6 +47,19 @@ export function planLengthDays(length: PlanLength, startDate: string): number {
 	return Math.min(PLAN_MAX_DAYS, daysToMonthEnd(startDate));
 }
 
+/**
+ * The seed of a NEW plan ("Terv készítése"): a random integer in the API's 0…2^31−1 range. The planner is
+ * deterministic for the same input, and the request carries no date, so a constant seed would give the same
+ * week every week. A different seed than the current plan's (`avoid`) is guaranteed, so a new plan is never
+ * silently the same as the one it replaces. `random` is injectable for tests.
+ */
+export function freshSeed(avoid: number | null = null, random: () => number = Math.random): number {
+	const value = random();
+	const unit = Number.isFinite(value) ? Math.min(Math.max(value, 0), 1 - Number.EPSILON) : 0;
+	const seed = Math.floor(unit * (SEED_MAX + 1));
+	return seed === avoid ? nextSeed(seed) : seed;
+}
+
 /** The seed of "Új javaslat": one more, wrapping inside the API's 0…2^31−1 range. */
 export function nextSeed(seed: number): number {
 	if (!Number.isInteger(seed) || seed < 0 || seed >= SEED_MAX) return 0;

@@ -43,6 +43,7 @@ ENGINE_FUNCTIONS = {
         " -> 'dict[str, tuple[tuple[date, Decimal], ...]]'"
     ),
     "nutrition_per_serving": "(recipe: 'Recipe', cat: 'Catalogue') -> 'NutritionPerServing | None'",
+    "whole_forints": "(amount: 'Decimal') -> 'Decimal'",
 }
 
 

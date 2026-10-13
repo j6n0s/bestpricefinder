@@ -2,7 +2,10 @@
 	The list for the chosen store, grouped by shop section (docs/DATA.md order): what to pick up, the packs and
 	what it costs there. The total is the server's checkout total; KSH estimates are labelled and never added
 	to it. Store prices and chain-typical prices are labelled apart (BUILD-BRIEF §8.6), and the GVH source with
-	its data date and the disclaimer close the view (§8.1–8.2).
+	its data date and the disclaimer close the view (§8.1–8.2). When some line costs a fraction of a forint (sold
+	by weight), a note says that the lines are shown rounded and the total is the exact sum.
+	The shop sections are plain groups under h4 headings, not landmarks: the shopping list above already has a
+	named region per section, and two regions with the same name would be indistinguishable.
 -->
 <script lang="ts">
 	import type { ListLineOut, StoreOut, StoreQuoteOut } from '$lib/api/types';
@@ -11,7 +14,7 @@
 	import { formatDistance, formatMoney } from '$lib/format';
 	import { t, tp } from '$lib/i18n';
 	import { groupLabelKey } from '$lib/list/groups';
-	import { hasKshEstimate, storeGroups } from '$lib/list/storeview';
+	import { hasFractionalCosts, hasKshEstimate, storeGroups } from '$lib/list/storeview';
 	import { storeAddress } from '$lib/list/stores';
 	import StoreLine from './StoreLine.svelte';
 
@@ -48,6 +51,7 @@
 	const groups = $derived(storeGroups(store, listLines));
 	const address = $derived(storeAddress(storeInfo));
 	const ksh = $derived(hasKshEstimate(store));
+	const fractional = $derived(hasFractionalCosts(store));
 </script>
 
 <section class="store-list" aria-labelledby="{id}-title" data-testid="store-list">
@@ -58,6 +62,9 @@
 		</p>
 	{/if}
 	<p class="total" data-testid="store-total">{t('list.store_total', { total: formatMoney(store.checkout_total) })}</p>
+	{#if fractional}
+		<p class="small muted" data-testid="store-total-rounding">{t('list.store_total_rounding')}</p>
+	{/if}
 	{#if store.missing.length > 0}
 		<p><Badge tone="warning">{tp('list.missing', store.missing.length)}</Badge></p>
 	{/if}
@@ -70,8 +77,8 @@
 	<p class="small muted">{t('list.scope_legend')}</p>
 
 	{#each groups as group (group.group)}
-		<section class="group" aria-labelledby="{id}-{group.group}">
-			<h4 id="{id}-{group.group}">{t(groupLabelKey(group.group))}</h4>
+		<div class="group">
+			<h4>{t(groupLabelKey(group.group))}</h4>
 			<ul class="lines">
 				{#each group.lines as view, index (index)}
 					<StoreLine
@@ -82,7 +89,7 @@
 					/>
 				{/each}
 			</ul>
-		</section>
+		</div>
 	{/each}
 
 	<Attribution {dataDate} {ksh} {kshPeriod} {kshUrl} />

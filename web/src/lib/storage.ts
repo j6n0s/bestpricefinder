@@ -3,9 +3,11 @@
  *
  * Nothing in here is ever sent to the server as a whole. Plan, household size, slots, radius, pantry,
  * exclusions (diet preferences are health data, GDPR Art. 9), location consent, the chosen district or the
- * approximate location, checked list items, the shopping-list choices (range, removed lines, chosen store)
- * and the UI language all live under ONE key (`hetikosar.state`), as one versioned JSON document. There is no
- * other key: the list choices that used to live under `hetikosar.list` are part of this document now.
+ * approximate location, the shopping-list choices (range, and per list the ticks, removed lines, excluded
+ * lines bought anyway and the chosen store), the last loaded list and the chosen store's last quote (so the
+ * list still works offline in the shop) and the UI language all live under ONE key (`hetikosar.state`), as
+ * one versioned JSON document. There is no other key: the list choices that used to live under
+ * `hetikosar.list` are part of this document now.
  *
  * Robustness rules:
  * - Every localStorage access is wrapped in try/catch: private browsing, disabled site data, a full quota
@@ -15,11 +17,24 @@
  * - An unknown `version` (newer, older without a migration, or missing) resets everything to the defaults.
  * - "Minden adat törlése" (`clearAll`) removes every `hetikosar.` key AND resets the in-memory copy, so
  *   nothing of the old data is shown again in this session, even when the browser refuses storage.
+ * - Another tab can change or delete the document at any time: pages subscribe with `onExternalChange` and
+ *   build every change from a fresh `load()`, never from a copy read when the page opened, so a stale tab
+ *   cannot write deleted data (a revoked position, a cleared plan) back.
  *
  * Schema changes: adding a field with a default needs no version bump (sanitising fills it in). Changing the
  * meaning or shape of a field needs `STORAGE_VERSION + 1` and a migration step in `MIGRATIONS`.
  */
-import { ID_PATTERNS, RECIPE_TAGS, SLOTS, type PlanDayIO, type RecipeTag, type Slot } from './api/types';
+import {
+	ID_PATTERNS,
+	RECIPE_TAGS,
+	SLOTS,
+	type ListLineOut,
+	type PlanDayIO,
+	type RecipeTag,
+	type Slot,
+	type StoreQuoteOut
+} from './api/types';
+import { validListLines, validStoreQuote } from './list/validate';
 
 export const STORAGE_KEY = 'hetikosar.state';
 /** Every key this app owns starts with this prefix (clearAll removes them all). */
@@ -42,11 +57,16 @@ const MAX_LIST = 200;
 export const MAX_LIST_ENTRIES = 12;
 /** Lines removed by hand, per list. */
 export const MAX_REMOVED_LINES = 200;
+/** Ticked lines, per list. */
+export const MAX_CHECKED_LINES = 500;
+/** Lines of the saved last list (offline copy). */
+export const MAX_SAVED_LIST_LINES = 500;
+/** The request body a saved answer belongs to (a JSON string). */
+const MAX_SAVED_BODY_CHARS = 65_536;
 /** A list key (`listKey(plan, range)`): 1–80 printable ASCII characters. */
 const LIST_KEY_PATTERN = /^[\x20-\x7e]{1,80}$/;
 const MAX_EXCLUDED_TAGS = 20;
 const MAX_EXCLUDED_INGREDIENTS = 50;
-const MAX_CHECKED = 500;
 const MAX_PLAN_DAYS = 31;
 const DISTRICT_ID = /^(0[1-9]|1\d|2[0-3])$/;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -63,8 +83,15 @@ export function isListRange(value: unknown): value is ListRange {
 export interface ListEntry {
 	/** `listKey(plan, range)` from src/lib/list/request.ts. */
 	key: string;
+	/**
+	 * Ingredient ids ticked off on THIS list. Per list, so a new plan (a new `createdAt`) or another range
+	 * starts with no ticks, while undoing "Terv törlése" brings the old plan's ticks back.
+	 */
+	checked: string[];
 	/** Ingredient ids removed from this list by hand. */
 	removed: string[];
+	/** Excluded ingredients (StoredState.exclusions) the user chose to buy anyway on this list. */
+	included: string[];
 	/** The store chosen for this list, or null. */
 	storeId: string | null;
 }
@@ -74,6 +101,25 @@ export interface StoredList {
 	range: ListRange;
 	/** The most recently used lists first, at most MAX_LIST_ENTRIES. */
 	entries: ListEntry[];
+}
+
+/** The last list POST /api/list returned, kept so the list still opens without a connection. */
+export interface SavedList {
+	/** The request body (JSON) the lines answer; the copy is used only for exactly this request. */
+	body: string;
+	/** When it was loaded (ISO date-time). */
+	savedAt: string;
+	lines: ListLineOut[];
+}
+
+/** The chosen store's part of the last POST /api/quote answer, for the store list without a connection. */
+export interface SavedQuote {
+	/** The request body (JSON) the quote answers. */
+	body: string;
+	savedAt: string;
+	/** The GVH data date of the prices (BUILD-BRIEF §8: a source and a date on every price). */
+	dataDate: string;
+	store: StoreQuoteOut;
 }
 
 export interface StoredPlan {
@@ -128,10 +174,12 @@ export interface StoredState {
 		ingredients: string[];
 	};
 	location: StoredLocation;
-	/** Ingredient ids ticked off on the shopping list. */
-	checkedItems: string[];
-	/** Shopping-list choices: the range, and per list the removed lines and the chosen store. */
+	/** Shopping-list choices: the range, and per list the ticks, removed lines and the chosen store. */
 	list: StoredList;
+	/** The last loaded shopping list (offline copy), or null. */
+	lastList: SavedList | null;
+	/** The chosen store's last quote (offline copy), or null. */
+	lastQuote: SavedQuote | null;
 }
 
 export function defaultState(): StoredState {
@@ -145,8 +193,9 @@ export function defaultState(): StoredState {
 		pantry: { notAtHome: [] },
 		exclusions: { tags: [], ingredients: [] },
 		location: { consent: 'unset', source: 'none', districtId: null, approx: null },
-		checkedItems: [],
-		list: { range: 'this_week', entries: [] }
+		list: { range: 'this_week', entries: [] },
+		lastList: null,
+		lastQuote: null
 	};
 }
 
@@ -243,13 +292,38 @@ function sanitisePantry(value: unknown): StoredState['pantry'] {
 
 function sanitiseListEntry(value: unknown): ListEntry | null {
 	if (!isRecord(value)) return null;
-	const { key, removed, storeId } = value;
+	const { key, checked, removed, included, storeId } = value;
 	if (typeof key !== 'string' || !LIST_KEY_PATTERN.test(key)) return null;
 	return {
 		key,
+		checked: idList(checked, ID_PATTERNS.ingredient, MAX_CHECKED_LINES),
 		removed: idList(removed, ID_PATTERNS.ingredient, MAX_REMOVED_LINES),
+		included: idList(included, ID_PATTERNS.ingredient, MAX_EXCLUDED_INGREDIENTS),
 		storeId: typeof storeId === 'string' && ID_PATTERNS.store.test(storeId) ? storeId : null
 	};
+}
+
+function isSavedBody(value: unknown): value is string {
+	return typeof value === 'string' && value.length > 0 && value.length <= MAX_SAVED_BODY_CHARS;
+}
+
+function sanitiseSavedList(value: unknown): SavedList | null {
+	if (!isRecord(value)) return null;
+	const { body, savedAt, lines } = value;
+	if (!isSavedBody(body) || !isIsoDateTime(savedAt)) return null;
+	if (!Array.isArray(lines) || lines.length > MAX_SAVED_LIST_LINES) return null;
+	const valid = validListLines({ lines });
+	return valid ? { body, savedAt, lines: valid } : null;
+}
+
+function sanitiseSavedQuote(value: unknown): SavedQuote | null {
+	if (!isRecord(value)) return null;
+	const { body, savedAt, dataDate, store } = value;
+	if (!isSavedBody(body) || !isIsoDateTime(savedAt)) return null;
+	if (typeof dataDate !== 'string' || !ISO_DATE.test(dataDate)) return null;
+	if (!validStoreQuote(store) || !ID_PATTERNS.store.test(store.store_id)) return null;
+	if (store.lines.length > MAX_SAVED_LIST_LINES) return null;
+	return { body, savedAt, dataDate, store };
 }
 
 /** The list choices: a known range, and at most 12 valid entries with unique keys (the first one wins). */
@@ -313,8 +387,10 @@ function sanitiseV1(raw: Record<string, unknown>): StoredState {
 		pantry: sanitisePantry(raw.pantry),
 		exclusions: sanitiseExclusions(raw.exclusions),
 		location: sanitiseLocation(raw.location),
-		checkedItems: idList(raw.checkedItems, ID_PATTERNS.ingredient, MAX_CHECKED),
-		list: sanitiseList(raw.list)
+		// The global `checkedItems` of earlier builds is dropped: ticks are kept per list (ListEntry.checked).
+		list: sanitiseList(raw.list),
+		lastList: sanitiseSavedList(raw.lastList),
+		lastQuote: sanitiseSavedQuote(raw.lastQuote)
 	};
 }
 
@@ -455,6 +531,40 @@ export function clearAll(): boolean {
 		persistent = false;
 	}
 	return removed;
+}
+
+/**
+ * Calls `onchange` with the new state whenever ANOTHER tab changes or deletes the stored document (the
+ * browser's `storage` event; it never fires for this tab's own writes). The in-memory copy is dropped first,
+ * so the next `load()` reads what the other tab stored. Returns the unsubscribe function. Never throws.
+ */
+export function onExternalChange(onchange: (state: StoredState) => void): () => void {
+	const target = typeof window === 'undefined' ? null : window;
+	if (!target) return () => {};
+	const listener = (event: StorageEvent): void => {
+		try {
+			// key null: the other tab called localStorage.clear().
+			if (event.key !== null && event.key !== STORAGE_KEY) return;
+			if (event.storageArea !== null && event.storageArea !== backend()) return;
+			memory = null;
+			unsaved = false;
+			onchange(load());
+		} catch {
+			// A failing subscriber must not break the other tabs' writes or this page.
+		}
+	};
+	try {
+		target.addEventListener('storage', listener);
+	} catch {
+		return () => {};
+	}
+	return () => {
+		try {
+			target.removeEventListener('storage', listener);
+		} catch {
+			// nothing to undo
+		}
+	};
 }
 
 /** False after a read or write failed: the data is then kept only until the tab is closed. */

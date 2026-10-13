@@ -3,9 +3,10 @@ retries, chunking, NOT-FOUND handling, schema drift, budget and the cache-busted
 
 from __future__ import annotations
 
+import gzip
 import json
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from datetime import date
 from decimal import Decimal
 
@@ -421,6 +422,92 @@ def test_responses_above_the_size_cap_are_refused(
     ):
         client.shops()
     assert len(fake.requests) == 1  # not retried
+
+
+class TrickleStream(httpx.SyncByteStream):
+    """A streamed body whose every read "takes" ``step`` seconds on the fake clock: well inside the 30 s read
+    timeout, so only a wall-clock budget ends it. Ends after ``chunks`` (default: effectively never)."""
+
+    def __init__(self, clock: FakeClock, chunks: list[bytes], *, step: float = 10.0) -> None:
+        self.clock = clock
+        self.chunks = chunks
+        self.step = step
+        self.served = 0
+        self.closed = False
+
+    def __iter__(self) -> Iterator[bytes]:
+        for chunk in self.chunks:
+            self.clock.advance(self.step)
+            self.served += 1
+            yield chunk
+
+    def close(self) -> None:
+        self.closed = True
+
+
+def trickle_transport(
+    stream: TrickleStream, calls: list[httpx.Request], **headers: str
+) -> httpx.MockTransport:
+    def handler(request: httpx.Request) -> httpx.Response:
+        calls.append(request)
+        return httpx.Response(200, stream=stream, headers={"content-type": "application/json", **headers})
+
+    return httpx.MockTransport(handler)
+
+
+def test_a_trickling_response_is_cut_off_after_its_budget_without_retry(clock: FakeClock) -> None:
+    stream = TrickleStream(clock, [b" "] * 10_000)  # 10,000 reads of 10 s: never over the read timeout
+    calls: list[httpx.Request] = []
+    start = clock.now
+    with make_client(trickle_transport(stream, calls), clock) as client:
+        with pytest.raises(GvhHttpError, match="not complete within 120 s") as err:
+            client.categories()
+        assert client.stats.requests == 1
+    assert err.value.status == 200
+    assert len(calls) == 1  # not retried
+    assert clock.now - start <= client_module.API_RESPONSE_BUDGET_S + stream.step
+    assert stream.closed  # the connection is released
+
+
+def test_a_compressed_trickle_that_decodes_to_nothing_is_cut_off_too(clock: FakeClock) -> None:
+    # A gzip header with FCOMMENT set, then comment bytes that never end: zlib yields no output at all, so a
+    # check on decoded chunks alone would never run (nor would the size cap, which counts decoded bytes).
+    header = b"\x1f\x8b\x08\x10" + b"\x00" * 6
+    stream = TrickleStream(clock, [header] + [b"x"] * 10_000)
+    calls: list[httpx.Request] = []
+    with (
+        make_client(trickle_transport(stream, calls, **{"content-encoding": "gzip"}), clock) as client,
+        pytest.raises(GvhHttpError, match="not complete within 120 s"),
+    ):
+        client.chain_stores()
+    assert len(calls) == 1
+    assert stream.served <= client_module.API_RESPONSE_BUDGET_S / stream.step + 1
+
+
+def test_the_xlsx_gets_the_larger_response_budget(clock: FakeClock) -> None:
+    stream = TrickleStream(clock, [b"PK"] * 10_000)
+    calls: list[httpx.Request] = []
+    start = clock.now
+    with (
+        make_client(trickle_transport(stream, calls), clock) as client,
+        pytest.raises(GvhHttpError, match="not complete within 300 s"),
+    ):
+        client.daily_xlsx(DAY, run_id=7)
+    assert len(calls) == 1
+    elapsed = clock.now - start
+    assert client_module.API_RESPONSE_BUDGET_S < elapsed <= client_module.XLSX_RESPONSE_BUDGET_S + stream.step
+
+
+def test_a_slow_but_finished_response_within_its_budget_is_read_whole(clock: FakeClock) -> None:
+    body = gzip.compress(json.dumps([{"uuid": "c", "name": "Lidl", "imageUrl": None}]).encode())
+    pieces = [body[i : i + 8] for i in range(0, len(body), 8)]
+    stream = TrickleStream(clock, pieces, step=client_module.API_RESPONSE_BUDGET_S / (len(pieces) + 1))
+    calls: list[httpx.Request] = []
+    with make_client(trickle_transport(stream, calls, **{"content-encoding": "gzip"}), clock) as client:
+        assert [c.name for c in client.chain_stores()] == ["Lidl"]
+        assert client.stats.bytes == len(gzip.decompress(body))
+    assert stream.served == len(pieces)
+    assert stream.closed
 
 
 def test_request_budget(fake: FakeGvh, clock: FakeClock) -> None:

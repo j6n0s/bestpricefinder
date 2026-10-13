@@ -1,7 +1,7 @@
 // All data in this file is SYNTHETIC test data (see README.md in this folder).
 import { describe, expect, it } from 'vitest';
 import type { ListLineOut, QuoteLineOut } from '../api/types';
-import { hasKshEstimate, storeGroups, storeLines } from './storeview';
+import { hasFractionalCosts, hasKshEstimate, storeGroups, storeLines } from './storeview';
 
 function listLine(id: string, name: string, group: string): ListLineOut {
 	return { ingredient_id: id, name_hu: name, qty: 1, unit: 'kg', list_group: group, pantry: false, recipe_ids: [] };
@@ -64,5 +64,20 @@ describe('hasKshEstimate', () => {
 		expect(hasKshEstimate({ lines: [quoteLine('a'), quoteLine('b', 'ksh_estimate', 420)] })).toBe(true);
 		expect(hasKshEstimate({ lines: [quoteLine('a'), quoteLine('b', 'unpriced')] })).toBe(false);
 		expect(hasKshEstimate({ lines: [quoteLine('b', 'ksh_estimate', null)] })).toBe(false);
+	});
+});
+
+describe('hasFractionalCosts', () => {
+	const priced = (id: string, cost: number | null): QuoteLineOut => ({ ...quoteLine(id), checkout_cost: cost });
+
+	it('is true when a priced line costs a fraction of a forint (sold by weight)', () => {
+		// 0.5 kg at 599 Ft/kg and at 999 Ft/kg: shown as 300 Ft and 500 Ft, the exact total 799 Ft.
+		expect(hasFractionalCosts({ lines: [priced('alma', 299.5), priced('korte', 499.5)] })).toBe(true);
+	});
+
+	it('is false for whole-forint lines and for lines without a price', () => {
+		expect(hasFractionalCosts({ lines: [priced('alma', 300), priced('korte', 500)] })).toBe(false);
+		expect(hasFractionalCosts({ lines: [{ ...quoteLine('so', 'unpriced'), checkout_cost: null }] })).toBe(false);
+		expect(hasFractionalCosts({ lines: [{ ...quoteLine('gomba', 'ksh_estimate', 600.5), checkout_cost: null }] })).toBe(false);
 	});
 });

@@ -175,6 +175,11 @@ declare global {
 async function setup(page: Page, override?: (method: string, path: string) => MockResult | null): Promise<Api> {
 	const api: Api = { suggests: [], checks: [], requests: [], consoleErrors: [], pageErrors: [], external: [], failSuggest: null };
 	await page.clock.setFixedTime(NOW);
+	// "Terv készítése" asks with a random seed; these tests pin it to 0 so the synthetic week is known (the
+	// seed test below replaces the generator).
+	await page.addInitScript(() => {
+		Math.random = () => 0;
+	});
 	await page.addInitScript(() => {
 		const list: string[] = [];
 		window.__cspViolations = list;
@@ -492,7 +497,8 @@ test.describe('plan details', () => {
 		await page.getByLabel('A hónap végéig (3 nap)').check();
 		await page.getByRole('button', { name: 'Terv készítése' }).click();
 		await expect(page.locator('[data-testid^="plan-day-"]')).toHaveCount(3);
-		expect(api.suggests[1]).toMatchObject({ days: 3, seed: 0 });
+		// Random seeds are pinned to 0 here, and a new plan never reuses the current plan's seed: 0 -> 1.
+		expect(api.suggests[1]).toMatchObject({ days: 3, seed: 1 });
 		await expect(chip(page, 'fish')).toContainText('Hal: nem értékeljük, mert ez a hét 4 napnál rövidebb');
 		expect(await storedPlan(page)).toMatchObject({ startDate: '2026-10-29' });
 		await expect(page.getByTestId('plan-summary')).toContainText('2026. 10. 29. – 2026. 10. 31., 3 nap');
@@ -579,6 +585,63 @@ test.describe('plan details', () => {
 		await expectClean(page, api);
 	});
 
+	test('every new plan gets a fresh seed (not the same week every week); "Új javaslat" the next one', async ({ page }) => {
+		const api = await setup(page);
+		await page.addInitScript(() => {
+			let x = 0.1;
+			Math.random = () => {
+				x = (x + 0.37) % 1;
+				return x;
+			};
+		});
+		await makeWeekPlan(page);
+		// Next week: delete the plan and make a new one.
+		await page.getByRole('button', { name: 'Terv törlése' }).click();
+		await page.getByRole('button', { name: 'Terv készítése' }).click();
+		await expect(page.getByRole('heading', { level: 2, name: 'A terved' })).toBeFocused();
+		await page.getByRole('button', { name: 'Új javaslat' }).click();
+		await expect.poll(() => api.suggests.length).toBe(3);
+		const seeds = api.suggests.map((request) => request.seed ?? -1);
+		for (const seed of seeds) expect(Number.isInteger(seed) && seed >= 0 && seed <= 2 ** 31 - 1, `seed ${seed}`).toBe(true);
+		expect(seeds[0]).not.toBe(0);
+		expect(seeds[1]).not.toBe(seeds[0]);
+		expect(seeds[2]).toBe((seeds[1] ?? 0) + 1);
+		await expect.poll(async () => (await storedPlan(page))?.seed).toBe(seeds[2]);
+		await expectClean(page, api);
+	});
+
+	test('while a plan is being made, focus stays on the pressed button and a status says so', async ({ page }) => {
+		const api = await setup(page);
+		await page.route('**/api/plan/suggest', async (route) => {
+			await new Promise((done) => setTimeout(done, 1_000));
+			await route.fallback();
+		});
+		await page.goto('/terv');
+		const make = page.getByRole('button', { name: /^Terv készítése/ });
+		await make.focus();
+		await page.keyboard.press('Enter');
+		await expect(make).toHaveAttribute('aria-disabled', 'true');
+		await expect(make).toBeFocused();
+		await expect(page.getByTestId('suggest-status')).toHaveText('Terv készítése…');
+		// Pressing it again does nothing.
+		await page.keyboard.press('Enter');
+		await expect(page.getByRole('heading', { level: 2, name: 'A terved' })).toBeFocused();
+		expect(api.suggests).toHaveLength(1);
+
+		// "Új javaslat" and "Terv törlése" stay focusable too.
+		const next = page.getByRole('button', { name: /^(Új javaslat|Terv készítése…)$/ }).first();
+		await next.click();
+		await expect(next).toHaveAttribute('aria-disabled', 'true');
+		await expect(next).toBeFocused();
+		// (force: Playwright itself waits for an aria-disabled button to become enabled.)
+		await page.getByRole('button', { name: 'Terv törlése' }).click({ force: true });
+		expect(await storedPlan(page)).not.toBeNull();
+		await expect(page.getByText('A tervet töröltük.')).toHaveCount(0);
+		await expect(page.getByText('Elkészült az új terv.')).toBeVisible();
+		expect(await page.evaluate(() => document.activeElement !== document.body)).toBe(true);
+		await expectClean(page, api);
+	});
+
 	test('a failed suggestion shows an error with a working retry', async ({ page }) => {
 		const api = await setup(page);
 		api.failSuggest = 500;
@@ -586,6 +649,8 @@ test.describe('plan details', () => {
 		await page.getByRole('button', { name: 'Terv készítése' }).click();
 		const alert = page.getByRole('alert');
 		await expect(alert).toContainText('A terv elkészítése nem sikerült');
+		// Focus moves to "Újra" (it never drops to <body>).
+		await expect(alert.getByRole('button', { name: 'Újra' })).toBeFocused();
 		expect(await storedPlan(page)).toBeNull();
 		await alert.getByRole('button', { name: 'Újra' }).click();
 		await expect(page.locator('[data-testid^="plan-day-"]')).toHaveCount(7);
@@ -680,6 +745,10 @@ test.describe('English and dark mode', () => {
 		await expect(page.getByTestId('meal-0-ebed')).toContainText('from ≈ 313 Ft/serving (Aldi, Lidl)');
 		await expect(page.getByTestId('plan-warnings')).toContainText('There are few recipes to choose for this meal, so some may repeat: breakfast.');
 		await expect(page.getByRole('button', { name: `Change (Tuesday, ${DATE_HU}, dinner)` })).toBeVisible();
+		// Recipe titles are Hungarian content: marked as such inside the English page (WCAG 3.1.2).
+		const title = page.getByTestId('meal-0-ebed').getByRole('link');
+		expect(await title.evaluate((el) => el.closest('[lang]')?.getAttribute('lang'))).toBe('hu');
+		expect(await page.getByRole('heading', { level: 1 }).evaluate((el) => el.closest('[lang]')?.getAttribute('lang'))).toBe('en');
 		await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(`Source: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`);
 		await expectNoHorizontalScroll(page);
 		await expectTouchTargets(page);

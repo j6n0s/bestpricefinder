@@ -1,9 +1,11 @@
 <!--
 	Settings. Everything here is personal data and is saved immediately, on this device only, through
-	$lib/storage (never sent to the server).
+	$lib/storage (never sent to the server). Every change starts from the stored state (load()), and the page
+	reloads it when another tab changes or deletes it (onExternalChange), so a stale tab never writes deleted
+	data back.
 -->
 <script lang="ts">
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import DistrictPicker from '$lib/components/DistrictPicker.svelte';
 	import LocationExplainer from '$lib/components/LocationExplainer.svelte';
 	import ExclusionSettings from '$lib/components/settings/ExclusionSettings.svelte';
@@ -17,6 +19,7 @@
 		clearAll,
 		isPersistent,
 		load,
+		onExternalChange,
 		update,
 		PEOPLE_MAX,
 		PEOPLE_MIN,
@@ -34,6 +37,14 @@
 	let resets = $state(0);
 	let dialog = $state<HTMLDialogElement>();
 	let cancelButton = $state<HTMLButtonElement>();
+	let locateButton = $state<HTMLButtonElement>();
+
+	onMount(() =>
+		onExternalChange((next) => {
+			settings = next;
+			persistent = isPersistent();
+		})
+	);
 
 	const loc = $derived(settings.location);
 	const district = $derived(districtById(loc.districtId));
@@ -45,7 +56,7 @@
 	}
 
 	function changePeople(delta: number): void {
-		const next = settings.people + delta;
+		const next = load().people + delta;
 		if (next < PEOPLE_MIN || next > PEOPLE_MAX) return;
 		save({ people: next });
 	}
@@ -67,13 +78,16 @@
 		notice = null;
 	}
 
-	function revoke(): void {
-		save({ location: revokedLocation(loc) });
+	async function revoke(): Promise<void> {
+		save({ location: revokedLocation(load().location) });
 		notice = 'revoked';
+		// The revoke button is gone: continue at "Helyzet használata…", never at <body>.
+		await tick();
+		locateButton?.focus();
 	}
 
 	function chooseDistrict(districtId: string | null): void {
-		save({ location: districtLocation(loc, districtId) });
+		save({ location: districtLocation(load().location, districtId) });
 	}
 
 	async function askClear(): Promise<void> {
@@ -207,7 +221,7 @@
 
 	<div class="btn-row">
 		{#key resets}
-			<LocationExplainer onchange={locationChanged} />
+			<LocationExplainer onchange={locationChanged} bind:openButton={locateButton} />
 		{/key}
 		{#if loc.consent === 'granted'}
 			<button type="button" class="btn btn-secondary" onclick={revoke}>{t('settings.location_revoke')}</button>

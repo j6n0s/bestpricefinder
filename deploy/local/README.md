@@ -29,11 +29,20 @@ deploy/local/db-backup.sh        # pg_dump -Fc into .data/backups/ (mode 600)
 | Superuser credentials | `.data/pg-admin.env` (mode 600): `bpf_admin`, for maintenance only; the app never uses it |
 | Backups | `.data/backups/bpf-<UTC timestamp>.dump[.age]` |
 
-Everything above is git-ignored. Passwords are 32 random bytes (hex), passed to `psql` through the
-environment (`\getenv`), never on a command line, and never written to the server log.
+With the default paths everything above is git-ignored (`.data/` and `.env.local`). If you change
+`BPF_PGDATA`, `BPF_BACKUP_DIR` or `BPF_ENV_FILE`, keep them under `.data/` or outside the repository. The parent
+directory of `BPF_PGDATA` receives `pg-admin.env` (the superuser password), the backups (unless `BPF_BACKUP_DIR`
+is set), the server log and the jobs' logs and locks, and outside `.data/` git may not ignore them:
+`BPF_PGDATA=$PWD/pgdata`, for example, would write the superuser password to `./pg-admin.env`.
+`git check-ignore -v <file>` shows whether git ignores a file. Passwords are 32 random bytes (hex), passed to
+`psql` through the environment (`\getenv`), never on a command line, and never written to the server log.
 
 Roles: `bpf_owner` (NOLOGIN, owns every object), `bpf_migrator` (can `SET ROLE bpf_owner`, inherits nothing),
-`bpf_ingest` (data writes, timeouts) and `bpf_api` (read-only transactions, 3 s statement timeout, 20 connections).
+`bpf_ingest` (data writes, timeouts) and `bpf_api` (SELECT on the `api` views only, 20 connections; read-only
+transactions and a 3 s statement timeout by default). The read-only mode and the timeouts of both roles are
+per-role session defaults (`ALTER ROLE … SET`). They catch mistakes in our code, but any session can `SET` them
+differently, so they are not a security boundary. What keeps `bpf_api` from changing a table is that it has no
+write privilege on any table.
 `pg_hba.conf` allows only SCRAM, only these roles, only on the `bpf` database; `bpf_admin` may reach any database;
 everything else is rejected explicitly. `server/tests/test_db_roles.py` checks all of this automatically.
 
@@ -42,7 +51,7 @@ everything else is rejected explicitly. `server/tests/test_db_roles.py` checks a
 | Variable | Default | Meaning |
 |---|---|---|
 | `BPF_PG_BIN` | discovered | Directory with `initdb`, `pg_ctl`, `postgres` (>= 16). Discovery: `pg_config --bindir`, then the highest of `/opt/homebrew/opt/postgresql@*/bin`, `/usr/local/opt/postgresql@*/bin`, `/usr/lib/postgresql/*/bin`, `/usr/pgsql-*/bin` |
-| `BPF_PGDATA` | `.data/pg` | Cluster directory. Log, socket, admin credentials and backups live next to it |
+| `BPF_PGDATA` | `.data/pg` | Cluster directory. Log, socket, admin credentials (`pg-admin.env`), backups and the jobs' logs and locks live next to it, in its parent directory: keep it under `.data/` or outside the repository (see above) |
 | `BPF_PG_PORT` | `5544` | Port (used by `db-init.sh`; later scripts read it from `<PGDATA>/bpf.conf`) |
 | `BPF_SOCKET_DIR` | `<dirname PGDATA>/sock` | Socket directory (used by `db-init.sh`; later read from `bpf.conf`) |
 | `BPF_ENV_FILE` | `.env.local` | Where `db-init.sh` writes the app credentials (the server reads the same variable) |
@@ -76,7 +85,7 @@ deploy/local/scheduler/backup-job.sh              # db-backup.sh + pruning, as t
 | `scheduler/` | launchd plist templates (placeholders filled in by `install-macos.sh`), the cron installer, `at-budapest.sh` (lets an hourly cron line through only in its Budapest hour: Debian/Ubuntu cron ignores `CRON_TZ`) and `backup-job.sh`. Schedule (Europe/Budapest): daily ingest 04:30 and 05:30, availability Sundays 05:00, backup 03:15. |
 | `caddy/` | `Caddyfile.example` and its [README](caddy/README.md): HTTPS for phones, (a) LAN with Caddy's internal CA or (b) a real domain with Let's Encrypt. |
 
-Files they write (all git-ignored, under `.data/`, i.e. next to `BPF_PGDATA`):
+Files they write (under `.data/` by default, i.e. next to `BPF_PGDATA`, and git-ignored there):
 
 | Item | Where |
 |---|---|

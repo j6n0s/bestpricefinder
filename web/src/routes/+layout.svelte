@@ -118,7 +118,8 @@
 	/* Narrow screens: keep content clear of the fixed bottom tab bar. */
 	@media (max-width: 47.99rem) {
 		.shell {
-			padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
+			/* --nav-reserved: the bar's measured height (BottomNav), e.g. with enlarged text. */
+			padding-bottom: var(--nav-reserved, calc(var(--nav-height) + env(safe-area-inset-bottom)));
 		}
 	}
 </style>

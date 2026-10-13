@@ -48,7 +48,7 @@ from bpf.pricing.nutrition import nutrition_per_serving
 from bpf.pricing.packs import optimise_packs, pack_options
 from bpf.pricing.prices import resolve_price
 from bpf.pricing.quote import quote_store
-from bpf.pricing.ranking import rank_stores, suggest_split
+from bpf.pricing.ranking import rank_stores, suggest_split, whole_forints
 from bpf.pricing.recipes import recipe_chain_costs
 from bpf.pricing.units import to_canonical
 
@@ -67,6 +67,7 @@ __all__ = [
     "resolve_price",
     "suggest_split",
     "to_canonical",
+    "whole_forints",
     # domain types and vocabularies (bpf/pricing/model.py)
     "SLOTS_3",
     "SLOTS_5",

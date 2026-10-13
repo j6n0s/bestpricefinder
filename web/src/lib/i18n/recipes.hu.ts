@@ -75,7 +75,7 @@ export const recipesHu = {
 	costs_partial: 'részleges ár',
 	costs_partial_note:
 		'A részleges árú láncok nincsenek a sorrendben: náluk a recept becsült költségének kevesebb mint 90\u00a0%-ára van ár, így az áruk nem hasonlítható össze a többiekével.',
-	costs_missing: 'Ár nélkül: {items}',
+	costs_missing: 'Ár nélkül:',
 	costs_none: 'Ehhez a recepthez még nincs lánconkénti ár.',
 
 	nutrition_title: 'Tápérték adagonként',

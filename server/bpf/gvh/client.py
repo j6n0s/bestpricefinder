@@ -6,7 +6,11 @@ Politeness and robustness (BUILD-BRIEF §4.1 trap 11, research/legal):
   retries included. The clock and sleep functions are injectable for tests.
 * **User-Agent:** descriptive, with the operator's contact e-mail; the client refuses to start without one.
 * **Retries:** at most 3, with exponential backoff, on 5xx and connection/timeouts only. Never on 4xx
-  (including 429) or 3xx: those raise :class:`GvhHttpError` immediately. 30 s timeout per request.
+  (including 429) or 3xx: those raise :class:`GvhHttpError` immediately.
+* **Timeouts:** 30 s per socket operation (connect, each read), and a wall-clock budget per response,
+  120 s (JSON) / 300 s (XLSX) from sending the request to the last body byte. A body that trickles in
+  (every read within 30 s, but never finishing) raises :class:`GvhHttpError` once over budget, without a
+  retry, so a degraded server cannot keep an ingest (and the ingest lock) alive indefinitely.
 * **Budget:** an optional ``max_requests`` cap (CLI ``--max-requests``); every attempt counts.
 * **Fail loudly:** every response is validated (``bpf.gvh.models``, ``bpf.gvh.xlsx``); unexpected shapes
   raise :class:`GvhSchemaError`; unknown extra fields are collected in :attr:`GvhClient.drift`.
@@ -61,7 +65,9 @@ log = logging.getLogger("bpf.gvh")
 LISTING_LIMIT = 48  # server maximum; the default page size is 12 (BUILD-BRIEF §4.1, §11)
 SHOP_IDS_PER_CALL = 200  # largest chunk verified to work (research/gvh-location/notes.md §1)
 MAX_RETRIES = 3
-DEFAULT_TIMEOUT_S = 30.0
+DEFAULT_TIMEOUT_S = 30.0  # per socket operation (httpx.Timeout): each read may take this long
+API_RESPONSE_BUDGET_S = 120.0  # wall clock per attempt, request sent to body complete
+XLSX_RESPONSE_BUDGET_S = 300.0  # the XLSX is about 2 MB
 DEFAULT_BACKOFF_S = 2.0
 API_MAX_BYTES = 32 * 1024 * 1024
 XLSX_MAX_BYTES = 64 * 1024 * 1024
@@ -107,6 +113,32 @@ class _Response:
     status: int
     content: bytes
     content_type: str | None
+
+
+class _DeadlineStream(httpx.SyncByteStream):
+    """A response's raw byte stream that raises ``expired()`` once ``clock()`` passes ``deadline``. It is
+    checked per raw chunk, so a trickle is caught even while a compressed body still decodes to nothing."""
+
+    def __init__(
+        self,
+        inner: httpx.SyncByteStream,
+        clock: Callable[[], float],
+        deadline: float,
+        expired: Callable[[], GvhHttpError],
+    ) -> None:
+        self._inner = inner
+        self._clock = clock
+        self._deadline = deadline
+        self._expired = expired
+
+    def __iter__(self) -> Iterator[bytes]:
+        for chunk in self._inner:
+            if self._clock() > self._deadline:
+                raise self._expired()
+            yield chunk
+
+    def close(self) -> None:
+        self._inner.close()
 
 
 @dataclass(frozen=True, slots=True)
@@ -231,24 +263,37 @@ class GvhClient:
         self._last_start = now
         self.stats.requests += 1
 
-    def _send_once(self, url: str, params: dict[str, str] | None, accept: str, max_bytes: int) -> _Response:
+    def _send_once(
+        self, url: str, params: dict[str, str] | None, accept: str, max_bytes: int, budget_s: float
+    ) -> _Response:
+        deadline = self._clock() + budget_s
         with self._http.stream("GET", url, params=params, headers={"Accept": accept}) as response:
+            short_url = _short(str(response.request.url))
+
+            def too_slow() -> GvhHttpError:
+                return GvhHttpError(
+                    f"response not complete within {budget_s:g} s", url=short_url, status=response.status_code
+                )
+
+            if self._clock() > deadline:  # the headers alone took longer than the budget
+                raise too_slow()
+            if isinstance(response.stream, httpx.SyncByteStream):
+                response.stream = _DeadlineStream(response.stream, self._clock, deadline, too_slow)
             chunks: list[bytes] = []
             size = 0
-            for chunk in response.iter_bytes():
-                size += len(chunk)
-                if size > max_bytes:
-                    self.stats.bytes += size
-                    raise GvhHttpError(
-                        f"response larger than {max_bytes} bytes",
-                        url=_short(str(response.request.url)),
-                        status=response.status_code,
-                    )
-                chunks.append(chunk)
-            self.stats.bytes += size
-            log.debug(
-                "GET %s -> %s (%d bytes)", _short(str(response.request.url)), response.status_code, size
-            )
+            try:
+                for chunk in response.iter_bytes():
+                    size += len(chunk)
+                    if size > max_bytes:
+                        raise GvhHttpError(
+                            f"response larger than {max_bytes} bytes",
+                            url=short_url,
+                            status=response.status_code,
+                        )
+                    chunks.append(chunk)
+            finally:
+                self.stats.bytes += size
+            log.debug("GET %s -> %s (%d bytes)", short_url, response.status_code, size)
             return _Response(response.status_code, b"".join(chunks), response.headers.get("content-type"))
 
     def _get(
@@ -264,11 +309,12 @@ class GvhClient:
         """One logical GET with throttle, budget and retries (5xx / connection errors only). A 5xx whose
         body names one of ``final_codes`` is a definitive answer and is returned without retrying."""
         max_bytes = XLSX_MAX_BYTES if xlsx else API_MAX_BYTES
+        budget_s = XLSX_RESPONSE_BUDGET_S if xlsx else API_RESPONSE_BUDGET_S
         attempts = self._max_retries + 1
         for attempt in range(attempts):
             self._before_request()
             try:
-                response = self._send_once(url, params, accept, max_bytes)
+                response = self._send_once(url, params, accept, max_bytes, budget_s)
             except httpx.DecodingError as exc:  # a corrupt (compressed) body: not a connection error
                 raise GvhHttpError(f"{what}: undecodable response body", url=_short(url)) from exc
             except httpx.TransportError as exc:

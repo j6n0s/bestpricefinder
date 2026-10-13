@@ -19,7 +19,7 @@
 </script>
 
 <article class="card recipe" aria-labelledby="recipe-{recipe.id}" data-testid="recipe-card">
-	<h2 id="recipe-{recipe.id}"><a href="/receptek/{encodeURIComponent(recipe.id)}">{recipe.title}</a></h2>
+	<h2 id="recipe-{recipe.id}"><a href="/receptek/{encodeURIComponent(recipe.id)}" lang="hu">{recipe.title}</a></h2>
 	<p class="meta small">
 		{#if recipe.minutes !== null}
 			<span>{tp('recipes.minutes', recipe.minutes)}</span>
@@ -30,7 +30,7 @@
 		{/if}
 	</p>
 	{#if recipe.summary}
-		<p class="summary">{recipe.summary}</p>
+		<p class="summary" lang="hu">{recipe.summary}</p>
 	{/if}
 	<TagList tags={recipe.tags} />
 	<p class="price-line">

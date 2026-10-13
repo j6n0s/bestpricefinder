@@ -11,13 +11,18 @@
 		label?: string;
 		/** Show the label next to the ring instead of only to screen readers. */
 		showLabel?: boolean;
+		/**
+		 * false: not a status region of its own, because the page announces the same text through a status
+		 * region that always exists (a region inserted together with its text is often not announced).
+		 */
+		announce?: boolean;
 	}
 
-	let { label, showLabel = false }: Props = $props();
+	let { label, showLabel = false, announce = true }: Props = $props();
 	const text = $derived(label ?? t('core.loading'));
 </script>
 
-<span class="spinner" role="status">
+<span class="spinner" role={announce ? 'status' : undefined}>
 	<span class="ring" aria-hidden="true"></span>
 	<span class:visually-hidden={!showLabel}>{text}</span>
 </span>

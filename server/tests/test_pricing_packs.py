@@ -5,6 +5,7 @@ all data is synthetic."""
 from __future__ import annotations
 
 import itertools
+import math
 import random
 import time
 from collections.abc import Sequence
@@ -13,6 +14,7 @@ from fractions import Fraction
 
 import pytest
 
+import bpf.pricing.packs as packs
 from bpf.pricing import Ingredient, LinePick, PackOption, optimise_packs, pack_options, to_canonical
 from tests.fixtures.pricing.builders import (
     catalogue,
@@ -472,3 +474,176 @@ def test_optimiser_matches_brute_force_on_hard_cases() -> None:
         assert picks is not None
         assert _result_key(qty, options, picks) == _reference_key(qty, options), (qty, options)
         checked += 1
+
+
+# ───────────── optimise_packs: many packs of near-equal unit price ─────────────
+
+# Proportionally priced packs of one product (about 2375 Ft/kg, within 1 %): the unit-price lower bound is
+# nearly tight, so a plain search over the pack counts explodes (one such call used to take minutes).
+NEAR_EQUAL = [
+    opt(f"p{index:02d}", size, price)
+    for index, (size, price) in enumerate(
+        [
+            ("0.3", 714),
+            ("1", 2375),
+            ("0.75", 1781),
+            ("0.33", 789),
+            ("0.9", 2147),
+            ("0.25", 594),
+            ("0.45", 1069),
+            ("0.175", 416),
+            ("0.2", 475),
+            ("0.8", 1900),
+            ("0.4", 950),
+            ("0.5", 1188),
+            ("0.35", 831),
+            ("0.125", 297),
+        ]
+    )
+]
+# Exactly proportional (2400 Ft/kg): every purchase costs the same per kg, the bound prunes nothing.
+PROPORTIONAL = [
+    opt(f"q{index:02d}", size, str(D(size) * 2400))
+    for index, size in enumerate(["0.2", "0.35", "0.175", "0.4", "0.3", "0.8", "1", "0.75", "0.5", "0.25"])
+]
+
+
+def _grid_reference_key(qty: Decimal, options: Sequence[PackOption]) -> tuple[object, ...]:
+    """Independent exact reference: a dynamic programme over every quantity on the pack-size grid (the
+    lexicographic purchase key is additive, so the best purchase of each exact quantity extends the best of a
+    smaller one), then the cheapest way to reach ``qty`` from each quantity (nothing, or loose weight)."""
+    rank = _rank_order(options)
+    fixed = [i for i, o in enumerate(options) if o.size is not None]
+    loose = [i for i, o in enumerate(options) if o.size is None]
+    sizes = {i: Fraction(options[i].size or 0) for i in fixed}
+    grid = Fraction(
+        math.gcd(*(s.numerator for s in sizes.values())), math.lcm(*(s.denominator for s in sizes.values()))
+    )
+    steps = {i: int(sizes[i] / grid) for i in fixed}
+    q = Fraction(qty)
+    top = math.ceil(q / grid) + max(steps.values())
+    best: list[tuple[Fraction, int, tuple[int, ...]] | None] = [None] * (top + 1)
+    best[0] = (Fraction(0), 0, (0,) * len(options))
+    for amount in range(1, top + 1):
+        for i in fixed:
+            previous = best[amount - steps[i]] if steps[i] <= amount else None
+            if previous is None:
+                continue
+            cost, picks, vector = previous
+            moved = list(vector)
+            moved[rank[i]] -= 1
+            candidate = (cost + Fraction(options[i].price), picks + 1, tuple(moved))
+            current = best[amount]
+            if current is None or candidate < current:
+                best[amount] = candidate
+    overall: tuple[Fraction, Fraction, int, tuple[int, ...]] | None = None
+    for amount, entry in enumerate(best):
+        if entry is None:
+            continue
+        cost, picks, vector = entry
+        bought = amount * grid
+        keys: list[tuple[Fraction, Fraction, int, tuple[int, ...]]] = []
+        if bought >= q:
+            keys.append((cost, bought - q, picks, vector))
+        else:
+            for i in loose:
+                moved = list(vector)
+                moved[rank[i]] -= 1
+                keys.append(
+                    (cost + (q - bought) * Fraction(options[i].price), Fraction(0), picks + 1, tuple(moved))
+                )
+        for key in keys:
+            if overall is None or key < overall:
+                overall = key
+    assert overall is not None
+    cost, leftover, picks, vector = overall
+    return (cost, leftover, picks, tuple((r, c) for r, c in enumerate(vector) if c))  # as _result_key
+
+
+def _b_alone_cost(qty: Decimal, options: Sequence[PackOption]) -> Decimal:
+    """Cost of covering qty with the best-unit-price pack alone (what any search result must not exceed)."""
+    fixed = [o for o in options if o.size is not None]
+    best = min(fixed, key=lambda o: (o.price / (o.size or 1), -(o.size or 0)))
+    return best.price * math.ceil(qty / (best.size or 1))
+
+
+@pytest.mark.parametrize(
+    ("qty", "options", "expected_cost"),
+    [
+        (D("25.628"), NEAR_EQUAL, D(60_859)),
+        (D("10.001"), NEAR_EQUAL, D(23_761)),
+        (D("92.382"), PROPORTIONAL, D(221_760)),
+        (D("97.721"), PROPORTIONAL, D(234_540)),
+    ],
+)
+def test_many_packs_of_near_equal_unit_price_are_fast_and_exact(
+    qty: Decimal, options: list[PackOption], expected_cost: Decimal
+) -> None:
+    started = time.perf_counter()
+    picks = optimise_packs(qty, options)
+    elapsed = time.perf_counter() - started
+    assert elapsed < 0.5, f"{elapsed:.3f} s"
+    assert picks is not None
+    assert sum(p.qty for p in picks) >= qty
+    assert total(picks) == expected_cost
+    assert total(picks) <= _b_alone_cost(qty, options)
+    assert _result_key(qty, options, picks) == _grid_reference_key(qty, options)
+
+
+def _near_equal_case(rng: random.Random) -> tuple[Decimal, list[PackOption]]:
+    """6-14 packs within about 1.5 % of one unit price (some exactly proportional), sometimes a loose option,
+    up to 30 kg: the inputs that used to make the search explode."""
+    sizes = (
+        "0.1",
+        "0.125",
+        "0.175",
+        "0.2",
+        "0.25",
+        "0.3",
+        "0.33",
+        "0.35",
+        "0.4",
+        "0.45",
+        "0.5",
+        "0.75",
+        "1",
+        "2",
+    )
+    base = rng.choice((800, 2375, 2400, 3990))
+    options: list[PackOption] = []
+    for index, size in enumerate(rng.sample(sizes, rng.randint(6, 14))):
+        exact = D(size) * base
+        price = exact if rng.random() < 0.4 else (exact * (1 + D(rng.randint(-15, 15)) / 1000)).quantize(D(1))
+        options.append(opt(f"{rng.choice('abcdef')}{index % 3}", size, str(price)))
+    if rng.random() < 0.3:
+        options.append(opt("loose", None, str(base + rng.randint(-10, 40))))
+    return D(rng.randint(1, 30_000)) / 1000, options
+
+
+def test_optimiser_matches_a_dynamic_programme_on_large_near_equal_cases() -> None:
+    rng = random.Random(20261014)  # noqa: S311 - seeded test cases, not security
+    slowest = 0.0
+    for _ in range(40):
+        qty, options = _near_equal_case(rng)
+        started = time.perf_counter()
+        picks = optimise_packs(qty, options)
+        slowest = max(slowest, time.perf_counter() - started)
+        assert picks is not None
+        assert _result_key(qty, options, picks) == _grid_reference_key(qty, options), (qty, options)
+    print(f"\nnear-equal unit prices: slowest optimise_packs call {slowest * 1000:.1f} ms")
+    assert slowest < 0.5
+
+
+def test_search_cap_returns_a_covering_purchase_no_worse_than_the_best_pack_alone(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # A tiny cap stops the search early: the result is then the best purchase found so far, which always
+    # covers qty and never costs more than the best-unit-price pack alone (the first purchase considered).
+    monkeypatch.setattr(packs, "MAX_SEARCH_STEPS", 3)
+    for qty in (D("25.628"), D("0.4"), D("3.333")):
+        picks = optimise_packs(qty, NEAR_EQUAL)
+        assert picks
+        assert sum(p.qty for p in picks) >= qty
+        assert total(picks) <= _b_alone_cost(qty, NEAR_EQUAL)
+    monkeypatch.undo()
+    assert total(optimise_packs(D("25.628"), NEAR_EQUAL)) == D(60_859)  # uncapped: the exact optimum

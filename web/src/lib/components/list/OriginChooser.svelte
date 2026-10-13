@@ -3,6 +3,8 @@
 	asked for a position only when the user presses "Saját helyzetem használata" (low accuracy, 10 s timeout,
 	rounded to about 100 m, kept on this device; only store ids are ever sent). The Budapest district picker
 	is the alternative. The outcome is reported through `onlocation`; the page saves it with $lib/storage.
+	Every new location is built from the STORED one (load()), not from the `location` prop: another tab may have
+	revoked the position or deleted everything since this page read it, and that must never be written back.
 -->
 <script lang="ts">
 	import { tick } from 'svelte';
@@ -16,7 +18,7 @@
 		grantedLocation,
 		type LocateFailure
 	} from '$lib/location';
-	import type { StoredLocation } from '$lib/storage';
+	import { load, type StoredLocation } from '$lib/storage';
 
 	interface Props {
 		location: StoredLocation;
@@ -51,19 +53,19 @@
 		const result = await locateForList();
 		pending = false;
 		if (result.ok) {
-			onlocation(grantedLocation(location, result.position));
+			onlocation(grantedLocation(load().location, result.position));
 			ondone();
 			return;
 		}
 		failure = result.reason;
-		if (result.reason === 'denied') onlocation(declinedLocation(location));
+		if (result.reason === 'denied') onlocation(declinedLocation(load().location));
 		await tick();
 		locateButton?.focus();
 	}
 
 	function chooseDistrict(districtId: string | null): void {
 		failure = null;
-		onlocation(districtLocation(location, districtId));
+		onlocation(districtLocation(load().location, districtId));
 	}
 </script>
 

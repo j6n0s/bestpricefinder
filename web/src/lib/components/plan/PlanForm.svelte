@@ -79,7 +79,8 @@
 		<a href="/beallitasok">{t('plan.settings_link')}</a>
 	</p>
 
-	<button type="submit" class="btn btn-primary" disabled={busy || !valid}>
+	<!-- aria-disabled, not disabled: a disabled button loses focus (to <body>) the moment it is pressed. -->
+	<button type="submit" class="btn btn-primary" aria-disabled={busy || !valid}>
 		{busy ? t('plan.making_plan') : t('plan.make_plan')}
 	</button>
 </form>

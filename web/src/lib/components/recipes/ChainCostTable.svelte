@@ -69,7 +69,9 @@
 								<Badge kind="no_price" />
 							{/if}
 							{#if row.missing.length > 0}
-								<span class="missing small">{t('recipes.costs_missing', { items: missingNames(row.missing) })}</span>
+								<span class="missing small"
+									>{t('recipes.costs_missing')} <span lang="hu">{missingNames(row.missing)}</span></span
+								>
 							{/if}
 						</td>
 					</tr>

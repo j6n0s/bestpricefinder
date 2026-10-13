@@ -91,7 +91,7 @@
 	<article class="recipe" aria-labelledby="recipe-title">
 		<header class="intro">
 			<p class="kind">{t('recipes.detail_title')}</p>
-			<h1 id="recipe-title" class="title">{detail.title}</h1>
+			<h1 id="recipe-title" class="title" lang="hu">{detail.title}</h1>
 			<p class="meta">
 				{#if detail.minutes !== null}
 					<span>{tp('recipes.minutes', detail.minutes)}</span>
@@ -102,7 +102,7 @@
 				{/if}
 			</p>
 			{#if detail.summary}
-				<p class="summary">{detail.summary}</p>
+				<p class="summary" lang="hu">{detail.summary}</p>
 			{/if}
 			<TagList tags={detail.tags} />
 			<p class="price"><RecipePrice recipe={detail} {names} /></p>
@@ -121,7 +121,7 @@
 
 		<section class="card" aria-labelledby="steps-title">
 			<h2 id="steps-title">{t('recipes.steps_title')}</h2>
-			<ol class="steps">
+			<ol class="steps" lang="hu">
 				{#each detail.steps as step, index (index)}
 					<li>{step}</li>
 				{/each}

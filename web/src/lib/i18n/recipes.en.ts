@@ -74,7 +74,7 @@ export const recipesEn: Messages<typeof recipesHu> = {
 	costs_partial: 'partial price',
 	costs_partial_note:
 		"Chains with a partial price are not ranked: they price less than 90% of the recipe's estimated cost, so their price cannot be compared with the others.",
-	costs_missing: 'No price: {items}',
+	costs_missing: 'No price:',
 	costs_none: 'There are no prices by chain for this recipe yet.',
 
 	nutrition_title: 'Nutrition per serving',

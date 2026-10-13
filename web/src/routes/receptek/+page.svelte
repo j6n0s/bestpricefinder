@@ -4,7 +4,7 @@
 	so the page carries the GVH source line with the data date (BUILD-BRIEF §8.2).
 -->
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { getRecipes } from '$lib/api/client';
 	import { RECIPE_TAGS, SLOTS, type RecipesResponse } from '$lib/api/types';
 	import Attribution from '$lib/components/Attribution.svelte';
@@ -57,6 +57,13 @@
 	onMount(() => {
 		void loadRecipes();
 	});
+
+	/** "Szűrők törlése" removes itself: continue at the search field, never at <body>. */
+	async function resetFilters(): Promise<void> {
+		resetRecipeFilters();
+		await tick();
+		document.getElementById('filter-q')?.focus();
+	}
 </script>
 
 <svelte:head>
@@ -103,7 +110,7 @@
 		</div>
 	</div>
 	{#if active}
-		<button type="button" class="btn btn-secondary" onclick={resetRecipeFilters}>{t('recipes.filters_reset')}</button>
+		<button type="button" class="btn btn-secondary" onclick={resetFilters}>{t('recipes.filters_reset')}</button>
 	{/if}
 </form>
 
@@ -116,7 +123,7 @@
 	{#if filtered.length === 0}
 		<EmptyState message={t('recipes.no_results')}>
 			{#if active}
-				<button type="button" class="btn btn-secondary" onclick={resetRecipeFilters}>{t('recipes.filters_reset')}</button>
+				<button type="button" class="btn btn-secondary" onclick={resetFilters}>{t('recipes.filters_reset')}</button>
 			{/if}
 		</EmptyState>
 	{:else}

@@ -48,7 +48,7 @@
 				{checked}
 				onchange={(event) => ontogglecheck(line.ingredient_id, event.currentTarget.checked)}
 			/>
-			<span class="name">{name}</span>
+			<span class="name" lang="hu">{name}</span>
 		</label>
 		<span class="cost">
 			{#if line.status === 'priced' && line.checkout_cost !== null}
@@ -71,7 +71,7 @@
 				{@const packs = packsText(pick, line.unit, lang)}
 				{@const type = typeText(pick.option)}
 				<li>
-					<span class="product">{pick.option.product_name}</span>
+					<span class="product" lang="hu">{pick.option.product_name}</span>
 					<span class="pack">
 						{packs ?? t('list.by_weight', { qty: formatAmount(pick.qty, line.unit, lang) })} · {formatMoney(pick.cost)}
 					</span>
@@ -97,7 +97,7 @@
 					{#each line.alternatives as option, index (index)}
 						{@const type = typeText(option)}
 						<li>
-							<span class="product">{option.product_name}</span>
+							<span class="product" lang="hu">{option.product_name}</span>
 							<span class="pack">{alternativeText(option)}</span>
 							<span class="labels">
 								<Badge tone="neutral">{t(priceScopeKey(option.price_scope))}</Badge>

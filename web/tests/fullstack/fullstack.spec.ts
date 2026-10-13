@@ -157,6 +157,10 @@ interface Watch {
  * are untouched. */
 async function watch(page: Page): Promise<Watch> {
 	const seen: Watch = { consoleErrors: [], pageErrors: [], external: [], requests: [] };
+	// "Terv készítése" asks with a random seed; pinned here (seed 0) so a failing run can be reproduced.
+	await page.addInitScript(() => {
+		Math.random = () => 0;
+	});
 	await page.addInitScript(() => {
 		const violations: string[] = [];
 		window.__cspViolations = violations;
@@ -325,7 +329,10 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	expect(shown.sort()).toEqual(toBuy.map((line) => line.ingredient_id).sort());
 	await expect(page.getByRole('heading', { level: 2, name: 'Valószínűleg otthon van' })).toBeVisible();
 	for (const line of pantry) {
-		await expect(page.getByRole('checkbox', { name: `Nincs otthon: ${line.name_hu}`, exact: true })).not.toBeChecked();
+		const notAtHome = page.getByRole('checkbox', { name: `Nincs otthon: ${line.name_hu}`, exact: true });
+		// Tap water is never bought, so it has no "nincs otthon" switch.
+		if (line.ingredient_id === 'viz') await expect(notAtHome).toHaveCount(0);
+		else await expect(notAtHome).not.toBeChecked();
 	}
 
 	// ── c. "Hol a legolcsóbb a közelben?": the explanation first, then the device's position ──
@@ -337,7 +344,9 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 
 	const quoted = page.waitForResponse(isApiPost('/api/quote'));
 	await page.getByRole('button', { name: 'Saját helyzetem használata' }).click();
-	await expect(page.getByTestId('origin')).toContainText('Kiindulási pont: a készülék hozzávetőleges helyzete.');
+	await expect(page.getByTestId('origin')).toContainText(
+		/Kiindulási pont: a készülék hozzávetőleges helyzete \(\d{4}\.\s\d{2}\.\s\d{2}\.\s\d{1,2}:\d{2} állapot szerint\)\./
+	);
 	const quoteResponse = await quoted;
 	expect(quoteResponse.status()).toBe(200);
 	const sent = quoteResponse.request().postDataJSON() as QuoteRequest;
@@ -369,8 +378,8 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	}
 	expect(expectedIds.size, 'stores near Nyugati tér').toBeGreaterThanOrEqual(5);
 	expect([...sent.store_ids].sort()).toEqual([...expectedIds].sort());
-	const distances = sent.store_ids.map((id) => distanceOf(storeById.get(id) as StoreOut));
-	expect(distances, 'nearest first').toEqual([...distances].sort((a, b) => a - b));
+	// Sorted by id: the order of the ids must not reveal the distances (and so the position).
+	expect(sent.store_ids, 'sorted by id').toEqual([...sent.store_ids].sort());
 	const real = realStores();
 	for (const id of sent.store_ids) {
 		const row = real.get(id);
@@ -476,7 +485,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	})).filter((group) => group.ids.length > 0);
 	expect(chosen.lines.every((line) => groupOf.has(line.ingredient_id)), 'every quoted line is a line of the list').toBe(true);
 	expect(expectedGroups.length, 'the list spans several shop sections').toBeGreaterThan(1);
-	const shownGroups = await storeList.locator('section.group').evaluateAll((sections) =>
+	const shownGroups = await storeList.locator('div.group').evaluateAll((sections) =>
 		sections.map((section) => ({
 			heading: section.querySelector('h4')?.textContent?.trim() ?? '',
 			ids: [...section.querySelectorAll('[data-testid="store-line"]')].map((el) => el.getAttribute('data-ingredient-id') ?? '')

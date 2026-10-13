@@ -84,7 +84,7 @@
       "slots": ["reggeli"],
       "servings": 2,
       "minutes": 15,
-      "tags": ["reggeli_hideg", "husmentes", "vegetarianus", "gyors", "gyerekbarat"],
+      "tags": ["reggeli_hideg", "husmentes", "vegetarianus", "gyors"],
       "lines": [
         {"ingredient_id": "joghurt", "qty": 0.4, "display": "40 dkg", "optional": false},
         {"ingredient_id": "alma", "qty": 0.18, "display": "1 közepes", "optional": false},

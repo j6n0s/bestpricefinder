@@ -4,9 +4,15 @@
 	- The list is made from the plan stored on this device (StoredState.plan) for the chosen days: every planned
 	  meal is `people` servings, summed per recipe (planToListItems), sent to POST /api/list. Only recipe ids
 	  and servings leave the device (no on-hand quantities: a pantry staple is at home or "nincs otthon").
-	- Ticks (StoredState.checkedItems), "nincs otthon" (StoredState.pantry.notAtHome), the range, the removed
-	  lines and the chosen store per list (StoredState.list, helpers in $lib/list/prefs) stay on this device,
-	  in the one document of $lib/storage.
+	- "nincs otthon" (StoredState.pantry.notAtHome), the range, and per list (plan + range: a new plan or
+	  range starts afresh) the ticks, the removed lines, the excluded lines bought anyway and the chosen store
+	  (StoredState.list, helpers in $lib/list/prefs) stay on this device, in the one document of $lib/storage.
+	- Ingredients excluded in the settings (StoredState.exclusions.ingredients) are not bought and not priced
+	  unless the user chooses "mégis megveszem" for this list ($lib/list/lines).
+	- Offline (in the shop): the last list is kept on the device ($lib/list/offline) and shown, dated, when
+	  POST /api/list fails for lack of a connection.
+	- Another tab may change or delete the stored data: the page reloads it (onExternalChange) and builds every
+	  change from a fresh load(), so it never writes deleted data back.
 	- Prices: see NearbyPrices (store ids only, never coordinates; source, date and scope note on every price).
 -->
 <script lang="ts">
@@ -19,15 +25,25 @@
 	import RangePicker from '$lib/components/list/RangePicker.svelte';
 	import ShoppingList from '$lib/components/list/ShoppingList.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import { formatDateTime } from '$lib/format';
 	import { t, tp } from '$lib/i18n';
 	import { loadRecipes } from '$lib/list/data';
 	import { lineChoices, quoteLines, toggleId } from '$lib/list/lines';
+	import { saveLastList, savedListFor } from '$lib/list/offline';
 	import { listEntry, withListEntry, type ListEntry } from '$lib/list/prefs';
 	import { effectiveRange, type ListRange } from '$lib/list/range';
 	import { buildListRequest, listKey } from '$lib/list/request';
 	import { recipeIds, validListLines } from '$lib/list/validate';
 	import { todayInBudapest } from '$lib/plan/dates';
-	import { isPersistent, load, update, type StatePatch, type StoredLocation, type StoredState } from '$lib/storage';
+	import {
+		isPersistent,
+		load,
+		onExternalChange,
+		update,
+		type StatePatch,
+		type StoredLocation,
+		type StoredState
+	} from '$lib/storage';
 
 	let settings = $state<StoredState>(load());
 	let persistent = $state(isPersistent());
@@ -60,6 +76,12 @@
 
 	onMount(() => {
 		if (settings.plan) fetchRecipes();
+		// Another tab changed or deleted the data ("Minden adat törlése", a revoked position, a new plan).
+		return onExternalChange((next) => {
+			settings = next;
+			persistent = isPersistent();
+			if (next.plan && recipes.status === 'idle') fetchRecipes();
+		});
 	});
 
 	const listPlan = $derived(
@@ -80,75 +102,95 @@
 		status: 'idle' | 'loading' | 'ready' | 'error';
 		lines: ListLineOut[];
 		error: unknown;
+		/** Set when the lines are the offline copy: when they were loaded. */
+		savedAt: string | null;
 	}
-	let listState = $state<ListState>({ status: 'idle', lines: [], error: null });
+	let listState = $state<ListState>({ status: 'idle', lines: [], error: null, savedAt: null });
 	let listAttempt = $state(0);
 
 	$effect(() => {
 		const body = listBody;
 		void listAttempt; // "Újra" asks again for the same list
 		if (body === null) {
-			listState = { status: 'idle', lines: [], error: null };
+			listState = { status: 'idle', lines: [], error: null, savedAt: null };
 			return;
 		}
 		const controller = new AbortController();
-		listState = { status: 'loading', lines: [], error: null };
+		listState = { status: 'loading', lines: [], error: null, savedAt: null };
 		postList(JSON.parse(body) as ListRequest, { signal: controller.signal })
 			.then((raw) => {
 				if (controller.signal.aborted) return;
 				const lines = validListLines(raw);
+				if (lines) saveLastList(body, lines);
 				listState = lines
-					? { status: 'ready', lines, error: null }
-					: { status: 'error', lines: [], error: new ApiError({ kind: 'invalid_response' }) };
+					? { status: 'ready', lines, error: null, savedAt: null }
+					: { status: 'error', lines: [], error: new ApiError({ kind: 'invalid_response' }), savedAt: null };
 			})
 			.catch((error: unknown) => {
 				if (controller.signal.aborted) return;
-				listState = { status: 'error', lines: [], error };
+				// No connection (in the shop): the same list as last loaded, dated.
+				const saved = savedListFor(body, error);
+				listState = saved
+					? { status: 'ready', lines: saved.lines, error: null, savedAt: saved.savedAt }
+					: { status: 'error', lines: [], error, savedAt: null };
 			});
 		return () => controller.abort();
 	});
 
 	const lines = $derived(listState.status === 'ready' ? listState.lines : []);
-	const choices = $derived(lineChoices(entry?.removed ?? [], settings.pantry.notAtHome));
+	const choices = $derived(
+		lineChoices(entry?.removed ?? [], settings.pantry.notAtHome, settings.exclusions.ingredients, entry?.included ?? [])
+	);
 	const quote = $derived(quoteLines(lines, choices));
-	const checked = $derived(new Set(settings.checkedItems));
+	// Ticks belong to THIS list: a new plan or another range starts with none.
+	const checked = $derived(new Set(entry?.checked ?? []));
 
 	function patch(next: StatePatch): void {
 		settings = update(next);
 		persistent = isPersistent();
 	}
 
-	function saveEntry(next: ListEntry): void {
-		patch({ list: withListEntry(prefs, next) });
+	/**
+	 * Changes this list's entry. Built from a fresh load(), never from the copy this page read earlier: another
+	 * tab may have changed or deleted the data in the meantime.
+	 */
+	function changeEntry(change: (current: ListEntry) => ListEntry): void {
+		if (!key) return;
+		const stored = load().list;
+		patch({ list: withListEntry(stored, change(listEntry(stored, key))) });
 	}
 
 	function chooseRange(next: ListRange): void {
-		patch({ list: { range: next, entries: prefs.entries } });
+		patch({ list: { range: next, entries: load().list.entries } });
 	}
 
 	function toggleCheck(ingredientId: string, on: boolean): void {
-		patch({ checkedItems: toggleId(settings.checkedItems, ingredientId, on) });
+		changeEntry((current) => ({ ...current, checked: toggleId(current.checked, ingredientId, on) }));
 	}
 
 	function clearChecks(): void {
-		const onList = new Set(lines.map((line) => line.ingredient_id));
-		patch({ checkedItems: settings.checkedItems.filter((ingredientId) => !onList.has(ingredientId)) });
+		changeEntry((current) => ({ ...current, checked: [] }));
 	}
 
 	function removeLine(ingredientId: string): void {
-		if (entry) saveEntry({ ...entry, removed: toggleId(entry.removed, ingredientId, true) });
+		changeEntry((current) => ({ ...current, removed: toggleId(current.removed, ingredientId, true) }));
 	}
 
 	function restoreLine(ingredientId: string): void {
-		if (entry) saveEntry({ ...entry, removed: toggleId(entry.removed, ingredientId, false) });
+		changeEntry((current) => ({ ...current, removed: toggleId(current.removed, ingredientId, false) }));
+	}
+
+	function includeLine(ingredientId: string): void {
+		changeEntry((current) => ({ ...current, included: toggleId(current.included, ingredientId, true) }));
 	}
 
 	function setNotAtHome(ingredientId: string, notAtHome: boolean): void {
-		patch({ pantry: { ...settings.pantry, notAtHome: toggleId(settings.pantry.notAtHome, ingredientId, notAtHome) } });
+		const pantry = load().pantry;
+		patch({ pantry: { ...pantry, notAtHome: toggleId(pantry.notAtHome, ingredientId, notAtHome) } });
 	}
 
 	function chooseStore(storeId: StoreId): void {
-		if (entry) saveEntry({ ...entry, storeId });
+		changeEntry((current) => ({ ...current, storeId }));
 	}
 
 	function setLocation(next: StoredLocation): void {
@@ -195,6 +237,12 @@
 		{:else if listState.status === 'error'}
 			<ErrorState error={listState.error} title={t('list.error_title')} onretry={() => (listAttempt += 1)} />
 		{:else if listState.status === 'ready'}
+			{#if listState.savedAt}
+				<div class="notice notice-warning offline-copy" data-testid="list-offline">
+					<p>{t('list.offline_list', { time: formatDateTime(listState.savedAt) })}</p>
+					<button type="button" class="btn btn-secondary" onclick={() => (listAttempt += 1)}>{t('core.retry')}</button>
+				</div>
+			{/if}
 			<ShoppingList
 				{lines}
 				{choices}
@@ -204,6 +252,7 @@
 				onremove={removeLine}
 				onrestore={restoreLine}
 				onnotathome={setNotAtHome}
+				oninclude={includeLine}
 			/>
 			{#if lines.length > 0}
 				<NearbyPrices
@@ -233,5 +282,18 @@
 
 	.list-area {
 		margin-top: var(--space-4);
+	}
+
+	.offline-copy {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-2) var(--space-3);
+		margin-bottom: var(--space-4);
+	}
+
+	.offline-copy p {
+		margin: 0;
 	}
 </style>

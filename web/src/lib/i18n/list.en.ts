@@ -40,10 +40,21 @@ export const listEn: Messages<typeof listHu> = {
 
 	pantry_title: 'Probably at home',
 	pantry_note:
-		'These are not put on the list and not priced. If one of them is not at home, mark it: it goes on the list and into the store prices.',
+		'These are not put on the list. If one of them is not at home, mark it: it goes on the list, and where there is a store price (for oil, flour or sugar, for example) it counts in the store prices. Most spices and salt have no store price.',
 	not_at_home: 'Not at home',
 	not_at_home_named: 'Not at home: {name}',
 	pantry_on_list: 'on the list',
+
+	excluded_title: 'Excluded ingredients',
+	excluded_note:
+		'You excluded these in the settings, so they are not put on the list or priced. If you need one of them anyway, put it on the list.',
+	buy_anyway: 'Buy anyway',
+	buy_anyway_named: 'Buy anyway: {name}',
+	line_excluded: 'excluded ingredient',
+
+	offline_list: 'No connection to the server, so you see the list as last loaded ({time}).',
+	offline_quote:
+		'No connection to the server, so you see the chosen store’s list as last loaded ({time}). The store ranking is not available without a connection.',
 
 	nearby_title: 'Where is it cheapest nearby?',
 	nearby_why:
@@ -52,7 +63,9 @@ export const listEn: Messages<typeof listHu> = {
 	origin_done: 'Done',
 	use_my_location: 'Use my location',
 	or_district: 'Or choose a Budapest district if you prefer not to share your location:',
-	origin_device: 'Starting point: the approximate location of this device.',
+	origin_device: 'Starting point: the approximate location of this device as of {time}.',
+	refresh_position: 'Update location',
+	position_stale: 'This location is more than a day old. If you are somewhere else, update it or choose a district.',
 	origin_district: 'Starting point: {district}.',
 	change_origin: 'Another starting point',
 	radius_info: 'Search radius: {radius}.',
@@ -73,6 +86,7 @@ export const listEn: Messages<typeof listHu> = {
 	quote_loading: 'Working out the prices…',
 	quote_updating: 'The list changed; updating the prices…',
 	quote_error_title: 'The prices could not be worked out right now',
+	status_cheapest: 'Cheapest {note}: {stores}.',
 
 	ranking_title: 'Stores by the price of the list',
 	ranking_scope: 'Cheapest first, {note}.',
@@ -94,9 +108,15 @@ export const listEn: Messages<typeof listHu> = {
 	split_text: 'If you split the items between {first} and {second}, you pay {total} in all.',
 	split_details: 'Which item where?',
 	split_store: '{store}:',
+	split_missing_one: '{count} item is sold in neither store:',
+	split_missing_other: '{count} items are sold in neither store:',
+	split_total_excludes_one: 'The amount to pay does not include this item.',
+	split_total_excludes_other: 'The amount to pay does not include these items.',
 
 	store_title: 'List: {store}',
 	store_total: 'To pay: {total}',
+	store_total_rounding:
+		'Item prices are shown rounded to whole forints, while the amount to pay is worked out from the exact prices, so it can differ from the sum of the items by a few forints.',
 	ksh_total:
 		'Estimated national average price (KSH) for the items GVH does not cover: {total}. It is not included in the amount to pay.',
 	scope_legend:
@@ -126,14 +146,14 @@ export const listEn: Messages<typeof listHu> = {
 	group_egyeb: 'Other',
 
 	pantry_settings_intro:
-		'Ingredients that are "probably at home" (salt, spices, oil…) are not put on the shopping list and not priced while they are ticked. Untick what is not at home.',
+		'Ingredients that are "probably at home" (salt, spices, oil…) are not put on the shopping list while they are ticked. Untick what is not at home: it goes on the list, and where there is a store price, it counts in the store prices.',
 	pantry_settings_legend: 'At home',
 	pantry_settings_loading: 'Loading ingredients…',
 	pantry_settings_empty: 'There are no such ingredients.',
 	device_only: 'Stored only on this device.',
 
 	exclusions_intro:
-		'What you exclude here is left out of the weekly plan suggestions. It is stored only on this device; the server receives it only to work out a suggestion and does not store it.',
+		'What you exclude here is left out of the weekly plan suggestions, and excluded ingredients are not put on the shopping list either. It is stored only on this device; the server receives it only to work out a suggestion and does not store it.',
 	exclude_tags_legend: 'Excluded recipe tags',
 	tag_hal: 'Fish',
 	tag_baromfi: 'Poultry',

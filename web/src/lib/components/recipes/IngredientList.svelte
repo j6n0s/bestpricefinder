@@ -23,8 +23,8 @@
 <ul class="ingredients">
 	{#each sorted as line (line.line_no)}
 		<li data-testid="ingredient-{line.ingredient_id}">
-			<span class="qty" data-testid="ingredient-qty">{scaleDisplay(line.display, factor)}</span>
-			<span class="name">{line.ingredient_name}</span>
+			<span class="qty" data-testid="ingredient-qty" lang="hu">{scaleDisplay(line.display, factor)}</span>
+			<span class="name" lang="hu">{line.ingredient_name}</span>
 			{#if line.optional}
 				<span class="muted small">({t('recipes.optional')})</span>
 			{/if}

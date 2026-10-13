@@ -11,7 +11,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, test, type Page } from '@playwright/test';
 import { MOCK_META, handleMockApi, type MockResult } from '../mocks/api';
-import { expectAccessible, expectHeadingOrder, expectTextContrast } from './a11y';
+import { expectAccessible, expectFocusNotObscured, expectHeadingOrder, expectTextContrast } from './a11y';
 import { BASE_URL, SCREENSHOT_DIR } from './config';
 import { startStaticServer } from './static-server';
 
@@ -177,6 +177,112 @@ for (const viewport of VIEWPORTS) {
 				await expectAccessible(page, `${viewport.name} ${route.path}`);
 				await page.screenshot({ path: screenshotPath(`${viewport.name}-${slug(route.path)}`), fullPage: true });
 				await expectClean(watcher);
+			});
+		}
+	});
+}
+
+// ───────────────────────────── keyboard focus and the fixed bottom navigation ─────────────────────────────
+
+/** A plan from the synthetic recipes, so /terv and /lista show their controls (Csere, Törlés, the list). */
+const SEEDED_PLAN_STATE = {
+	version: 1,
+	plan: {
+		createdAt: '2026-10-11T18:00:00.000Z',
+		startDate: '2026-10-12',
+		seed: 3,
+		slots: 3,
+		noRepeatDays: 5,
+		days: Array.from({ length: 7 }, (_, index) => ({
+			index,
+			meals: { reggeli: null, ebed: 'minta-lencsefozelek', vacsora: index % 2 === 0 ? 'minta-csirke' : null }
+		}))
+	},
+	list: { range: 'whole', entries: [] }
+};
+
+const FOCUS_VIEWPORTS = [
+	{ name: 'phone-320', width: 320, height: 640 },
+	{ name: 'phone-360', width: 360, height: 740 },
+	// A 1280×800 window at 200% zoom: the narrow layout with the fixed bar, and very little height.
+	{ name: 'zoom-200', width: 640, height: 400 }
+] as const;
+
+for (const viewport of FOCUS_VIEWPORTS) {
+	test.describe(`focus not obscured, ${viewport.name}`, () => {
+		test.use({ viewport: { width: viewport.width, height: viewport.height } });
+
+		test('tabbing never hides the focused control behind the bottom navigation', async ({ page }) => {
+			const watcher = await watch(page);
+			await page.addInitScript(
+				([key, value]) => {
+					if (localStorage.getItem(key) === null) localStorage.setItem(key, value);
+				},
+				[STORAGE_KEY, JSON.stringify(SEEDED_PLAN_STATE)] as const
+			);
+			for (const route of ROUTES) {
+				await page.goto(route.path);
+				await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
+				await expect(page.getByTestId('data-status')).toContainText(`Adatok: ${DATE_HU}`);
+				if (route.path === '/terv') await expect(page.locator('[data-testid^="plan-day-"]').first()).toBeVisible();
+				if (route.path === '/lista') await expect(page.getByText('2 tétel a listán')).toBeVisible();
+				await expectFocusNotObscured(page, `${viewport.name} ${route.path}`);
+			}
+			await expectClean(watcher);
+		});
+	});
+}
+
+// ───────────────────────────── user text spacing and text-only zoom (WCAG 1.4.12, 1.4.4) ─────────────────────────────
+
+const TEXT_OVERRIDES = [
+	{
+		name: 'text spacing',
+		css: '* { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; } p { margin-bottom: 2em !important; }'
+	},
+	{ name: 'text 200%', css: 'html { font-size: 200% !important; }' }
+] as const;
+
+for (const width of [320, 360, 390]) {
+	test.describe(`nav labels with enlarged text at ${width} px`, () => {
+		// The page's hash CSP refuses the injected stylesheet; this check is about layout, not the CSP.
+		test.use({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true, bypassCSP: true });
+
+		for (const override of TEXT_OVERRIDES) {
+			test(`every tab label fits with ${override.name}`, async ({ page }) => {
+				await watch(page);
+				for (const route of ROUTES) {
+					await page.goto(route.path);
+					await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
+					await page.addStyleTag({ content: override.css });
+					await expectNavLabelsFit(page);
+					// Each label stays inside its own tab and the viewport.
+					const outside = await page
+						.getByRole('navigation', { name: 'Fő navigáció' })
+						.locator('li')
+						.evaluateAll((items) =>
+							items.flatMap((li) => {
+								const label = li.querySelector('.label');
+								if (!label) return [];
+								const range = document.createRange();
+								range.selectNodeContents(label);
+								const text = range.getBoundingClientRect();
+								const cell = li.getBoundingClientRect();
+								return text.left < cell.left - 0.5 || text.right > cell.right + 0.5 || text.right > window.innerWidth + 0.5
+									? [label.textContent ?? '']
+									: [];
+							})
+						);
+					expect(outside, `${route.path}: labels outside their tab`).toEqual([]);
+					// The layout keeps the end of the page clear of the taller bar.
+					const clearance = await page.evaluate(() => {
+						const nav = [...document.querySelectorAll('nav')].find((n) => getComputedStyle(n).position === 'fixed');
+						const shell = document.querySelector('.shell');
+						if (!nav || !shell) return 0;
+						return Number.parseFloat(getComputedStyle(shell).paddingBottom) - nav.getBoundingClientRect().height;
+					});
+					expect(clearance, `${route.path}: bottom padding at least the bar's height`).toBeGreaterThanOrEqual(-0.5);
+				}
 			});
 		}
 	});
@@ -451,6 +557,8 @@ test.describe('location consent', () => {
 		await page.goto('/beallitasok');
 		await page.getByRole('button', { name: 'Engedély visszavonása' }).click();
 		await expect(page.getByText('A tárolt helyzetet töröltük.', { exact: false })).toBeVisible();
+		// The revoke button is gone; focus continues at "Helyzet használata…", never at <body>.
+		await expect(page.getByRole('button', { name: 'Helyzet használata…' })).toBeFocused();
 		await expect(page.getByTestId('location-status')).toContainText('Nincs engedélyezve.');
 		expect(await storedState(page)).toMatchObject({ location: { consent: 'unset', source: 'none', approx: null } });
 		await expectClean(watcher);
@@ -674,6 +782,101 @@ test.describe('offline', () => {
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Források és adatvédelem');
 			await expect(page.getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
 			await page.screenshot({ path: screenshotPath('offline-phone-360-forrasok'), fullPage: true });
+			expect(pageErrors).toEqual([]);
+		} finally {
+			await context.setOffline(false);
+			server.closeAllConnections();
+			server.close();
+		}
+	});
+
+	test('the shopping list and the chosen store’s list still open in the shop without a connection', async ({
+		page,
+		context
+	}) => {
+		const port = 4300 + Math.floor(Math.random() * 600);
+		const server = await startStaticServer(BUILD_DIR, port, handleMockApi);
+		const origin = `http://127.0.0.1:${port}`;
+		const pageErrors: string[] = [];
+		page.on('pageerror', (error) => pageErrors.push(String(error)));
+		const plan = {
+			createdAt: '2026-10-11T18:00:00.000Z',
+			startDate: '2026-10-12',
+			seed: 3,
+			slots: 3,
+			noRepeatDays: 5,
+			days: [{ index: 0, meals: { reggeli: null, ebed: 'minta-lencsefozelek', vacsora: null } }]
+		};
+		try {
+			await page.goto(`${origin}/`);
+			await page.evaluate(
+				([key, value]) => localStorage.setItem(key, value),
+				[STORAGE_KEY, JSON.stringify({ version: 1, plan, list: { range: 'whole', entries: [] } })] as const
+			);
+			await page.evaluate(async () => {
+				await navigator.serviceWorker.ready;
+			});
+			await page.reload();
+			await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
+
+			// Online: the list, a tick, a district, a store.
+			await page.getByRole('navigation', { name: 'Fő navigáció' }).getByRole('link', { name: 'Lista' }).click();
+			await expect(page.getByText('2 tétel a listán')).toBeVisible();
+			await page.getByRole('checkbox', { name: /^vöröshagyma/ }).check();
+			await expect(page.getByText('Kipipálva: 1 / 2')).toBeVisible();
+			await page.getByLabel('Budapesti kerület').selectOption('05');
+			await page.getByRole('button', { name: /^Lista ennél a boltnál: Lidl/ }).first().click();
+			const storeList = page.getByTestId('store-list');
+			await expect(storeList.getByRole('heading', { level: 3 })).toHaveText('Lista: Lidl');
+			await expect.poll(async () => ((await storedState(page)) as { lastQuote?: unknown } | null)?.lastQuote ?? null).not.toBeNull();
+			expect(await storedState(page)).toMatchObject({ lastList: { lines: [{ ingredient_id: 'voroshagyma' }, { ingredient_id: 'voros_lencse' }] } });
+
+			// The server goes away and the device goes offline.
+			await new Promise<void>((done) => {
+				server.closeAllConnections();
+				server.close(() => done());
+			});
+			await context.setOffline(true);
+
+			const expectOfflineList = async (): Promise<void> => {
+				await expect(page.getByTestId('list-offline')).toContainText('a legutóbb betöltött listát látod');
+				await expect(page.getByText('A lista most nem készült el')).toHaveCount(0);
+				await expect(page.getByText('2 tétel a listán')).toBeVisible();
+				await expect(page.getByText('Kipipálva: 1 / 2')).toBeVisible();
+				await expect(page.getByTestId('quote-offline')).toContainText('a kiválasztott bolt legutóbb betöltött listáját látod');
+				await expect(storeList.getByRole('heading', { level: 3 })).toHaveText('Lista: Lidl');
+				// A source and a date on every price, offline too.
+				await expect(storeList.getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
+				await expect(storeList.getByRole('checkbox', { name: /^vöröshagyma/ })).toBeChecked();
+			};
+
+			// (a) In-app navigation away and back.
+			const nav = page.getByRole('navigation', { name: 'Fő navigáció' });
+			await nav.getByRole('link', { name: 'Beállítások' }).click();
+			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Beállítások');
+			await nav.getByRole('link', { name: 'Lista' }).click();
+			await expectOfflineList();
+			// Ticks still work on the device.
+			await page.getByRole('checkbox', { name: /^vörös lencse/ }).first().check();
+			await expect(page.getByText('Kipipálva: 2 / 2')).toBeVisible();
+
+			// (b) A reload (or a relaunch) of the list.
+			await page.reload();
+			await page.getByRole('checkbox', { name: /^vörös lencse/ }).first().uncheck();
+			await expectOfflineList();
+			await page.screenshot({ path: screenshotPath('offline-phone-360-lista'), fullPage: true });
+
+			// The list and the quote are personal: the worker never caches a POST answer.
+			const cached = await page.evaluate(async () => {
+				const paths: string[] = [];
+				for (const name of await window.caches.keys()) {
+					const cache = await window.caches.open(name);
+					for (const request of await cache.keys()) paths.push(`${request.method} ${new URL(request.url).pathname}`);
+				}
+				return paths;
+			});
+			expect(cached.filter((entry) => !entry.startsWith('GET '))).toEqual([]);
+			expect(cached.filter((entry) => entry.includes('/api/list') || entry.includes('/api/quote'))).toEqual([]);
 			expect(pageErrors).toEqual([]);
 		} finally {
 			await context.setOffline(false);

@@ -98,7 +98,7 @@
 						aria-current={recipe.id === currentId ? 'true' : undefined}
 						onclick={() => pick(recipe.id)}
 					>
-						<span class="title">{recipe.title}</span>
+						<span class="title" lang="hu">{recipe.title}</span>
 						<span class="meta small">
 							{#if recipe.minutes !== null}
 								<span>{tp('recipes.minutes', recipe.minutes)}</span>

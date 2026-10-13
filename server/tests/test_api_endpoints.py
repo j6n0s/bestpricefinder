@@ -1282,3 +1282,56 @@ def test_python_m_bpf_api_serves_with_its_own_pool(cluster: PgCluster, tmp_path:
         output, _ = proc.communicate(timeout=30)
     assert proc.returncode == 0, output
     assert "Traceback" not in output
+
+
+def test_python_m_bpf_api_logs_no_websocket_client_address(cluster: PgCluster, tmp_path: Path) -> None:
+    """The access log is off because it would record client IPs; uvicorn's WebSocket rejection would still
+    log '<client> - "WebSocket <path?query>" 403' at INFO (the default level of run-api.sh), with the real
+    client address behind the proxy. ``python -m bpf.api`` turns WebSockets off, so such a request is
+    ordinary HTTP: answered with the security headers, and logged without an address or the query."""
+    port = free_port()
+    env = {k: v for k, v in os.environ.items() if not k.startswith("BPF_")}
+    env.update(
+        BPF_ENV_FILE=str(cluster.env_file),
+        BPF_WEB_BUILD_DIR=str(tmp_path / "no-build"),
+        BPF_TRUST_PROXY_HEADERS="true",
+    )
+    proc = subprocess.Popen(  # noqa: S603 - fixed argv
+        [sys.executable, "-m", "bpf.api", "--port", str(port), "--log-level", "info"],
+        cwd=Path(__file__).resolve().parents[1],
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+    try:
+        deadline = time.monotonic() + 30
+        while True:
+            try:
+                httpx.get(f"http://127.0.0.1:{port}/api/health", timeout=2)
+                break
+            except httpx.TransportError:
+                assert time.monotonic() < deadline, "the server did not start"
+                time.sleep(0.2)
+        response = httpx.get(
+            f"http://127.0.0.1:{port}/api/health?marker=zz9wsmarker",
+            headers={
+                "Connection": "Upgrade",
+                "Upgrade": "websocket",
+                "Sec-WebSocket-Version": "13",
+                "Sec-WebSocket-Key": "c3ludGhldGljLWtleS0xNg==",
+                "X-Forwarded-For": "203.0.113.77",
+            },
+            timeout=5,
+        )
+        assert response.status_code == 200  # not 101, not uvicorn's bare 403
+        for name, value in SECURITY_HEADERS.items():
+            assert response.headers[name] == value, name
+    finally:
+        proc.send_signal(signal.SIGINT)
+        output, _ = proc.communicate(timeout=30)
+    assert proc.returncode == 0, output
+    assert "Application startup complete" in output  # INFO lines are in the output
+    assert "203.0.113.77" not in output
+    assert "zz9wsmarker" not in output
+    assert "WebSocket /" not in output

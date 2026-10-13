@@ -3,9 +3,11 @@ BUILD-BRIEF §6.3). Quotes are built by hand; all amounts are synthetic."""
 
 from __future__ import annotations
 
-from decimal import Decimal
+import math
+import random
+from decimal import ROUND_HALF_UP, Decimal, localcontext
 
-from bpf.pricing import QuoteLine, StoreQuote, rank_stores, suggest_split
+from bpf.pricing import QuoteLine, StoreQuote, rank_stores, suggest_split, whole_forints
 
 D = Decimal
 
@@ -63,6 +65,48 @@ def test_ties_share_a_rank_and_are_never_broken_by_store_or_chain_name() -> None
     ranking = rank_stores(quotes)
     assert {r.store_id: r.rank for r in ranking} == {"aldi-1": 1, "lidl-1": 1, "spar-1": 1, "tesco-1": 4}
     assert [r.rank for r in ranking] == [1, 1, 1, 4]
+
+
+def test_a_total_just_under_half_a_forint_ties_with_what_it_is_displayed_as() -> None:
+    # Loose bananas, 0.505 kg: 999 Ft/kg = 504.495 Ft is sent as 504.50 and shown as "505 Ft", the same as
+    # 1000 Ft/kg = 505 Ft. Rounding the exact amount straight to whole forints (504) would rank them 1 and 2.
+    quotes = [quote("lidl-1", {"banan": "505.000"}), quote("aldi-1", {"banan": "504.495"})]
+    ranking = rank_stores(quotes)
+    assert [(r.store_id, r.rank) for r in ranking] == [("aldi-1", 1), ("lidl-1", 1)]
+    assert [r.penalized_total for r in ranking] == [D("504.495"), D("505.000")]  # exact amounts kept
+
+
+def test_a_total_below_the_displayed_half_forint_is_not_tied_upwards() -> None:
+    # 504.494 is sent as 504.49 and shown as "504 Ft"; 504.2 is also "504 Ft"; 504.5 is "505 Ft".
+    quotes = [
+        quote("a", {"x": "504.494"}),
+        quote("b", {"x": "504.2"}),
+        quote("c", {"x": "504.5"}),
+    ]
+    assert {r.store_id: r.rank for r in rank_stores(quotes)} == {"a": 1, "b": 1, "c": 3}
+
+
+def test_whole_forints_matches_the_api_money_then_client_rounding() -> None:
+    # The API sends money as float(quantize half-up to 0.01) (bpf.api.present.money) and the client shows it
+    # with Intl.NumberFormat maximumFractionDigits 0 (halfExpand, i.e. half away from zero, on the float).
+    def displayed(amount: Decimal) -> Decimal:
+        sent = float(amount.quantize(D("0.01"), rounding=ROUND_HALF_UP))
+        return D(math.floor(sent + 0.5)) if sent >= 0 else -D(math.floor(-sent + 0.5))
+
+    rng = random.Random(20261013)  # noqa: S311 - seeded test values, not security
+    samples = [
+        D(f"{whole}.{frac}")
+        for whole in (0, 1, 412, 504, 99_999)
+        for frac in ("49", "494", "495", "4999", "5")
+    ]
+    samples += [D(rng.randint(0, 10**9)) / D(10 ** rng.randint(0, 6)) for _ in range(5_000)]
+    for amount in samples:
+        assert whole_forints(amount) == displayed(amount), amount
+    assert whole_forints(D("412.495")) == whole_forints(D("412.6")) == D(413)
+    assert whole_forints(D("504.4949")) == D(504)
+    with localcontext() as ctx:  # the caller's decimal context does not matter
+        ctx.prec = 2
+        assert whole_forints(D("123456.495")) == D(123457)
 
 
 def test_equal_totals_with_different_missing_counts_are_not_tied() -> None:

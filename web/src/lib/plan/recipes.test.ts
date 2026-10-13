@@ -1,3 +1,6 @@
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import type { ChainCostOut, RecipeSummary, Slot } from '../api/types';
 import {
@@ -141,6 +144,26 @@ describe('scaleDisplay (real display texts from data/recipes)', () => {
 		expect(scaleDisplay('felezett', 2)).toBe('felezett');
 	});
 
+	it('understands "negyed" and "háromnegyed" as whole words only', () => {
+		expect(scaleDisplay('negyed fej', 2)).toBe('0,5 fej');
+		expect(scaleDisplay('negyed kígyóuborka', 3)).toBe('0,75 kígyóuborka');
+		expect(scaleDisplay('Negyed fej', 4)).toBe('1 fej');
+		expect(scaleDisplay('háromnegyed liter', 2)).toBe('1,5 liter');
+		expect(scaleDisplay('negyedelt alma', 2)).toBe('negyedelt alma');
+		expect(scaleDisplay('negyedeld fel', 2)).toBe('negyedeld fel');
+	});
+
+	it('understands "egy" as a whole word only', () => {
+		expect(scaleDisplay('1 kg (egy kisebb fej)', 2)).toBe('2 kg (2 kisebb fej)');
+		expect(scaleDisplay('1 kg (egy kisebb fej)', 0.5)).toBe('0,5 kg (0,5 kisebb fej)');
+		expect(scaleDisplay('kb. 30 dkg (egy kisebb fej fele)', 2)).toBe('kb. 60 dkg (2 kisebb fej fele)');
+		expect(scaleDisplay('Egy csipet', 3)).toBe('3 csipet');
+		expect(scaleDisplay('egyszerű', 2)).toBe('egyszerű');
+		expect(scaleDisplay('egyenként', 2)).toBe('egyenként');
+		expect(scaleDisplay('egy-egy szelet', 2)).toBe('egy-egy szelet');
+		expect(scaleDisplay('egy-két szál', 2)).toBe('egy-két szál');
+	});
+
 	it('leaves text without an amount, percentages and suffixed numbers alone', () => {
 		expect(scaleDisplay('ízlés szerint', 3)).toBe('ízlés szerint');
 		expect(scaleDisplay('2,8%-os tej', 2)).toBe('2,8%-os tej');
@@ -150,6 +173,27 @@ describe('scaleDisplay (real display texts from data/recipes)', () => {
 
 	it('formats large results with hu-HU grouping', () => {
 		expect(scaleDisplay('600 g', 3)).toBe(`1${NBSP}800 g`);
+	});
+
+	it('scales every amount in the real recipe content (data/recipes/*.json)', () => {
+		// Amounts that cannot be scaled on purpose. Anything else that stays the same at ×2 is a number word (or
+		// format) scaleDisplay does not understand yet, and the recipe page would show an unscaled amount.
+		const unscalable = (display: string): boolean => display === 'ízlés szerint' || display.startsWith('néhány ');
+		const dir = fileURLToPath(new URL('../../../../data/recipes', import.meta.url));
+		const displays = readdirSync(dir)
+			.filter((name) => name.endsWith('.json'))
+			.flatMap((name) => {
+				const doc = JSON.parse(readFileSync(join(dir, name), 'utf8')) as {
+					recipes: { id: string; lines: { display: string }[] }[];
+				};
+				return doc.recipes.flatMap((recipe) => recipe.lines.map((line) => `${recipe.id}: ${line.display}`));
+			});
+		expect(displays.length).toBeGreaterThan(100);
+		const unchanged = displays.filter((entry) => {
+			const display = entry.slice(entry.indexOf(': ') + 2);
+			return !unscalable(display) && scaleDisplay(display, 2) === display;
+		});
+		expect(unchanged).toEqual([]);
 	});
 });
 

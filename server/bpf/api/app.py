@@ -38,7 +38,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from bpf.api.errors import ApiError, api_error_handler, http_error_handler, validation_error_handler
 from bpf.api.repo import CONNECTION_TIMEOUT_S, CatalogueProvider, DataUnavailable
-from bpf.api.routes import register_routes
+from bpf.api.routes import HeavyRunner, register_routes
 from bpf.api.security import (
     BodyLimitMiddleware,
     JsonContentTypeMiddleware,
@@ -123,6 +123,7 @@ def create_app(
     )
     app.state.settings = settings
     app.state.provider = catalogue_provider
+    app.state.heavy = HeavyRunner(trust_proxy_headers=settings.trust_proxy_headers)
     app.router.route_class = StrictJsonRoute
     register_routes(app)
 

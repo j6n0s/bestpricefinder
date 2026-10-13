@@ -40,7 +40,7 @@
 | vegetarianus | 29 | reggeli_meleg | 5 |
 | gyors (≤ 25 min) | 16 | baromfi | 4 |
 | foetel | 15 | fozelek | 4 |
-| gyerekbarat | 11 | hal | 4 |
+| gyerekbarat | 10 | hal | 4 |
 | ket_napos | 7 | reggeli_hideg | 4 |
 | snack | 7 | salata | 4 |
 | leves | 6 | sertes | 3 |
@@ -50,6 +50,7 @@
 - No recipe uses `koret`.
 - `olcso` is computed by the app and never set by hand.
 - `vegetarianus` is descriptive and lacto-ovo: some cheeses may be made with animal rennet.
+- `gyerekbarat` is descriptive only (a simple, mild dish children commonly eat). It is never put on a recipe with a required `nut_seed` line (whole or chopped nuts or seeds), so the peanut-topped `joghurtos-gyumolcstal-foldimogyoroval` does not carry it. The loader does not check this yet; `server/tests/test_content_shipped_tags.py` guards the shipped data.
 
 ## 4. Coverage per recipe
 
@@ -93,7 +94,7 @@
 | `almas-joghurtos-kevert-suti` | Almás-fahéjas joghurtos kevert süti | small | tizorai, uzsonna | 4 | 65 | snack, edes, ket_napos, husmentes, vegetarianus, gyerekbarat | 100.0 % | 277 | 277 | 69 |
 | `bananos-kefir` | Banános kefir | small | tizorai, uzsonna | 2 | 5 | snack, husmentes, vegetarianus, gyors, gyerekbarat | 100.0 % | 368 | 368 | 184 |
 | `bundas-kenyer-friss-zoldseggel` | Bundás kenyér friss paradicsommal és uborkával | small | reggeli | 2 | 25 | reggeli_meleg, husmentes, vegetarianus, gyors, gyerekbarat | 100.0 % | 635 | 635 | 318 |
-| `joghurtos-gyumolcstal-foldimogyoroval` | Joghurtos gyümölcstál pirított földimogyoróval | small | reggeli | 2 | 15 | reggeli_hideg, husmentes, vegetarianus, gyors, gyerekbarat | 100.0 % | 446 | 446 | 223 |
+| `joghurtos-gyumolcstal-foldimogyoroval` | Joghurtos gyümölcstál pirított földimogyoróval | small | reggeli | 2 | 15 | reggeli_hideg, husmentes, vegetarianus, gyors | 100.0 % | 446 | 446 | 223 |
 | `korozott-rozskenyerrel` | Körözött rozskenyérrel és zöldpaprikával | small | reggeli | 2 | 15 | reggeli_hideg, husmentes, vegetarianus, gyors | 100.0 % | 559 | 559 | 280 |
 | `kortes-narancsos-joghurt` | Körtés-narancsos joghurtkehely | small | tizorai, uzsonna | 2 | 10 | snack, husmentes, vegetarianus, gyors, gyerekbarat | 100.0 % | 353 | 353 | 177 |
 | `kortes-turokrem-piritoson` | Fahéjas-körtés túrókrém pirított rozskenyéren | small | reggeli | 2 | 15 | reggeli_hideg, husmentes, vegetarianus, gyors | 100.0 % | 499 | 499 | 250 |
@@ -251,7 +252,7 @@ The library has 408 recipe lines, 21 of them optional.
   - doneness checks are given for poultry, pork, beef and fish;
   - the six two-day main dishes say to cool the leftovers and refrigerate them within two hours, then reheat to boiling; the two-day cake keeps covered at room temperature;
   - times are plausible;
-  - tags are consistent (`gyors` ≤ 25 minutes; every `ket_napos` recipe has a storage step).
+  - tags are consistent (`gyors` ≤ 25 minutes; every `ket_napos` recipe has a storage step; no `gyerekbarat` recipe has a required `nut_seed` line).
 - **Claims:** no health or nutrition claims.
 - **Originality:** the research files hold titles, URLs and ingredient lists, but no recipe instruction text. No text of ours reads like a known recipe-site phrasing.
 

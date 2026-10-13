@@ -292,7 +292,8 @@ textarea {
 	cursor: pointer;
 }
 
-.btn:disabled {
+.btn:disabled,
+.btn[aria-disabled='true'] {
 	cursor: not-allowed;
 	opacity: 0.6;
 }
@@ -302,7 +303,7 @@ textarea {
 	color: var(--color-on-primary);
 }
 
-.btn-primary:hover:not(:disabled) {
+.btn-primary:hover:not(:disabled, [aria-disabled='true']) {
 	background: var(--color-primary-hover);
 	color: var(--color-on-primary);
 }
@@ -313,7 +314,7 @@ textarea {
 	border-color: var(--color-border);
 }
 
-.btn-secondary:hover:not(:disabled) {
+.btn-secondary:hover:not(:disabled, [aria-disabled='true']) {
 	background: var(--color-surface-alt);
 	color: var(--color-text);
 }
@@ -384,6 +385,20 @@ textarea {
 	margin: 0;
 	flex: none;
 	accent-color: var(--color-primary);
+}
+
+/*
+ * Narrow screens: the main navigation is a fixed bar at the bottom (BottomNav, same breakpoint). Keep focused
+ * controls, scrollIntoView targets and fragment jumps clear of it, so the bar never covers the focused control
+ * and its focus ring (WCAG 2.4.7 / 2.4.11; also at 200% desktop zoom, where this layout applies).
+ */
+@media (max-width: 47.99rem) {
+	html {
+		/* --nav-reserved: the bar's measured height (BottomNav), when it is taller than usual. */
+		scroll-padding-bottom: calc(
+			var(--nav-reserved, calc(var(--nav-height) + env(safe-area-inset-bottom))) + var(--space-2)
+		);
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {

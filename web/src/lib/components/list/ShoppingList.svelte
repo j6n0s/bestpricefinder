@@ -1,8 +1,10 @@
 <!--
 	The shopping list itself: the lines to buy grouped by shop section (docs/DATA.md order) with check-off
-	boxes, the "valószínűleg otthon van" section with a "nincs otthon" toggle per staple, and the lines removed
-	by hand. No prices here (so no attribution is needed); the prices are in "Hol a legolcsóbb a közelben?".
-	Every change is reported to the page, which saves it on this device only.
+	boxes, the "valószínűleg otthon van" section with a "nincs otthon" toggle per staple (none for tap water),
+	the ingredients excluded in the settings (with "mégis megveszem"), and the lines removed by hand. No prices
+	here (so no attribution is needed); the prices are in "Hol a legolcsóbb a közelben?". Every change is
+	reported to the page, which saves it on this device only. Ingredient names come from the content, which is
+	Hungarian only, so they carry lang="hu" (WCAG 3.1.2) in the English UI too.
 -->
 <script lang="ts">
 	import { tick } from 'svelte';
@@ -10,7 +12,7 @@
 	import Badge from '$lib/components/Badge.svelte';
 	import { i18n, t, tp } from '$lib/i18n';
 	import { groupLabelKey, groupLines } from '$lib/list/groups';
-	import { isBought, lineKind, listSections, type LineChoices } from '$lib/list/lines';
+	import { canBeBought, isBought, isIncludedExclusion, lineKind, listSections, type LineChoices } from '$lib/list/lines';
 	import { formatAmount } from '$lib/list/packs';
 
 	interface Props {
@@ -22,12 +24,16 @@
 		onremove: (ingredientId: string) => void;
 		onrestore: (ingredientId: string) => void;
 		onnotathome: (ingredientId: string, notAtHome: boolean) => void;
+		/** "Mégis megveszem": an ingredient excluded in the settings goes on this list after all. */
+		oninclude: (ingredientId: string) => void;
 	}
 
-	let { lines, choices, checked, ontogglecheck, onclearchecks, onremove, onrestore, onnotathome }: Props = $props();
+	let { lines, choices, checked, ontogglecheck, onclearchecks, onremove, onrestore, onnotathome, oninclude }: Props =
+		$props();
 	const id = $props.id();
 
 	let root = $state<HTMLDivElement>();
+	let summaryLine = $state<HTMLParagraphElement>();
 
 	const sections = $derived(listSections(lines, choices));
 	/** Lines to buy: the non-pantry lines plus the staples marked "nincs otthon", grouped by section. */
@@ -50,6 +56,22 @@
 		target?.focus();
 	}
 
+	/** After "Pipák törlése" the button is gone: focus the first box (or the summary), never <body>. */
+	async function clearChecks(): Promise<void> {
+		onclearchecks();
+		await tick();
+		const target = root?.querySelector<HTMLElement>('input[data-line-check]') ?? summaryLine;
+		target?.focus();
+	}
+
+	async function include(ingredientId: string): Promise<void> {
+		oninclude(ingredientId);
+		await tick();
+		const target =
+			root?.querySelector<HTMLElement>(`input[data-line-check="${CSS.escape(ingredientId)}"]`) ?? summaryLine;
+		target?.focus();
+	}
+
 	async function restore(ingredientId: string): Promise<void> {
 		onrestore(ingredientId);
 		await tick();
@@ -62,14 +84,14 @@
 
 <div class="shopping-list" bind:this={root}>
 	<div class="summary">
-		<p>
+		<p tabindex="-1" bind:this={summaryLine} data-testid="list-summary">
 			<strong>{tp('list.summary', bought.length)}</strong>
 			{#if bought.length > 0}
 				<span class="muted">· {t('list.checked_count', { done: doneCount, total: bought.length })}</span>
 			{/if}
 		</p>
 		{#if doneCount > 0}
-			<button type="button" class="btn btn-secondary" onclick={onclearchecks}>{t('list.clear_checks')}</button>
+			<button type="button" class="btn btn-secondary" onclick={clearChecks}>{t('list.clear_checks')}</button>
 		{/if}
 	</div>
 
@@ -91,9 +113,12 @@
 								data-line-check={line.ingredient_id}
 								onchange={(event) => ontogglecheck(line.ingredient_id, event.currentTarget.checked)}
 							/>
-							<span class="name">{line.name_hu}</span>
+							<span class="name" lang="hu">{line.name_hu}</span>
 							<span class="qty">{amount(line)}</span>
 						</label>
+						{#if isIncludedExclusion(line, choices)}
+							<Badge tone="warning">{t('list.line_excluded')}</Badge>
+						{/if}
 						{#if lineKind(line, choices) === 'pantry_missing'}
 							<Badge tone="neutral">{t('list.line_not_at_home')}</Badge>
 						{:else}
@@ -129,21 +154,46 @@
 					{@const missing = lineKind(line, choices) === 'pantry_missing'}
 					<li class="line">
 						<span class="item">
-							<span class="name">{line.name_hu}</span>
+							<span class="name" lang="hu">{line.name_hu}</span>
 							<span class="qty">{amount(line)}</span>
 							{#if missing}
 								<Badge tone="info">{t('list.pantry_on_list')}</Badge>
 							{/if}
 						</span>
-						<label class="choice toggle">
-							<input
-								type="checkbox"
-								checked={missing}
-								aria-label={t('list.not_at_home_named', { name: line.name_hu })}
-								onchange={(event) => onnotathome(line.ingredient_id, event.currentTarget.checked)}
-							/>
-							<span>{t('list.not_at_home')}</span>
-						</label>
+						{#if canBeBought(line.ingredient_id)}
+							<label class="choice toggle">
+								<input
+									type="checkbox"
+									checked={missing}
+									aria-label={t('list.not_at_home_named', { name: line.name_hu })}
+									onchange={(event) => onnotathome(line.ingredient_id, event.currentTarget.checked)}
+								/>
+								<span>{t('list.not_at_home')}</span>
+							</label>
+						{/if}
+					</li>
+				{/each}
+			</ul>
+		</section>
+	{/if}
+
+	{#if sections.excluded.length > 0}
+		<section class="group excluded" aria-labelledby="{id}-excluded" data-testid="excluded-lines">
+			<h2 id="{id}-excluded">{t('list.excluded_title')}</h2>
+			<p class="small muted">{t('list.excluded_note')}</p>
+			<ul class="lines">
+				{#each sections.excluded as line (line.ingredient_id)}
+					<li class="line">
+						<span class="item">
+							<span class="name" lang="hu">{line.name_hu}</span>
+							<span class="qty">{amount(line)}</span>
+						</span>
+						<button
+							type="button"
+							class="btn btn-secondary"
+							aria-label={t('list.buy_anyway_named', { name: line.name_hu })}
+							onclick={() => include(line.ingredient_id)}>{t('list.buy_anyway')}</button
+						>
 					</li>
 				{/each}
 			</ul>
@@ -158,7 +208,7 @@
 				{#each sections.removed as line (line.ingredient_id)}
 					<li class="line">
 						<span class="item">
-							<span class="name">{line.name_hu}</span>
+							<span class="name" lang="hu">{line.name_hu}</span>
 							<span class="qty">{amount(line)}</span>
 						</span>
 						<button
@@ -186,6 +236,14 @@
 
 	.summary p {
 		margin: 0;
+	}
+
+	.summary p:focus {
+		outline: none;
+	}
+
+	.summary p:focus-visible {
+		outline: var(--focus-ring);
 	}
 
 	.group {

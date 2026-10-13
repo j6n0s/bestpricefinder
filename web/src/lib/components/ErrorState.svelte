@@ -7,9 +7,11 @@
 		error: unknown;
 		onretry?: () => void;
 		title?: string;
+		/** Bound by a page that moves focus to "Újra" after a failed action (so focus never drops to <body>). */
+		retryButton?: HTMLButtonElement;
 	}
 
-	let { error, onretry, title }: Props = $props();
+	let { error, onretry, title, retryButton = $bindable() }: Props = $props();
 	const message = $derived(t(errorMessageKey(error)));
 </script>
 
@@ -17,7 +19,7 @@
 	<p class="title">{title ?? t('core.error_title')}</p>
 	<p>{message}</p>
 	{#if onretry}
-		<button type="button" class="btn btn-secondary" onclick={onretry}>{t('core.retry')}</button>
+		<button type="button" class="btn btn-secondary" bind:this={retryButton} onclick={onretry}>{t('core.retry')}</button>
 	{/if}
 </div>
 

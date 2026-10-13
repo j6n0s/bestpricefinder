@@ -9,6 +9,12 @@
 * Any other path is a client-side route: the fallback page ``index.html`` (read once at startup, so the page
   and its CSP header always match) with ``no-cache``. A missing file under ``/_app/`` is a 404 instead, so a
   stale client never receives HTML for a JavaScript chunk.
+* ``service-worker.js`` is also read once at startup and served from that snapshot (``no-cache``, a content
+  ETag), so the worker always belongs to the same build as the page the server hands out. Served live from
+  disk, a new build written before the restart would pair the new worker (and its precache list) with the
+  old in-memory page: a browser could install it and cache the old shell under the new version. After the
+  restart the worker is byte-identical, so it is never replaced, and offline the old shell asks for chunks
+  that no longer exist (a blank page).
 * CSP: SvelteKit writes the policy (with the hash of its inline bootstrap script) into a ``<meta
   http-equiv="content-security-policy">`` of the HTML. At startup that policy is read from the fallback page
   and sent as the ``Content-Security-Policy`` header with ``frame-ancestors 'none'`` added (a meta tag cannot
@@ -112,17 +118,28 @@ class StaticFile:
 
 FALLBACK: Final = "fallback"
 NOT_FOUND: Final = "not_found"
+SERVICE_WORKER: Final = "service_worker"
+SERVICE_WORKER_FILE: Final = "service-worker.js"
 type Lookup = StaticFile | str
 
 
-class StaticSite:
-    """A loaded ``web/build``: its resolved root, the fallback page and the header policy."""
+def _content_etag(body: bytes) -> str:
+    return '"' + hashlib.sha256(body).hexdigest() + '"'
 
-    def __init__(self, root: Path, index_html: bytes, policy: str) -> None:
+
+class StaticSite:
+    """A loaded ``web/build``: its resolved root, the fallback page, the service worker (both read at
+    startup) and the header policy."""
+
+    def __init__(
+        self, root: Path, index_html: bytes, policy: str, service_worker: bytes | None = None
+    ) -> None:
         self.root = root
         self.index_html = index_html
-        self.index_etag = '"' + hashlib.sha256(index_html).hexdigest() + '"'
+        self.index_etag = _content_etag(index_html)
         self.policy = policy
+        self.service_worker = service_worker
+        self.service_worker_etag = _content_etag(service_worker) if service_worker is not None else ""
 
     @classmethod
     def load(cls, build_dir: Path) -> StaticSite | None:
@@ -138,7 +155,7 @@ class StaticSite:
         policy = header_policy(meta)
         if meta is None or policy == STRICT_HTML_POLICY:
             log.warning("web build: no usable CSP meta tag in index.html; serving a strict fallback policy")
-        return cls(root, index, policy)
+        return cls(root, index, policy, _read_service_worker(root))
 
     def lookup(self, url_path: str) -> Lookup:
         """Map a decoded request path to a file, the fallback page or NOT_FOUND (see the module doc)."""
@@ -150,6 +167,8 @@ class StaticSite:
             return NOT_FOUND
         if not parts or parts == ["index.html"]:
             return FALLBACK
+        if parts == [SERVICE_WORKER_FILE] and self.service_worker is not None:
+            return SERVICE_WORKER
         try:
             candidate = self.root.joinpath(*parts).resolve()
             if not candidate.is_relative_to(self.root):
@@ -168,15 +187,19 @@ class StaticSite:
         if isinstance(found, StaticFile):
             return self._file_response(request, found)
         if found == FALLBACK:
-            headers = {
-                "Cache-Control": CACHE_REVALIDATE,
-                "ETag": self.index_etag,
-                "Content-Security-Policy": self.policy,
-            }
-            if etag_matches(request.headers.get("if-none-match"), self.index_etag):
-                return Response(status_code=304, headers=headers)
-            return Response(self.index_html, media_type=CONTENT_TYPES[".html"], headers=headers)
+            return self._snapshot_response(request, self.index_html, self.index_etag, CONTENT_TYPES[".html"])
+        if found == SERVICE_WORKER and self.service_worker is not None:
+            return self._snapshot_response(
+                request, self.service_worker, self.service_worker_etag, CONTENT_TYPES[".js"]
+            )
         return error_response(404, "not_found")
+
+    def _snapshot_response(self, request: Request, body: bytes, etag: str, media_type: str) -> Response:
+        """A file read at startup: ``no-cache`` and a content ETag (the server drops the body for HEAD)."""
+        headers = {"Cache-Control": CACHE_REVALIDATE, "ETag": etag, "Content-Security-Policy": self.policy}
+        if etag_matches(request.headers.get("if-none-match"), etag):
+            return Response(status_code=304, headers=headers)
+        return Response(body, media_type=media_type, headers=headers)
 
     def _file_response(self, request: Request, found: StaticFile) -> Response:
         try:
@@ -188,6 +211,17 @@ class StaticSite:
         if etag_matches(request.headers.get("if-none-match"), etag):
             return Response(status_code=304, headers=headers)
         return FileResponse(found.path, headers=headers, media_type=found.content_type, stat_result=stat)
+
+
+def _read_service_worker(root: Path) -> bytes | None:
+    """The build's ``service-worker.js`` (inside the build, symlinks resolved), or None when there is none."""
+    try:
+        path = (root / SERVICE_WORKER_FILE).resolve(strict=True)
+        if not path.is_relative_to(root) or not path.is_file():
+            return None
+        return path.read_bytes()
+    except OSError:
+        return None
 
 
 def _content_type(path: Path) -> str:

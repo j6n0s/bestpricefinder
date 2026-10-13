@@ -8,6 +8,7 @@ import {
 	load,
 	migrate,
 	normaliseRadius,
+	onExternalChange,
 	resetForTests,
 	save,
 	update,
@@ -87,13 +88,77 @@ const fullState = (): StoredState => ({
 	pantry: { notAtHome: ['napraforgoolaj'] },
 	exclusions: { tags: ['hal', 'sertes'], ingredients: ['tej'] },
 	location: { consent: 'granted', source: 'device', districtId: '11', approx: { lat: 47.477, lon: 19.047, at: '2026-10-13T08:00:00.000Z' } },
-	checkedItems: ['lencse', 'voroshagyma'],
 	list: {
 		range: 'next_week',
 		entries: [
-			{ key: '2026-10-13T08:00:00.000Z|next_week', removed: ['repa', 'rizs'], storeId: 'synthetic-lidl-1' },
-			{ key: '2026-10-13T08:00:00.000Z|whole', removed: [], storeId: null }
+			{
+				key: '2026-10-13T08:00:00.000Z|next_week',
+				checked: ['lencse', 'voroshagyma'],
+				removed: ['repa', 'rizs'],
+				included: ['tej'],
+				storeId: 'synthetic-lidl-1'
+			},
+			{ key: '2026-10-13T08:00:00.000Z|whole', checked: [], removed: [], included: [], storeId: null }
 		]
+	},
+	lastList: {
+		body: '{"items":[{"recipe_id":"lencsefozelek","servings":2}]}',
+		savedAt: '2026-10-13T08:05:00.000Z',
+		lines: [
+			{
+				ingredient_id: 'voros_lencse',
+				name_hu: 'vörös lencse',
+				qty: 0.2,
+				unit: 'kg',
+				list_group: 'szaraz_tartos',
+				pantry: false,
+				recipe_ids: ['lencsefozelek']
+			}
+		]
+	},
+	lastQuote: {
+		body: '{"lines":[{"ingredient_id":"voros_lencse","qty":0.2}],"store_ids":["synthetic-lidl-1"],"include_loyalty":false}',
+		savedAt: '2026-10-13T08:06:00.000Z',
+		dataDate: '2026-10-13',
+		store: {
+			store_id: 'synthetic-lidl-1',
+			chain: 'lidl',
+			checkout_total: 899,
+			used_total: 360,
+			missing: [],
+			assumed_count: 0,
+			ksh_estimate_total: 0,
+			lines: [
+				{
+					ingredient_id: 'voros_lencse',
+					qty: 0.2,
+					unit: 'kg',
+					status: 'priced',
+					picks: [
+						{
+							option: {
+								product_id: 'synthetic-lencse-0.5',
+								product_name: 'Szintetikus vörös lencse',
+								pack_size: 0.5,
+								pack_price: 899,
+								unit_price: 1798,
+								price_type: 'NORMAL',
+								price_scope: 'chain',
+								availability: 'confirmed'
+							},
+							count: 1,
+							qty: 0.5,
+							cost: 899
+						}
+					],
+					checkout_cost: 899,
+					used_cost: 360,
+					leftover_qty: 0.3,
+					ksh_estimate: null,
+					alternatives: []
+				}
+			]
+		}
 	}
 });
 
@@ -137,7 +202,7 @@ describe('save / load / update', () => {
 	it('returns copies that cannot change the stored state', () => {
 		save(fullState());
 		const state = load();
-		state.checkedItems.push('x');
+		state.list.entries[0]?.checked.push('x');
 		state.exclusions.tags.length = 0;
 		expect(load()).toEqual(fullState());
 	});
@@ -228,16 +293,34 @@ describe('field validation', () => {
 		for (const candidate of bad) expect(migrate({ ...fullState(), plan: candidate }).plan).toBeNull();
 	});
 
-	it('cleans pantry, exclusions and checked items entry by entry', () => {
+	it('cleans pantry and exclusions entry by entry', () => {
 		const state = migrate({
 			...fullState(),
 			pantry: { notAtHome: ['olaj', 'olaj', 7, 'Ő'] },
-			exclusions: { tags: ['hal', 'hal', 'unknown_tag', 3], ingredients: ['tej', 'x'] },
-			checkedItems: ['a1', 'a1', 'b2', '', 'C']
+			exclusions: { tags: ['hal', 'hal', 'unknown_tag', 3], ingredients: ['tej', 'x'] }
 		});
 		expect(state.pantry).toEqual({ notAtHome: ['olaj'] });
 		expect(state.exclusions).toEqual({ tags: ['hal'], ingredients: ['tej'] });
-		expect(state.checkedItems).toEqual(['a1', 'b2']);
+	});
+
+	it('drops the global ticks of earlier builds: ticks belong to one list (no version bump needed)', () => {
+		const state = migrate({ ...fullState(), checkedItems: ['voroshagyma', 'kenyer'] });
+		expect(JSON.stringify(state)).not.toContain('checkedItems');
+		expect(state.list.entries[0]?.checked).toEqual(['lencse', 'voroshagyma']);
+	});
+
+	it('cleans the ticks and the "bought anyway" ids of each list; older entries without them get []', () => {
+		const entry = (value: Record<string, unknown>) =>
+			migrate({ ...fullState(), list: { range: 'whole', entries: [{ key: 'k', storeId: null, ...value }] } }).list.entries[0];
+		expect(entry({ removed: ['repa'] })).toEqual({ key: 'k', checked: [], removed: ['repa'], included: [], storeId: null });
+		expect(entry({ checked: ['a1', 'a1', 'b2', '', 'C', 7], included: ['tej', 'tej', 'BAD!'] })).toEqual({
+			key: 'k',
+			checked: ['a1', 'b2'],
+			removed: [],
+			included: ['tej'],
+			storeId: null
+		});
+		expect(entry({ checked: 'x', included: null })).toMatchObject({ checked: [], included: [] });
 	});
 
 	it('drops the retired on-hand quantities of older documents (no version bump needed)', () => {
@@ -276,10 +359,10 @@ describe('field validation', () => {
 		).toEqual({
 			range: 'next_week',
 			entries: [
-				{ key: 'ok', removed: ['repa', 'rizs'], storeId: null },
-				{ key: 'x'.repeat(80), removed: [], storeId: 'synthetic-aldi-1' },
-				{ key: ' ~', removed: [], storeId: null },
-				{ key: 'no-store', removed: [], storeId: null }
+				{ key: 'ok', checked: [], removed: ['repa', 'rizs'], included: [], storeId: null },
+				{ key: 'x'.repeat(80), checked: [], removed: [], included: [], storeId: 'synthetic-aldi-1' },
+				{ key: ' ~', checked: [], removed: [], included: [], storeId: null },
+				{ key: 'no-store', checked: [], removed: [], included: [], storeId: null }
 			]
 		});
 	});
@@ -295,9 +378,49 @@ describe('field validation', () => {
 
 	it('bounds list sizes', () => {
 		const ids = Array.from({ length: 600 }, (_, i) => `item_${i}`);
-		const state = migrate({ ...fullState(), checkedItems: ids, exclusions: { tags: [], ingredients: ids } });
-		expect(state.checkedItems).toHaveLength(500);
+		const state = migrate({
+			...fullState(),
+			list: { range: 'whole', entries: [{ key: 'k', checked: ids, removed: [], included: ids, storeId: null }] },
+			exclusions: { tags: [], ingredients: ids }
+		});
+		expect(state.list.entries[0]?.checked).toHaveLength(500);
+		expect(state.list.entries[0]?.included).toHaveLength(50);
 		expect(state.exclusions.ingredients).toHaveLength(50);
+	});
+
+	it('keeps the offline copies only when they are well formed', () => {
+		const full = fullState();
+		const lastList = (value: unknown) => migrate({ ...full, lastList: value }).lastList;
+		const lastQuote = (value: unknown) => migrate({ ...full, lastQuote: value }).lastQuote;
+		expect(lastList(full.lastList)).toEqual(full.lastList);
+		expect(lastQuote(full.lastQuote)).toEqual(full.lastQuote);
+		const line = full.lastList?.lines[0];
+		for (const bad of [
+			undefined,
+			'x',
+			{ ...full.lastList, body: '' },
+			{ ...full.lastList, body: 'x'.repeat(65_537) },
+			{ ...full.lastList, savedAt: 'yesterday' },
+			{ ...full.lastList, lines: 'x' },
+			{ ...full.lastList, lines: [{ ...line, qty: '0.2' }] },
+			{ ...full.lastList, lines: Array.from({ length: 501 }, (_, i) => ({ ...line, ingredient_id: `item_${i}` })) }
+		]) {
+			expect(lastList(bad)).toBeNull();
+		}
+		const store = full.lastQuote?.store;
+		for (const bad of [
+			undefined,
+			{ ...full.lastQuote, dataDate: '13/10/2026' },
+			{ ...full.lastQuote, savedAt: 7 },
+			{ ...full.lastQuote, body: 7 },
+			{ ...full.lastQuote, store: { ...store, store_id: 'bad id!' } },
+			{ ...full.lastQuote, store: { ...store, checkout_total: '899' } },
+			{ ...full.lastQuote, store: { ...store, lines: [{ ...store?.lines[0], status: 'akcio' }] } }
+		]) {
+			expect(lastQuote(bad)).toBeNull();
+		}
+		// Duplicate list lines are dropped (keyed lists).
+		expect(lastList({ ...full.lastList, lines: [line, line] })?.lines).toHaveLength(1);
 	});
 
 	it('keeps a position only with consent, rounded to about 100 m', () => {
@@ -445,7 +568,7 @@ describe('clearAll ("minden adat törlése")', () => {
 		expect(isPersistent()).toBe(false);
 		expect(update({ people: 3 })).toMatchObject({ people: 3, plan: null, list: { range: 'this_week', entries: [] } });
 		// The next successful write replaces the old copy with the cleared state.
-		expect(stored()).toMatchObject({ people: 3, plan: null, checkedItems: [] });
+		expect(stored()).toMatchObject({ people: 3, plan: null, list: { entries: [] }, lastList: null, lastQuote: null });
 		expect(isPersistent()).toBe(true);
 	});
 
@@ -474,5 +597,72 @@ describe('clearAll ("minden adat törlése")', () => {
 		expect(clearAll()).toBe(false);
 		expect(load()).toEqual(defaultState());
 		expect(isPersistent()).toBe(false);
+	});
+});
+
+describe('onExternalChange (another tab)', () => {
+	/** A window double: the storage module listens to its `storage` events. */
+	function fakeWindow(): EventTarget {
+		const target = new EventTarget();
+		vi.stubGlobal('window', target);
+		return target;
+	}
+
+	function storageEvent(key: string | null, area: Storage = fake): Event {
+		return Object.assign(new Event('storage'), { key, storageArea: area });
+	}
+
+	it('drops the in-memory copy and reports the defaults when another tab deleted everything', () => {
+		const win = fakeWindow();
+		save(fullState());
+		const seen: StoredState[] = [];
+		const stop = onExternalChange((state) => seen.push(state));
+		fake.map.clear(); // "Minden adat törlése" in the other tab
+		win.dispatchEvent(storageEvent(STORAGE_KEY));
+		expect(seen).toEqual([defaultState()]);
+		expect(load()).toEqual(defaultState());
+		stop();
+		win.dispatchEvent(storageEvent(STORAGE_KEY));
+		expect(seen).toHaveLength(1);
+	});
+
+	it('reports what the other tab stored, also after localStorage.clear() (key null)', () => {
+		const win = fakeWindow();
+		const seen: number[] = [];
+		onExternalChange((state) => seen.push(state.people));
+		fake.map.set(STORAGE_KEY, JSON.stringify({ ...fullState(), people: 7 }));
+		win.dispatchEvent(storageEvent(null));
+		expect(seen).toEqual([7]);
+	});
+
+	it('even the copy this tab could not write gives way to the other tab', () => {
+		const win = fakeWindow();
+		save(fullState());
+		fake.failSet = true;
+		update({ people: 9 }); // kept in memory only
+		expect(load().people).toBe(9);
+		fake.failSet = false;
+		fake.map.delete(STORAGE_KEY);
+		const seen: StoredState[] = [];
+		onExternalChange((state) => seen.push(state));
+		win.dispatchEvent(storageEvent(STORAGE_KEY));
+		expect(seen[0]).toEqual(defaultState());
+	});
+
+	it('ignores other keys and other storage areas', () => {
+		const win = fakeWindow();
+		const seen: unknown[] = [];
+		onExternalChange((state) => seen.push(state));
+		win.dispatchEvent(storageEvent('other.app'));
+		win.dispatchEvent(storageEvent(STORAGE_KEY, new FakeStorage()));
+		expect(seen).toEqual([]);
+	});
+
+	it('is a no-op without a window', () => {
+		vi.stubGlobal('window', undefined);
+		const stop = onExternalChange(() => {
+			throw new Error('never called');
+		});
+		expect(() => stop()).not.toThrow();
 	});
 });

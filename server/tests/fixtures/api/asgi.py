@@ -8,7 +8,9 @@ from typing import Any
 JSON_HEADERS = [(b"host", b"testserver"), (b"content-type", b"application/json")]
 
 
-async def _call(app: Any, scope: dict[str, Any], chunks: list[bytes]) -> tuple[int, dict[str, str], bytes]:
+async def _call(
+    app: Any, scope: dict[str, Any], chunks: list[bytes], *, disconnect: bool = False
+) -> tuple[int, dict[str, str], bytes]:
     queue = [
         {"type": "http.request", "body": c, "more_body": i < len(chunks) - 1} for i, c in enumerate(chunks)
     ]
@@ -17,7 +19,8 @@ async def _call(app: Any, scope: dict[str, Any], chunks: list[bytes]) -> tuple[i
     async def receive() -> dict[str, Any]:
         if queue:
             return queue.pop(0)
-        await asyncio.sleep(3600)  # never disconnect while the app is still answering
+        if not disconnect:
+            await asyncio.sleep(3600)  # never disconnect while the app is still answering
         return {"type": "http.disconnect"}
 
     async def send(message: dict[str, Any]) -> None:
@@ -30,17 +33,14 @@ async def _call(app: Any, scope: dict[str, Any], chunks: list[bytes]) -> tuple[i
     return start["status"], headers, body
 
 
-def raw_request(
-    app: Any,
+def make_scope(
     path: str,
     *,
     method: str = "GET",
     headers: list[tuple[bytes, bytes]] | None = None,
-    chunks: list[bytes] | None = None,
     client: tuple[str, int] = ("198.51.100.7", 40000),
-) -> tuple[int, dict[str, str], bytes]:
-    """Call the ASGI app with an exact, already-decoded ``path`` (no client-side URL normalisation)."""
-    scope = {
+) -> dict[str, Any]:
+    return {
         "type": "http",
         "asgi": {"version": "3.0"},
         "http_version": "1.1",
@@ -55,4 +55,33 @@ def raw_request(
         "server": ("testserver", 80),
         "state": {},
     }
+
+
+def raw_request(
+    app: Any,
+    path: str,
+    *,
+    method: str = "GET",
+    headers: list[tuple[bytes, bytes]] | None = None,
+    chunks: list[bytes] | None = None,
+    client: tuple[str, int] = ("198.51.100.7", 40000),
+) -> tuple[int, dict[str, str], bytes]:
+    """Call the ASGI app with an exact, already-decoded ``path`` (no client-side URL normalisation)."""
+    scope = make_scope(path, method=method, headers=headers, client=client)
     return asyncio.run(_call(app, scope, chunks or [b""]))
+
+
+async def request_async(
+    app: Any,
+    path: str,
+    *,
+    method: str = "GET",
+    headers: list[tuple[bytes, bytes]] | None = None,
+    chunks: list[bytes] | None = None,
+    client: tuple[str, int] = ("198.51.100.7", 40000),
+    disconnect: bool = False,
+) -> tuple[int, dict[str, str], bytes]:
+    """:func:`raw_request` inside a running event loop (concurrent requests). With ``disconnect`` the client
+    hangs up right after sending the body: every later ``receive()`` is ``http.disconnect``."""
+    scope = make_scope(path, method=method, headers=headers, client=client)
+    return await _call(app, scope, chunks or [b""], disconnect=disconnect)

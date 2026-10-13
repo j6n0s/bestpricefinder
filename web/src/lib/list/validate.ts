@@ -112,6 +112,11 @@ function isQuoteLine(value: unknown): value is QuoteLineOut {
 	);
 }
 
+/** One store of a POST /api/quote answer, checked against the contract (also used for the offline copy). */
+export function validStoreQuote(value: unknown): value is StoreQuoteOut {
+	return isStoreQuote(value);
+}
+
 function isStoreQuote(value: unknown): value is StoreQuoteOut {
 	return (
 		isRecord(value) &&

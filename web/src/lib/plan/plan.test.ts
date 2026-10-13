@@ -12,6 +12,7 @@ import {
 	emptyPlan,
 	mealAt,
 	mealCount,
+	freshSeed,
 	nextSeed,
 	planFromResponse,
 	planLengthDays,
@@ -53,6 +54,28 @@ describe('plan length and slots', () => {
 		expect(planLengthDays('month', '2026-10-31')).toBe(1);
 		expect(planLengthDays('month', '2026-12-01')).toBe(31);
 		expect(planLengthDays('month', '2026-02-01')).toBe(28);
+	});
+});
+
+describe('freshSeed (a new plan)', () => {
+	it('is a whole number in the API range 0…2^31−1, also at the edges of random()', () => {
+		expect(freshSeed(null, () => 0)).toBe(0);
+		expect(freshSeed(null, () => 0.5)).toBe(2 ** 30);
+		expect(freshSeed(null, () => 0.999999)).toBe(Math.floor(0.999999 * 2 ** 31));
+		expect(freshSeed(null, () => 1)).toBe(SEED_MAX);
+		expect(freshSeed(null, () => Number.NaN)).toBe(0);
+		expect(freshSeed(null, () => -1)).toBe(0);
+		for (let i = 0; i < 200; i += 1) {
+			const seed = freshSeed();
+			expect(Number.isInteger(seed) && seed >= 0 && seed <= SEED_MAX).toBe(true);
+		}
+	});
+
+	it('differs between plans: not a constant, and never the seed of the plan it replaces', () => {
+		expect(freshSeed(null, () => 0.1)).not.toBe(freshSeed(null, () => 0.2));
+		expect(freshSeed(0, () => 0)).toBe(1);
+		expect(freshSeed(SEED_MAX, () => 1)).toBe(0);
+		expect(freshSeed(5, () => 0)).toBe(0);
 	});
 });
 

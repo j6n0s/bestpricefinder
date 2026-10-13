@@ -1,7 +1,13 @@
 <!--
 	Weekly plan ("Heti terv"): plan the rest of the month week by week.
 	- "Terv készítése" / "Új javaslat" call POST /api/plan/suggest with the household settings from
-	  $lib/storage (people, slots, exclusions) and a seed; "Új javaslat" uses the next seed.
+	  $lib/storage (people, slots, exclusions) and a seed. "Terv készítése" uses a fresh random seed (never the
+	  current plan's): the planner is deterministic and gets no date, so a fixed seed would repeat the same week
+	  every week. "Új javaslat" uses the next seed; both are stored with the plan, so retry and undo work.
+	- Another tab may change or delete the plan: the page reloads it (onExternalChange), and edits start from
+	  the stored plan, never from a stale copy.
+	- Focus never drops to <body>: the buttons stay focusable while a plan is being made (aria-disabled), a
+	  failed suggestion moves focus to "Újra", and a status region says "Terv készítése…".
 	- The plan is personal data: it is kept only in localStorage (StoredState.plan), never on the server.
 	- Every edit (change or remove a meal) re-checks the weekly rules with POST /api/plan/check, using the
 	  plan's own no_repeat_days.
@@ -32,6 +38,7 @@
 		clearMeal,
 		dayDate,
 		mealAt,
+		freshSeed,
 		nextSeed,
 		planFromResponse,
 		planLengthDays,
@@ -41,7 +48,7 @@
 		type PlanLength
 	} from '$lib/plan/plan';
 	import { chainNameMap } from '$lib/plan/recipes';
-	import { isPersistent, load, update, type StoredPlan } from '$lib/storage';
+	import { isPersistent, load, onExternalChange, update, type StoredPlan } from '$lib/storage';
 
 	type CheckStatus = 'idle' | 'loading' | 'ready' | 'error';
 	type Notice = 'replaced' | 'cleared' | 'restored';
@@ -83,6 +90,7 @@
 
 	let planHeading = $state<HTMLElement>();
 	let undoButton = $state<HTMLButtonElement>();
+	let suggestRetry = $state<HTMLButtonElement>();
 
 	const recipeById = $derived(new Map<string, RecipeSummary>((recipes?.recipes ?? []).map((r) => [r.id, r])));
 	const knownIds = $derived(recipes ? new Set(recipes.recipes.map((r) => r.id)) : null);
@@ -211,19 +219,24 @@
 			await tick();
 			planHeading?.focus();
 		} catch (error) {
-			if (seq === suggestSeq) suggestError = error;
+			if (seq !== suggestSeq) return;
+			suggestError = error;
+			suggesting = false;
+			// The pressed button stays where it was, but the way on is "Újra" in the error above it.
+			await tick();
+			suggestRetry?.focus();
 		} finally {
 			if (seq === suggestSeq) suggesting = false;
 		}
 	}
 
 	function makePlan(): void {
-		if (!isCalendarDate(startDate)) return;
-		void suggest({ seed: 0, startDate, days: planLengthDays(length, startDate) });
+		if (suggesting || !isCalendarDate(startDate)) return;
+		void suggest({ seed: freshSeed(load().plan?.seed ?? null), startDate, days: planLengthDays(length, startDate) });
 	}
 
 	function newSuggestion(): void {
-		if (!plan) return;
+		if (suggesting || !plan) return;
 		void suggest({
 			seed: nextSeed(plan.seed),
 			startDate: plan.startDate ?? todayInBudapest(),
@@ -236,7 +249,7 @@
 	}
 
 	async function clearPlan(): Promise<void> {
-		if (!plan) return;
+		if (suggesting || !plan) return;
 		const before = plan;
 		stopChecking();
 		savePlan(null);
@@ -289,14 +302,19 @@
 	function pickMeal(recipeId: string): void {
 		const target = picker;
 		picker = null;
-		if (!target || !settings.plan) return;
-		editPlan(setMeal(settings.plan, target.dayIndex, target.slot, recipeId));
+		// From the stored plan: another tab may have changed or deleted it since this page read it.
+		const current = load().plan;
+		if (!target || !current) return;
+		const next = setMeal(current, target.dayIndex, target.slot, recipeId);
+		if (next !== current) editPlan(next);
 		void focusChangeButton(target.dayIndex, target.slot);
 	}
 
 	function removeMeal(dayIndex: number, slot: Slot): void {
-		if (!settings.plan) return;
-		editPlan(clearMeal(settings.plan, dayIndex, slot));
+		const current = load().plan;
+		if (!current) return;
+		const next = clearMeal(current, dayIndex, slot);
+		if (next !== current) editPlan(next);
 		void focusChangeButton(dayIndex, slot);
 	}
 
@@ -304,7 +322,15 @@
 		void loadRecipes().then(() => {
 			if (settings.plan) void runCheck();
 		});
+		const stopWatching = onExternalChange((next) => {
+			const before = settings.plan;
+			settings = next;
+			persistent = isPersistent();
+			if (!next.plan) picker = null;
+			if (next.plan && JSON.stringify(next.plan) !== JSON.stringify(before)) void runCheck();
+		});
 		return () => {
+			stopWatching();
 			stopChecking();
 			stopSuggesting();
 		};
@@ -335,8 +361,17 @@
 	{/if}
 </div>
 
+<p class="visually-hidden" role="status" data-testid="suggest-status">
+	{#if suggesting}{t('plan.making_plan')}{/if}
+</p>
+
 {#if suggestError}
-	<ErrorState error={suggestError} title={t('plan.suggest_error_title')} onretry={retrySuggest} />
+	<ErrorState
+		error={suggestError}
+		title={t('plan.suggest_error_title')}
+		onretry={retrySuggest}
+		bind:retryButton={suggestRetry}
+	/>
 {/if}
 
 {#if plan}
@@ -349,10 +384,10 @@
 				{t('plan.slots_value', { count: plan.slots })}
 			</p>
 			<div class="btn-row">
-				<button type="button" class="btn btn-primary" onclick={newSuggestion} disabled={suggesting}>
+				<button type="button" class="btn btn-primary" onclick={newSuggestion} aria-disabled={suggesting}>
 					{suggesting ? t('plan.making_plan') : t('plan.new_suggestion')}
 				</button>
-				<button type="button" class="btn btn-secondary" onclick={clearPlan} disabled={suggesting}>
+				<button type="button" class="btn btn-secondary" onclick={clearPlan} aria-disabled={suggesting}>
 					{t('plan.clear_plan')}
 				</button>
 				<a class="btn btn-secondary" href="/lista">{t('plan.to_list')}</a>

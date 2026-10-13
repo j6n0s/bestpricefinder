@@ -30,7 +30,8 @@ export const sourcesEn: Messages<typeof sourcesHu> = {
 
 	privacy_title: 'Privacy',
 	device_title: 'What stays on your device',
-	device_plan: 'the weekly plan and the ticks on the shopping list',
+	device_plan:
+		'the weekly plan, the ticks and choices on the shopping list, and the last loaded list with the chosen store’s prices (so it also works without a connection)',
 	device_household: 'the household size, the number of meals and the search radius',
 	device_pantry: 'the pantry and the excluded ingredients and tags',
 	device_location: 'the location permission, the chosen district or the approximate location',

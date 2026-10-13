@@ -31,13 +31,50 @@ The search is exact. Every quantity and price is converted to a scaled integer (
   pack's count: ``c_i <= ceil(qty / s_i)``; ``c_i < s_b / gcd(s_i, s_b)`` (that many copies of ``i`` can be
   swapped for whole ``b`` packs, strictly better); and their total count ``< s_b / gcd(all sizes)``
   (pigeonhole on partial sums modulo ``s_b``);
-* a depth-first search over the other packs' counts with a linear-relaxation lower bound, where ``b``'s
-  count and the variable weight are computed in closed form at each leaf.
+* a search over multisets ``X`` of the other packs (labels), where ``b``'s count and the variable weight
+  are computed in closed form for each label, described below.
+
+Search
+------
+The purchase order (cost, leftover, picks, product id) is the lexicographic order of an additive vector:
+``W = (cost, quantity bought, picks, -count of each option in product-id rank order)`` (with equal picks,
+"more of the lower-ranked option" is exactly "larger count at the first differing rank"; the variable
+weight counts as one pick of its option). Labels are taken from a priority queue in increasing ``covered``
+(the quantity of ``X``), so every label with less ``covered`` has been taken before, and are extended by
+one more pack of any kind within the bounds. A label is dropped when:
+
+* a lexicographic lower bound of (cost, leftover, picks) over every purchase that contains it is above the
+  best purchase found: the rest of ``qty`` at ``b``'s unit price (no option is cheaper per unit), at least
+  one more pick while ``qty`` is not covered, and the leftover it already has;
+* ``covered >= qty + s_b``: such a purchase is always beaten by ``b`` alone (cheaper, or as cheap with
+  less leftover);
+* dominance. Completing ``X`` with ``k`` packs of ``b`` changes ``W`` by ``k * W(b)``. Take two labels in
+  the same residue class of ``covered`` modulo ``s_b`` with ``covered_1 <= covered_2``, and any further
+  packs ``Z``. Every completion of ``X_2 + Z`` that can be optimal (it covers less than ``qty + s_b``, see
+  above; loose weight beside fewer than the most whole ``b`` packs that fit is dearer) has a counterpart
+  for ``X_1 + Z`` with the same variable weight and ``(covered_2 - covered_1) / s_b`` more packs of ``b``,
+  and the two compare as the reduced keys ``N(X) = s_b * W(X) - covered(X) * W(b)`` (additive; the
+  quantity component is 0): premium ``cost * s_b - covered * c_b``, pick excess ``picks * s_b - covered``,
+  then the rank vector. A label whose ``N`` is not below the lowest ``N`` already taken in its residue
+  class can therefore never be part of the optimum (equal ``N`` means the same multiset). One exception:
+  when the loose option costs exactly ``b``'s unit price (then so does every pack), a "loose weight only"
+  completion can be optimal and does not follow ``N``, so only exact duplicates are dropped; the bound
+  above then ends the search almost at once.
+
+Search cap
+----------
+The work is pseudo-polynomial in ``s_b / gcd(all sizes)`` (residue classes) and ``qty / s_b``: real
+catalogues need at most a few thousand steps (labels taken plus labels queued), mostly far fewer. As a
+safety net for pathological inputs (many packs of near-identical unit price with sizes on a very fine
+common grid), one call stops after ``MAX_SEARCH_STEPS`` and returns the best purchase found so far. That
+purchase is always a valid covering of ``qty`` and never worse than ``b`` alone (the first label is the
+empty one), but it may not be the optimum.
 """
 
 from __future__ import annotations
 
 import functools
+import heapq
 import math
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -168,6 +205,24 @@ class _Best:
     weight: int  # variable weight, scaled quantity units
 
 
+# Safety cap on the work of one search (labels popped plus labels pushed). Real catalogues need a few thousand
+# at most; the cap only bounds pathological inputs (module docstring, "Search cap").
+MAX_SEARCH_STEPS = 200_000
+
+
+@dataclass(slots=True)
+class _Label:
+    """A multiset of the packs other than b (module docstring, "Search")."""
+
+    covered: int  # scaled quantity
+    cost: int  # scaled money
+    picks: int  # number of packs
+    counts: tuple[int, ...]  # per non-b pack
+    premium: int  # cost * s_b - covered * c_b (>= 0)
+    excess: int  # picks * s_b - covered
+    vector: tuple[int, ...] | None = None  # the rest of the reduced key, built on demand
+
+
 class _Problem:
     """One optimisation problem in scaled integers, searched exactly (see the module docstring)."""
 
@@ -177,46 +232,114 @@ class _Problem:
         self.others = others
         self.var = var
         self.total_bound = total_bound
-        self.counts = [0] * len(others)
         self.best: _Best | None = None
+        self.steps = 0
+        self.capped = False
+        # The reduced key orders labels only when the loose option costs more per unit than b; when it costs
+        # exactly b's unit price (then every pack does), only exact duplicates are dropped.
+        self.reduced = var is None or var.price * b.size != b.cost
+        # The reduced key's rank vector: b (-1) and every other pack (its index), in product-id rank order.
+        self.rank_order = sorted([-1, *range(len(others))], key=lambda i: b.rank if i < 0 else others[i].rank)
 
     def solve(self) -> _Best:
-        self._dfs(0, 0, 0, 0, self.total_bound)
-        if self.best is None:  # pragma: no cover - the all-zero leaf always yields a solution
+        b = self.b
+        root = self._label(0, 0, 0, (0,) * len(self.others))
+        heap: list[tuple[int, int, int, int, _Label]] = [(0, 0, 0, 0, root)]
+        pushed = 1
+        lowest: dict[int, _Label] = {}  # residue of covered modulo s_b -> lowest reduced key popped so far
+        seen: set[tuple[int, ...]] = set()
+        while heap:
+            label = heapq.heappop(heap)[-1]
+            self.steps += 1
+            if self.steps > MAX_SEARCH_STEPS:
+                self.capped = True
+                break
+            if self.reduced:
+                residue = label.covered % b.size
+                low = lowest.get(residue)
+                if low is not None and not self._less(label, low):
+                    continue  # dominated (or a duplicate): see the module docstring
+                lowest[residue] = label
+            elif label.counts in seen:
+                continue
+            else:
+                seen.add(label.counts)
+            if self._bound_exceeds_best(label.covered, label.cost, label.picks):
+                continue
+            self._leaf(label)
+            for child in self._children(label):
+                self.steps += 1
+                pushed += 1
+                heapq.heappush(heap, (child.covered, child.premium, child.excess, pushed, child))
+        if self.best is None:  # pragma: no cover - the root (b alone) is the first label popped
             raise AssertionError("no solution found")
         return self.best
 
-    def _dfs(self, level: int, covered: int, cost: int, picks: int, budget: int) -> None:
-        if level == len(self.others):
-            self._leaf(covered, cost, picks)
-            return
-        pack = self.others[level]
+    def _label(self, covered: int, cost: int, picks: int, counts: tuple[int, ...]) -> _Label:
         b = self.b
-        for count in range(min(pack.bound, budget) + 1):
-            new_covered = covered + count * pack.size
-            new_cost = cost + count * pack.cost
-            best = self.best
-            if best is not None:
-                # Lower bound for the whole subtree: the rest at b's unit price (the best one available;
-                # the variable weight is never cheaper per unit than b, or b would have been pruned).
-                rest = self.qty - new_covered
-                bound = new_cost * b.size + (rest * b.cost if rest > 0 else 0)
-                if bound > best.cost * b.size:
-                    break  # the bound only grows with count
-            self.counts[level] = count
-            self._dfs(level + 1, new_covered, new_cost, picks + count, budget - count)
-        self.counts[level] = 0
+        return _Label(
+            covered, cost, picks, counts, cost * b.size - covered * b.cost, picks * b.size - covered
+        )
 
-    def _leaf(self, covered: int, cost: int, picks: int) -> None:
+    def _children(self, label: _Label) -> list[_Label]:
+        """``label`` plus one more pack, for every pack still within its bounds."""
+        if label.picks >= self.total_bound:
+            return []
+        limit = self.qty + self.b.size  # covering that much alone is always worse than b alone
+        children: list[_Label] = []
+        for index, pack in enumerate(self.others):
+            if label.counts[index] >= pack.bound:
+                continue
+            covered = label.covered + pack.size
+            cost = label.cost + pack.cost
+            if covered >= limit or self._bound_exceeds_best(covered, cost, label.picks + 1):
+                continue
+            counts = label.counts[:index] + (label.counts[index] + 1,) + label.counts[index + 1 :]
+            children.append(self._label(covered, cost, label.picks + 1, counts))
+        return children
+
+    def _bound_exceeds_best(self, covered: int, cost: int, picks: int) -> bool:
+        """Whether a lexicographic lower bound of (cost, leftover, picks) over every purchase that contains
+        these packs is above the best purchase found so far: the rest at b's unit price (the best one; the
+        variable weight is never cheaper per unit than b, or b would have been pruned) and at least one more
+        pick while qty is not covered, or the leftover already bought."""
+        best = self.best
+        if best is None:
+            return False
+        b = self.b
+        target = (best.cost * b.size, best.leftover, best.picks)
         rest = self.qty - covered
+        if rest > 0:
+            return (cost * b.size + rest * b.cost, 0, picks + 1) > target
+        return (cost * b.size, -rest, picks) > target
+
+    def _less(self, x: _Label, y: _Label) -> bool:
+        """Strict order of the reduced key (premium, pick excess, rank vector)."""
+        if x.premium != y.premium:
+            return x.premium < y.premium
+        if x.excess != y.excess:
+            return x.excess < y.excess
+        return self._vector(x) < self._vector(y)
+
+    def _vector(self, label: _Label) -> tuple[int, ...]:
+        """Per option in rank order: ``covered`` for b, s_b * (minus the count) for every other pack."""
+        if label.vector is None:
+            size = self.b.size
+            label.vector = tuple(label.covered if i < 0 else -size * label.counts[i] for i in self.rank_order)
+        return label.vector
+
+    def _leaf(self, label: _Label) -> None:
+        """Complete ``label`` with b's count and the variable weight in closed form."""
+        cost, picks, counts = label.cost, label.picks, label.counts
+        rest = self.qty - label.covered
         b = self.b
         if rest <= 0:
-            self._consider(cost, -rest, picks, 0, 0)
+            self._consider(cost, -rest, picks, counts, 0, 0)
             return
         full, part = divmod(rest, b.size)
         ceil_count = full + (1 if part else 0)
         leftover = ceil_count * b.size - rest
-        self._consider(cost + ceil_count * b.cost, leftover, picks + ceil_count, ceil_count, 0)
+        self._consider(cost + ceil_count * b.cost, leftover, picks + ceil_count, counts, ceil_count, 0)
         var = self.var
         if var is None:
             return
@@ -226,20 +349,22 @@ class _Problem:
             weight = rest - count * b.size
             if weight > 0:
                 total = cost + count * b.cost + weight * var.price
-                self._consider(total, 0, picks + count + 1, count, weight)
+                self._consider(total, 0, picks + count + 1, counts, count, weight)
 
-    def _consider(self, cost: int, leftover: int, picks: int, b_count: int, weight: int) -> None:
+    def _consider(
+        self, cost: int, leftover: int, picks: int, counts: tuple[int, ...], b_count: int, weight: int
+    ) -> None:
         best = self.best
         if best is not None:
             mine = (cost, leftover, picks)
             theirs = (best.cost, best.leftover, best.picks)
             if mine > theirs:
                 return
-            if mine == theirs and self._rank_key(tuple(self.counts), b_count, weight) >= self._rank_key(
+            if mine == theirs and self._rank_key(counts, b_count, weight) >= self._rank_key(
                 best.counts, best.b_count, best.weight
             ):
                 return
-        self.best = _Best(cost, leftover, picks, tuple(self.counts), b_count, weight)
+        self.best = _Best(cost, leftover, picks, counts, b_count, weight)
 
     def _rank_key(self, counts: tuple[int, ...], b_count: int, weight: int) -> tuple[tuple[int, int], ...]:
         """Final tie-break: more of the lower-ranked (product id) options first."""

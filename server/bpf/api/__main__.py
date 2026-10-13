@@ -1,9 +1,15 @@
 """``python -m bpf.api``: serve the API (and the SPA build) with uvicorn.
 
 Binds 127.0.0.1:8000 by default (put Caddy in front to expose it). ``X-Forwarded-*`` headers are honoured
-only when ``BPF_TRUST_PROXY_HEADERS=true`` (and then only from ``FORWARDED_ALLOW_IPS``, uvicorn's default
-127.0.0.1). The ``Server`` header is not sent. The access log is off by default (it would record client IP
-addresses); ``--access-log`` turns it on.
+only when ``BPF_TRUST_PROXY_HEADERS=true``, and then only from a trusted peer: uvicorn rewrites the client
+address only for ``FORWARDED_ALLOW_IPS`` (default 127.0.0.1), and the rate limiter reads ``X-Forwarded-For``
+only from a loopback peer (``bpf.api.security.client_key``). The ``Server`` header is not sent.
+
+The access log is off by default (it would record client IP addresses); ``--access-log`` turns it on.
+WebSocket support is off (``ws="none"``): the app has no WebSocket route, and uvicorn would log the client
+address and the full query string of every ``Upgrade: websocket`` request it rejects, even without the
+access log. Such a request is served as ordinary HTTP instead, through every middleware (security headers,
+rate limit).
 """
 
 from __future__ import annotations
@@ -36,6 +42,7 @@ def main(argv: list[str] | None = None) -> int:
         proxy_headers=settings.trust_proxy_headers,
         server_header=False,
         access_log=args.access_log,
+        ws="none",  # no WebSocket routes; a rejected upgrade would be logged with the client address
         log_level=args.log_level,
         lifespan="on",
     )

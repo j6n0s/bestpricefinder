@@ -92,6 +92,21 @@ export function splitParts(split: Pick<SplitOut, 'store_ids' | 'assignment'>): S
 }
 
 /**
+ * The lines neither store of a split sells (`missing` at both): the server leaves them out of the split's
+ * `assignment` and `total`, so the card must name them. In the first store's line order, each once.
+ */
+export function splitMissing(
+	split: Pick<SplitOut, 'store_ids'>,
+	stores: readonly Pick<StoreQuoteOut, 'store_id' | 'missing'>[]
+): IngredientId[] {
+	const first = stores.find((store) => store.store_id === split.store_ids[0]);
+	const second = stores.find((store) => store.store_id === split.store_ids[1]);
+	if (!first || !second) return [];
+	const atSecond = new Set(second.missing);
+	return [...new Set(first.missing)].filter((ingredientId) => atSecond.has(ingredientId));
+}
+
+/**
  * Plain-text label of a price type. DISCOUNTED is NOT a deal flag (Aldi never sets it, and it also marks
  * long-running reductions), so it is only ever "kedvezményes ár (GVH-jelölés)", never an "akció" badge
  * (docs/API.md "Price types and deals"). NORMAL needs no label.

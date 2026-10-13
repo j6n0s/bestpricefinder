@@ -59,6 +59,12 @@ describe('byName / pantryIngredients', () => {
 		expect(pantryIngredients(INGREDIENTS).map((i) => i.id)).toEqual(['almaecet', 'olivaolaj', 'oregano', 'so']);
 		expect(byName(INGREDIENTS).map((i) => i.id)[0]).toBe('alma');
 	});
+
+	it('leaves out tap water, which is never bought', () => {
+		const withWater = [...INGREDIENTS, ingredient('viz', 'víz', true)];
+		expect(pantryIngredients(withWater).map((i) => i.id)).not.toContain('viz');
+		expect(pantryIngredients(withWater)).toHaveLength(4);
+	});
 });
 
 describe('searchIngredients', () => {
