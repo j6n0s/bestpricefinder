@@ -92,11 +92,24 @@
             "minimum": 0.0,
             "title": "Priced Share",
             "type": "number"
+          },
+          "rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "competition rank by whole-forint cost among the chains that may be called cheapest (priced_share >= 0.9, else the best-covered); tied chains share it; null for the others",
+            "title": "Rank"
           }
         },
         "required": [
           "chain",
           "cost_per_serving",
+          "rank",
           "priced_share",
           "missing"
         ],
@@ -372,16 +385,9 @@
             "type": "string"
           },
           "servings": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "string"
-              }
-            ],
             "description": "servings wanted (e.g. people × meals), 0 < servings <= 100",
-            "title": "Servings"
+            "title": "Servings",
+            "type": "number"
           }
         },
         "required": [
@@ -974,16 +980,9 @@
             "type": "string"
           },
           "qty": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "string"
-              }
-            ],
             "description": "in the ingredient's canonical unit, 0 < qty <= 1000",
-            "title": "Qty"
+            "title": "Qty",
+            "type": "number"
           }
         },
         "required": [

@@ -7,7 +7,7 @@ from __future__ import annotations
 from decimal import ROUND_DOWN, ROUND_HALF_UP, Context, Decimal
 from typing import Literal
 
-from bpf.api.repo import Snapshot, StoreInfo
+from bpf.api.repo import Snapshot, StoreInfo, chain_cost_ranks
 from bpf.api.schemas import (
     ChainCostOut,
     IngredientOut,
@@ -179,7 +179,9 @@ def recipe_detail(recipe: Recipe, snap: Snapshot) -> RecipeDetail:
             )
         )
     chain_costs = []
-    for cost in snap.recipe_costs.get(recipe.id, ()):
+    costs = snap.recipe_costs.get(recipe.id, ())
+    ranks = chain_cost_ranks(costs)
+    for cost in costs:
         slug = snap.chain_slug(cost.chain_id)
         if slug is None:  # pragma: no cover - costs are computed from the catalogue's chains
             continue
@@ -187,6 +189,7 @@ def recipe_detail(recipe: Recipe, snap: Snapshot) -> RecipeDetail:
             ChainCostOut(
                 chain=slug,
                 cost_per_serving=money_or_none(cost.cost_per_serving),
+                rank=ranks.get(cost.chain_id),
                 priced_share=share(cost.priced_share),
                 missing=list(cost.missing),
             )

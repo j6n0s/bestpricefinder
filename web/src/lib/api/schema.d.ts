@@ -222,6 +222,11 @@ export interface components {
             missing: string[];
             /** Priced Share */
             priced_share: number;
+            /**
+             * Rank
+             * @description competition rank by whole-forint cost among the chains that may be called cheapest (priced_share >= 0.9, else the best-covered); tied chains share it; null for the others
+             */
+            rank: number | null;
         };
         /** ChainOut */
         ChainOut: {
@@ -331,7 +336,7 @@ export interface components {
              * Servings
              * @description servings wanted (e.g. people × meals), 0 < servings <= 100
              */
-            servings: number | string;
+            servings: number;
         };
         /** ListLineOut */
         ListLineOut: {
@@ -552,7 +557,7 @@ export interface components {
              * Qty
              * @description in the ingredient's canonical unit, 0 < qty <= 1000
              */
-            qty: number | string;
+            qty: number;
         };
         /** QuoteLineOut */
         QuoteLineOut: {

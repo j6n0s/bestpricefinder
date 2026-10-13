@@ -26,6 +26,7 @@ from bpf.api.repo import (
     _ksh,
     assemble_snapshot,
     availability_recent,
+    chain_cost_ranks,
     store_has_data,
     summarise_costs,
 )
@@ -328,6 +329,31 @@ def test_summarise_costs_ignores_a_chain_that_prices_only_a_cheap_subset() -> No
     assert _summary([*costs, _cost("partial", "390.40", "0.5")]) == (D("390.40"), ("most",), D("0.9"))
 
 
+def test_chain_cost_ranks_match_the_cheapest_group_and_rank_on_unrounded_costs() -> None:
+    """The recipe page's per-chain ranks come from the server (the client must not re-derive them from the
+    2-decimal JSON money: 412.495 shows as 412.50 but is 412 Ft whole). Rank 1 == cheapest_chains."""
+    costs = [
+        _cost("a", "412.495", "0.95"),  # whole 412 (unrounded half-up), JSON would show 412.50
+        _cost("b", "412.40", "1"),  # whole 412
+        _cost("c", "413.20", "1"),  # whole 413
+        _cost("d", "50", "0.3"),  # not comparable: unranked
+        _cost("e", None, "0"),  # unpriced: unranked
+    ]
+    ranks = chain_cost_ranks(costs)
+    assert ranks == {"a": 1, "b": 1, "c": 3}
+    summary = summarise_costs(costs)
+    assert set(summary.cheapest_chain_ids) == {chain for chain, rank in ranks.items() if rank == 1}
+    assert chain_cost_ranks([]) == {}
+    assert chain_cost_ranks([_cost("a", None, "0")]) == {}
+    # fallback group (nobody reaches 0.9): only the best-covered chains are ranked
+    assert chain_cost_ranks(
+        [_cost("a", "100", "0.5"), _cost("b", "300", "0.8"), _cost("c", "250", "0.8")]
+    ) == {
+        "c": 1,
+        "b": 2,
+    }
+
+
 def test_summarise_costs_falls_back_to_the_best_covered_chains() -> None:
     """When no chain reaches 0.9, the candidates are the chains with the highest share (ties included)."""
     costs = [
@@ -431,9 +457,11 @@ def test_recipe_cheapest_chain_needs_coverage_end_to_end() -> None:
     assert beta == {
         "chain": "beta",
         "cost_per_serving": 54.9,
+        "rank": None,  # not comparable: never ranked, however cheap its partial cost
         "priced_share": 0.1304,
         "missing": ["csirkemell"],
     }
+    assert {c["chain"]: c["rank"] for c in detail["chain_costs"]} == {"alfa": 2, "beta": None, "gamma": 1}
     rows = _recipe_rows(client)
     assert rows["zz-csirkes-rizs"] == (408.4, ["gamma"], 1.0)
     assert (detail["cost_per_serving_from"], detail["cheapest_chains"]) == (408.4, ["gamma"])

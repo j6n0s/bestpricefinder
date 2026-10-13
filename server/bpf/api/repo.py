@@ -191,6 +191,28 @@ def whole_forints(amount: Decimal) -> Decimal:
     return amount.quantize(Decimal(1), rounding=ROUND_HALF_UP, context=_CONTEXT)
 
 
+def _comparable(costs: Sequence[ChainRecipeCost]) -> list[ChainRecipeCost]:
+    """The chains that may be called cheapest: priced, with ``priced_share >= 0.9``, or (when none reaches
+    it) the priced chains with the highest share."""
+    priced = [c for c in costs if c.cost_per_serving is not None]
+    candidates = [c for c in priced if c.priced_share >= MIN_CHEAPEST_SHARE]
+    if not candidates and priced:
+        top = max(c.priced_share for c in priced)
+        candidates = [c for c in priced if c.priced_share == top]
+    return candidates
+
+
+def chain_cost_ranks(costs: Sequence[ChainRecipeCost]) -> dict[str, int]:
+    """Competition rank (1, 1, 3) by whole-forint cost per serving among the comparable chains; chains that
+    are not comparable are absent. Rank 1 is exactly the ``cheapest_chains`` group of
+    :func:`summarise_costs`."""
+    comparable = _comparable(costs)
+    wholes = {
+        c.chain_id: whole_forints(c.cost_per_serving) for c in comparable if c.cost_per_serving is not None
+    }
+    return {chain: 1 + sum(1 for other in wholes.values() if other < own) for chain, own in wholes.items()}
+
+
 def summarise_costs(costs: Sequence[ChainRecipeCost]) -> RecipeCostSummary:
     """docs/ENGINE.md "Cheapest chain of a recipe".
 
@@ -199,13 +221,9 @@ def summarise_costs(costs: Sequence[ChainRecipeCost]) -> RecipeCostSummary:
     ``cost_per_serving_from`` is the lowest cost per serving among the candidates; the tie group is EVERY
     candidate at that cost in whole forints (never broken by name); ``priced_share`` is the lowest share in
     the group. Chains without a cost (nothing priced, share 0) are never candidates."""
-    priced = [c for c in costs if c.cost_per_serving is not None]
-    if not priced:
-        return RecipeCostSummary(None, (), Decimal(0))
-    candidates = [c for c in priced if c.priced_share >= MIN_CHEAPEST_SHARE]
+    candidates = _comparable(costs)
     if not candidates:
-        top = max(c.priced_share for c in priced)
-        candidates = [c for c in priced if c.priced_share == top]
+        return RecipeCostSummary(None, (), Decimal(0))
     best = min(c.cost_per_serving for c in candidates if c.cost_per_serving is not None)
     target = whole_forints(best)
     tied = [

@@ -407,9 +407,9 @@ def test_recipe_detail_with_costs_and_lines(client: TestClient) -> None:
     # chain-typical used cost per serving: alfa (2490 x 0.6 + 499 x 0.4) / 4 = 423.40; beta 1490 per 0.5 kg
     # = 2980/kg -> (1788 + 219.6) / 4 = 501.90; gamma (1434 + 199.6) / 4 = 408.40; the drugstore is left out
     assert body["chain_costs"] == [
-        {"chain": "alfa", "cost_per_serving": 423.4, "priced_share": 1.0, "missing": []},
-        {"chain": "beta", "cost_per_serving": 501.9, "priced_share": 1.0, "missing": []},
-        {"chain": "gamma", "cost_per_serving": 408.4, "priced_share": 1.0, "missing": []},
+        {"chain": "alfa", "cost_per_serving": 423.4, "rank": 2, "priced_share": 1.0, "missing": []},
+        {"chain": "beta", "cost_per_serving": 501.9, "rank": 3, "priced_share": 1.0, "missing": []},
+        {"chain": "gamma", "cost_per_serving": 408.4, "rank": 1, "priced_share": 1.0, "missing": []},
     ]
     assert body["cost_per_serving_from"] == 408.4
     assert body["nutrition"] is None  # only the rice (40 % of the mass) has composition data
@@ -425,7 +425,13 @@ def test_recipe_detail_missing_lines_null_costs_and_nutrition(client: TestClient
     pork = client.get("/api/recipes/zz-porkolt").json()
     assert pork["cost_per_serving_from"] is None
     assert pork["chain_costs"] == [
-        {"chain": slug, "cost_per_serving": None, "priced_share": 0.0, "missing": ["sertescomb"]}
+        {
+            "chain": slug,
+            "cost_per_serving": None,
+            "rank": None,
+            "priced_share": 0.0,
+            "missing": ["sertescomb"],
+        }
         for slug in ("alfa", "beta", "gamma")
     ]
     # rice only: 0.1 kg per serving = 100 g, so the per-serving values equal the synthetic per-100 g row

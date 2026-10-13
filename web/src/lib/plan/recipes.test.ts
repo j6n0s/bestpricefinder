@@ -3,13 +3,11 @@ import type { ChainCostOut, RecipeSummary, Slot } from '../api/types';
 import {
 	SERVINGS_MAX,
 	SERVINGS_MIN,
-	MIN_CHEAPEST_SHARE,
 	chainCostRows,
 	chainList,
 	chainName,
 	chainNameMap,
 	clampServings,
-	comparableChainCosts,
 	coveragePercent,
 	eligibleRecipes,
 	filterRecipes,
@@ -215,7 +213,7 @@ describe('chain names and tags', () => {
 	});
 });
 
-describe('chainCostRows (tie-aware, BUILD-BRIEF §4.1 trap 13)', () => {
+describe('chainCostRows (server ranks, tie-aware, BUILD-BRIEF §4.1 trap 13)', () => {
 	const names = chainNameMap([
 		{ id: 'c1', slug: 'aldi', name: 'Aldi', is_grocery: true },
 		{ id: 'c2', slug: 'lidl', name: 'Lidl', is_grocery: true },
@@ -223,84 +221,79 @@ describe('chainCostRows (tie-aware, BUILD-BRIEF §4.1 trap 13)', () => {
 		{ id: 'c4', slug: 'tesco', name: 'Tesco', is_grocery: true },
 		{ id: 'c5', slug: 'penny', name: 'Penny', is_grocery: true }
 	]);
-	const cost = (chain: string, value: number | null, share = 1, missing: string[] = []): ChainCostOut => ({
-		chain,
-		cost_per_serving: value,
-		priced_share: share,
-		missing
-	});
+	const cost = (
+		chain: string,
+		value: number | null,
+		rank: number | null,
+		share = 1,
+		missing: string[] = []
+	): ChainCostOut => ({ chain, cost_per_serving: value, rank, priced_share: share, missing });
 
-	it('sorts cheapest first, unpriced chains last', () => {
+	it('orders ranked chains by the server rank, then partial, then unpriced chains', () => {
 		const rows = chainCostRows(
-			[cost('aldi', 330), cost('auchan', null, 0, ['a']), cost('spar', 400.2, 0.92, ['b']), cost('tesco', 290)],
+			[cost('aldi', 330, 2), cost('auchan', null, null, 0, ['a']), cost('spar', 400.2, 3, 0.92, ['b']), cost('tesco', 290, 1)],
 			names
 		);
-		expect(rows.map((r) => [r.chain, r.rank, r.tied])).toEqual([
-			['tesco', 1, false],
-			['aldi', 2, false],
-			['spar', 3, false],
-			['auchan', null, false]
+		expect(rows.map((r) => [r.chain, r.rank, r.tied, r.partial])).toEqual([
+			['tesco', 1, false, false],
+			['aldi', 2, false, false],
+			['spar', 3, false, false],
+			['auchan', null, false, false]
 		]);
 		expect(rows[2]).toMatchObject({ name: 'Spar', coveragePercent: 92, missing: ['b'], costPerServing: 400.2 });
 		expect(rows[3]).toMatchObject({ name: 'auchan', costPerServing: null, barPercent: 0, coveragePercent: 0 });
 	});
 
-	it('treats equal whole-forint costs as a tie that shares a rank (1, 1, 3), never re-ordered by name', () => {
-		const rows = chainCostRows([cost('lidl', 312.4), cost('penny', 350), cost('aldi', 312.3), cost('spar', 312.6)], names);
+	it('shows a shared server rank as a tie (1, 1, 3) and keeps the server order inside it', () => {
+		const rows = chainCostRows([cost('lidl', 312.4, 1), cost('penny', 350, 4), cost('aldi', 312.3, 1), cost('spar', 312.6, 3)], names);
 		expect(rows.map((r) => [r.chain, r.rank, r.tied])).toEqual([
-			// Lidl stays before Aldi: the server's order inside the tie, not the alphabet.
 			['lidl', 1, true],
 			['aldi', 1, true],
-			// 312.6 rounds to 313 Ft: not part of the tie.
 			['spar', 3, false],
 			['penny', 4, false]
 		]);
 	});
 
-	it('gives bar lengths relative to the most expensive priced chain', () => {
-		const rows = chainCostRows([cost('aldi', 100), cost('lidl', 400), cost('spar', 2), cost('penny', 0)], names);
-		expect(Object.fromEntries(rows.map((r) => [r.chain, r.barPercent]))).toEqual({ aldi: 25, lidl: 100, spar: 1, penny: 0 });
+	it('uses the server rank, never re-deriving it from the 2-decimal JSON costs', () => {
+		// The server saw 412.495 (412 Ft whole) and 412.40: a tie at rank 1. The JSON shows 412.5, which a
+		// client would round to 413 Ft; the row must still be a rank-1 tie.
+		const rows = chainCostRows([cost('aldi', 412.5, 1), cost('lidl', 412.4, 1), cost('spar', 413.2, 3)], names);
+		expect(rows.map((r) => [r.chain, r.rank, r.tied])).toEqual([
+			['aldi', 1, true],
+			['lidl', 1, true],
+			['spar', 3, false]
+		]);
 	});
 
-	it('is empty for no chain costs', () => {
-		expect(chainCostRows([], names)).toEqual([]);
-	});
-
-	it('never ranks a chain that prices less than 90 % of the cost (contract v1.2)', () => {
+	it('shows a priced but unranked chain as partial, after the ranked ones (contract v1.2)', () => {
 		const rows = chainCostRows(
-			[cost('aldi', 330, 0.95), cost('lidl', 150, 0.4, ['a', 'b']), cost('spar', 300, 0.9), cost('tesco', null, 0, ['a'])],
+			[cost('aldi', 330, 2, 0.95), cost('lidl', 150, null, 0.4, ['a', 'b']), cost('spar', 300, 1, 0.9), cost('tesco', null, null, 0, ['a'])],
 			names
 		);
 		expect(rows.map((r) => [r.chain, r.rank, r.tied, r.partial])).toEqual([
 			['spar', 1, false, false],
 			['aldi', 2, false, false],
-			// Cheaper per serving only because it prices a cheap subset: shown, but unranked and after the others.
 			['lidl', null, false, true],
 			['tesco', null, false, false]
 		]);
 		expect(rows[2]).toMatchObject({ costPerServing: 150, coveragePercent: 40, barPercent: 45.5 });
 	});
 
-	it('ranks the best-covered chains when none reaches 90 %', () => {
-		const costs = [cost('aldi', 330, 0.85), cost('lidl', 150, 0.6), cost('penny', 340, 0.85), cost('spar', 200, 0.8)];
-		expect(comparableChainCosts(costs).map((c) => c.chain)).toEqual(['aldi', 'penny']);
-		expect(chainCostRows(costs, names).map((r) => [r.chain, r.rank, r.partial])).toEqual([
-			['aldi', 1, false],
-			['penny', 2, false],
-			['lidl', null, true],
-			['spar', null, true]
+	it('treats a malformed rank as unranked', () => {
+		const rows = chainCostRows([cost('aldi', 300, 0), cost('lidl', 310, 1.5), cost('spar', 320, 1)], names);
+		expect(rows.map((r) => [r.chain, r.rank, r.partial])).toEqual([
+			['spar', 1, false],
+			['aldi', null, true],
+			['lidl', null, true]
 		]);
 	});
 
-	it('keeps a tie only among the comparable chains, matching the summary tie group', () => {
-		// The summary says cheapest_chains = [aldi, lidl] at 313 Ft; penny is as cheap but only 50 % priced.
-		const rows = chainCostRows([cost('aldi', 312.5, 0.94), cost('lidl', 312.7, 0.91), cost('penny', 313, 0.5)], names);
-		expect(rows.filter((r) => r.rank === 1).map((r) => r.chain)).toEqual(['aldi', 'lidl']);
-		expect(rows.every((r) => r.rank !== 1 || r.tied)).toBe(true);
-		expect(rows.find((r) => r.chain === 'penny')).toMatchObject({ rank: null, tied: false, partial: true });
-		expect(MIN_CHEAPEST_SHARE).toBe(0.9);
-		// The server rounds the share DOWN to 4 decimals, so 0.8999 is below the line and 0.9 is on it.
-		expect(comparableChainCosts([cost('aldi', 300, 0.8999), cost('lidl', 400, 0.9)]).map((c) => c.chain)).toEqual(['lidl']);
-		expect(comparableChainCosts([cost('aldi', null, 0)])).toEqual([]);
+	it('gives bar lengths relative to the most expensive priced chain', () => {
+		const rows = chainCostRows([cost('aldi', 100, 2), cost('lidl', 400, 4), cost('spar', 2, 1), cost('penny', 0, null)], names);
+		expect(Object.fromEntries(rows.map((r) => [r.chain, r.barPercent]))).toEqual({ aldi: 25, lidl: 100, spar: 1, penny: 0 });
+	});
+
+	it('is empty for no chain costs', () => {
+		expect(chainCostRows([], names)).toEqual([]);
 	});
 });

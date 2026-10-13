@@ -56,13 +56,13 @@ function line(lineNo: number, id: string, name: string, qty: number, display: st
 }
 
 const HARCSA_COSTS: ChainCostOut[] = [
-	{ chain: 'aldi', cost_per_serving: 655.2, priced_share: 1, missing: [] },
+	{ chain: 'aldi', cost_per_serving: 655.2, rank: 1, priced_share: 1, missing: [] },
 	// Cheaper only because it prices half of the cost: never ranked (contract v1.2, the 90 % rule).
-	{ chain: 'auchan', cost_per_serving: 400, priced_share: 0.5, missing: ['harcsafile'] },
-	{ chain: 'lidl', cost_per_serving: 655.4, priced_share: 1, missing: [] },
-	{ chain: 'penny', cost_per_serving: 700, priced_share: 1, missing: [] },
-	{ chain: 'spar', cost_per_serving: null, priced_share: 0, missing: ['harcsafile'] },
-	{ chain: 'tesco', cost_per_serving: 720.3, priced_share: 0.92, missing: ['citrom'] }
+	{ chain: 'auchan', cost_per_serving: 400, rank: null, priced_share: 0.5, missing: ['harcsafile'] },
+	{ chain: 'lidl', cost_per_serving: 655.4, rank: 1, priced_share: 1, missing: [] },
+	{ chain: 'penny', cost_per_serving: 700, rank: 3, priced_share: 1, missing: [] },
+	{ chain: 'spar', cost_per_serving: null, rank: null, priced_share: 0, missing: ['harcsafile'] },
+	{ chain: 'tesco', cost_per_serving: 720.3, rank: 4, priced_share: 0.92, missing: ['citrom'] }
 ];
 
 const DETAILS: Record<string, RecipeDetail> = {
@@ -87,7 +87,7 @@ const DETAILS: Record<string, RecipeDetail> = {
 		data_date: MOCK_DATA_DATE,
 		steps: ['Szintetikus lépés, csak teszteléshez.'],
 		lines: [line(1, 'voros_lencse', 'vörös lencse', 0.4, '40 dkg'), line(2, 'voroshagyma', 'vöröshagyma', 0.1, '1 fej')],
-		chain_costs: [{ chain: 'lidl', cost_per_serving: 312.5, priced_share: 0.94, missing: [] }],
+		chain_costs: [{ chain: 'lidl', cost_per_serving: 312.5, rank: 1, priced_share: 0.94, missing: [] }],
 		nutrition: null
 	},
 	[ALMA.id]: {

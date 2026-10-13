@@ -241,9 +241,9 @@ export const MOCK_RECIPE_DETAILS: Record<string, RecipeDetail> = {
 			}
 		],
 		chain_costs: [
-			{ chain: 'aldi', cost_per_serving: 312.5, priced_share: 0.94, missing: [] },
-			{ chain: 'lidl', cost_per_serving: 312.5, priced_share: 0.94, missing: [] },
-			{ chain: 'spar', cost_per_serving: null, priced_share: 0, missing: ['voros_lencse', 'voroshagyma'] }
+			{ chain: 'aldi', cost_per_serving: 312.5, rank: 1, priced_share: 0.94, missing: [] },
+			{ chain: 'lidl', cost_per_serving: 312.5, rank: 1, priced_share: 0.94, missing: [] },
+			{ chain: 'spar', cost_per_serving: null, rank: null, priced_share: 0, missing: ['voros_lencse', 'voroshagyma'] }
 		],
 		nutrition: null
 	},

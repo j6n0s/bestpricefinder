@@ -21,7 +21,15 @@ import math
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_validator, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StringConstraints,
+    WithJsonSchema,
+    field_validator,
+    model_validator,
+)
 
 # ───────────────────────────── shared types ─────────────────────────────
 
@@ -60,6 +68,9 @@ RecipeTag = Literal[
 RuleName = Literal["fish", "legume", "meat_free_day", "red_meat", "potato", "sweets", "variety", "budget"]
 
 _QTY_STEP = Decimal("0.001")
+
+JsonNumber = Annotated[Decimal, WithJsonSchema({"type": "number"})]
+"""A Decimal that the JSON contract declares as a plain number (strings are rejected by ``_to_qty``)."""
 
 
 def _to_qty(value: object, *, low: Decimal, high: Decimal) -> Decimal:
@@ -238,6 +249,12 @@ class RecipeLineOut(_Out):
 class ChainCostOut(_Out):
     chain: ChainSlug
     cost_per_serving: float | None
+    rank: int | None = Field(
+        description=(
+            "competition rank by whole-forint cost among the chains that may be called cheapest "
+            "(priced_share >= 0.9, else the best-covered); tied chains share it; null for the others"
+        )
+    )
     priced_share: float = Field(ge=0, le=1)
     missing: list[IngredientId]
 
@@ -267,7 +284,7 @@ class RecipeDetail(RecipeSummary):
 
 class ListItemIn(_In):
     recipe_id: RecipeId
-    servings: Decimal = Field(description="servings wanted (e.g. people × meals), 0 < servings <= 100")
+    servings: JsonNumber = Field(description="servings wanted (e.g. people × meals), 0 < servings <= 100")
 
     @field_validator("servings", mode="before")
     @classmethod
@@ -277,7 +294,7 @@ class ListItemIn(_In):
 
 class QtyLineIn(_In):
     ingredient_id: IngredientId
-    qty: Decimal = Field(description="in the ingredient's canonical unit, 0 < qty <= 1000")
+    qty: JsonNumber = Field(description="in the ingredient's canonical unit, 0 < qty <= 1000")
 
     @field_validator("qty", mode="before")
     @classmethod

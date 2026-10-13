@@ -119,7 +119,9 @@ Response: `{ingredient_id, unit, days, series: [{chain, points: [{date, unit_pri
 - **Rate limit** applies to `/api/*` only. IPv6 clients are grouped by /64.
 - **Body size limit** applies to every request. CPU-heavy POST work runs in worker threads behind a capacity limiter.
 - **503 `no_data`** is also returned when the database is unreachable and nothing is cached; `/api/health` then answers 503 `down`. History without any successful ingest is 503 `no_data`.
-- **Strict JSON** (422, `fields: ["body"]`): duplicate keys, NaN/Infinity literals, non-UTF-8 bodies or a BOM, and nesting or integer-size limits. Quantities must be JSON numbers. Field paths are cut at the first unknown component, so an unknown root field is reported as `body`. Model-level errors (duplicate lines or stores) are also `body`.
+- **Strict JSON** (422, `fields: ["body"]`): duplicate keys, NaN/Infinity literals, non-UTF-8 bodies or a BOM, and nesting or integer-size limits. Field paths are cut at the first unknown component, so an unknown root field is reported as `body`. Model-level errors (duplicate lines or stores) are also `body`.
+- **Quantities** must be JSON numbers: a string, or a value far outside the bounds, is a 422 on the field's own path (e.g. `lines.0.qty`).
+- **Recipe chain ranks:** `chain_costs[].rank` is the server's competition rank among the comparable chains; rank 1 is exactly `cheapest_chains`. The client displays it and never re-derives it from the rounded JSON money.
 - **`/api/plan/suggest`** ignores unknown `exclude_ingredients` ids (they exclude nothing); every other endpoint answers 422 for unknown ids. The planner's budget uses each recipe's `cost_per_serving_from` and only when `weekly_budget` is set.
 - **ETag/304** also apply to `/api/health`, which keeps `Cache-Control: no-store`.
 - **Static files:** a missing file under `/_app/` is a JSON 404, not the SPA page. Paths with `.`/`..`/dot-file segments, backslashes, NUL or more than 1,024 characters are 404. Every static response, `service-worker.js` included, carries the SPA policy header. `index.html` is read once at startup, so deploying a new `web/build` needs an API restart.

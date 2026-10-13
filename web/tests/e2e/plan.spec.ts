@@ -80,7 +80,15 @@ function detail(recipe: RecipeSummary): RecipeDetail {
 		lines: [
 			{ line_no: 1, ingredient_id: 'voroshagyma', ingredient_name: 'vöröshagyma', qty: 0.1, unit: 'kg', display: '1 fej', optional: false, pantry: false }
 		],
-		chain_costs: [{ chain: 'lidl', cost_per_serving: recipe.cost_per_serving_from, priced_share: recipe.priced_share, missing: [] }],
+		chain_costs: [
+			{
+				chain: 'lidl',
+				cost_per_serving: recipe.cost_per_serving_from,
+				rank: recipe.cost_per_serving_from === null ? null : 1,
+				priced_share: recipe.priced_share,
+				missing: []
+			}
+		],
 		nutrition: null
 	};
 }
