@@ -13,6 +13,7 @@ Skipped automatically when ``node`` or the web build is missing (``cd web && npm
 from __future__ import annotations
 
 import csv
+import json
 import math
 import shutil
 from collections.abc import Iterator
@@ -25,7 +26,7 @@ import pytest
 
 from tests.fakegvh import NO_DATA_STORES, STORES_CSV, VALID_UNITS
 from tests.fullstack import FullStack
-from tests.fullstack.stack import CONTACT_EMAIL, DEFAULT_WEB_BUILD
+from tests.fullstack.stack import CONTACT_EMAIL, DEFAULT_WEB_BUILD, INGREDIENTS_JSON, REPO_ROOT
 from tests.pgcluster import PgUnavailable
 
 pytestmark = pytest.mark.db
@@ -38,6 +39,7 @@ DISCLAIMER_HU = "Nem hivatalos alkalmazás, nem áll kapcsolatban a Gazdasági V
 GROCERY = {"aldi", "auchan", "lidl", "penny", "spar", "tesco"}
 HAS_DATA_WINDOW_DAYS = 8  # docs/ENGINE.md Store.has_data
 RADIUS_KM = 1.5  # the app's default search radius
+KSH_CSV = REPO_ROOT / "data" / "ksh" / "ara0044.csv"
 
 
 def _km(a: tuple[float, float], b: tuple[float, float]) -> float:
@@ -96,10 +98,14 @@ def test_every_step_ran_for_real_and_ended_ok(stack: FullStack) -> None:
         assert step.summary.startswith(f"{kind} {date}: ok (run "), step.summary
         assert step.argv[1:4] == ("-m", "bpf.ingest", kind)
         assert step.requests > 0
-        # The ingest keeps its politeness floor over real HTTP: >= 1 s between the starts of two requests.
+        # The ingest keeps its politeness floor over real HTTP. The client starts requests >= 1 s apart
+        # (bpf.gvh.client); the fake's receipt times add scheduling jitter to a single gap (0.87 s was seen
+        # under load) but not to the span, which only the first request's delay can shorten.
         if step.requests > 1:
             assert step.min_request_gap_s is not None
-            assert step.min_request_gap_s >= 0.9, step
+            assert step.request_span_s is not None
+            assert step.request_span_s >= (step.requests - 1) * 1.0 - 0.5, step
+            assert step.min_request_gap_s >= 0.5, step
     assert stack.steps[1].summary.startswith("loaded (ingest_run 2):")
     assert [(r["kind"], r["status"], r["error"]) for r in stack.runs] == [
         ("reference", "ok", None),
@@ -262,6 +268,50 @@ def test_a_quote_over_five_real_nyugati_stores_is_ranked(
                 assert abs(other["penalized_total"] - entry["penalized_total"]) < 1
             elif other["rank"] < entry["rank"]:
                 assert other["penalized_total"] <= entry["penalized_total"] + 0.01
+
+
+def test_a_ksh_priced_line_is_a_labelled_estimate_outside_the_total(
+    client: httpx.Client, ontology: dict[str, dict[str, Any]]
+) -> None:
+    """No recipe uses a KSH-priced ingredient, so the browser flow never meets one (docs/E2E.md); the API is
+    asked directly: the estimate is the real KSH average (data/ksh) times the quantity, and stays out of the
+    checkout total."""
+    content = {
+        row["id"]: row for row in json.loads(INGREDIENTS_JSON.read_text(encoding="utf-8"))["ingredients"]
+    }
+    with KSH_CSV.open(encoding="utf-8", newline="") as handle:
+        ksh_rows = {row["code"]: row for row in csv.DictReader(handle)}
+    ksh_ids = sorted(ingredient for ingredient, row in ontology.items() if row["priced_by"] == "ksh")
+    assert ksh_ids, "the content has KSH-priced ingredients"
+    gvh_ids = sorted(
+        ingredient for ingredient, row in ontology.items() if row["priced_by"] == "gvh" and not row["pantry"]
+    )[:8]
+    qty = 0.5
+    lines = [{"ingredient_id": ingredient, "qty": qty} for ingredient in (*ksh_ids, *gvh_ids)]
+    response = client.post("/api/quote", json={"lines": lines, "store_ids": list(NYUGATI_STORES)})
+    assert response.status_code == 200, response.text
+    quote = response.json()
+    assert quote["attribution"]["ksh"]["text_hu"] == "Forrás: KSH"
+    assert quote["attribution"]["ksh"]["url"].startswith("https://www.ksh.hu/")
+    assert quote["attribution"]["ksh"]["license"] == "CC BY 4.0"
+    for store in quote["stores"]:
+        by_id = {line["ingredient_id"]: line for line in store["lines"]}
+        for ingredient in ksh_ids:
+            line = by_id[ingredient]
+            row = ksh_rows[content[ingredient]["ksh_code"]]
+            assert row["unit"] == content[ingredient]["unit"], ingredient  # all kg today: no conversion
+            expected = Decimal(str(qty)) * Decimal(row["price"]) / Decimal(row["unit_qty"])
+            assert line["status"] == "ksh_estimate", line
+            assert Decimal(str(line["ksh_estimate"])) == expected.quantize(Decimal("0.01")), ingredient
+            assert line["checkout_cost"] is None
+            assert line["picks"] == []
+            assert ingredient not in store["missing"]
+        ksh_total = sum(Decimal(str(by_id[ingredient]["ksh_estimate"])) for ingredient in ksh_ids)
+        assert Decimal(str(store["ksh_estimate_total"])) == ksh_total
+        priced = sum(
+            Decimal(str(line["checkout_cost"])) for line in store["lines"] if line["status"] == "priced"
+        )
+        assert abs(Decimal(str(store["checkout_total"])) - priced) <= Decimal("0.01"), store["store_id"]
 
 
 def test_the_api_takes_store_ids_never_coordinates(client: httpx.Client, ontology: dict[str, Any]) -> None:

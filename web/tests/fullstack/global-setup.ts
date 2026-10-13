@@ -5,12 +5,15 @@
  *
  * The launcher keeps running until global-teardown.ts sends SIGTERM. Its stdin stays a pipe from this process:
  * if the Playwright runner dies, the pipe closes and the launcher tears everything down by itself.
+ *
+ * FULLSTACK_ATTACH=1 skips the launch and uses a stack already running from the same run directory (started by
+ * hand with `python -m tests.fullstack --run-dir <FULLSTACK_RUN_DIR> --no-stdin-watch`); it is left running.
  */
 import { spawn, spawnSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createInterface } from 'node:readline';
-import { BUILD_DIR, READY_PREFIX, RUN_DIR, SERVER_DIR, type StackState } from './stack';
+import { BASE_URL_ENV, BUILD_DIR, READY_PREFIX, RUN_DIR, SERVER_DIR, readState, type StackState } from './stack';
 
 /** The ingest runs at the GVH politeness floor of 1 request per second: about 4 minutes in all. */
 const START_TIMEOUT_MS = Number(process.env.FULLSTACK_START_TIMEOUT_MS ?? 20 * 60_000);
@@ -20,13 +23,13 @@ export interface LauncherGlobal {
 }
 
 function serverPython(): string {
-	const probe = spawnSync('uv', ['run', 'python', '-c', 'import sys; print(sys.executable)'], {
+	const probe = spawnSync('uv', ['run', '--quiet', 'python', '-c', 'import sys; print(sys.executable)'], {
 		cwd: SERVER_DIR,
 		encoding: 'utf-8'
 	});
 	const python = probe.stdout?.trim().split('\n').at(-1) ?? '';
 	if (probe.status !== 0 || !python) {
-		throw new Error(`cannot resolve the server's Python with uv (cd server && uv run python): ${probe.stderr ?? probe.error}`);
+		throw new Error(`cannot resolve the server's Python with uv (cd server && uv run python): ${probe.stderr || String(probe.error)}`);
 	}
 	return python;
 }
@@ -48,6 +51,7 @@ function waitForReady(child: ChildProcess): Promise<StackState> {
 		};
 		child.once('exit', onExit);
 		if (!child.stdout) {
+			clearTimeout(timer);
 			reject(new Error('no stdout pipe to the launcher'));
 			return;
 		}
@@ -68,7 +72,28 @@ async function stop(child: ChildProcess): Promise<void> {
 	await exited;
 }
 
+function steps(state: StackState): string {
+	return state.steps.map((step) => `${step.name} ${step.status} ${step.seconds.toFixed(1)} s (${step.requests} req)`).join(', ');
+}
+
+async function attach(): Promise<void> {
+	const state = readState();
+	const health = await fetch(`${state.base_url}/api/health`).catch((error: unknown) => {
+		throw new Error(`FULLSTACK_ATTACH: no stack answers at ${state.base_url} (${String(error)}); start one or unset FULLSTACK_ATTACH`);
+	});
+	const body = (await health.json()) as { status?: string; data_date?: string };
+	if (body.status !== 'ok' || body.data_date !== state.data_date) {
+		throw new Error(`FULLSTACK_ATTACH: ${state.base_url}/api/health is ${JSON.stringify(body)}, not ok for ${state.data_date}`);
+	}
+	process.env[BASE_URL_ENV] = state.base_url;
+	console.log(`[fullstack] attached to the running stack at ${state.base_url} (data date ${state.data_date}); it is left running`);
+}
+
 export default async function globalSetup(): Promise<void> {
+	if (process.env.FULLSTACK_ATTACH === '1') {
+		await attach();
+		return;
+	}
 	if (!existsSync(join(BUILD_DIR, 'index.html'))) {
 		throw new Error('web/build/index.html is missing: run `npm run build` first (`npm run test:fullstack` does).');
 	}
@@ -89,9 +114,10 @@ export default async function globalSetup(): Promise<void> {
 		await stop(child);
 		throw error;
 	}
-	// Read by the specs (workers start after this and inherit the environment).
-	process.env.FULLSTACK_RUN_DIR = RUN_DIR;
-	process.env.FULLSTACK_BASE_URL = state.base_url;
-	const steps = state.steps.map((step) => `${step.name} ${step.status} ${step.seconds.toFixed(1)} s (${step.requests} req)`).join(', ');
-	console.log(`[fullstack] ready in ${((Date.now() - began) / 1000).toFixed(0)} s at ${state.base_url}, data date ${state.data_date}: ${steps}`);
+	// Read by the specs (the workers start after this and inherit the environment).
+	process.env[BASE_URL_ENV] = state.base_url;
+	console.log(
+		`[fullstack] ready in ${((Date.now() - began) / 1000).toFixed(0)} s at ${state.base_url}, data date ${state.data_date}, ` +
+			`PostgreSQL ${state.postgres.major}: ${steps(state)}`
+	);
 }

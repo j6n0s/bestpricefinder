@@ -109,6 +109,9 @@ def _serve(stack: FullStack, run_dir: Path, *, watch_stdin: bool, log: Callable[
     except (StackError, PgUnavailable, OSError, subprocess.SubprocessError) as exc:
         log(f"error: {type(exc).__name__}: {exc}")
         return 1
+    except Exception as exc:  # noqa: BLE001 - e.g. a failed deploy script (RuntimeError): report, exit 1
+        log(f"error: {type(exc).__name__}: {exc}")
+        return 1
     state = stack.state()
     (run_dir / "stack.json").write_text(json.dumps(state, indent=1) + "\n", encoding="utf-8")
     print(READY_PREFIX + json.dumps(state, separators=(",", ":")), flush=True)

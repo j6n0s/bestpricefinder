@@ -39,11 +39,13 @@ import os
 import signal
 import subprocess
 import sys
+import threading
 import time
 from collections.abc import Callable, Iterator, Mapping
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
+from types import FrameType
 from typing import Any
 
 import httpx
@@ -70,6 +72,7 @@ CONTENT_TIMEOUT_S = 300.0
 API_READY_TIMEOUT_S = 60.0
 API_STOP_TIMEOUT_S = 15.0
 API_START_ATTEMPTS = 3
+STOP_SIGNALS = (signal.SIGTERM, signal.SIGINT, signal.SIGHUP)
 
 Logger = Callable[[str], None]
 
@@ -89,7 +92,8 @@ class StepResult:
     summary: str  # the command's last stdout line
     seconds: float
     requests: int  # requests the fake GVH received during the step
-    min_request_gap_s: float | None  # smallest gap between two of those requests (politeness, >= ~1 s)
+    min_request_gap_s: float | None  # smallest gap between two of those requests, as the fake received them
+    request_span_s: float | None  # first to last request: >= (requests - 1) s at 1 request per second
     log: str
 
     def as_json(self) -> dict[str, Any]:
@@ -102,6 +106,7 @@ class StepResult:
             "seconds": round(self.seconds, 2),
             "requests": self.requests,
             "min_request_gap_s": None if self.min_request_gap_s is None else round(self.min_request_gap_s, 3),
+            "request_span_s": None if self.request_span_s is None else round(self.request_span_s, 3),
             "log": self.log,
         }
 
@@ -113,6 +118,38 @@ def ontology_leaves(path: Path = INGREDIENTS_JSON) -> frozenset[int]:
     if not leaves:
         raise StackError(f"{path}: no ingredient references a GVH leaf")
     return leaves
+
+
+@contextlib.contextmanager
+def _stop_signals_deferred() -> Iterator[None]:
+    """Hold SIGTERM, SIGINT and SIGHUP back while the stack is torn down, so a stop signal can never cut a
+    teardown short and leave a cluster behind. A held signal is raised again afterwards, under the handler
+    that was in place before (so Ctrl-C still stops pytest, and SIGTERM still ends the process, once all is
+    down).
+
+    Python runs signal handlers in the main thread whichever thread receives the signal, so swapping the
+    handlers (rather than masking signals) covers every thread. Off the main thread nothing can be swapped.
+    """
+    if threading.current_thread() is not threading.main_thread():
+        yield
+        return
+    held: list[int] = []
+
+    def hold(signum: int, _frame: FrameType | None) -> None:
+        held.append(signum)
+
+    previous: dict[int, Any] = {}
+    try:
+        # A signal that arrives in this loop leaves before the body, so nothing has been torn down yet.
+        for sig in STOP_SIGNALS:
+            previous[sig] = signal.signal(sig, hold)
+        yield
+    finally:
+        for sig, handler in previous.items():
+            if handler is not None:  # None: a handler not set from Python, which cannot be restored
+                signal.signal(sig, handler)
+        for signum in dict.fromkeys(held):
+            signal.raise_signal(signum)
 
 
 def _stderr_logger(prefix: str = "fullstack") -> Logger:
@@ -143,6 +180,8 @@ class FullStack:
         self.run_dir = Path(run_dir).resolve()
         self.log_dir = self.run_dir / "logs"
         self.log_dir.mkdir(parents=True, exist_ok=True)
+        for stale in (*self.log_dir.glob("[0-9][0-9]-*.log"), *self.log_dir.glob("api-*.log")):
+            stale.unlink()  # an earlier run's logs in a reused run directory
         self.web_build = Path(web_build).resolve() if web_build is not None else None
         self.per_leaf = per_leaf
         self.seed = seed
@@ -204,17 +243,20 @@ class FullStack:
         are collected in :attr:`teardown_errors` (and :attr:`clean` is then False)."""
         if self._closed:
             return
-        self._closed = True
-        began = time.monotonic()
-        try:
-            self._exit.close()  # LIFO: API, fake GVH, cluster; every callback runs even if one fails
-        except BaseException as exc:  # noqa: BLE001 - report, never leave the rest running
-            self.teardown_errors.append(f"{type(exc).__name__}: {exc}")
-        self.timings["teardown"] = round(time.monotonic() - began, 2)
-        if self.clean:
-            self.log(f"torn down in {self.timings['teardown']:.1f} s")
-        else:
-            self.log(f"teardown NOT clean: {self.teardown_errors or 'cluster directory still exists'}")
+        # Stop signals are held from here on. One that arrives before the hold is in place leaves this method
+        # with nothing done and _closed still False, so the caller can simply call close() again.
+        with _stop_signals_deferred():
+            self._closed = True
+            began = time.monotonic()
+            try:
+                self._exit.close()  # LIFO: API, fake GVH, cluster; every callback runs even if one fails
+            except BaseException as exc:  # noqa: BLE001 - report, never leave the rest running
+                self.teardown_errors.append(f"{type(exc).__name__}: {exc}")
+            self.timings["teardown"] = round(time.monotonic() - began, 2)
+            if self.clean:
+                self.log(f"torn down in {self.timings['teardown']:.1f} s")
+            else:
+                self.log(f"teardown NOT clean: {self.teardown_errors or 'cluster directory still exists'}")
 
     @property
     def clean(self) -> bool:
@@ -357,7 +399,10 @@ class FullStack:
                 except httpx.TransportError:
                     time.sleep(0.2)
                     continue
-                body = response.json() if response.status_code == 200 else None
+                try:
+                    body = response.json() if response.status_code == 200 else None
+                except ValueError:
+                    body = None
                 if (
                     body
                     and body.get("status") == "ok"
@@ -365,7 +410,10 @@ class FullStack:
                 ):
                     return True
                 if response.status_code == 200:
-                    raise StackError(f"/api/health is not ok for {self.data_date}: {body}; see {log_path}")
+                    raise StackError(
+                        f"/api/health is not ok for {self.data_date}: {body or response.text[:200]!r}; "
+                        f"see {log_path}"
+                    )
                 time.sleep(0.2)
         raise StackError(f"/api/health did not answer within {API_READY_TIMEOUT_S:.0f} s; see {log_path}")
 
@@ -462,6 +510,7 @@ class FullStack:
             seconds=seconds,
             requests=len(received),
             min_request_gap_s=min(gaps) if gaps else None,
+            request_span_s=stamps[-1] - stamps[0] if len(stamps) > 1 else None,
             log=str(log_path),
         )
         self.steps.append(result)

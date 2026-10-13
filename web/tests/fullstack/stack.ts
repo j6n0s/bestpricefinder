@@ -17,10 +17,12 @@ export const BUILD_DIR = join(WEB_DIR, 'build');
 /** The real store list the fake GVH serves (research data, read-only). */
 export const STORES_CSV = join(REPO_DIR, 'research', 'gvh-location', 'data', 'stores.csv');
 /** Logs, stack.json and teardown.json of the launcher (git-ignored; outside Playwright's outputDir). */
-export const RUN_DIR = process.env.FULLSTACK_RUN_DIR ?? join(WEB_DIR, 'test-results', 'fullstack-stack');
+export const RUN_DIR = resolve(process.env.FULLSTACK_RUN_DIR ?? join(WEB_DIR, 'test-results', 'fullstack-stack'));
 export const STATE_FILE = join(RUN_DIR, 'stack.json');
 export const TEARDOWN_FILE = join(RUN_DIR, 'teardown.json');
 export const READY_PREFIX = 'FULLSTACK-READY ';
+/** Set by global-setup.ts for the workers: the API's address. */
+export const BASE_URL_ENV = 'FULLSTACK_BASE_URL';
 
 export interface StepState {
 	name: string;
@@ -30,6 +32,7 @@ export interface StepState {
 	seconds: number;
 	requests: number;
 	min_request_gap_s: number | null;
+	request_span_s: number | null;
 }
 
 export interface StackState {

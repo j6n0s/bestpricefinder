@@ -23,11 +23,11 @@ import type {
 	StoreOut,
 	StoresResponse
 } from '../../src/lib/api/types';
-import { STORES_CSV, readState } from './stack';
+import { BASE_URL_ENV, STORES_CSV, readState } from './stack';
 
-const STATE = readState();
-const BASE_URL = STATE.base_url;
-const ORIGIN = new URL(BASE_URL).origin;
+/** Set by global-setup.ts once the stack is up (empty while Playwright only lists the tests). */
+const BASE_URL = process.env[BASE_URL_ENV] ?? '';
+const ORIGIN = BASE_URL ? new URL(BASE_URL).origin : '';
 /** Nyugati tér, a BUILD-BRIEF §10 test point: what the browser reports. */
 const DEVICE = { latitude: 47.5103, longitude: 19.0558 };
 /** What the app keeps of it (rounded to 3 decimals, src/lib/location.ts), for the distance checks here. */
@@ -41,8 +41,19 @@ const PEOPLE = 2;
 const DAYS = 7;
 const DISCLAIMER = 'Nem hivatalos alkalmazás, nem áll kapcsolatban a Gazdasági Versenyhivatallal.';
 const EARTH_RADIUS_KM = 6371.0088;
+/** The shop sections of a list, in the docs/DATA.md order, with their Hungarian headings. */
+const LIST_GROUPS: readonly (readonly [string, string])[] = [
+	['zoldseg_gyumolcs', 'Zöldség, gyümölcs'],
+	['pekaru', 'Pékáru'],
+	['tejtermek_tojas', 'Tejtermék, tojás'],
+	['hus_hal', 'Hús, hal'],
+	['szaraz_tartos', 'Száraz és tartós élelmiszer'],
+	['fagyasztott', 'Fagyasztott'],
+	['fuszer_olaj', 'Fűszer, olaj'],
+	['egyeb', 'Egyéb']
+];
 
-test.use({ baseURL: BASE_URL, geolocation: DEVICE, permissions: ['geolocation'] });
+test.use({ baseURL: BASE_URL || undefined, geolocation: DEVICE, permissions: ['geolocation'] });
 
 declare global {
 	interface Window {
@@ -141,8 +152,9 @@ interface Watch {
 	requests: { method: string; url: string; body: string }[];
 }
 
-/** Records console errors, uncaught errors, CSP violations, geolocation calls and every request; a request to
- * another origin is recorded and aborted (it never reaches the network). Our own requests are untouched. */
+/** Records console errors, uncaught errors, CSP violations, geolocation calls and every request of the browser
+ * context; a request to another origin is recorded and aborted (it never reaches the network). Our own requests
+ * are untouched. */
 async function watch(page: Page): Promise<Watch> {
 	const seen: Watch = { consoleErrors: [], pageErrors: [], external: [], requests: [] };
 	await page.addInitScript(() => {
@@ -165,8 +177,10 @@ async function watch(page: Page): Promise<Watch> {
 		if (message.type() === 'error') seen.consoleErrors.push(message.text());
 	});
 	page.on('pageerror', (error) => seen.pageErrors.push(String(error)));
-	page.on('request', (request) => seen.requests.push({ method: request.method(), url: request.url(), body: request.postData() ?? '' }));
-	await page.route(
+	// Context-wide, so a popup or a new tab would be covered too.
+	const context = page.context();
+	context.on('request', (request) => seen.requests.push({ method: request.method(), url: request.url(), body: request.postData() ?? '' }));
+	await context.route(
 		(url) => url.origin !== ORIGIN,
 		async (route) => {
 			seen.external.push(route.request().url());
@@ -177,15 +191,34 @@ async function watch(page: Page): Promise<Watch> {
 }
 
 async function expectClean(page: Page, seen: Watch, where: string): Promise<void> {
-	expect(seen.consoleErrors, `console errors (${where})`).toEqual([]);
-	expect(seen.pageErrors, `uncaught errors (${where})`).toEqual([]);
-	expect(await page.evaluate(() => window.__cspViolations ?? ['listener missing']), `CSP violations (${where})`).toEqual([]);
-	expect(seen.external, `requests to another origin (${where})`).toEqual([]);
-	for (const request of seen.requests) {
-		expect(new URL(request.url).origin, `request origin (${where})`).toBe(ORIGIN);
-		expect(`${request.url} ${request.body}`, `no coordinates in any request (${where})`).not.toMatch(COORDINATES);
+	// Soft: every kind of problem is reported, not only the first (the test still fails).
+	expect.soft(seen.consoleErrors, `console errors (${where})`).toEqual([]);
+	expect.soft(seen.pageErrors, `uncaught errors (${where})`).toEqual([]);
+	expect.soft(await page.evaluate(() => window.__cspViolations ?? ['listener missing']), `CSP violations (${where})`).toEqual([]);
+	expect.soft(seen.external, `requests to another origin (${where})`).toEqual([]);
+	expect.soft(seen.requests.filter((r) => new URL(r.url).origin !== ORIGIN).map((r) => r.url), `request origins (${where})`).toEqual([]);
+	expect
+		.soft(seen.requests.filter((r) => COORDINATES.test(`${r.url} ${r.body}`)).map((r) => `${r.method} ${r.url} ${r.body}`), `requests carrying a coordinate (${where})`)
+		.toEqual([]);
+	await expect.soft(page.locator('body'), `"akció" (${where})`).not.toContainText(/akció/i);
+}
+
+/** Loads a page of the SPA (a full document load) and checks its HTML response: 200, and the CSP header carries
+ * every directive of the build's meta policy plus frame-ancestors 'none', and no 'unsafe-inline'. */
+async function openPage(page: Page, path: string): Promise<void> {
+	const html = await page.goto(path);
+	expect(html?.status(), `GET ${path}`).toBe(200);
+	expect(html?.headers()['content-type'], `GET ${path}`).toMatch(/^text\/html/);
+	const header = html?.headers()['content-security-policy'] ?? '';
+	expect(header, `CSP header of ${path}`).toMatch(/(^|; )frame-ancestors 'none'$/);
+	expect(header, `CSP header of ${path}`).toContain("default-src 'self'");
+	expect(header, `CSP header of ${path}`).not.toContain('unsafe-inline');
+	const metaPolicy = (await page.locator('meta[http-equiv="content-security-policy"]').getAttribute('content')) ?? '';
+	const directives = metaPolicy.split(';').map(norm).filter(Boolean);
+	expect(directives.length, `the build's CSP meta policy (${path})`).toBeGreaterThan(0);
+	for (const directive of directives) {
+		expect(header.split('; '), `the CSP header of ${path} keeps "${directive}"`).toContain(directive);
 	}
-	await expect(page.locator('body')).not.toContainText(/akció/i);
 }
 
 async function getJson<T>(request: APIRequestContext, path: string): Promise<T> {
@@ -212,6 +245,9 @@ async function rowTexts(rows: Locator): Promise<{ id: string; rank: string; tota
 // ───────────────────────────── the test ─────────────────────────────
 
 test('week plan -> list -> nearby stores -> store totals -> recipes, on the real stack', async ({ page, request }) => {
+	expect(BASE_URL, `${BASE_URL_ENV} (set by global-setup.ts)`).not.toBe('');
+	const STATE = readState();
+	expect(STATE.base_url, 'stack.json describes the stack under test').toBe(BASE_URL);
 	const seen = await watch(page);
 	const meta = await getJson<MetaResponse>(request, '/api/meta');
 	const { recipes } = await getJson<RecipesResponse>(request, '/api/recipes');
@@ -221,17 +257,8 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	const attribution = `Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${dateHu(STATE.data_date)}`;
 	const chainName = new Map(meta.chains.map((chain) => [chain.slug, chain.name]));
 
-	// ── f. the HTML carries the CSP header (the meta policy plus frame-ancestors 'none') ──
-	const html = await page.goto('/terv');
-	expect(html?.status()).toBe(200);
-	const header = html?.headers()['content-security-policy'] ?? '';
-	expect(header).toMatch(/(^|; )frame-ancestors 'none'$/);
-	const metaPolicy = await page.locator('meta[http-equiv="content-security-policy"]').getAttribute('content');
-	for (const directive of (metaPolicy ?? '').split(';').map(norm).filter(Boolean)) {
-		expect(header.split('; '), `header policy keeps "${directive}"`).toContain(directive);
-	}
-	expect(header).toContain("default-src 'self'");
-	expect(header).not.toContain('unsafe-inline');
+	// ── f. every HTML document carries the CSP header (the meta policy plus frame-ancestors 'none') ──
+	await openPage(page, '/terv');
 
 	// ── a. /terv: a 7-day plan, 3 slots, 2 people, from the real planner ──
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Heti terv');
@@ -271,7 +298,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 
 	// ── b. /lista: the list of this plan from the real /api/list ──
 	const listed = page.waitForResponse(isApiPost('/api/list'));
-	await page.goto('/lista');
+	await openPage(page, '/lista');
 	const listResponse = await listed;
 	expect(listResponse.status()).toBe(200);
 	const listRequest = listResponse.request().postDataJSON() as ListRequest;
@@ -437,7 +464,25 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	expect(priced.length, 'something is priced at the cheapest store').toBeGreaterThan(0);
 	const sum = priced.reduce((total, line) => total + (line.checkout_cost ?? 0), 0);
 	expect(Math.abs(sum - chosen.checkout_total)).toBeLessThan(0.011);
-	await expect(storeList.locator('h4').first()).toBeVisible();
+	// Grouped by shop section (docs/DATA.md order), each section in the list's order.
+	const listOrder = new Map(list.lines.map((line, index) => [line.ingredient_id, index]));
+	const groupOf = new Map(list.lines.map((line) => [line.ingredient_id, line.list_group]));
+	const expectedGroups = LIST_GROUPS.map(([group, heading]) => ({
+		heading,
+		ids: chosen.lines
+			.map((line) => line.ingredient_id)
+			.filter((id) => groupOf.get(id) === group)
+			.sort((a, b) => (listOrder.get(a) ?? 0) - (listOrder.get(b) ?? 0))
+	})).filter((group) => group.ids.length > 0);
+	expect(chosen.lines.every((line) => groupOf.has(line.ingredient_id)), 'every quoted line is a line of the list').toBe(true);
+	expect(expectedGroups.length, 'the list spans several shop sections').toBeGreaterThan(1);
+	const shownGroups = await storeList.locator('section.group').evaluateAll((sections) =>
+		sections.map((section) => ({
+			heading: section.querySelector('h4')?.textContent?.trim() ?? '',
+			ids: [...section.querySelectorAll('[data-testid="store-line"]')].map((el) => el.getAttribute('data-ingredient-id') ?? '')
+		}))
+	);
+	expect(shownGroups).toEqual(expectedGroups);
 	await expect(storeList.getByTestId('store-line')).toHaveCount(chosen.lines.length);
 	for (const line of chosen.lines) {
 		const element = storeList.locator(`[data-testid="store-line"][data-ingredient-id="${line.ingredient_id}"]`);
@@ -476,7 +521,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	await expectClean(page, seen, '/lista');
 
 	// ── e. /receptek and the detail of the first planned recipe: the chain table is the server's ──
-	await page.goto('/receptek');
+	await openPage(page, '/receptek');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Receptek');
 	await expect(page.getByTestId('recipe-card')).toHaveCount(recipes.length);
 	await expect(page.getByTestId('recipe-count')).toHaveText(loose(`${recipes.length} recept`));
