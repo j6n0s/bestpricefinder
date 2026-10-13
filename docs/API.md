@@ -44,7 +44,7 @@ Optional filters:
 - `tag`: one recipe tag;
 - `q`: 2–40 characters, accent-insensitive substring search over the title.
 
-Each item has: `id, title, summary, slots, servings, minutes, tags, tested, cost_per_serving_from, cheapest_chains, priced_share`. `cheapest_chains` lists **every** grocery chain tied at the minimum (equal after rounding to whole forints). It is a tie group, never an order; the UI must not single out one chain of a tie. `cost_per_serving_from` is the cheapest **chain-typical** used cost per serving across the grocery chains (the `productMinAmount` price, used quantities, pantry lines excluded). It is null when nothing can be priced.
+Each item has: `id, title, summary, slots, servings, minutes, tags, tested, cost_per_serving_from, cheapest_chains, priced_share`. Only chains that price ≥90 % of the recipe's estimated cost can be "cheapest" (or, when none reaches 90 %, the best-covered chains); see docs/ENGINE.md. `cheapest_chains` lists **every** grocery chain tied at the minimum (equal after rounding to whole forints). It is a tie group, never an order; the UI must not single out one chain of a tie. `cost_per_serving_from` is the cheapest **chain-typical** used cost per serving across the grocery chains (the `productMinAmount` price, used quantities, pantry lines excluded). It is null when nothing can be priced.
 
 ### `GET /api/recipes/{id}`
 The summary fields plus:
@@ -112,6 +112,19 @@ Our own daily archive. Per chain, the cheapest matching product's chain-typical 
 - `days`: 7–365, default 30.
 
 Response: `{ingredient_id, unit, days, series: [{chain, points: [{date, unit_price}]}]}`.
+
+## Implementation decisions (v1.2, recorded from the implementation)
+- **Settings:** `BPF_HSTS=true` adds HSTS (use it only behind TLS). `BPF_ENABLE_DOCS=true` serves the docs UI at `/api/docs`, `/api/redoc` and `/api/openapi.json` with a development-only CSP; it is off by default.
+- **Methods:** `HEAD` on API endpoints is 405; static paths accept `GET` and `HEAD`.
+- **Rate limit** applies to `/api/*` only. IPv6 clients are grouped by /64.
+- **Body size limit** applies to every request. CPU-heavy POST work runs in worker threads behind a capacity limiter.
+- **503 `no_data`** is also returned when the database is unreachable and nothing is cached; `/api/health` then answers 503 `down`. History without any successful ingest is 503 `no_data`.
+- **Strict JSON** (422, `fields: ["body"]`): duplicate keys, NaN/Infinity literals, non-UTF-8 bodies or a BOM, and nesting or integer-size limits. Quantities must be JSON numbers. Field paths are cut at the first unknown component, so an unknown root field is reported as `body`. Model-level errors (duplicate lines or stores) are also `body`.
+- **`/api/plan/suggest`** ignores unknown `exclude_ingredients` ids (they exclude nothing); every other endpoint answers 422 for unknown ids. The planner's budget uses each recipe's `cost_per_serving_from` and only when `weekly_budget` is set.
+- **ETag/304** also apply to `/api/health`, which keeps `Cache-Control: no-store`.
+- **Static files:** a missing file under `/_app/` is a JSON 404, not the SPA page. Paths with `.`/`..`/dot-file segments, backslashes, NUL or more than 1,024 characters are 404. Every static response, `service-worker.js` included, carries the SPA policy header. `index.html` is read once at startup, so deploying a new `web/build` needs an API restart.
+- **Logging:** the uvicorn access log is off by default because it records client IPs (`python -m bpf.api --access-log` turns it on).
+- **Output order:** ingredients and stores by id, chains by slug, recipes by accent-folded title, history series by chain slug.
 
 ## Price types and "deals"
 `price_type` is reported for transparency only. `DISCOUNTED` is **not** a weekly-deal flag: Aldi never sets it, and it also marks long-running reductions (BUILD-BRIEF §3). The UI may show "kedvezményes ár (GVH-jelölés)" as plain text, but must not show an "akció"/deal badge based on it. A future deal badge will compare against our own daily archive.

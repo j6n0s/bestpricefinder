@@ -74,7 +74,7 @@ db/migrations/        numbered SQL migrations (schema + grants)
 deploy/local/         db-init.sh, db-start.sh, db-stop.sh, run scripts
 server/bpf/           Python package: config, db, gvh client, ingest, pricing, planner, api
 server/tests/         pytest (unit + DB integration against a throwaway database)
-data/                 ingredients.json (ontology), recipes.json (original recipes), ksh/ (CC BY 4.0)
+data/                 ingredients.json (ontology), recipes/*.json (original recipes), ksh/ (CC BY 4.0)
 web/                  SvelteKit PWA
 docs/                 ARCHITECTURE.md, API.md, DATA.md, PROGRESS.md
 research/             research evidence (read-only)

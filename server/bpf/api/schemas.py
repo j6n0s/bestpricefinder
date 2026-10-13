@@ -6,7 +6,8 @@ the OpenAPI document produced from these models (``web/src/lib/api/schema.d.ts``
 Rules
 -----
 * Every request model forbids unknown fields and bounds every list, string and number.
-* Quantities arrive as JSON numbers and are quantised to 0.001 (ROUND_HALF_UP); NaN/Infinity are rejected.
+* Quantities arrive as JSON numbers (strings are rejected) and are quantised to 0.001 (ROUND_HALF_UP);
+  NaN/Infinity and magnitudes far outside the bounds are rejected with 422, never an arithmetic error.
 * Responses carry money as JSON numbers in HUF rounded to 2 decimals, and quantities rounded to 3 decimals.
   The UI rounds money to whole forints for display.
 * Chains are identified by ``slug`` (e.g. "lidl") in every request and response.
@@ -63,21 +64,25 @@ _QTY_STEP = Decimal("0.001")
 
 def _to_qty(value: object, *, low: Decimal, high: Decimal) -> Decimal:
     """Number -> Decimal quantised to 0.001; rejects bool, NaN, Infinity and out-of-range values."""
-    if isinstance(value, bool) or not isinstance(value, (int, float, Decimal, str)):
-        raise ValueError("must be a number")
+    if isinstance(value, bool) or not isinstance(value, (int, float, Decimal)):
+        raise ValueError("must be a number")  # JSON strings are rejected: clients send numbers
     if isinstance(value, float) and not math.isfinite(value):
         raise ValueError("must be finite")
-    if isinstance(value, str) and len(value) > 20:
-        raise ValueError("too long")
     try:
         dec = Decimal(str(value))
     except InvalidOperation as exc:
         raise ValueError("must be a number") from exc
     if not dec.is_finite():
         raise ValueError("must be finite")
-    dec = dec.quantize(_QTY_STEP, rounding=ROUND_HALF_UP)
+    out_of_range = ValueError(f"must be > {low} and <= {high}")
+    if dec.adjusted() > 6:  # >= 10**7: far above every bound; quantize would overflow the context precision
+        raise out_of_range
+    try:
+        dec = dec.quantize(_QTY_STEP, rounding=ROUND_HALF_UP)
+    except InvalidOperation as exc:  # defensive: never let an ArithmeticError become a 500
+        raise out_of_range from exc
     if not (low < dec <= high):
-        raise ValueError(f"must be > {low} and <= {high}")
+        raise out_of_range
     return dec
 
 

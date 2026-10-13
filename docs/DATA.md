@@ -1,6 +1,6 @@
 # Content data (`data/`)
 
-**Status:** contract v1, 2026-10-13 (cloud agent). The loader is `server/bpf/content.py`, run as `python -m bpf.content [--dry-run]`. It runs as `bpf_ingest`, validates **everything** before writing anything, upserts in one transaction, and records an `ops.ingest_run` row of kind `content`. The domain types it produces are in [`server/bpf/pricing/model.py`](../server/bpf/pricing/model.py).
+**Status:** contract v1.2, 2026-10-13 (cloud agent). The loader is the package `server/bpf/content/`, run as `python -m bpf.content [--dry-run]` (options: docs/ENGINE.md). It runs as `bpf_ingest`, validates **everything** before writing anything, upserts in one transaction, and records an `ops.ingest_run` row of kind `content`. The domain types it produces are in [`server/bpf/pricing/model.py`](../server/bpf/pricing/model.py).
 
 All files are UTF-8 JSON (2-space indent, keys in the order below, stable sort by `id`) except the KSH CSV. Content is **ours**:
 - recipe text is original;
@@ -66,16 +66,37 @@ Validation:
   - `baromfi`, `sertes` and `marha` likewise;
   - `gyors`: `minutes ≤ 25`.
 - `olcso` is never hand-set; it is computed.
-- **No health claims** in any text: the loader rejects "egészséges", "fogyaszt", "diéta", "méregtelenít", "immun", "gyógy" and "betegség" (case-insensitive).
+- **No health claims** in any text: the loader rejects "egészséges", "fogyaszt", "diéta", "méregtelenít", "immun", "gyógy" and "betegség", matched as accent-folded word stems in any form (so "fogyasztás" is rejected too).
+- Stricter rules the loader enforces (v1.2):
+  - `husmentes` is **required** when no line is tagged `red_meat`, `processed_meat`, `poultry` or `fish`;
+  - the meat check also applies to `vegetarianus`;
+  - `hal`, `huvelyes`, `baromfi`, `sertes` and `marha` need a required (non-optional) matching line, and `sertes`/`marha` a `red_meat` line;
+  - at least one required line;
+  - `qty` has at most 3 decimals;
+  - each file is sorted by `id`.
+- Ingredient file rules (v1.2):
+  - sorted by `id`, and `name_hu` unique after accent folding;
+  - `include_patterns`, `exclude_patterns` and `product_units` need `leaf_ids`;
+  - mixing `l` and `kg` needs `density_kg_per_l`;
+  - a KSH row's unit must convert to the canonical unit;
+  - `red_meat`/`processed_meat` must be weighable in kg;
+  - regexes may not match the empty string.
 
 **Coverage rule (BUILD-BRIEF §5).** Every recipe needs **≥90 % of its estimated ingredient cost in GVH-mapped ingredients**. Non-GVH lines are KSH-priced or pantry. `python -m bpf.content --coverage-report` prints per recipe:
 - the share, using the latest DB prices when they exist, else `research/gap-healthy-plan-priceability/data/ingredient_reference_prices.csv`;
 - the failing recipes. They block the load unless `--allow-low-coverage` is passed.
 
+How the share is computed (v1.2):
+- Optional and pantry lines are left out, as in `recipe_chain_costs`.
+- A GVH-mapped line with no price, in the DB or the reference CSV, is left out and reported; the share is then a **lower bound**.
+- A non-GVH line with no price at all (KSH or reference) **fails** the recipe.
+
 ## `data/ksh/ara0044.csv`: KSH national average prices (CC BY 4.0)
 - **Source:** KSH STADAT ara0044, <https://www.ksh.hu/stadat_files/ara/hu/ara0044.html>. Attribution "Forrás: KSH" with a link, as required.
 - **Format:** UTF-8 CSV with the header `code,name,unit,unit_qty,price,period`. `unit` ∈ {kg, l, db} after normalisation (e.g. "Tojás, 10 darab" → unit `db`, unit_qty 10); `period` is `YYYY-MM-01`.
 - Rows that are not food, or whose unit cannot be normalised (`pár`, `m²`, `adag`…), are dropped by the converter `python -m bpf.content --convert-ksh <raw file>`. The converter reads the original ISO-8859-2 file and records it in `data/ksh/SOURCE.md` with the URL, the fetch date and the file's sha256.
+- **Stored per one unit:** `app.ksh_price` has no `unit_qty` column, so the loader stores `price / unit_qty`, i.e. HUF per ONE `unit` (eggs: 814 Ft / 10 db = 81.40 Ft/db). The API repo therefore builds `KshPrice(unit_qty=1, price=row.price)`. The CSV itself keeps `unit_qty`.
+- **History:** for each code in the file, rows of a later period than the file's are deleted; earlier periods, and codes no longer in the file, are kept.
 - **Seed:** until a raw KSH file can be fetched (the cloud container cannot reach ksh.hu), the CSV is converted from `research/alt-price-sources/data/ksh_ara0044_latest_avg_prices.csv` (period 2026-09). `SOURCE.md` says so.
 
 ## `data/nutrition/` (optional)
