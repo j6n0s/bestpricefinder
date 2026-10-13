@@ -1,0 +1,2864 @@
+{
+  "components": {
+    "schemas": {
+      "AttributionOut": {
+        "properties": {
+          "license": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "License"
+          },
+          "text_en": {
+            "title": "Text En",
+            "type": "string"
+          },
+          "text_hu": {
+            "title": "Text Hu",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text_hu",
+          "text_en",
+          "url"
+        ],
+        "title": "AttributionOut",
+        "type": "object"
+      },
+      "AttributionSet": {
+        "properties": {
+          "gvh": {
+            "$ref": "#/components/schemas/AttributionOut"
+          },
+          "ksh": {
+            "$ref": "#/components/schemas/AttributionOut"
+          },
+          "nutrition": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AttributionOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "gvh",
+          "ksh"
+        ],
+        "title": "AttributionSet",
+        "type": "object"
+      },
+      "ChainCostOut": {
+        "properties": {
+          "chain": {
+            "pattern": "^[a-z0-9-]{1,30}$",
+            "title": "Chain",
+            "type": "string"
+          },
+          "cost_per_serving": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Per Serving"
+          },
+          "missing": {
+            "items": {
+              "pattern": "^[a-z0-9_]{2,40}$",
+              "type": "string"
+            },
+            "title": "Missing",
+            "type": "array"
+          },
+          "priced_share": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Priced Share",
+            "type": "number"
+          }
+        },
+        "required": [
+          "chain",
+          "cost_per_serving",
+          "priced_share",
+          "missing"
+        ],
+        "title": "ChainCostOut",
+        "type": "object"
+      },
+      "ChainOut": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "is_grocery": {
+            "title": "Is Grocery",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "slug": {
+            "pattern": "^[a-z0-9-]{1,30}$",
+            "title": "Slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "is_grocery"
+        ],
+        "title": "ChainOut",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "description": "Generic error body. Never echoes input values or internals.",
+        "properties": {
+          "error": {
+            "enum": [
+              "invalid_request",
+              "not_found",
+              "payload_too_large",
+              "unsupported_media_type",
+              "rate_limited",
+              "no_data",
+              "internal",
+              "method_not_allowed"
+            ],
+            "title": "Error",
+            "type": "string"
+          },
+          "fields": {
+            "description": "dotted paths of invalid fields (422 only)",
+            "items": {
+              "type": "string"
+            },
+            "title": "Fields",
+            "type": "array"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "properties": {
+          "data_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Date"
+          },
+          "db": {
+            "title": "Db",
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "degraded",
+              "down"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "db",
+          "data_date"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "HistoryPoint": {
+        "properties": {
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "unit_price": {
+            "title": "Unit Price",
+            "type": "number"
+          }
+        },
+        "required": [
+          "date",
+          "unit_price"
+        ],
+        "title": "HistoryPoint",
+        "type": "object"
+      },
+      "HistoryResponse": {
+        "properties": {
+          "days": {
+            "title": "Days",
+            "type": "integer"
+          },
+          "ingredient_id": {
+            "pattern": "^[a-z0-9_]{2,40}$",
+            "title": "Ingredient Id",
+            "type": "string"
+          },
+          "series": {
+            "items": {
+              "$ref": "#/components/schemas/HistorySeries"
+            },
+            "title": "Series",
+            "type": "array"
+          },
+          "unit": {
+            "enum": [
+              "kg",
+              "l",
+              "db"
+            ],
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ingredient_id",
+          "unit",
+          "days",
+          "series"
+        ],
+        "title": "HistoryResponse",
+        "type": "object"
+      },
+      "HistorySeries": {
+        "properties": {
+          "chain": {
+            "pattern": "^[a-z0-9-]{1,30}$",
+            "title": "Chain",
+            "type": "string"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/HistoryPoint"
+            },
+            "title": "Points",
+            "type": "array"
+          }
+        },
+        "required": [
+          "chain",
+          "points"
+        ],
+        "title": "HistorySeries",
+        "type": "object"
+      },
+      "IngredientOut": {
+        "properties": {
+          "id": {
+            "pattern": "^[a-z0-9_]{2,40}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "list_group": {
+            "title": "List Group",
+            "type": "string"
+          },
+          "name_hu": {
+            "title": "Name Hu",
+            "type": "string"
+          },
+          "pantry": {
+            "title": "Pantry",
+            "type": "boolean"
+          },
+          "piece_weight_kg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Piece Weight Kg"
+          },
+          "priced_by": {
+            "enum": [
+              "gvh",
+              "ksh",
+              "none"
+            ],
+            "title": "Priced By",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "unit": {
+            "enum": [
+              "kg",
+              "l",
+              "db"
+            ],
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name_hu",
+          "list_group",
+          "unit",
+          "piece_weight_kg",
+          "pantry",
+          "priced_by",
+          "tags"
+        ],
+        "title": "IngredientOut",
+        "type": "object"
+      },
+      "IngredientsResponse": {
+        "properties": {
+          "ingredients": {
+            "items": {
+              "$ref": "#/components/schemas/IngredientOut"
+            },
+            "title": "Ingredients",
+            "type": "array"
+          }
+        },
+        "required": [
+          "ingredients"
+        ],
+        "title": "IngredientsResponse",
+        "type": "object"
+      },
+      "ListItemIn": {
+        "additionalProperties": false,
+        "properties": {
+          "recipe_id": {
+            "pattern": "^[a-z0-9-]{2,60}$",
+            "title": "Recipe Id",
+            "type": "string"
+          },
+          "servings": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "servings wanted (e.g. people × meals), 0 < servings <= 100",
+            "title": "Servings"
+          }
+        },
+        "required": [
+          "recipe_id",
+          "servings"
+        ],
+        "title": "ListItemIn",
+        "type": "object"
+      },
+      "ListLineOut": {
+        "properties": {
+          "ingredient_id": {
+            "pattern": "^[a-z0-9_]{2,40}$",
+            "title": "Ingredient Id",
+            "type": "string"
+          },
+          "list_group": {
+            "title": "List Group",
+            "type": "string"
+          },
+          "name_hu": {
+            "title": "Name Hu",
+            "type": "string"
+          },
+          "pantry": {
+            "title": "Pantry",
+            "type": "boolean"
+          },
+          "qty": {
+            "title": "Qty",
+            "type": "number"
+          },
+          "recipe_ids": {
+            "items": {
+              "pattern": "^[a-z0-9-]{2,60}$",
+              "type": "string"
+            },
+            "title": "Recipe Ids",
+            "type": "array"
+          },
+          "unit": {
+            "enum": [
+              "kg",
+              "l",
+              "db"
+            ],
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ingredient_id",
+          "name_hu",
+          "qty",
+          "unit",
+          "list_group",
+          "pantry",
+          "recipe_ids"
+        ],
+        "title": "ListLineOut",
+        "type": "object"
+      },
+      "ListRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "include_optional": {
+            "default": true,
+            "title": "Include Optional",
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ListItemIn"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Items",
+            "type": "array"
+          },
+          "on_hand": {
+            "items": {
+              "$ref": "#/components/schemas/QtyLineIn"
+            },
+            "maxItems": 200,
+            "title": "On Hand",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ListRequest",
+        "type": "object"
+      },
+      "ListResponse": {
+        "properties": {
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/ListLineOut"
+            },
+            "title": "Lines",
+            "type": "array"
+          }
+        },
+        "required": [
+          "lines"
+        ],
+        "title": "ListResponse",
+        "type": "object"
+      },
+      "MetaResponse": {
+        "properties": {
+          "attribution": {
+            "$ref": "#/components/schemas/AttributionSet"
+          },
+          "chains": {
+            "items": {
+              "$ref": "#/components/schemas/ChainOut"
+            },
+            "title": "Chains",
+            "type": "array"
+          },
+          "data_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Date"
+          },
+          "disclaimer_en": {
+            "title": "Disclaimer En",
+            "type": "string"
+          },
+          "disclaimer_hu": {
+            "title": "Disclaimer Hu",
+            "type": "string"
+          },
+          "ingested_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ingested At"
+          },
+          "ksh_period": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ksh Period"
+          },
+          "stale": {
+            "description": "true when data_date is older than yesterday (Europe/Budapest)",
+            "title": "Stale",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "data_date",
+          "ingested_at",
+          "stale",
+          "ksh_period",
+          "chains",
+          "attribution",
+          "disclaimer_hu",
+          "disclaimer_en"
+        ],
+        "title": "MetaResponse",
+        "type": "object"
+      },
+      "NutritionOut": {
+        "properties": {
+          "carb_g": {
+            "title": "Carb G",
+            "type": "number"
+          },
+          "coverage": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Coverage",
+            "type": "number"
+          },
+          "fat_g": {
+            "title": "Fat G",
+            "type": "number"
+          },
+          "fiber_g": {
+            "title": "Fiber G",
+            "type": "number"
+          },
+          "kcal": {
+            "title": "Kcal",
+            "type": "number"
+          },
+          "protein_g": {
+            "title": "Protein G",
+            "type": "number"
+          },
+          "salt_g": {
+            "title": "Salt G",
+            "type": "number"
+          },
+          "satfat_g": {
+            "title": "Satfat G",
+            "type": "number"
+          },
+          "sugar_g": {
+            "title": "Sugar G",
+            "type": "number"
+          }
+        },
+        "required": [
+          "kcal",
+          "protein_g",
+          "carb_g",
+          "sugar_g",
+          "fat_g",
+          "satfat_g",
+          "fiber_g",
+          "salt_g",
+          "coverage"
+        ],
+        "title": "NutritionOut",
+        "type": "object"
+      },
+      "PackOptionOut": {
+        "properties": {
+          "availability": {
+            "enum": [
+              "confirmed",
+              "assumed"
+            ],
+            "title": "Availability",
+            "type": "string"
+          },
+          "pack_price": {
+            "description": "HUF per pack; for sold-by-weight items HUF per canonical unit",
+            "title": "Pack Price",
+            "type": "number"
+          },
+          "pack_size": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "canonical units per pack; null = sold by weight",
+            "title": "Pack Size"
+          },
+          "price_scope": {
+            "enum": [
+              "store",
+              "chain"
+            ],
+            "title": "Price Scope",
+            "type": "string"
+          },
+          "price_type": {
+            "enum": [
+              "NORMAL",
+              "DISCOUNTED",
+              "LOYALTY"
+            ],
+            "title": "Price Type",
+            "type": "string"
+          },
+          "product_id": {
+            "title": "Product Id",
+            "type": "string"
+          },
+          "product_name": {
+            "title": "Product Name",
+            "type": "string"
+          },
+          "unit_price": {
+            "description": "HUF per canonical unit",
+            "title": "Unit Price",
+            "type": "number"
+          }
+        },
+        "required": [
+          "product_id",
+          "product_name",
+          "pack_size",
+          "pack_price",
+          "unit_price",
+          "price_type",
+          "price_scope",
+          "availability"
+        ],
+        "title": "PackOptionOut",
+        "type": "object"
+      },
+      "PickOut": {
+        "properties": {
+          "cost": {
+            "title": "Cost",
+            "type": "number"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "option": {
+            "$ref": "#/components/schemas/PackOptionOut"
+          },
+          "qty": {
+            "title": "Qty",
+            "type": "number"
+          }
+        },
+        "required": [
+          "option",
+          "count",
+          "qty",
+          "cost"
+        ],
+        "title": "PickOut",
+        "type": "object"
+      },
+      "PlanCheckRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "days": {
+            "items": {
+              "$ref": "#/components/schemas/PlanDayIO"
+            },
+            "maxItems": 31,
+            "minItems": 1,
+            "title": "Days",
+            "type": "array"
+          },
+          "no_repeat_days": {
+            "default": 5,
+            "maximum": 14.0,
+            "minimum": 0.0,
+            "title": "No Repeat Days",
+            "type": "integer"
+          },
+          "people": {
+            "default": 2,
+            "maximum": 12.0,
+            "minimum": 1.0,
+            "title": "People",
+            "type": "integer"
+          },
+          "red_meat_g_per_person_week": {
+            "default": 600,
+            "maximum": 3000.0,
+            "minimum": 0.0,
+            "title": "Red Meat G Per Person Week",
+            "type": "integer"
+          },
+          "weekly_budget": {
+            "anyOf": [
+              {
+                "maximum": 1000000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weekly Budget"
+          }
+        },
+        "required": [
+          "days"
+        ],
+        "title": "PlanCheckRequest",
+        "type": "object"
+      },
+      "PlanCheckResponse": {
+        "properties": {
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/RuleCheckOut"
+            },
+            "title": "Checks",
+            "type": "array"
+          }
+        },
+        "required": [
+          "checks"
+        ],
+        "title": "PlanCheckResponse",
+        "type": "object"
+      },
+      "PlanDayIO": {
+        "additionalProperties": false,
+        "properties": {
+          "index": {
+            "maximum": 30.0,
+            "minimum": 0.0,
+            "title": "Index",
+            "type": "integer"
+          },
+          "meals": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "pattern": "^[a-z0-9-]{2,60}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "propertyNames": {
+              "enum": [
+                "reggeli",
+                "tizorai",
+                "ebed",
+                "uzsonna",
+                "vacsora"
+              ]
+            },
+            "title": "Meals",
+            "type": "object"
+          }
+        },
+        "required": [
+          "index",
+          "meals"
+        ],
+        "title": "PlanDayIO",
+        "type": "object"
+      },
+      "PlanResponse": {
+        "properties": {
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/RuleCheckOut"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "days": {
+            "items": {
+              "$ref": "#/components/schemas/PlanDayIO"
+            },
+            "title": "Days",
+            "type": "array"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "days",
+          "checks",
+          "warnings"
+        ],
+        "title": "PlanResponse",
+        "type": "object"
+      },
+      "PlanSuggestRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "days": {
+            "default": 7,
+            "maximum": 31.0,
+            "minimum": 1.0,
+            "title": "Days",
+            "type": "integer"
+          },
+          "exclude_ingredients": {
+            "items": {
+              "pattern": "^[a-z0-9_]{2,40}$",
+              "type": "string"
+            },
+            "maxItems": 50,
+            "title": "Exclude Ingredients",
+            "type": "array"
+          },
+          "exclude_tags": {
+            "items": {
+              "enum": [
+                "leves",
+                "fozelek",
+                "foetel",
+                "koret",
+                "salata",
+                "reggeli_hideg",
+                "reggeli_meleg",
+                "snack",
+                "husmentes",
+                "vegetarianus",
+                "hal",
+                "huvelyes",
+                "baromfi",
+                "sertes",
+                "marha",
+                "edes",
+                "gyors",
+                "ket_napos",
+                "olcso",
+                "gyerekbarat"
+              ],
+              "type": "string"
+            },
+            "maxItems": 20,
+            "title": "Exclude Tags",
+            "type": "array"
+          },
+          "no_repeat_days": {
+            "default": 5,
+            "maximum": 14.0,
+            "minimum": 0.0,
+            "title": "No Repeat Days",
+            "type": "integer"
+          },
+          "people": {
+            "default": 2,
+            "maximum": 12.0,
+            "minimum": 1.0,
+            "title": "People",
+            "type": "integer"
+          },
+          "red_meat_g_per_person_week": {
+            "default": 600,
+            "maximum": 3000.0,
+            "minimum": 0.0,
+            "title": "Red Meat G Per Person Week",
+            "type": "integer"
+          },
+          "seed": {
+            "default": 0,
+            "maximum": 2147483647.0,
+            "minimum": 0.0,
+            "title": "Seed",
+            "type": "integer"
+          },
+          "slots": {
+            "default": 3,
+            "enum": [
+              3,
+              5
+            ],
+            "title": "Slots",
+            "type": "integer"
+          },
+          "weekly_budget": {
+            "anyOf": [
+              {
+                "maximum": 1000000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weekly Budget"
+          }
+        },
+        "title": "PlanSuggestRequest",
+        "type": "object"
+      },
+      "QtyLineIn": {
+        "additionalProperties": false,
+        "properties": {
+          "ingredient_id": {
+            "pattern": "^[a-z0-9_]{2,40}$",
+            "title": "Ingredient Id",
+            "type": "string"
+          },
+          "qty": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "in the ingredient's canonical unit, 0 < qty <= 1000",
+            "title": "Qty"
+          }
+        },
+        "required": [
+          "ingredient_id",
+          "qty"
+        ],
+        "title": "QtyLineIn",
+        "type": "object"
+      },
+      "QuoteLineOut": {
+        "properties": {
+          "alternatives": {
+            "items": {
+              "$ref": "#/components/schemas/PackOptionOut"
+            },
+            "title": "Alternatives",
+            "type": "array"
+          },
+          "checkout_cost": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checkout Cost"
+          },
+          "ingredient_id": {
+            "pattern": "^[a-z0-9_]{2,40}$",
+            "title": "Ingredient Id",
+            "type": "string"
+          },
+          "ksh_estimate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ksh Estimate"
+          },
+          "leftover_qty": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leftover Qty"
+          },
+          "picks": {
+            "items": {
+              "$ref": "#/components/schemas/PickOut"
+            },
+            "title": "Picks",
+            "type": "array"
+          },
+          "qty": {
+            "title": "Qty",
+            "type": "number"
+          },
+          "status": {
+            "enum": [
+              "priced",
+              "pantry",
+              "unavailable",
+              "ksh_estimate",
+              "unpriced"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "unit": {
+            "enum": [
+              "kg",
+              "l",
+              "db"
+            ],
+            "title": "Unit",
+            "type": "string"
+          },
+          "used_cost": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Used Cost"
+          }
+        },
+        "required": [
+          "ingredient_id",
+          "qty",
+          "unit",
+          "status",
+          "picks",
+          "checkout_cost",
+          "used_cost",
+          "leftover_qty",
+          "ksh_estimate",
+          "alternatives"
+        ],
+        "title": "QuoteLineOut",
+        "type": "object"
+      },
+      "QuoteRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "include_loyalty": {
+            "default": false,
+            "title": "Include Loyalty",
+            "type": "boolean"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/QtyLineIn"
+            },
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Lines",
+            "type": "array"
+          },
+          "store_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9_-]{1,40}$",
+              "type": "string"
+            },
+            "maxItems": 25,
+            "minItems": 1,
+            "title": "Store Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "lines",
+          "store_ids"
+        ],
+        "title": "QuoteRequest",
+        "type": "object"
+      },
+      "QuoteResponse": {
+        "properties": {
+          "attribution": {
+            "$ref": "#/components/schemas/AttributionSet"
+          },
+          "data_date": {
+            "format": "date",
+            "title": "Data Date",
+            "type": "string"
+          },
+          "ranking": {
+            "items": {
+              "$ref": "#/components/schemas/RankOut"
+            },
+            "title": "Ranking",
+            "type": "array"
+          },
+          "scope_note_en": {
+            "title": "Scope Note En",
+            "type": "string"
+          },
+          "scope_note_hu": {
+            "description": "e.g. \"a kiválasztott boltok közül, a 2026-10-13-i GVH-adatok alapján\"",
+            "title": "Scope Note Hu",
+            "type": "string"
+          },
+          "split": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SplitOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stores": {
+            "items": {
+              "$ref": "#/components/schemas/StoreQuoteOut"
+            },
+            "title": "Stores",
+            "type": "array"
+          }
+        },
+        "required": [
+          "data_date",
+          "stores",
+          "ranking",
+          "split",
+          "scope_note_hu",
+          "scope_note_en",
+          "attribution"
+        ],
+        "title": "QuoteResponse",
+        "type": "object"
+      },
+      "RankOut": {
+        "properties": {
+          "checkout_total": {
+            "title": "Checkout Total",
+            "type": "number"
+          },
+          "missing_count": {
+            "title": "Missing Count",
+            "type": "integer"
+          },
+          "penalized_total": {
+            "title": "Penalized Total",
+            "type": "number"
+          },
+          "rank": {
+            "description": "competition rank: tied stores share it (1, 1, 3); order inside a tie is meaningless",
+            "title": "Rank",
+            "type": "integer"
+          },
+          "store_id": {
+            "pattern": "^[A-Za-z0-9_-]{1,40}$",
+            "title": "Store Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "store_id",
+          "rank",
+          "checkout_total",
+          "penalized_total",
+          "missing_count"
+        ],
+        "title": "RankOut",
+        "type": "object"
+      },
+      "RecipeDetail": {
+        "properties": {
+          "chain_costs": {
+            "items": {
+              "$ref": "#/components/schemas/ChainCostOut"
+            },
+            "title": "Chain Costs",
+            "type": "array"
+          },
+          "cheapest_chains": {
+            "description": "all grocery chains tied at cost_per_serving_from (whole Ft); a tie group, not an order",
+            "items": {
+              "pattern": "^[a-z0-9-]{1,30}$",
+              "type": "string"
+            },
+            "title": "Cheapest Chains",
+            "type": "array"
+          },
+          "cost_per_serving_from": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "cheapest chain-typical used cost per serving across grocery chains (HUF); null if unpriced",
+            "title": "Cost Per Serving From"
+          },
+          "data_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Date"
+          },
+          "id": {
+            "pattern": "^[a-z0-9-]{2,60}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeLineOut"
+            },
+            "title": "Lines",
+            "type": "array"
+          },
+          "minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minutes"
+          },
+          "nutrition": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NutritionOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "per serving; null until composition data is imported"
+          },
+          "priced_share": {
+            "description": "share of cost priced at the cheapest chain(s) (the lowest share of a tie)",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Priced Share",
+            "type": "number"
+          },
+          "servings": {
+            "title": "Servings",
+            "type": "integer"
+          },
+          "slots": {
+            "items": {
+              "enum": [
+                "reggeli",
+                "tizorai",
+                "ebed",
+                "uzsonna",
+                "vacsora"
+              ],
+              "type": "string"
+            },
+            "title": "Slots",
+            "type": "array"
+          },
+          "steps": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "tested": {
+            "title": "Tested",
+            "type": "boolean"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "summary",
+          "slots",
+          "servings",
+          "minutes",
+          "tags",
+          "tested",
+          "cost_per_serving_from",
+          "cheapest_chains",
+          "priced_share",
+          "data_date",
+          "steps",
+          "lines",
+          "chain_costs",
+          "nutrition"
+        ],
+        "title": "RecipeDetail",
+        "type": "object"
+      },
+      "RecipeLineOut": {
+        "properties": {
+          "display": {
+            "title": "Display",
+            "type": "string"
+          },
+          "ingredient_id": {
+            "pattern": "^[a-z0-9_]{2,40}$",
+            "title": "Ingredient Id",
+            "type": "string"
+          },
+          "ingredient_name": {
+            "title": "Ingredient Name",
+            "type": "string"
+          },
+          "line_no": {
+            "title": "Line No",
+            "type": "integer"
+          },
+          "optional": {
+            "title": "Optional",
+            "type": "boolean"
+          },
+          "pantry": {
+            "title": "Pantry",
+            "type": "boolean"
+          },
+          "qty": {
+            "title": "Qty",
+            "type": "number"
+          },
+          "unit": {
+            "enum": [
+              "kg",
+              "l",
+              "db"
+            ],
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "line_no",
+          "ingredient_id",
+          "ingredient_name",
+          "qty",
+          "unit",
+          "display",
+          "optional",
+          "pantry"
+        ],
+        "title": "RecipeLineOut",
+        "type": "object"
+      },
+      "RecipeSummary": {
+        "properties": {
+          "cheapest_chains": {
+            "description": "all grocery chains tied at cost_per_serving_from (whole Ft); a tie group, not an order",
+            "items": {
+              "pattern": "^[a-z0-9-]{1,30}$",
+              "type": "string"
+            },
+            "title": "Cheapest Chains",
+            "type": "array"
+          },
+          "cost_per_serving_from": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "cheapest chain-typical used cost per serving across grocery chains (HUF); null if unpriced",
+            "title": "Cost Per Serving From"
+          },
+          "id": {
+            "pattern": "^[a-z0-9-]{2,60}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minutes"
+          },
+          "priced_share": {
+            "description": "share of cost priced at the cheapest chain(s) (the lowest share of a tie)",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Priced Share",
+            "type": "number"
+          },
+          "servings": {
+            "title": "Servings",
+            "type": "integer"
+          },
+          "slots": {
+            "items": {
+              "enum": [
+                "reggeli",
+                "tizorai",
+                "ebed",
+                "uzsonna",
+                "vacsora"
+              ],
+              "type": "string"
+            },
+            "title": "Slots",
+            "type": "array"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "tested": {
+            "title": "Tested",
+            "type": "boolean"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "summary",
+          "slots",
+          "servings",
+          "minutes",
+          "tags",
+          "tested",
+          "cost_per_serving_from",
+          "cheapest_chains",
+          "priced_share"
+        ],
+        "title": "RecipeSummary",
+        "type": "object"
+      },
+      "RecipesResponse": {
+        "properties": {
+          "data_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Date"
+          },
+          "recipes": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeSummary"
+            },
+            "title": "Recipes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "data_date",
+          "recipes"
+        ],
+        "title": "RecipesResponse",
+        "type": "object"
+      },
+      "RuleCheckOut": {
+        "properties": {
+          "limit": {
+            "title": "Limit",
+            "type": "string"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          },
+          "rule": {
+            "enum": [
+              "fish",
+              "legume",
+              "meat_free_day",
+              "red_meat",
+              "potato",
+              "sweets",
+              "variety",
+              "budget"
+            ],
+            "title": "Rule",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          },
+          "week": {
+            "title": "Week",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "week",
+          "rule",
+          "ok",
+          "value",
+          "limit"
+        ],
+        "title": "RuleCheckOut",
+        "type": "object"
+      },
+      "SplitOut": {
+        "properties": {
+          "assignment": {
+            "additionalProperties": {
+              "pattern": "^[A-Za-z0-9_-]{1,40}$",
+              "type": "string"
+            },
+            "title": "Assignment",
+            "type": "object"
+          },
+          "saving": {
+            "title": "Saving",
+            "type": "number"
+          },
+          "store_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9_-]{1,40}$",
+              "type": "string"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Store Ids",
+            "type": "array"
+          },
+          "total": {
+            "title": "Total",
+            "type": "number"
+          }
+        },
+        "required": [
+          "store_ids",
+          "total",
+          "saving",
+          "assignment"
+        ],
+        "title": "SplitOut",
+        "type": "object"
+      },
+      "StoreOut": {
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "chain": {
+            "pattern": "^[a-z0-9-]{1,30}$",
+            "title": "Chain",
+            "type": "string"
+          },
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "format": {
+            "anyOf": [
+              {
+                "enum": [
+                  "hyper",
+                  "express",
+                  "other"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Format"
+          },
+          "has_data": {
+            "description": "false when the store had no product on the latest data date",
+            "title": "Has Data",
+            "type": "boolean"
+          },
+          "id": {
+            "pattern": "^[A-Za-z0-9_-]{1,40}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_budapest": {
+            "title": "Is Budapest",
+            "type": "boolean"
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lon": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lon"
+          },
+          "postal_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postal Code"
+          }
+        },
+        "required": [
+          "id",
+          "chain",
+          "postal_code",
+          "city",
+          "address",
+          "lat",
+          "lon",
+          "format",
+          "is_budapest",
+          "has_data"
+        ],
+        "title": "StoreOut",
+        "type": "object"
+      },
+      "StoreQuoteOut": {
+        "properties": {
+          "assumed_count": {
+            "title": "Assumed Count",
+            "type": "integer"
+          },
+          "chain": {
+            "pattern": "^[a-z0-9-]{1,30}$",
+            "title": "Chain",
+            "type": "string"
+          },
+          "checkout_total": {
+            "title": "Checkout Total",
+            "type": "number"
+          },
+          "ksh_estimate_total": {
+            "title": "Ksh Estimate Total",
+            "type": "number"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/QuoteLineOut"
+            },
+            "title": "Lines",
+            "type": "array"
+          },
+          "missing": {
+            "items": {
+              "pattern": "^[a-z0-9_]{2,40}$",
+              "type": "string"
+            },
+            "title": "Missing",
+            "type": "array"
+          },
+          "store_id": {
+            "pattern": "^[A-Za-z0-9_-]{1,40}$",
+            "title": "Store Id",
+            "type": "string"
+          },
+          "used_total": {
+            "title": "Used Total",
+            "type": "number"
+          }
+        },
+        "required": [
+          "store_id",
+          "chain",
+          "checkout_total",
+          "used_total",
+          "missing",
+          "assumed_count",
+          "ksh_estimate_total",
+          "lines"
+        ],
+        "title": "StoreQuoteOut",
+        "type": "object"
+      },
+      "StoresResponse": {
+        "properties": {
+          "data_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Date"
+          },
+          "stores": {
+            "items": {
+              "$ref": "#/components/schemas/StoreOut"
+            },
+            "title": "Stores",
+            "type": "array"
+          }
+        },
+        "required": [
+          "data_date",
+          "stores"
+        ],
+        "title": "StoresResponse",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "Stateless, read-only API of the weekly meal planner. Contract: docs/API.md.",
+    "title": "Heti kosár API",
+    "version": "1.1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "database unreachable"
+          }
+        },
+        "summary": "Liveness and data freshness"
+      }
+    },
+    "/api/ingredients": {
+      "get": {
+        "operationId": "ingredients_api_ingredients_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngredientsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "304": {
+            "description": "Not Modified (If-None-Match matched the ETag)"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "The ingredient ontology"
+      }
+    },
+    "/api/ingredients/{id}/history": {
+      "get": {
+        "operationId": "history_api_ingredients__id__history_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "chain slug",
+            "in": "query",
+            "name": "chain",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[a-z0-9-]{1,30}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "chain slug",
+              "title": "Chain"
+            }
+          },
+          {
+            "in": "query",
+            "name": "days",
+            "required": false,
+            "schema": {
+              "default": 30,
+              "maximum": 365,
+              "minimum": 7,
+              "title": "Days",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "304": {
+            "description": "Not Modified (If-None-Match matched the ETag)"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "not_found"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "invalid_request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "Daily chain-typical unit price from our own archive"
+      }
+    },
+    "/api/list": {
+      "post": {
+        "operationId": "post_list_api_list_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "payload_too_large"
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "unsupported_media_type"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "invalid_request (fields = dotted paths, never values)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "Aggregated shopping list"
+      }
+    },
+    "/api/meta": {
+      "get": {
+        "operationId": "meta_api_meta_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "304": {
+            "description": "Not Modified (If-None-Match matched the ETag)"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "Data date, chains, attribution"
+      }
+    },
+    "/api/plan/check": {
+      "post": {
+        "operationId": "post_plan_check_api_plan_check_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanCheckRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanCheckResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "payload_too_large"
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "unsupported_media_type"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "invalid_request (fields = dotted paths, never values)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "Re-check an edited plan"
+      }
+    },
+    "/api/plan/suggest": {
+      "post": {
+        "operationId": "post_plan_suggest_api_plan_suggest_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanSuggestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "payload_too_large"
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "unsupported_media_type"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "invalid_request (fields = dotted paths, never values)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "Suggest a rule-checked plan"
+      }
+    },
+    "/api/quote": {
+      "post": {
+        "operationId": "post_quote_api_quote_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "payload_too_large"
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "unsupported_media_type"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "invalid_request (fields = dotted paths, never values)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "Price a list at the chosen stores"
+      }
+    },
+    "/api/recipes": {
+      "get": {
+        "operationId": "recipes_api_recipes_get",
+        "parameters": [
+          {
+            "description": "one of the 5 slots",
+            "in": "query",
+            "name": "slot",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "reggeli",
+                    "tizorai",
+                    "ebed",
+                    "uzsonna",
+                    "vacsora"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "one of the 5 slots",
+              "title": "Slot"
+            }
+          },
+          {
+            "description": "one recipe tag",
+            "in": "query",
+            "name": "tag",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "leves",
+                    "fozelek",
+                    "foetel",
+                    "koret",
+                    "salata",
+                    "reggeli_hideg",
+                    "reggeli_meleg",
+                    "snack",
+                    "husmentes",
+                    "vegetarianus",
+                    "hal",
+                    "huvelyes",
+                    "baromfi",
+                    "sertes",
+                    "marha",
+                    "edes",
+                    "gyors",
+                    "ket_napos",
+                    "olcso",
+                    "gyerekbarat"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "one recipe tag",
+              "title": "Tag"
+            }
+          },
+          {
+            "description": "accent-insensitive title substring",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 40,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "accent-insensitive title substring",
+              "title": "Q"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipesResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "304": {
+            "description": "Not Modified (If-None-Match matched the ETag)"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "invalid_request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "Recipes with their cheapest chain-typical cost"
+      }
+    },
+    "/api/recipes/{id}": {
+      "get": {
+        "operationId": "recipe_api_recipes__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "304": {
+            "description": "Not Modified (If-None-Match matched the ETag)"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "not_found"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "invalid_request"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "One recipe with lines, steps, chain costs and nutrition"
+      }
+    },
+    "/api/stores": {
+      "get": {
+        "operationId": "stores_api_stores_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoresResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "304": {
+            "description": "Not Modified (If-None-Match matched the ETag)"
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "method_not_allowed"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "rate_limited (with Retry-After)"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "internal"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_data"
+          }
+        },
+        "summary": "Every store"
+      }
+    }
+  }
+}
