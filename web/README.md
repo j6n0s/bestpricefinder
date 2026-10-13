@@ -25,6 +25,7 @@ Run them from `web/`.
 | `npm run gen:api:check` | Fails when `schema.d.ts` is not what `gen:api` would write now. |
 | `npm test` | Vitest unit tests (`src/**/*.test.ts`, `tests/mocks/*.test.ts`). |
 | `npm run test:e2e` | Builds, then runs every Playwright spec in `tests/e2e/` against `web/build` (`npx playwright test` alone reuses the last build). |
+| `npm run test:fullstack` | The full-stack end-to-end test: a real DB, the real ingest against a synthetic fake GVH, the real API and Chromium (about 4 min). See `docs/E2E.md`. |
 | `npm run gen:districts` | Regenerates `src/lib/data/districts.json` from `research/gvh-location/data/stores.csv` (`node scripts/gen-districts.mjs --check` verifies it is current). |
 | `npm run gen:icons` | Redraws the app icon and renders the PNGs in `static/icons/` with the local Chromium. |
 

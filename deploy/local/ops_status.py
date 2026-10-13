@@ -249,8 +249,9 @@ def _availability(rep: Report, run: Run | None, good: Run | None, now: datetime)
             fix,
         )
     elif "no_daily_data" in good.warning_codes:
-        # It finished ok without refreshing anything, yet the API counts it as recent: then only stores with
-        # per-store prices count as having data, and the app hides the others.
+        # Runs recorded before the ingest fix finished ok without refreshing anything, yet the API counts
+        # them as recent: then only stores with per-store prices count as having data. Current runs that
+        # refresh nothing fail instead, so this only flags old rows.
         rep.warn(
             f"the last availability run #{good.id} ({good.data_date.isoformat()}) refreshed nothing: no "
             "daily ingest had succeeded yet. Until a real one runs, most stores count as having no data",

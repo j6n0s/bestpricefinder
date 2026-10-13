@@ -770,11 +770,17 @@ def test_availability_needs_an_ontology_and_a_daily_run(
     fake = FakeGvh(WORLD, data_date=TODAY)
     with client_for(fake.transport()) as client:
         empty = run_availability(conn, client, data_date=TODAY)
-    assert (empty.status, codes(empty), empty.requests) == ("ok", ["no_ingredient_leaves"], 0)
+    # A run that refreshes nothing fails, so api.ingest_latest never counts it as a recent availability
+    # check (the API would otherwise hide every store without fresh availability rows).
+    assert (empty.status, empty.requests) == ("failed", 0)
+    assert "references no GVH leaf" in (empty.error or "")
     set_ontology(admin, [7])
     with client_for(fake.transport()) as client:
         no_daily = run_availability(conn, client, data_date=TODAY)
-    assert (no_daily.status, codes(no_daily), no_daily.requests) == ("ok", ["no_daily_data"], 0)
+    assert (no_daily.status, no_daily.requests) == ("failed", 0)
+    assert "no successful daily run yet" in (no_daily.error or "")
+    recent = admin.execute("SELECT count(*) FROM api.ingest_latest WHERE kind = 'availability'").fetchone()
+    assert recent == (0,)
 
 
 def test_availability_missing_product_makes_the_run_partial(

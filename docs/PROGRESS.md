@@ -1,6 +1,6 @@
 # Progress and hand-off (read this first, cloud agent)
 
-**Last updated:** 2026-10-13 01:50 CEST by the local research session "Meal planning app idea analysis".
+**Last updated:** 2026-10-13 by the cloud agent (steps 1–8 done; step 9 in progress). Earlier: 01:50 CEST by the local research session "Meal planning app idea analysis".
 **Decision by the user (2026-10-13):** a **cloud-based agent writes the code**. The local session did the research and laid the foundation below, then pushed.
 **Communication:** the local session and the cloud agent cannot message each other. Use the repo:
 - questions and decisions go in `docs/QUESTIONS.md` (append; date and sign each entry);
@@ -49,7 +49,7 @@ The user relays anything urgent.
   - pydantic validation that fails loudly on schema drift.
 
   The daily run order is in ARCHITECTURE.md. Record each run in `ops.ingest_run`. Tests use recorded fixture JSON; take small fresh samples, and never commit large raw dumps.
-- [ ] **4. Content** in `data/`, with `docs/DATA.md` documenting the formats:
+- [x] **4. Content** in `data/`, with `docs/DATA.md` documenting the formats: _(done 2026-10-13 by the cloud agent: 162 ingredients, 41 original recipes (all `tested=false` until a human cooks them), the KSH seed and the loader `server/bpf/content/`; see `data/CONTENT_REPORT.md`. Leaf ids were checked against the 2026-10-12 research leaf list, because GVH is unreachable from the cloud)_
   - `ingredients.json`: ontology rows matching `app.ingredient`. Seed from `research/recipe-coverage/out/ingredient_mapping.csv`, then verify the leaf ids against live `/api/categories`.
   - `recipes.json`: 30–40 **original**, GVH-native Hungarian recipes. Each needs ≥90% of its cost in GVH-priced ingredients; breakfasts are built from bread, túró, joghurt, eggs, vegetables and fruit; mark them `tested=false` until a human cooks them.
   - `ksh/ara0044.csv`: CC BY 4.0, ISO-8859-2 source.
@@ -57,7 +57,7 @@ The user relays anything urgent.
 
   Never copy recipe text from recipe sites or OKOSTÁNYÉR.
 - [x] **5. Pricing engine + planner** _(done 2026-10-13 by the cloud agent: `server/bpf/pricing/`, `server/bpf/planner/`; the pack optimiser is checked against brute force, plus a hand-computed golden test of 3 recipes × 3 stores)_ (`bpf/pricing/`, `bpf/planner/`): the algorithms are in BUILD-BRIEF §6. Write pure functions with unit tests: unit normalisation (db↔kg via `piece_weight_kg`), name include/exclude rules, store availability, store-vs-chain price choice, pack optimisation, store ranking, cheaper swaps, and planner weekly rules.
-- [ ] **6. API** (`bpf/api/`): write `docs/API.md` first. Proposed contract:
+- [x] **6. API** (`bpf/api/`): write `docs/API.md` first. Proposed contract: _(done 2026-10-13 by the cloud agent: contract v1.2 in `docs/API.md`, `docs/openapi.json` and `server/bpf/api/schemas.py`; security middleware, a strict-JSON fuzz test and the bpf_api read-only role)_
   - `GET /api/health` → `{status, db, data_date}`.
   - `GET /api/meta` → `{data_date, ingested_at, chains[], attribution{gvh,ksh,nutrition}, disclaimer}`.
   - `GET /api/stores` → all stores (id, chain, address, lat/lon, format, has_data). ETag; cacheable for a day. **The client computes distances itself.**
@@ -67,12 +67,12 @@ The user relays anything urgent.
   - `GET /api/ingredients/{id}/history?chain=&days=` returns history from our own archive.
 
   Security: pydantic bounds on every input, per-IP rate limit, body size limit, strict CORS, security headers, generic errors, the `bpf_api` role only.
-- [ ] **7. `web/`**: SvelteKit 2 + Svelte 5 + TS, `adapter-static` SPA, PWA (manifest + service worker), Hungarian UI, mobile-first.
+- [x] **7. `web/`**: SvelteKit 2 + Svelte 5 + TS, `adapter-static` SPA, PWA (manifest + service worker), Hungarian UI, mobile-first. _(done 2026-10-13 by the cloud agent: HU UI with an English toggle, types generated from docs/openapi.json, CSP by hash without unsafe-inline)_
   - Pages: Heti terv, Receptek (+ részletek), Bevásárlólista + "Hol a legolcsóbb a közelben?", Beállítások (location consent, radius, people, slots 3/5, pantry, excluded ingredients), Források és adatvédelem.
   - Personal data lives in localStorage only.
   - Configure `kit.csp` with `mode: 'hash'` so no `unsafe-inline` script is needed.
   - Show the disclaimer and "Forrás: GVH Árfigyelő, [dátum]" on every price view.
-- [ ] **8. Integration**: FastAPI serves `web/build` plus `/api`. Run an end-to-end test of a week plan → list → nearby stores → store totals. Add a daily scheduler entry (launchd or cron) for the ingest.
+- [x] **8. Integration**: FastAPI serves `web/build` plus `/api`. Run an end-to-end test of a week plan → list → nearby stores → store totals. Add a daily scheduler entry (launchd or cron) for the ingest. _(done 2026-10-13 by the cloud agent: `docs/E2E.md` (`cd web && npm run test:fullstack`), `docs/RUNNING.md`, `deploy/local/` scripts and scheduler. Tested on PostgreSQL 16 and with a synthetic GVH only; still to do on the Mac: run it on PostgreSQL 18 and against real GVH data)_
 - [ ] **9. Security review**: dependency audit (`pip-audit`, `npm audit`), the role-privilege tests above as automated tests, an input-fuzz test of the API, a CSP check, and a secrets scan before every push.
 
 ## Founder-only items (agents must not do these)

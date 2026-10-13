@@ -23,6 +23,7 @@ import psycopg
 from bpf.gvh import GvhBudgetExceeded, GvhClient, GvhHttpError, GvhSchemaError, ProductDetail
 from bpf.ingest.common import (
     Clock,
+    IngestError,
     IngestOutcome,
     RunContext,
     budapest_today,
@@ -117,23 +118,20 @@ def _products_to_refresh(conn: psycopg.Connection, leaves: frozenset[int]) -> tu
 
 def availability_step(ctx: RunContext, *, all_food: bool = False) -> None:
     leaves = fetch_food_leaves(ctx.conn) if all_food else fetch_ingredient_leaves(ctx.conn)
+    # A run that refreshes nothing FAILS: an ok/partial availability run counts as "recent" in
+    # api.ingest_latest, and the API's Store.has_data rule would then hide every store without fresh
+    # availability rows (docs/ENGINE.md).
     if not leaves:
         if all_food:
-            ctx.log.warn(
-                "no_food_leaves", "nothing to refresh: no food category stored (run `reference` first)"
-            )
-        else:
-            ctx.log.warn(
-                "no_ingredient_leaves",
-                "nothing to refresh: the ontology references no GVH leaf (--all-food refreshes all)",
-            )
-        return
+            raise IngestError("nothing to refresh: no food category stored (run `reference` first)")
+        raise IngestError(
+            "nothing to refresh: the ontology references no GVH leaf (--all-food refreshes all)"
+        )
     products, latest = _products_to_refresh(ctx.conn, leaves)
     ctx.log.stat("leaves", len(leaves))
     ctx.log.stat("products", len(products))
     if latest is None:
-        ctx.log.warn("no_daily_data", "no successful daily run yet: nothing to refresh (run `daily` first)")
-        return
+        raise IngestError("nothing to refresh: no successful daily run yet (run `daily` first)")
     ctx.log.stat("daily_data_date", latest)
     chains = ChainResolver(fetch_chains(ctx.conn))
     writable = history_writable(ctx.conn, ctx.data_date)
