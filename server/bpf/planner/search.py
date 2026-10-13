@@ -4,12 +4,15 @@
    tag and recipes with an excluded ingredient on a non-optional line. Pools are sorted by recipe id, so
    the input order of ``recipes`` does not matter.
 2. Construction: fill every slot day by day, preferring recipes not used within the no-repeat window.
-3. Local search with a fixed, input-derived iteration budget (never a clock, so results are reproducible):
-   random reassignments, same-slot swaps between days, ``ket_napos`` next-day copies, and targeted repairs
-   of the failing rules. A move is kept when it does not worsen the score:
+3. Local search with a fixed iteration budget (never a clock, so results are reproducible): random
+   reassignments, same-slot swaps between days, ``ket_napos`` next-day copies, targeted repairs of the
+   failing rules (rules the pools make impossible are not targeted), and, after every ``DEEP_AFTER`` moves
+   without progress, a steepest-descent step over one cell. A move is kept when it does not worsen the score
    ``VIOLATION x rule violations + GUIDE x distance-to-feasibility + distinct perishables per block``.
    Rules always dominate; within the rules, the score minimises the number of distinct perishable
    ingredients (``perishable_days <= 7``) in each 7-day block (leftover-aware grouping).
+   It is a heuristic: with pools barely large enough for the no-repeat window it can miss a plan that
+   meets every rule (another seed may find one).
 4. The returned checks are computed from scratch with the same code as ``check_plan``.
 
 Warnings (machine codes, in this order):
@@ -67,11 +70,23 @@ from .rules import (
 VIOLATION = 10**13
 GUIDE = 10**5
 GUIDE_CAP = 10**6
-ITERATIONS_PER_CELL = 40
-PATIENCE_PER_CELL = 15
+# Score weights keep the order strict: guidance per block is at most 2 x GUIDE_CAP + 7, so all guidance of a
+# 31-day plan (5 blocks) stays below one VIOLATION, and the distinct perishables of a block (a few dozen
+# ingredients) stay far below one GUIDE.
+ITERATIONS = 6000
+"""Search moves per plan. About 6000 x 10 us keeps 31 days x 5 slots near 60 ms; small plans converge."""
+PATIENCE = 2500
+"""Stop early after this many moves without a strict improvement."""
+DEEP_AFTER = 300
+"""Moves without progress before each steepest-descent step."""
+STEEPEST_MAX_RECIPES = 40
+"""Reassignments a steepest-descent step evaluates at most (plus every same-slot swap)."""
 REPAIR_SHARE = 0.4
+SWAP_REPAIR_SHARE = 0.5
+"""Share of variety and potato repairs that swap the cell with another day instead of replacing it."""
 
 Change = tuple[int, int, int]  # (day, slot position, meal index)
+_Undo = tuple[list[Change], list[int], list[int], list[int], list[int]]
 
 
 # ───────────────────────────── scoring ─────────────────────────────
@@ -106,8 +121,14 @@ class _Search:
     """Mutable search state over a ``days x 5`` grid of meal indexes (``NO_MEAL`` outside the plan)."""
 
     def __init__(
-        self, n_days: int, positions: Sequence[int], pools: Mapping[int, tuple[int, ...]],
-        meals: Sequence[Meal], lim: Limits, n_perish_bits: int,
+        self,
+        n_days: int,
+        positions: Sequence[int],
+        pools: Mapping[int, tuple[int, ...]],
+        meals: Sequence[Meal],
+        lim: Limits,
+        n_perish_bits: int,
+        hopeless: Sequence[frozenset[str]] = (),
     ) -> None:
         self.n = n_days
         self.active = tuple(pos for pos in positions if pools[pos])
@@ -117,10 +138,14 @@ class _Search:
         self.lim = lim
         self.grid = [[NO_MEAL] * len(SLOTS_5) for _ in range(n_days)]
         n_weeks = (n_days + WEEK_DAYS - 1) // WEEK_DAYS
-        self.blocks = [BlockTotals(min(WEEK_DAYS, n_days - WEEK_DAYS * w), n_perish_bits) for w in range(n_weeks)]
+        self.blocks = [
+            BlockTotals(min(WEEK_DAYS, n_days - WEEK_DAYS * w), n_perish_bits) for w in range(n_weeks)
+        ]
         self.block_pen = [0] * n_weeks
+        self.hopeless = list(hopeless) or [frozenset()] * n_weeks  # block rules no plan can satisfy
         self.occ: list[list[tuple[int, int]]] = [[] for _ in meals]
         self.repeats = [0] * len(meals)
+        self.repeating: set[int] = set()  # meal indexes with repeats > 0
         self.potato = [0] * n_days  # main-slot potato meals per day
         self.total = 0
         self.has_two_day = any(meals[m].two_day for pos in self.active for m in pools[pos])
@@ -161,7 +186,9 @@ class _Search:
         return old
 
     def _repeat_count(self, m: int) -> int:
-        return sum(repeat_flags(self.occ[m], self.meals[m].two_day, self.lim.main_window, self.lim.snack_window))
+        return sum(
+            repeat_flags(self.occ[m], self.meals[m].two_day, self.lim.main_window, self.lim.snack_window)
+        )
 
     def _potato_pairs(self, pairs: Sequence[int]) -> int:
         """Number of potato day pairs ``(d - 1, d)`` among the given ``d``."""
@@ -171,34 +198,66 @@ class _Search:
     def recompute(self) -> None:
         self.block_pen = [block_penalty(block, self.lim) for block in self.blocks]
         self.repeats = [self._repeat_count(m) for m in range(len(self.meals))]
+        self.repeating = {m for m, count in enumerate(self.repeats) if count}
         all_pairs = range(1, self.n)
         self.total = sum(self.block_pen) + VIOLATION * (sum(self.repeats) + self._potato_pairs(all_pairs))
 
-    def _try(self, changes: Sequence[Change]) -> None:
-        """Apply ``changes``; keep them if the score does not get worse, else undo them."""
-        weeks = sorted({day // WEEK_DAYS for day, _, _ in changes})
-        touched = sorted(({self.grid[day][pos] for day, pos, _ in changes} | {m for _, _, m in changes})
-                         - {NO_MEAL})
-        pairs = sorted({d for day, _, _ in changes for d in (day, day + 1) if 1 <= d < self.n})
-        saved_pen = [self.block_pen[w] for w in weeks]
-        saved_rep = [self.repeats[m] for m in touched]
+    def _apply(self, changes: Sequence[Change]) -> tuple[int, _Undo]:
+        """Apply ``changes`` and update the score. Returns the score delta and what ``_revert`` needs.
+
+        Only the touched blocks, recipes and potato day pairs can change score, so only they are re-scored."""
+        weeks: list[int] = []
+        touched: list[int] = []
+        pairs: list[int] = []  # d stands for the day pair (d - 1, d)
+        for day, pos, new in changes:
+            week = day // WEEK_DAYS
+            if week not in weeks:
+                weeks.append(week)
+            for m in (self.grid[day][pos], new):
+                if m != NO_MEAL and m not in touched:
+                    touched.append(m)
+            for d in (day, day + 1):
+                if 1 <= d < self.n and d not in pairs:
+                    pairs.append(d)
+        block_pen = self.block_pen
+        repeats = self.repeats
+        saved_pen = [block_pen[w] for w in weeks]
+        saved_rep = [repeats[m] for m in touched]
         before = sum(saved_pen) + VIOLATION * (sum(saved_rep) + self._potato_pairs(pairs))
-        undo = [(day, pos, self._set(day, pos, m)) for day, pos, m in changes]
+        undo = [(day, pos, self._set(day, pos, new)) for day, pos, new in changes]
         for w in weeks:
-            self.block_pen[w] = block_penalty(self.blocks[w], self.lim)
+            block_pen[w] = block_penalty(self.blocks[w], self.lim)
         for m in touched:
-            self.repeats[m] = self._repeat_count(m)
-        after = (sum(self.block_pen[w] for w in weeks)
-                 + VIOLATION * (sum(self.repeats[m] for m in touched) + self._potato_pairs(pairs)))
-        if after <= before:
-            self.total += after - before
-            return
-        for day, pos, m in reversed(undo):
-            self._set(day, pos, m)
+            repeats[m] = count = self._repeat_count(m)
+            self._mark_repeating(m, count)
+        after = sum(block_pen[w] for w in weeks) + VIOLATION * (
+            sum(repeats[m] for m in touched) + self._potato_pairs(pairs)
+        )
+        self.total += after - before
+        return after - before, (undo, weeks, saved_pen, touched, saved_rep)
+
+    def _revert(self, delta: int, saved: _Undo) -> None:
+        undo, weeks, saved_pen, touched, saved_rep = saved
+        for day, pos, old in reversed(undo):
+            self._set(day, pos, old)
         for w, pen in zip(weeks, saved_pen, strict=True):
             self.block_pen[w] = pen
         for m, rep in zip(touched, saved_rep, strict=True):
             self.repeats[m] = rep
+            self._mark_repeating(m, rep)
+        self.total -= delta
+
+    def _mark_repeating(self, m: int, count: int) -> None:
+        if count:
+            self.repeating.add(m)
+        else:
+            self.repeating.discard(m)
+
+    def _try(self, changes: Sequence[Change]) -> None:
+        """Keep ``changes`` if the score does not get worse, else undo them."""
+        delta, saved = self._apply(changes)
+        if delta > 0:
+            self._revert(delta, saved)
 
     # ── construction and search ──
 
@@ -215,19 +274,74 @@ class _Search:
         self.recompute()
 
     def optimise(self, rng: random.Random) -> None:
-        cells = self.n * len(self.active)
-        if cells == 0:
+        """Keep every move that does not worsen the score (so the current plan is always the best seen).
+        Every ``DEEP_AFTER`` moves without progress, run a steepest-descent step on one cell (one involved
+        in a violation while there are any); stop after ``PATIENCE`` moves without progress."""
+        if not self.multi:  # every active slot has a single recipe: nothing to choose
             return
-        patience = PATIENCE_PER_CELL * cells
         idle = 0
-        for _ in range(ITERATIONS_PER_CELL * cells):
+        for _ in range(ITERATIONS):
             before = self.total
             changes = self._propose(rng)
             if changes:
                 self._try(changes)
-            idle = 0 if self.total < before else idle + 1
-            if idle > patience:
+            if self.total < before:
+                idle = 0
+                continue
+            idle += 1
+            if idle > PATIENCE:
                 break
+            if idle % DEEP_AFTER == 0:
+                self._steepest(rng)
+                if self.total < before:
+                    idle = 0
+
+    def _steepest(self, rng: random.Random) -> None:
+        """Try the reassignments and every same-slot swap of one cell (involved in a fixable violation if
+        there is one, else any cell with a choice); apply the best (random among equals) unless it worsens
+        the score."""
+        cells = self._violation_cells() or [(day, pos) for day in range(self.n) for pos in self.multi]
+        day, pos = cells[rng.randrange(len(cells))]
+        current = self.grid[day][pos]
+        others = [m for m in self.pools[pos] if m != current]
+        if len(others) > STEEPEST_MAX_RECIPES:  # bound the cost on very large pools
+            others = rng.sample(others, STEEPEST_MAX_RECIPES)
+        options = [[(day, pos, m)] for m in others]
+        options += [
+            [(day, pos, self.grid[d][pos]), (d, pos, current)]
+            for d in range(self.n)
+            if self.grid[d][pos] != current
+        ]
+        best_delta: int | None = None
+        best: list[list[Change]] = []
+        for changes in options:
+            delta, saved = self._apply(changes)
+            self._revert(delta, saved)
+            if best_delta is None or delta < best_delta:
+                best_delta, best = delta, [changes]
+            elif delta == best_delta:
+                best.append(changes)
+        if best_delta is not None and best_delta <= 0:
+            self._apply(best[rng.randrange(len(best))])
+
+    def _violation_cells(self) -> list[tuple[int, int]]:
+        """Cells (with a choice) of repeated meals, potato day pairs and blocks that break a rule."""
+        cells: list[tuple[int, int]] = []
+        for m in sorted(self.repeating):
+            flags = repeat_flags(
+                self.occ[m], self.meals[m].two_day, self.lim.main_window, self.lim.snack_window
+            )
+            cells += [occ for occ, hit in zip(self.occ[m], flags, strict=True) if hit]
+        for d in range(1, self.n):
+            if self.potato[d] and self.potato[d - 1]:
+                cells += [(day, pos) for day in (d - 1, d) for pos in self.active if pos in MAIN_POS]
+        for w, pen in enumerate(self.block_pen):
+            if pen >= VIOLATION and set(block_failures(self.blocks[w], self.lim)) - self.hopeless[w]:
+                start = w * WEEK_DAYS
+                cells += [
+                    (day, pos) for day in range(start, min(start + WEEK_DAYS, self.n)) for pos in self.active
+                ]
+        return [(day, pos) for day, pos in cells if len(self.pools[pos]) > 1]
 
     def _propose(self, rng: random.Random) -> list[Change] | None:
         if self.total >= VIOLATION and rng.random() < REPAIR_SHARE:
@@ -249,12 +363,17 @@ class _Search:
         return self._replace(day, pos, self.pools[pos], rng)
 
     def _replace(self, day: int, pos: int, choices: Sequence[int], rng: random.Random) -> list[Change] | None:
-        """Change cell ``(day, pos)`` to a random recipe of ``choices`` other than its current one."""
+        """Change cell ``(day, pos)`` to a uniformly random member of ``choices`` (distinct recipe indexes)
+        other than its current recipe; ``None`` when there is no other member."""
         current = self.grid[day][pos]
-        options = [m for m in choices if m != current]
-        if not options:
+        size = len(choices)
+        if size == 0 or (size == 1 and choices[0] == current):
             return None
-        return [(day, pos, options[rng.randrange(len(options))])]
+        i = rng.randrange(size)
+        if choices[i] == current:  # draw again among the other size - 1 members, still uniform
+            j = rng.randrange(size - 1)
+            i = j + 1 if j >= i else j
+        return [(day, pos, choices[i])]
 
     def _swap(self, rng: random.Random) -> list[Change] | None:
         if self.n < 2 or not self.multi:
@@ -285,8 +404,10 @@ class _Search:
         issues: list[tuple[str, int]] = []
         for w, block in enumerate(self.blocks):
             if self.block_pen[w] >= VIOLATION:
-                issues.extend((rule, w) for rule in block_failures(block, self.lim))
-        issues.extend(("variety", m) for m, count in enumerate(self.repeats) if count)
+                issues.extend(
+                    (rule, w) for rule in block_failures(block, self.lim) if rule not in self.hopeless[w]
+                )
+        issues.extend(("variety", m) for m in sorted(self.repeating))
         issues.extend(("potato", d) for d in range(1, self.n) if self.potato[d] and self.potato[d - 1])
         if not issues:
             return None
@@ -322,7 +443,9 @@ class _Search:
             if not meaty:
                 return None
             fewest = min(meaty)
-            offsets = [o for o in range(block.days) if block.day_meals[o] > 0 and block.day_meaty[o] == fewest]
+            offsets = [
+                o for o in range(block.days) if block.day_meals[o] > 0 and block.day_meaty[o] == fewest
+            ]
             day = start + offsets[rng.randrange(len(offsets))]
             cells = [pos for pos in self.active if not self.meals[self.grid[day][pos]].meat_free]
             cells = [pos for pos in cells if self.free_pool[pos]]
@@ -331,7 +454,9 @@ class _Search:
             pos = cells[rng.randrange(len(cells))]
             return self._replace(day, pos, self.free_pool[pos], rng)
         if rule == "sweets":
-            cells = [(d, p) for d, p in self._cells(week, lambda meal: meal.sweet == 1) if self.nonsweet_pool[p]]
+            cells = [
+                (d, p) for d, p in self._cells(week, lambda meal: meal.sweet == 1) if self.nonsweet_pool[p]
+            ]
             if not cells:
                 return None
             day, pos = cells[rng.randrange(len(cells))]
@@ -342,9 +467,13 @@ class _Search:
                 return None
             day, pos = cells[rng.randrange(len(cells))]
             current = self.meals[self.grid[day][pos]].red_units
-            return self._replace(day, pos, [m for m in self.pools[pos] if self.meals[m].red_units < current], rng)
+            return self._replace(
+                day, pos, [m for m in self.pools[pos] if self.meals[m].red_units < current], rng
+            )
         # budget: replace an unpriced meal by a priced one, else a priced meal by a cheaper one
-        unpriced = [(d, p) for d, p in self._cells(week, lambda meal: meal.cost is None) if self.priced_pool[p]]
+        unpriced = [
+            (d, p) for d, p in self._cells(week, lambda meal: meal.cost is None) if self.priced_pool[p]
+        ]
         if unpriced:
             day, pos = unpriced[rng.randrange(len(unpriced))]
             return self._replace(day, pos, self.priced_pool[pos], rng)
@@ -353,9 +482,24 @@ class _Search:
             return None
         day, pos = priced[rng.randrange(len(priced))]
         cost = self.meals[self.grid[day][pos]].cost
-        cheaper = [m for m in self.priced_pool[pos] if (c := self.meals[m].cost) is not None and cost is not None
-                   and c < cost]
+        cheaper = [
+            m
+            for m in self.priced_pool[pos]
+            if (c := self.meals[m].cost) is not None and cost is not None and c < cost
+        ]
         return self._replace(day, pos, cheaper, rng)
+
+    def _swap_days(self, day: int, pos: int, rng: random.Random) -> list[Change] | None:
+        """Swap cell ``(day, pos)`` with the same slot on a random other day."""
+        if self.n < 2:
+            return None
+        other = rng.randrange(self.n - 1)
+        if other >= day:
+            other += 1
+        a, b = self.grid[day][pos], self.grid[other][pos]
+        if a == b:
+            return None
+        return [(day, pos, b), (other, pos, a)]
 
     def _repair_variety(self, m: int, rng: random.Random) -> list[Change] | None:
         occs = self.occ[m]
@@ -364,6 +508,8 @@ class _Search:
         if not hits:
             return None
         day, pos = hits[rng.randrange(len(hits))]
+        if rng.random() < SWAP_REPAIR_SHARE:
+            return self._swap_days(day, pos, rng)
         return self._replace(day, pos, self.pools[pos], rng)
 
     def _repair_potato(self, day: int, rng: random.Random) -> list[Change] | None:
@@ -371,11 +517,13 @@ class _Search:
             (d, pos)
             for d in (day - 1, day)
             for pos in self.active
-            if pos in MAIN_POS and self.meals[self.grid[d][pos]].potato and self.nopotato_pool[pos]
+            if pos in MAIN_POS and len(self.pools[pos]) > 1 and self.meals[self.grid[d][pos]].potato
         ]
         if not cells:
             return None
         d, pos = cells[rng.randrange(len(cells))]
+        if rng.random() < SWAP_REPAIR_SHARE or not self.nopotato_pool[pos]:
+            return self._swap_days(d, pos, rng)
         return self._replace(d, pos, self.nopotato_pool[pos], rng)
 
 
@@ -387,7 +535,11 @@ def _block_lengths(n_days: int) -> list[int]:
 
 
 def _too_small_slots(
-    group: Sequence[int], pools: Mapping[int, tuple[int, ...]], meals: Sequence[Meal], window: int, n_days: int
+    group: Sequence[int],
+    pools: Mapping[int, tuple[int, ...]],
+    meals: Sequence[Meal],
+    window: int,
+    n_days: int,
 ) -> set[int]:
     """Slot positions of ``group`` that cannot avoid repeats within one window.
 
@@ -408,10 +560,15 @@ def _too_small_slots(
     return flagged
 
 
-def pool_warnings(
-    n_days: int, positions: Sequence[int], pools: Mapping[int, tuple[int, ...]], meals: Sequence[Meal],
+def analyse_pools(
+    n_days: int,
+    positions: Sequence[int],
+    pools: Mapping[int, tuple[int, ...]],
+    meals: Sequence[Meal],
     lim: Limits,
-) -> list[str]:
+) -> tuple[list[str], list[frozenset[str]]]:
+    """Warnings for rules the pools provably cannot satisfy, and per block the block rules that are hopeless
+    (the search does not spend repairs on them)."""
     warnings = [f"slot_pool_empty:{SLOTS_5[pos]}" for pos in positions if not pools[pos]]
     active = [pos for pos in positions if pools[pos]]
     main = [pos for pos in active if pos in MAIN_POS]
@@ -419,36 +576,55 @@ def pool_warnings(
     small = _too_small_slots(main, pools, meals, lim.main_window, n_days)
     small |= _too_small_slots(snack, pools, meals, lim.snack_window, n_days)
     warnings += [f"slot_pool_too_small:{SLOTS_5[pos]}" for pos in positions if pos in small]
-    lengths = _block_lengths(n_days)
-    if n_days >= COUNT_RULE_MIN_DAYS and active:
-        if not any(meals[m].fish for pos in active for m in pools[pos]):
-            warnings.append("no_fish_recipe_available")
-        if not any(meals[m].legume for pos in active for m in pools[pos]):
-            warnings.append("no_legume_recipe_available")
-        warnings += [
-            f"no_meat_free_recipe_available:{SLOTS_5[pos]}"
-            for pos in active
-            if not any(meals[m].meat_free for m in pools[pos])
-        ]
+
+    no_fish = not any(meals[m].fish for pos in active for m in pools[pos])
+    no_legume = not any(meals[m].legume for pos in active for m in pools[pos])
+    meaty_slots = [pos for pos in active if not any(meals[m].meat_free for m in pools[pos])]
+    if n_days >= COUNT_RULE_MIN_DAYS:
+        warnings += ["no_fish_recipe_available"] * no_fish + ["no_legume_recipe_available"] * no_legume
+        warnings += [f"no_meat_free_recipe_available:{SLOTS_5[pos]}" for pos in meaty_slots]
     if n_days >= 2:
         warnings += [
             f"no_potato_free_recipe_available:{SLOTS_5[pos]}"
             for pos in main
             if all(meals[m].potato for m in pools[pos])
         ]
+
     red_per_day = sum(min(meals[m].red_units for m in pools[pos]) for pos in active)
-    if any(days * red_per_day > lim.red_limit_g(days) * lim.red_den for days in lengths):
-        warnings.append("red_meat_cap_unreachable")
     sweet_per_day = sum(1 for pos in active if all(meals[m].sweet for m in pools[pos]))
-    if any(days * sweet_per_day > SWEETS_MAX for days in lengths):
-        warnings.append("sweets_cap_unreachable")
-    if lim.budget is not None and active:
-        cheapest = [[c for m in pools[pos] if (c := meals[m].cost) is not None] for pos in active]
-        if not all(cheapest) or any(
-            sum(min(c) for c in cheapest) * days > lim.budget_limit(days) for days in lengths
+    cheapest = [[c for m in pools[pos] if (c := meals[m].cost) is not None] for pos in active]
+    hopeless: list[frozenset[str]] = []
+    for days in _block_lengths(n_days):
+        rules: set[str] = set()
+        if days >= COUNT_RULE_MIN_DAYS:
+            rules.update(
+                rule
+                for rule, dead in (
+                    ("fish", no_fish),
+                    ("legume", no_legume),
+                    ("meat_free_day", bool(meaty_slots) or not active),
+                )
+                if dead
+            )
+        if days * red_per_day > lim.red_limit_g(days) * lim.red_den:
+            rules.add("red_meat")
+        if days * sweet_per_day > SWEETS_MAX:
+            rules.add("sweets")
+        if (
+            lim.budget is not None
+            and active
+            and (not all(cheapest) or sum(min(c) for c in cheapest) * days > lim.budget_limit(days))
         ):
-            warnings.append("budget_unreachable")
-    return warnings
+            rules.add("budget")
+        hopeless.append(frozenset(rules))
+    for rule, code in (
+        ("red_meat", "red_meat_cap_unreachable"),
+        ("sweets", "sweets_cap_unreachable"),
+        ("budget", "budget_unreachable"),
+    ):
+        if any(rule in rules for rules in hopeless):
+            warnings.append(code)
+    return warnings, hopeless
 
 
 # ───────────────────────────── public: suggest_plan ─────────────────────────────
@@ -504,11 +680,13 @@ def suggest_plan(recipes: Sequence[Recipe], ingredients: Mapping[str, Ingredient
     facts = [recipe_facts(recipe, ingredients, people=req.people, costs=costs) for recipe in used]
     perishables = sorted({iid for f in facts for iid in f.perishables} - req.exclude_ingredients)
     meals, red_den = compile_meals(facts, {iid: bit for bit, iid in enumerate(perishables)})
-    pools = {pos: tuple(i for i, recipe in enumerate(used) if SLOTS_5[pos] in recipe.slots) for pos in positions}
+    pools = {
+        pos: tuple(i for i, recipe in enumerate(used) if SLOTS_5[pos] in recipe.slots) for pos in positions
+    }
     lim = make_limits(req.red_meat_g_per_person_week, red_den, budget if costs else None, req.no_repeat_days)
-    warnings = pool_warnings(req.days, positions, pools, meals, lim)
+    warnings, hopeless = analyse_pools(req.days, positions, pools, meals, lim)
 
-    search = _Search(req.days, positions, pools, meals, lim, len(perishables))
+    search = _Search(req.days, positions, pools, meals, lim, len(perishables), hopeless)
     rng = random.Random(req.seed)  # noqa: S311 - reproducible plan variety, not security
     search.construct(rng)
     search.optimise(rng)
@@ -516,8 +694,10 @@ def suggest_plan(recipes: Sequence[Recipe], ingredients: Mapping[str, Ingredient
     days = tuple(
         PlanDay(
             index=day,
-            meals={SLOTS_5[pos]: None if (m := search.grid[day][pos]) == NO_MEAL else meals[m].recipe_id
-                   for pos in positions},
+            meals={
+                SLOTS_5[pos]: None if (m := search.grid[day][pos]) == NO_MEAL else meals[m].recipe_id
+                for pos in positions
+            },
         )
         for day in range(req.days)
     )

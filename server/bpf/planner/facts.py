@@ -1,4 +1,4 @@
-"""Per-recipe facts the planner rules need, plus input validation shared by ``suggest_plan`` and ``check_plan``.
+"""Per-recipe facts the planner rules need, and the input validation shared by the two public functions.
 
 Pure: no I/O, no clock, no randomness. Quantities that come from a division (grams per serving) are exact
 ``Fraction`` values; money stays ``Decimal`` (only multiplied by whole numbers, so it stays exact).

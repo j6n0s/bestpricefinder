@@ -4,14 +4,15 @@ Rules are evaluated per 7-day block (week ``w`` = day indexes ``7w .. 7w+6``), f
 principles (docs/ENGINE.md "bpf.planner"):
 
 * ``fish`` / ``legume``: >= 1 meal with a ``hal`` / ``huvelyes`` recipe.
-* ``meat_free_day``: >= 1 day with at least one meal where every meal is ``husmentes``.
+* ``meat_free_day``: >= 1 day that has at least one meal and only ``husmentes`` meals (empty slots ignored).
   These three count rules apply only to blocks of at least 4 days; shorter blocks report ``ok`` / ``"n/a"``.
 * ``red_meat``: raw grams of ``red_meat`` + ``processed_meat`` lines per person (line kg x 1000 / servings per
   meal; optional lines count, since they may be eaten) <= the cap pro rata to the block length, rounded down
   to whole grams: ``cap x days // 7``.
 * ``potato``: no two consecutive days with a ``potato`` ingredient in a main meal (reggeli, ebed, vacsora).
   Runs are followed across block boundaries; a run is reported in the block where it continues.
-* ``sweets``: <= 2 meals with an ``edes`` recipe.
+* ``sweets``: <= 2 meals with an ``edes`` recipe (the same cap for shorter blocks; only red meat and budget
+  are pro rata).
 * ``variety``: a recipe never repeats within ``no_repeat_days`` days (``day2 - day1 < window`` is a repeat,
   so a window of 1 forbids only same-day repeats and 0 disables the rule). Snacks (tizorai, uzsonna) may
   repeat more often: any pair that involves a snack slot uses ``min(2, no_repeat_days)``. Exception: a
@@ -23,9 +24,9 @@ principles (docs/ENGINE.md "bpf.planner"):
   rounded down to whole forints: ``budget x days // 7``. A meal without an estimate fails the rule, since the
   week's cost cannot then be estimated.
 
-All comparisons are exact (integers, ``Fraction`` or ``Decimal``; never ``float``). Displayed values are
-rounded up and limits rounded down to whole units, and limits are whole numbers, so a displayed value is
-within its displayed limit exactly when the check is ok.
+All comparisons are exact (integers, ``Fraction`` or ``Decimal``; never ``float``). Limits are whole numbers
+and displayed values are rounded up, so a displayed value is within its displayed limit exactly when the
+check is ok (except a budget value that also lists meals without an estimate, which always fails).
 """
 
 from __future__ import annotations
@@ -55,7 +56,7 @@ COUNT_RULE_MIN_DAYS = 4
 SWEETS_MAX = 2
 SNACK_WINDOW_DAYS = 2
 DEFAULT_NO_REPEAT_DAYS = 5
-"""``check_plan`` has no window parameter (contract v1); it uses ``PlanRequest.no_repeat_days``'s default."""
+"""Default variety window, shared by ``check_plan`` and ``PlanRequest.no_repeat_days``."""
 
 NO_MEAL = -1
 """Grid cell without a meal (slot not planned, or no eligible recipe)."""
@@ -134,13 +135,22 @@ class BlockTotals:
     """Running totals of one 7-day block. ``add`` with sign -1 exactly undoes sign +1."""
 
     __slots__ = (
-        "cost", "day_meals", "day_meaty", "days", "fish", "free_days", "legume", "meals",
-        "perish", "perish_distinct", "red", "sweets", "unpriced",
+        "cost",
+        "day_meals",
+        "day_meaty",
+        "days",
+        "fish",
+        "free_days",
+        "legume",
+        "perish",
+        "perish_distinct",
+        "red",
+        "sweets",
+        "unpriced",
     )
 
     def __init__(self, days: int, n_perish_bits: int = 0) -> None:
         self.days = days  # plan days in this block (1..7)
-        self.meals = 0
         self.fish = 0
         self.legume = 0
         self.sweets = 0
@@ -160,7 +170,6 @@ class BlockTotals:
             self.day_meaty[offset] += sign
         is_free = self.day_meals[offset] > 0 and self.day_meaty[offset] == 0
         self.free_days += int(is_free) - int(was_free)
-        self.meals += sign
         self.fish += sign * meal.fish
         self.legume += sign * meal.legume
         self.sweets += sign * meal.sweet
@@ -257,7 +266,8 @@ def evaluate(
     week_days: dict[int, int] = {}
     for day in day_ids:
         week_days[day // WEEK_DAYS] = week_days.get(day // WEEK_DAYS, 0) + 1
-    totals = {week: BlockTotals(count) for week, count in week_days.items()}
+    n_bits = 1 + max((bit for meal in meals for bit in meal.perish_bits), default=-1)
+    totals = {week: BlockTotals(count, n_bits) for week, count in week_days.items()}
     occurrences: dict[int, list[tuple[int, int]]] = {}
     potato_run = dict.fromkeys(week_days, 0)
     run_by_day: dict[int, int] = {}
@@ -277,8 +287,9 @@ def evaluate(
         potato_run[day // WEEK_DAYS] = max(potato_run[day // WEEK_DAYS], run)
     repeats = dict.fromkeys(week_days, 0)
     for m, occs in occurrences.items():  # occs are ascending: days ascending, slot positions ascending
-        for (day, _pos), hit in zip(occs, repeat_flags(occs, meals[m].two_day, lim.main_window,
-                                                       lim.snack_window), strict=True):
+        for (day, _pos), hit in zip(
+            occs, repeat_flags(occs, meals[m].two_day, lim.main_window, lim.snack_window), strict=True
+        ):
             if hit:
                 repeats[day // WEEK_DAYS] += 1
     checks: list[RuleCheck] = []
@@ -309,24 +320,42 @@ def week_checks(
         _count_check(week, "legume", t.legume, "hüvelyes", applies),
         _count_check(week, "meat_free_day", t.free_days, "húsmentes nap", applies),
         RuleCheck(
-            week=week, rule="red_meat", ok=red_ok(t, lim),
-            value=f"{math.ceil(Fraction(t.red, lim.red_den))} g/fő", limit=f"≤ {lim.red_limit_g(t.days)} g/fő",
+            week=week,
+            rule="red_meat",
+            ok=red_ok(t, lim),
+            value=f"{math.ceil(Fraction(t.red, lim.red_den))} g/fő",
+            limit=f"≤ {lim.red_limit_g(t.days)} g/fő",
         ),
         RuleCheck(
-            week=week, rule="potato", ok=potato_run <= 1,
-            value=f"{potato_run} nap egymás után", limit="≤ 1 nap egymás után",
+            week=week,
+            rule="potato",
+            ok=potato_run <= 1,
+            value=f"{potato_run} nap egymás után",
+            limit="≤ 1 nap egymás után",
         ),
-        RuleCheck(week=week, rule="sweets", ok=t.sweets <= SWEETS_MAX, value=f"{t.sweets} édes",
-                  limit=f"≤ {SWEETS_MAX}"),
-        RuleCheck(week=week, rule="variety", ok=repeats == 0, value=f"{repeats} ismétlés", limit=variety_limit),
+        RuleCheck(
+            week=week,
+            rule="sweets",
+            ok=t.sweets <= SWEETS_MAX,
+            value=f"{t.sweets} édes",
+            limit=f"≤ {SWEETS_MAX}",
+        ),
+        RuleCheck(
+            week=week, rule="variety", ok=repeats == 0, value=f"{repeats} ismétlés", limit=variety_limit
+        ),
     ]
     if lim.budget is not None:
         value = f"{math.ceil(t.cost)} Ft"
         if t.unpriced:
             value += f" + {t.unpriced} ár nélküli étel"
         checks.append(
-            RuleCheck(week=week, rule="budget", ok=budget_ok(t, lim), value=value,
-                      limit=f"≤ {int(lim.budget_limit(t.days))} Ft")
+            RuleCheck(
+                week=week,
+                rule="budget",
+                ok=budget_ok(t, lim),
+                value=value,
+                limit=f"≤ {int(lim.budget_limit(t.days))} Ft",
+            )
         )
     return checks
 
@@ -343,15 +372,17 @@ def check_plan(
     red_meat_g_per_person_week: int = 600,
     weekly_budget: Decimal | None = None,
     recipe_cost_per_serving: Mapping[str, Decimal] | None = None,
+    no_repeat_days: int = DEFAULT_NO_REPEAT_DAYS,
 ) -> tuple[RuleCheck, ...]:
     """Check a (possibly hand-edited) plan against the weekly rules; see the module docstring.
 
     Days are placed by ``PlanDay.index`` (week = index // 7; days may be unsorted or have gaps; a block's
-    length is the number of days given in it). The variety window is ``DEFAULT_NO_REPEAT_DAYS``.
+    length is the number of days given in it). The variety window is ``no_repeat_days``.
     Raises ``KeyError`` for an unknown recipe or ingredient id and ``ValueError`` for duplicate or negative
     day indexes, unknown slots or invalid parameters."""
     validate_people(people)
     red_cap = validate_non_negative_int(red_meat_g_per_person_week, "red_meat_g_per_person_week")
+    window = validate_non_negative_int(no_repeat_days, "no_repeat_days")
     budget = None if weekly_budget is None else validate_money(weekly_budget, "weekly_budget")
     costs = validate_costs(recipe_cost_per_serving)
     index: dict[str, int] = {}
@@ -380,5 +411,5 @@ def check_plan(
         grid[day] = row
     facts = [recipe_facts(recipes[rid], ingredients, people=people, costs=costs) for rid in index]
     meals, red_den = compile_meals(facts)
-    lim = make_limits(red_cap, red_den, budget if costs else None, DEFAULT_NO_REPEAT_DAYS)
+    lim = make_limits(red_cap, red_den, budget if costs else None, window)
     return evaluate(grid, frozenset(snack_weeks), meals, lim)
