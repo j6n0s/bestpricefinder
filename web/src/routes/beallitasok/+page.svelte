@@ -12,6 +12,7 @@
 	import { formatDateTime, formatDistance, formatNumber } from '$lib/format';
 	import { i18n, reloadLanguage, setLanguage, t, tp, type Lang } from '$lib/i18n';
 	import { districtLocation, revokedLocation } from '$lib/location';
+	import { resetRecipeFilters } from '$lib/plan/filters.svelte';
 	import {
 		clearAll,
 		isPersistent,
@@ -29,7 +30,7 @@
 
 	let settings = $state<StoredState>(load());
 	let persistent = $state(isPersistent());
-	let notice = $state<'revoked' | 'cleared' | null>(null);
+	let notice = $state<'revoked' | 'cleared' | 'cleared_session' | null>(null);
 	let resets = $state(0);
 	let dialog = $state<HTMLDialogElement>();
 	let cancelButton = $state<HTMLButtonElement>();
@@ -82,13 +83,17 @@
 	}
 
 	function confirmClear(): void {
-		clearAll();
+		// clearAll resets the in-memory copy too; false = the stored copy could not be reached or deleted.
+		const removed = clearAll();
+		// Other personal data held in memory for this tab: the language and the recipe filters (a filter such
+		// as "húsmentes" is a diet preference).
 		reloadLanguage();
+		resetRecipeFilters();
 		settings = load();
 		persistent = isPersistent();
 		resets += 1;
 		dialog?.close();
-		notice = 'cleared';
+		notice = removed ? 'cleared' : 'cleared_session';
 	}
 </script>
 
@@ -106,6 +111,8 @@
 <div role="status" class="announce">
 	{#if notice === 'cleared'}
 		<p class="notice notice-success">{t('settings.clear_done')}</p>
+	{:else if notice === 'cleared_session'}
+		<p class="notice notice-warning">{t('settings.clear_partial')}</p>
 	{:else if notice === 'revoked'}
 		<p class="notice notice-success">{t('settings.location_revoked')}</p>
 	{/if}

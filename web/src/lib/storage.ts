@@ -3,8 +3,9 @@
  *
  * Nothing in here is ever sent to the server as a whole. Plan, household size, slots, radius, pantry,
  * exclusions (diet preferences are health data, GDPR Art. 9), location consent, the chosen district or the
- * approximate location, checked list items and the UI language all live under one key, as one versioned
- * JSON document.
+ * approximate location, checked list items, the shopping-list choices (range, removed lines, chosen store)
+ * and the UI language all live under ONE key (`hetikosar.state`), as one versioned JSON document. There is no
+ * other key: the list choices that used to live under `hetikosar.list` are part of this document now.
  *
  * Robustness rules:
  * - Every localStorage access is wrapped in try/catch: private browsing, disabled site data, a full quota
@@ -12,6 +13,8 @@
  *   session and `isPersistent()` turns false so the UI can say so.
  * - Reading never trusts the stored JSON: every field is validated and replaced by its default when invalid.
  * - An unknown `version` (newer, older without a migration, or missing) resets everything to the defaults.
+ * - "Minden adat törlése" (`clearAll`) removes every `hetikosar.` key AND resets the in-memory copy, so
+ *   nothing of the old data is shown again in this session, even when the browser refuses storage.
  *
  * Schema changes: adding a field with a default needs no version bump (sanitising fills it in). Changing the
  * meaning or shape of a field needs `STORAGE_VERSION + 1` and a migration step in `MIGRATIONS`.
@@ -35,6 +38,12 @@ export const RADIUS_STEP_KM = 0.5;
 export const APPROX_DECIMALS = 3;
 
 const MAX_LIST = 200;
+/** Remembered shopping lists (most recently used first); older ones are dropped. */
+export const MAX_LIST_ENTRIES = 12;
+/** Lines removed by hand, per list. */
+export const MAX_REMOVED_LINES = 200;
+/** A list key (`listKey(plan, range)`): 1–80 printable ASCII characters. */
+const LIST_KEY_PATTERN = /^[\x20-\x7e]{1,80}$/;
 const MAX_EXCLUDED_TAGS = 20;
 const MAX_EXCLUDED_INGREDIENTS = 50;
 const MAX_CHECKED = 500;
@@ -42,10 +51,29 @@ const MAX_PLAN_DAYS = 31;
 const DISTRICT_ID = /^(0[1-9]|1\d|2[0-3])$/;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
-export interface PantryEntry {
-	ingredientId: string;
-	/** Quantity at home in the ingredient's canonical unit; null = "enough at home". */
-	qty: number | null;
+/** "Ez a hét", "Jövő hét", "Az egész terv" (src/lib/list/range.ts). */
+export const LIST_RANGES = ['this_week', 'next_week', 'whole'] as const;
+export type ListRange = (typeof LIST_RANGES)[number];
+
+export function isListRange(value: unknown): value is ListRange {
+	return typeof value === 'string' && (LIST_RANGES as readonly string[]).includes(value);
+}
+
+/** The choices for one shopping list (one plan and range). */
+export interface ListEntry {
+	/** `listKey(plan, range)` from src/lib/list/request.ts. */
+	key: string;
+	/** Ingredient ids removed from this list by hand. */
+	removed: string[];
+	/** The store chosen for this list, or null. */
+	storeId: string | null;
+}
+
+export interface StoredList {
+	/** The range the user last chose. */
+	range: ListRange;
+	/** The most recently used lists first, at most MAX_LIST_ENTRIES. */
+	entries: ListEntry[];
 }
 
 export interface StoredPlan {
@@ -89,9 +117,10 @@ export interface StoredState {
 	radiusKm: number;
 	plan: StoredPlan | null;
 	pantry: {
-		/** Ingredients the user has at home. */
-		onHand: PantryEntry[];
-		/** Pantry staples ("valószínűleg otthon van") the user marked "nincs otthon". */
+		/**
+		 * Pantry staples ("valószínűleg otthon van") the user marked "nincs otthon". There are no on-hand
+		 * quantities: staples are either at home (the default) or bought, and the app never sends `on_hand`.
+		 */
 		notAtHome: string[];
 	};
 	exclusions: {
@@ -101,6 +130,8 @@ export interface StoredState {
 	location: StoredLocation;
 	/** Ingredient ids ticked off on the shopping list. */
 	checkedItems: string[];
+	/** Shopping-list choices: the range, and per list the removed lines and the chosen store. */
+	list: StoredList;
 }
 
 export function defaultState(): StoredState {
@@ -111,10 +142,11 @@ export function defaultState(): StoredState {
 		slots: 3,
 		radiusKm: 1.5,
 		plan: null,
-		pantry: { onHand: [], notAtHome: [] },
+		pantry: { notAtHome: [] },
 		exclusions: { tags: [], ingredients: [] },
 		location: { consent: 'unset', source: 'none', districtId: null, approx: null },
-		checkedItems: []
+		checkedItems: [],
+		list: { range: 'this_week', entries: [] }
 	};
 }
 
@@ -206,22 +238,36 @@ function sanitisePlan(value: unknown): StoredPlan | null {
 
 function sanitisePantry(value: unknown): StoredState['pantry'] {
 	if (!isRecord(value)) return defaultState().pantry;
-	const onHand: PantryEntry[] = [];
+	return { notAtHome: idList(value.notAtHome, ID_PATTERNS.ingredient, MAX_LIST) };
+}
+
+function sanitiseListEntry(value: unknown): ListEntry | null {
+	if (!isRecord(value)) return null;
+	const { key, removed, storeId } = value;
+	if (typeof key !== 'string' || !LIST_KEY_PATTERN.test(key)) return null;
+	return {
+		key,
+		removed: idList(removed, ID_PATTERNS.ingredient, MAX_REMOVED_LINES),
+		storeId: typeof storeId === 'string' && ID_PATTERNS.store.test(storeId) ? storeId : null
+	};
+}
+
+/** The list choices: a known range, and at most 12 valid entries with unique keys (the first one wins). */
+function sanitiseList(value: unknown): StoredList {
+	if (!isRecord(value)) return defaultState().list;
+	const entries: ListEntry[] = [];
 	const seen = new Set<string>();
-	if (Array.isArray(value.onHand)) {
-		for (const entry of value.onHand) {
-			if (onHand.length >= MAX_LIST) break;
-			if (!isRecord(entry)) continue;
-			const { ingredientId, qty } = entry;
-			if (typeof ingredientId !== 'string' || !ID_PATTERNS.ingredient.test(ingredientId) || seen.has(ingredientId)) {
-				continue;
+	if (Array.isArray(value.entries)) {
+		for (const item of value.entries) {
+			if (entries.length >= MAX_LIST_ENTRIES) break;
+			const entry = sanitiseListEntry(item);
+			if (entry && !seen.has(entry.key)) {
+				seen.add(entry.key);
+				entries.push(entry);
 			}
-			if (qty !== null && !(isFiniteNumber(qty) && qty > 0 && qty <= 1000)) continue;
-			seen.add(ingredientId);
-			onHand.push({ ingredientId, qty });
 		}
 	}
-	return { onHand, notAtHome: idList(value.notAtHome, ID_PATTERNS.ingredient, MAX_LIST) };
+	return { range: isListRange(value.range) ? value.range : 'this_week', entries };
 }
 
 function sanitiseExclusions(value: unknown): StoredState['exclusions'] {
@@ -267,7 +313,8 @@ function sanitiseV1(raw: Record<string, unknown>): StoredState {
 		pantry: sanitisePantry(raw.pantry),
 		exclusions: sanitiseExclusions(raw.exclusions),
 		location: sanitiseLocation(raw.location),
-		checkedItems: idList(raw.checkedItems, ID_PATTERNS.ingredient, MAX_CHECKED)
+		checkedItems: idList(raw.checkedItems, ID_PATTERNS.ingredient, MAX_CHECKED),
+		list: sanitiseList(raw.list)
 	};
 }
 
@@ -378,23 +425,36 @@ export function update(patch: StatePatch): StoredState {
 	return clone(memory ?? migrate(next));
 }
 
-/** Deletes every key this app owns ("minden adat törlése"). The next load() returns the defaults. */
+/**
+ * "Minden adat törlése": deletes every key this app owns and resets the in-memory copy. Returns false when
+ * the stored copy could not be deleted (storage refused); the session then shows the defaults anyway, keeps
+ * them in memory only (`isPersistent()` is false), and the next successful save overwrites the old copy.
+ */
 export function clearAll(): boolean {
 	memory = null;
 	unsaved = false;
 	const storage = backend();
-	if (!storage) return false;
-	try {
-		const keys: string[] = [];
-		for (let i = 0; i < storage.length; i += 1) {
-			const key = storage.key(i);
-			if (key !== null && key.startsWith(STORAGE_PREFIX)) keys.push(key);
+	let removed = false;
+	if (storage) {
+		try {
+			const keys: string[] = [];
+			for (let i = 0; i < storage.length; i += 1) {
+				const key = storage.key(i);
+				if (key !== null && key.startsWith(STORAGE_PREFIX)) keys.push(key);
+			}
+			for (const key of keys) storage.removeItem(key);
+			removed = true;
+		} catch {
+			removed = false;
 		}
-		for (const key of keys) storage.removeItem(key);
-		return true;
-	} catch {
-		return false;
 	}
+	if (!removed) {
+		// The old copy may still be readable: the defaults in memory win over it for the rest of the session.
+		memory = defaultState();
+		unsaved = true;
+		persistent = false;
+	}
+	return removed;
 }
 
 /** False after a read or write failed: the data is then kept only until the tab is closed. */

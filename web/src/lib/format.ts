@@ -1,7 +1,7 @@
 /**
  * Number, money, quantity and date formatting. Always hu-HU, in both UI languages (user decision):
- * "1 234 Ft", "0,4 kg", "2026. 10. 13.". The space inside numbers and before units is a no-break space
- * (U+00A0) so a price never wraps across lines.
+ * "1 234 Ft", "0,4 kg", "2026. 10. 13.". Every space inside a number, before a unit and inside a date is a
+ * no-break space (U+00A0), so a price or a date (e.g. in the GVH source line) never wraps across lines.
  */
 import type { Unit } from './api/types';
 import { coreEn } from './i18n/core.en';
@@ -92,23 +92,31 @@ export function parseIsoDate(value: string): Date | null {
 	return date;
 }
 
-/** "2026-10-13" -> "2026. 10. 13."; null or an invalid date -> "". */
+/** Every kind of space (Intl may use U+0020, U+00A0 or U+202F) as a no-break space, so a date never wraps. */
+function noBreak(text: string): string {
+	return text.replace(/[\s\u202f]+/gu, NBSP);
+}
+
+/** "2026-10-13" -> "2026. 10. 13." (no-break spaces); null or an invalid date -> "". */
 export function formatDate(iso: string | null | undefined): string {
 	if (!iso) return '';
 	const date = parseIsoDate(iso);
-	return date ? dateFormat.format(date) : '';
+	return date ? noBreak(dateFormat.format(date)) : '';
 }
 
-/** "2026-09-01" -> "2026. 09." (the KSH period is a month); null or invalid -> "". */
+/** "2026-09-01" -> "2026. 09." (the KSH period is a month; no-break space); null or invalid -> "". */
 export function formatMonth(iso: string | null | undefined): string {
 	if (!iso) return '';
 	const date = parseIsoDate(iso);
-	return date ? monthFormat.format(date) : '';
+	return date ? noBreak(monthFormat.format(date)) : '';
 }
 
-/** An ISO date-time in Budapest time: "2026-10-13T02:31:00Z" -> "2026. 10. 13. 4:31"; invalid -> "". */
+/**
+ * An ISO date-time in Budapest time: "2026-10-13T02:31:00Z" -> "2026. 10. 13. 4:31" (no-break spaces);
+ * invalid -> "".
+ */
 export function formatDateTime(iso: string | null | undefined): string {
 	if (!iso) return '';
 	const time = Date.parse(iso);
-	return Number.isNaN(time) ? '' : dateTimeFormat.format(new Date(time));
+	return Number.isNaN(time) ? '' : noBreak(dateTimeFormat.format(new Date(time)));
 }

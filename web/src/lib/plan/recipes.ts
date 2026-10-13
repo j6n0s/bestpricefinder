@@ -163,14 +163,26 @@ export function chainList(slugs: readonly ChainSlug[], names: ReadonlyMap<ChainS
 	return slugs.map((slug) => chainName(slug, names)).join(', ');
 }
 
+/**
+ * docs/ENGINE.md "Cheapest chain of a recipe" (contract v1.2): only chains that price at least 90 % of the
+ * recipe's estimated cost can be "the cheapest", or, when none reaches 90 %, the best-covered chains. The
+ * server's priced_share is rounded DOWN to 4 decimals, so `>= 0.9` on it is exactly the server's test.
+ */
+export const MIN_CHEAPEST_SHARE = 0.9;
+
 export interface ChainCostRow {
 	chain: ChainSlug;
 	name: string;
 	costPerServing: number | null;
-	/** Competition rank on whole forints (tied chains share it: 1, 1, 3); null when unpriced. */
+	/**
+	 * Competition rank on whole forints among the comparable chains (tied chains share it: 1, 1, 3); null for
+	 * a partial or an unpriced chain.
+	 */
 	rank: number | null;
-	/** Another chain has the same whole-forint cost. */
+	/** Another comparable chain has the same whole-forint cost. */
 	tied: boolean;
+	/** Priced, but below the coverage the ranking needs: its price covers only part of the recipe. */
+	partial: boolean;
 	/** Bar length, 0–100, relative to the most expensive priced chain. */
 	barPercent: number;
 	coveragePercent: number;
@@ -181,34 +193,57 @@ function isPriced(cost: ChainCostOut): cost is ChainCostOut & { cost_per_serving
 	return typeof cost.cost_per_serving === 'number' && Number.isFinite(cost.cost_per_serving);
 }
 
+function shareOf(cost: ChainCostOut): number {
+	return Number.isFinite(cost.priced_share) ? cost.priced_share : 0;
+}
+
+/** The priced chains that may be ranked: priced_share ≥ 0.9, else the ones with the highest share. */
+export function comparableChainCosts<T extends ChainCostOut>(costs: readonly T[]): T[] {
+	const priced = costs.filter(isPriced);
+	const covered = priced.filter((cost) => shareOf(cost) >= MIN_CHEAPEST_SHARE);
+	if (covered.length > 0 || priced.length === 0) return covered;
+	const top = Math.max(...priced.map(shareOf));
+	return priced.filter((cost) => shareOf(cost) === top);
+}
+
 /**
- * The chain cost comparison, cheapest first. Equal whole-forint costs form a tie: they share a rank and keep
- * the server's order (never re-ordered by name). Unpriced chains come last, in the server's order.
+ * The chain cost comparison. First the comparable chains (see `comparableChainCosts`), cheapest first: equal
+ * whole-forint costs form a tie, share a rank and keep the server's order (never re-ordered by name). Then
+ * the partial chains, unranked, in the server's order (a chain that prices only a cheap subset of the lines
+ * is never shown as cheaper than a fully priced one). Unpriced chains come last, in the server's order.
  */
 export function chainCostRows(costs: readonly ChainCostOut[], names: ReadonlyMap<ChainSlug, string>): ChainCostRow[] {
 	const priced = costs.filter(isPriced);
+	const comparable = new Set<ChainCostOut>(comparableChainCosts(costs));
+	const ranked = priced.filter((cost) => comparable.has(cost));
 	const whole = (cost: number): number => Math.round(cost);
 	const max = priced.reduce((highest, cost) => Math.max(highest, cost.cost_per_serving), 0);
-	const ordered = priced
-		.map((cost, position) => ({ cost, position }))
-		.sort((a, b) => whole(a.cost.cost_per_serving) - whole(b.cost.cost_per_serving) || a.position - b.position)
-		.map(({ cost }) => cost);
-	const rows: ChainCostRow[] = ordered.map((cost) => {
-		const own = whole(cost.cost_per_serving);
-		const cheaper = priced.filter((other) => whole(other.cost_per_serving) < own).length;
-		const same = priced.filter((other) => whole(other.cost_per_serving) === own).length;
+	const pricedRow = (cost: ChainCostOut & { cost_per_serving: number }, rank: number | null, tied: boolean): ChainCostRow => {
 		const ratio = max > 0 ? cost.cost_per_serving / max : 0;
 		return {
 			chain: cost.chain,
 			name: chainName(cost.chain, names),
 			costPerServing: cost.cost_per_serving,
-			rank: cheaper + 1,
-			tied: same > 1,
+			rank,
+			tied,
+			partial: rank === null,
 			barPercent: cost.cost_per_serving > 0 ? Math.min(100, Math.max(1, Math.round(ratio * 1000) / 10)) : 0,
 			coveragePercent: coveragePercent(cost.priced_share),
 			missing: cost.missing
 		};
-	});
+	};
+	const rows: ChainCostRow[] = ranked
+		.map((cost, position) => ({ cost, position }))
+		.sort((a, b) => whole(a.cost.cost_per_serving) - whole(b.cost.cost_per_serving) || a.position - b.position)
+		.map(({ cost }) => {
+			const own = whole(cost.cost_per_serving);
+			const cheaper = ranked.filter((other) => whole(other.cost_per_serving) < own).length;
+			const same = ranked.filter((other) => whole(other.cost_per_serving) === own).length;
+			return pricedRow(cost, cheaper + 1, same > 1);
+		});
+	for (const cost of priced) {
+		if (!comparable.has(cost)) rows.push(pricedRow(cost, null, false));
+	}
 	for (const cost of costs) {
 		if (isPriced(cost)) continue;
 		rows.push({
@@ -217,6 +252,7 @@ export function chainCostRows(costs: readonly ChainCostOut[], names: ReadonlyMap
 			costPerServing: null,
 			rank: null,
 			tied: false,
+			partial: false,
 			barPercent: 0,
 			coveragePercent: coveragePercent(cost.priced_share),
 			missing: cost.missing

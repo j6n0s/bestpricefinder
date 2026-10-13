@@ -141,6 +141,31 @@ describe('privacy: request bodies carry only known fields', () => {
 		});
 	});
 
+	it('sends quantities as JSON numbers, never strings (contract v1.2)', async () => {
+		const { fetch, calls } = fakeFetch(() => json({ lines: [] }));
+		await postList(
+			{
+				items: [{ recipe_id: 'r1', servings: 2.5 }],
+				on_hand: [{ ingredient_id: 'liszt', qty: 0.125 }]
+			},
+			{ fetch }
+		);
+		await postQuote({ lines: [{ ingredient_id: 'liszt', qty: 0.4 }], store_ids: ['s1'] }, { fetch });
+		expect(String(calls[0]?.init.body)).toBe(
+			'{"items":[{"recipe_id":"r1","servings":2.5}],"on_hand":[{"ingredient_id":"liszt","qty":0.125}]}'
+		);
+		expect(String(calls[1]?.init.body)).toBe('{"lines":[{"ingredient_id":"liszt","qty":0.4}],"store_ids":["s1"]}');
+
+		// A value that slipped past the types is never sent as a string: it becomes null (the server's 422).
+		await postList({ items: [{ recipe_id: 'r1', servings: '2' as never }], on_hand: [{ ingredient_id: 'x1', qty: Number.NaN }] }, { fetch });
+		await postQuote({ lines: [{ ingredient_id: 'x1', qty: '0.4' as never }], store_ids: ['s1'] }, { fetch });
+		expect(JSON.parse(String(calls[2]?.init.body))).toEqual({
+			items: [{ recipe_id: 'r1', servings: null }],
+			on_hand: [{ ingredient_id: 'x1', qty: null }]
+		});
+		expect(JSON.parse(String(calls[3]?.init.body))).toEqual({ lines: [{ ingredient_id: 'x1', qty: null }], store_ids: ['s1'] });
+	});
+
 	it('/api/list keeps on_hand and include_optional only', async () => {
 		const { fetch, calls } = fakeFetch(() => json({ lines: [] }));
 		await postList(

@@ -44,7 +44,7 @@
 						{#if !recipe.tested}
 							<Badge kind="untested" />
 						{/if}
-						<span class="hint small"><RecipePrice {recipe} {names} showCoverage={false} /></span>
+						<span class="hint small"><RecipePrice {recipe} {names} compact /></span>
 					{:else if recipesLoaded}
 						<span class="title">{meal.recipeId}</span>
 						<span class="hint small warn">{t('plan.meal_unknown')}</span>

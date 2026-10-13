@@ -11,7 +11,6 @@ export const coreEn: Messages<typeof coreHu> = {
 	nav_recipes: 'Recipes',
 	nav_list: 'List',
 	nav_settings: 'Settings',
-	nav_sources: 'Sources and privacy',
 	lang_toggle_text: 'Magyar',
 
 	data_date: 'Data: {date}',

@@ -18,12 +18,14 @@ import type {
 	ListResponse,
 	MetaResponse,
 	PlanCheckResponse,
+	PlanDayIO,
 	PlanResponse,
 	QuoteLineOut,
 	QuoteResponse,
 	RecipeDetail,
 	RecipeSummary,
 	RecipesResponse,
+	RuleCheckOut,
 	Slot,
 	StoreOut,
 	StoresResponse,
@@ -338,12 +340,20 @@ function quoteLine(ingredientId: string, qty: number, chain: string): QuoteLineO
 	};
 }
 
+/** A request quantity: a JSON number (never a string, contract v1.2) with 0 < value <= max. */
+const isQty = (value: unknown, max: number): value is number =>
+	typeof value === 'number' && Number.isFinite(value) && value > 0 && value <= max;
+
 function mockQuote(body: Record<string, unknown>): MockResult {
-	const extra = onlyKeys(body, ['lines', 'store_ids', 'include_loyalty']);
-	if (extra.length > 0) return fail(422, 'invalid_request', extra);
+	// Like the API: an unknown root field (coordinates, for example) is reported as "body".
+	if (onlyKeys(body, ['lines', 'store_ids', 'include_loyalty']).length > 0) return fail(422, 'invalid_request', ['body']);
 	const { lines, store_ids: storeIds } = body;
 	if (!Array.isArray(lines) || lines.length === 0 || !Array.isArray(storeIds) || storeIds.length === 0) {
 		return fail(422, 'invalid_request', ['lines', 'store_ids']);
+	}
+	for (const [index, line] of lines.entries()) {
+		if (!isRecord(line) || typeof line.ingredient_id !== 'string') return fail(422, 'invalid_request', [`lines.${index}`]);
+		if (!isQty(line.qty, 1000)) return fail(422, 'invalid_request', [`lines.${index}.qty`]);
 	}
 	const known = new Map(MOCK_STORES.map((s) => [s.id, s]));
 	const stores: StoreQuoteOut[] = [];
@@ -389,25 +399,175 @@ function mockQuote(body: Record<string, unknown>): MockResult {
 	return ok(response);
 }
 
+const ALL_SLOTS: readonly Slot[] = ['reggeli', 'tizorai', 'ebed', 'uzsonna', 'vacsora'];
+/** SYNTHETIC grams of red meat per serving of a recipe tagged "sertes" or "marha". */
+const SYNTHETIC_RED_MEAT_G = 150;
+
+export interface MockCheckOptions {
+	people: number;
+	redMeatGPerPersonWeek: number;
+	noRepeatDays: number;
+	weeklyBudget: number | null;
+}
+
+/** What a spec with its own SYNTHETIC recipes passes to `handleMockApi`, so plan checks know their tags. */
+export interface MockContext {
+	recipes?: readonly RecipeSummary[];
+}
+
+const isInt = (value: unknown, min: number, max: number): value is number =>
+	typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max;
+
+/**
+ * The weekly rule results for a plan, computed from the plan and the SYNTHETIC recipe tags, in the server's
+ * string format (server/bpf/planner/rules.py): per 7-day week (day index ÷ 7) fish, legume, meat_free_day,
+ * red_meat, potato, sweets and variety, plus budget when a weekly budget is set. The count rules apply from
+ * 4 planned days of a week ("n/a" below that). `library` defaults to the mocks' own recipes.
+ */
+export function computeMockChecks(
+	days: readonly PlanDayIO[],
+	options: MockCheckOptions,
+	library: readonly RecipeSummary[] = MOCK_RECIPES
+): RuleCheckOut[] {
+	const recipes = new Map(library.map((recipe) => [recipe.id, recipe]));
+	const idsOf = (day: PlanDayIO): string[] =>
+		ALL_SLOTS.map((slot) => day.meals[slot]).filter((id): id is string => typeof id === 'string');
+	const has = (id: string, tag: string): boolean => recipes.get(id)?.tags.includes(tag) ?? false;
+	const weeks = new Map<number, PlanDayIO[]>();
+	for (const day of [...days].sort((a, b) => a.index - b.index)) {
+		const week = Math.floor(day.index / 7);
+		weeks.set(week, [...(weeks.get(week) ?? []), day]);
+	}
+	// Variety: a recipe again within `noRepeatDays` days (the same day included) is a repeat, except a
+	// "ket_napos" recipe on the very next day.
+	const lastSeen = new Map<string, number>();
+	const repeats = new Map<number, number>();
+	for (const day of [...days].sort((a, b) => a.index - b.index)) {
+		for (const id of idsOf(day)) {
+			const previous = lastSeen.get(id);
+			const gap = previous === undefined ? null : day.index - previous;
+			const twoDay = gap === 1 && has(id, 'ket_napos');
+			if (gap !== null && gap < Math.max(1, options.noRepeatDays) && !twoDay) {
+				const week = Math.floor(day.index / 7);
+				repeats.set(week, (repeats.get(week) ?? 0) + 1);
+			}
+			lastSeen.set(id, day.index);
+		}
+	}
+	const checks: RuleCheckOut[] = [];
+	for (const [week, weekDays] of [...weeks].sort((a, b) => a[0] - b[0])) {
+		const meals = weekDays.flatMap(idsOf);
+		const count = (tag: string): number => meals.filter((id) => has(id, tag)).length;
+		const freeDays = weekDays.filter((day) => {
+			const ids = idsOf(day);
+			return ids.length > 0 && ids.every((id) => has(id, 'husmentes') || has(id, 'vegetarianus'));
+		}).length;
+		const applies = weekDays.length >= 4;
+		const countRule = (rule: 'fish' | 'legume' | 'meat_free_day', n: number, noun: string): RuleCheckOut =>
+			applies ? { week, rule, ok: n >= 1, value: `${n} ${noun}`, limit: '≥ 1' } : { week, rule, ok: true, value: 'n/a', limit: '≥ 1' };
+		const redMeat = SYNTHETIC_RED_MEAT_G * meals.filter((id) => has(id, 'sertes') || has(id, 'marha')).length;
+		const redCap = Math.floor((options.redMeatGPerPersonWeek * weekDays.length) / 7);
+		const sweets = count('edes');
+		const weekRepeats = repeats.get(week) ?? 0;
+		checks.push(
+			countRule('fish', count('hal'), 'hal'),
+			countRule('legume', count('huvelyes'), 'hüvelyes'),
+			countRule('meat_free_day', freeDays, 'húsmentes nap'),
+			{ week, rule: 'red_meat', ok: redMeat <= redCap, value: `${redMeat} g/fő`, limit: `≤ ${redCap} g/fő` },
+			{ week, rule: 'potato', ok: true, value: '0 nap egymás után', limit: '≤ 1 nap egymás után' },
+			{ week, rule: 'sweets', ok: sweets <= 2, value: `${sweets} édes`, limit: '≤ 2' },
+			{
+				week,
+				rule: 'variety',
+				ok: weekRepeats === 0,
+				value: `${weekRepeats} ismétlés`,
+				limit: `0 ismétlés ${options.noRepeatDays} napon belül`
+			}
+		);
+		if (options.weeklyBudget !== null) {
+			const costs = meals.map((id) => recipes.get(id)?.cost_per_serving_from ?? null);
+			const cost = costs.reduce<number>((sum, value) => sum + (value ?? 0) * options.people, 0);
+			const unpriced = costs.filter((value) => value === null).length;
+			const limit = Math.floor((options.weeklyBudget * weekDays.length) / 7);
+			checks.push({
+				week,
+				rule: 'budget',
+				ok: Math.ceil(cost) <= limit,
+				value: `${Math.ceil(cost)} Ft${unpriced > 0 ? ` + ${unpriced} ár nélküli étel` : ''}`,
+				limit: `≤ ${limit} Ft`
+			});
+		}
+	}
+	return checks;
+}
+
+/** The plan days of a request, or the dotted path of the first invalid field (like the API's 422). */
+function parsePlanDays(value: unknown, library: readonly RecipeSummary[]): PlanDayIO[] | string {
+	if (!Array.isArray(value) || value.length < 1 || value.length > 31) return 'days';
+	const known = new Set(library.map((recipe) => recipe.id));
+	const days: PlanDayIO[] = [];
+	for (const [i, day] of value.entries()) {
+		if (!isRecord(day) || onlyKeys(day, ['index', 'meals']).length > 0) return `days.${i}`;
+		if (!isInt(day.index, 0, 30)) return `days.${i}.index`;
+		if (!isRecord(day.meals)) return `days.${i}.meals`;
+		const meals: PlanDayIO['meals'] = {};
+		for (const [slot, id] of Object.entries(day.meals)) {
+			if (!(ALL_SLOTS as readonly string[]).includes(slot)) return `days.${i}.meals`;
+			if (id !== null && !(typeof id === 'string' && known.has(id))) return `days.${i}.meals.${slot}`;
+			meals[slot as Slot] = id;
+		}
+		days.push({ index: day.index, meals });
+	}
+	return days;
+}
+
+function checkOptions(body: Record<string, unknown>): MockCheckOptions | string {
+	const people = body.people ?? 2;
+	const redMeat = body.red_meat_g_per_person_week ?? 600;
+	const noRepeat = body.no_repeat_days ?? 5;
+	const budget = body.weekly_budget ?? null;
+	if (!isInt(people, 1, 12)) return 'people';
+	if (!isInt(redMeat, 0, 3000)) return 'red_meat_g_per_person_week';
+	if (!isInt(noRepeat, 0, 14)) return 'no_repeat_days';
+	if (budget !== null && !isInt(budget, 0, 1_000_000)) return 'weekly_budget';
+	return { people, redMeatGPerPersonWeek: redMeat, noRepeatDays: noRepeat, weeklyBudget: budget };
+}
+
 function mockPlan(body: Record<string, unknown>): MockResult {
 	const days = typeof body.days === 'number' && Number.isInteger(body.days) ? body.days : 7;
-	const slots: readonly Slot[] = body.slots === 5 ? ['reggeli', 'tizorai', 'ebed', 'uzsonna', 'vacsora'] : ['reggeli', 'ebed', 'vacsora'];
+	const slots: readonly Slot[] = body.slots === 5 ? ALL_SLOTS : ['reggeli', 'ebed', 'vacsora'];
 	if (days < 1 || days > 31) return fail(422, 'invalid_request', ['days']);
+	const options = checkOptions(body);
+	if (typeof options === 'string') return fail(422, 'invalid_request', [options]);
+	const planDays: PlanDayIO[] = Array.from({ length: days }, (_, index) => ({
+		index,
+		meals: Object.fromEntries(slots.map((slot) => [slot, slot === 'ebed' || slot === 'vacsora' ? summaryA.id : null]))
+	}));
 	const response: PlanResponse = {
-		days: Array.from({ length: days }, (_, index) => ({
-			index,
-			meals: Object.fromEntries(
-				slots.map((slot) => [slot, slot === 'ebed' || slot === 'vacsora' ? summaryA.id : null])
-			) as Partial<Record<Slot, string | null>>
-		})),
-		checks: [{ week: 0, rule: 'legume', ok: true, value: '7 hüvelyes', limit: '≥ 1' }],
+		days: planDays,
+		checks: computeMockChecks(planDays, options),
 		warnings: ['slot_pool_empty:reggeli']
 	};
 	return ok(response);
 }
 
+function mockPlanCheck(body: Record<string, unknown>, context: MockContext): MockResult {
+	const library = context.recipes ?? MOCK_RECIPES;
+	const extra = onlyKeys(body, ['days', 'people', 'red_meat_g_per_person_week', 'no_repeat_days', 'weekly_budget']);
+	if (extra.length > 0) return fail(422, 'invalid_request', ['body']);
+	const days = parsePlanDays(body.days, library);
+	if (typeof days === 'string') return fail(422, 'invalid_request', [days]);
+	const options = checkOptions(body);
+	if (typeof options === 'string') return fail(422, 'invalid_request', [options]);
+	return ok({ checks: computeMockChecks(days, options, library) } satisfies PlanCheckResponse);
+}
+
 function mockList(body: Record<string, unknown>): MockResult {
 	if (!Array.isArray(body.items) || body.items.length === 0) return fail(422, 'invalid_request', ['items']);
+	for (const [index, item] of body.items.entries()) {
+		if (!isRecord(item) || typeof item.recipe_id !== 'string') return fail(422, 'invalid_request', [`items.${index}`]);
+		if (!isQty(item.servings, 100)) return fail(422, 'invalid_request', [`items.${index}.servings`]);
+	}
 	const response: ListResponse = {
 		lines: [
 			{
@@ -444,9 +604,10 @@ function parseBody(text: string): Record<string, unknown> | null {
 
 /**
  * Answers one /api request from the synthetic data. `url` may be a path ("/api/meta?x=1") or a full URL.
- * Unknown paths give 404, other methods 405, malformed bodies 422, like the real API.
+ * Unknown paths give 404, other methods 405, malformed bodies 422, like the real API. A spec that serves
+ * its own recipes passes them in `context`, so POST /api/plan/check knows them (unknown ids are a 422).
  */
-export function handleMockApi(method: string, url: string, bodyText = ''): MockResult {
+export function handleMockApi(method: string, url: string, bodyText = '', context: MockContext = {}): MockResult {
 	const parsed = new URL(url, 'http://mock.invalid');
 	const path = parsed.pathname;
 	const m = method.toUpperCase();
@@ -473,7 +634,7 @@ export function handleMockApi(method: string, url: string, bodyText = ''): MockR
 		'/api/list': mockList,
 		'/api/quote': mockQuote,
 		'/api/plan/suggest': mockPlan,
-		'/api/plan/check': () => ok({ checks: [] } satisfies PlanCheckResponse)
+		'/api/plan/check': (body) => mockPlanCheck(body, context)
 	};
 
 	const recipeMatch = /^\/api\/recipes\/([^/]+)$/.exec(path);

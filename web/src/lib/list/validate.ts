@@ -7,10 +7,14 @@
 import {
 	UNITS,
 	type AttributionSet,
+	type AvailabilityKind,
 	type IngredientOut,
+	type LineStatus,
 	type ListLineOut,
 	type PackOptionOut,
 	type PickOut,
+	type PriceScope,
+	type PriceType,
 	type QuoteLineOut,
 	type QuoteResponse,
 	type RankOut,
@@ -19,8 +23,22 @@ import {
 	type StoreQuoteOut
 } from '../api/types';
 
-const STATUSES = ['priced', 'pantry', 'unavailable', 'ksh_estimate', 'unpriced'] as const;
-const PRICE_TYPES = ['NORMAL', 'DISCOUNTED', 'LOYALTY'] as const;
+// Each list is checked against the generated union, so a contract change is a type error here.
+const STATUSES = ['priced', 'pantry', 'unavailable', 'ksh_estimate', 'unpriced'] as const satisfies readonly LineStatus[];
+const PRICE_TYPES = ['NORMAL', 'DISCOUNTED', 'LOYALTY'] as const satisfies readonly PriceType[];
+const PRICE_SCOPES = ['store', 'chain'] as const satisfies readonly PriceScope[];
+const AVAILABILITY = ['confirmed', 'assumed'] as const satisfies readonly AvailabilityKind[];
+const PRICED_BY = ['gvh', 'ksh', 'none'] as const satisfies readonly IngredientOut['priced_by'][];
+const STORE_FORMATS = ['hyper', 'express', 'other'] as const satisfies readonly NonNullable<StoreOut['format']>[];
+/** Compile-time only: a type error unless every member of the union `All` is in `Listed`. */
+type AllListed<All, Listed extends All> = [Exclude<All, Listed>] extends [never] ? true : false;
+type Check<T extends true> = T;
+type _StatusesListed = Check<AllListed<LineStatus, (typeof STATUSES)[number]>>;
+type _PriceTypesListed = Check<AllListed<PriceType, (typeof PRICE_TYPES)[number]>>;
+type _PriceScopesListed = Check<AllListed<PriceScope, (typeof PRICE_SCOPES)[number]>>;
+type _AvailabilityListed = Check<AllListed<AvailabilityKind, (typeof AVAILABILITY)[number]>>;
+type _PricedByListed = Check<AllListed<IngredientOut['priced_by'], (typeof PRICED_BY)[number]>>;
+type _FormatsListed = Check<AllListed<NonNullable<StoreOut['format']>, (typeof STORE_FORMATS)[number]>>;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 type Rec = Record<string, unknown>;
@@ -67,8 +85,8 @@ function isOption(value: unknown): value is PackOptionOut {
 		isNumber(value.pack_price) &&
 		isNumber(value.unit_price) &&
 		oneOf(PRICE_TYPES, value.price_type) &&
-		oneOf(['store', 'chain'] as const, value.price_scope) &&
-		oneOf(['confirmed', 'assumed'] as const, value.availability)
+		oneOf(PRICE_SCOPES, value.price_scope) &&
+		oneOf(AVAILABILITY, value.availability)
 	);
 }
 
@@ -177,7 +195,10 @@ function isIngredient(value: unknown): value is IngredientOut {
 		isString(value.name_hu) &&
 		isString(value.list_group) &&
 		oneOf(UNITS, value.unit) &&
-		typeof value.pantry === 'boolean'
+		isNumberOrNull(value.piece_weight_kg) &&
+		typeof value.pantry === 'boolean' &&
+		oneOf(PRICED_BY, value.priced_by) &&
+		isStringArray(value.tags)
 	);
 }
 
@@ -199,6 +220,8 @@ function isStore(value: unknown): value is StoreOut {
 		isStringOrNull(value.address) &&
 		isNumberOrNull(value.lat) &&
 		isNumberOrNull(value.lon) &&
+		(value.format === null || oneOf(STORE_FORMATS, value.format)) &&
+		typeof value.is_budapest === 'boolean' &&
 		typeof value.has_data === 'boolean'
 	);
 }

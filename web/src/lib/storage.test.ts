@@ -14,11 +14,12 @@ import {
 	type StoredState
 } from './storage';
 
-/** In-memory Storage double; `failGet` / `failSet` simulate private mode and full quotas. */
+/** In-memory Storage double; `failGet` / `failSet` / `failRemove` simulate private mode and full quotas. */
 class FakeStorage implements Storage {
 	readonly map = new Map<string, string>();
 	failGet = false;
 	failSet = false;
+	failRemove = false;
 
 	get length(): number {
 		return this.map.size;
@@ -38,6 +39,7 @@ class FakeStorage implements Storage {
 	}
 
 	removeItem(key: string): void {
+		if (this.failRemove) throw new DOMException('denied', 'SecurityError');
 		this.map.delete(key);
 	}
 
@@ -82,10 +84,17 @@ const fullState = (): StoredState => ({
 			{ index: 1, meals: { ebed: 'lencsefozelek' } }
 		]
 	},
-	pantry: { onHand: [{ ingredientId: 'liszt', qty: 1 }, { ingredientId: 'so', qty: null }], notAtHome: ['napraforgoolaj'] },
+	pantry: { notAtHome: ['napraforgoolaj'] },
 	exclusions: { tags: ['hal', 'sertes'], ingredients: ['tej'] },
 	location: { consent: 'granted', source: 'device', districtId: '11', approx: { lat: 47.477, lon: 19.047, at: '2026-10-13T08:00:00.000Z' } },
-	checkedItems: ['lencse', 'voroshagyma']
+	checkedItems: ['lencse', 'voroshagyma'],
+	list: {
+		range: 'next_week',
+		entries: [
+			{ key: '2026-10-13T08:00:00.000Z|next_week', removed: ['repa', 'rizs'], storeId: 'synthetic-lidl-1' },
+			{ key: '2026-10-13T08:00:00.000Z|whole', removed: [], storeId: null }
+		]
+	}
 });
 
 describe('defaults', () => {
@@ -94,6 +103,8 @@ describe('defaults', () => {
 		expect(state).toEqual(defaultState());
 		expect(state).toMatchObject({ version: 1, people: 2, slots: 3, radiusKm: 1.5, language: 'hu', plan: null });
 		expect(state.location).toEqual({ consent: 'unset', source: 'none', districtId: null, approx: null });
+		expect(state.pantry).toEqual({ notAtHome: [] });
+		expect(state.list).toEqual({ range: 'this_week', entries: [] });
 		expect(isPersistent()).toBe(true);
 	});
 
@@ -220,30 +231,66 @@ describe('field validation', () => {
 	it('cleans pantry, exclusions and checked items entry by entry', () => {
 		const state = migrate({
 			...fullState(),
-			pantry: {
-				onHand: [
-					{ ingredientId: 'liszt', qty: 1 },
-					{ ingredientId: 'liszt', qty: 2 },
-					{ ingredientId: 'BAD', qty: 1 },
-					{ ingredientId: 'tej', qty: -1 },
-					{ ingredientId: 'vaj', qty: 1001 },
-					{ ingredientId: 'so', qty: null },
-					'x'
-				],
-				notAtHome: ['olaj', 'olaj', 7, 'Ő']
-			},
+			pantry: { notAtHome: ['olaj', 'olaj', 7, 'Ő'] },
 			exclusions: { tags: ['hal', 'hal', 'unknown_tag', 3], ingredients: ['tej', 'x'] },
 			checkedItems: ['a1', 'a1', 'b2', '', 'C']
 		});
-		expect(state.pantry).toEqual({
-			onHand: [
-				{ ingredientId: 'liszt', qty: 1 },
-				{ ingredientId: 'so', qty: null }
-			],
-			notAtHome: ['olaj']
-		});
+		expect(state.pantry).toEqual({ notAtHome: ['olaj'] });
 		expect(state.exclusions).toEqual({ tags: ['hal'], ingredients: ['tej'] });
 		expect(state.checkedItems).toEqual(['a1', 'b2']);
+	});
+
+	it('drops the retired on-hand quantities of older documents (no version bump needed)', () => {
+		const state = migrate({
+			...fullState(),
+			pantry: { onHand: [{ ingredientId: 'liszt', qty: 1 }], notAtHome: ['olaj'] }
+		});
+		expect(state.pantry).toEqual({ notAtHome: ['olaj'] });
+		expect(JSON.stringify(state)).not.toContain('onHand');
+	});
+
+	it('cleans the list choices strictly: range, keys, removed ids and store ids', () => {
+		const list = (value: unknown) => migrate({ ...fullState(), list: value }).list;
+		expect(list(undefined)).toEqual({ range: 'this_week', entries: [] });
+		expect(list('x')).toEqual({ range: 'this_week', entries: [] });
+		expect(list({ range: 'month', entries: 'x' })).toEqual({ range: 'this_week', entries: [] });
+		expect(list({ range: 'whole' })).toEqual({ range: 'whole', entries: [] });
+		expect(
+			list({
+				range: 'next_week',
+				entries: [
+					{ key: 'ok', removed: ['repa', 'repa', 'BAD!', 7, 'rizs', 'Ő'], storeId: 'bad id!' },
+					{ key: 'ok', removed: [], storeId: 'synthetic-aldi-1' },
+					{ key: '', removed: [] },
+					{ key: 'x'.repeat(81), removed: [] },
+					{ key: 'tab\tkey', removed: [] },
+					{ key: 'ékezet', removed: [] },
+					{ key: 7, removed: [] },
+					'not an object',
+					null,
+					{ key: 'x'.repeat(80), removed: 'nope', storeId: 'synthetic-aldi-1' },
+					{ key: ' ~', removed: null, storeId: 'a'.repeat(41) },
+					{ key: 'no-store', removed: [] }
+				]
+			})
+		).toEqual({
+			range: 'next_week',
+			entries: [
+				{ key: 'ok', removed: ['repa', 'rizs'], storeId: null },
+				{ key: 'x'.repeat(80), removed: [], storeId: 'synthetic-aldi-1' },
+				{ key: ' ~', removed: [], storeId: null },
+				{ key: 'no-store', removed: [], storeId: null }
+			]
+		});
+	});
+
+	it('keeps at most 12 lists and 200 removed lines per list', () => {
+		const ids = Array.from({ length: 250 }, (_, i) => `item_${i}`);
+		const entries = Array.from({ length: 20 }, (_, i) => ({ key: `k${i}`, removed: ids, storeId: null }));
+		const { list } = migrate({ ...fullState(), list: { range: 'whole', entries } });
+		expect(list.entries.map((entry) => entry.key)).toEqual(Array.from({ length: 12 }, (_, i) => `k${i}`));
+		expect(list.entries[0]?.removed).toHaveLength(200);
+		expect(list.entries[0]?.removed.at(-1)).toBe('item_199');
 	});
 
 	it('bounds list sizes', () => {
@@ -372,6 +419,7 @@ describe('clearAll ("minden adat törlése")', () => {
 	it('removes every key of the app and nothing else', () => {
 		save(fullState());
 		fake.map.set('hetikosar.other', 'x');
+		fake.map.set('hetikosar.list', '{"version":1,"range":"whole","lists":[]}');
 		fake.map.set('someone-else', 'keep');
 		expect(clearAll()).toBe(true);
 		expect([...fake.map.keys()]).toEqual(['someone-else']);
@@ -382,7 +430,49 @@ describe('clearAll ("minden adat törlése")', () => {
 		fake.failSet = true;
 		save(fullState());
 		expect(load().people).toBe(4);
+		expect(load().list).toEqual(fullState().list);
 		clearAll();
 		expect(load()).toEqual(defaultState());
+	});
+
+	it('resets the session even when the stored copy cannot be deleted, until a write succeeds', () => {
+		save(fullState());
+		fake.failRemove = true;
+		expect(clearAll()).toBe(false);
+		// The old copy is still on disk, but this session never shows it again.
+		expect(fake.map.has(STORAGE_KEY)).toBe(true);
+		expect(load()).toEqual(defaultState());
+		expect(isPersistent()).toBe(false);
+		expect(update({ people: 3 })).toMatchObject({ people: 3, plan: null, list: { range: 'this_week', entries: [] } });
+		// The next successful write replaces the old copy with the cleared state.
+		expect(stored()).toMatchObject({ people: 3, plan: null, checkedItems: [] });
+		expect(isPersistent()).toBe(true);
+	});
+
+	it('resets the session when reading and writing are refused too', () => {
+		save(fullState());
+		fake.failSet = true;
+		update({ people: 9 });
+		fake.failGet = true;
+		fake.failRemove = true;
+		expect(clearAll()).toBe(false);
+		expect(load()).toEqual(defaultState());
+		expect(isPersistent()).toBe(false);
+	});
+
+	it('succeeds when there was nothing stored (writes had been refused)', () => {
+		fake.failSet = true;
+		save(fullState());
+		expect(clearAll()).toBe(true);
+		expect(load()).toEqual(defaultState());
+	});
+
+	it('resets the session without any localStorage', () => {
+		vi.stubGlobal('localStorage', undefined);
+		save(fullState());
+		expect(load().people).toBe(4);
+		expect(clearAll()).toBe(false);
+		expect(load()).toEqual(defaultState());
+		expect(isPersistent()).toBe(false);
 	});
 });

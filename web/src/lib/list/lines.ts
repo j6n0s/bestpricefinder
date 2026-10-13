@@ -4,43 +4,26 @@
  *
  * Rules (docs/API.md "POST /api/quote", docs/DATA.md):
  * - A pantry line (`ListLineOut.pantry`) is shown in the "valószínűleg otthon van" section and stays out of
- *   the quote, unless the user marked it "nincs otthon" (`StoredState.pantry.notAtHome`).
- * - An ingredient stored as "enough at home" (`StoredState.pantry.onHand` entry with `qty: null`) is treated
- *   like a pantry line. An on-hand entry WITH a quantity is subtracted by the server instead (`on_hand`).
+ *   the quote, unless the user marked it "nincs otthon" (`StoredState.pantry.notAtHome`). There are no
+ *   on-hand quantities: a staple is either at home or bought, so the app never sends `on_hand`.
  * - A line the user removed from this list never goes into the quote.
  * - The quote takes at most 200 unique lines with 0 < qty ≤ 1000 and 1–25 unique store ids, and never
  *   anything else (no coordinates: the API client rebuilds the body from these fields only).
  */
 import { ID_PATTERNS, LIMITS, type ListLineOut, type QtyLineIn, type QuoteRequest, type StoreId } from '../api/types';
-import type { PantryEntry } from '../storage';
 
 export interface LineChoices {
 	/** Lines removed from this list by hand. */
 	removed: ReadonlySet<string>;
 	/** Pantry staples marked "nincs otthon": they are bought, so they go into the quote. */
 	notAtHome: ReadonlySet<string>;
-	/** Ingredients stored as "enough at home" (on-hand entries without a quantity). */
-	enoughAtHome: ReadonlySet<string>;
 }
 
-export function lineChoices(
-	removed: Iterable<string>,
-	notAtHome: Iterable<string>,
-	onHand: readonly PantryEntry[]
-): LineChoices {
-	return {
-		removed: new Set(removed),
-		notAtHome: new Set(notAtHome),
-		enoughAtHome: new Set(onHand.filter((entry) => entry.qty === null).map((entry) => entry.ingredientId))
-	};
+export function lineChoices(removed: Iterable<string>, notAtHome: Iterable<string>): LineChoices {
+	return { removed: new Set(removed), notAtHome: new Set(notAtHome) };
 }
 
 type LineLike = Pick<ListLineOut, 'ingredient_id' | 'pantry'>;
-
-/** Shown in the "valószínűleg otthon van" section (with a "nincs otthon" toggle). */
-export function isPantryLike(line: LineLike, choices: LineChoices): boolean {
-	return line.pantry || choices.enoughAtHome.has(line.ingredient_id);
-}
 
 export type LineKind = 'buy' | 'pantry_at_home' | 'pantry_missing' | 'removed';
 
@@ -52,7 +35,7 @@ export type LineKind = 'buy' | 'pantry_at_home' | 'pantry_missing' | 'removed';
  */
 export function lineKind(line: LineLike, choices: LineChoices): LineKind {
 	if (choices.removed.has(line.ingredient_id)) return 'removed';
-	if (isPantryLike(line, choices)) {
+	if (line.pantry) {
 		return choices.notAtHome.has(line.ingredient_id) ? 'pantry_missing' : 'pantry_at_home';
 	}
 	return 'buy';
@@ -131,20 +114,6 @@ export function buildQuoteRequest(lines: readonly QtyLineIn[], storeIds: readonl
 		store_ids: stores,
 		include_loyalty: false
 	};
-}
-
-/** On-hand quantities for POST /api/list: entries with a quantity, unique, valid, at most 200. */
-export function onHandForList(onHand: readonly PantryEntry[]): QtyLineIn[] {
-	const out: QtyLineIn[] = [];
-	const seen = new Set<string>();
-	for (const entry of onHand) {
-		if (out.length >= LIMITS.onHand) break;
-		const { ingredientId, qty } = entry;
-		if (qty === null || seen.has(ingredientId) || !ID_PATTERNS.ingredient.test(ingredientId) || !validQty(qty)) continue;
-		seen.add(ingredientId);
-		out.push({ ingredient_id: ingredientId, qty });
-	}
-	return out;
 }
 
 /** `ids` with `id` added (true) or removed (false), keeping the order; the input is never changed. */

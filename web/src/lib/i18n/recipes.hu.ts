@@ -26,6 +26,7 @@ export const recipesHu = {
 	price_from: '≈ {price}/adag-tól ({chains})',
 	price_from_plain: '≈ {price}/adag-tól',
 	coverage: 'az ár a hozzávalók {percent}\u00a0%-át fedi le',
+	coverage_short: 'részleges ár ({percent}\u00a0%)',
 	price_note:
 		'Az adagonkénti ár lánc-jellemző ár a GVH napi adataiból (a lánc boltjainak többségében érvényes ár), a kamrában lévő és az elhagyható hozzávalók nélkül. Egy-egy bolt ára eltérhet.',
 
@@ -71,6 +72,9 @@ export const recipesHu = {
 	costs_col_price: 'Ár/adag',
 	costs_rank: '{rank}.',
 	costs_tie: 'holtverseny',
+	costs_partial: 'részleges ár',
+	costs_partial_note:
+		'A részleges árú láncok nincsenek a sorrendben: náluk a recept becsült költségének kevesebb mint 90\u00a0%-ára van ár, így az áruk nem hasonlítható össze a többiekével.',
 	costs_missing: 'Ár nélkül: {items}',
 	costs_none: 'Ehhez a recepthez még nincs lánconkénti ár.',
 

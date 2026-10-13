@@ -25,6 +25,7 @@ export const recipesEn: Messages<typeof recipesHu> = {
 	price_from: 'from ≈ {price}/serving ({chains})',
 	price_from_plain: 'from ≈ {price}/serving',
 	coverage: 'the price covers {percent}% of the ingredients',
+	coverage_short: 'partial price ({percent}%)',
 	price_note:
 		'The price per serving is a chain-typical price from the daily GVH data (the price in most of the chain’s stores), without pantry staples and optional ingredients. A single store’s price may differ.',
 
@@ -70,6 +71,9 @@ export const recipesEn: Messages<typeof recipesHu> = {
 	costs_col_price: 'Price/serving',
 	costs_rank: '{rank}.',
 	costs_tie: 'tie',
+	costs_partial: 'partial price',
+	costs_partial_note:
+		"Chains with a partial price are not ranked: they price less than 90% of the recipe's estimated cost, so their price cannot be compared with the others.",
 	costs_missing: 'No price: {items}',
 	costs_none: 'There are no prices by chain for this recipe yet.',
 

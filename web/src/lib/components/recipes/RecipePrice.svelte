@@ -1,6 +1,8 @@
 <!--
 	A recipe's chain-typical price per serving: "≈ 313 Ft/adag-tól (Aldi, Lidl)". Every chain of a tie is
 	named, in the server's order (never one chain singled out); "nincs ár" when the recipe cannot be priced.
+	When the price covers less than the whole recipe (priced_share < 1) the caveat is ALWAYS shown (contract
+	v1.2): in full ("az ár a hozzávalók 94 %-át fedi le") or, with `compact`, short ("részleges ár (94 %)").
 	The view that shows this must also render <Attribution dataDate=… /> (BUILD-BRIEF §8.2).
 -->
 <script lang="ts">
@@ -13,11 +15,11 @@
 	interface Props {
 		recipe: Pick<RecipeSummary, 'cost_per_serving_from' | 'cheapest_chains' | 'priced_share'>;
 		names: ReadonlyMap<ChainSlug, string>;
-		/** Also say how much of the ingredients the price covers when it is below 100 %. */
-		showCoverage?: boolean;
+		/** Short coverage caveat on the same line (plan cards, the meal picker). */
+		compact?: boolean;
 	}
 
-	let { recipe, names, showCoverage = true }: Props = $props();
+	let { recipe, names, compact = false }: Props = $props();
 
 	const cost = $derived(recipe.cost_per_serving_from);
 	const chains = $derived(chainList(recipe.cheapest_chains, names));
@@ -32,8 +34,12 @@
 			? t('recipes.price_from', { price: formatMoney(cost), chains })
 			: t('recipes.price_from_plain', { price: formatMoney(cost) })}
 	</span>
-	{#if showCoverage && percent < 100}
-		<span class="coverage small muted">{t('recipes.coverage', { percent })}</span>
+	{#if percent < 100}
+		{#if compact}
+			<span class="coverage-short" data-testid="recipe-coverage">{t('recipes.coverage_short', { percent })}</span>
+		{:else}
+			<span class="coverage small muted" data-testid="recipe-coverage">{t('recipes.coverage', { percent })}</span>
+		{/if}
 	{/if}
 {/if}
 
@@ -44,5 +50,9 @@
 
 	.coverage {
 		display: block;
+	}
+
+	.coverage-short {
+		white-space: nowrap;
 	}
 </style>

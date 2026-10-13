@@ -145,6 +145,18 @@ describe('validIngredients', () => {
 		expect(validIngredients({ ingredients: [ING, { ...ING, name_hu: 'másik' }, { ...ING, id: 'bors', name_hu: 1 }] })).toEqual([ING]);
 	});
 
+	it('drops rows that miss or garble a contract field', () => {
+		const bad = [
+			{ ...ING, priced_by: 'xyz' },
+			{ ...ING, priced_by: undefined },
+			{ ...ING, piece_weight_kg: '0.1' },
+			{ ...ING, tags: 'spice' },
+			{ ...ING, tags: [1] }
+		];
+		expect(validIngredients({ ingredients: bad })).toEqual([]);
+		expect(validIngredients({ ingredients: [{ ...ING, piece_weight_kg: 0.1, priced_by: 'ksh', tags: ['x'] }] })).toHaveLength(1);
+	});
+
 	it('gives nothing for a malformed answer', () => {
 		expect(validIngredients(null)).toEqual([]);
 		expect(validIngredients({ ingredients: 'x' })).toEqual([]);
@@ -172,6 +184,9 @@ describe('validStores', () => {
 
 	it('drops malformed rows and rejects an answer without a store list', () => {
 		expect(validStores({ stores: [{ ...STORE, lat: '47.5' }, { ...STORE, has_data: 'yes' }, { ...STORE, id: 7 }, null] })).toEqual([]);
+		expect(validStores({ stores: [{ ...STORE, format: 'mega' }, { ...STORE, is_budapest: 'igen' }, { ...STORE, is_budapest: undefined }] })).toEqual([]);
+		const hyper = { ...STORE, format: 'hyper' };
+		expect(validStores({ stores: [hyper] })).toEqual([hyper]);
 		expect(validStores({})).toBeNull();
 		expect(validStores(null)).toBeNull();
 	});

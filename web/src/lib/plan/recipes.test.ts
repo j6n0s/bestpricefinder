@@ -3,11 +3,13 @@ import type { ChainCostOut, RecipeSummary, Slot } from '../api/types';
 import {
 	SERVINGS_MAX,
 	SERVINGS_MIN,
+	MIN_CHEAPEST_SHARE,
 	chainCostRows,
 	chainList,
 	chainName,
 	chainNameMap,
 	clampServings,
+	comparableChainCosts,
 	coveragePercent,
 	eligibleRecipes,
 	filterRecipes,
@@ -262,5 +264,43 @@ describe('chainCostRows (tie-aware, BUILD-BRIEF §4.1 trap 13)', () => {
 
 	it('is empty for no chain costs', () => {
 		expect(chainCostRows([], names)).toEqual([]);
+	});
+
+	it('never ranks a chain that prices less than 90 % of the cost (contract v1.2)', () => {
+		const rows = chainCostRows(
+			[cost('aldi', 330, 0.95), cost('lidl', 150, 0.4, ['a', 'b']), cost('spar', 300, 0.9), cost('tesco', null, 0, ['a'])],
+			names
+		);
+		expect(rows.map((r) => [r.chain, r.rank, r.tied, r.partial])).toEqual([
+			['spar', 1, false, false],
+			['aldi', 2, false, false],
+			// Cheaper per serving only because it prices a cheap subset: shown, but unranked and after the others.
+			['lidl', null, false, true],
+			['tesco', null, false, false]
+		]);
+		expect(rows[2]).toMatchObject({ costPerServing: 150, coveragePercent: 40, barPercent: 45.5 });
+	});
+
+	it('ranks the best-covered chains when none reaches 90 %', () => {
+		const costs = [cost('aldi', 330, 0.85), cost('lidl', 150, 0.6), cost('penny', 340, 0.85), cost('spar', 200, 0.8)];
+		expect(comparableChainCosts(costs).map((c) => c.chain)).toEqual(['aldi', 'penny']);
+		expect(chainCostRows(costs, names).map((r) => [r.chain, r.rank, r.partial])).toEqual([
+			['aldi', 1, false],
+			['penny', 2, false],
+			['lidl', null, true],
+			['spar', null, true]
+		]);
+	});
+
+	it('keeps a tie only among the comparable chains, matching the summary tie group', () => {
+		// The summary says cheapest_chains = [aldi, lidl] at 313 Ft; penny is as cheap but only 50 % priced.
+		const rows = chainCostRows([cost('aldi', 312.5, 0.94), cost('lidl', 312.7, 0.91), cost('penny', 313, 0.5)], names);
+		expect(rows.filter((r) => r.rank === 1).map((r) => r.chain)).toEqual(['aldi', 'lidl']);
+		expect(rows.every((r) => r.rank !== 1 || r.tied)).toBe(true);
+		expect(rows.find((r) => r.chain === 'penny')).toMatchObject({ rank: null, tied: false, partial: true });
+		expect(MIN_CHEAPEST_SHARE).toBe(0.9);
+		// The server rounds the share DOWN to 4 decimals, so 0.8999 is below the line and 0.9 is on it.
+		expect(comparableChainCosts([cost('aldi', 300, 0.8999), cost('lidl', 400, 0.9)]).map((c) => c.chain)).toEqual(['lidl']);
+		expect(comparableChainCosts([cost('aldi', null, 0)])).toEqual([]);
 	});
 });

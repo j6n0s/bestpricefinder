@@ -4,11 +4,9 @@ import type { ListLineOut } from '../api/types';
 import {
 	buildQuoteRequest,
 	isBought,
-	isPantryLike,
 	lineChoices,
 	lineKind,
 	listSections,
-	onHandForList,
 	quoteLines,
 	toggleId
 } from './lines';
@@ -27,7 +25,7 @@ const LINES: ListLineOut[] = [
 
 describe('lineKind', () => {
 	it('classifies every case', () => {
-		const choices = lineChoices(['rizs'], ['napraforgoolaj'], []);
+		const choices = lineChoices(['rizs'], ['napraforgoolaj']);
 		expect(lineKind(line('repa', 1), choices)).toBe('buy');
 		expect(lineKind(line('rizs', 1), choices)).toBe('removed');
 		expect(lineKind(line('so', 1, true), choices)).toBe('pantry_at_home');
@@ -35,29 +33,15 @@ describe('lineKind', () => {
 	});
 
 	it('a removed pantry line is removed', () => {
-		expect(lineKind(line('so', 1, true), lineChoices(['so'], ['so'], []))).toBe('removed');
+		expect(lineKind(line('so', 1, true), lineChoices(['so'], ['so']))).toBe('removed');
 	});
 
 	it('"nincs otthon" on a non-pantry line changes nothing', () => {
-		expect(lineKind(line('repa', 1), lineChoices([], ['repa'], []))).toBe('buy');
-	});
-
-	it('an on-hand entry without a quantity ("enough at home") makes a line pantry-like', () => {
-		const choices = lineChoices([], [], [
-			{ ingredientId: 'repa', qty: null },
-			{ ingredientId: 'rizs', qty: 0.2 }
-		]);
-		expect(isPantryLike(line('repa', 1), choices)).toBe(true);
-		expect(lineKind(line('repa', 1), choices)).toBe('pantry_at_home');
-		// A quantity is subtracted by the server instead.
-		expect(lineKind(line('rizs', 1), choices)).toBe('buy');
-		expect(lineKind(line('repa', 1), lineChoices([], ['repa'], [{ ingredientId: 'repa', qty: null }]))).toBe(
-			'pantry_missing'
-		);
+		expect(lineKind(line('repa', 1), lineChoices([], ['repa']))).toBe('buy');
 	});
 
 	it('isBought is true exactly for "buy" and "pantry_missing"', () => {
-		const choices = lineChoices(['rizs'], ['napraforgoolaj'], []);
+		const choices = lineChoices(['rizs'], ['napraforgoolaj']);
 		expect(LINES.filter((l) => isBought(l, choices)).map((l) => l.ingredient_id)).toEqual([
 			'repa',
 			'voroshagyma',
@@ -68,7 +52,7 @@ describe('lineKind', () => {
 
 describe('listSections', () => {
 	it('splits into buy, pantry and removed, keeping the list order', () => {
-		const sections = listSections(LINES, lineChoices(['voroshagyma'], ['napraforgoolaj'], []));
+		const sections = listSections(LINES, lineChoices(['voroshagyma'], ['napraforgoolaj']));
 		expect(sections.buy.map((l) => l.ingredient_id)).toEqual(['repa', 'rizs']);
 		expect(sections.pantry.map((l) => l.ingredient_id)).toEqual(['so', 'napraforgoolaj']);
 		expect(sections.removed.map((l) => l.ingredient_id)).toEqual(['voroshagyma']);
@@ -77,7 +61,7 @@ describe('listSections', () => {
 
 describe('quoteLines', () => {
 	it('sends the bought lines only: no removed line, no pantry line unless it is "nincs otthon"', () => {
-		const result = quoteLines(LINES, lineChoices(['rizs'], ['napraforgoolaj'], []));
+		const result = quoteLines(LINES, lineChoices(['rizs'], ['napraforgoolaj']));
 		expect(result).toEqual({
 			lines: [
 				{ ingredient_id: 'repa', qty: 0.5 },
@@ -89,19 +73,19 @@ describe('quoteLines', () => {
 	});
 
 	it('leaves out every pantry line by default', () => {
-		const result = quoteLines(LINES, lineChoices([], [], []));
+		const result = quoteLines(LINES, lineChoices([], []));
 		expect(result.lines.map((l) => l.ingredient_id)).toEqual(['repa', 'voroshagyma', 'rizs']);
 	});
 
 	it('sends each ingredient once', () => {
-		const result = quoteLines([line('repa', 0.5), line('repa', 0.7)], lineChoices([], [], []));
+		const result = quoteLines([line('repa', 0.5), line('repa', 0.7)], lineChoices([], []));
 		expect(result.lines).toEqual([{ ingredient_id: 'repa', qty: 0.5 }]);
 	});
 
 	it('skips quantities outside 0 < qty <= 1000 and invalid ids, and reports them', () => {
 		const result = quoteLines(
 			[line('nulla', 0), line('negativ', -1), line('sok', 1000.5), line('nan', Number.NaN), line('Rossz-ID', 1), line('ok', 1000)],
-			lineChoices([], [], [])
+			lineChoices([], [])
 		);
 		expect(result.lines).toEqual([{ ingredient_id: 'ok', qty: 1000 }]);
 		expect(result.skipped).toEqual(['nulla', 'negativ', 'sok', 'nan', 'Rossz-ID']);
@@ -109,7 +93,7 @@ describe('quoteLines', () => {
 
 	it('caps the quote at 200 lines and reports the rest', () => {
 		const many = Array.from({ length: 205 }, (_, i) => line(`tetel_${String(i).padStart(3, '0')}`, 1));
-		const result = quoteLines(many, lineChoices([], [], []));
+		const result = quoteLines(many, lineChoices([], []));
 		expect(result.lines).toHaveLength(200);
 		expect(result.skipped).toEqual(['tetel_200', 'tetel_201', 'tetel_202', 'tetel_203', 'tetel_204']);
 	});
@@ -141,23 +125,6 @@ describe('buildQuoteRequest', () => {
 		expect(request?.store_ids).toHaveLength(25);
 		expect(request?.store_ids.slice(0, 3)).toEqual(['s-1', 's-2', 's-3']);
 		expect(new Set(request?.store_ids).size).toBe(25);
-	});
-});
-
-describe('onHandForList', () => {
-	it('sends only entries with a valid quantity, once each, at most 200', () => {
-		expect(
-			onHandForList([
-				{ ingredientId: 'liszt', qty: 1 },
-				{ ingredientId: 'so', qty: null },
-				{ ingredientId: 'liszt', qty: 2 },
-				{ ingredientId: 'cukor', qty: 0 },
-				{ ingredientId: 'tej', qty: 1001 },
-				{ ingredientId: 'BAD', qty: 1 }
-			])
-		).toEqual([{ ingredient_id: 'liszt', qty: 1 }]);
-		const many = Array.from({ length: 210 }, (_, i) => ({ ingredientId: `t_${i}`, qty: 1 }));
-		expect(onHandForList(many)).toHaveLength(200);
 	});
 });
 

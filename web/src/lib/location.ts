@@ -29,6 +29,11 @@ export interface LocateEnvironment {
 	secure?: boolean;
 }
 
+export interface LocateOptions {
+	/** How long the browser may take, in ms (default GEO_TIMEOUT_MS; the list uses 10 s). */
+	timeoutMs?: number;
+}
+
 function defaultEnvironment(): LocateEnvironment {
 	try {
 		return {
@@ -47,12 +52,25 @@ export function failureFromCode(code: number): LocateFailure {
 	return 'unavailable';
 }
 
+/** A usable geolocation timeout: a positive whole number of ms up to 60 s, else the default. */
+export function geoTimeout(timeoutMs: number | undefined): number {
+	return typeof timeoutMs === 'number' && Number.isFinite(timeoutMs) && timeoutMs >= 1
+		? Math.min(Math.round(timeoutMs), 60_000)
+		: GEO_TIMEOUT_MS;
+}
+
 /**
- * Asks the browser once for an approximate position. Never rejects. Call it only from a user action on the
- * explanation screen. The returned coordinates are already rounded to APPROX_DECIMALS.
+ * Asks the browser once for an approximate position (`enableHighAccuracy: false`, `options.timeoutMs`, a
+ * cached position up to GEO_MAX_AGE_MS old). Never rejects. Call it only from a user action on an
+ * explanation card (LocationExplainer or the list's OriginChooser). The returned coordinates are already
+ * rounded to APPROX_DECIMALS. `env` is injectable for tests; it defaults to the browser's own API.
  */
-export function requestApproxPosition(env: LocateEnvironment = defaultEnvironment()): Promise<LocateResult> {
+export function requestApproxPosition(
+	options: LocateOptions = {},
+	env: LocateEnvironment = defaultEnvironment()
+): Promise<LocateResult> {
 	const geolocation = env.geolocation ?? null;
+	const timeout = geoTimeout(options.timeoutMs);
 	if (env.secure === false) return Promise.resolve({ ok: false, reason: 'insecure' });
 	if (geolocation === null) return Promise.resolve({ ok: false, reason: 'unsupported' });
 	return new Promise((resolve) => {
@@ -70,7 +88,7 @@ export function requestApproxPosition(env: LocateEnvironment = defaultEnvironmen
 					});
 				},
 				(error) => resolve({ ok: false, reason: failureFromCode(error.code) }),
-				{ enableHighAccuracy: false, timeout: GEO_TIMEOUT_MS, maximumAge: GEO_MAX_AGE_MS }
+				{ enableHighAccuracy: false, timeout, maximumAge: GEO_MAX_AGE_MS }
 			);
 		} catch {
 			resolve({ ok: false, reason: 'unavailable' });

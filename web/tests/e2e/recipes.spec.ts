@@ -17,10 +17,13 @@ import { join } from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import type { ChainCostOut, MetaResponse, RecipeDetail, RecipeLineOut, RecipeSummary, Slot } from '../../src/lib/api/types';
 import { MOCK_DATA_DATE, MOCK_META, handleMockApi, type MockResult } from '../mocks/api';
+import { expectAccessible } from './a11y';
 import { BASE_URL, SCREENSHOT_DIR } from './config';
 
 const STORAGE_KEY = 'hetikosar.state';
 const DATE_HU = '2026. 10. 13.';
+/** A hu-HU date as the app renders it: no-break spaces, so it never wraps (src/lib/format.ts). */
+const nb = (text: string): string => text.replaceAll(' ', '\u00a0');
 const ATTRIBUTION = `Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`;
 const DISCLAIMER = 'Nem hivatalos alkalmazás, nem áll kapcsolatban a Gazdasági Versenyhivatallal.';
 /** 10:00 in Budapest on Tuesday 2026-10-13. */
@@ -54,6 +57,8 @@ function line(lineNo: number, id: string, name: string, qty: number, display: st
 
 const HARCSA_COSTS: ChainCostOut[] = [
 	{ chain: 'aldi', cost_per_serving: 655.2, priced_share: 1, missing: [] },
+	// Cheaper only because it prices half of the cost: never ranked (contract v1.2, the 90 % rule).
+	{ chain: 'auchan', cost_per_serving: 400, priced_share: 0.5, missing: ['harcsafile'] },
 	{ chain: 'lidl', cost_per_serving: 655.4, priced_share: 1, missing: [] },
 	{ chain: 'penny', cost_per_serving: 700, priced_share: 1, missing: [] },
 	{ chain: 'spar', cost_per_serving: null, priced_share: 0, missing: ['harcsafile'] },
@@ -177,7 +182,8 @@ function answer(api: Api, method: string, url: URL, body: string): MockResult {
 		const found = DETAILS[id];
 		return found ? { status: 200, body: found } : { status: 404, body: { error: 'not_found', fields: [] } };
 	}
-	return handleMockApi(method, `${url.pathname}${url.search}`, body);
+	// This spec's own recipes, so POST /api/plan/check (on the plan page) knows them.
+	return handleMockApi(method, `${url.pathname}${url.search}`, body, { recipes: RECIPES });
 }
 
 async function expectClean(page: Page, api: Api, allowConsole: RegExp | null = null): Promise<void> {
@@ -255,6 +261,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
 			await expectNoHorizontalScroll(page);
 			await expectTouchTargets(page);
+			await expectAccessible(page, `recipes ${viewport.name} list`);
 			await page.screenshot({ path: screenshot(`recipes-${viewport.name}-list`), fullPage: true });
 
 			// Slot, tag and accent-insensitive search, filtered on the device.
@@ -293,7 +300,7 @@ for (const viewport of VIEWPORTS) {
 			await page.getByRole('link', { name: HARCSA.title }).click();
 			// The list's cards are h2 too: wait for the detail page itself before going back.
 			await expect(page).toHaveURL(/\/receptek\/minta-harcsa$/);
-			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Recept');
+			await expect(page.getByRole('heading', { level: 1 })).toHaveText(HARCSA.title);
 			await expect(page.getByTestId('chain-costs')).toBeVisible();
 			await page.goBack();
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Receptek');
@@ -308,9 +315,20 @@ for (const viewport of VIEWPORTS) {
 		test('the detail: servings, chain costs, nutrition and adding to a new plan', async ({ page }) => {
 			const api = await setup(page);
 			await page.goto(`/receptek/${HARCSA.id}`);
-			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Recept');
-			await expect(page.getByRole('heading', { level: 2, name: HARCSA.title })).toBeVisible();
+			// The recipe title is the h1, the small "Recept" label a paragraph, every section an h2.
+			await expect(page.getByRole('heading', { level: 1 })).toHaveText(HARCSA.title);
+			await expect(page.locator('main .intro .kind')).toHaveText('Recept');
 			await expect(page).toHaveTitle(`${HARCSA.title} · Heti kosár`);
+			expect(
+				await page.locator('main').locator('h1, h2, h3, h4, h5, h6').evaluateAll((hs) => hs.map((h) => `${h.tagName} ${h.textContent?.trim()}`))
+			).toEqual([
+				`H1 ${HARCSA.title}`,
+				'H2 Hozzávalók',
+				'H2 Elkészítés',
+				'H2 Ár láncok szerint',
+				'H2 Tápérték adagonként',
+				'H2 Hozzáadás a tervhez'
+			]);
 			await expect(page.locator('main')).not.toContainText('kipróbálatlan recept');
 			await expect(page.locator('main .intro').getByTestId('recipe-price')).toHaveText('≈ 655 Ft/adag-tól (Aldi, Lidl)');
 
@@ -355,12 +373,13 @@ for (const viewport of VIEWPORTS) {
 			const table = page.getByRole('table').filter({ has: page.getByText('Lánc-jellemző ár adagonként') });
 			await expect(table.locator('caption')).toHaveText('Lánc-jellemző ár adagonként, a legalacsonyabbtól a legmagasabbig');
 			const rows = table.locator('tbody tr');
-			await expect(rows).toHaveCount(5);
+			await expect(rows).toHaveCount(6);
 			expect(await rows.evaluateAll((trs) => trs.map((tr) => tr.getAttribute('data-testid')))).toEqual([
 				'chain-cost-aldi',
 				'chain-cost-lidl',
 				'chain-cost-penny',
 				'chain-cost-tesco',
+				'chain-cost-auchan',
 				'chain-cost-spar'
 			]);
 			await expect(rows.nth(0).getByRole('rowheader')).toHaveText('1. Aldi holtverseny');
@@ -371,12 +390,18 @@ for (const viewport of VIEWPORTS) {
 			await expect(rows.nth(3).getByRole('cell')).toContainText('720 Ft');
 			await expect(rows.nth(3).getByRole('cell')).toContainText('az ár a hozzávalók 92 %-át fedi le');
 			await expect(rows.nth(3).getByRole('cell')).toContainText('Ár nélkül: citrom');
-			await expect(rows.nth(4).getByRole('rowheader')).toHaveText('Spar');
-			await expect(rows.nth(4).getByRole('cell')).toContainText('nincs ár');
-			await expect(rows.nth(4).getByRole('cell')).toContainText('Ár nélkül: harcsafilé');
-			await expect(rows.nth(4).locator('svg')).toHaveCount(0);
+			await expect(rows.nth(3).getByRole('rowheader')).toHaveText('4. Tesco');
+			// The partial chain: shown with its coverage, unranked, after the ranked ones, and explained.
+			await expect(rows.nth(4).getByRole('rowheader')).toHaveText('Auchan részleges ár');
+			await expect(rows.nth(4).getByRole('cell')).toContainText('400 Ft');
+			await expect(rows.nth(4).getByRole('cell')).toContainText('az ár a hozzávalók 50 %-át fedi le');
+			await expect(page.getByTestId('chain-costs-partial-note')).toContainText('A részleges árú láncok nincsenek a sorrendben');
+			await expect(rows.nth(5).getByRole('rowheader')).toHaveText('Spar');
+			await expect(rows.nth(5).getByRole('cell')).toContainText('nincs ár');
+			await expect(rows.nth(5).getByRole('cell')).toContainText('Ár nélkül: harcsafilé');
+			await expect(rows.nth(5).locator('svg')).toHaveCount(0);
 			const bars = await rows.locator('rect.fill').evaluateAll((rects) => rects.map((rect) => Number(rect.getAttribute('width'))));
-			expect(bars).toEqual([91, 91, 97.2, 100]);
+			expect(bars).toEqual([91, 91, 97.2, 100, 55.5]);
 			await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
 			await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
 
@@ -403,7 +428,7 @@ for (const viewport of VIEWPORTS) {
 			]);
 			await expect(add.getByLabel('Nap')).toHaveValue('0');
 			await expect(add.getByLabel('Étkezés').locator('option')).toHaveText(['ebéd', 'vacsora']);
-			await add.getByLabel('Nap').selectOption({ label: 'Szerda, 2026. 10. 14.' });
+			await add.getByLabel('Nap').selectOption({ label: `Szerda, ${nb('2026. 10. 14.')}` });
 			await add.getByLabel('Étkezés').selectOption({ label: 'vacsora' });
 			await add.getByRole('button', { name: 'Hozzáadás a tervhez' }).click();
 			await expect(add.getByRole('status')).toContainText('Hozzáadtuk a tervhez: Szerda, 2026. 10. 14., vacsora.');
@@ -418,6 +443,7 @@ for (const viewport of VIEWPORTS) {
 
 			await expectNoHorizontalScroll(page);
 			await expectTouchTargets(page);
+			await expectAccessible(page, `recipes ${viewport.name} detail`);
 			await page.screenshot({ path: screenshot(`recipes-${viewport.name}-detail`), fullPage: true });
 
 			await add.getByRole('link', { name: 'Terv megnyitása' }).click();
@@ -433,10 +459,32 @@ for (const viewport of VIEWPORTS) {
 test.describe('recipe details', () => {
 	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
 
+	test('"Minden adat törlése" also forgets the recipe filters kept in memory', async ({ page }) => {
+		const api = await setup(page);
+		await page.goto('/receptek');
+		await page.getByLabel('Címke').selectOption({ label: 'húsmentes' });
+		await page.getByLabel('Keresés a címben').fill('lencse');
+		await expect(cardTitles(page)).toHaveText([LENCSE.title]);
+		// In-app navigation keeps the filters (a diet preference) for this tab, until everything is deleted.
+		const nav = page.getByRole('navigation', { name: 'Fő navigáció' });
+		await nav.getByRole('link', { name: 'Beállítások' }).click();
+		await nav.getByRole('link', { name: 'Receptek' }).click();
+		await expect(page.getByLabel('Címke')).toHaveValue('husmentes');
+		await nav.getByRole('link', { name: 'Beállítások' }).click();
+		await page.getByRole('button', { name: 'Minden adat törlése' }).click();
+		await page.getByRole('dialog').getByRole('button', { name: 'Igen, mindent törlök' }).click();
+		await expect(page.getByText('Minden adat törölve.')).toBeVisible();
+		await nav.getByRole('link', { name: 'Receptek' }).click();
+		await expect(page.getByLabel('Címke')).toHaveValue('');
+		await expect(page.getByLabel('Keresés a címben')).toHaveValue('');
+		await expect(cardTitles(page)).toHaveCount(RECIPES.length);
+		await expectClean(page, api);
+	});
+
 	test('nutrition is hidden when null; excluded ingredients and untested recipes are marked', async ({ page }) => {
 		const api = await setup(page, { exclusions: { tags: [], ingredients: ['voroshagyma'] } });
 		await page.goto(`/receptek/${LENCSE.id}`);
-		await expect(page.getByRole('heading', { level: 2, name: LENCSE.title })).toBeVisible();
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText(LENCSE.title);
 		await expect(page.locator('main .intro')).toContainText('kipróbálatlan recept');
 		await expect(page.getByTestId('ingredient-voroshagyma')).toContainText('a beállításokban kizártad');
 		await expect(page.getByTestId('ingredient-voros_lencse')).not.toContainText('kizártad');
@@ -512,6 +560,7 @@ test.describe('recipe details', () => {
 		await expect(alert).toContainText('A recept betöltése nem sikerült');
 		await expect(alert).toContainText('A keresett elem nem található.');
 		await expect(alert.getByRole('button')).toHaveCount(0);
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Recept');
 		await page.goto('/receptek/NEM_JO');
 		await expect(page.getByRole('alert')).toContainText('A keresett elem nem található.');
 		expect(api.detailRequests).toEqual(['minta-nincs-ilyen']);
@@ -524,8 +573,10 @@ test.describe('recipe details', () => {
 		api.failDetail = 1;
 		await page.goto(`/receptek/${HARCSA.id}`);
 		await expect(page.getByRole('alert')).toContainText('Váratlan hiba történt.');
+		// The page keeps a sensible h1 while it has no recipe to show.
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Recept');
 		await page.getByRole('alert').getByRole('button', { name: 'Újra' }).click();
-		await expect(page.getByRole('heading', { level: 2, name: HARCSA.title })).toBeVisible();
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText(HARCSA.title);
 		expect(api.detailRequests).toEqual([HARCSA.id, HARCSA.id]);
 		await expectClean(page, api, /status of 500/);
 	});
@@ -545,9 +596,12 @@ test.describe('English at 320 px', () => {
 		await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(`Source: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`);
 		await expectNoHorizontalScroll(page);
 		await expectTouchTargets(page);
+		await expectAccessible(page, 'recipes en 320 list');
 
 		await page.goto(`/receptek/${HARCSA.id}`);
-		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Recipe');
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText(HARCSA.title);
+		await expect(page.locator('main .intro .kind')).toHaveText('Recipe');
+		await expect(page.getByTestId('chain-cost-auchan').getByRole('rowheader')).toHaveText('Auchan partial price');
 		await expect(page.getByRole('table').first().locator('caption')).toHaveText('Chain-typical price per serving, from lowest to highest');
 		await expect(page.getByTestId('chain-cost-aldi').getByRole('rowheader')).toHaveText('1. Aldi tie');
 		await expect(page.getByTestId('chain-cost-tesco')).toContainText('the price covers 92% of the ingredients');
@@ -558,6 +612,7 @@ test.describe('English at 320 px', () => {
 		);
 		await expectNoHorizontalScroll(page);
 		await expectTouchTargets(page);
+		await expectAccessible(page, 'recipes en 320 detail');
 		await page.screenshot({ path: screenshot('recipes-en-phone-320-detail'), fullPage: true });
 		await expectClean(page, api);
 	});

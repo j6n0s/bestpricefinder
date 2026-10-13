@@ -3,8 +3,10 @@ import { dayLabel, weekdayName } from './labels';
 
 describe('day labels', () => {
 	it('names dated days with the weekday and the hu-HU date in both languages', () => {
-		expect(dayLabel({ index: 0, date: '2026-10-13', weekday: 1 }, 'hu')).toBe('Kedd, 2026. 10. 13.');
-		expect(dayLabel({ index: 0, date: '2026-10-13', weekday: 1 }, 'en')).toBe('Tuesday, 2026. 10. 13.');
+		// The date itself never wraps (no-break spaces); the space after the comma may.
+		const date = '2026.\u00a010.\u00a013.';
+		expect(dayLabel({ index: 0, date: '2026-10-13', weekday: 1 }, 'hu')).toBe(`Kedd, ${date}`);
+		expect(dayLabel({ index: 0, date: '2026-10-13', weekday: 1 }, 'en')).toBe(`Tuesday, ${date}`);
 	});
 
 	it('numbers undated days from 1', () => {

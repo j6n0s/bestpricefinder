@@ -6,19 +6,15 @@
  * before the plan starts it is the first block. An undated plan counts as starting today. After the plan's
  * last day "Ez a hét" and "Jövő hét" are empty, and the page offers the whole plan.
  */
-import type { StoredPlan } from '../storage';
+import type { ListRange, StoredPlan } from '../storage';
 import { parseCalendarDate } from '../plan/dates';
 import { dayDate } from '../plan/plan';
 
-export const LIST_RANGES = ['this_week', 'next_week', 'whole'] as const;
-export type ListRange = (typeof LIST_RANGES)[number];
+// The range values are part of the stored document (StoredState.list.range), so they live in $lib/storage.
+export { LIST_RANGES, isListRange, type ListRange } from '../storage';
 
 const DAY_MS = 86_400_000;
 const WEEK_DAYS = 7;
-
-export function isListRange(value: unknown): value is ListRange {
-	return typeof value === 'string' && (LIST_RANGES as readonly string[]).includes(value);
-}
 
 /** The 7-day block of the plan that contains `today` ("YYYY-MM-DD"); 0 before the start or when undated. */
 export function currentWeekIndex(plan: Pick<StoredPlan, 'startDate'>, today: string): number {

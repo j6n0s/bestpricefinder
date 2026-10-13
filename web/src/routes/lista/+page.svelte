@@ -2,10 +2,11 @@
 	Shopping list ("Bevásárlólista") and "Hol a legolcsóbb a közelben?".
 
 	- The list is made from the plan stored on this device (StoredState.plan) for the chosen days: every planned
-	  meal is `people` servings, summed per recipe (planToListItems), sent to POST /api/list with the on-hand
-	  quantities. Only recipe ids, servings and quantities leave the device.
-	- Ticks (StoredState.checkedItems), "nincs otthon" (StoredState.pantry.notAtHome), the removed lines and
-	  the chosen store per list ($lib/list/prefs) stay on this device.
+	  meal is `people` servings, summed per recipe (planToListItems), sent to POST /api/list. Only recipe ids
+	  and servings leave the device (no on-hand quantities: a pantry staple is at home or "nincs otthon").
+	- Ticks (StoredState.checkedItems), "nincs otthon" (StoredState.pantry.notAtHome), the range, the removed
+	  lines and the chosen store per list (StoredState.list, helpers in $lib/list/prefs) stay on this device,
+	  in the one document of $lib/storage.
 	- Prices: see NearbyPrices (store ids only, never coordinates; source, date and scope note on every price).
 -->
 <script lang="ts">
@@ -21,14 +22,7 @@
 	import { t, tp } from '$lib/i18n';
 	import { loadRecipes } from '$lib/list/data';
 	import { lineChoices, quoteLines, toggleId } from '$lib/list/lines';
-	import {
-		listEntry,
-		loadListPrefs,
-		saveListPrefs,
-		withListEntry,
-		type ListEntry,
-		type ListPrefs
-	} from '$lib/list/prefs';
+	import { listEntry, withListEntry, type ListEntry } from '$lib/list/prefs';
 	import { effectiveRange, type ListRange } from '$lib/list/range';
 	import { buildListRequest, listKey } from '$lib/list/request';
 	import { recipeIds, validListLines } from '$lib/list/validate';
@@ -36,10 +30,9 @@
 	import { isPersistent, load, update, type StatePatch, type StoredLocation, type StoredState } from '$lib/storage';
 
 	let settings = $state<StoredState>(load());
-	let prefs = $state<ListPrefs>(loadListPrefs());
 	let persistent = $state(isPersistent());
-	let prefsSaved = $state(true);
 	const today = todayInBudapest();
+	const prefs = $derived(settings.list);
 
 	const plan = $derived(settings.plan);
 	const range = $derived(plan ? effectiveRange(plan, prefs.range, today) : prefs.range);
@@ -76,8 +69,7 @@
 					range,
 					today,
 					recipes.ids.map((recipeId) => ({ id: recipeId })),
-					settings.people,
-					settings.pantry.onHand
+					settings.people
 				)
 			: null
 	);
@@ -117,7 +109,7 @@
 	});
 
 	const lines = $derived(listState.status === 'ready' ? listState.lines : []);
-	const choices = $derived(lineChoices(entry?.removed ?? [], settings.pantry.notAtHome, settings.pantry.onHand));
+	const choices = $derived(lineChoices(entry?.removed ?? [], settings.pantry.notAtHome));
 	const quote = $derived(quoteLines(lines, choices));
 	const checked = $derived(new Set(settings.checkedItems));
 
@@ -126,17 +118,12 @@
 		persistent = isPersistent();
 	}
 
-	function savePrefs(next: ListPrefs): void {
-		prefs = next;
-		prefsSaved = saveListPrefs(next);
-	}
-
 	function saveEntry(next: ListEntry): void {
-		savePrefs(withListEntry(prefs, next));
+		patch({ list: withListEntry(prefs, next) });
 	}
 
 	function chooseRange(next: ListRange): void {
-		savePrefs({ ...prefs, range: next });
+		patch({ list: { range: next, entries: prefs.entries } });
 	}
 
 	function toggleCheck(ingredientId: string, on: boolean): void {
@@ -179,7 +166,7 @@
 
 <h1>{t('list.title')}</h1>
 
-{#if !persistent || !prefsSaved}
+{#if !persistent}
 	<p class="notice notice-warning" role="status">{t('list.storage_unavailable')}</p>
 {/if}
 

@@ -1,7 +1,7 @@
 // All data in this file is SYNTHETIC test data (see README.md in this folder).
 import { describe, expect, it } from 'vitest';
-import type { GeolocationLike } from '../location';
-import { LIST_GEO_TIMEOUT_MS, locateForList, withTimeout } from './locate';
+import { GEO_MAX_AGE_MS, type GeolocationLike } from '../location';
+import { LIST_GEO_TIMEOUT_MS, locateForList } from './locate';
 
 type Outcome = { coords: { latitude: number; longitude: number } } | { code: number };
 
@@ -17,25 +17,13 @@ function fakeGeolocation(outcome: Outcome): GeolocationLike & { calls: (Position
 	};
 }
 
-describe('withTimeout', () => {
-	it('asks for low accuracy with a 10 s timeout, whatever the caller passed', () => {
-		const geo = fakeGeolocation({ coords: { latitude: 47.5, longitude: 19.05 } });
-		withTimeout(geo).getCurrentPosition(
-			() => undefined,
-			() => undefined,
-			{ enableHighAccuracy: true, timeout: 60_000, maximumAge: 600_000 }
-		);
-		expect(LIST_GEO_TIMEOUT_MS).toBe(10_000);
-		expect(geo.calls).toEqual([{ enableHighAccuracy: false, timeout: 10_000, maximumAge: 600_000 }]);
-	});
-});
-
 describe('locateForList', () => {
-	it('returns the position rounded to about 100 m', async () => {
+	it('asks the browser directly for a low-accuracy position with a 10 s timeout, rounded to about 100 m', async () => {
 		const geo = fakeGeolocation({ coords: { latitude: 47.4995123, longitude: 19.0518987 } });
-		const result = await locateForList({ geolocation: withTimeout(geo), secure: true });
+		const result = await locateForList({ geolocation: geo, secure: true });
 		expect(result).toEqual({ ok: true, position: { lat: 47.5, lon: 19.052 } });
-		expect(geo.calls[0]).toMatchObject({ enableHighAccuracy: false, timeout: 10_000 });
+		expect(LIST_GEO_TIMEOUT_MS).toBe(10_000);
+		expect(geo.calls).toEqual([{ enableHighAccuracy: false, timeout: 10_000, maximumAge: GEO_MAX_AGE_MS }]);
 	});
 
 	it('maps refusals, timeouts and missing support to reasons, without throwing', async () => {

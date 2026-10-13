@@ -23,7 +23,7 @@ const RECIPES = [{ id: 'minta-pirits' }, { id: 'minta-lencse' }, { id: 'minta-cs
 
 describe('buildListRequest', () => {
 	it('this week: people servings per planned meal, summed per recipe, in plan order', () => {
-		const result = buildListRequest(PLAN, 'this_week', '2026-10-13', RECIPES, 2, []);
+		const result = buildListRequest(PLAN, 'this_week', '2026-10-13', RECIPES, 2);
 		expect(result.days).toBe(7);
 		expect(result.unknownRecipeIds).toEqual([]);
 		expect(result.request).toEqual({
@@ -36,14 +36,14 @@ describe('buildListRequest', () => {
 	});
 
 	it('next week: leaves out recipes the library no longer has and reports them', () => {
-		const result = buildListRequest(PLAN, 'next_week', '2026-10-13', RECIPES, 3, []);
+		const result = buildListRequest(PLAN, 'next_week', '2026-10-13', RECIPES, 3);
 		expect(result.request).toEqual({ items: [{ recipe_id: 'minta-hal', servings: 6 }] });
 		expect(result.unknownRecipeIds).toEqual(['minta-torolt']);
 		expect(result.days).toBe(2);
 	});
 
 	it('whole plan: every day', () => {
-		const result = buildListRequest(PLAN, 'whole', '2026-10-13', RECIPES, 1, []);
+		const result = buildListRequest(PLAN, 'whole', '2026-10-13', RECIPES, 1);
 		expect(result.request?.items).toEqual([
 			{ recipe_id: 'minta-pirits', servings: 7 },
 			{ recipe_id: 'minta-lencse', servings: 4 },
@@ -52,24 +52,16 @@ describe('buildListRequest', () => {
 		]);
 	});
 
-	it('adds the on-hand quantities (only those with a quantity)', () => {
-		const result = buildListRequest(PLAN, 'this_week', '2026-10-13', RECIPES, 2, [
-			{ ingredientId: 'liszt', qty: 0.5 },
-			{ ingredientId: 'so', qty: null }
-		]);
-		expect(result.request?.on_hand).toEqual([{ ingredient_id: 'liszt', qty: 0.5 }]);
-	});
-
 	it('has no request when the range has no known meal', () => {
-		const result = buildListRequest(PLAN, 'next_week', '2026-10-13', [{ id: 'minta-pirits' }], 2, []);
+		const result = buildListRequest(PLAN, 'next_week', '2026-10-13', [{ id: 'minta-pirits' }], 2);
 		expect(result.request).toBeNull();
 		expect(result.unknownRecipeIds).toEqual(['minta-torolt', 'minta-hal']);
-		expect(buildListRequest(PLAN, 'this_week', '2026-12-01', RECIPES, 2, []).request).toBeNull();
+		expect(buildListRequest(PLAN, 'this_week', '2026-12-01', RECIPES, 2).request).toBeNull();
 	});
 
-	it('never sends anything but recipe ids, servings and on-hand quantities', () => {
-		const result = buildListRequest(PLAN, 'whole', '2026-10-13', RECIPES, 2, [{ ingredientId: 'liszt', qty: 1 }]);
-		expect(Object.keys(result.request ?? {}).sort()).toEqual(['items', 'on_hand']);
+	it('never sends anything but recipe ids and servings (no on_hand)', () => {
+		const result = buildListRequest(PLAN, 'whole', '2026-10-13', RECIPES, 2);
+		expect(Object.keys(result.request ?? {}).sort()).toEqual(['items']);
 		for (const item of result.request?.items ?? []) expect(Object.keys(item).sort()).toEqual(['recipe_id', 'servings']);
 	});
 });

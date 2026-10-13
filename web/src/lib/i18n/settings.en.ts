@@ -38,9 +38,7 @@ export const settingsEn: Messages<typeof settingsHu> = {
 	location_use_district: 'Use the district',
 
 	pantry_title: 'Pantry',
-	pantry_placeholder: 'Coming soon: mark what you have at home.',
 	exclusions_title: 'Excluded ingredients and tags',
-	exclusions_placeholder: 'Coming soon: exclude what you do not eat.',
 
 	clear_title: 'Delete data',
 	clear_description:
@@ -50,5 +48,7 @@ export const settingsEn: Messages<typeof settingsHu> = {
 	clear_confirm_text: 'This cannot be undone.',
 	clear_confirm_yes: 'Yes, delete everything',
 	clear_confirm_no: 'Cancel',
-	clear_done: 'All data deleted.'
+	clear_done: 'All data deleted.',
+	clear_partial:
+		'All data is cleared from this session, but the browser did not allow access to its storage. If it saved data earlier, you can delete it in the browser settings (site data).'
 };

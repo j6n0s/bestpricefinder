@@ -1,8 +1,10 @@
 <!--
 	Chain cost comparison of one recipe: an accessible table (caption, column and row headers) with a simple
 	bar per chain, cheapest first. Equal whole-forint costs are a tie: they share a rank and are labelled
-	"holtverseny"; no chain of a tie is singled out (BUILD-BRIEF §4.1 trap 13). The bars are SVG rectangles
-	sized by an attribute, so no inline style is needed (CSP style-src 'self').
+	"holtverseny"; no chain of a tie is singled out (BUILD-BRIEF §4.1 trap 13). Only chains that price at least
+	90 % of the cost are ranked (contract v1.2); the others are shown after them as "részleges ár", unranked,
+	with a note. The bars are SVG rectangles sized by an attribute, so no inline style is needed (CSP
+	style-src 'self').
 -->
 <script lang="ts">
 	import type { ChainCostOut, ChainSlug, RecipeLineOut } from '$lib/api/types';
@@ -20,6 +22,7 @@
 	let { costs, lines, names }: Props = $props();
 
 	const rows = $derived(chainCostRows(costs, names));
+	const hasPartial = $derived(rows.some((row) => row.partial));
 	const ingredientNames = $derived(new Map(lines.map((line) => [line.ingredient_id, line.ingredient_name])));
 
 	function missingNames(ids: readonly string[]): string {
@@ -50,6 +53,9 @@
 							{#if row.tied}
 								<Badge tone="neutral">{t('recipes.costs_tie')}</Badge>
 							{/if}
+							{#if row.partial}
+								<Badge tone="warning">{t('recipes.costs_partial')}</Badge>
+							{/if}
 						</th>
 						<td>
 							{#if row.costPerServing !== null}
@@ -71,6 +77,9 @@
 			</tbody>
 		</table>
 	</div>
+	{#if hasPartial}
+		<p class="small muted" data-testid="chain-costs-partial-note">{t('recipes.costs_partial_note')}</p>
+	{/if}
 {/if}
 
 <style>

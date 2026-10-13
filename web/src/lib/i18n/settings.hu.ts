@@ -38,9 +38,7 @@ export const settingsHu = {
 	location_use_district: 'Kerület használata',
 
 	pantry_title: 'Kamra',
-	pantry_placeholder: 'Hamarosan: itt jelölheted meg, mi van otthon.',
 	exclusions_title: 'Kizárt alapanyagok és címkék',
-	exclusions_placeholder: 'Hamarosan: itt zárhatod ki, amit nem eszel.',
 
 	clear_title: 'Adatok törlése',
 	clear_description:
@@ -50,5 +48,7 @@ export const settingsHu = {
 	clear_confirm_text: 'A törlés nem vonható vissza.',
 	clear_confirm_yes: 'Igen, mindent törlök',
 	clear_confirm_no: 'Mégse',
-	clear_done: 'Minden adat törölve.'
+	clear_done: 'Minden adat törölve.',
+	clear_partial:
+		'Ebből a munkamenetből minden adatot töröltünk, de a böngésző nem engedte elérni a tárolóját. Ha korábban mentett adatot, azt a böngésző beállításaiban (webhelyadatok) törölheted.'
 } as const;

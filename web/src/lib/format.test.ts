@@ -96,14 +96,25 @@ describe('formatPercent', () => {
 });
 
 describe('dates (hu-HU)', () => {
+	/** The expected text with every space as a no-break space. */
+	const nb = (text: string): string => text.replaceAll(' ', NBSP);
+
 	it('formats a data date as "2026. 10. 13."', () => {
-		expect(formatDate('2026-10-13')).toBe('2026. 10. 13.');
-		expect(formatDate('2026-01-05')).toBe('2026. 01. 05.');
+		expect(formatDate('2026-10-13')).toBe(nb('2026. 10. 13.'));
+		expect(formatDate('2026-01-05')).toBe(nb('2026. 01. 05.'));
+	});
+
+	it('never lets a date wrap: only no-break spaces inside dates (the source line, the header)', () => {
+		for (const text of [formatDate('2026-10-13'), formatMonth('2026-09-01'), formatDateTime('2026-10-13T02:31:00Z')]) {
+			expect(text).toContain(NBSP);
+			expect(text).not.toMatch(/[ \t\n\u202f]/);
+		}
+		expect(formatDate('2026-10-13')).toBe(`2026.${NBSP}10.${NBSP}13.`);
 	});
 
 	it('does not shift the calendar day with the time zone', () => {
-		expect(formatDate('2026-12-31')).toBe('2026. 12. 31.');
-		expect(formatDate('2026-10-13T23:59:59+02:00')).toBe('2026. 10. 13.');
+		expect(formatDate('2026-12-31')).toBe(nb('2026. 12. 31.'));
+		expect(formatDate('2026-10-13T23:59:59+02:00')).toBe(nb('2026. 10. 13.'));
 	});
 
 	it.each([null, undefined, '', '2026-13-01', '2026-02-30', '13.10.2026', '2026-1-5', 'x'])('gives "" for %j', (value) => {
@@ -117,13 +128,13 @@ describe('dates (hu-HU)', () => {
 	});
 
 	it('formats the KSH period as a month', () => {
-		expect(formatMonth('2026-09-01')).toBe('2026. 09.');
+		expect(formatMonth('2026-09-01')).toBe(nb('2026. 09.'));
 		expect(formatMonth(null)).toBe('');
 	});
 
 	it('formats an ingest time in Budapest time (summer and winter)', () => {
-		expect(formatDateTime('2026-10-13T02:31:00Z')).toBe('2026. 10. 13. 4:31');
-		expect(formatDateTime('2026-01-15T23:05:00Z')).toBe('2026. 01. 16. 0:05');
+		expect(formatDateTime('2026-10-13T02:31:00Z')).toBe(nb('2026. 10. 13. 4:31'));
+		expect(formatDateTime('2026-01-15T23:05:00Z')).toBe(nb('2026. 01. 16. 0:05'));
 		expect(formatDateTime('nope')).toBe('');
 		expect(formatDateTime(null)).toBe('');
 	});

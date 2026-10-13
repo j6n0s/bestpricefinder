@@ -25,10 +25,13 @@ import type {
 	Slot
 } from '../../src/lib/api/types';
 import { MOCK_DATA_DATE, handleMockApi, type MockResult } from '../mocks/api';
+import { expectAccessible } from './a11y';
 import { BASE_URL, SCREENSHOT_DIR } from './config';
 
 const STORAGE_KEY = 'hetikosar.state';
 const DATE_HU = '2026. 10. 13.';
+/** A hu-HU date as the app renders it: no-break spaces, so it never wraps (src/lib/format.ts). */
+const nb = (text: string): string => text.replaceAll(' ', '\u00a0');
 const ATTRIBUTION = `Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`;
 const DISCLAIMER = 'Nem hivatalos alkalmazás, nem áll kapcsolatban a Gazdasági Versenyhivatallal.';
 /** 10:00 in Budapest on Tuesday 2026-10-13. */
@@ -334,6 +337,9 @@ for (const viewport of VIEWPORTS) {
 			await expect(day0Dinner).toContainText('kipróbálatlan recept');
 			await expect(page.getByTestId('meal-1-ebed')).toContainText('nincs ár');
 			await expect(page.getByTestId('meal-0-ebed')).toContainText('≈ 313 Ft/adag-tól (Aldi, Lidl)');
+			// priced_share < 1 always comes with a caveat (contract v1.2), short in the plan cards.
+			await expect(page.getByTestId('meal-0-ebed').getByTestId('recipe-coverage')).toHaveText('részleges ár (94 %)');
+			await expect(day0Dinner.getByTestId('recipe-coverage')).toHaveText('részleges ár (97 %)');
 			// Every view with prices: the GVH source line with the data date, and the disclaimer near it.
 			await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
 			await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
@@ -343,6 +349,7 @@ for (const viewport of VIEWPORTS) {
 			expect(stored?.days[0]).toEqual({ index: 0, meals: { reggeli: TUROS.id, ebed: LENCSE.id, vacsora: RAKOTT.id } });
 			await expectNoHorizontalScroll(page);
 			await expectTouchTargets(page);
+			await expectAccessible(page, `plan ${viewport.name} made`);
 			await page.screenshot({ path: screenshot(`plan-${viewport.name}-made`), fullPage: true });
 
 			// Change Tuesday's dinner to the fish recipe through the picker (accent-insensitive search).
@@ -356,6 +363,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(dialog.getByRole('button', { name: /Minta rakott krumpli/ })).toHaveAttribute('aria-current', 'true');
 			await expect(dialog.getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
 			await expectTouchTargets(page);
+			await expectAccessible(page, `plan ${viewport.name} picker`);
 			await expectNoHorizontalScroll(page);
 			await page.screenshot({ path: screenshot(`plan-${viewport.name}-picker`) });
 			await dialog.getByLabel('Keresés a receptek címében').fill('SULT harcsa');
@@ -365,6 +373,8 @@ for (const viewport of VIEWPORTS) {
 			await expect(dialog).toBeHidden();
 			await expect(change).toBeFocused();
 			await expect(day0Dinner.getByRole('link')).toHaveText(HARCSA.title);
+			// Fully priced (priced_share 1): no caveat.
+			await expect(day0Dinner.getByTestId('recipe-coverage')).toHaveCount(0);
 
 			// The edit is re-checked with the plan's variety window; the chip updates.
 			await expect(chip(page, 'fish')).toContainText('Hal: 1 (cél: legalább 1)');
@@ -385,10 +395,9 @@ for (const viewport of VIEWPORTS) {
 			// Open the recipe and add it to Thursday's lunch.
 			await day0Dinner.getByRole('link', { name: HARCSA.title }).click();
 			await expect(page).toHaveURL(/\/receptek\/minta-harcsa$/);
-			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Recept');
-			await expect(page.getByRole('heading', { level: 2, name: HARCSA.title })).toBeVisible();
+			await expect(page.getByRole('heading', { level: 1 })).toHaveText(HARCSA.title);
 			const add = page.getByTestId('add-to-plan');
-			await add.getByLabel('Nap').selectOption({ label: 'Csütörtök, 2026. 10. 15.' });
+			await add.getByLabel('Nap').selectOption({ label: `Csütörtök, ${nb('2026. 10. 15.')}` });
 			await add.getByLabel('Étkezés').selectOption({ label: 'ebéd' });
 			await expect(add.getByLabel('Étkezés').locator('option')).toHaveText(['ebéd', 'vacsora']);
 			await expect(add).toContainText('Ebben az étkezésben már van egy recept, a hozzáadás lecseréli.');
@@ -540,6 +549,15 @@ test.describe('plan details', () => {
 		await page.keyboard.press('Enter');
 		const dialog = page.getByRole('dialog', { name: 'Étel választása' });
 		await expect(dialog.getByLabel('Keresés a receptek címében')).toBeFocused();
+		// Escape closes the picker without a change, and focus goes back to the button that opened it.
+		await page.keyboard.type('xy');
+		await page.keyboard.press('Escape');
+		await expect(dialog).toBeHidden();
+		await expect(choose).toBeFocused();
+		await expect(page.getByTestId('meal-0-ebed').getByRole('link')).toHaveText(LENCSE.title);
+		await page.keyboard.press('Enter');
+		await expect(dialog.getByLabel('Keresés a receptek címében')).toBeFocused();
+		await expect(dialog.getByLabel('Keresés a receptek címében')).toHaveValue('');
 		await page.keyboard.type('csirke');
 		await expect(dialog.getByRole('status')).toHaveText('1 választható recept');
 		await page.keyboard.press('Tab');
@@ -657,6 +675,7 @@ test.describe('English and dark mode', () => {
 		await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(`Source: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`);
 		await expectNoHorizontalScroll(page);
 		await expectTouchTargets(page);
+		await expectAccessible(page, 'plan en dark 320');
 		await page.screenshot({ path: screenshot('plan-en-dark-phone-320'), fullPage: true });
 		await expectClean(page, api);
 	});

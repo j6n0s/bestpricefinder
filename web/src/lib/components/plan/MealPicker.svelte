@@ -110,7 +110,7 @@
 								<span class="muted">({t('plan.picker_current')})</span>
 							{/if}
 						</span>
-						<span class="small"><RecipePrice {recipe} {names} showCoverage={false} /></span>
+						<span class="small"><RecipePrice {recipe} {names} compact /></span>
 					</button>
 				</li>
 			{/each}

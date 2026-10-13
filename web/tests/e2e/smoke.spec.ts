@@ -11,6 +11,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, test, type Page } from '@playwright/test';
 import { MOCK_META, handleMockApi, type MockResult } from '../mocks/api';
+import { expectAccessible, expectHeadingOrder, expectTextContrast } from './a11y';
 import { BASE_URL, SCREENSHOT_DIR } from './config';
 import { startStaticServer } from './static-server';
 
@@ -24,7 +25,8 @@ const ROUTES = [
 	{ path: '/', heading: 'Heti étrend, bevásárlólista, közeli árak', nav: 'Kezdőlap' },
 	{ path: '/terv', heading: 'Heti terv', nav: 'Heti terv' },
 	{ path: '/receptek', heading: 'Receptek', nav: 'Receptek' },
-	{ path: '/receptek/minta-lencsefozelek', heading: 'Recept', nav: 'Receptek' },
+	// The recipe title is the detail page's h1 (it says "Recept" only while loading or on an error).
+	{ path: '/receptek/minta-lencsefozelek', heading: 'Minta lencsefőzelék (szintetikus)', nav: 'Receptek' },
 	{ path: '/lista', heading: 'Bevásárlólista', nav: 'Lista' },
 	{ path: '/beallitasok', heading: 'Beállítások', nav: 'Beállítások' },
 	{ path: '/forrasok', heading: 'Források és adatvédelem', nav: null }
@@ -171,6 +173,8 @@ for (const viewport of VIEWPORTS) {
 				await expect(page).toHaveTitle(/Heti kosár/);
 				await expectNavLabelsFit(page);
 				await expectNoHorizontalScroll(page);
+				// Heading order, accessible names, no positive tabindex, rendered contrast, 44×44 px targets.
+				await expectAccessible(page, `${viewport.name} ${route.path}`);
 				await page.screenshot({ path: screenshotPath(`${viewport.name}-${slug(route.path)}`), fullPage: true });
 				await expectClean(watcher);
 			});
@@ -345,17 +349,25 @@ test.describe('settings', () => {
 		await page.getByRole('button', { name: 'English' }).click();
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Settings');
 
-		await page.getByRole('button', { name: 'Delete all data' }).click();
+		const open = page.getByRole('button', { name: 'Delete all data' });
+		await open.click();
 		const dialog = page.getByRole('dialog', { name: 'Delete all data?' });
 		await expect(dialog).toBeVisible();
 		await expect(dialog.getByRole('button', { name: 'Cancel' })).toBeFocused();
+		// Keyboard use inside the modal: Tab moves to its other button.
+		await page.keyboard.press('Tab');
+		await expect(dialog.getByRole('button', { name: 'Yes, delete everything' })).toBeFocused();
 		await dialog.getByRole('button', { name: 'Cancel' }).click();
 		await expect(dialog).toBeHidden();
+		// Focus returns to the button that opened the dialog.
+		await expect(open).toBeFocused();
 		expect(await storedState(page)).toMatchObject({ people: 3, language: 'en' });
 
-		await page.getByRole('button', { name: 'Delete all data' }).click();
+		await open.click();
+		await expect(dialog).toBeVisible();
 		await page.keyboard.press('Escape');
 		await expect(dialog).toBeHidden();
+		await expect(open).toBeFocused();
 		expect(await storedState(page)).toMatchObject({ people: 3 });
 
 		await page.getByRole('button', { name: 'Delete all data' }).click();
@@ -531,13 +543,16 @@ test.describe('accessibility', () => {
 test.describe('dark mode', () => {
 	test.use({ colorScheme: 'dark', viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
 
-	test('uses the dark tokens', async ({ page }) => {
+	test('uses the dark tokens, with readable text on every page', async ({ page }) => {
 		const watcher = await watch(page);
-		for (const path of ['/', '/beallitasok']) {
-			await page.goto(path);
+		for (const route of ROUTES) {
+			await page.goto(route.path);
+			await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
 			await expect(page.getByTestId('data-status')).toContainText('Adatok:');
 			expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(17, 20, 18)');
-			await page.screenshot({ path: screenshotPath(`dark-phone-360-${slug(path)}`), fullPage: true });
+			await expectTextContrast(page, `dark ${route.path}`);
+			await expectHeadingOrder(page, `dark ${route.path}`);
+			await page.screenshot({ path: screenshotPath(`dark-phone-360-${slug(route.path)}`), fullPage: true });
 		}
 		await expectNoHorizontalScroll(page);
 		await expectClean(watcher);

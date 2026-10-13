@@ -9,7 +9,6 @@ export const coreHu = {
 	nav_recipes: 'Receptek',
 	nav_list: 'Lista',
 	nav_settings: 'Beállítások',
-	nav_sources: 'Források és adatvédelem',
 	// The language switch shows the OTHER language's name, in that language.
 	lang_toggle_text: 'English',
 

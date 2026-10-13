@@ -5,6 +5,7 @@ import {
 	declinedLocation,
 	districtLocation,
 	failureFromCode,
+	geoTimeout,
 	grantedLocation,
 	originFromLocation,
 	requestApproxPosition,
@@ -37,11 +38,24 @@ const base = (): StoredLocation => defaultState().location;
 describe('requestApproxPosition', () => {
 	it('asks for a low-accuracy position and rounds it to 3 decimals', async () => {
 		const { geo, options } = geolocation((ok) => ok(47.4774567, 19.0470123));
-		await expect(requestApproxPosition({ geolocation: geo, secure: true })).resolves.toEqual({
+		await expect(requestApproxPosition({}, { geolocation: geo, secure: true })).resolves.toEqual({
 			ok: true,
 			position: { lat: 47.477, lon: 19.047 }
 		});
 		expect(options).toEqual([{ enableHighAccuracy: false, timeout: GEO_TIMEOUT_MS, maximumAge: GEO_MAX_AGE_MS }]);
+	});
+
+	it('takes a timeout option and falls back to the default for unusable values', async () => {
+		const { geo, options } = geolocation((ok) => ok(47.5, 19.05));
+		await requestApproxPosition({ timeoutMs: 10_000 }, { geolocation: geo, secure: true });
+		await requestApproxPosition({ timeoutMs: 2500.4 }, { geolocation: geo, secure: true });
+		for (const timeoutMs of [0, -5, Number.NaN, Number.POSITIVE_INFINITY, undefined]) {
+			await requestApproxPosition({ timeoutMs }, { geolocation: geo, secure: true });
+		}
+		await requestApproxPosition({ timeoutMs: 600_000 }, { geolocation: geo, secure: true });
+		expect(options.map((o) => o.timeout)).toEqual([10_000, 2500, ...Array(5).fill(GEO_TIMEOUT_MS), 60_000]);
+		expect(options.every((o) => o.enableHighAccuracy === false && o.maximumAge === GEO_MAX_AGE_MS)).toBe(true);
+		expect(geoTimeout(1)).toBe(1);
 	});
 
 	it.each([
@@ -51,14 +65,14 @@ describe('requestApproxPosition', () => {
 		[99, 'unavailable']
 	] as const)('maps error code %s to %s', async (code, reason) => {
 		const { geo } = geolocation((_ok, fail) => fail(code));
-		await expect(requestApproxPosition({ geolocation: geo, secure: true })).resolves.toEqual({ ok: false, reason });
+		await expect(requestApproxPosition({}, { geolocation: geo, secure: true })).resolves.toEqual({ ok: false, reason });
 		expect(failureFromCode(code)).toBe(reason);
 	});
 
 	it('does not ask when the page is not a secure context or the API is missing', async () => {
 		const { geo, options } = geolocation((ok) => ok(47.5, 19));
-		await expect(requestApproxPosition({ geolocation: geo, secure: false })).resolves.toEqual({ ok: false, reason: 'insecure' });
-		await expect(requestApproxPosition({ geolocation: null, secure: true })).resolves.toEqual({
+		await expect(requestApproxPosition({}, { geolocation: geo, secure: false })).resolves.toEqual({ ok: false, reason: 'insecure' });
+		await expect(requestApproxPosition({}, { geolocation: null, secure: true })).resolves.toEqual({
 			ok: false,
 			reason: 'unsupported'
 		});
@@ -71,12 +85,12 @@ describe('requestApproxPosition', () => {
 				throw new Error('boom');
 			}
 		};
-		await expect(requestApproxPosition({ geolocation: throwing, secure: true })).resolves.toEqual({
+		await expect(requestApproxPosition({}, { geolocation: throwing, secure: true })).resolves.toEqual({
 			ok: false,
 			reason: 'unavailable'
 		});
 		const { geo } = geolocation((ok) => ok(Number.NaN, 19));
-		await expect(requestApproxPosition({ geolocation: geo, secure: true })).resolves.toEqual({ ok: false, reason: 'unavailable' });
+		await expect(requestApproxPosition({}, { geolocation: geo, secure: true })).resolves.toEqual({ ok: false, reason: 'unavailable' });
 	});
 });
 

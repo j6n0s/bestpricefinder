@@ -29,6 +29,7 @@ import type {
 	StoreQuoteOut
 } from '../../src/lib/api/types';
 import { MOCK_INGREDIENTS, MOCK_META, handleMockApi, type MockResult } from '../mocks/api';
+import { expectAccessible } from './a11y';
 import { BASE_URL, SCREENSHOT_DIR } from './config';
 
 const DATA_DATE = '2026-10-13';
@@ -36,7 +37,6 @@ const DATE_HU = '2026. 10. 13.';
 const ATTRIBUTION = `Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`;
 const DISCLAIMER = 'Nem hivatalos alkalmazás, nem áll kapcsolatban a Gazdasági Versenyhivatallal.';
 const STORAGE_KEY = 'hetikosar.state';
-const LIST_PREFS_KEY = 'hetikosar.list';
 /** Tuesday 13 October 2026, 10:00 in Budapest. */
 const NOW = new Date('2026-10-13T08:00:00Z');
 const NBSP = '\u00a0';
@@ -451,7 +451,7 @@ function seededState(extra: Record<string, unknown> = {}): Record<string, unknow
 				meals: { reggeli: null, ebed: 'minta-lencsefozelek', vacsora: index % 2 === 0 ? 'minta-csirke' : null }
 			}))
 		},
-		pantry: { onHand: [], notAtHome: [] },
+		pantry: { notAtHome: [] },
 		exclusions: { tags: [], ingredients: [] },
 		location: { consent: 'unset', source: 'none', districtId: null, approx: null },
 		checkedItems: [],
@@ -549,6 +549,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(page.getByText('csak a kiválasztott boltok azonosítóit küldjük el', { exact: false })).toBeVisible();
 			expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
 			expect(rec.requests.filter((r) => r.url.includes('/api/stores') || r.url.includes('/api/quote'))).toEqual([]);
+			await expectAccessible(page, `list ${viewport.name} before location`);
 			await page.screenshot({ path: screenshotPath(`list-${viewport.name}-before-location`), fullPage: true });
 
 			await page.getByRole('button', { name: 'Saját helyzetem használata' }).click();
@@ -647,6 +648,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(line('voroshagyma').getByRole('checkbox')).toBeChecked();
 			await page.screenshot({ path: screenshotPath(`list-${viewport.name}-store`), fullPage: true });
 			await expectTouchTargets(page);
+			await expectAccessible(page, `list ${viewport.name} store list`);
 
 			// At Spar the lentils are not available.
 			await chooseButton(page, 'Spar', 'synthetic-spar-a').click();
@@ -654,12 +656,18 @@ for (const viewport of VIEWPORTS) {
 			await expect(line('voros_lencse')).toContainText('nincs ebben a boltban');
 			await chooseButton(page, 'Lidl', 'synthetic-lidl-a').click();
 
-			// The chosen store is remembered for this list; after a reload the same view comes back.
-			const prefs = await storedJson(page, LIST_PREFS_KEY);
-			expect(prefs).toMatchObject({
+			// The chosen store is remembered for this list, in the one stored document (no key of its own); after
+			// a reload the same view comes back.
+			expect(await storedJson(page, STORAGE_KEY)).toMatchObject({
 				version: 1,
-				lists: [{ key: '2026-10-11T18:00:00.000Z|this_week', removed: ['kenyer'], storeId: 'synthetic-lidl-a' }]
+				list: {
+					range: 'this_week',
+					entries: [{ key: '2026-10-11T18:00:00.000Z|this_week', removed: ['kenyer'], storeId: 'synthetic-lidl-a' }]
+				}
 			});
+			expect(await page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith('hetikosar.')))).toEqual([
+				STORAGE_KEY
+			]);
 			await page.reload();
 			await expect(page.getByTestId('store-list').getByRole('heading', { level: 3 })).toHaveText('Lista: Lidl');
 			await expect(page.getByRole('checkbox', { name: /^vöröshagyma/ }).first()).toBeChecked();
@@ -706,6 +714,7 @@ for (const viewport of VIEWPORTS) {
 			await page.getByRole('button', { name: 'Kész' }).click();
 			await expect(page.getByRole('heading', { name: 'Honnan keressük a boltokat?' })).toHaveCount(0);
 			await expect(page.getByTestId('origin')).toBeFocused();
+			await expectAccessible(page, `list ${viewport.name} district`);
 			await page.screenshot({ path: screenshotPath(`list-${viewport.name}-district`), fullPage: true });
 
 			// The same view in English: texts change, numbers and dates stay hu-HU.
@@ -787,7 +796,7 @@ test.describe('pantry and exclusion settings', () => {
 		await seed(page, seededState({ exclusions: { tags: ['hal'], ingredients: ['voros_lencse'] } }));
 		await page.goto('/lista');
 		await page.getByRole('button', { name: 'kenyér eltávolítása a listáról' }).click();
-		expect(await storedJson(page, LIST_PREFS_KEY)).not.toBeNull();
+		expect(await storedJson(page, STORAGE_KEY)).toMatchObject({ list: { entries: [{ removed: ['kenyer'] }] } });
 		await page.goto('/beallitasok');
 		await expect(page.getByTestId('exclusion-settings').getByRole('checkbox', { name: 'Hal' })).toBeChecked();
 		await page.getByRole('button', { name: 'Minden adat törlése' }).click();
@@ -796,6 +805,11 @@ test.describe('pantry and exclusion settings', () => {
 		await expect(page.getByTestId('exclusion-settings').getByRole('checkbox', { name: 'Hal' })).not.toBeChecked();
 		await expect(page.getByTestId('exclusion-settings')).toContainText('Nincs kizárt alapanyag.');
 		expect(await page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith('hetikosar.')))).toEqual([]);
+		// Back on the list (in-app navigation: a reload would run the seeding script again) there is no plan,
+		// so nothing of the old list or its removed lines is shown.
+		await page.getByRole('navigation', { name: 'Fő navigáció' }).getByRole('link', { name: 'Lista' }).click();
+		await expect(page.getByText('Még nincs heti terved')).toBeVisible();
+		await expect(page.getByText('Eltávolított tételek', { exact: false })).toHaveCount(0);
 		await expectClean(page, rec);
 	});
 });
@@ -817,6 +831,36 @@ test.describe('storage refused by the browser', () => {
 		await expect(page.getByText('A böngésző nem engedi az adatok mentését', { exact: false })).toBeVisible();
 		await page.getByRole('button', { name: 'kenyér eltávolítása a listáról' }).click();
 		await expect(page.getByText('Eltávolított tételek (1)')).toBeVisible();
+		await expectClean(page, rec);
+	});
+
+	test('"Minden adat törlése" still clears this session when the stored copy cannot be deleted', async ({ page }) => {
+		await page.addInitScript((state) => {
+			localStorage.setItem('hetikosar.state', state);
+			Storage.prototype.setItem = () => {
+				throw new DOMException('quota', 'QuotaExceededError');
+			};
+			Storage.prototype.removeItem = () => {
+				throw new DOMException('denied', 'SecurityError');
+			};
+		}, JSON.stringify(seededState()));
+		const rec = await harness(page);
+		await page.goto('/lista');
+		await page.getByRole('button', { name: 'kenyér eltávolítása a listáról' }).click();
+		await expect(page.getByText('Eltávolított tételek (1)')).toBeVisible();
+
+		// In-app navigation keeps this session's memory: the reset must reach it.
+		const nav = page.getByRole('navigation', { name: 'Fő navigáció' });
+		await nav.getByRole('link', { name: 'Beállítások' }).click();
+		await page.getByRole('button', { name: 'Minden adat törlése' }).click();
+		await page.getByRole('dialog').getByRole('button', { name: 'Igen, mindent törlök' }).click();
+		await expect(page.getByText('a böngésző nem engedte elérni a tárolóját', { exact: false })).toBeVisible();
+		await expect(page.getByText('Minden adat törölve.')).toHaveCount(0);
+		await expect(page.getByTestId('people-value')).toHaveText('2 fő');
+
+		await nav.getByRole('link', { name: 'Lista' }).click();
+		await expect(page.getByText('Még nincs heti terved')).toBeVisible();
+		await expect(page.getByText('Eltávolított tételek', { exact: false })).toHaveCount(0);
 		await expectClean(page, rec);
 	});
 });

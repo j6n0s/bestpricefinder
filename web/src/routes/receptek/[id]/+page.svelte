@@ -3,6 +3,9 @@
 	(pantry staples marked), steps, the chain cost comparison (table + bars, cheapest first, tie-aware) with the
 	GVH source line, nutrition only when the API has it (null until composition data is imported), and
 	"Hozzáadás a tervhez", which writes to the plan stored on this device.
+
+	Headings: the recipe title is the page's h1 (the small "Recept" label above it is a plain paragraph) and
+	every section is an h2. While loading and on an error the h1 is "Recept", so the page always has one.
 -->
 <script lang="ts">
 	import { page } from '$app/state';
@@ -72,20 +75,23 @@
 </svelte:head>
 
 <p class="back"><a href="/receptek">{t('recipes.back')}</a></p>
-<h1 class="kind">{t('recipes.detail_title')}</h1>
 
-{#if loading}
-	<Spinner showLabel />
-{:else if error}
-	<ErrorState
-		{error}
-		title={t('recipes.detail_error_title')}
-		onretry={notFound ? undefined : () => void loadRecipe(id)}
-	/>
-{:else if detail}
+{#if loading || error || !detail}
+	<h1 class="title">{t('recipes.detail_title')}</h1>
+	{#if loading}
+		<Spinner showLabel />
+	{:else if error}
+		<ErrorState
+			{error}
+			title={t('recipes.detail_error_title')}
+			onretry={notFound ? undefined : () => void loadRecipe(id)}
+		/>
+	{/if}
+{:else}
 	<article class="recipe" aria-labelledby="recipe-title">
 		<header class="intro">
-			<h2 id="recipe-title" class="title">{detail.title}</h2>
+			<p class="kind">{t('recipes.detail_title')}</p>
+			<h1 id="recipe-title" class="title">{detail.title}</h1>
 			<p class="meta">
 				{#if detail.minutes !== null}
 					<span>{tp('recipes.minutes', detail.minutes)}</span>
@@ -103,7 +109,7 @@
 		</header>
 
 		<section class="card" aria-labelledby="ingredients-title">
-			<h3 id="ingredients-title">{t('recipes.ingredients_title')}</h3>
+			<h2 id="ingredients-title">{t('recipes.ingredients_title')}</h2>
 			<ServingsStepper value={servings} onchange={(value) => (servings = value)} />
 			{#if servings !== detail.servings}
 				<p class="small muted" data-testid="scaled-note">
@@ -114,7 +120,7 @@
 		</section>
 
 		<section class="card" aria-labelledby="steps-title">
-			<h3 id="steps-title">{t('recipes.steps_title')}</h3>
+			<h2 id="steps-title">{t('recipes.steps_title')}</h2>
 			<ol class="steps">
 				{#each detail.steps as step, index (index)}
 					<li>{step}</li>
@@ -123,7 +129,7 @@
 		</section>
 
 		<section class="card" aria-labelledby="costs-title">
-			<h3 id="costs-title">{t('recipes.costs_title')}</h3>
+			<h2 id="costs-title">{t('recipes.costs_title')}</h2>
 			<ChainCostTable costs={detail.chain_costs} lines={detail.lines} {names} />
 			<p class="small muted">{t('recipes.price_note')}</p>
 			<Attribution dataDate={detail.data_date} />
@@ -131,13 +137,13 @@
 
 		{#if detail.nutrition}
 			<section class="card" aria-labelledby="nutrition-title">
-				<h3 id="nutrition-title">{t('recipes.nutrition_title')}</h3>
+				<h2 id="nutrition-title">{t('recipes.nutrition_title')}</h2>
 				<NutritionTable nutrition={detail.nutrition} source={meta.data?.attribution.nutrition} />
 			</section>
 		{/if}
 
 		<section class="card" aria-labelledby="add-title">
-			<h3 id="add-title">{t('recipes.add_title')}</h3>
+			<h2 id="add-title">{t('recipes.add_title')}</h2>
 			{#key detail.id}
 				<AddToPlan recipe={detail} />
 			{/key}
@@ -161,6 +167,10 @@
 
 	.title {
 		font-size: var(--font-size-2xl);
+	}
+
+	.intro .kind + .title {
+		margin-top: 0;
 	}
 
 	.recipe > :global(* + *) {

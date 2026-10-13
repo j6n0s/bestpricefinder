@@ -8,6 +8,8 @@
  * - Same origin, no cookies (`credentials: 'omit'`), no redirects followed.
  * - Privacy: request bodies are rebuilt from the known fields only, so nothing else (for example a location
  *   accidentally spread into a request object) can ever leave the device. /api/quote takes store ids only.
+ * - Quantities (`qty`, `servings`) always go out as JSON numbers (contract v1.2 rejects strings): a value
+ *   that is not a finite number is sent as `null`, which the server answers with a 422 for that field.
  */
 import {
 	ERROR_CODES,
@@ -25,6 +27,7 @@ import {
 	type PlanCheckResponse,
 	type PlanResponse,
 	type PlanSuggestRequest,
+	type QtyLineIn,
 	type QuoteRequest,
 	type QuoteResponse,
 	type RecipeDetail,
@@ -268,20 +271,36 @@ export function getIngredientHistory(
 
 // ───────────────────────────── POST endpoints (bodies rebuilt from known fields) ─────────────────────────────
 
+/**
+ * A quantity as it goes on the wire: the number itself, never a string (contract v1.2). Anything that is not
+ * a finite number becomes null, which the server rejects with a 422 naming the field.
+ */
+export function jsonNumber(value: unknown): number | null {
+	return typeof value === 'number' && Number.isFinite(value) ? value : null;
+}
+
+/** A request body with every quantity field widened to what `jsonNumber` can produce. */
+type Wire<T, K extends string> = { [P in keyof T]: P extends K ? number | null : T[P] };
+type ListBody = Omit<ListRequest, 'items' | 'on_hand'> & {
+	items: Wire<ListRequest['items'][number], 'servings'>[];
+	on_hand?: Wire<QtyLineIn, 'qty'>[];
+};
+type QuoteBody = Omit<QuoteRequest, 'lines'> & { lines: Wire<QtyLineIn, 'qty'>[] };
+
 export function postList(req: ListRequest, options: RequestOptions = {}): Promise<ListResponse> {
-	const body: ListRequest = {
-		items: req.items.map((item) => ({ recipe_id: item.recipe_id, servings: item.servings }))
+	const body: ListBody = {
+		items: req.items.map((item) => ({ recipe_id: item.recipe_id, servings: jsonNumber(item.servings) }))
 	};
 	if (req.on_hand !== undefined) {
-		body.on_hand = req.on_hand.map((line) => ({ ingredient_id: line.ingredient_id, qty: line.qty }));
+		body.on_hand = req.on_hand.map((line) => ({ ingredient_id: line.ingredient_id, qty: jsonNumber(line.qty) }));
 	}
 	if (req.include_optional !== undefined) body.include_optional = req.include_optional;
 	return request<ListResponse>('POST', '/api/list', body, options);
 }
 
 export function postQuote(req: QuoteRequest, options: RequestOptions = {}): Promise<QuoteResponse> {
-	const body: QuoteRequest = {
-		lines: req.lines.map((line) => ({ ingredient_id: line.ingredient_id, qty: line.qty })),
+	const body: QuoteBody = {
+		lines: req.lines.map((line) => ({ ingredient_id: line.ingredient_id, qty: jsonNumber(line.qty) })),
 		store_ids: req.store_ids.map((id) => String(id))
 	};
 	if (req.include_loyalty !== undefined) body.include_loyalty = req.include_loyalty;
