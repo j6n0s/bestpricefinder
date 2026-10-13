@@ -10,7 +10,7 @@
 The user relays anything urgent.
 
 ## Read in this order
-1. [`BUILD-BRIEF.md`](../BUILD-BRIEF.md). The spec. §1 what to build, §4 the data API and its 12 traps, §8 the **binding legal guardrails**.
+1. [`BUILD-BRIEF.md`](../BUILD-BRIEF.md). The spec. §1 what to build, §4 the data API and its 13 traps, §8 the **binding legal guardrails**.
 2. [`docs/ARCHITECTURE.md`](ARCHITECTURE.md). The stack and the security model (already decided; change only with a reason recorded in QUESTIONS.md).
 3. [`db/migrations/0001_init.sql`](../db/migrations/0001_init.sql). The schema (done and tested, see below).
 4. `research/`. Evidence and data. Each stream's `verify.md` corrects its `notes.md`.

@@ -68,20 +68,22 @@ The goal is to **put it into real use quickly**: the founder first, then a small
 - Realistic household saving is about 3–8k Ft/month: store choice plus cheaper equivalent products plus less waste.
 - Picking a cheaper equivalent product *within* the chosen store is worth more than switching chains. Build a "cheaper swap" suggestion.
 
-**Stability.**
-- Lidl was the cheapest chain for a 20-item core basket on every sampled date since 2025-03-07.
-- About 1.8% of food product×chain prices change day to day, and 13–19% week to week (promotions start Thursday or Monday).
-- The cheapest chain *per item* changes week to week for about half the items. Recompute weekly lists from fresh data.
+**Stability** (fact-checked on 2026-10-13).
+- Lidl was the cheapest chain for a 20-item core basket on all 8 sampled dates since 2025-03-07. The lead is thin: 3.8% (391 Ft) on 2026-10-13, and a single banana price change moved it by 2 points. Never hard-code a "cheapest chain".
+- Between 1.2% and 2.6% of food product×chain prices change per day (3 observed days), and 13–19% per week. Most chains start promotions on Thursday or Monday, but Penny and Tesco also change prices on other weekdays.
+- **Ties are common.** 8–9 of the 20 core items are exact cross-chain ties on a given day; for example, own-label carrots cost 489 Ft at Aldi, Lidl and Spar. Any "cheapest chain for this item" logic must be **tie-aware**: show all tied chains and never break ties alphabetically. Counting ties properly, 12–16 of 20 items keep their cheapest chain week to week. Recompute weekly lists from fresh data.
 
-**Promotions.**
-- For products inside GVH's categories, promotions **are** in GVH on the day they start. In a 26/26 sample:
-  - Penny and Lidl: `DISCOUNTED` = promo price, `NORMAL` = pre-promo price.
-  - Aldi: promo shows only as a lower `NORMAL`.
+**Promotions** (fact-checked on 2026-10-13).
+- Every priced food promotion inside GVH's categories at Penny, Lidl and Aldi in the week of 2026-10-08 (26 of 26, the whole population) appeared in GVH at the promo price. It applied chain-wide and in every Budapest store tested.
+  - Day-one capture is proven for Monday-start offers (13/13). Thursday-start offers were only observed from day 4 onwards; confirm them with your own Thursday snapshots.
+  - Penny and Lidl report `DISCOUNTED` = promo price and `NORMAL` = pre-promo price.
+  - **Aldi never uses `DISCOUNTED`**: 0 of 420 Aldi food entries. Its promos appear only as a lower `NORMAL`.
   - Penny card prices appear as `LOYALTY`.
-- Missing:
-  - Lidl Plus app prices.
-  - Coupon and multi-buy prices.
-  - Temporary "Csak most!" items sold for at most 1 month.
+- **`DISCOUNTED` ≠ "weekly deal".** It also flags long-running reductions that are not in any leaflet, and GVH even carries promos the chain's own site doesn't list. A "deal" badge must come from **our own daily archive** (price below the recent typical price), not from the flag.
+- Missing from GVH:
+  - Lidl Plus app prices: 0 of 385 Lidl food entries have `LOYALTY`. Lidl describes these as automatically applied card prices, so this looks like a reporting gap, not a legal exclusion.
+  - Coupon and multi-buy prices (excluded by law, §57(1) bc).
+  - Items sold for at most 1 month (exempt, §66(5)), e.g. "Csak most!" items.
   - Anything outside GVH categories. Only about 5–26% of a chain's weekly offers fall in GVH at all.
 - **No leaflet data needed for the MVP.**
 
@@ -121,17 +123,18 @@ Official daily bulk file: `https://cdnarfigyeloprodweu.azureedge.net/excel/arfig
 
 Product objects carry: `id, name, imageUrl, unit, unitTitle, bulk, packaging, categoryPath, minUnitPrice, pricesOfChainStores[{id,name,priceSameEverywhere,productMinAmount,prices[{type: NORMAL|DISCOUNTED|LOYALTY, amount, unitAmount, sameAmountEverywhere}]}]`.
 
-**Traps. Each one has bitten the research; write tests for them.**
+**Traps. Each one has bitten the research; write tests for them.** Items 4, 10, 12 and 13 were refined by the 2026-10-13 fact-check in `research/gap-gvh-promo-and-stability/verify.md`.
 1. **Which price is "the chain price".**
    - `prices[].amount` in the listing is the **cheapest single store's** price; it may come from 1–2 stores. Example: Spar spaghetti listed at 294 Ft while 296 stores charge 699.
    - **`productMinAmount`** is the daily price charged by **≥80% of the chain's carrying stores**. It is what GVH's site displays.
    - Use `productMinAmount` for "typical chain price" and the per-store endpoint for "your store".
 2. **The listing shows at most 3 chains per product.** For completeness use `/product/{id}` or the XLSX.
 3. The listing's `priceSameEverywhere` follows the 80% rule; the detail flag is literal. Don't treat either as proof that every store is identical.
-4. **XLSX CDN serves stale copies.**
-   - Add a cache-busting query (`?v=YYYYMMDD`).
-   - Verify the sheet name `Napi feltöltések - YYYY-MM-DD` equals today.
+4. **The XLSX CDN serves stale copies.** The plain URL returned files 6–30+ hours old, varying by `Accept-Encoding`, despite `max-age=3600`.
+   - Always add a unique cache-busting query (`?v=<date+run id>`).
+   - Verify the sheet name `Napi feltöltések - YYYY-MM-DD` equals today; otherwise retry later and never ingest it as today.
    - Numbers are text with a decimal comma.
+   - **The XLSX excludes `LOYALTY` prices**, and so does `productMinAmount`. Card prices exist only in the listing's `prices[]` (`type: LOYALTY`) and the per-store endpoint. A pipeline that reads only the XLSX misses them.
 5. **Units are mixed.** 21 of 120 food leaves mix per-piece (`db`) and per-kg/l products, and 55% of fresh SKUs are sold by weight. Normalise with explicit per-piece weight assumptions per ingredient (e.g. 1 db kígyóuborka ≈ 0.4 kg; 1 fej fokhagyma ≈ 0.05 kg). Unit-price rows are inconsistent in 0.5% of cases (`unitAmount ≠ amount/packaging`); recompute and validate.
 6. **Mis-filed and off-scope SKUs.** Examples: trappista inside "Natúr joghurt"; non-extra-virgin "olívaolaj" in the extra-virgin leaf; breaded fish in fish fillets; salmon and pollock in one leaf. Apply include/exclude name rules per ingredient.
 7. **Product ids are mixed**: EAN-13 (about 70% of food SKUs), in-store weight codes starting with `2`, chain-internal ids (`lidl-0080000`, `aldi-320458`, `penny-108`). 84% of food SKUs are sold by only one chain, so **compare by ingredient/category, not by barcode.**
@@ -141,13 +144,22 @@ Product objects carry: `id, name, imageUrl, unit, unitTitle, bulk, packaging, ca
    - There is no store name or format field. Tesco `tesco-1xxx` = hyper/large, `tesco-4xxx` = Expressz.
    - One coordinate is wrong: Rossmann Zalaegerszeg is about 111 km off.
 9. **No history.** The law archives prices the day after they change, and archives are closed to the public. **Snapshot daily from day one (append-only).** That archive becomes your price history and an asset.
-10. **Timing.** Retailers upload day-D prices by the end of D-1. The API switches around midnight; the XLSX is built about 04:00 Budapest time. **Run ingest at about 04:30 Budapest time**, and log the data date.
+10. **Timing** (measured 2026-10-11 to 13).
+    - Retailers upload day-D prices by the end of D-1 (§66(1)).
+    - The **API switches at about 00:00 UTC**, which is 02:00 Budapest time in summer and 01:00 in winter, not at Budapest midnight. Until then it still serves the previous day.
+    - The XLSX is regenerated at 02:00:12 UTC (04:00 Budapest time in summer).
+    - **Run the ingest at about 04:30 Budapest time**, log the data date, and check that the API and the XLSX agree on it.
 11. **No gzip, no ETag, no observed rate limit.**
     - Be polite anyway: ≤1–1.5 req/s.
     - Use a descriptive User-Agent with a contact address for the app.
     - Cache aggressively.
     - Fail loudly on schema changes, because the API is undocumented and can change.
-12. Promo semantics (section 3): Aldi promos look like `NORMAL` drops; Lidl Plus prices are absent.
+12. **Promo semantics** (section 3):
+    - Aldi promos look like `NORMAL` drops.
+    - `DISCOUNTED` also marks long-running reductions.
+    - Lidl Plus prices are absent.
+    - Derive "deal" from our own archive.
+13. **Ties.** Many items cost exactly the same at several chains. Ranking and "cheapest" logic must keep ties (sort by price, then *group*). Never use the chain name as a tie-breaker.
 
 **Recommended daily ingest (about 1–1.7k requests, about 15 MB):**
 - XLSX (1 request).
@@ -280,6 +292,13 @@ Starter mappings: `research/recipe-coverage/out/ingredient_mapping.csv`, `resear
 - Act LXIII of 2012 was repealed on 2024-04-01; the re-use route is Act CI of 2023.
 - The SPAR online shop no longer exists; it moved to Wolt in March 2025.
 - "No Hungarian app combines recipes and prices" is false (NomNom, Lefőzlek, Kifli Séf).
+- These corrections come from the 2026-10-13 fact-check:
+  - The GVH API changes day at about 00:00 UTC, not at Budapest midnight.
+  - About 1.2–2.6% of prices change per day, not a fixed 1.8%.
+  - `DISCOUNTED` is not a weekly-deal flag, and Aldi never uses it.
+  - Missing Lidl Plus prices are probably a reporting gap, not a legal exclusion.
+  - The XLSX and `productMinAmount` exclude loyalty prices.
+  - Per-item "cheapest chain" statistics must be tie-aware.
 
 ## 12. Research index (`research/`)
 | Folder | What's inside |
