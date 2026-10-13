@@ -9,10 +9,11 @@
 #   deploy/local/scheduler/install-linux.sh --print   # show the block; change nothing
 #   deploy/local/scheduler/uninstall-linux.sh         # remove the block (the rest of the crontab stays)
 #
-# Budapest time on any machine time zone: Debian/Ubuntu cron ignores CRON_TZ (only cronie honours it), and a
-# CRON_TZ line would also shift the user's own entries that follow it. So the block sets no variables: every
-# line fires hourly at the job's minute, and scheduler/at-budapest.sh lets it through only in the job's
-# Budapest hour (and weekday). Cron does not catch up runs missed while the machine was off.
+# Budapest time whatever the machine's time zone: Debian/Ubuntu cron ignores CRON_TZ (only cronie honours it),
+# and a CRON_TZ line would also shift the user's own entries that follow it. So the block sets no variables:
+# every line fires hourly at the job's minute, and scheduler/at-budapest.sh lets it through only in the job's
+# Budapest hour (and weekday). That needs a machine time zone whose UTC offset is a whole number of hours
+# (the installer checks). Cron does not catch up runs missed while the machine was off.
 #
 # The jobs print nothing unless they fail (cron then mails that line, if mail is set up); their logs are in
 # <data>/logs/ (.data/logs/ by default). These settings are copied into the block when they are set at install
@@ -24,23 +25,22 @@
 set -euo pipefail
 umask 077
 
-# shellcheck source-path=SCRIPTDIR source=../_common.sh
-. "$(dirname "${BASH_SOURCE[0]}")/../_common.sh"
+# shellcheck source-path=SCRIPTDIR source=../_ops.sh
+. "$(dirname "${BASH_SOURCE[0]}")/../_ops.sh"
 
-SCHED_DIR=$BPF_REPO_ROOT/deploy/local/scheduler
 BEGIN_MARK="# >>> bestpricefinder schedule (deploy/local/scheduler/install-linux.sh) >>>"
 END_MARK="# <<< bestpricefinder schedule <<<"
-PASS_THROUGH="BPF_PG_BIN BPF_PGDATA BPF_ENV_FILE BPF_DB_NAME BPF_BACKUP_DIR BPF_BACKUP_AGE_RECIPIENT \
-BPF_BACKUP_KEEP_DAYS BPF_LOG_KEEP_DAYS BPF_INGEST_LOCK_WAIT_S"
 CRONTAB=${BPF_CRONTAB:-crontab}
 
 print_only=0
 case $# in
     0) ;;
-    1) if [ "$1" = "--print" ]; then print_only=1; else
-        printf 'usage: %s [--print]\n' "$0" >&2
-        exit 2
-    fi ;;
+    1)
+        if [ "$1" = "--print" ]; then print_only=1; else
+            printf 'usage: %s [--print]\n' "$0" >&2
+            exit 2
+        fi
+        ;;
     *)
         printf 'usage: %s [--print]\n' "$0" >&2
         exit 2
@@ -51,64 +51,37 @@ if [ "$(id -u)" -eq 0 ] && [ "${BPF_ALLOW_ROOT:-}" != "1" ]; then
     bpf_die "run this as your normal user (cron runs the jobs as the crontab's owner), not as root."
 fi
 if bpf_is_macos && [ "$print_only" -eq 0 ]; then
-    bpf_die "on macOS use deploy/local/scheduler/install-macos.sh (launchd); cron is deprecated there."
+    bpf_die "on macOS use deploy/local/scheduler/install-macos.sh (launchd)."
 fi
 
-# Values end up in crontab command lines inside single quotes: keep them boring. % is special to cron.
-check_value() { # $1 = description, $2 = value
-    case $2 in
-        *"'"* | *'"'* | *\\* | *'$'* | *'`'* | *'&'* | *'<'* | *'>'* | *'%'*)
-            bpf_die "$1 contains one of ' \" \\ \$ \` & < > %, which the scheduler does not support: $2"
-            ;;
-    esac
-    if [ "$(printf '%s' "$2" | wc -l | tr -d ' ')" -ne 0 ]; then bpf_die "$1 contains a newline"; fi
-}
-check_value "the repository path" "$BPF_REPO_ROOT"
-
-zone=$(TZ=Europe/Budapest date +%Z)
-case $zone in
-    CET | CEST) ;;
-    *) bpf_die "the time zone database has no Europe/Budapest (got $zone). Install tzdata (apt install tzdata)." ;;
+bpf_check_job_value "the repository path" "$BPF_REPO_ROOT"
+bpf_resolve_paths # rejects unusable BPF_PGDATA / BPF_ENV_FILE / BPF_BACKUP_DIR values before anything is written
+bpf_have_budapest_tz || bpf_die "the time zone database has no Europe/Budapest. Install tzdata (apt install tzdata)."
+# at-budapest.sh gates by Budapest HOUR only: a line firing at local minute 30 must also be minute 30 in
+# Budapest, which holds when the local UTC offset is a whole number of hours (Budapest's always is).
+local_offset=$(date +%z)
+case $local_offset in
+    [+-][0-9][0-9]00) ;;
+    *)
+        bpf_die "this machine's UTC offset is $local_offset, not a whole number of hours: the jobs would run at" \
+            "the wrong minute. Set the machine's time zone (e.g. sudo timedatectl set-timezone Europe/Budapest)."
+        ;;
 esac
 
-find_uv() {
-    local candidate
-    if command -v uv >/dev/null 2>&1; then
-        command -v uv
-        return 0
-    fi
-    for candidate in "${HOME:-/nonexistent}/.local/bin/uv" "${HOME:-/nonexistent}/.cargo/bin/uv" \
-        /opt/homebrew/bin/uv /usr/local/bin/uv; do
-        if [ -x "$candidate" ]; then
-            printf '%s\n' "$candidate"
-            return 0
-        fi
-    done
-    return 1
-}
-uv_path=$(find_uv) || bpf_die "uv not found. Install it first (docs/RUNNING.md)."
-uv_dir=$(cd "$(dirname "$uv_path")" && pwd -P)
-job_path=
-for dir in "$uv_dir" /usr/local/bin /usr/bin /bin; do
-    case ":$job_path:" in *":$dir:"*) continue ;; esac
-    job_path=${job_path:+$job_path:}$dir
-done
-check_value "PATH for the jobs" "$job_path"
+job_path=$(bpf_job_path /usr/local/bin /usr/bin /bin)
+settings=$(bpf_job_settings)
 
 # ── the block ───────────────────────────────────────────────────────────────────────────────────────
 env_prefix="PATH='$job_path'"
-for var in $PASS_THROUGH; do
-    value=${!var:-}
-    [ -n "$value" ] || continue
-    case $var in
-        BPF_PG_BIN | BPF_PGDATA | BPF_ENV_FILE | BPF_BACKUP_DIR) value=$(bpf_abspath "$value") ;;
-        BPF_BACKUP_AGE_RECIPIENT) case $value in age1*) ;; *) value=$(bpf_abspath "$value") ;; esac ;;
-    esac
-    check_value "$var" "$value"
-    env_prefix="$env_prefix $var='$value'"
-done
-at="'$SCHED_DIR/at-budapest.sh'"
-ingest="'$BPF_REPO_ROOT/deploy/local/run-ingest.sh' --scheduled"
+while IFS= read -r line; do
+    [ -n "$line" ] || continue
+    env_prefix="$env_prefix ${line%%=*}='${line#*=}'"
+done <<EOF
+$settings
+EOF
+# /bin/bash explicitly: the jobs work even if the scripts lost their executable bit.
+at="/bin/bash '$BPF_SCHED_DIR/at-budapest.sh'"
+ingest="/bin/bash '$BPF_OPS_DIR/run-ingest.sh' --scheduled"
 block="$BEGIN_MARK
 # Times are Europe/Budapest whatever this machine's time zone: each line fires hourly and at-budapest.sh lets
 # it through only in the listed Budapest hour(s). Daily ingest 04:30 and 05:30 (the second run is a no-op
@@ -116,8 +89,17 @@ block="$BEGIN_MARK
 # not these lines.
 30 * * * * $env_prefix $at any 4,5 $ingest daily
 0 * * * * $env_prefix $at sun 5 $ingest availability
-15 * * * * $env_prefix $at any 3 '$SCHED_DIR/backup-job.sh'
+15 * * * * $env_prefix $at any 3 /bin/bash '$BPF_SCHED_DIR/backup-job.sh'
 $END_MARK"
+# Debian/Ubuntu cron refuses commands of about 1,000 characters ("command too long").
+while IFS= read -r line; do
+    if [ "${#line}" -gt 950 ]; then
+        bpf_die "a crontab line would be ${#line} characters long, too long for cron (about 1,000 at most)." \
+            "Use a shorter repository path, or unset the BPF_* settings the jobs do not need."
+    fi
+done <<EOF
+$block
+EOF
 
 if [ "$print_only" -eq 1 ]; then
     printf '%s\n' "$block"
@@ -127,7 +109,9 @@ fi
 # ── install ─────────────────────────────────────────────────────────────────────────────────────────
 command -v "$CRONTAB" >/dev/null 2>&1 || bpf_die "$CRONTAB not found. Install cron (Debian/Ubuntu: apt install cron)."
 work=$(mktemp -d "${TMPDIR:-/tmp}/bpf-cron.XXXXXX")
-trap 'rm -rf "$work"' EXIT
+# shellcheck disable=SC2329 # invoked by the EXIT trap
+cleanup() { rm -f "$work/current" "$work/err" "$work/new" "$work/check" && rmdir "$work"; }
+trap cleanup EXIT
 
 if ! "$CRONTAB" -l >"$work/current" 2>"$work/err"; then
     if grep -qi 'no crontab' "$work/err"; then
@@ -159,5 +143,4 @@ if ! pgrep -x cron >/dev/null 2>&1 && ! pgrep -x crond >/dev/null 2>&1; then
     bpf_warn "no cron daemon (cron/crond) seems to be running: the jobs will not run until one is" \
         "(Debian/Ubuntu: sudo systemctl enable --now cron)."
 fi
-bpf_resolve_paths
-bpf_info "Logs: $DATA_ROOT/logs/. Remove the schedule: $SCHED_DIR/uninstall-linux.sh"
+bpf_info "Logs: $DATA_ROOT/logs/. Show the block: crontab -l. Remove it: $BPF_SCHED_DIR/uninstall-linux.sh"

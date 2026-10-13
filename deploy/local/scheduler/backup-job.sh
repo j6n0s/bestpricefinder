@@ -5,20 +5,20 @@
 #
 #   deploy/local/scheduler/backup-job.sh
 #
-# Output goes to <data>/logs/backup-YYYY-MM-DD.log (mode 600); the job prints one line only when it fails
-# (launchd's log file, cron's mail). It starts the local cluster first if it is not running.
+# Output goes to <data>/logs/backup-YYYY-MM-DD.log (Budapest date, mode 600); the job prints one line only
+# when it fails (launchd's log file, cron's mail). It starts the local cluster first if it is not running.
 #
 # Pruning: dumps named <db>-<UTC timestamp>.dump[.age] in the backup directory that are older than
 # BPF_BACKUP_KEEP_DAYS days (default 30; 0 = never delete) are deleted, but the newest 7 are always kept.
 # Job logs older than BPF_LOG_KEEP_DAYS (default 30) are deleted. Nothing else is touched.
 # Environment: as db-backup.sh (BPF_PGDATA, BPF_PG_BIN, BPF_BACKUP_DIR, BPF_BACKUP_AGE_RECIPIENT...).
+# It always refuses to run as root, like db-backup.sh.
 set -euo pipefail
 umask 077
 
-# shellcheck source-path=SCRIPTDIR source=../_common.sh
-. "$(dirname "${BASH_SOURCE[0]}")/../_common.sh"
+# shellcheck source-path=SCRIPTDIR source=../_ops.sh
+. "$(dirname "${BASH_SOURCE[0]}")/../_ops.sh"
 
-SCRIPT_DIR=$BPF_REPO_ROOT/deploy/local
 MIN_KEEP=7
 
 [ $# -eq 0 ] || {
@@ -34,10 +34,10 @@ case $log_keep_days in '' | *[!0-9]*) bpf_die "BPF_LOG_KEEP_DAYS must be a whole
 [ "$log_keep_days" -ge 1 ] || bpf_die "BPF_LOG_KEEP_DAYS must be at least 1"
 
 bpf_resolve_paths
+bpf_ops_paths
 bpf_ensure_dir "$DATA_ROOT"
-JOB_LOG_DIR=$DATA_ROOT/logs
 bpf_ensure_private_dir "$JOB_LOG_DIR"
-JOB_LOG=$JOB_LOG_DIR/backup-$(date +%Y-%m-%d).log
+JOB_LOG=$JOB_LOG_DIR/backup-$(bpf_budapest_date).log
 touch "$JOB_LOG"
 chmod 600 "$JOB_LOG"
 exec 3>&1 >>"$JOB_LOG" 2>&1
@@ -54,21 +54,13 @@ find "$JOB_LOG_DIR" -maxdepth 1 -type f \( -name 'ingest-*.log' -o -name 'backup
     -mtime +"$((log_keep_days - 1))" -exec rm -f {} + 2>/dev/null || true
 
 bpf_cluster_exists || fail "no cluster at $PGDATA_DIR (deploy/local/db-init.sh)"
-accepting=0
-if (
-    bpf_find_pg_bin >/dev/null
-    bpf_load_cluster_conf
-    isready=$PG_BIN/pg_isready
-    [ -x "$isready" ] || isready=$(command -v pg_isready)
-    "$isready" -q -h "$SOCKET_DIR" -p "$PG_PORT" -t 5
-) 2>/dev/null; then accepting=1; fi
-if [ "$accepting" -eq 0 ]; then
+if ! bpf_db_accepting; then
     say "PostgreSQL is not running; starting it with deploy/local/db-start.sh"
     # 3>&-: the postmaster must not inherit cron's mail pipe or launchd's log descriptor.
-    "$SCRIPT_DIR/db-start.sh" 3>&- || fail "PostgreSQL could not be started (see the log)"
+    "$BASH" "$BPF_OPS_DIR/db-start.sh" 3>&- || fail "PostgreSQL could not be started (see the log)"
 fi
 
-"$SCRIPT_DIR/db-backup.sh" 3>&- || fail "db-backup.sh failed (see the log)"
+"$BASH" "$BPF_OPS_DIR/db-backup.sh" 3>&- || fail "db-backup.sh failed (see the log)"
 
 # ── pruning ─────────────────────────────────────────────────────────────────────────────────────────
 if [ "$keep_days" -eq 0 ]; then

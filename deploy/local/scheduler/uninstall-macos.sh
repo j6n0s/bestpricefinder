@@ -6,8 +6,8 @@
 set -euo pipefail
 umask 077
 
-# shellcheck source-path=SCRIPTDIR source=../_common.sh
-. "$(dirname "${BASH_SOURCE[0]}")/../_common.sh"
+# shellcheck source-path=SCRIPTDIR source=../_ops.sh
+. "$(dirname "${BASH_SOURCE[0]}")/../_ops.sh"
 
 LABELS="com.bestpricefinder.ingest-daily com.bestpricefinder.ingest-availability com.bestpricefinder.backup"
 

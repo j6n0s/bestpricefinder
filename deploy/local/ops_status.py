@@ -44,7 +44,8 @@ EXIT_UNAVAILABLE = 2
 STUCK_AFTER = timedelta(hours=3)
 #: The scheduler runs the daily ingest at 04:30 and 05:30 Budapest time; after this, today's data is due.
 DAILY_DUE = time(6, 0)
-KINDS = ("reference", "daily", "availability", "content")
+#: The second scheduled daily run (Budapest time).
+DAILY_RETRY = time(5, 30)
 FIX_STALE_XLSX = (
     "the GVH CDN still served an old XLSX (BUILD-BRIEF §4.1 trap 4). The scheduler runs the daily ingest at "
     "04:30 and 05:30 Budapest time; otherwise run deploy/local/run-ingest.sh daily again later"
@@ -121,11 +122,22 @@ def daily_ok(day: date) -> int:
     return EXIT_OK
 
 
-def _last_runs(conn: psycopg.Connection) -> dict[str, Run]:
-    rows = conn.execute(
-        "SELECT DISTINCT ON (kind) id, kind, status, data_date, started_at, finished_at, requests, warnings, "
-        "error FROM ops.ingest_run ORDER BY kind, id DESC"
-    ).fetchall()
+_LAST_RUNS = (
+    "SELECT DISTINCT ON (kind) id, kind, status, data_date, started_at, finished_at, requests, warnings, "
+    "error "
+    "FROM ops.ingest_run ORDER BY kind, id DESC"
+)
+_LAST_GOOD_RUNS = (
+    "SELECT DISTINCT ON (kind) id, kind, status, data_date, started_at, finished_at, requests, warnings, "
+    "error "
+    "FROM ops.ingest_run WHERE status IN ('ok', 'partial') AND finished_at IS NOT NULL ORDER BY kind, id DESC"
+)
+
+
+def _last_runs(conn: psycopg.Connection, *, good: bool = False) -> dict[str, Run]:
+    """The newest run of every kind; with ``good``, the newest finished ``ok`` or ``partial`` one (the runs
+    that ``api.latest`` and ``api.ingest_latest`` count)."""
+    rows = conn.execute(_LAST_GOOD_RUNS if good else _LAST_RUNS).fetchall()
     return {
         str(r[1]): Run(
             id=int(r[0]),
@@ -149,11 +161,14 @@ def _fix_for_error(error: str | None) -> str:
     if text.startswith("GvhConfigError"):
         return "set BPF_CONTACT_EMAIL=you@example.org in the env file (.env.local)"
     if text.startswith("GvhHttpError") or text.startswith("GvhBudgetExceeded"):
-        return "GVH or the network was unreachable; check the connection, then deploy/local/run-ingest.sh daily"
+        return (
+            "GVH or the network was unreachable; check the connection, then run the ingest again "
+            "(deploy/local/run-ingest.sh)"
+        )
     if text.startswith("GvhSchemaError"):
         return (
-            "GVH changed its API or XLSX format: the ingest refuses to guess. See server/bpf/gvh/ASSUMPTIONS.md "
-            "and the log in .data/logs/"
+            "GVH changed its API or XLSX format: the ingest refuses to guess. See "
+            "server/bpf/gvh/ASSUMPTIONS.md and the log in .data/logs/"
         )
     return "see the run's log in .data/logs/ and docs/RUNNING.md, Troubleshooting"
 
@@ -192,40 +207,57 @@ def _freshness(rep: Report, latest: date | None, ingested_at: datetime | None, n
 def _daily(rep: Report, run: Run | None, latest: date | None, now: datetime) -> None:
     if run is None:
         return  # _freshness already reported "no successful daily ingest yet"
-    served_today = latest is not None and latest >= now.date()
+    # An earlier run for the same data date succeeded (or partly): its data are served.
+    covered = latest is not None and run.data_date is not None and latest >= run.data_date
+    # Today's first scheduled attempt failed, and the 05:30 retry is still to come.
+    retry_due = run.data_date == now.date() and now.time() < DAILY_RETRY
     if run.status == "ok":
         rep.ok(f"{_describe(run)} (finished {_local(run.finished_at)}, {run.requests} requests)")
     elif run.status == "partial":
         codes = ", ".join(run.warning_codes[:6]) or "no warning codes"
-        fix = "data were written; the 05:30 run or a manual deploy/local/run-ingest.sh daily may complete them"
+        fix = (
+            "data were written; the 05:30 run or a manual deploy/local/run-ingest.sh daily may complete them"
+        )
         if "api_xlsx_date_mismatch" in run.warning_codes:
             fix = (
-                "api_xlsx_date_mismatch: the GVH API had not switched to the XLSX's day yet (BUILD-BRIEF §4.1 "
-                "trap 10); re-run deploy/local/run-ingest.sh daily later in the morning"
+                "api_xlsx_date_mismatch: the GVH API had not switched to the XLSX's day yet (BUILD-BRIEF "
+                "§4.1 trap 10); re-run deploy/local/run-ingest.sh daily later in the morning"
             )
         rep.warn(f"{_describe(run)} ({codes})", fix)
     elif run.status == "failed":
         text = f"{_describe(run)}: {run.error or 'no error recorded'}"
-        if served_today:
-            rep.warn(text + " (an earlier run today succeeded; its data are served)", _fix_for_error(run.error))
+        if covered:
+            served = " (an earlier run for that date succeeded; its data are served)"
+            rep.warn(text + served, _fix_for_error(run.error))
+        elif retry_due:
+            rep.warn(text + " (the scheduler retries at 05:30)", _fix_for_error(run.error))
         else:
             rep.fail(text, _fix_for_error(run.error))
     elif run.status == "running":
         rep.ok(f"{_describe(run)} since {_local(run.started_at)}")
 
 
-def _availability(rep: Report, run: Run | None, last_good: date | None, now: datetime) -> None:
+def _availability(rep: Report, run: Run | None, good: Run | None, now: datetime) -> None:
+    """``run``: the newest availability run; ``good``: the newest ok/partial one (what the API counts)."""
     fix = "deploy/local/run-ingest.sh availability (the scheduler runs it on Sundays at 05:00)"
-    if last_good is None:
+    if good is None or good.data_date is None:
         rep.warn("no availability ingest yet: every store counts as having data", fix)
-    elif (now.date() - last_good).days > HAS_DATA_WINDOW_DAYS:
+    elif (now.date() - good.data_date).days > HAS_DATA_WINDOW_DAYS:
         rep.warn(
-            f"the last good availability ingest is for {last_good.isoformat()}, more than "
+            f"the last good availability ingest is for {good.data_date.isoformat()}, more than "
             f"{HAS_DATA_WINDOW_DAYS} days ago: every store counts as having data again",
             fix,
         )
+    elif "no_daily_data" in good.warning_codes:
+        # It finished ok without refreshing anything, yet the API counts it as recent: then only stores with
+        # per-store prices count as having data, and the app hides the others.
+        rep.warn(
+            f"the last availability run #{good.id} ({good.data_date.isoformat()}) refreshed nothing: no "
+            "daily ingest had succeeded yet. Until a real one runs, most stores count as having no data",
+            "deploy/local/run-ingest.sh availability (now that a daily ingest has succeeded)",
+        )
     else:
-        rep.ok(f"availability data as of {last_good.isoformat()}")
+        rep.ok(f"availability data as of {good.data_date.isoformat()} (run #{good.id})")
     if run is not None and run.status == "failed":
         rep.warn(f"{_describe(run)}: {run.error or 'no error recorded'}", _fix_for_error(run.error))
     elif run is not None and run.status == "partial":
@@ -239,16 +271,10 @@ def report(now: datetime) -> int:
         with _connect() as conn:
             latest_row = conn.execute("SELECT data_date, ingested_at FROM api.latest").fetchone()
             runs = _last_runs(conn)
-            good = {
-                str(kind): day
-                for kind, day in conn.execute(
-                    "SELECT kind, max(data_date) FROM ops.ingest_run "
-                    "WHERE status IN ('ok', 'partial') AND finished_at IS NOT NULL GROUP BY kind"
-                ).fetchall()
-            }
+            good = _last_runs(conn, good=True)
             stuck = conn.execute(
-                "SELECT id, kind, started_at FROM ops.ingest_run WHERE status = 'running' AND started_at < %s "
-                "ORDER BY id",
+                "SELECT id, kind, started_at FROM ops.ingest_run "
+                "WHERE status = 'running' AND started_at < %s ORDER BY id",
                 (now - STUCK_AFTER,),
             ).fetchall()
             counts = conn.execute(
@@ -274,7 +300,8 @@ def report(now: datetime) -> int:
         rep.fail("no reference data (chains, stores) yet", "deploy/local/run-ingest.sh reference")
     reference = runs.get("reference")
     if reference is not None and reference.status == "failed":
-        rep.warn(f"{_describe(reference)}: {reference.error or 'no error recorded'}", _fix_for_error(reference.error))
+        text = f"{_describe(reference)}: {reference.error or 'no error recorded'}"
+        rep.warn(text, _fix_for_error(reference.error))
 
     content = runs.get("content")
     if recipes and ingredients:
@@ -282,8 +309,10 @@ def report(now: datetime) -> int:
     else:
         rep.fail("content (ingredients, recipes) not loaded", "deploy/local/load-content.sh")
     if content is not None and content.status == "failed":
-        rep.warn(f"last content load #{content.id} failed: {content.error or 'no error recorded'}",
-                 "deploy/local/load-content.sh")
+        rep.warn(
+            f"last content load #{content.id} failed: {content.error or 'no error recorded'}",
+            "deploy/local/load-content.sh",
+        )
 
     for run_id, kind, started_at in stuck:
         rep.warn(

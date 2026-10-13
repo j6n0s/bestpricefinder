@@ -38,8 +38,11 @@
 	request_body {
 		max_size 64KiB
 	}
-	# Do not advertise the server software.
-	header -Server
+	# Do not advertise the proxy software (Caddy adds "Server: Caddy" and "Via: 1.1 Caddy").
+	header {
+		-Server
+		-Via
+	}
 	reverse_proxy 127.0.0.1:8000
 	# No access log: it would record every visitor's IP address. To debug, uncomment this one, which masks
 	# the addresses (IPv4 to /16, IPv6 to /32) and keeps 30 days. Use an absolute path.

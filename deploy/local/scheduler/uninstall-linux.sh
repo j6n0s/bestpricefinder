@@ -8,8 +8,8 @@
 set -euo pipefail
 umask 077
 
-# shellcheck source-path=SCRIPTDIR source=../_common.sh
-. "$(dirname "${BASH_SOURCE[0]}")/../_common.sh"
+# shellcheck source-path=SCRIPTDIR source=../_ops.sh
+. "$(dirname "${BASH_SOURCE[0]}")/../_ops.sh"
 
 BEGIN_MARK="# >>> bestpricefinder schedule (deploy/local/scheduler/install-linux.sh) >>>"
 END_MARK="# <<< bestpricefinder schedule <<<"
@@ -25,7 +25,9 @@ fi
 command -v "$CRONTAB" >/dev/null 2>&1 || bpf_die "$CRONTAB not found"
 
 work=$(mktemp -d "${TMPDIR:-/tmp}/bpf-cron.XXXXXX")
-trap 'rm -rf "$work"' EXIT
+# shellcheck disable=SC2329 # invoked by the EXIT trap
+cleanup() { rm -f "$work/current" "$work/err" "$work/new" "$work/check" && rmdir "$work"; }
+trap cleanup EXIT
 if ! "$CRONTAB" -l >"$work/current" 2>"$work/err"; then
     if grep -qi 'no crontab' "$work/err"; then
         bpf_info "No crontab: the bestpricefinder schedule is not installed."

@@ -24,7 +24,7 @@ Quick reference (all in `deploy/local/`):
 |---|---|
 | `db-init.sh` | Creates the dedicated database cluster and `.env.local` (once). |
 | `db-start.sh` / `db-stop.sh` | Starts or stops the cluster. |
-| `load-content.sh` | Applies migrations, validates `data/`, loads ingredients, recipes and KSH prices. |
+| `load-content.sh` | Applies migrations, then validates `data/` and loads ingredients, recipes and KSH prices. |
 | `run-ingest.sh reference\|daily\|availability` | Fetches GVH data, with a lock and a log in `.data/logs/`. |
 | `build-web.sh` | `npm ci`, `npm run check` and `npm run build` in `web/`. |
 | `run-api.sh` | Serves the app on http://127.0.0.1:8000. |
@@ -56,13 +56,14 @@ node --version                               # v22.12 or newer
 ### Linux (Debian/Ubuntu)
 
 ```sh
-sudo apt install postgresql git age tzdata cron curl   # PostgreSQL 16 or newer
+sudo apt install postgresql git age tzdata cron curl   # PostgreSQL 16 or newer (Ubuntu 24.04: 16)
 curl -LsSf https://astral.sh/uv/install.sh | sh        # uv, into ~/.local/bin
 # Node.js 22: from https://nodejs.org/ (or NodeSource / nvm); check with: node --version
 ```
 
 The distribution's own PostgreSQL service is not used and may stay stopped. The scripts find the server
-binaries in `/usr/lib/postgresql/<version>/bin` (or set `BPF_PG_BIN`).
+binaries in `/usr/lib/postgresql/<version>/bin` (or set `BPF_PG_BIN`). Debian 12 ships PostgreSQL 15, which is
+too old: install 16 or newer from the PostgreSQL project's apt repository (apt.postgresql.org).
 
 ## 2. Get the code
 
@@ -92,8 +93,10 @@ cluster with `deploy/local/db-start.sh`; the scheduled jobs also start it when t
 deploy/local/load-content.sh
 ```
 
-This applies the database migrations, validates `data/` (ingredients, recipes, KSH prices) and loads it. Run it
-again after every `git pull`. It is idempotent.
+This applies the database migrations, then validates `data/` (ingredients, recipes, KSH prices) and loads it in
+one transaction: if anything is invalid, nothing is written. Run it again after every `git pull`. It is
+idempotent. Once the first ingest has run (step 6), it also checks the ingredients' GVH categories and the
+recipes' price coverage against the real GVH data, so run it once more after step 6.
 
 ## 5. Set your contact e-mail
 
@@ -112,11 +115,12 @@ deploy/local/run-ingest.sh daily          # today's prices: about 1,000-1,700 re
 deploy/local/run-ingest.sh availability   # which store carries what: thousands of requests, about an hour
 ```
 
-- Run `daily` **after about 04:30 Budapest time**. GVH regenerates its daily XLSX at about 02:00 UTC (04:00 in
-  summer, 03:00 in winter). Before that the CDN serves yesterday's file, and the run fails with "stale XLSX".
-  Nothing is wrong then: run it again later.
-- `availability` needs the products of a daily run, so run it after `daily`. Until it has run once, every
-  store counts as having data.
+- `daily` fetches the prices of today's date (Budapest). Between midnight and about 04:30 Budapest time it fails
+  with "stale XLSX": GVH regenerates its daily XLSX at about 02:00 UTC (04:00 in summer, 03:00 in winter), and
+  until then its CDN serves yesterday's file. Nothing is wrong then, and nothing was written: run it again later.
+- Run `availability` **after** a successful `daily`: it refreshes the products of the latest daily run. Run before
+  any, it refreshes nothing, and the app then treats most stores as having no data until it runs again
+  (`doctor.sh` warns about this). Until the first real availability run, every store counts as having data.
 - At most one ingest runs at a time. A second one exits with code 75 and says so.
 - Output goes to the terminal and to `.data/logs/ingest-YYYY-MM-DD.log`.
 - Exit codes: 0 ok, 1 failed, 3 partial (data were written but something is missing; `doctor.sh` shows what).
@@ -128,7 +132,9 @@ deploy/local/build-web.sh
 ```
 
 This runs `npm ci` (it needs the network), then `npm run check` (types and accessibility rules) and `npm run
-build`, which writes `web/build/`.
+build`, which writes `web/build/`. `npm ci` prints an `npm audit` summary: those advisories concern
+development-only packages (the test runner, and SvelteKit's server runtime, which this static app does not
+ship), not the built app; see "Known issues" in [`web/README.md`](../web/README.md).
 
 ## 8. Start the app
 
@@ -138,7 +144,8 @@ deploy/local/run-api.sh
 
 Open <http://127.0.0.1:8000>. Keep the terminal tab open; Ctrl-C stops the app. The script refuses to start
 when `web/build` is missing or migrations are pending, and it warns when `web/build` is older than the web
-sources. It binds to 127.0.0.1 only, so other devices cannot reach it without Caddy.
+sources. It binds to 127.0.0.1 only, so other devices cannot reach it without Caddy. Nothing starts the app
+by itself: after a reboot, run `deploy/local/db-start.sh` and then `deploy/local/run-api.sh` again.
 
 Then check the whole installation:
 
@@ -191,9 +198,9 @@ deploy/local/scheduler/uninstall-linux.sh
 
 Debian/Ubuntu cron ignores `CRON_TZ`, and a `CRON_TZ` line would also shift the schedule of your other entries.
 So every line of the block fires hourly, and `scheduler/at-budapest.sh` lets it through only in the Budapest hour
-of the job. The times are right whatever the machine's time zone, including across daylight saving changes. Cron
-does not catch up on runs missed while the machine was off. A cron daemon must be running
-(`sudo systemctl enable --now cron`).
+of the job. The times are right whatever the machine's time zone (as long as its UTC offset is a whole number of
+hours, which the installer checks), including across daylight saving changes. Cron does not catch up on runs
+missed while the machine was off. A cron daemon must be running (`sudo systemctl enable --now cron`).
 
 Both installers copy these settings into the jobs if they are set when you run the installer (the jobs do not
 see your shell's environment): `BPF_PG_BIN`, `BPF_PGDATA`, `BPF_ENV_FILE`, `BPF_DB_NAME`, `BPF_BACKUP_DIR`,
@@ -218,7 +225,7 @@ age-keygen -o ~/.config/bestpricefinder/backup-key.txt     # prints "Public key:
 # Store a copy of backup-key.txt in your password manager. Without it the backups cannot be read.
 export BPF_BACKUP_AGE_RECIPIENT=age1...                      # the public key
 deploy/local/db-backup.sh                                    # writes only bpf-<timestamp>.dump.age
-deploy/local/scheduler/install-macos.sh                      # re-run, so the nightly job encrypts too
+deploy/local/scheduler/install-macos.sh                      # re-run (Linux: install-linux.sh), so the nightly job encrypts too
 ```
 
 Copy `.data/backups/*.dump.age` to an external disk or a cloud drive now and then. To restore, see
@@ -248,7 +255,7 @@ Start with `deploy/local/doctor.sh`. Then look at the newest log in `.data/logs/
 | Symptom | Cause and fix |
 |---|---|
 | `failed: stale XLSX` (`StaleXlsxError: ... sheet date X != expected Y`) | GVH's CDN still served yesterday's file (BUILD-BRIEF §4.1 trap 4). It is regenerated at about 02:00 UTC. No prices were written. The 05:30 run retries; by hand, run `run-ingest.sh daily` later. If it persists all day, check <https://arfigyelo.gvh.hu> in a browser. |
-| `partial` with `api_xlsx_date_mismatch` | The GVH API switches days at about 00:00 UTC, and its listing still disagreed with the dated XLSX (trap 10). The data were written and are served. Run `run-ingest.sh daily` again later in the morning to refresh the listing columns. |
+| `partial` with `api_xlsx_date_mismatch` | The GVH API switches days at about 00:00 UTC, and its listing still disagreed with the dated XLSX (trap 10). The data were written and are served. The 05:30 run retries automatically (only an `ok` run makes it a no-op); by hand, run `run-ingest.sh daily` again later in the morning. |
 | `GvhHttpError`, `ConnectError`, timeouts | GVH or your network is unreachable. Check the connection, then run the ingest again. The client already retries 5xx and connection errors 3 times. |
 | `GvhSchemaError` | GVH changed its undocumented API or XLSX. The ingest refuses to guess (it fails loudly). See `server/bpf/gvh/ASSUMPTIONS.md`; the code needs an update. |
 | `GvhConfigError` / "BPF_CONTACT_EMAIL is not set" | Step 5. |
@@ -258,6 +265,7 @@ Start with `deploy/local/doctor.sh`. Then look at the newest log in `.data/logs/
 | `address already in use` | Something else uses port 8000: stop it, or start with `BPF_API_PORT=8001 deploy/local/run-api.sh`. |
 | The app says the prices are stale | The latest data are older than yesterday: the schedule did not run or keeps failing. Check `doctor.sh` and `.data/logs/`. |
 | macOS: `Operation not permitted` in `.data/logs/launchd-*.log` | The repository is in a protected folder (step 2). Move it and re-run `install-macos.sh`. |
+| doctor: "the last availability run ... refreshed nothing" | `availability` ran before any daily run had succeeded, so the app treats most stores as having no data. Run `run-ingest.sh availability` again now (step 6). |
 | A run stays `running` in doctor | Its process was killed (e.g. power loss). It is harmless, because the next run is not blocked. |
 | Linux: jobs never run | No cron daemon (`sudo systemctl enable --now cron`), or the machine was off at those hours. |
 

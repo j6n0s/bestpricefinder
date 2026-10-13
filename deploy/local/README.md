@@ -53,7 +53,7 @@ everything else is rejected explicitly. `server/tests/test_db_roles.py` checks a
 ## Operation scripts
 
 ```sh
-deploy/local/load-content.sh                      # bpf-migrate, validate data/ (no DB), load it as bpf_ingest
+deploy/local/load-content.sh                      # bpf-migrate, then validate data/ and load it as bpf_ingest
 deploy/local/run-ingest.sh reference|daily|availability [bpf-ingest options]
 deploy/local/build-web.sh                         # npm ci, npm run check, npm run build (web/build)
 deploy/local/run-api.sh                           # python -m bpf.api on http://127.0.0.1:8000 (Ctrl-C stops)
@@ -65,13 +65,14 @@ deploy/local/scheduler/backup-job.sh              # db-backup.sh + pruning, as t
 
 | Script | Notes |
 |---|---|
-| `load-content.sh` | Stops at the first failing step; every step is transactional. `--allow-low-coverage` is passed to `python -m bpf.content`. Run it after every `git pull`. |
-| `run-ingest.sh` | Needs `BPF_CONTACT_EMAIL` (env file or environment). One ingest at a time: `flock` on `.data/locks/ingest.lock` (Linux), a `mkdir` lock with the owner's pid on macOS (a lock left by a dead process is broken safely). A manual run exits 75 if another holds the lock; `--scheduled` waits up to `BPF_INGEST_LOCK_WAIT_S` (10800 s). Output is appended to `.data/logs/ingest-YYYY-MM-DD.log` (mode 600); a manual run also prints it. Exit codes: bpf-ingest's (0 ok, 1 failed, 2 usage, 3 partial) or 75. |
+| `load-content.sh` | `bpf-migrate`, then `python -m bpf.content`, which validates `data/` (against the database's GVH categories once a reference ingest has run), checks recipe coverage (with the latest GVH prices once a daily ingest has run) and loads everything in one transaction; invalid content writes nothing. `--allow-low-coverage` is passed on. Run it after every `git pull`. |
+| `run-ingest.sh` | Needs `BPF_CONTACT_EMAIL` (env file or environment). One ingest of any kind at a time: `flock` on `.data/locks/ingest.lock` on Linux, a `mkdir` lock (`.data/locks/ingest.lock.d` with the owner's pid) on macOS; a lock whose owner is no longer a running `run-ingest.sh` is broken safely. A manual run exits 75 if another holds the lock; `--scheduled` waits up to `BPF_INGEST_LOCK_WAIT_S` (10800 s). Output is appended to `.data/logs/ingest-YYYY-MM-DD.log` (Budapest date, mode 600); a manual run also prints it. Exit codes: bpf-ingest's (0 ok, 1 failed, 2 usage, 3 partial) or 75. |
 | `run-ingest.sh --scheduled` | For launchd/cron: no options after the kind; quiet unless the run did not end ok (then one line for launchd's log or cron's mail); starts the cluster if it exists but is stopped. `daily` is a no-op when today's (Budapest) daily run already finished `ok` (`ops_status.py daily-ok`). The schedule starts it at 04:30 and 05:30, so a stale XLSX (exit 1, `StaleXlsxError`) or a partial run at 04:30 is retried once at 05:30. Nothing is retried inside one invocation. |
 | `build-web.sh` | Needs Node.js >= 22.12 and the network (`npm ci`). Restart `run-api.sh` afterwards: the API reads `index.html` and its CSP at startup. |
 | `run-api.sh` | Binds 127.0.0.1 only. Refuses to start without `web/build/index.html` or with pending migrations (`bpf-migrate --check`); warns when `web/build` is older than `web/src`, `web/static` or the web configuration. Builds nothing. |
 | `doctor.sh` | `[ ok ]` / `[WARN]` / `[FAIL]` lines with a `fix:` each: PostgreSQL >= 16, uv, Python >= 3.14, Node.js 22, npm; env file mode 600 and `BPF_CONTACT_EMAIL`; cluster, socket directory mode 700, running; migrations; latest data date and staleness, the last run of each ingest kind, reference data, content (`ops_status.py report`); web build; API health; schedule (and the Mac's time zone). |
 | `ops_status.py` | Small helper the scripts run with uv: `daily-ok` (exit 0 if today's daily run finished ok) and `report` (doctor's data checks). Connects as `bpf_ingest`, reads only. |
+| `_ops.sh` | Shell helpers shared by the operation scripts (it sources `_common.sh`, the helpers of the `db-*.sh` scripts). |
 | `scheduler/` | launchd plist templates (placeholders filled in by `install-macos.sh`), the cron installer, `at-budapest.sh` (lets an hourly cron line through only in its Budapest hour: Debian/Ubuntu cron ignores `CRON_TZ`) and `backup-job.sh`. Schedule (Europe/Budapest): daily ingest 04:30 and 05:30, availability Sundays 05:00, backup 03:15. |
 | `caddy/` | `Caddyfile.example` and its [README](caddy/README.md): HTTPS for phones, (a) LAN with Caddy's internal CA or (b) a real domain with Let's Encrypt. |
 
@@ -111,10 +112,21 @@ deploy/local/db-stop.sh && rm -rf .data/pg .data/pg-admin.env .env.local && depl
 
 ## Restoring a backup
 
+Stop `run-api.sh` and make sure no ingest is running, then, from the repository root:
+
 ```sh
-age --decrypt -i key.txt .data/backups/bpf-….dump.age > /tmp/bpf.dump   # only for encrypted dumps
-pg_restore -h .data/sock -p 5544 -U bpf_admin -d bpf --clean --if-exists /tmp/bpf.dump
+deploy/local/db-start.sh
+# Encrypted dumps only: decrypt into the private backup directory (mode 700).
+age --decrypt -i ~/.config/bestpricefinder/backup-key.txt -o .data/backups/restore.dump .data/backups/bpf-<timestamp>.dump.age
+# pg_restore asks for the bpf_admin password: BPF_ADMIN_PASSWORD in .data/pg-admin.env. The socket directory
+# must be an absolute path (BPF_DB_HOST in .env.local); a relative one would be taken for a host name.
+pg_restore -h "$PWD/.data/sock" -p 5544 -U bpf_admin -d bpf --clean --if-exists --single-transaction \
+    .data/backups/restore.dump        # or the unencrypted .data/backups/bpf-<timestamp>.dump
+rm .data/backups/restore.dump
+deploy/local/run-api.sh
 ```
+
+`--single-transaction`: if anything fails, the database stays as it was.
 
 ## Notes
 

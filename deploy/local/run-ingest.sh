@@ -10,23 +10,25 @@
 # Requirements: the env file (BPF_ENV_FILE, default .env.local; written by db-init.sh) and BPF_CONTACT_EMAIL,
 # either in that file or in the environment: GVH gets it in the User-Agent (BUILD-BRIEF §4.1 trap 11).
 #
-# Lock: only one ingest of any kind runs at a time (they all talk to GVH, at most 1 request/s in total):
-# flock(1) on <data>/locks/ingest.lock where it exists (Linux), else a mkdir lock with the owner's pid
-# (macOS). A manual run fails at once (exit 75) when another ingest holds the lock; a scheduled run waits
-# for it (BPF_INGEST_LOCK_WAIT_S, default 10800 s).
+# Lock: only one ingest of any kind runs at a time (they all talk to GVH, at most 1 request/s in total).
+# Linux: flock(1) on <data>/locks/ingest.lock (released by the kernel when the run ends, however it ends).
+# macOS: a mkdir lock, <data>/locks/ingest.lock.d with the owner's pid; a lock whose owner is no longer a
+# running run-ingest.sh is broken safely. A manual run fails at once (exit 75) when another ingest holds the
+# lock; a scheduled run waits for it (BPF_INGEST_LOCK_WAIT_S, default 10800 s).
 #
-# Log: everything (ours, uv's and bpf-ingest's) is appended to <data>/logs/ingest-YYYY-MM-DD.log (mode 600;
-# <data> is .data/ by default, the directory above BPF_PGDATA). Logs older than BPF_LOG_KEEP_DAYS (default 30)
-# are deleted. A manual run also shows the output; --scheduled prints nothing unless the run did not end ok.
-# Nothing here prints a secret: the env file is never echoed, and bpf-ingest never logs credentials.
+# Log: everything (ours, uv's and bpf-ingest's) is appended to <data>/logs/ingest-YYYY-MM-DD.log (Budapest
+# date, mode 600; <data> is .data/ by default, the directory above BPF_PGDATA). Job logs older than
+# BPF_LOG_KEEP_DAYS (default 30) are deleted. A manual run also shows the output; --scheduled prints nothing
+# unless the run did not end ok. Nothing here prints a secret: the env file is never echoed, and bpf-ingest
+# never logs credentials or response bodies.
 #
 # --scheduled (no further options allowed):
 #   - starts the local cluster first if it exists but is not running (a laptop after a reboot);
-#   - daily: does nothing when today's (Budapest) daily run already finished ok. The scheduler starts the
-#     daily ingest at 04:30 and again at 05:30 Europe/Budapest, so a stale XLSX at 04:30 (bpf-ingest exit 1,
-#     error "StaleXlsxError": the CDN still served yesterday's file, BUILD-BRIEF §4.1 trap 4) or a partial
-#     run is retried once, and the 05:30 run is a no-op after a good 04:30 run. Nothing is retried within
-#     one invocation.
+#   - daily: does nothing when today's (Budapest) daily run already finished ok (ops_status.py daily-ok).
+#     The scheduler starts the daily ingest at 04:30 and again at 05:30 Europe/Budapest, so a stale XLSX at
+#     04:30 (bpf-ingest exit 1 with "error: StaleXlsxError": the CDN still served yesterday's file,
+#     BUILD-BRIEF §4.1 trap 4) or a partial run is retried once at 05:30, and the 05:30 run is a no-op after
+#     a good 04:30 run. Nothing is retried within one invocation.
 #
 # Exit codes: those of bpf-ingest (0 ok, 1 failed, 2 usage error, 3 partial: data written, something
 # missing), plus 75 when another ingest holds the lock. A skipped scheduled daily run exits 0.
@@ -37,10 +39,9 @@
 set -euo pipefail
 umask 077
 
-# shellcheck source-path=SCRIPTDIR source=_common.sh
-. "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
+# shellcheck source-path=SCRIPTDIR source=_ops.sh
+. "$(dirname "${BASH_SOURCE[0]}")/_ops.sh"
 
-SCRIPT_DIR=$BPF_REPO_ROOT/deploy/local
 EX_LOCKED=75
 
 usage() {
@@ -61,31 +62,34 @@ case $kind in
     *) usage ;;
 esac
 if [ "$scheduled" -eq 1 ] && [ $# -gt 0 ]; then
-    bpf_die "--scheduled takes no bpf-ingest options (got: $*)"
+    printf 'error: --scheduled takes no bpf-ingest options (got: %s)\n' "$*" >&2
+    exit 2
 fi
 
-if [ "$(id -u)" -eq 0 ] && [ "${BPF_ALLOW_ROOT:-}" != "1" ]; then
-    bpf_die "do not run this as root; run it as the user who owns the database (BPF_ALLOW_ROOT=1 is for CI only)."
-fi
-
+bpf_ops_refuse_root
 bpf_resolve_paths
-JOB_LOG_DIR=$DATA_ROOT/logs
-LOCK_DIR=$DATA_ROOT/locks
+bpf_ops_paths
 
 keep_days=${BPF_LOG_KEEP_DAYS:-30}
 case $keep_days in '' | *[!0-9]*) bpf_die "BPF_LOG_KEEP_DAYS must be a whole number of days: $keep_days" ;; esac
 [ "$keep_days" -ge 1 ] || bpf_die "BPF_LOG_KEEP_DAYS must be at least 1"
 if [ "$scheduled" -eq 1 ]; then lock_wait=${BPF_INGEST_LOCK_WAIT_S:-10800}; else lock_wait=${BPF_INGEST_LOCK_WAIT_S:-0}; fi
 case $lock_wait in '' | *[!0-9]*) bpf_die "BPF_INGEST_LOCK_WAIT_S must be a whole number of seconds: $lock_wait" ;; esac
+if bpf_is_macos || [ "${BPF_LOCK_IMPL:-}" = "mkdir" ]; then
+    lock_impl="mkdir"
+else
+    lock_impl="flock"
+    command -v flock >/dev/null 2>&1 || bpf_die "flock not found; it is part of util-linux (apt install util-linux)."
+fi
 
 # ── log file ────────────────────────────────────────────────────────────────────────────────────────
 bpf_ensure_dir "$DATA_ROOT"
 bpf_ensure_private_dir "$JOB_LOG_DIR"
-JOB_LOG=$JOB_LOG_DIR/ingest-$(date +%Y-%m-%d).log
+JOB_LOG=$JOB_LOG_DIR/ingest-$(bpf_budapest_date).log
 touch "$JOB_LOG"
 chmod 600 "$JOB_LOG"
 if [ "$scheduled" -eq 1 ]; then
-    # Keep the caller's stdout (launchd's log file, or cron's mail) on fd 3 for the one-line failure notice;
+    # Keep the caller's stdout (launchd's log file, or cron's mail) on fd 3 for the one-line notice;
     # everything else goes to the job log.
     exec 3>&1 >>"$JOB_LOG" 2>&1
 fi
@@ -107,7 +111,7 @@ die() {
     exit 1
 }
 
-# Logs of the last $keep_days days are kept (find -mtime +N: N full days older than now).
+# Job logs of the last $keep_days days are kept (find -mtime +N: more than N full days old).
 find "$JOB_LOG_DIR" -maxdepth 1 -type f \( -name 'ingest-*.log' -o -name 'backup-*.log' \) \
     -mtime +"$((keep_days - 1))" -exec rm -f {} + 2>/dev/null || true
 
@@ -121,42 +125,16 @@ if [ -z "${BPF_CONTACT_EMAIL:-}" ] && ! bpf_env_get "$ENV_FILE" BPF_CONTACT_EMAI
     die "BPF_CONTACT_EMAIL is not set. Add the line BPF_CONTACT_EMAIL=you@example.org to $ENV_FILE:" \
         "GVH receives it in the User-Agent so that they can reach the operator (BUILD-BRIEF §4.1 trap 11)."
 fi
+UV=$(bpf_find_uv) || die "uv not found. Install it (macOS: brew install uv; see docs/RUNNING.md)."
 
-find_uv() {
-    local candidate
-    if command -v uv >/dev/null 2>&1; then
-        command -v uv
-        return 0
-    fi
-    for candidate in "${HOME:-/nonexistent}/.local/bin/uv" "${HOME:-/nonexistent}/.cargo/bin/uv" \
-        /opt/homebrew/bin/uv /usr/local/bin/uv; do
-        if [ -x "$candidate" ]; then
-            printf '%s\n' "$candidate"
-            return 0
-        fi
-    done
-    return 1
-}
-UV=$(find_uv) || die "uv not found. Install it (macOS: brew install uv; see docs/RUNNING.md)."
-
-server_python() { # python in the server project's environment (uv syncs it to uv.lock first if needed)
-    (cd "$BPF_REPO_ROOT/server" && PYTHONUNBUFFERED=1 "$UV" run --locked python "$@")
+server_python() { # python in server/'s environment; unbuffered, so the log is in order
+    PYTHONUNBUFFERED=1 bpf_server_run python "$@"
 }
 
-db_accepting() { # 0 when the local cluster accepts connections
-    (
-        bpf_find_pg_bin >/dev/null
-        bpf_load_cluster_conf
-        isready=$PG_BIN/pg_isready
-        [ -x "$isready" ] || isready=$(command -v pg_isready)
-        "$isready" -q -h "$SOCKET_DIR" -p "$PG_PORT" -t 5
-    ) 2>/dev/null
-}
-
-if [ "$scheduled" -eq 1 ] && bpf_cluster_exists && ! db_accepting; then
+if [ "$scheduled" -eq 1 ] && bpf_cluster_exists && ! bpf_db_accepting; then
     say "PostgreSQL is not running; starting it with deploy/local/db-start.sh"
     # 3>&-: the postmaster must not inherit cron's mail pipe or launchd's log descriptor.
-    "$SCRIPT_DIR/db-start.sh" 3>&- || die "PostgreSQL could not be started (see above)"
+    "$BASH" "$BPF_OPS_DIR/db-start.sh" 3>&- || die "PostgreSQL could not be started (see the log)"
 fi
 
 # ── lock ────────────────────────────────────────────────────────────────────────────────────────────
@@ -225,16 +203,16 @@ acquire_mkdir_lock() { # $1 = seconds to wait
 
 acquire_lock() { # $1 = seconds to wait
     bpf_ensure_private_dir "$LOCK_DIR"
-    if [ "${BPF_LOCK_IMPL:-}" != "mkdir" ] && command -v flock >/dev/null 2>&1; then
-        # fd 9 stays open in bpf-ingest too, so the lock is held for exactly as long as the run lives.
-        exec 9>>"$LOCK_DIR/ingest.lock"
-        if flock -n 9; then return 0; fi
-        [ "$1" -gt 0 ] || return 1
-        say "another ingest holds the lock; waiting up to $1 s"
-        flock -w "$1" 9
+    if [ "$lock_impl" = "mkdir" ]; then
+        acquire_mkdir_lock "$1"
         return
     fi
-    acquire_mkdir_lock "$1"
+    # fd 9 stays open in bpf-ingest too, so the lock is held for exactly as long as the run lives.
+    exec 9>>"$LOCK_DIR/ingest.lock"
+    if flock -n 9; then return 0; fi
+    [ "$1" -gt 0 ] || return 1
+    say "another ingest holds the lock; waiting up to $1 s"
+    flock -w "$1" 9
 }
 
 if ! acquire_lock "$lock_wait"; then
@@ -250,7 +228,7 @@ fi
 # ── a scheduled daily run after a good one is a no-op ───────────────────────────────────────────────
 if [ "$scheduled" -eq 1 ] && [ "$kind" = "daily" ]; then
     check_rc=0
-    check=$(server_python "$SCRIPT_DIR/ops_status.py" daily-ok 2>&1) || check_rc=$?
+    check=$(server_python "$BPF_OPS_DIR/ops_status.py" daily-ok 2>&1) || check_rc=$?
     say "$check"
     if [ "$check_rc" -eq 0 ]; then
         say "=== nothing to do ==="

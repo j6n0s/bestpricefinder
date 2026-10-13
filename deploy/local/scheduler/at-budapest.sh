@@ -9,9 +9,10 @@
 # Why: Debian/Ubuntu cron ignores CRON_TZ (only cronie honours it), and a CRON_TZ line would also change the
 # schedule of the user's own entries that follow it. install-linux.sh therefore writes crontab lines that fire
 # every hour at the job's minute; this script lets one of them through in each scheduled Budapest hour and
-# exits 0 silently otherwise. Daylight saving time needs no care: 03:00-23:59 exist exactly once every day.
-# It needs the time zone database (tzdata): without it `TZ=Europe/Budapest date` silently gives UTC, so the
-# script checks that the zone abbreviation is CET or CEST and fails loudly otherwise.
+# exits 0 silently otherwise. Daylight saving time needs no care for the hours used here (3, 4, 5): 02:00-02:59
+# is the only Budapest hour that is skipped or repeated. It needs the time zone database (tzdata): without it
+# `TZ=Europe/Budapest date` silently gives UTC, so the script checks that the zone abbreviation is CET or CEST
+# and fails loudly otherwise.
 set -euo pipefail
 
 usage() {
@@ -35,6 +36,13 @@ case $day in
     *) usage ;;
 esac
 case $hours in '' | ,* | *, | *,,* | *[!0-9,]*) usage ;; esac
+old_ifs=$IFS
+IFS=,
+for hour in $hours; do
+    case $hour in ?? | ?) ;; *) usage ;; esac # one or two digits
+    [ "$((10#$hour))" -le 23 ] || usage
+done
+IFS=$old_ifs
 
 # One date call, so weekday and hour come from the same instant. %u: 1 = Monday ... 7 = Sunday.
 now=$(TZ=Europe/Budapest date '+%u %H %Z')
@@ -53,10 +61,8 @@ now_hour=$((10#$now_hour)) # "04" -> 4 (a leading zero would otherwise mean octa
 
 [ -z "$want_day" ] || [ "$now_day" = "$want_day" ] || exit 0
 match=0
-old_ifs=$IFS
 IFS=,
 for hour in $hours; do
-    [ "$((10#$hour))" -le 23 ] || usage
     if [ "$((10#$hour))" -eq "$now_hour" ]; then match=1; fi
 done
 IFS=$old_ifs

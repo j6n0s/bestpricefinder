@@ -20,7 +20,7 @@ with `caddy validate` (Caddy 2.11).
 - **Headers:** the app already sends its security headers: a `Content-Security-Policy` with the hashes of its
   inline scripts, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` and so on (docs/API.md). Caddy
   passes them through unchanged and adds no security headers of its own, so nothing is duplicated or
-  overridden. It only removes its own `Server` header.
+  overridden. It only removes the `Server: Caddy` and `Via: 1.1 Caddy` headers it would add.
 - **HSTS** also comes from the app, with `BPF_HSTS=true`. Use it only with (b). With (a), a browser that
   received HSTS would refuse plain HTTP to that address for a year, and an IP address is not a stable
   identity.

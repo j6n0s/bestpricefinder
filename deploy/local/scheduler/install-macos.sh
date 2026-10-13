@@ -12,8 +12,8 @@
 #
 # launchd uses the Mac's local time, so the Mac must be set to Europe/Budapest (System Settings > General >
 # Date & Time); the script refuses otherwise (--any-timezone overrides: then the times above are local
-# times). A sleeping Mac runs missed jobs when it wakes (launchd merges the missed 04:30 and 05:30 runs into
-# one). The jobs write their logs to <data>/logs/ (.data/logs/ by default).
+# times). A sleeping Mac runs a missed job when it wakes (launchd merges the missed 04:30 and 05:30 runs into
+# one); a Mac that is switched off runs nothing. The jobs write their logs to <data>/logs/ (.data/logs/).
 #
 # The plists are rendered from the templates next to this script: the repository path, a PATH that finds uv
 # (and Homebrew's PostgreSQL and age), and these settings if they are set when you run the installer (the
@@ -25,13 +25,10 @@
 set -euo pipefail
 umask 077
 
-# shellcheck source-path=SCRIPTDIR source=../_common.sh
-. "$(dirname "${BASH_SOURCE[0]}")/../_common.sh"
+# shellcheck source-path=SCRIPTDIR source=../_ops.sh
+. "$(dirname "${BASH_SOURCE[0]}")/../_ops.sh"
 
-SCHED_DIR=$BPF_REPO_ROOT/deploy/local/scheduler
 LABELS="com.bestpricefinder.ingest-daily com.bestpricefinder.ingest-availability com.bestpricefinder.backup"
-PASS_THROUGH="BPF_PG_BIN BPF_PGDATA BPF_ENV_FILE BPF_DB_NAME BPF_BACKUP_DIR BPF_BACKUP_AGE_RECIPIENT \
-BPF_BACKUP_KEEP_DAYS BPF_LOG_KEEP_DAYS BPF_INGEST_LOCK_WAIT_S"
 
 usage() {
     printf 'usage: %s [--any-timezone] | --render-only DIR\n' "$0" >&2
@@ -60,16 +57,7 @@ if [ -z "$render_dir" ] && ! bpf_is_macos; then
     bpf_die "this installs launchd agents (macOS). On Linux use deploy/local/scheduler/install-linux.sh."
 fi
 
-# Values end up inside XML and launchd's environment: keep them boring (no quoting or escaping needed).
-check_value() { # $1 = description, $2 = value
-    case $2 in
-        *"'"* | *'"'* | *\\* | *'$'* | *'`'* | *'&'* | *'<'* | *'>'* | *'%'*)
-            bpf_die "$1 contains one of ' \" \\ \$ \` & < > %, which the scheduler does not support: $2"
-            ;;
-    esac
-    if [ "$(printf '%s' "$2" | wc -l | tr -d ' ')" -ne 0 ]; then bpf_die "$1 contains a newline"; fi
-}
-check_value "the repository path" "$BPF_REPO_ROOT"
+bpf_check_job_value "the repository path" "$BPF_REPO_ROOT"
 
 # ── time zone ───────────────────────────────────────────────────────────────────────────────────────
 if [ -z "$render_dir" ]; then
@@ -80,7 +68,7 @@ if [ -z "$render_dir" ]; then
             message="the Mac's time zone is not Europe/Budapest (/etc/localtime -> ${tz_link:-unknown}); launchd runs at local times."
             if [ "$any_tz" -eq 0 ]; then
                 bpf_die "$message Set the time zone to Budapest (System Settings > General > Date & Time), or pass" \
-                    "--any-timezone to accept local times (the ingest needs a run after about 04:00 Budapest time)."
+                    "--any-timezone to accept local times (the daily ingest needs a run after about 04:00 Budapest time)."
             fi
             bpf_warn "$message Installing anyway (--any-timezone)."
             ;;
@@ -95,48 +83,21 @@ if [ -z "$render_dir" ]; then
 fi
 
 # ── what goes into the plists ───────────────────────────────────────────────────────────────────────
-find_uv() {
-    local candidate
-    if command -v uv >/dev/null 2>&1; then
-        command -v uv
-        return 0
-    fi
-    for candidate in "${HOME:-/nonexistent}/.local/bin/uv" "${HOME:-/nonexistent}/.cargo/bin/uv" \
-        /opt/homebrew/bin/uv /usr/local/bin/uv; do
-        if [ -x "$candidate" ]; then
-            printf '%s\n' "$candidate"
-            return 0
-        fi
-    done
-    return 1
-}
-uv_path=$(find_uv) || bpf_die "uv not found. Install it first (brew install uv; docs/RUNNING.md)."
-uv_dir=$(cd "$(dirname "$uv_path")" && pwd -P)
-
-job_path=
-for dir in "$uv_dir" /opt/homebrew/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin; do
-    case ":$job_path:" in *":$dir:"*) continue ;; esac
-    job_path=${job_path:+$job_path:}$dir
-done
-check_value "PATH for the jobs" "$job_path"
-
+job_path=$(bpf_job_path /opt/homebrew/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin)
+settings=$(bpf_job_settings)
 bpf_resolve_paths
-JOB_LOG_DIR=$DATA_ROOT/logs
-check_value "the log directory" "$JOB_LOG_DIR"
+bpf_ops_paths
+bpf_check_job_value "the log directory" "$JOB_LOG_DIR"
 
 extra_env=
-for var in $PASS_THROUGH; do
-    value=${!var:-}
-    [ -n "$value" ] || continue
-    case $var in
-        BPF_PG_BIN | BPF_PGDATA | BPF_ENV_FILE | BPF_BACKUP_DIR) value=$(bpf_abspath "$value") ;;
-        BPF_BACKUP_AGE_RECIPIENT) case $value in age1*) ;; *) value=$(bpf_abspath "$value") ;; esac ;;
-    esac
-    check_value "$var" "$value"
-    extra_env="$extra_env		<key>$var</key>
-		<string>$value</string>
+while IFS= read -r line; do
+    [ -n "$line" ] || continue
+    extra_env="$extra_env		<key>${line%%=*}</key>
+		<string>${line#*=}</string>
 "
-done
+done <<EOF
+$settings
+EOF
 
 render() { # $1 = template, $2 = output file
     local line in_note=0 template_name
@@ -183,7 +144,7 @@ render() { # $1 = template, $2 = output file
 if [ -n "$render_dir" ]; then
     [ -d "$render_dir" ] || bpf_die "--render-only: $render_dir is not a directory"
     for label in $LABELS; do
-        render "$SCHED_DIR/$label.plist" "$render_dir/$label.plist"
+        render "$BPF_SCHED_DIR/$label.plist" "$render_dir/$label.plist"
         bpf_info "wrote $render_dir/$label.plist"
     done
     exit 0
@@ -199,13 +160,13 @@ uid=$(id -u)
 for label in $LABELS; do
     plist=$agents_dir/$label.plist
     launchctl bootout "gui/$uid/$label" >/dev/null 2>&1 || true # not loaded yet: fine
-    render "$SCHED_DIR/$label.plist" "$plist"
+    render "$BPF_SCHED_DIR/$label.plist" "$plist"
     launchctl enable "gui/$uid/$label"
     tries=0
     # bootout can take a moment to finish; bootstrap fails with "Input/output error" until it has.
     until launchctl bootstrap "gui/$uid" "$plist"; do
         tries=$((tries + 1))
-        [ "$tries" -lt 5 ] || bpf_die "launchctl bootstrap failed for $plist"
+        [ "$tries" -lt 5 ] || bpf_die "launchctl bootstrap failed for $plist (run this in a Terminal of the logged-in user)"
         sleep 1
     done
     launchctl print "gui/$uid/$label" >/dev/null || bpf_die "$label is not loaded after bootstrap"
@@ -214,4 +175,4 @@ done
 bpf_info ""
 bpf_info "Installed. Logs: $JOB_LOG_DIR/ (ingest-*.log, backup-*.log; launchd-*.log hold only failures)."
 bpf_info "Check: launchctl print gui/$uid/com.bestpricefinder.ingest-daily | grep -E 'state|last exit'"
-bpf_info "Run now: launchctl kickstart gui/$uid/com.bestpricefinder.ingest-daily     Remove: $SCHED_DIR/uninstall-macos.sh"
+bpf_info "Run now: launchctl kickstart gui/$uid/com.bestpricefinder.ingest-daily     Remove: $BPF_SCHED_DIR/uninstall-macos.sh"

@@ -2,22 +2,24 @@
 # Brings the database schema and our own content up to date. Run it as your normal user, from any directory,
 # after deploy/local/db-init.sh and after every `git pull`:
 #
-#   deploy/local/load-content.sh                        # migrate, validate, load
+#   deploy/local/load-content.sh                        # migrate, then validate and load data/
 #   deploy/local/load-content.sh --allow-low-coverage   # load even if recipes fail the 90 % cost rule
 #
-# Steps (it stops at the first failure; nothing half-written: each step is transactional):
-#   1. uv run bpf-migrate                 apply pending db/migrations as bpf_migrator
-#   2. python -m bpf.content --dry-run    validate data/ (ingredients, recipes, KSH prices) without a database
-#   3. python -m bpf.content              validate again against the database's GVH categories, check recipe
-#                                         coverage, and load everything as bpf_ingest in one transaction
+# Steps (it stops at the first failure):
+#   1. uv run bpf-migrate     apply pending db/migrations as bpf_migrator (one transaction per migration)
+#   2. python -m bpf.content  validate data/ (ingredients, recipes, KSH prices; the ingredients' GVH leaves
+#                             against the database's categories once a reference ingest has run), check the
+#                             recipes' cost coverage (with the latest GVH prices once a daily ingest has run),
+#                             then load everything as bpf_ingest in ONE transaction. Invalid content writes
+#                             nothing, and the content loaded before stays as it was.
 #
 # Needs the env file (BPF_ENV_FILE, default .env.local) and a running cluster (deploy/local/db-start.sh).
 # BPF_ALLOW_ROOT=1 lets it run as root (CI containers only).
 set -euo pipefail
 umask 077
 
-# shellcheck source-path=SCRIPTDIR source=_common.sh
-. "$(dirname "${BASH_SOURCE[0]}")/_common.sh"
+# shellcheck source-path=SCRIPTDIR source=_ops.sh
+. "$(dirname "${BASH_SOURCE[0]}")/_ops.sh"
 
 content_args=()
 for arg in "$@"; do
@@ -30,51 +32,24 @@ for arg in "$@"; do
     esac
 done
 
-if [ "$(id -u)" -eq 0 ] && [ "${BPF_ALLOW_ROOT:-}" != "1" ]; then
-    bpf_die "do not run this as root; run it as the user who owns the database (BPF_ALLOW_ROOT=1 is for CI only)."
-fi
-
+bpf_ops_refuse_root
 bpf_resolve_paths
-[ -f "$ENV_FILE" ] || bpf_die "no env file at $ENV_FILE. Create the database first: deploy/local/db-init.sh"
-export BPF_ENV_FILE=$ENV_FILE
+bpf_require_env_file
+bpf_require_uv
 
-find_uv() {
-    local candidate
-    if command -v uv >/dev/null 2>&1; then
-        command -v uv
-        return 0
-    fi
-    for candidate in "${HOME:-/nonexistent}/.local/bin/uv" "${HOME:-/nonexistent}/.cargo/bin/uv" \
-        /opt/homebrew/bin/uv /usr/local/bin/uv; do
-        if [ -x "$candidate" ]; then
-            printf '%s\n' "$candidate"
-            return 0
-        fi
-    done
-    return 1
-}
-UV=$(find_uv) || bpf_die "uv not found. Install it (macOS: brew install uv; see docs/RUNNING.md)."
-
-in_server() { (cd "$BPF_REPO_ROOT/server" && "$UV" run --locked "$@"); }
-
-bpf_info "== 1/3 Database migrations (bpf-migrate, as bpf_migrator) =="
-if ! in_server bpf-migrate; then
-    bpf_die "migrations failed (see above). Is PostgreSQL running? deploy/local/db-start.sh"
+bpf_info "== 1/2 Database migrations (bpf-migrate, as bpf_migrator) =="
+if ! bpf_server_run bpf-migrate; then
+    bpf_die "migrations failed (see above); nothing further was done. Is PostgreSQL running? deploy/local/db-start.sh"
 fi
 
 bpf_info ""
-bpf_info "== 2/3 Validating data/ (no database) =="
+bpf_info "== 2/2 Content: validate data/, check recipe coverage, load (as bpf_ingest, one transaction) =="
 # "${arr[@]+"${arr[@]}"}" expands an empty array safely under set -u on bash 3.2 (macOS).
-if ! in_server python -m bpf.content --dry-run ${content_args[@]+"${content_args[@]}"}; then
-    bpf_die "the content in data/ is invalid; nothing was written. Fix the problems listed above (docs/DATA.md)."
-fi
-
-bpf_info ""
-bpf_info "== 3/3 Loading content (as bpf_ingest, one transaction) =="
-if ! in_server python -m bpf.content ${content_args[@]+"${content_args[@]}"}; then
-    bpf_die "loading failed; nothing was written (see above)."
+if ! bpf_server_run python -m bpf.content ${content_args[@]+"${content_args[@]}"}; then
+    bpf_die "the content was not loaded; nothing was written (see the problems above, and docs/DATA.md)."
 fi
 
 bpf_info ""
 bpf_info "Done: schema up to date and content loaded."
-bpf_info "Next (first time): deploy/local/run-ingest.sh reference, then daily, then availability (docs/RUNNING.md)."
+bpf_info "First time? Next: set BPF_CONTACT_EMAIL, then deploy/local/run-ingest.sh reference, daily and" \
+    "availability (docs/RUNNING.md, steps 5 and 6)."
