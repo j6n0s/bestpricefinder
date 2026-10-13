@@ -1,0 +1,850 @@
+leaf_id,unit,name,source
+1,l,Kunsági ESL tej 2.8% 1 L QQ,research/gvh-location/data/store_price_variation.csv
+2,l,"Abaúj dobozos tej 1,5% 1L",research/gvh-location/data/store_price_variation.csv
+2,l,Auchan Collection Gazdától az asztalig friss tej pasztőrözöt,research/gvh-location/data/store_price_variation.csv
+2,l,"Auchan Kedvenc pasztőrözött tej 1,5% 1 l",research/gvh-location/data/staples_store_variation.csv
+2,l,"ESL tej 1,5 % 1L",research/gvh-location/data/staples_store_variation.csv
+2,l,Kunsági ESL tej 1.5% 1 L QQ,research/gvh-location/data/staples_store_variation.csv
+2,l,Magyar ESL tej 1.5% 1 L QQ,research/gvh-location/data/store_price_variation.csv
+2,l,"Magyar és Finom tej 1,5% 1 l",research/gvh-location/data/store_price_variation.csv
+2,l,"Mizo ESL tej 1,5% 1,5 l PET",research/gvh-location/data/store_price_variation.csv
+2,l,"Mizo ESL zsírszegény tej 1,5% 1 l",research/gvh-location/data/store_price_variation.csv
+2,l,"Pilos Friss Tej 1,5%,  1l,",research/gvh-location/data/staples_store_variation.csv
+2,l,"Pusztaszabolcsi tej 1,5% 1 l palackos",research/gvh-location/data/store_price_variation.csv
+2,l,"S-Budget ESL zsírszegény tej 1,5% 1 l",research/gvh-location/data/staples_store_variation.csv
+2,l,"SPAR Hazai Szeretem ESL zsírszegény, homogénezett tej 1,5% 1",research/gvh-location/data/store_price_variation.csv
+2,l,"Sissy ESL tej 1,5% 1l",research/gvh-location/data/staples_store_variation.csv
+2,l,Tesco ESL tej 1.5% 1 L QQ,research/gvh-location/data/store_price_variation.csv
+2,l,"Tolle ESL 1,5%",research/gvh-location/data/store_price_variation.csv
+2,l,"Tolle ESL tej 1,5% 1l",research/gvh-location/data/store_price_variation.csv
+5,kg,FARMER TEJFÖL 20% 330 g,research/gvh-location/data/store_price_variation.csv
+5,,Magyar Tejföl 20%,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+5,,Milsani tejföl 20%,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+5,kg,RETRO TEJFÖL 20% 330 g QQ,research/gvh-location/data/store_price_variation.csv
+7,kg,Activia pille natúr 4x125g,research/gvh-location/data/store_price_variation.csv
+7,kg,Auchan Kedvenc natúr habart joghurt 200 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Auchan Kedvenc natúr joghurt 3% 850 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Auchan Kedvenc natúr joghurt élőflórás homogénezett  3% 175,research/gvh-location/data/store_price_variation.csv
+7,kg,"Auchan Kedvenc natúr joghurt élőflórás, homogénezett, 3% 450",research/gvh-location/data/store_price_variation.csv
+7,kg,"Auchan Tipp natúr joghurt 0,1% 175 g",research/gvh-location/data/staples_store_variation.csv
+7,kg,Cirmi zsírszegény natúr joghurt 150 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Cserpes Sajtműhely natúr joghurt élőflórás 250 g,research/gvh-location/data/store_price_variation.csv
+7,kg,DANONE GÖRÖG STILUSU JOGHURT 375 g QQ,research/gvh-location/data/store_price_variation.csv
+7,kg,Danone Activia Pille élőflórás natúr joghurt 8 x 125 g (1000,research/gvh-location/data/store_price_variation.csv
+7,kg,"Danone Activia Pille élőflórás, natúr joghurt 4 x 125 g (500",research/gvh-location/data/store_price_variation.csv
+7,kg,Danone Activia krémes joghurt 4x125g,research/gvh-location/data/store_price_variation.csv
+7,kg,Danone natúr joghurt 4 x 130 g,research/gvh-location/data/store_price_variation.csv
+7,kg,"Darassa Tej natúr joghurt, élőflórás, homogénezett savanyú t",research/gvh-location/data/store_price_variation.csv
+7,kg,Kokárdás natúr joghurt 3% 850 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Koliós Hercules High Protein zsírmentes görög joghurt 200 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Kukkonia krémes fehér natúr joghurt 150 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Magyar Joghurt natúr joghurt 140 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Magyar Joghurt natúr joghurt 300 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Marton habart natúr joghurt 200g,research/gvh-location/data/store_price_variation.csv
+7,kg,"Milbona Natúr joghurt, 2féle ,, 500g",research/gvh-location/data/store_price_variation.csv
+7,kg,Milkeria jogh.bifid.4x140g,research/gvh-location/data/store_price_variation.csv
+7,kg,"Milsani natúr joghurt 0,1% 175g",research/gvh-location/data/staples_store_variation.csv
+7,kg,"Milsani natúr joghurt 1,5% 175g",research/gvh-location/data/store_price_variation.csv
+7,kg,Mizo natúr joghurt 150 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Mizo natúr joghurt 330 g,research/gvh-location/data/store_price_variation.csv
+7,kg,NADUDVARI JOGHURT NATUR 3% 900 g QQ,research/gvh-location/data/store_price_variation.csv
+7,kg,"NÁDUDVARI JOGH. ÉLŐFLÓRÁS, NATÚR 1.4% 350 g QQ",research/gvh-location/data/store_price_variation.csv
+7,kg,Nádudvari natúr élőflórás krémjoghurt 700 g,research/gvh-location/data/store_price_variation.csv
+7,kg,"Nádudvari zsírszegény, élőflórás natúr joghurt 150 g",research/gvh-location/data/store_price_variation.csv
+7,kg,Nádudvari élőflórás natúr joghurt 150 g,research/gvh-location/data/store_price_variation.csv
+7,kg,Nádudvari élőflórás natúr joghurt 330 g,research/gvh-location/data/store_price_variation.csv
+7,kg,"Pilos Natúr joghurt 0,1%  175g",research/gvh-location/data/store_price_variation.csv
+7,kg,"Pilos Natúr joghurt 0,1% , 175g",research/gvh-location/data/staples_store_variation.csv
+7,kg,Pilos Natúr joghurt 3%   175g,research/gvh-location/data/store_price_variation.csv
+7,kg,"Pilos Natúr joghurt 3,0% , 1 kg",research/gvh-location/data/store_price_variation.csv
+7,kg,Pro görnatjog 1 kg QQ,research/gvh-location/data/store_price_variation.csv
+7,kg,"Pusztaszabolcsi natúr joghurt, poharas 3,5% 230 g",research/gvh-location/data/store_price_variation.csv
+7,kg,RN NATÚR GÖRÖG LIGHT JOGHURT 1 kg QQ,research/gvh-location/data/store_price_variation.csv
+7,kg,S-Budget Light natúr joghurt 500 g,research/gvh-location/data/staples_store_variation.csv
+7,kg,S-Budget natúr joghurt 175 g,research/gvh-location/data/store_price_variation.csv
+7,kg,S-budget natúr joghurt 3% 1kg,research/gvh-location/data/store_price_variation.csv
+7,kg,SPAR natúr élőflórás joghurt 450 g,research/gvh-location/data/store_price_variation.csv
+7,kg,SZENTKÚTI-TEJ NAT. JOG. LIGHT ÉLŐ. 150 g QQ,research/gvh-location/data/staples_store_variation.csv
+7,kg,Sissy natúr joghurt,research/gvh-location/data/store_price_variation.csv
+7,kg,"Sissy natúr joghurt 0,1%",research/gvh-location/data/staples_store_variation.csv
+7,kg,TESCO JOGHURT NATÚR 3% 175 g,research/gvh-location/data/store_price_variation.csv
+7,kg,TESCO NATÚR JOGHURT 400 g QQ,research/gvh-location/data/store_price_variation.csv
+7,,Tarka natúr joghurt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+7,kg,Tejmalom érlelt trappista db,research/gvh-location/data/store_price_variation.csv
+7,kg,Zott Primo natúr élőflórás joghurt 150 g,research/gvh-location/data/store_price_variation.csv
+8,,Hazánk Kincsei zselici kefir,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+8,,Tarka kefír,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+9,kg,Abaúj félzsíros túró 450 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Auchan Kedvenc félzsíros rögös túró 500 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Auchan Kedvenc félzsíros tehéntúró 250 g,research/gvh-location/data/staples_store_variation.csv
+9,kg,Garabonciás leveles tehéntúró 250 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Hazai félzsíros rögös túró 450 g,research/gvh-location/data/store_price_variation.csv
+9,kg,"Holn.Farm túró félzsíros 1,2% 500g",research/gvh-location/data/store_price_variation.csv
+9,kg,Jásztej félzsíros tehéntúró 450 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Krém-tehéntúró 250g,research/gvh-location/data/staples_store_variation.csv
+9,kg,Magyar Túró félzsíros rögös tehéntúró 400 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Magyar tégelyes túró 250 g QQ,research/gvh-location/data/store_price_variation.csv
+9,kg,Magyar és finom tég. félzsíros túró 250 g QQ,research/gvh-location/data/store_price_variation.csv
+9,kg,Martontej Hazai túró félzsíros 250 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Milfina túró 250g,research/gvh-location/data/store_price_variation.csv
+9,kg,Milli félzsíros rögös túró 250 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Milli félzsíros rögös túró 450 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Milsani félzsíros tehéntúró 250g,research/gvh-location/data/store_price_variation.csv
+9,kg,Milsani rögös túró 500g,research/gvh-location/data/store_price_variation.csv
+9,kg,Mizo félzsíros rögös túró 250 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Mizo félzsíros rögös túró 450 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Nádudvari félzsíros tehéntúró 450 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Nádudvari félzsíros túró 250 g,research/gvh-location/data/store_price_variation.csv
+9,kg,"Pilos Tehéntúró 0% , 250g",research/gvh-location/data/staples_store_variation.csv
+9,kg,"Pilos Tehéntúró 10%,  zsírszegény, 500g",research/gvh-location/data/store_price_variation.csv
+9,kg,"Pilos Tehéntúró 10%, zsírszegény,  250g,",research/gvh-location/data/store_price_variation.csv
+9,kg,"Pilos Tehéntúró 25%,  500g",research/gvh-location/data/store_price_variation.csv
+9,kg,"Pilos Tégelyes tehéntúró,  250g",research/gvh-location/data/store_price_variation.csv
+9,kg,S-Budget félzsíros rögös túró 250 g,research/gvh-location/data/staples_store_variation.csv
+9,kg,S-Budget félzsíros túró 500 g,research/gvh-location/data/store_price_variation.csv
+9,kg,SPAR Hazai Szeretem félzsíros tehéntúró 250 g,research/gvh-location/data/store_price_variation.csv
+9,kg,SPAR félzsíros rögös túró 450 g,research/gvh-location/data/store_price_variation.csv
+9,kg,SZENTKÚTI FÉLZS. TÚRÓ 500 g QQ,research/gvh-location/data/store_price_variation.csv
+9,kg,Sissy félzsíros tég. túró,research/gvh-location/data/store_price_variation.csv
+9,kg,Sissy félzsíros túró vcs.,research/gvh-location/data/store_price_variation.csv
+9,kg,Sissy krémes zsírszeg. túró,research/gvh-location/data/staples_store_variation.csv
+9,kg,Sissy rögös túró félzsíros,research/gvh-location/data/store_price_variation.csv
+9,kg,Sissy zsírszegény túró,research/gvh-location/data/store_price_variation.csv
+9,kg,Sissy zsírszegény túró vcs.,research/gvh-location/data/store_price_variation.csv
+9,kg,TOLLE RÖGÖS TÚRÓ FÉLZSÍROS 250 g QQ,research/gvh-location/data/store_price_variation.csv
+9,kg,TOLLE RÖGÖS TÚRÓ FÉLZSÍROS 450 g QQ,research/gvh-location/data/store_price_variation.csv
+9,kg,Tarka félzsíros tehéntúró 450 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Tesco félzsíros túró 500 g QQ,research/gvh-location/data/staples_store_variation.csv
+9,kg,Túró 250g,research/gvh-location/data/store_price_variation.csv
+9,kg,Vedd a hazait! Védd a hazait! túró 450 g,research/gvh-location/data/store_price_variation.csv
+9,kg,Zsírszegény rögös túró 500g,research/gvh-location/data/store_price_variation.csv
+10,kg,Auchan Collection Gazdától az asztalig  felezett trappista s,research/gvh-location/data/store_price_variation.csv
+10,kg,Auchan Collection Gazdától az asztalig trappista sajt pultos,research/gvh-location/data/store_price_variation.csv
+10,kg,Auchan Kedvenc trappista sajt Ft/kg,research/gvh-location/data/store_price_variation.csv
+10,kg,Auchan Kedvenc trappista sajt pultos Ft/kg,research/gvh-location/data/store_price_variation.csv
+10,kg,Cheeseland füstölt edami sajt,research/gvh-location/data/store_price_variation.csv
+10,kg,Gelej kézműves trappista sajt Ft/kg,research/gvh-location/data/store_price_variation.csv
+10,,Kokárdás trappista sajt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+10,kg,Kokárdás trappista sajt kg,research/gvh-location/data/staples_store_variation.csv
+10,kg,LECKER TRAPPISTA SAJT FELEZETT 700 g,research/gvh-location/data/staples_store_variation.csv
+10,kg,MIZO TRAPPISTA SAJT FT/KG,research/gvh-location/data/staples_store_variation.csv
+10,kg,"Magyar Trappista Sajt zsíros, félkemény trappista sajt",research/gvh-location/data/store_price_variation.csv
+10,,Magyar trappista sajt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+10,,Milbona Trapper tégla sajt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+10,kg,Milsani trappista sajt felezett 700g,research/gvh-location/data/store_price_variation.csv
+10,kg,Mizo trappista sajt,research/gvh-location/data/store_price_variation.csv
+10,kg,PURE MILK SAJTHASÁB,research/gvh-location/data/store_price_variation.csv
+10,kg,Patinás trappista sajt,research/gvh-location/data/store_price_variation.csv
+10,kg,"Pilos Trappista sajt   ca1,4kg",research/gvh-location/data/staples_store_variation.csv
+10,kg,"S-Budget Trappista felezett, zsíros, félkemény sajt 700 g",research/gvh-location/data/store_price_variation.csv
+10,kg,"S-Budget félzsíros, félkemény darabolt trappista sajt",research/gvh-location/data/store_price_variation.csv
+10,kg,"S-Budget félzsíros, félkemény trappista sajt",research/gvh-location/data/store_price_variation.csv
+10,kg,"SPAR darabolt zsíros, félkemény trappista sajt",research/gvh-location/data/store_price_variation.csv
+10,kg,Sissy trappista sajt egész kg,research/gvh-location/data/staples_store_variation.csv
+10,kg,Spar light szeletelt trappista sajt 125g,research/gvh-location/data/store_price_variation.csv
+10,kg,"Tolle füstölt, félkemény trappista sajt",research/gvh-location/data/store_price_variation.csv
+10,kg,Tolle trappista sajt egész kg,research/gvh-location/data/store_price_variation.csv
+10,kg,"Tolle trappista sajt félkemény, darabolt Ft/kg",research/gvh-location/data/store_price_variation.csv
+10,kg,Tolle trappista sajt kg,research/gvh-location/data/store_price_variation.csv
+10,kg,"Tolle trappista sajt, zsíros, félkemény Ft/kg",research/gvh-location/data/store_price_variation.csv
+10,kg,"Tolle zsíros, félkemény trappista sajt",research/gvh-location/data/staples_store_variation.csv
+10,kg,"Tolle zsíros, félkemény trappista sajt darabolt vákuumcsomag",research/gvh-location/data/store_price_variation.csv
+12,kg,Ammerländer márkázott vaj 250 g,research/gvh-location/data/store_price_variation.csv
+12,kg,Magyar Vaj teavaj 100 g,research/gvh-location/data/store_price_variation.csv
+13,,Milsani vajkrém,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+14,db,Auchan Kedvenc extra sárga friss tojás A osztály M-L méret 1,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc extra sárga tojás A osztály L méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc extra sárga tojás A osztály különböző méretű,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc friss tojás A osztály Jumbo L-XL méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc friss tojás A osztály L-XL méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc friss tojás A osztály M méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc friss tojás A osztály M méret 30 db,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc ketreces tartásból származó tojás A osztály M,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc mélyalmos friss tojás A osztály M-L méret 30,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc mélyalmos tojás A osztály L méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc mélyalmos tojás A osztály különböző méretű to,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Kedvenc szabad tartású tojás A osztály M méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Auchan Tipp friss tojás A osztály S méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Duna-Hyb tyúktojás 10 db ¨L¨,research/gvh-location/data/store_price_variation.csv
+14,db,Duna-Hyb tyúktojás 10 db ¨M¨,research/gvh-location/data/store_price_variation.csv
+14,db,FRISS 10DB TOJÁS 530G M MÉRET QQ,research/gvh-location/data/store_price_variation.csv
+14,db,FRISS L MERETU 10DB TOJÁS 630G QQ,research/gvh-location/data/store_price_variation.csv
+14,db,FUCHS EXT. SÁR. MÉLY. 10DB TOJÁS 530G M-L QQ,research/gvh-location/data/store_price_variation.csv
+14,db,FUCHS MA 10DB TOJÁS 630G L MÉRET QQ,research/gvh-location/data/store_price_variation.csv
+14,db,Farm Tojás Farm Prémium GMO mentes farm tojás M 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Farm Tojás Farm Prémium farm tojás M 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Farm Tojás Farm Prémium mélyalmos tojás M 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Farm Tojás Free Range tojás szabad tartásból M 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Farm Tojás Prémium Omega 3 tojás M 6 db,research/gvh-location/data/store_price_variation.csv
+14,db,"Friss Tojás 10 db, S-es",research/gvh-location/data/staples_store_variation.csv
+14,db,"Friss Tojás, A osztályú, M Méretű, 30db,",research/gvh-location/data/store_price_variation.csv
+14,db,"Friss tojás extra sárga. L méretu,,  10darab,",research/gvh-location/data/store_price_variation.csv
+14,db,"Friss tojás, A osztályú, M méretu,  10db,",research/gvh-location/data/store_price_variation.csv
+14,db,"Friss, mélyalmos tojás  extra sárga, L méretű, 10db",research/gvh-location/data/store_price_variation.csv
+14,db,Fuchs extra sárga tojás M-L 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Fuchs szabad tartásból származó extra sárga tojás M-L 6 db,research/gvh-location/data/store_price_variation.csv
+14,db,Goldland tojás M 10db,research/gvh-location/data/store_price_variation.csv
+14,db,"JóHázi Tojás, Mélyalmos  L-XL, 10 db",research/gvh-location/data/store_price_variation.csv
+14,db,JóHázi extrasárga tojás A osztály M-L méret 30 db,research/gvh-location/data/store_price_variation.csv
+14,db,JóHázi friss extra sárga tojás A osztály L méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,JóHázi friss tojás A osztály M méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Ketreces tojás 30 db S,research/gvh-location/data/staples_store_variation.csv
+14,db,Ketreces tojás10 db L-XL,research/gvh-location/data/store_price_variation.csv
+14,db,Kla-Man mentes tyúktojás L 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Kla-Man mentes tyúktojás M 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,MN FRISS 10DB TOJÁS 430G S MÉRET QQ,research/gvh-location/data/store_price_variation.csv
+14,db,MU 30DB TOJÁS 1290G S MÉRET QQ,research/gvh-location/data/staples_store_variation.csv
+14,db,Magyar fészektojás mélyalmos tartásból M méret 18 db,research/gvh-location/data/store_price_variation.csv
+14,db,Mélyalmos extra sárga tojás M 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Mélyalmos tojás 10 db M,research/gvh-location/data/store_price_variation.csv
+14,db,"Mélyalmos tojás 10M,  10db",research/gvh-location/data/store_price_variation.csv
+14,db,Mélyalmos tojás 10db l-es,research/gvh-location/data/store_price_variation.csv
+14,db,Mélyalmos tojás 30db M-es,research/gvh-location/data/store_price_variation.csv
+14,db,Mélyalmos tojás m10db,research/gvh-location/data/store_price_variation.csv
+14,db,Mélyalmostojás extra sárga 10 db L,research/gvh-location/data/store_price_variation.csv
+14,db,Nagy Tesó friss tojás L méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Pfeiffer mélyalmos tyúktojás 10 db ¨L¨,research/gvh-location/data/store_price_variation.csv
+14,db,Pfeiffer mélyalmos tyúktojás 10 db ¨M¨,research/gvh-location/data/store_price_variation.csv
+14,db,S-budget tojás 10db ¨s¨,research/gvh-location/data/staples_store_variation.csv
+14,db,S-budget tojás 18 m alternativ,research/gvh-location/data/store_price_variation.csv
+14,db,"S-budget tojás ¨l,, al",research/gvh-location/data/store_price_variation.csv
+14,db,S-buget tojás 10db ¨m¨,research/gvh-location/data/store_price_variation.csv
+14,db,SPAR Hazai Szeretem friss tojás M 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,SPAR friss tojás 10 db L,research/gvh-location/data/store_price_variation.csv
+14,db,SPAR mélyalmos friss tojás L 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,SPAR mélyalmos friss tojás M 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,SPAR mélyalmos friss tojás S 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,SZERENCSI EXTRA SÁRGA 10DB TOJÁS 530G M MÉRET,research/gvh-location/data/store_price_variation.csv
+14,db,SZERENCSI KETRE. 30DB TOJÁS 1590G M,research/gvh-location/data/store_price_variation.csv
+14,db,SZERENCSI MÉLYA. 10DB TOJÁS 530G M,research/gvh-location/data/store_price_variation.csv
+14,db,Spar szabadtart.tojás l 6db hazai szeretem,research/gvh-location/data/store_price_variation.csv
+14,db,Szabadtartású Friss tojás M-L  10db,research/gvh-location/data/store_price_variation.csv
+14,db,Szabadtartású tojás l 10db,research/gvh-location/data/store_price_variation.csv
+14,db,Szijártó Jumbo friss tojás L-XL 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Szijártó friss tojás A osztály S méret 30 db,research/gvh-location/data/staples_store_variation.csv
+14,db,Szijártó friss tojás M méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Szijártó szalmonella ellen kezelt tojás L 30 db,research/gvh-location/data/store_price_variation.csv
+14,db,"Szíjártó Jumbo +  mélyalmos tojás L-XL, 10db",research/gvh-location/data/store_price_variation.csv
+14,db,TESCO KETRECES 10DB TOJÁS 530G M MÉRET QQ,research/gvh-location/data/store_price_variation.csv
+14,db,TESCO KETRECES 10DB TOJÁS 630G L MÉRET QQ,research/gvh-location/data/store_price_variation.csv
+14,db,TF EXTRA SÁR. MÉLYALMOS 10DB TOJÁS 630G L QQ,research/gvh-location/data/store_price_variation.csv
+14,db,TF MÉLYALMOS 10DB TOJÁS 730G XL MÉRET QQ,research/gvh-location/data/store_price_variation.csv
+14,db,TS KETR. KART. 10DB TOJÁS 630G L MÉRET QQ,research/gvh-location/data/store_price_variation.csv
+14,db,TS MA 10DB TOJÁS 530G M MÉRET QQ,research/gvh-location/data/store_price_variation.csv
+14,db,TS SZABADTARTÁSÚ 10DB TOJÁS 530G M-L MÉRET QQ,research/gvh-location/data/store_price_variation.csv
+14,db,Tojás Király tojás L-XL méret 10 db,research/gvh-location/data/store_price_variation.csv
+14,db,Tálcás tojás M méretű 30db,research/gvh-location/data/store_price_variation.csv
+14,db,Tálcás tojás s méretű 30db,research/gvh-location/data/staples_store_variation.csv
+18,kg,14. FRISS CSIRKEMELL FILE PULTOS QQ,research/gvh-location/data/staples_store_variation.csv
+18,kg,ABM csirkemellfilé,research/gvh-location/data/store_price_variation.csv
+18,kg,"Auchan Kedvenc friss csirkemellfilé ""A"" minőségű védőgázas c",research/gvh-location/data/store_price_variation.csv
+18,kg,Auchan Kedvenc friss csirkemellfilé vákuumcsomagolásban Ft/k,research/gvh-location/data/store_price_variation.csv
+18,kg,CSIRKE BELSŐ MELLFILÉ VÁKUMCS Ft/kg,research/gvh-location/data/store_price_variation.csv
+18,kg,CSIRKE MELLFILÉ VÁKUMCS Ft/kg,research/gvh-location/data/store_price_variation.csv
+18,kg,Csirkemell filé lédig,research/gvh-location/data/staples_store_variation.csv
+18,kg,"Csirkemell tokány, kg",research/gvh-location/data/staples_store_variation.csv
+18,kg,"Friss Csirkemellfilé csemegepultos , kg",research/gvh-location/data/store_price_variation.csv
+18,kg,Friss csirke belső mellfilé Ft/kg,research/gvh-location/data/store_price_variation.csv
+18,kg,Friss csirkemellfilé,research/gvh-location/data/store_price_variation.csv
+18,kg,Friss csirkemellfilé vákuumcsomagolt Ft/kg,research/gvh-location/data/store_price_variation.csv
+18,kg,Friss csirkemellfilé védőgázas Ft/kg,research/gvh-location/data/store_price_variation.csv
+18,kg,GMO MENTES CSIRKEMELL FILÉ Ft/kg QQ,research/gvh-location/data/store_price_variation.csv
+18,kg,"Gazdától az asztalig friss csirkemellfilé, GMO-mentes termel",research/gvh-location/data/store_price_variation.csv
+18,kg,"Húsfarm Csirkemellfilé , kg",research/gvh-location/data/store_price_variation.csv
+18,kg,"Húsfarm Felezett csirkemell, 650g",research/gvh-location/data/store_price_variation.csv
+18,kg,"Húsfarm Háztáji GMO-mentes  csirkemellfilé, 650g",research/gvh-location/data/store_price_variation.csv
+18,kg,Húsmester csirkemellfilé kg vákuumcsomagolt,research/gvh-location/data/staples_store_variation.csv
+18,kg,Húsmester csirkemellfilé kg védőgázas,research/gvh-location/data/store_price_variation.csv
+18,kg,IVÁNYI BIO CSIRKEMELL,research/gvh-location/data/store_price_variation.csv
+18,kg,IVÁNYI KUKORICÁS CSIRKEMELLFILÉ Ft/kg QQ,research/gvh-location/data/store_price_variation.csv
+18,kg,Kedvenc Hentese friss csirkemellfilé kg,research/gvh-location/data/staples_store_variation.csv
+18,kg,LA PROVINCIA CSIRKE  MELLFILÉ ANTIBIOTIKUM ME.,research/gvh-location/data/store_price_variation.csv
+18,kg,Master Good csirkemellfilé GMO-mentes kg védőgázas,research/gvh-location/data/store_price_variation.csv
+18,kg,Master Good friss csirkemellfilé,research/gvh-location/data/store_price_variation.csv
+18,kg,Prémium friss csirkemellfilé  vákuumos csomagolásban Ft/kg,research/gvh-location/data/store_price_variation.csv
+18,kg,"Pult Auchan Kedvenc friss csirkemellfilé ""A"" Ft/kg",research/gvh-location/data/store_price_variation.csv
+18,kg,Royal friss tanyasi csirkemellfilé,research/gvh-location/data/store_price_variation.csv
+18,kg,S-Budget friss csirkemellfilé,research/gvh-location/data/store_price_variation.csv
+18,kg,"Székely Csürke csirkemellfilé ""A"" osztály vákuumcsomagolt Ft",research/gvh-location/data/staples_store_variation.csv
+18,kg,"Székely Csürke csirkemellfilé ""A"" osztály vákuumcsomagolt Ft/kg",research/gvh-location/data/basket_items_national.csv
+18,kg,TANYASI CSIRKE MELLFILÉ TC. Ft/kg QQ,research/gvh-location/data/store_price_variation.csv
+18,kg,TESCO CSIRKE MELLFILÉ VAC Ft/kg QQ,research/gvh-location/data/store_price_variation.csv
+18,kg,TESCO CSIRKEMELL FILÉ 500 g QQ,research/gvh-location/data/store_price_variation.csv
+18,kg,TS KISVÁKUM CSIRKE BELSŐ MELLFILÉ Ft/kg,research/gvh-location/data/store_price_variation.csv
+18,kg,Tanyasi friss csirkemellfilé Ft/kg,research/gvh-location/data/store_price_variation.csv
+18,kg,"Valdor friss csirkemellfilé A"" minőségű védőgázas csomagolás",research/gvh-location/data/store_price_variation.csv
+19,,Csirke alsócomb,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+19,,Csirke felsőcomb,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+21,kg,27. FRISS PULYKAMELL FILE PULTOS,research/gvh-location/data/store_price_variation.csv
+21,kg,Auchan Kedvenc friss pulykamellfilé védőgázas csomagolásban,research/gvh-location/data/store_price_variation.csv
+21,kg,Friss pulykamellfilé Ft/kg,research/gvh-location/data/store_price_variation.csv
+21,kg,Gallio pulykamellfilé 450 g,research/gvh-location/data/staples_store_variation.csv
+21,kg,"Húsfarm Friss pulykamellfilé csont és bőr nélkül , kg",research/gvh-location/data/store_price_variation.csv
+21,kg,Húsmester pulykamellfilé kg vákuumcsomagolt,research/gvh-location/data/staples_store_variation.csv
+21,kg,Kedvenc Hentese friss pulykamellfilé kg,research/gvh-location/data/staples_store_variation.csv
+21,kg,Pulykamell  kg,research/gvh-location/data/staples_store_variation.csv
+21,kg,Pulykamellfilé 450 g,research/gvh-location/data/staples_store_variation.csv
+21,kg,Pulykamellfilé lédig,research/gvh-location/data/store_price_variation.csv
+21,kg,TESCO FRISS PULYAKMELLFILÉ 450 g QQ,research/gvh-location/data/staples_store_variation.csv
+22,,Privát sertészsír,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+23,,Pick Pickolino virsli,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+25,,Hazánk Kincsei nemespenészes szalámi,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+25,,Karát csemege téliszalámi,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+25,,Karát paprikás téliszalámi,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+28,kg,"Alma 1,5 kg",research/gvh-location/data/store_price_variation.csv
+28,kg,Alma Idared lédig,research/gvh-location/data/store_price_variation.csv
+28,kg,Alma granny smith kg,research/gvh-location/data/store_price_variation.csv
+28,db,Alma idared 4db,research/gvh-location/data/store_price_variation.csv
+28,db,Alma piros 4db,research/gvh-location/data/store_price_variation.csv
+28,kg,Alma piros lédig,research/gvh-location/data/staples_store_variation.csv
+28,kg,Alma zingy kg,research/gvh-location/data/store_price_variation.csv
+28,kg,"Alma, Shampion kg",research/gvh-location/data/staples_store_variation.csv
+28,kg,IDARED ALMA LÉDIG QQ,research/gvh-location/data/staples_store_variation.csv
+28,kg,Idared alma Ft/kg,research/gvh-location/data/staples_store_variation.csv
+28,kg,Idared alma lédig,research/gvh-location/data/staples_store_variation.csv
+28,kg,Idared alma lédig kg,research/gvh-location/data/staples_store_variation.csv
+28,,Jonagold alma,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+28,kg,Kalodás piros alma Ft/kg,research/gvh-location/data/store_price_variation.csv
+28,kg,Piros alma csomagolt 2 kg,research/gvh-location/data/store_price_variation.csv
+28,kg,"Pirosalma 1,5kg",research/gvh-location/data/store_price_variation.csv
+28,kg,Pirosalma kg Idared,research/gvh-location/data/store_price_variation.csv
+28,,Red Jonaprince alma,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+28,kg,S-Budget piros alma 2 kg,research/gvh-location/data/store_price_variation.csv
+28,kg,Zöld alma kg Granny Smith,research/gvh-location/data/store_price_variation.csv
+31,db,Bandázsolt banán fürt 5db,research/gvh-location/data/store_price_variation.csv
+31,kg,Banán Ft/kg,research/gvh-location/data/staples_store_variation.csv
+31,db,Banán bandázsolt 5 db/fürt,research/gvh-location/data/store_price_variation.csv
+31,db,Banán fürt 5db-os,research/gvh-location/data/store_price_variation.csv
+31,kg,Banán kg,research/gvh-location/data/staples_store_variation.csv
+31,kg,Banán lédig,research/gvh-location/data/staples_store_variation.csv
+31,kg,Banán lédig kg,research/gvh-location/data/staples_store_variation.csv
+31,kg,Főzőbanán lédig,research/gvh-location/data/store_price_variation.csv
+32,,Citrom,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+32,kg,Citrom lédig,research/gvh-location/data/store_price_variation.csv
+32,kg,Tesco citrom 500 g,research/gvh-location/data/store_price_variation.csv
+34,kg,Bugaci fürtös paradicsom lédig,research/gvh-location/data/staples_store_variation.csv
+34,kg,FÜRTÖS PARADICSOM LÉDIG QQ,research/gvh-location/data/staples_store_variation.csv
+34,kg,Fürtös paradicsom Ft/kg,research/gvh-location/data/store_price_variation.csv
+34,kg,Fürtös paradicsom lédig,research/gvh-location/data/store_price_variation.csv
+34,kg,Fürtös édes koktélparadicsom lédig,research/gvh-location/data/store_price_variation.csv
+34,kg,"Hazai fürtös paradicsom, 1kg",research/gvh-location/data/store_price_variation.csv
+34,kg,Húsparadicsom lédig,research/gvh-location/data/store_price_variation.csv
+34,kg,Magyar fürtös paradicsom lé kg,research/gvh-location/data/staples_store_variation.csv
+34,kg,Paradicsom 1 kg,research/gvh-location/data/staples_store_variation.csv
+34,kg,Paradicsom 1kg,research/gvh-location/data/staples_store_variation.csv
+34,kg,Paradicsom fürtös lédig,research/gvh-location/data/staples_store_variation.csv
+34,kg,S-Budget paradicsom 500 g,research/gvh-location/data/store_price_variation.csv
+34,kg,Spar hazai szeretem húsparadicsom,research/gvh-location/data/store_price_variation.csv
+34,kg,Spar hazai szeretem marmande paradicsom,research/gvh-location/data/store_price_variation.csv
+35,db,Hazai TV paprika 3db,research/gvh-location/data/store_price_variation.csv
+35,kg,Hazai TV paprika kg,research/gvh-location/data/store_price_variation.csv
+35,kg,Hazai lecsópaprika 750gr,research/gvh-location/data/staples_store_variation.csv
+35,kg,Lecsópaprika 750g,research/gvh-location/data/staples_store_variation.csv
+35,kg,Magyar tv paprika lédig kg,research/gvh-location/data/store_price_variation.csv
+35,kg,PAPRIKA LÉDIG QQ,research/gvh-location/data/staples_store_variation.csv
+35,kg,Paprika lecsó 1kg,research/gvh-location/data/staples_store_variation.csv
+35,kg,Paprika tv lédig,research/gvh-location/data/store_price_variation.csv
+35,kg,S-Budget lecsópaprika,research/gvh-location/data/store_price_variation.csv
+35,kg,S-Budget étkezési fehér paprika 500 g,research/gvh-location/data/store_price_variation.csv
+35,kg,"S-budget xxl lecsópaprika 1,5kg",research/gvh-location/data/store_price_variation.csv
+35,db,SPAR Hazai Szeretem étkezési paprika 5 db,research/gvh-location/data/store_price_variation.csv
+35,kg,TF SZENTESI ZÖLDPAPRIKA 500 g,research/gvh-location/data/store_price_variation.csv
+35,kg,TV ZÖLDPAPRIKA 500G,research/gvh-location/data/store_price_variation.csv
+35,kg,Étkezési fehér paprika 500 g,research/gvh-location/data/store_price_variation.csv
+35,kg,Étkezési paprika 1 kg,research/gvh-location/data/store_price_variation.csv
+35,db,Étkezési paprika 5 db/csomag,research/gvh-location/data/store_price_variation.csv
+35,kg,Étkezési paprika Ft/kg,research/gvh-location/data/staples_store_variation.csv
+35,kg,Étkezési paprika lédig,research/gvh-location/data/staples_store_variation.csv
+36,db,Csomós répa db,research/gvh-location/data/store_price_variation.csv
+36,db,Csomós sárgarépa,research/gvh-location/data/store_price_variation.csv
+36,kg,S-Budget sárgarépa 1 kg,research/gvh-location/data/staples_store_variation.csv
+36,db,SÁRGARÉPA CSOMÓS,research/gvh-location/data/store_price_variation.csv
+36,kg,Sárgarépa 1 kg,research/gvh-location/data/store_price_variation.csv
+36,kg,Sárgarépa 1kg,research/gvh-location/data/staples_store_variation.csv
+36,kg,Sárgarépa 1kg-os,research/gvh-location/data/staples_store_variation.csv
+36,kg,Sárgarépa 2 kg,research/gvh-location/data/staples_store_variation.csv
+36,kg,Sárgarépa 2kg,research/gvh-location/data/staples_store_variation.csv
+36,kg,Sárgarépa Ft/kg,research/gvh-location/data/store_price_variation.csv
+36,db,Sárgarépa csomós,research/gvh-location/data/store_price_variation.csv
+36,kg,Sárgarépa lédig,research/gvh-location/data/staples_store_variation.csv
+36,kg,Sárgarépa lédig kg,research/gvh-location/data/store_price_variation.csv
+36,kg,TS sárgarépa 1 kg,research/gvh-location/data/store_price_variation.csv
+36,db,Új csomós sárgarépa Ft/csomó,research/gvh-location/data/store_price_variation.csv
+38,,Kígyóuborka,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+38,db,Kígyóuborka,research/gvh-location/data/staples_store_variation.csv
+38,db,Kígyóuborka 2db,research/gvh-location/data/staples_store_variation.csv
+38,db,Kígyóuborka db,research/gvh-location/data/staples_store_variation.csv
+38,db,"Kígyóuborka db, min. 300g",research/gvh-location/data/store_price_variation.csv
+38,db,Méhkeréki Kígyóuborka db,research/gvh-location/data/store_price_variation.csv
+39,kg,FOKHAGYMA 250 g,research/gvh-location/data/store_price_variation.csv
+39,kg,FOKHAGYMA LÉDIG QQ,research/gvh-location/data/staples_store_variation.csv
+39,db,Fehér fokhagyma 3 db,research/gvh-location/data/store_price_variation.csv
+39,db,Fokhagyma 200g,research/gvh-location/data/store_price_variation.csv
+39,kg,Fokhagyma 200g,research/gvh-location/data/store_price_variation.csv
+39,db,Fokhagyma 3 db/csomag,research/gvh-location/data/store_price_variation.csv
+39,db,Fokhagyma 3db-os,research/gvh-location/data/store_price_variation.csv
+39,db,Fokhagyma 5 darabos,research/gvh-location/data/store_price_variation.csv
+39,kg,Fokhagyma 500 g,research/gvh-location/data/store_price_variation.csv
+39,db,Fokhagyma db,research/gvh-location/data/store_price_variation.csv
+39,kg,Fokhagyma lédig,research/gvh-location/data/staples_store_variation.csv
+39,kg,Fokhagyma lédig Ft/kg,research/gvh-location/data/staples_store_variation.csv
+39,kg,Fokhagyma lédig kg,research/gvh-location/data/staples_store_variation.csv
+39,db,TS FOKHAGYMA 3 db QQ,research/gvh-location/data/store_price_variation.csv
+40,kg,GH VÖRÖSHAGYMA  1 KG QQ,research/gvh-location/data/store_price_variation.csv
+40,kg,GH VÖRÖSHAGYMA 2 KG,research/gvh-location/data/store_price_variation.csv
+40,kg,"S-Budget vöröshagyma 2,5 kg",research/gvh-location/data/store_price_variation.csv
+40,db,Salátahagyma 3 db,research/gvh-location/data/store_price_variation.csv
+40,kg,VÖRÖSHAGYMA LÉDIG QQ,research/gvh-location/data/staples_store_variation.csv
+40,kg,Vöröshagyma 1 kg,research/gvh-location/data/store_price_variation.csv
+40,kg,Vöröshagyma 1kg,research/gvh-location/data/store_price_variation.csv
+40,kg,Vöröshagyma 2 kg,research/gvh-location/data/store_price_variation.csv
+40,kg,"Vöröshagyma 2,5kg hálós",research/gvh-location/data/store_price_variation.csv
+40,kg,Vöröshagyma 2kg,research/gvh-location/data/staples_store_variation.csv
+40,db,Vöröshagyma 3 db/csomag,research/gvh-location/data/store_price_variation.csv
+40,db,Vöröshagyma 3db,research/gvh-location/data/store_price_variation.csv
+40,kg,Vöröshagyma 500 g,research/gvh-location/data/store_price_variation.csv
+40,kg,Vöröshagyma Ft/kg,research/gvh-location/data/staples_store_variation.csv
+40,kg,Vöröshagyma hálóban 2 kg,research/gvh-location/data/store_price_variation.csv
+40,kg,Vöröshagyma hálós 1kg,research/gvh-location/data/store_price_variation.csv
+40,kg,Vöröshagyma lédig,research/gvh-location/data/staples_store_variation.csv
+40,kg,Vöröshagyma lédig kg,research/gvh-location/data/staples_store_variation.csv
+41,kg,Burgonya 2kg hálós,research/gvh-location/data/staples_store_variation.csv
+41,kg,Burgonya d-pack piros i.v,research/gvh-location/data/store_price_variation.csv
+41,kg,Burgonya lédig sárga kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Burgonya piros 2kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Burgonya piros lédig,research/gvh-location/data/store_price_variation.csv
+41,kg,Burgonya sárga 2kg,research/gvh-location/data/store_price_variation.csv
+41,kg,"Burgonya étekzési salátának való 1,5kg",research/gvh-location/data/store_price_variation.csv
+41,kg,Burgonya étkezési 2kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Burgonya étkezési 5kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Burgonya étkezési lédig,research/gvh-location/data/staples_store_variation.csv
+41,kg,FP BURGONYA 2 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,GROWERS HARVEST BURGONYA 5 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Piros burgonya 10 kg,research/gvh-location/data/staples_store_variation.csv
+41,kg,Piros burgonya 5 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Piros burgonya 5kg,research/gvh-location/data/store_price_variation.csv
+41,kg,"Piros burgonya D-Pack 2,5 kg",research/gvh-location/data/store_price_variation.csv
+41,kg,Piros burgonya Ft/kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Piros burgonya kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Piros burgonya lédig QQ,research/gvh-location/data/store_price_variation.csv
+41,kg,Piros burgonya lédig kg,research/gvh-location/data/staples_store_variation.csv
+41,kg,Piros burgonya necc hálóban 2 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Piros étkezési burgonya 2 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,S-Budget étkezési burgonya 2 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,S-budget burgonya 5kg,research/gvh-location/data/staples_store_variation.csv
+41,kg,SPAR B (főzni való) mosott étkezési burgonya 3 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,SZIKLEVÉL PIROS BURGONYA SERPENYŐS 1 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Serpenyős burgonya 1 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Serpenyős burgonya Ft/kg,research/gvh-location/data/store_price_variation.csv
+41,kg,SÁRGA BURGONYA LÉDIG QQ,research/gvh-location/data/staples_store_variation.csv
+41,kg,"Sárga burgonya D-Pack 2,5 kg",research/gvh-location/data/store_price_variation.csv
+41,kg,Sárga burgonya Ft/kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Sárga burgonya kg,research/gvh-location/data/store_price_variation.csv
+41,kg,Sárga burgonya lédig,research/gvh-location/data/store_price_variation.csv
+41,kg,Sárga étkezési burgonya 2 kg,research/gvh-location/data/store_price_variation.csv
+41,kg,TESCO BURGONYA FOZNIVALO 2 kg QQ,research/gvh-location/data/store_price_variation.csv
+41,kg,TESCO BURGONYA SALATANAK VALO 2 kg QQ,research/gvh-location/data/store_price_variation.csv
+41,kg,TESCO BURGONYA SUTNIVALO 2 kg QQ,research/gvh-location/data/store_price_variation.csv
+41,kg,TESCO FINEST SISSI BURONYA 1 kg QQ,research/gvh-location/data/store_price_variation.csv
+43,kg,FEHÉR FEJESKÁPOSZTA lédig QQ,research/gvh-location/data/staples_store_variation.csv
+43,kg,Fejes káposzta lédig,research/gvh-location/data/staples_store_variation.csv
+43,kg,Fejes káposzta lédig kg,research/gvh-location/data/staples_store_variation.csv
+43,kg,Fejeskáposzta,research/gvh-location/data/staples_store_variation.csv
+43,kg,"Fejeskáposzta, 1kg",research/gvh-location/data/staples_store_variation.csv
+45,,Karfiol,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+46,kg,Parasztkenyér 1 kg,research/gvh-location/data/store_price_variation.csv
+46,kg,Szeletelt fehér kenyér 1 kg,research/gvh-location/data/store_price_variation.csv
+46,kg,X KOVÁSZOS VEKNI VEKNI 470G,research/gvh-location/data/store_price_variation.csv
+46,kg,X TIGRIS VEKNI 250G,research/gvh-location/data/store_price_variation.csv
+46,,Zsúrkenyér,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+47,kg,Szeletelt félbarna kenyér 500 g,research/gvh-location/data/store_price_variation.csv
+47,kg,X Felbarna vekni 500 g,research/gvh-location/data/store_price_variation.csv
+48,kg,Auchan Kedvenc teljes kiőrlésű kenyér 400 g,research/gvh-location/data/staples_store_variation.csv
+48,kg,Ceres nc telj.k. tönkölykenyér,research/gvh-location/data/store_price_variation.csv
+48,kg,Ceres vollkorn szeletek,research/gvh-location/data/store_price_variation.csv
+48,kg,Frissen a Péktől E-mentes kenyerek (teljes kiőrlésű kornmix),research/gvh-location/data/store_price_variation.csv
+48,kg,Kemencés Kedvenc TK kenyér,research/gvh-location/data/staples_store_variation.csv
+48,kg,Kemencés Kedvencek fehér kenyér vagy teljeskiörlésű kenyér 4,research/gvh-location/data/store_price_variation.csv
+48,kg,Kemencés kedvencek  (teljes kiőrlésű kenyér és félbarna keny,research/gvh-location/data/staples_store_variation.csv
+48,kg,"Kemencés kedvencek  (teljes kiőrlésű kenyér és félbarna kenyér) vegyes karton, 400g",research/gvh-location/data/basket_items_national.csv
+48,,Mátyás kenyere (teljes kiőrlésű),research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+48,kg,Mátyás kenyere telj.kiőrl.,research/gvh-location/data/store_price_variation.csv
+48,kg,PurPur vekni szeletelt 500g,research/gvh-location/data/store_price_variation.csv
+48,kg,TELJ.K.TÖBBMAGV. KENYÉR 500G,research/gvh-location/data/staples_store_variation.csv
+48,kg,Teljes kiőrlésű forma kenyér 750 g,research/gvh-location/data/store_price_variation.csv
+48,kg,Teljes kiőrlésű kenyér 400 g,research/gvh-location/data/staples_store_variation.csv
+48,kg,Teljes kiőrlésű kenyér 500 g,research/gvh-location/data/store_price_variation.csv
+48,kg,Teljes kiőrlésű kenyér 500g,research/gvh-location/data/store_price_variation.csv
+48,kg,Teljes kiőrlésű kovászos vekni 450 g,research/gvh-location/data/store_price_variation.csv
+48,kg,Teljes kiőrlésű rozsos kenyér,research/gvh-location/data/staples_store_variation.csv
+48,kg,"Vadkovászos kenyér, teljes kiörlésű 750g",research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA BIO FETTUCCINE 500 g *ÚJ,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA BIO MEZZI RIGATONI 500G,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA BIO ORIGIN VOLANTI 500 g *NEU,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA BIO PENNE 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA BIO TÖNKÖLY  PENNE 500G,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA CSAVART TÉSZTA TÖNKÖLY 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA FARFALLE TELJES KIŐRLÉSŰ 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA FUSILLI SZÁRAZTÉSZTA 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA LINGUINE DURUMBÚZA 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA SPAGETTI 500 g TELJES KIŐRLÉSŰ TÖNKÖLY,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA SPAGETTI DURUM 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA TELJES KIŐRLÉSŰ PIPE RIGATE TÉSZTA 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA TELJES KIŐRLÉSŰ SPAGETTITÉSZTA 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA TÖNKÖLY ORSÓ TÉSZTA 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA TÖNKÖLY SPAGETTI 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,ALNATURA TÖNKÖLY SPAGHETTINI 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Aranykosár 4 tojásos makaróni,research/gvh-location/data/store_price_variation.csv
+50,kg,Aranykosár 4 tojásos spagetti,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc Tavola In Italia Al Bronzo Fusilli durum szár,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc Tavola In Italia Al Bronzo spagetti száraztés,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc Tavola In Italia Penne Rigate durum száraztés,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc Tavola In Italia Pipe Rigate durum száraztész,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc Tavola In Italia spagetti durum száraztészta,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc Tavola in Italia Al Bronso makaróni durum szá,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc Tavola in Italia Al Bronso penne durum száraz,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc Tavola in Italia fusilli száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc durum fusilli tészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc durum penne tészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc durum spagetti tészta 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc durum száraztészta 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc makaróni 4 tojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc orsó durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,"Auchan Kedvenc orsó száraztészta, 4 tojásos 500 g",research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc penne durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc serpentini - csavartcső alakú durum száraztés,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc spagetti durum száraztészta 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,Auchan Kedvenc spagetti száraztészta 4 tojásos 500 g,research/gvh-location/data/staples_store_variation.csv
+50,kg,BARILLA APRÓ DURUM SZ.TÉSZTA MACCHERONI 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,BARILLA BAVETTE  DURUM SZT.500G,research/gvh-location/data/store_price_variation.csv
+50,kg,BARILLA RISONI APRÓ SZÁRAZTÉSZ. 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,BARILLA T.KIŐR. SPAGHETTI 500G,research/gvh-location/data/store_price_variation.csv
+50,kg,BARILLA T.KIŐRL. PENNETTE 500G,research/gvh-location/data/store_price_variation.csv
+50,kg,BIO GOURMET SPAGETTI TK. DURUM SZÁRAZTÉSZTA 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Bucatini szálas durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,"Barilla Collezione Mezze Penne Tricolore paradicsommal, spen",research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Fusilli apró durum száraztészta 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Fusilli apró durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Maccheroni apró durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Penne Rigate apró durum száraztészta 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Penne Rigate apró durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Piccolini Mini Penne Rigate apró durum száraztészta,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Spaghetti szálas durum száraztészta 1000 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Spaghetti szálas durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Spaghettini szálas durum száraztészta 1000 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Spaghettini szálas durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Barilla Spaghettoni szálas durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,,Barilla fusilli,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+50,,Barilla spagetti,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+50,kg,"Bio farfalle száraztészta teljes kiőrlésű durumbúzából, 500",research/gvh-location/data/store_price_variation.csv
+50,kg,"Bio penne száraztészta durumbúzából, 500 g",research/gvh-location/data/store_price_variation.csv
+50,kg,"Bio spagetti száraztészta durumbúzából, 500 g",research/gvh-location/data/store_price_variation.csv
+50,kg,"Bio spagetti száraztészta teljes kiőrlésű durumbúzából, 500",research/gvh-location/data/store_price_variation.csv
+50,kg,"Bio spirelli száraztészta durumbúzából, 500 g",research/gvh-location/data/store_price_variation.csv
+50,kg,Bronze Cut tészta,research/gvh-location/data/store_price_variation.csv
+50,kg,"Combino Fusilli durum , 500g",research/gvh-location/data/store_price_variation.csv
+50,kg,"Combino Makaróni 4 tojásos, 500g",research/gvh-location/data/store_price_variation.csv
+50,kg,"Combino Orsó, 4 tojásos,500g",research/gvh-location/data/store_price_variation.csv
+50,kg,"Combino Penne durum, 500g",research/gvh-location/data/store_price_variation.csv
+50,,Combino Pipe Rigate,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+50,kg,"Combino Spagetti durum, 1kg",research/gvh-location/data/staples_store_variation.csv
+50,kg,"Combino Spagetti durum, 500g",research/gvh-location/data/store_price_variation.csv
+50,kg,"Combino Spagetti in Bronzo form, 500g",research/gvh-location/data/store_price_variation.csv
+50,kg,"Combino Spagetti, 4 tojásos száraztészta, 500g,",research/gvh-location/data/store_price_variation.csv
+50,,Császár cérnácska,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+50,kg,Császár spagetti 4 tojásos 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Cucina Nobile spagetti durum 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Cucina spagetti durum 1kg,research/gvh-location/data/staples_store_variation.csv
+50,kg,DURILLO FUSILLI DURUM SZÁRAZ TÉSZTA 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,DURILLO PENNE DURUM SZÁRAZ TÉSZTA 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,DURILLO SPAGHET. DURUM SZÁRAZ TÉSZTA 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,De Cecco fusilli durum búzadarából készült tészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,De Cecco penne rigate durum búzadarából készült tészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,De Cecco spaghetti durum búzadarából készült tészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,"Diadalk Körettészta csökkentett szénhidráttartalmú, fehérjéb",research/gvh-location/data/store_price_variation.csv
+50,kg,Divella spagetti durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Divella trikolor spagetti száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Don Francesco Integrale fusilli teljes kiőrlésű durum száraz,research/gvh-location/data/store_price_variation.csv
+50,kg,Don Francesco Penne durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Don Francesco fusilli durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Don Francesco spagetti durum száraztészta 500 g,research/gvh-location/data/staples_store_variation.csv
+50,kg,Dunakeszi spagetti 2 tojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Dunakeszi spagetti 4 tojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Família orsó 4 tojásos száraztészta 400 g,research/gvh-location/data/store_price_variation.csv
+50,kg,GYERMELYI 4 TOJ.  RÖVIDCSŐ 500G,research/gvh-location/data/store_price_variation.csv
+50,,Gourmet Bronze cut tészta,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+50,kg,Granoro Dedicato teljeskiőrlésű spaghetti száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Granoro durum penne n.27 száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi Expressz Fusilli durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi Expressz Spaghetti durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi Vita Pasta Fusilli Tricolore durum száraztészta 50,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi Vita Pasta Fusilli durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi Vita Pasta Spaghetti durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi Vita Pasta XXL durum fusilli száraztészta 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi Vita Pasta XXL durum spagetti száraztészta 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi Vita Pasta penne durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi makaróni 4 tojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi orsó 4 tojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi spagetti 4 tojásos száraztészta 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,Gyermelyi spagetti 4 tojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,HF 2T ORSÓ 500 G,research/gvh-location/data/store_price_variation.csv
+50,kg,HF 2T SPAGETTI  500 G,research/gvh-location/data/store_price_variation.csv
+50,kg,Izsáki spagetti 4 tojásos 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,KÄFER FUSILLI 500 G,research/gvh-location/data/store_price_variation.csv
+50,kg,KÄFER PENNE 500G,research/gvh-location/data/store_price_variation.csv
+50,kg,KÄFER SPAGETTI 500 G,research/gvh-location/data/store_price_variation.csv
+50,kg,Makaróni 4 tojásos 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,My bio spagetti 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Orsótészta 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Penne 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Penny spagetti 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Piacelli spagetti durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Rummo Bucatini durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Rummo Fusilli tojás nélküli durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Rummo Penne Rigate durum száraztészta 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,Rummo Penne Rigate tojás nélküli durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Rummo spaghetti durum száraztészta 1 kg,research/gvh-location/data/store_price_variation.csv
+50,kg,Rummo spaghetti durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,S-Budget 2 tojásos spagetti száraztészta 1000 g,research/gvh-location/data/store_price_variation.csv
+50,kg,S-Budget Fusilli durum száraztészta 1000 g,research/gvh-location/data/store_price_variation.csv
+50,kg,S-Budget Penne durum száraztészta 1000 g,research/gvh-location/data/store_price_variation.csv
+50,kg,S-Budget Spagetti durum száraztészta 1000 g,research/gvh-location/data/store_price_variation.csv
+50,kg,S-budget spagetti 4 tojásos 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,SPAR Fusilli durumbúzadarából készült száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,SPAR Natur*pur Bio Orsó durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,SPAR Natur*pur Bio Spagetti durum száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,SPAR Pasta Italiana Penne Rigate durumbúzadarából készült sz,research/gvh-location/data/store_price_variation.csv
+50,kg,SPAR Pasta Italiana Spaghetti n. 5 durumbúzadarából készült,research/gvh-location/data/store_price_variation.csv
+50,kg,SPAR makaróni négytojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,SPAR orsó négytojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,SPAR spagetti négytojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,San fabio fusilli durumtészta,research/gvh-location/data/staples_store_variation.csv
+50,kg,San fabio penne durumtészta,research/gvh-location/data/store_price_variation.csv
+50,kg,San fabio spagetti durumtészta,research/gvh-location/data/store_price_variation.csv
+50,kg,San fabio tejl.kiörl.spagetti,research/gvh-location/data/store_price_variation.csv
+50,kg,San fabio telj.kiörlésű penne,research/gvh-location/data/store_price_variation.csv
+50,kg,San fabio tricolor fusilli,research/gvh-location/data/store_price_variation.csv
+50,kg,Soós Premio spagetti négytojásos száraztészta 400 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Szabó spagetti 4tojásos 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Séf Konyhája 4 tojásos spagetti 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,TO TELJK. FUSILLI 500G,research/gvh-location/data/store_price_variation.csv
+50,kg,TO TELJK. SPAGETTI 500G,research/gvh-location/data/store_price_variation.csv
+50,kg,TS 3SZINU ORSO UR.TESZT.500G,research/gvh-location/data/store_price_variation.csv
+50,kg,TS 4 TOJ. ORSO 5 00G,research/gvh-location/data/store_price_variation.csv
+50,kg,TS ORSÓ DURUM TÉ SZTA 500G,research/gvh-location/data/store_price_variation.csv
+50,kg,TS PENNE DURUM T ÉSZTA 500G,research/gvh-location/data/store_price_variation.csv
+50,kg,TS SPAGETTI DURU M TESZT 500G,research/gvh-location/data/staples_store_variation.csv
+50,kg,TS TEL.KIORLESU ORSO SZT.500G,research/gvh-location/data/store_price_variation.csv
+50,kg,TS TELJ.KIÖR.SPA GETTI SZT.500G,research/gvh-location/data/store_price_variation.csv
+50,kg,Teljeskiőrlésű fusilli 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Teljeskiőrlésű spagetti 500g,research/gvh-location/data/store_price_variation.csv
+50,kg,Tesco 4 tojásos spagetti 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Tetővári spagetti 4 tojásos száraztészta 500 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Ürömi Arnold orsó 4 tojásos száraztészta 400 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Ürömi Arnold penne 4 tojásos száraztészta 400 g,research/gvh-location/data/store_price_variation.csv
+50,kg,Ürömi Arnold rövid makaróni 4 tojásos száraztészta 400 g,research/gvh-location/data/store_price_variation.csv
+52,,Belbake búzaliszt (Lidl Plus),research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+52,,Gyermelyi búzafinomliszt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+57,,Freshona savanyított uborka (Lidl Plus),research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+57,,Zöldségeskert csemegeuborka,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+59,kg,"Auchan Kedvenc extra zsenge zöldborsó I. osztály, gyorsfagya",research/gvh-location/data/staples_store_variation.csv
+59,kg,"Auchan Kedvenc extra zsenge zöldborsó I. osztály, gyorsfagyasztott 450 g",research/gvh-location/data/basket_items_national.csv
+59,kg,Bonduelle Vapeur gyorsfagyasztott zöldborsó 400 g,research/gvh-location/data/store_price_variation.csv
+59,kg,FRoSTA zöldborsó zsenge gyorsfagyasztott 400 g,research/gvh-location/data/store_price_variation.csv
+59,kg,"Freshona Extra zsenge zöldborsó, gyf. , 450g,",research/gvh-location/data/staples_store_variation.csv
+59,kg,Iglo gyorsfagyasztott zsenge zöldborsó 450 g,research/gvh-location/data/store_price_variation.csv
+59,kg,SPAR gyorsfagyasztott extra zsenge zöldborsó 450 g,research/gvh-location/data/staples_store_variation.csv
+59,kg,Sprint Natura gyorsfagyasztott zsenge zöldborsó 450 g,research/gvh-location/data/store_price_variation.csv
+59,kg,Tesco gyorsfagyasztott zöldborsó 450 g,research/gvh-location/data/staples_store_variation.csv
+59,kg,Zöldborsó extra zsenge 450g,research/gvh-location/data/staples_store_variation.csv
+59,kg,Zöldségeskert  extra zsenge zöldborsó,research/gvh-location/data/staples_store_variation.csv
+61,,Rio d'Oro narancslé,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+62,,Almalé,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+62,,Rio d'Oro almalé,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+67,,Aquitas ásványvíz,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+81,,Pilos főzőtejszín (Lidl Plus),research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+84,,Milkeria magvas gyümölcsjoghurt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+85,,Darált sertés-marhahús,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+88,,Pikok szeletelt paprikás kolbász (Lidl Plus),research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+88,,Vastagkolbász,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+89,,Dárdás császárszalonna,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+93,kg,7 TENGER  ALSZKAI TOKEHAL 800G,research/gvh-location/data/store_price_variation.csv
+93,kg,"Alaszkai tőkehal, 400g",research/gvh-location/data/store_price_variation.csv
+93,kg,Alaszkai tőkehalfilé,research/gvh-location/data/staples_store_variation.csv
+93,kg,Auchan Kedvenc Atlanti lazacfilé szeletek (Salmo Salar) gyor,research/gvh-location/data/store_price_variation.csv
+93,kg,"Auchan Kedvenc alaszkai tőkehal filé (4 db), szálka nélkül,",research/gvh-location/data/store_price_variation.csv
+93,kg,Bőrös lazacfilé  kg,research/gvh-location/data/store_price_variation.csv
+93,kg,CLASSIC GYF.HEKK FILE 900G,research/gvh-location/data/store_price_variation.csv
+93,kg,Classic gyorsfagyasztott alaszkai tőkehalfilé 540 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Classic gyorsfagyasztott csendes-óceáni lazac 540 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Classic gyorsfagyasztott hekkfilé 540 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Csomagolt lazac filé Ft/kg,research/gvh-location/data/store_price_variation.csv
+93,kg,Delforg gyorsfagyasztott alaszkai tőkehalfilé 800 g,research/gvh-location/data/staples_store_variation.csv
+93,kg,FRoSTA lazacfilé 180 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Fjord formázott lazac burger 2x100 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Friss norvég lazacfilé 300,research/gvh-location/data/store_price_variation.csv
+93,kg,Fűszeres lazacfilé 250g,research/gvh-location/data/store_price_variation.csv
+93,kg,"GGN XXL Lazacfilé bőrrel , 8x125g",research/gvh-location/data/store_price_variation.csv
+93,kg,Gran m.pan.halszelet filéből,research/gvh-location/data/store_price_variation.csv
+93,kg,Gran mare lazacfilé,research/gvh-location/data/store_price_variation.csv
+93,kg,Halker Csendes-óceáni lazacfilé porció bőr nélkül 800 g,research/gvh-location/data/store_price_variation.csv
+93,kg,"Lazacfilé, bőrös, 4x125g, 500g",research/gvh-location/data/store_price_variation.csv
+93,kg,MSC al.tőkehalfilé natúr,research/gvh-location/data/staples_store_variation.csv
+93,kg,MSC vadlazac filé 250g,research/gvh-location/data/store_price_variation.csv
+93,kg,Myfood atlanti lazacfilé 450 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Norvég lazacfilé,research/gvh-location/data/store_price_variation.csv
+93,kg,Norvég lazacfilé bőr nélkül 160g,research/gvh-location/data/store_price_variation.csv
+93,kg,Norvég lazacfilé családi kisz.,research/gvh-location/data/store_price_variation.csv
+93,kg,Norvég lazacfilé+fűszervaj,research/gvh-location/data/store_price_variation.csv
+93,kg,Norvég lazacfilészelet 750g,research/gvh-location/data/store_price_variation.csv
+93,kg,"Ocean Sea Alaszkai tőkehalfilé, MSC,( 475) 500g",research/gvh-location/data/staples_store_variation.csv
+93,kg,"Ocean Sea Alaszkai tőkehalfilé, többféle,1, 400g",research/gvh-location/data/store_price_variation.csv
+93,kg,"Ocean Sea Lazacfilé bőr nélkül , 250g",research/gvh-location/data/store_price_variation.csv
+93,kg,"Ocean Sea MSC Vadlazacfilé, 250g",research/gvh-location/data/store_price_variation.csv
+93,kg,"Prémium lazacfilé bőrös, szeletelt 2x125g",research/gvh-location/data/store_price_variation.csv
+93,kg,Pult defrost norvég lazacfilé Ft/kg,research/gvh-location/data/store_price_variation.csv
+93,kg,ROZMÁR LEPÉNYHAL FILÉ GYORSFAGY. 700 g,research/gvh-location/data/store_price_variation.csv
+93,kg,"Rozmár Lazac porció, Salmo salar, bőrös gyorsfagyasztott 1 k",research/gvh-location/data/store_price_variation.csv
+93,kg,"Rozmár lazacfilé bőr nélkül, tisztított, nyers gyorsfagyaszt",research/gvh-location/data/store_price_variation.csv
+93,kg,Rozmár vadlazac filé (KETA) porciózva 1 kg,research/gvh-location/data/store_price_variation.csv
+93,kg,S-BUDGET alaszkai tőkehal 950g,research/gvh-location/data/staples_store_variation.csv
+93,kg,SEAFOOD HUNGARY NORVÉG LAZACFILÉ Ft/kg,research/gvh-location/data/store_price_variation.csv
+93,kg,SEAFOOD HUNGARY PRÉMIUM NORVÉG LAZACFILÉ 160 g,research/gvh-location/data/store_price_variation.csv
+93,kg,SF HUNGARY FEKETE TŐKEHAL FILÉ Ft/kg,research/gvh-location/data/store_price_variation.csv
+93,kg,SPAR prémium fekete tőkehalfilé,research/gvh-location/data/store_price_variation.csv
+93,kg,Seafood lazacfilé fűszeres vajjal 160 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Seafood norvég lazacfilé zöldfűszeres vajjal 160 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Selfish fokhagymás-zöldfűszeres lazacfilé 2x200 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Selfish lazacfilé natur 250g,research/gvh-location/data/store_price_variation.csv
+93,kg,Selfish lazacfilé natúr 160 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Selfish lazacfilé natúr védőgázas kiszerelésben 4x125 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Selfish norvég lazacfilé fokhagymás fűszervajjal 160 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Selfish norvég lazacfilé grillfűszeres pácban 160 g,research/gvh-location/data/store_price_variation.csv
+93,kg,Spar norvég lazacfilé 250g,research/gvh-location/data/store_price_variation.csv
+93,kg,Spar prémium norvég lazacfilé 160g,research/gvh-location/data/store_price_variation.csv
+93,kg,TESCO ALAS. TOK EHAL FILE 475G,research/gvh-location/data/staples_store_variation.csv
+93,kg,TESCO ALASZKAI T OKEHAL 400G,research/gvh-location/data/store_price_variation.csv
+93,kg,TESCO ARGEN HEKK FILE 475G,research/gvh-location/data/store_price_variation.csv
+93,kg,TS Atlantic salmon fillet portions 250 g,research/gvh-location/data/store_price_variation.csv
+95,kg,"Auchan Tipp ""B"" minőségű rizs 1 kg",research/gvh-location/data/staples_store_variation.csv
+95,kg,B rizs,research/gvh-location/data/staples_store_variation.csv
+95,kg,"Golden Sun Hosszú szemű \""B\"" rizs, 1kg",research/gvh-location/data/staples_store_variation.csv
+95,kg,HEARTY FOOD RIZS 1KG,research/gvh-location/data/staples_store_variation.csv
+95,,Jázmin rizs,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+95,kg,MESTER B RIZS 1  KG,research/gvh-location/data/store_price_variation.csv
+95,kg,"Nagykun „B"" minőségű rizs 1 kg",research/gvh-location/data/store_price_variation.csv
+95,kg,S-Budget ¨B¨ minőségű rizs 1 kg,research/gvh-location/data/staples_store_variation.csv
+95,kg,SPAR ¨B¨ minőségű rizs 1 kg,research/gvh-location/data/store_price_variation.csv
+95,kg,enerBiO basmati rizs - 1 kg,research/gvh-location/data/store_price_variation.csv
+96,kg,BON-RI zöld lencse/vörös lencse 500g,research/gvh-location/data/staples_store_variation.csv
+96,kg,"Bio beluga lencse, 500 g",research/gvh-location/data/store_price_variation.csv
+96,kg,"Bio hegyi lencse, 0,5 kg",research/gvh-location/data/store_price_variation.csv
+96,kg,"Bio sárga lencse, 500 g",research/gvh-location/data/store_price_variation.csv
+96,kg,"Bio vörös lencse, 500 g",research/gvh-location/data/store_price_variation.csv
+96,kg,"Campo Largo Zöld lencse, 500g",research/gvh-location/data/staples_store_variation.csv
+96,kg,Kalifa lencse 500 g,research/gvh-location/data/staples_store_variation.csv
+96,kg,Mánya lencse 500 g,research/gvh-location/data/store_price_variation.csv
+96,kg,PACO étkezési lencse 500 g,research/gvh-location/data/store_price_variation.csv
+96,kg,Penelas Eston lencse 500 g,research/gvh-location/data/store_price_variation.csv
+96,kg,Penelas Zöld castellana lencse 500 g,research/gvh-location/data/store_price_variation.csv
+96,kg,Pure land lencse 500gr,research/gvh-location/data/staples_store_variation.csv
+96,kg,S-Budget lencse 500 g,research/gvh-location/data/staples_store_variation.csv
+96,kg,TO VÖRÖSLENCSE 500g,research/gvh-location/data/store_price_variation.csv
+96,kg,TS HANTOLT VOROS LENCSE 500G,research/gvh-location/data/store_price_variation.csv
+96,kg,TS LENCSE 500G,research/gvh-location/data/staples_store_variation.csv
+96,kg,Tellér közepes magvú étkezési lencse 500 g,research/gvh-location/data/store_price_variation.csv
+96,kg,Tellér nagymagvú étkezési lencse 500 g,research/gvh-location/data/store_price_variation.csv
+96,kg,enerBiO hegyi lencse - 500 g,research/gvh-location/data/store_price_variation.csv
+96,kg,ÉTKEZÉSI LENCSE 500G,research/gvh-location/data/store_price_variation.csv
+97,,Brokkoli,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+97,kg,Brokkoli 500 g,research/gvh-location/data/staples_store_variation.csv
+97,kg,Brokkoli 500g,research/gvh-location/data/staples_store_variation.csv
+97,kg,"Brokkoli, 500g",research/gvh-location/data/staples_store_variation.csv
+97,kg,TS BROCCOLI 500 G,research/gvh-location/data/staples_store_variation.csv
+98,kg,TESCO BROKKOLI 4 50G,research/gvh-location/data/store_price_variation.csv
+101,,Bellarom Gold őrölt kávé,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+101,,Eduscho Family őrölt kávé,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+101,,Omnia Silk kávé,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+101,,Paloma őrölt kávé,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+102,,Naturland tea,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+107,,Ementaler sajt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+109,,Milkeria gouda sajt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+109,,Pilos Gouda sajt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+112,,Milkeria francia lágy sajt,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+112,,Roi de Trefle francia brie,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+114,,Pilos mini mozzarella (Lidl Plus),research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+116,,Pilos high protein túródesszert,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+116,,Pöttyös Túró Rudi citromkrémes multipack,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+116,,Pöttyös Óriás Túró Rudi 0% hozzáadott cukorral multipack,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+116,,Pöttyös Óriás Túró Rudi étbevonóval multipack,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+119,,Pick sertéstarja,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv
+120,l,Abaco extra szűz olívaolaj 1 l,research/gvh-location/data/store_price_variation.csv
+120,l,Abaco extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Auchan Kedvenc extra szűz olívaolaj 1 l,research/gvh-location/data/store_price_variation.csv
+120,l,Auchan Kedvenc extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Auchan Kedvenc extra szűz olívaolaj 750 ml,research/gvh-location/data/store_price_variation.csv
+120,l,BERTOLLI AIRFRYER OLÍVAOLAJ SPRAY 200ML*HU,research/gvh-location/data/store_price_variation.csv
+120,l,BERTOLLI HOT COOKING OLÍVAOLAJ SPRAY 200ML*HU,research/gvh-location/data/store_price_variation.csv
+120,l,Bellasan olívaolaj 1 l,research/gvh-location/data/store_price_variation.csv
+120,l,Bertolli Originale extra szűz olívaolaj 250 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Bertolli Originale extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Bertolli Originale extra szűz olívaolaj 750 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Bertolli extraszűz olívaolaj 1 l,research/gvh-location/data/store_price_variation.csv
+120,l,Costa d'Oro Il Grezzo olasz szűretlen olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Costa d'Oro Squeeze extra szűz olíva olaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Costa d'Oro extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Cotoliva extra szűz olívaolaj 250 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Cotoliva extra szűz olívaolaj 750 ml,research/gvh-location/data/store_price_variation.csv
+120,l,DESPAR Premium extra szűz olívaolaj 750 ml,research/gvh-location/data/store_price_variation.csv
+120,l,DESPAR extraszűz olívaolaj 1 l,research/gvh-location/data/staples_store_variation.csv
+120,l,DESPAR extraszűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,"Dante Extra szűz olívaolaj fokhagymás, fokhagyma darabokkal",research/gvh-location/data/store_price_variation.csv
+120,l,Dante Terre Antiche extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Dante extra szűz olívaolaj bazsalikom darabokkal 250 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Dante extra szűz olívaolaj citrom darabokkal 250 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Dante extra szűz olívaolaj fokhagyma és chili darabokkal 250,research/gvh-location/data/store_price_variation.csv
+120,l,De Cecco extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,"ESP. EVO 0,75l",research/gvh-location/data/store_price_variation.csv
+120,l,"ESP. EVO OL.0,5l",research/gvh-location/data/store_price_variation.csv
+120,l,Extra szűz olívaolaj 1l,research/gvh-location/data/store_price_variation.csv
+120,l,Filippo Berio Fruttato extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Filippo Berio extra szűz olívaolaj 1 l,research/gvh-location/data/store_price_variation.csv
+120,l,Filippo Berio extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Filippo berio extra szűz olívaolaj fémdobozban 1 l,research/gvh-location/data/store_price_variation.csv
+120,l,Floriol extraszűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Frantó extra sz.olívaolaj750ml,research/gvh-location/data/staples_store_variation.csv
+120,l,Görög extra szűz olívaol,research/gvh-location/data/store_price_variation.csv
+120,l,KAEFER OLIVENOEL EXTRA VERGINE BASILICO,research/gvh-location/data/store_price_variation.csv
+120,l,KAEFER OLIVENOEL PEPERON OLIO EXTRA VERGINE,research/gvh-location/data/store_price_variation.csv
+120,l,KAEFER OLIVENOEL ZITRONE OLIO EXTRA VERGINE AL,research/gvh-location/data/store_price_variation.csv
+120,l,Korvel P.D.O. Kalamata extra szűz olívaolaj 750 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Korvel Peloponnese extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Korvel extra szűz olívaolaj 1 l,research/gvh-location/data/store_price_variation.csv
+120,l,Korvel extra szűz olívaolaj 250 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Korvel extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,LA ESPANOLA SQUI ZZ 620 ml,research/gvh-location/data/store_price_variation.csv
+120,l,"MONINI EXT.SZŰZ  OLIVAOLAJ 0,5L",research/gvh-location/data/store_price_variation.csv
+120,l,Mantova Extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Mantova extra szűz olívaolaj 250 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Mantova extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Mantova narancsos-fekete borsos extra szűz olíva olaj spray,research/gvh-location/data/store_price_variation.csv
+120,l,Monini Classico extra szűz olívaolaj 1 l,research/gvh-location/data/store_price_variation.csv
+120,l,Monini Classico extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Monini Classico extra szűz olívaolaj 750 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Monini Originale extra szűz olívaolaj 2 l,research/gvh-location/data/store_price_variation.csv
+120,l,Olívaolaj extra szűz 750,research/gvh-location/data/staples_store_variation.csv
+120,l,Orfeas Classic olívaolaj 1 l,research/gvh-location/data/store_price_variation.csv
+120,l,Orfeas extra szűz olíva olaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Piacelli extra szűz olasz olívaolaj 500 ml,research/gvh-location/data/staples_store_variation.csv
+120,l,"Primadonna Extra szűz olívaolaj, 750ml",research/gvh-location/data/staples_store_variation.csv
+120,l,"Primadonna Olívaolaj finomított és szűz olívaolajból, 1l",research/gvh-location/data/store_price_variation.csv
+120,l,TS EXTRA VIRGIN OLIVE OIL 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,TS EXTRA VIRGIN OLIVE OIL 750 ml,research/gvh-location/data/staples_store_variation.csv
+120,l,Tesoros del Sur extra szűz olívaolaj 500ml,research/gvh-location/data/store_price_variation.csv
+120,l,Ybarra Arbequina extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Ybarra Hojiblanca Extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Ybarra Picual extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,Ybarra klasszikus extra szűz olívaolaj 500 ml,research/gvh-location/data/store_price_variation.csv
+120,l,enerBiO olívaolaj - 750 ml,research/gvh-location/data/store_price_variation.csv
+120,l,enerBio Olivaolaj - 500 ml,research/gvh-location/data/store_price_variation.csv
+122,,Segafredo Intermezzo szemes kávé,research/gap-gvh-promo-and-stability/data/promo_capture_sample_2026-10-12.csv

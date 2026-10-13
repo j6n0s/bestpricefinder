@@ -39,7 +39,7 @@ The user relays anything urgent.
   - applies `db/migrations/*.sql` in order inside one transaction each, prefixed with `SET ROLE bpf_owner`;
   - records version and sha256 in `public.schema_migrations`;
   - refuses to run if an applied file's checksum changed.
-- [ ] **3. GVH client + ingest** (`bpf/gvh/`, `bpf/ingest/`). Handle every trap in BUILD-BRIEF §4.1:
+- [x] **3. GVH client + ingest** _(done 2026-10-13 by the cloud agent: `server/bpf/gvh/`, `server/bpf/ingest/`, CLI `bpf-ingest`. **Built against the documented shapes only:** the assumptions are listed in `server/bpf/gvh/ASSUMPTIONS.md`, and the real-sample tests run automatically once `server/tests/fixtures/gvh/raw/` exists; see QUESTIONS.md)_ (`bpf/gvh/`, `bpf/ingest/`). Handle every trap in BUILD-BRIEF §4.1:
   - `limit=48` paging;
   - `productMinAmount` vs `prices[]`;
   - the 3-chain listing cap;
@@ -56,7 +56,7 @@ The user relays anything urgent.
   - A loader (`bpf/content.py`) that validates and upserts as `bpf_ingest`.
 
   Never copy recipe text from recipe sites or OKOSTÁNYÉR.
-- [ ] **5. Pricing engine + planner** (`bpf/pricing/`, `bpf/planner/`): the algorithms are in BUILD-BRIEF §6. Write pure functions with unit tests: unit normalisation (db↔kg via `piece_weight_kg`), name include/exclude rules, store availability, store-vs-chain price choice, pack optimisation, store ranking, cheaper swaps, and planner weekly rules.
+- [x] **5. Pricing engine + planner** _(done 2026-10-13 by the cloud agent: `server/bpf/pricing/`, `server/bpf/planner/`; the pack optimiser is checked against brute force, plus a hand-computed golden test of 3 recipes × 3 stores)_ (`bpf/pricing/`, `bpf/planner/`): the algorithms are in BUILD-BRIEF §6. Write pure functions with unit tests: unit normalisation (db↔kg via `piece_weight_kg`), name include/exclude rules, store availability, store-vs-chain price choice, pack optimisation, store ranking, cheaper swaps, and planner weekly rules.
 - [ ] **6. API** (`bpf/api/`): write `docs/API.md` first. Proposed contract:
   - `GET /api/health` → `{status, db, data_date}`.
   - `GET /api/meta` → `{data_date, ingested_at, chains[], attribution{gvh,ksh,nutrition}, disclaimer}`.

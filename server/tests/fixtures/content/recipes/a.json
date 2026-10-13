@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "recipes": [
+    {
+      "id": "csirke-gombaval",
+      "title": "Serpenyős csirke gombával",
+      "summary": "Csirkemell hagymával és gombával, serpenyőben sütve.",
+      "slots": ["ebed", "vacsora"],
+      "servings": 2,
+      "minutes": 30,
+      "tags": ["foetel", "baromfi"],
+      "lines": [
+        {"ingredient_id": "csirkemell", "qty": 0.5, "display": "50 dkg", "optional": false},
+        {"ingredient_id": "gomba", "qty": 0.05, "display": "5 dkg", "optional": false},
+        {"ingredient_id": "voroshagyma", "qty": 0.1, "display": "1 kisebb fej", "optional": false},
+        {"ingredient_id": "olaj", "qty": 0.02, "display": "2 evőkanál", "optional": false},
+        {"ingredient_id": "so", "qty": 0.005, "display": "1 teáskanál", "optional": false}
+      ],
+      "steps": [
+        "A hagymát vágd apróra, és az olajon párold üvegesre.",
+        "Add hozzá a csíkokra vágott húst és a szeletelt gombát, sózd, és süsd készre."
+      ],
+      "tested": false
+    },
+    {
+      "id": "lencse-tojassal",
+      "title": "Lencse főtt tojással",
+      "summary": "Sűrű lencseragu hagymával, mellé főtt tojás.",
+      "slots": ["ebed"],
+      "servings": 4,
+      "minutes": 45,
+      "tags": ["fozelek", "huvelyes", "husmentes"],
+      "lines": [
+        {"ingredient_id": "lencse", "qty": 0.4, "display": "40 dkg", "optional": false},
+        {"ingredient_id": "voroshagyma", "qty": 0.1, "display": "1 fej", "optional": false},
+        {"ingredient_id": "tojas", "qty": 4, "display": "4 db", "optional": false},
+        {"ingredient_id": "olaj", "qty": 0.03, "display": "3 evőkanál", "optional": false},
+        {"ingredient_id": "so", "qty": 0.005, "display": "1 teáskanál", "optional": false}
+      ],
+      "steps": [
+        "A lencsét áztasd be, majd főzd puhára sós vízben.",
+        "A hagymát az olajon párold meg, keverd a lencséhez, és forrald össze.",
+        "A tojásokat főzd keményre, és tálald a lencse mellé."
+      ],
+      "tested": false
+    }
+  ]
+}

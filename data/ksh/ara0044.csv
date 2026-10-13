@@ -1,0 +1,62 @@
+code,name,unit,unit_qty,price,period
+10001,"Rövidkaraj, kg",kg,1,2070,2026-09-01
+10003,"Sertéshús, comb (csont és csülök nélkül), kg",kg,1,1670,2026-09-01
+10103,"Marhahús, rostélyos, csontos vagy csont nélküli, kg",kg,1,5900,2026-09-01
+10401,"Bontott csirke, kg",kg,1,1310,2026-09-01
+10405,"Csirkecomb, kg",kg,1,1070,2026-09-01
+10407,"Csirkeszárny, kg",kg,1,1020,2026-09-01
+10408,"Pulykamellfilé, kg",kg,1,3280,2026-09-01
+10409,"Csirkemellfilé (csont és bőr nélkül), kg",kg,1,2460,2026-09-01
+10501,"Szárazkolbász, kg",kg,1,5830,2026-09-01
+10502,"Téliszalámi, kg",kg,1,10060,2026-09-01
+10506,"Pulykamell sonka, szeletelt, kg",kg,1,5000,2026-09-01
+10601,"Párizsi felvágott, kg",kg,1,1990,2026-09-01
+10602,"Virsli, sertés vagy baromfi, kg",kg,1,3200,2026-09-01
+10603,"Olasz felvágott, kg",kg,1,3070,2026-09-01
+10801,"Pontyszelet vagy filé, kg",kg,1,4710,2026-09-01
+11001,"Tojás, 10 darab",db,10,814,2026-09-01
+11101,"Pasztőrözött ESL tej, 2,8%, liter",l,1,349,2026-09-01
+11103,"Pasztőrözött ESL tej, 1,5%, liter",l,1,335,2026-09-01
+11104,"UHT tartós tej dobozban, 2,8% zsírtartalom, liter",l,1,346,2026-09-01
+11209,"Sajt, trappista, tömb, kg",kg,1,2660,2026-09-01
+11301,"Tejföl, 20% zsírtartalom, kg",kg,1,1220,2026-09-01
+11306,"Gyümölcsjoghurt, 125–150 g-os, db",db,1,148,2026-09-01
+11311,"Tejföl 12% zsírtartalommal, 300–450 g-os, kg",kg,1,1050,2026-09-01
+12001,"Vaj, legalább 80% zsírtartalom, 100–125 g-os csomagolásban, db",db,1,414,2026-09-01
+12201,"Csemegeszalonna, füstölt (előre csomagolt is), kg",kg,1,3240,2026-09-01
+12301,"Napraforgó-étolaj, liter",l,1,874,2026-09-01
+12402,"Tejes margarin, 200–250 g, db",db,1,376,2026-09-01
+13002,"Liszt, finomliszt, kg",kg,1,232,2026-09-01
+13003,"Rétesliszt, kg",kg,1,258,2026-09-01
+13101,"Rizs, hántolt, fényezetlen, kg",kg,1,676,2026-09-01
+13201,"Kenyér, fehér, kg",kg,1,905,2026-09-01
+13206,"Félbarna kenyér, kg",kg,1,857,2026-09-01
+13301,"Zsemle, 1 db",db,1,70,2026-09-01
+13305,"Kakaós csiga, db",db,1,238,2026-09-01
+13404,"Spagetti, 4 tojásos, gyári készítésű, 400–500 g-os, db",db,1,607,2026-09-01
+13501,"Kristálycukor, kg",kg,1,324,2026-09-01
+13601,"Kakaópor, 70–200 g-os, kg",kg,1,9060,2026-09-01
+13617,"Mogyorós tejcsokoládé, 80–100 g, egész- vagy törtmogyorós tábla, db",db,1,711,2026-09-01
+13711,"Jégkrém, dobozos, liter",l,1,2180,2026-09-01
+13910,"Akácméz, kg",kg,1,5970,2026-09-01
+14001,"Korai burgonya, kg",kg,1,439,2026-07-01
+14002,"Kései burgonya, kg",kg,1,393,2026-09-01
+14101,"Sárgarépa, kg",kg,1,535,2026-09-01
+14103,"Vöröshagyma, kg",kg,1,332,2026-09-01
+14104,"Fejes káposzta, kg",kg,1,375,2026-09-01
+14107,"Paradicsom, kg",kg,1,956,2026-09-01
+14108,"Zöldpaprika (szántóföldi és primőr együtt), kg",kg,1,917,2026-09-01
+14110,"Uborka, kg",kg,1,1110,2026-09-01
+14111,"Gomba, kg",kg,1,1900,2026-09-01
+14201,"Alma, kg",kg,1,600,2026-09-01
+14202,"Görögdinnye, kg",kg,1,355,2026-09-01
+14209,"Körte, kg",kg,1,1100,2026-09-01
+14221,"Citrom, kg",kg,1,1300,2026-09-01
+14222,"Banán, kg",kg,1,739,2026-09-01
+14224,"Narancs, kg",kg,1,894,2026-09-01
+14401,"Gyorsfagyasztott zöldborsó, kg",kg,1,1180,2026-09-01
+14508,"Gyümölcslekvár, 250–650 g, min. 50%, kg",kg,1,2910,2026-09-01
+14601,"Szárazbab, csomagolt is, kg",kg,1,1540,2026-09-01
+14701,"Tisztított dió, csomagolt is (nem darált, nem cukrozott),kg",kg,1,6180,2026-09-01
+15202,"Fűszerpaprika, csemege, 75–100 g-os tasakból 1 kg-ra számítva",kg,1,8840,2026-09-01
+15204,"Só, étkezési, finomított, 1 kg (kivéve tengeri só), kg",kg,1,266,2026-09-01

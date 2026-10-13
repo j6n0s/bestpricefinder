@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "recipes": [
+    {
+      "id": "sult-lazac",
+      "title": "Sült lazac kaporral",
+      "summary": "Sütőben sült lazacfilé, a végén friss kaporral.",
+      "slots": ["vacsora"],
+      "servings": 2,
+      "minutes": 25,
+      "tags": ["foetel", "hal", "gyors"],
+      "lines": [
+        {"ingredient_id": "lazac", "qty": 0.4, "display": "40 dkg", "optional": false},
+        {"ingredient_id": "olaj", "qty": 0.01, "display": "1 evőkanál", "optional": false},
+        {"ingredient_id": "so", "qty": 0.003, "display": "fél teáskanál", "optional": false},
+        {"ingredient_id": "kapor", "qty": 0.01, "display": "1 csokor", "optional": true}
+      ],
+      "steps": [
+        "A halat tedd sütőpapírra, kend meg olajjal, és sózd meg.",
+        "Süsd 200 fokon 15 percig, majd szórd meg a felaprított kaporral."
+      ],
+      "tested": false
+    }
+  ]
+}
