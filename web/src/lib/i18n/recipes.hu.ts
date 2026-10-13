@@ -1,8 +1,102 @@
-/** Recipe pages ("Receptek"). STUB: the recipes feature agent extends this namespace (and recipes.en.ts). */
+/**
+ * Recipe pages ("Receptek" and the recipe detail). Prices are chain-typical estimates from the GVH data and
+ * are always shown with the source and the data date (BUILD-BRIEF §8.2). No health claims (§8.7).
+ */
 export const recipesHu = {
 	title: 'Receptek',
-	placeholder: 'Hamarosan: itt böngészheted a recepteket.',
+	intro: 'Saját, eredeti receptek, a napi 3 vagy 5 étkezéshez.',
+	error_title: 'A receptek betöltése nem sikerült',
+
+	filters_title: 'Szűrés',
+	filter_slot_label: 'Étkezés',
+	filter_tag_label: 'Címke',
+	filter_all: 'Mindegyik',
+	search_label: 'Keresés a címben',
+	search_hint: 'Ékezet nélkül is kereshetsz, legalább 2 betűvel.',
+	filters_reset: 'Szűrők törlése',
+	results_one: '{count} recept',
+	results_other: '{count} recept',
+	no_results: 'Nincs a szűrőknek megfelelő recept.',
+
+	minutes_one: '{count} perc',
+	minutes_other: '{count} perc',
+	servings_one: '{count} adag',
+	servings_other: '{count} adag',
+	tags_label: 'Címkék',
+	price_from: '≈ {price}/adag-tól ({chains})',
+	price_from_plain: '≈ {price}/adag-tól',
+	coverage: 'az ár a hozzávalók {percent}\u00a0%-át fedi le',
+	price_note:
+		'Az adagonkénti ár lánc-jellemző ár a GVH napi adataiból (a lánc boltjainak többségében érvényes ár), a kamrában lévő és az elhagyható hozzávalók nélkül. Egy-egy bolt ára eltérhet.',
+
+	tag_leves: 'leves',
+	tag_fozelek: 'főzelék',
+	tag_foetel: 'főétel',
+	tag_koret: 'köret',
+	tag_salata: 'saláta',
+	tag_reggeli_hideg: 'hideg reggeli',
+	tag_reggeli_meleg: 'meleg reggeli',
+	tag_snack: 'kisétkezés',
+	tag_husmentes: 'húsmentes',
+	tag_vegetarianus: 'vegetáriánus',
+	tag_hal: 'hal',
+	tag_huvelyes: 'hüvelyes',
+	tag_baromfi: 'baromfi',
+	tag_sertes: 'sertés',
+	tag_marha: 'marha',
+	tag_edes: 'édes',
+	tag_gyors: 'gyors',
+	tag_ket_napos: 'két napra',
+	tag_olcso: 'olcsó',
+	tag_gyerekbarat: 'gyerekbarát',
+
 	detail_title: 'Recept',
-	detail_placeholder: 'Hamarosan: itt jelennek meg a recept hozzávalói, lépései és árai.',
-	back: 'Vissza a receptekhez'
+	detail_error_title: 'A recept betöltése nem sikerült',
+	back: 'Vissza a receptekhez',
+	ingredients_title: 'Hozzávalók',
+	servings_label: 'Adagok száma',
+	servings_decrease: 'Eggyel kevesebb adag',
+	servings_increase: 'Eggyel több adag',
+	scaled_note_one:
+		'A mennyiségeket {count} adagra számoltuk át az eredeti, {original} adagos receptből. Kerekített, közelítő értékek.',
+	scaled_note_other:
+		'A mennyiségeket {count} adagra számoltuk át az eredeti, {original} adagos receptből. Kerekített, közelítő értékek.',
+	optional: 'elhagyható',
+	excluded: 'a beállításokban kizártad',
+	steps_title: 'Elkészítés',
+
+	costs_title: 'Ár láncok szerint',
+	costs_caption: 'Lánc-jellemző ár adagonként, a legalacsonyabbtól a legmagasabbig',
+	costs_col_chain: 'Lánc',
+	costs_col_price: 'Ár/adag',
+	costs_rank: '{rank}.',
+	costs_tie: 'holtverseny',
+	costs_missing: 'Ár nélkül: {items}',
+	costs_none: 'Ehhez a recepthez még nincs lánconkénti ár.',
+
+	nutrition_title: 'Tápérték adagonként',
+	nutrition_col_nutrient: 'Tápanyag',
+	nutrition_col_amount: 'Mennyiség',
+	nutrition_kcal: 'Energia',
+	nutrition_protein: 'Fehérje',
+	nutrition_carb: 'Szénhidrát',
+	nutrition_sugar: 'ebből cukrok',
+	nutrition_fat: 'Zsír',
+	nutrition_satfat: 'ebből telített zsírsavak',
+	nutrition_fiber: 'Rost',
+	nutrition_salt: 'Só',
+	nutrition_coverage: 'A hozzávalók {percent}\u00a0%-ára van tápérték-adat; a többi nélkül számoltunk.',
+
+	add_title: 'Hozzáadás a tervhez',
+	add_day_label: 'Nap',
+	add_slot_label: 'Étkezés',
+	add_button: 'Hozzáadás a tervhez',
+	add_no_plan:
+		'Még nincs terved. A hozzáadással egy mától induló 7 napos terv készül, a többi étkezés üresen marad.',
+	add_replaces: 'Ebben az étkezésben már van egy recept, a hozzáadás lecseréli.',
+	add_already: 'Ez a recept már ebben az étkezésben van.',
+	add_done: 'Hozzáadtuk a tervhez: {day}, {slot}.',
+	add_open_plan: 'Terv megnyitása',
+	add_no_slot: 'Ez a recept ezekhez az étkezésekhez való: {slots}. A tervedben nincs ilyen étkezés.',
+	add_no_slot_hint: 'Napi 5 étkezést a beállításokban választhatsz, utána készíts új tervet.'
 } as const;

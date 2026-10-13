@@ -6,6 +6,8 @@
 	import { tick } from 'svelte';
 	import DistrictPicker from '$lib/components/DistrictPicker.svelte';
 	import LocationExplainer from '$lib/components/LocationExplainer.svelte';
+	import ExclusionSettings from '$lib/components/settings/ExclusionSettings.svelte';
+	import PantrySettings from '$lib/components/settings/PantrySettings.svelte';
 	import { districtById } from '$lib/districts';
 	import { formatDateTime, formatDistance, formatNumber } from '$lib/format';
 	import { i18n, reloadLanguage, setLanguage, t, tp, type Lang } from '$lib/i18n';
@@ -226,14 +228,16 @@
 
 <section class="card" aria-labelledby="set-pantry">
 	<h2 id="set-pantry">{t('settings.pantry_title')}</h2>
-	<!-- TODO(list agent): pantry editor (StoredState.pantry.onHand / notAtHome) via $lib/storage. -->
-	<p class="muted">{t('settings.pantry_placeholder')}</p>
+	{#key resets}
+		<PantrySettings />
+	{/key}
 </section>
 
 <section class="card" aria-labelledby="set-exclusions">
 	<h2 id="set-exclusions">{t('settings.exclusions_title')}</h2>
-	<!-- TODO(list agent): excluded tags and ingredients (StoredState.exclusions) via $lib/storage. -->
-	<p class="muted">{t('settings.exclusions_placeholder')}</p>
+	{#key resets}
+		<ExclusionSettings />
+	{/key}
 </section>
 
 <section class="card" aria-labelledby="set-clear">
