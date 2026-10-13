@@ -1,0 +1,44 @@
+{
+ "shops": [
+  {
+   "shopUuid": "tesco-1009",
+   "prices": [
+    {
+     "type": "NORMAL",
+     "amount": 2030,
+     "unitAmount": 2030
+    }
+   ]
+  },
+  {
+   "shopUuid": "tesco-1014",
+   "prices": [
+    {
+     "type": "NORMAL",
+     "amount": 2030,
+     "unitAmount": 2030
+    }
+   ]
+  },
+  {
+   "shopUuid": "tesco-1025",
+   "prices": [
+    {
+     "type": "NORMAL",
+     "amount": 2030,
+     "unitAmount": 2030
+    }
+   ]
+  },
+  {
+   "shopUuid": "tesco-1046",
+   "prices": [
+    {
+     "type": "NORMAL",
+     "amount": 2030,
+     "unitAmount": 2030
+    }
+   ]
+  }
+ ]
+}

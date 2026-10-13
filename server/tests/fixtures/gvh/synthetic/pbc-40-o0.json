@@ -1,0 +1,418 @@
+{
+ "products": [
+  {
+   "id": "5994038219631",
+   "name": "Példatej vöröshagyma 1 db",
+   "imageUrl": null,
+   "unit": "db",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 37,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 51,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 51,
+       "unitAmount": 51,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 37,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 37,
+       "unitAmount": 37,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 47,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 47,
+       "unitAmount": 47,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5992913138220",
+   "name": "Tesztmalom vöröshagyma 1 db",
+   "imageUrl": null,
+   "unit": "db",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 38,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 49,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 49,
+       "unitAmount": 49,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 38,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 38,
+       "unitAmount": 38,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 49,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 49,
+       "unitAmount": 49,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5998156795565",
+   "name": "Kísérleti vöröshagyma 1 db",
+   "imageUrl": null,
+   "unit": "db",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 38,
+   "pricesOfChainStores": [
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 38,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 38,
+       "unitAmount": 38,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5993445412598",
+   "name": "Tesztmalom vöröshagyma 1 db",
+   "imageUrl": null,
+   "unit": "db",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 40,
+   "pricesOfChainStores": [
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 40,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 40,
+       "unitAmount": 40,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5992826887840",
+   "name": "Tesztmalom vöröshagyma 6 db",
+   "imageUrl": null,
+   "unit": "db",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 6,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 41.83,
+   "pricesOfChainStores": [
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 251,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 251,
+       "unitAmount": 41.83,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "aldi-151320",
+   "name": "Tesztmalom vöröshagyma 6 db",
+   "imageUrl": null,
+   "unit": "db",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 6,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 42,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 252,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 252,
+       "unitAmount": 42,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999252867993",
+   "name": "Vöröshagyma lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 189,
+   "pricesOfChainStores": [
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 189,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 189,
+       "unitAmount": 189,
+       "sameAmountEverywhere": true
+      },
+      {
+       "type": "LOYALTY",
+       "amount": 161,
+       "unitAmount": 161,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5999212528516",
+   "name": "Próbakert vöröshagyma 500 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.5,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 194,
+   "pricesOfChainStores": [
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 97,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 97,
+       "unitAmount": 194,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999363845150",
+   "name": "Vöröshagyma lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 210,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 210,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 210,
+       "unitAmount": 210,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "aldi-585165",
+   "name": "Próbakert vöröshagyma 250 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.25,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 220,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 55,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 55,
+       "unitAmount": 220,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999763291551",
+   "name": "Vöröshagyma lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 227,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 227,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 227,
+       "unitAmount": 227,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "penny-7238",
+   "name": "Próbakert vöröshagyma 500 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.5,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 240,
+   "pricesOfChainStores": [
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 120,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 120,
+       "unitAmount": 240,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5992199207054",
+   "name": "Mintafarm vöröshagyma 3 db-os háló",
+   "imageUrl": null,
+   "unit": "csomag",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
+   "minUnitPrice": 299,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 299,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 299,
+       "unitAmount": 299,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "count": 13
+}

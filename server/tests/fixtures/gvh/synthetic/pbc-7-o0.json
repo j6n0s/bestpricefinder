@@ -1,0 +1,169 @@
+{
+ "products": [
+  {
+   "id": "5995237894469",
+   "name": "Szintetika natúr joghurt 250 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.25,
+   "categoryPath": "tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt",
+   "minUnitPrice": 396,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 103,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 103,
+       "unitAmount": 412,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 104,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 104,
+       "unitAmount": 416,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 99,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 99,
+       "unitAmount": 396,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5994195528171",
+   "name": "Kísérleti natúr joghurt 200 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.2,
+   "categoryPath": "tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt",
+   "minUnitPrice": 450,
+   "pricesOfChainStores": [
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 90,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 90,
+       "unitAmount": 450,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "aldi-936569",
+   "name": "Szintetika natúr joghurt 500 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.5,
+   "categoryPath": "tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt",
+   "minUnitPrice": 504,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 252,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 252,
+       "unitAmount": 504,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5994828418336",
+   "name": "Példatej natúr joghurt 150 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.15,
+   "categoryPath": "tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt",
+   "minUnitPrice": 926.67,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 139,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 139,
+       "unitAmount": 926.67,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 145,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 145,
+       "unitAmount": 966.67,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 149,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 149,
+       "unitAmount": 993.33,
+       "sameAmountEverywhere": false
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "count": 4
+}

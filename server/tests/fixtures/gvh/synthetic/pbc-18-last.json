@@ -1,0 +1,140 @@
+{
+ "products": [
+  {
+   "id": "5992023733254",
+   "name": "Szintetika csirkemellfilé 1 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 2303,
+   "pricesOfChainStores": [
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2303,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2303,
+       "unitAmount": 2303,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "aldi-597675",
+   "name": "Példatej csirkemellfilé 1 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 2308,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2308,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2308,
+       "unitAmount": 2308,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5993799746431",
+   "name": "Szintetika csirkemellfilé 500 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.5,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 2312,
+   "pricesOfChainStores": [
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1156,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1156,
+       "unitAmount": 2312,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5993794954657",
+   "name": "Mintafarm csirkemellfilé 1 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 2316,
+   "pricesOfChainStores": [
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2316,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2316,
+       "unitAmount": 2316,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5991628161646",
+   "name": "Mintafarm csirkemellfilé 250 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.25,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 2324,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 581,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 581,
+       "unitAmount": 2324,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "count": 101
+}

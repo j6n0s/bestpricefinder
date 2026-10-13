@@ -1,0 +1,1717 @@
+{
+ "products": [
+  {
+   "id": "5995533002766",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1377,
+   "pricesOfChainStores": [
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1377,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1836,
+       "unitAmount": 1836,
+       "sameAmountEverywhere": true
+      },
+      {
+       "type": "DISCOUNTED",
+       "amount": 1377,
+       "unitAmount": 1377,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999142796545",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1492,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1743,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1743,
+       "unitAmount": 1743,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1492,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1989,
+       "unitAmount": 1989,
+       "sameAmountEverywhere": true
+      },
+      {
+       "type": "DISCOUNTED",
+       "amount": 1492,
+       "unitAmount": 1492,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5999077090357",
+   "name": "Példatej csirkemellfilé 2 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 2,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1493.5,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 4135,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 4135,
+       "unitAmount": 2067.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3695,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3695,
+       "unitAmount": 1847.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2987,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3983,
+       "unitAmount": 1991.5,
+       "sameAmountEverywhere": true
+      },
+      {
+       "type": "DISCOUNTED",
+       "amount": 2987,
+       "unitAmount": 1493.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5992632883500",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1684,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1684,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1684,
+       "unitAmount": 1684,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999070544357",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1686,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1686,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1686,
+       "unitAmount": 1686,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1800,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1800,
+       "unitAmount": 1800,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1785,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1785,
+       "unitAmount": 1785,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5996221377869",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1686,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1686,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1686,
+       "unitAmount": 1686,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5996281079086",
+   "name": "Tesztmalom csirkemellfilé 2 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 2,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1699.5,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3399,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3399,
+       "unitAmount": 1699.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3489,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3489,
+       "unitAmount": 1744.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3832,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3832,
+       "unitAmount": 1916,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5996547142523",
+   "name": "Próbakert csirkemellfilé 1 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1700,
+   "pricesOfChainStores": [
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1700,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1700,
+       "unitAmount": 1700,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999114866855",
+   "name": "81. FRISS CSIRKEMELLFILE PULTOS QQ",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1702,
+   "pricesOfChainStores": [
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2083,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2083,
+       "unitAmount": 2083,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1702,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1702,
+       "unitAmount": 1702,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1925,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1925,
+       "unitAmount": 1925,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999869783343",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1703,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1703,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1703,
+       "unitAmount": 1703,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "penny-7806",
+   "name": "Mintafarm csirkemellfilé 1 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1715,
+   "pricesOfChainStores": [
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1715,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1715,
+       "unitAmount": 1715,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5998590867590",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1720,
+   "pricesOfChainStores": [
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1720,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1720,
+       "unitAmount": 1720,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5994075225817",
+   "name": "Szintetika csirkemellfilé 500 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.5,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1722,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1147,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1147,
+       "unitAmount": 2294,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 861,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 861,
+       "unitAmount": 1722,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 911,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 911,
+       "unitAmount": 1822,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5992315252258",
+   "name": "Mintafarm csirkemellfilé 2 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 2,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1730.5,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3928,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3928,
+       "unitAmount": 1964,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 4424,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 4424,
+       "unitAmount": 2212,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3461,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3461,
+       "unitAmount": 1730.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5997817671859",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1743,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1743,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1743,
+       "unitAmount": 1743,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999007397018",
+   "name": "72. FRISS CSIRKEMELLFILE PULTOS QQ",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1749,
+   "pricesOfChainStores": [
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1749,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1749,
+       "unitAmount": 1749,
+       "sameAmountEverywhere": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5997322045145",
+   "name": "Szintetika csirkemellfilé 1 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1751,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1751,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1751,
+       "unitAmount": 1751,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5994503537376",
+   "name": "Próbakert csirkemellfilé 1 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1752,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2321,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2321,
+       "unitAmount": 2321,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1752,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1752,
+       "unitAmount": 1752,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5999526446407",
+   "name": "Szintetika csirkemellfilé 2 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 2,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1754,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3508,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3508,
+       "unitAmount": 1754,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3560,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3560,
+       "unitAmount": 1780,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5993811254982",
+   "name": "Kísérleti csirkemellfilé 250 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.25,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1756,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 439,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 439,
+       "unitAmount": 1756,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5991615601544",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1760,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1760,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1760,
+       "unitAmount": 1760,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999425636405",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1786,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2102,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2102,
+       "unitAmount": 2102,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1895,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1895,
+       "unitAmount": 1895,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1786,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1786,
+       "unitAmount": 1786,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999616930419",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1789,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1789,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1789,
+       "unitAmount": 1789,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5999542254741",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1795,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1795,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1795,
+       "unitAmount": 1795,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5996862258701",
+   "name": "Kísérleti csirkemellfilé 2 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 2,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1811.5,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 4195,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 4195,
+       "unitAmount": 2097.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 4081,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 4081,
+       "unitAmount": 2040.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3623,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3623,
+       "unitAmount": 1811.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5994829070335",
+   "name": "Tesztmalom csirkemellfilé 400 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.4,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1815,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 789,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 789,
+       "unitAmount": 1972.5,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 726,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 726,
+       "unitAmount": 1815,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999612220718",
+   "name": "93. FRISS CSIRKEMELLFILE PULTOS QQ",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1820,
+   "pricesOfChainStores": [
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1820,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1820,
+       "unitAmount": 1820,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5994834174431",
+   "name": "Példatej csirkemellfilé 200 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.2,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1820,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 364,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 364,
+       "unitAmount": 1820,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5993601305733",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1821,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1821,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1821,
+       "unitAmount": 1821,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5996703295407",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1827,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1827,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1827,
+       "unitAmount": 1827,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5994097473036",
+   "name": "Kísérleti csirkemellfilé 250 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.25,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1828,
+   "pricesOfChainStores": [
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 457,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 457,
+       "unitAmount": 1828,
+       "sameAmountEverywhere": true
+      },
+      {
+       "type": "DISCOUNTED",
+       "amount": 274,
+       "unitAmount": 1096,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999718746468",
+   "name": "53. FRISS CSIRKEMELLFILE PULTOS QQ",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1829,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2056,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2056,
+       "unitAmount": 2056,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1829,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1829,
+       "unitAmount": 1829,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2129,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2129,
+       "unitAmount": 2129,
+       "sameAmountEverywhere": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5991836690501",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1831,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1831,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1831,
+       "unitAmount": 1831,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5992777945361",
+   "name": "Mintafarm csirkemellfilé 500 g",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 0.5,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1832,
+   "pricesOfChainStores": [
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 916,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 916,
+       "unitAmount": 1832,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1110,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1110,
+       "unitAmount": 2220,
+       "sameAmountEverywhere": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999397103363",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1834,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1834,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1834,
+       "unitAmount": 1834,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999312175187",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1837,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1837,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1837,
+       "unitAmount": 1837,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999425396180",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1840,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1840,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1840,
+       "unitAmount": 1840,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5997198238009",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1844,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1844,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1844,
+       "unitAmount": 1844,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5999866885539",
+   "name": "Példatej csirkemellfilé 2 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 2,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1854,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 4060,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 4060,
+       "unitAmount": 2030,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+     "name": "Tesco",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3708,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3708,
+       "unitAmount": 1854,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5992545839786",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1863,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1863,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1863,
+       "unitAmount": 1863,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999628504597",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1864,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1883,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1883,
+       "unitAmount": 1883,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2313,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2313,
+       "unitAmount": 2313,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1864,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1864,
+       "unitAmount": 1864,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5991813009876",
+   "name": "Demóház csirkemellfilé 1 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1866,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1866,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1866,
+       "unitAmount": 1866,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2197,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2197,
+       "unitAmount": 2197,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999746013814",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1867,
+   "pricesOfChainStores": [
+    {
+     "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+     "name": "Penny",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1867,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1867,
+       "unitAmount": 1867,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999841540453",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1874,
+   "pricesOfChainStores": [
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1874,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1874,
+       "unitAmount": 1874,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5993881079270",
+   "name": "Tesztmalom csirkemellfilé 1 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1876,
+   "pricesOfChainStores": [
+    {
+     "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+     "name": "Aldi",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1876,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1876,
+       "unitAmount": 1876,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "5999762909247",
+   "name": "Próbakert csirkemellfilé 2 kg",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "csomag",
+   "bulk": false,
+   "packaging": 2,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1878,
+   "pricesOfChainStores": [
+    {
+     "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+     "name": "Auchan",
+     "priceSameEverywhere": true,
+     "productMinAmount": 3756,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 3756,
+       "unitAmount": 1878,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999748284601",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1885,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1885,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1885,
+       "unitAmount": 1885,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "2999722693422",
+   "name": "Csirkemellfilé lédig",
+   "imageUrl": null,
+   "unit": "kg",
+   "unitTitle": "kg",
+   "bulk": false,
+   "packaging": 1,
+   "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
+   "minUnitPrice": 1903,
+   "pricesOfChainStores": [
+    {
+     "id": "aaaf447d-da4c-518e-966a-bdae24170972",
+     "name": "Lidl",
+     "priceSameEverywhere": true,
+     "productMinAmount": 1903,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 1903,
+       "unitAmount": 1903,
+       "sameAmountEverywhere": true
+      }
+     ]
+    },
+    {
+     "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+     "name": "Spar",
+     "priceSameEverywhere": true,
+     "productMinAmount": 2256,
+     "prices": [
+      {
+       "type": "NORMAL",
+       "amount": 2256,
+       "unitAmount": 2256,
+       "sameAmountEverywhere": true
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "count": 101
+}

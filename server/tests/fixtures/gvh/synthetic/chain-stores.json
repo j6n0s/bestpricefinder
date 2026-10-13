@@ -1,0 +1,47 @@
+[
+ {
+  "uuid": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+  "name": "Aldi",
+  "imageUrl": "https://cdn.example.invalid/chain.png"
+ },
+ {
+  "uuid": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+  "name": "Auchan",
+  "imageUrl": "https://cdn.example.invalid/chain.png"
+ },
+ {
+  "uuid": "aaaf447d-da4c-518e-966a-bdae24170972",
+  "name": "Lidl",
+  "imageUrl": "https://cdn.example.invalid/chain.png"
+ },
+ {
+  "uuid": "fda321a8-462e-5601-ba81-290af58a9315",
+  "name": "Müller",
+  "imageUrl": "https://cdn.example.invalid/chain.png"
+ },
+ {
+  "uuid": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+  "name": "Penny",
+  "imageUrl": "https://cdn.example.invalid/chain.png"
+ },
+ {
+  "uuid": "05ebbb5a-e919-55fe-9e1f-9f0d6b62a731",
+  "name": "Rossmann",
+  "imageUrl": "https://cdn.example.invalid/chain.png"
+ },
+ {
+  "uuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+  "name": "Spar",
+  "imageUrl": "https://cdn.example.invalid/chain.png"
+ },
+ {
+  "uuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+  "name": "Tesco",
+  "imageUrl": "https://cdn.example.invalid/chain.png"
+ },
+ {
+  "uuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+  "name": "dm",
+  "imageUrl": "https://cdn.example.invalid/chain.png"
+ }
+]
