@@ -1049,6 +1049,10 @@ class FakeGvh:
             return _json(200, shops_json(world))
         if match := re.fullmatch(r"/products-by-category/(\d+)", path):
             return self._listing(int(match.group(1)), query)
+        if path == "/search" and len(fold(query.get("q", ""))) < 3:
+            # research/gvh-location/notes.md §1: a 2-character q is HTTP 400 SEARCH-INPUT-ERROR (longer
+            # queries are not modelled: the app never searches; they get the SPA page like any unknown path)
+            return _json(400, {"statusCode": 400, "message": "SEARCH-INPUT-ERROR"})
         if match := re.fullmatch(r"/product/([^/]+)/shop/([^/]+)", raw_path):
             product = world.products.get(unquote(match.group(1)))
             ids = [s for s in unquote(match.group(2)).split(",") if s]

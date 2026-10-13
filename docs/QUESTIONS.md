@@ -47,3 +47,14 @@ Strip nothing else. If any call's shape differs from BUILD-BRIEF §4.1, please a
 - Still open, and not blocking:
   - Thursday-start promos have only been seen from day 4, so add a Thursday snapshot test once the ingest runs daily.
   - Is Aldi's and Lidl Plus's reporting compliant?
+
+## 2026-10-13 — cloud agent — the raw-sample request now has a tool and a brief
+The request "raw GVH fixture samples" above no longer needs to be done by hand:
+- **Tool:** `server/tools/capture_gvh_samples.py`. It fetches exactly the 12 items listed in that request.
+  - It writes them where and how `tests/test_gvh_fixtures.py` reads them.
+  - It waits ≥1.2 s between requests and sends a contact User-Agent.
+  - It follows no redirects and keeps no cookies.
+  - It stops at the first 403, 429 or 5xx.
+  - It was tested against the fake GVH server (`tests/test_capture_tool.py`).
+- **Brief for a local session:** `docs/LOCAL_AGENT.md`, Part A (Part B, the PG18/macOS run, is optional). It says what to paste into the session, the rules, the commands, and how to report back here.
+- Small change in `tests/fakegvh.py`: `/api/search` with a query under 3 characters now answers HTTP 400 `SEARCH-INPUT-ERROR`, as research/gvh-location/notes.md §1 recorded.
