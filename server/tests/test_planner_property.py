@@ -12,6 +12,7 @@ import random
 from collections.abc import Mapping, Sequence
 from decimal import Decimal
 from fractions import Fraction
+from typing import Any
 
 import pytest
 
@@ -244,13 +245,13 @@ def test_incremental_search_state_matches_a_fresh_rebuild(seed: int, monkeypatch
     """After the search, the incrementally maintained totals equal totals rebuilt from the final grid, and the
     search's own score says "no violation" exactly when every returned check is ok."""
     states: list[search_module._Search] = []
-    original = search_module._Search.optimise
+    original = search_module.build_plan
 
-    def spy(self: search_module._Search, rng: random.Random) -> None:
-        original(self, rng)
-        states.append(self)
+    def spy(search: search_module._Search, *args: Any) -> None:
+        original(search, *args)
+        states.append(search)
 
-    monkeypatch.setattr(search_module._Search, "optimise", spy)
+    monkeypatch.setattr(search_module, "build_plan", spy)
     rng = seeded(20_000 + seed)
     recipes = random_library(rng)
     req = random_request(rng, recipes, no_repeat_days=seeded(seed).choice((0, 2, 5, 5, 7)))
