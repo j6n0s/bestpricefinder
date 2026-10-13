@@ -56,11 +56,15 @@ describe('synthetic mock API', () => {
 			'/api/quote',
 			JSON.stringify({
 				lines: [{ ingredient_id: 'voros_lencse', qty: 1 }],
-				store_ids: ['synthetic-lidl-1', 'synthetic-aldi-1', 'synthetic-lidl-2']
+				store_ids: ['synthetic-spar-1', 'synthetic-lidl-1', 'synthetic-aldi-1']
 			})
 		);
-		const ranks = (result.body as { ranking: { store_id: string; rank: number }[] }).ranking.map((r) => r.rank);
-		expect(ranks).toEqual([1, 2, 3]);
+		const ranking = (result.body as { ranking: { store_id: string; rank: number }[] }).ranking;
+		expect(ranking.map((r) => [r.store_id, r.rank])).toEqual([
+			['synthetic-aldi-1', 1],
+			['synthetic-lidl-1', 1],
+			['synthetic-spar-1', 3]
+		]);
 	});
 
 	it('is clearly synthetic', () => {

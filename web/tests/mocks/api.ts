@@ -268,6 +268,8 @@ export const MOCK_RECIPE_DETAILS: Record<string, RecipeDetail> = {
 
 /** Fixed synthetic unit prices (HUF per canonical unit) used to build quote answers. */
 const SYNTHETIC_UNIT_PRICE: Record<string, number> = { csirkemellfile: 2000, voroshagyma: 400, voros_lencse: 1200 };
+/** Synthetic per-chain surcharge; Aldi and Lidl tie on purpose, so the mock exercises tie handling. */
+const SYNTHETIC_CHAIN_OFFSET: Record<string, number> = { aldi: 0, lidl: 0, penny: 50, auchan: 120, spar: 100, tesco: 150 };
 
 export interface MockResult {
 	status: number;
@@ -288,7 +290,7 @@ function onlyKeys(value: Record<string, unknown>, allowed: readonly string[]): s
 	return Object.keys(value).filter((key) => !allowed.includes(key));
 }
 
-function quoteLine(ingredientId: string, qty: number, storeIndex: number): QuoteLineOut {
+function quoteLine(ingredientId: string, qty: number, chain: string): QuoteLineOut {
 	const unitPrice = SYNTHETIC_UNIT_PRICE[ingredientId];
 	if (unitPrice === undefined) {
 		return {
@@ -304,7 +306,7 @@ function quoteLine(ingredientId: string, qty: number, storeIndex: number): Quote
 			alternatives: []
 		};
 	}
-	const price = unitPrice + storeIndex * 50;
+	const price = unitPrice + (SYNTHETIC_CHAIN_OFFSET[chain] ?? 200);
 	const cost = Math.round(qty * price * 100) / 100;
 	return {
 		ingredient_id: ingredientId,
@@ -350,7 +352,7 @@ function mockQuote(body: Record<string, unknown>): MockResult {
 		if (!found) return fail(422, 'invalid_request', [`store_ids.${index}`]);
 		const quoteLines = lines.map((line) => {
 			const rec = isRecord(line) ? line : {};
-			return quoteLine(String(rec.ingredient_id), Number(rec.qty), index);
+			return quoteLine(String(rec.ingredient_id), Number(rec.qty), found.chain);
 		});
 		const total = quoteLines.reduce((sum, line) => sum + (line.checkout_cost ?? 0), 0);
 		stores.push({
