@@ -52,6 +52,28 @@ def test_missing_line_is_penalised_with_the_median_of_the_other_stores() -> None
     ]
 
 
+def test_ties_share_a_rank_and_are_never_broken_by_store_or_chain_name() -> None:
+    # BUILD-BRIEF §4.1 trap 13: equal (displayed) totals form one tie group: competition ranking 1, 1, 3.
+    quotes = [
+        quote("spar-1", {"repa": 489}),
+        quote("aldi-1", {"repa": 489}),
+        quote("lidl-1", {"repa": "489.40"}),  # 489 Ft when displayed: still tied
+        quote("tesco-1", {"repa": "489.50"}),  # 490 Ft when displayed: next rank
+    ]
+    ranking = rank_stores(quotes)
+    assert {r.store_id: r.rank for r in ranking} == {"aldi-1": 1, "lidl-1": 1, "spar-1": 1, "tesco-1": 4}
+    assert [r.rank for r in ranking] == [1, 1, 1, 4]
+
+
+def test_equal_totals_with_different_missing_counts_are_not_tied() -> None:
+    quotes = [
+        quote("a", {"tej": 300, "liszt": 200, "lazac": None}),  # 500 + median(300) = 800, 1 missing
+        quote("b", {"tej": 300, "liszt": 200, "lazac": 300}),  # 800, 0 missing
+    ]
+    ranking = rank_stores(quotes)
+    assert [(r.store_id, r.rank) for r in ranking] == [("b", 1), ("a", 2)]
+
+
 def test_even_number_of_other_prices_uses_the_mean_of_the_middle_two() -> None:
     quotes = [quote("s1", {"x": None}), quote("s2", {"x": 1000}), quote("s3", {"x": 1501})]
     penalised = {r.store_id: r.penalized_total for r in rank_stores(quotes)}

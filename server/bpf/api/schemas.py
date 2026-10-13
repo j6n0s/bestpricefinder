@@ -206,9 +206,11 @@ class RecipeSummary(_Out):
             "cheapest chain-typical used cost per serving across grocery chains (HUF); null if unpriced"
         )
     )
-    cheapest_chain: ChainSlug | None
+    cheapest_chains: list[ChainSlug] = Field(
+        description="all grocery chains tied at cost_per_serving_from (whole Ft); a tie group, not an order"
+    )
     priced_share: float = Field(
-        ge=0, le=1, description="share of cost covered by priced lines at cheapest_chain"
+        ge=0, le=1, description="share of cost priced at the cheapest chain(s) (the lowest share of a tie)"
     )
 
 
@@ -359,7 +361,9 @@ class StoreQuoteOut(_Out):
 
 class RankOut(_Out):
     store_id: StoreId
-    rank: int
+    rank: int = Field(
+        description="competition rank: tied stores share it (1, 1, 3); order inside a tie is meaningless"
+    )
     checkout_total: float
     penalized_total: float
     missing_count: int

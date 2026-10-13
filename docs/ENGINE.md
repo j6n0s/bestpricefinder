@@ -49,7 +49,9 @@ quote_store(lines: Sequence[tuple[str, Decimal]], store: Store, cat: Catalogue, 
 rank_stores(quotes: Sequence[StoreQuote]) -> tuple[StoreRank, ...]
     # penalized_total = checkout_total + sum over missing lines of the median checkout_cost of that
     # ingredient across the OTHER quotes that priced it (if no other store has it: no penalty, but
-    # missing_count still counts). Sort by penalized_total, then missing_count, then store id.
+    # missing_count still counts). Sort by whole-forint penalized_total, then missing_count. Ties share a
+    # rank (competition ranking 1, 1, 3) and are never broken by chain or store name (trap 13); store id
+    # orders a tie group only for determinism.
 
 suggest_split(quotes: Sequence[StoreQuote], *, threshold: Decimal = Decimal(1500)) -> SplitSuggestion | None
     # Best pair of stores: each line goes to the cheaper of the two (lines missing at both stay out of the
@@ -59,7 +61,8 @@ suggest_split(quotes: Sequence[StoreQuote], *, threshold: Decimal = Decimal(1500
     # `total` = the amount paid at the two stores. store_ids lists the better-ranked store first.
 
 recipe_chain_costs(recipe: Recipe, cat: Catalogue) -> tuple[ChainRecipeCost, ...]
-    # One entry per grocery chain (Chain.is_grocery), sorted by chain slug. Chain-typical:
+    # One entry per grocery chain (Chain.is_grocery), sorted by chain slug. Callers that pick "the cheapest"
+    # must keep ties (equal whole-forint cost per serving) as a group. Chain-typical:
     # product_min_amount unit prices, used quantities, the cheapest candidate per line, pantry lines and
     # optional lines excluded. priced_share = priced cost / (priced cost + estimated cost of missing lines,
     # where the estimate is the median of other chains' price for that line, or KSH, or 0).
@@ -119,10 +122,10 @@ If the pool cannot satisfy a rule, return the best plan with a failing check and
 - `products_by_category(leaf_id, *, shop_ids=None)`, which iterates every page with `limit=48` and returns a `CategoryListing` (`count`, `pages`, `duplicates`, `count_changed`, the validated products);
 - `product(product_id)`;
 - `product_shop_prices(product_id, store_ids)`, which chunks into ≤200 ids per call, maps `PRODUCT-SHOP-PRICES-NOT-FOUND` to an empty result and returns `dict[store_id, tuple[PriceEntry, ...]]`;
-- `daily_xlsx(expected_date)`, returning a `DailyXlsx`, which is cache-busted (`?v=YYYYMMDD`), checks that the sheet name `Napi feltöltések - YYYY-MM-DD` equals `expected_date` (else raises `StaleXlsxError`), parses decimal-comma text to Decimal and validates the header.
+- `daily_xlsx(expected_date)`, returning a `DailyXlsx`, which is cache-busted with a value unique per run (`?v=YYYYMMDD-<run id>`; the plain URL served 6–30 h old copies), checks that the sheet name `Napi feltöltések - YYYY-MM-DD` equals `expected_date` (else raises `StaleXlsxError`), parses decimal-comma text to Decimal and validates the header.
 
 ## `bpf.ingest` (CLI `python -m bpf.ingest {reference|daily|availability} [--date YYYY-MM-DD] [--all-stores] [--all-food] [--max-requests N] [-v]`; exit 0 ok, 1 failed, 2 usage error, 3 partial)
-Runs as `bpf_ingest`. Each run inserts an `ops.ingest_run` row (`running` → `ok` | `partial` | `failed`, with request and byte counts, warnings and stats). The run is idempotent per data date (upsert today's rows; history is append-only by trigger). The order is ARCHITECTURE.md "Data flow". The data date is today in Europe/Budapest. Unit validation: products with a unit outside {kg, l, db} are skipped, with a warning listing them. Per-store calls only for (product, chain) pairs whose XLSX `min < max`, for Budapest stores, in leaves referenced by the ontology (the leaf set is read from `app.ingredient.leaf_ids`; `bpf_ingest` has no SELECT on the `api` views except `api.latest`). Per-store prices are for Budapest stores by default (`--all-stores` for all). Availability refreshes the ontology's leaves by default (`--all-food` for every food product). `daily` runs the reference step first. A stale XLSX fails the run before anything is written; the scheduler retries later. `BPF_CONTACT_EMAIL` is required (it goes into the User-Agent).
+Runs as `bpf_ingest`. Each run inserts an `ops.ingest_run` row (`running` → `ok` | `partial` | `failed`, with request and byte counts, warnings and stats). The run is idempotent per data date (upsert today's rows; history is append-only by trigger). The order is ARCHITECTURE.md "Data flow". The data date is today in Europe/Budapest. Unit validation: products with a unit outside {kg, l, db} are skipped, with a warning listing them. Per-store calls only for (product, chain) pairs whose XLSX `min < max`, for Budapest stores, in leaves referenced by the ontology (the leaf set is read from `app.ingredient.leaf_ids`; `bpf_ingest` has no SELECT on the `api` views except `api.latest`). Per-store prices are for Budapest stores by default (`--all-stores` for all). Availability refreshes the ontology's leaves by default (`--all-food` for every food product). `daily` runs the reference step first. **Date agreement check (trap 10):** the API switches day at about 00:00 UTC and has no date field, so after fetching both, compare the XLSX minimum with the listing's daily minimum (min of NORMAL and DISCOUNTED, excluding LOYALTY) on every product×chain pair present in both. The same day disagrees on about 0.1 % of pairs, while consecutive days differ on 1.2–2.6 %. If more than 0.6 % disagree, record the warning `api_xlsx_date_mismatch` with the share and finish the run as `partial`. Loyalty prices come only from the listing (`prices[]` LOYALTY) and the per-store endpoint; the XLSX and `productMinAmount` exclude them. A stale XLSX fails the run before anything is written; the scheduler retries later. `BPF_CONTACT_EMAIL` is required (it goes into the User-Agent).
 
 ## `bpf.content` (CLI `python -m bpf.content [--dry-run] [--coverage-report] [--allow-low-coverage] [--convert-ksh RAW]`)
 See docs/DATA.md.

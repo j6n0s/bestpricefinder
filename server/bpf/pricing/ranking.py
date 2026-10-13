@@ -19,7 +19,7 @@ store first; ``assignment`` maps each assigned ingredient id to its store, in th
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 from bpf.pricing._num import ZERO, exact, median
 from bpf.pricing.model import SplitSuggestion, StoreQuote, StoreRank
@@ -46,7 +46,11 @@ def _imputed(
 
 @exact
 def rank_stores(quotes: Sequence[StoreQuote]) -> tuple[StoreRank, ...]:
-    """Rank 1 = lowest penalized total; ties: fewer missing lines, then store id."""
+    """Rank 1 = lowest penalized total, then fewer missing lines. Ties share a rank (competition ranking:
+    1, 1, 3): two stores tie when their penalized totals are equal after rounding to whole forints (what the
+    user sees) and they miss the same number of lines. Ties are never broken by chain or store name
+    (BUILD-BRIEF §4.1 trap 13); inside a tie group the list order is by store id only for determinism and
+    carries no meaning (the client orders a tie group by distance)."""
     priced = [_priced_costs(q) for q in quotes]
     rows: list[tuple[Decimal, int, str, StoreQuote]] = []
     for index, quote in enumerate(quotes):
@@ -56,17 +60,29 @@ def rank_stores(quotes: Sequence[StoreQuote]) -> tuple[StoreRank, ...]:
             if imputed is not None:
                 penalty += imputed
         rows.append((quote.checkout_total + penalty, len(quote.missing), quote.store_id, quote))
-    rows.sort(key=lambda row: (row[0], row[1], row[2]))
-    return tuple(
-        StoreRank(
-            store_id=quote.store_id,
-            rank=position,
-            checkout_total=quote.checkout_total,
-            penalized_total=penalized,
-            missing_count=missing_count,
+    rows.sort(key=lambda row: (_whole_forints(row[0]), row[1], row[2]))
+    ranks: list[StoreRank] = []
+    previous: tuple[Decimal, int] | None = None
+    rank = 0
+    for position, (penalized, missing_count, _, quote) in enumerate(rows, start=1):
+        key = (_whole_forints(penalized), missing_count)
+        if key != previous:
+            rank, previous = position, key
+        ranks.append(
+            StoreRank(
+                store_id=quote.store_id,
+                rank=rank,
+                checkout_total=quote.checkout_total,
+                penalized_total=penalized,
+                missing_count=missing_count,
+            )
         )
-        for position, (penalized, missing_count, _, quote) in enumerate(rows, start=1)
-    )
+    return tuple(ranks)
+
+
+def _whole_forints(amount: Decimal) -> Decimal:
+    """The displayed precision: whole forints, rounded half-up."""
+    return amount.quantize(Decimal(1), rounding=ROUND_HALF_UP)
 
 
 def _line_order(quotes: Sequence[StoreQuote]) -> list[str]:

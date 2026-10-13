@@ -44,7 +44,7 @@ Optional filters:
 - `tag`: one recipe tag;
 - `q`: 2–40 characters, accent-insensitive substring search over the title.
 
-Each item has: `id, title, summary, slots, servings, minutes, tags, tested, cost_per_serving_from, cheapest_chain, priced_share`. `cost_per_serving_from` is the cheapest **chain-typical** used cost per serving across the grocery chains (the `productMinAmount` price, used quantities, pantry lines excluded). It is null when nothing can be priced.
+Each item has: `id, title, summary, slots, servings, minutes, tags, tested, cost_per_serving_from, cheapest_chains, priced_share`. `cheapest_chains` lists **every** grocery chain tied at the minimum (equal after rounding to whole forints). It is a tie group, never an order; the UI must not single out one chain of a tie. `cost_per_serving_from` is the cheapest **chain-typical** used cost per serving across the grocery chains (the `productMinAmount` price, used quantities, pantry lines excluded). It is null when nothing can be priced.
 
 ### `GET /api/recipes/{id}`
 The summary fields plus:
@@ -80,7 +80,7 @@ Per line the response gives:
 Statuses: `priced`, `pantry` (a pantry staple with no GVH mapping, such as spices; never priced), `unavailable` ("nincs ebben a boltban"), `ksh_estimate`, `unpriced` ("nincs ár"). Pantry staples that *are* GVH-mapped (oil, flour) are priced normally when sent. By default the client leaves pantry lines out of the quote unless the user marks them "nincs otthon".
 
 Per store: `checkout_total`, `used_total`, `missing`, `assumed_count`, `ksh_estimate_total`.
-- `ranking`: sorted by `penalized_total` = `checkout_total` + for each missing line the median checkout cost of that line at the other requested stores that have it.
+- `ranking`: sorted by `penalized_total` = `checkout_total` + for each missing line the median checkout cost of that line at the other requested stores that have it. **Ties share a rank** (1, 1, 3): equal whole-forint penalized totals and equal missing counts. The order inside a tie group carries no meaning; the client orders it by distance. Ties are never broken by chain or store name (BUILD-BRIEF §4.1 trap 13).
 - `split`: the best 2-store split, only if it saves at least 1,500 Ft against the best single store; otherwise `null`.
 - Also: `scope_note_hu` / `scope_note_en`, `attribution`, `data_date`.
 
@@ -112,6 +112,9 @@ Our own daily archive. Per chain, the cheapest matching product's chain-typical 
 - `days`: 7–365, default 30.
 
 Response: `{ingredient_id, unit, days, series: [{chain, points: [{date, unit_price}]}]}`.
+
+## Price types and "deals"
+`price_type` is reported for transparency only. `DISCOUNTED` is **not** a weekly-deal flag: Aldi never sets it, and it also marks long-running reductions (BUILD-BRIEF §3). The UI may show "kedvezményes ár (GVH-jelölés)" as plain text, but must not show an "akció"/deal badge based on it. A future deal badge will compare against our own daily archive.
 
 ## Static hosting (the SPA)
 - FastAPI serves `web/build` (adapter-static) at `/`, and the SPA fallback page for unknown non-`/api` paths.

@@ -338,7 +338,7 @@ class StoreQuote:
 @dataclass(frozen=True, slots=True)
 class StoreRank:
     store_id: str
-    rank: int  # 1 = best
+    rank: int  # 1 = best; ties (equal whole-forint penalized total and missing count) share a rank: 1, 1, 3
     checkout_total: Decimal
     penalized_total: Decimal  # checkout_total + imputed cost of missing lines (median of other stores)
     missing_count: int
