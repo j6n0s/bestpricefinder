@@ -20,7 +20,14 @@ Spar single-store outlier (``prices[]`` NORMAL far below ``productMinAmount``), 
 price zone, products sold by more than 3 chains (the listing shows 3), ``PRODUCT-SHOP-PRICES-NOT-FOUND`` for
 stores that do not carry a product, Budapest stores without any product, a product with the unknown unit
 "csomag", and an XLSX with decimal-comma text numbers. Modes: stale XLSX, XLSX header changes, schema drift,
-an ignored ``limit``, the SPA's HTML page for unknown API paths, and injected 5xx / connection failures.
+an ignored ``limit``, the SPA's HTML page for unknown API paths, injected 5xx / connection failures, and a
+listing that still serves the previous day for a share of pairs (``listing_lag``, trap 10). The fake CDN
+serves yesterday's file without a cache-buster and, like a real edge, keeps serving the first copy it cached
+under a given ``v`` value (trap 4).
+
+By default the listing and the XLSX agree exactly (both derive from the same per-store prices): the listing's
+min(NORMAL, DISCOUNTED) per chain equals the XLSX "Minimum ár", and LOYALTY appears only in the listing and
+the per-store answers.
 
 Regenerate the synthetic fixtures with ``python -m tests.fakegvh --write-fixtures`` (from ``server/``).
 """
@@ -30,6 +37,7 @@ from __future__ import annotations
 import argparse
 import csv
 import functools
+import hashlib
 import io
 import json
 import os
@@ -114,6 +122,8 @@ NONFOOD_PRICE = {"kg": 3000, "l": 1500, "db": 1200}
 BRANDS = ("Mintafarm", "Próbakert", "Tesztmalom", "Példatej", "Kísérleti", "Szintetika", "Demóház")
 PIECE_KG = Decimal("0.2")
 CENT = Decimal("0.01")
+VALID_UNITS = frozenset({"kg", "l", "db"})  # what the ingest keeps (others are skipped, trap 5)
+PREVIOUS_DAY_RISE = Decimal("0.08")  # a lagged listing pair shows a price 8 % (>= 1 Ft) off today's
 
 
 def fold(text: str) -> str:
@@ -352,6 +362,23 @@ def summarise(offer: Offer, scope: frozenset[str] | None = None) -> OfferSummary
         daily_min=min(daily.values()),
         daily_max=max(daily.values()),
     )
+
+
+@functools.cache
+def previous_day(offer: Offer) -> Offer:
+    """The offer as the API showed it the day before (trap 10): one NORMAL price in every store, 8 % (at least
+    1 Ft) above today's cheapest daily price, so its daily minimum differs from today's XLSX "Minimum ár" by
+    more than the ingest's 0.5 Ft tolerance. Promotions and loyalty prices of today are not there yet."""
+    today = summarise(offer)
+    if today is None:
+        return offer
+    rise = max(1, int((today.daily_min * PREVIOUS_DAY_RISE).to_integral_value(ROUND_HALF_UP)))
+    return Offer(offer.chain, offer.stores, today.daily_min + rise)
+
+
+def shown_chains(summaries: Sequence[OfferSummary]) -> list[OfferSummary]:
+    """The listing's 3-chain cap (trap 2): the chains with the most carrying stores, ties by name."""
+    return sorted(summaries, key=lambda s: (-len(s.stores), s.chain))[:3]
 
 
 @dataclass
@@ -710,12 +737,18 @@ def _path_of(world: FakeWorld, leaf_id: int) -> str:
 
 
 def listing_item(
-    world: FakeWorld, product: FakeProduct, scope: frozenset[str] | None = None
+    world: FakeWorld,
+    product: FakeProduct,
+    scope: frozenset[str] | None = None,
+    lagged: frozenset[str] = frozenset(),
 ) -> dict[str, Any] | None:
-    summaries = [s for offer in product.offers if (s := summarise(offer, scope)) is not None]
+    """One listing product. Chains named in ``lagged`` show :func:`previous_day` prices (same stores, so the
+    3-chain cap picks the same chains)."""
+    offers = [previous_day(offer) if offer.chain in lagged else offer for offer in product.offers]
+    summaries = [s for offer in offers if (s := summarise(offer, scope)) is not None]
     if not summaries:
         return None
-    shown = sorted(summaries, key=lambda s: (-len(s.stores), s.chain))[:3]  # the listing's 3-chain cap
+    shown = shown_chains(summaries)
     return {
         "id": product.id,
         "name": product.name,
@@ -814,6 +847,31 @@ def xlsx_rows(world: FakeWorld) -> list[list[str]]:
     return rows
 
 
+def compared_pairs(world: FakeWorld) -> list[tuple[str, str]]:
+    """(product id, chain name) pairs the daily ingest compares in its date agreement check: food leaves,
+    units kg/l/db, chains shown in the (unscoped) listing. Every one of them is in the XLSX too. Sorted."""
+    pairs = []
+    for product in world.products.values():
+        leaf = world.leaves.get(product.leaf_id)
+        if leaf is None or not leaf.is_food or product.unit not in VALID_UNITS:
+            continue
+        summaries = [s for offer in product.offers if (s := summarise(offer)) is not None]
+        pairs.extend((product.id, s.chain) for s in shown_chains(summaries))
+    return sorted(pairs)
+
+
+def lagged_pairs(world: FakeWorld, share: float) -> dict[str, frozenset[str]]:
+    """Product id -> chains whose listing entry still shows the previous day: exactly ``round(share * N)`` of
+    the N :func:`compared_pairs`, picked by a seeded hash (stable across runs and processes)."""
+    pool = compared_pairs(world)
+    count = round(share * len(pool))
+    pool.sort(key=lambda pair: hashlib.sha256(f"{world.seed}|{pair[0]}|{pair[1]}".encode()).digest())
+    chosen: dict[str, set[str]] = {}
+    for product_id, chain in pool[:count]:
+        chosen.setdefault(product_id, set()).add(chain)
+    return {product_id: frozenset(chains) for product_id, chains in chosen.items()}
+
+
 def xlsx_bytes(
     world: FakeWorld, sheet_date: date, *, mode: str | None = None, row_limit: int | None = None
 ) -> bytes:
@@ -904,9 +962,14 @@ class FakeGvh:
         self.xlsx_mode: str | None = None  # see xlsx_bytes
         self.drift: str | None = None  # "extra_field" | "type_change" | "missing_field"
         self.ignore_limit = False  # behave as if limit were not sent: 12 rows per page
+        # Share of compared pairs whose listing entry still shows the previous day's prices: the API has not
+        # switched day yet (trap 10). 0.0 (the default): the listing and the XLSX agree exactly.
+        self.listing_lag = 0.0
+        self.cdn_cache: dict[str, date] = {}  # cache-buster value -> sheet date of the copy cached under it
         self.faults: list[Fault] = []
         self.requests: list[Recorded] = []
         self._lock = threading.Lock()
+        self._lagged: tuple[float, Mapping[str, frozenset[str]]] = (0.0, {})
 
     # ── helpers for tests ──
     def fail(self, prefix: str, kind: int | str, times: int = 1) -> None:
@@ -915,6 +978,17 @@ class FakeGvh:
 
     def paths(self, prefix: str = "") -> list[str]:
         return [r.path for r in self.requests if r.path.startswith(prefix)]
+
+    def lagged(self) -> Mapping[str, frozenset[str]]:
+        """Product id -> chain names whose listing entry shows the previous day (see ``listing_lag``)."""
+        with self._lock:
+            if self._lagged[0] != self.listing_lag:
+                self._lagged = (self.listing_lag, lagged_pairs(self.world, self.listing_lag))
+            return self._lagged[1]
+
+    def xlsx_busters(self) -> list[str]:
+        """The ``v`` values of the XLSX requests, in order."""
+        return [r.query.get("v", "") for r in self.requests if r.path == XLSX_PATH]
 
     def transport(self) -> httpx.MockTransport:
         return httpx.MockTransport(self.handler)
@@ -954,8 +1028,14 @@ class FakeGvh:
 
     def _xlsx(self, query: Mapping[str, str]) -> FakeResponse:
         fresh = self.xlsx_date or self.data_date
-        # Like the real CDN: without a cache-buster the edge serves yesterday's copy.
-        sheet = fresh if query.get("v") else self.data_date - timedelta(days=1)
+        buster = query.get("v")
+        if buster:
+            # Like a real CDN edge: the first copy fetched under a cache key is served again for that key,
+            # even after the origin file changed (the real one kept copies for 6-30+ h despite max-age=3600).
+            with self._lock:
+                sheet = self.cdn_cache.setdefault(buster, fresh)
+        else:
+            sheet = self.data_date - timedelta(days=1)  # the plain URL: the edge serves yesterday's copy
         body = xlsx_bytes(self.world, sheet, mode=self.xlsx_mode)
         return FakeResponse(200, body, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
@@ -996,10 +1076,11 @@ class FakeGvh:
             else [leaf.id for leaf in world.leaves.values() if leaf.l2_id == category_id]
         )
         scope = frozenset(query["shopIds"].split(",")) if query.get("shopIds") else None
+        lagged = self.lagged()
         items = []
         for leaf_id in leaf_ids:
             for product in world.leaf_products(leaf_id):
-                item = listing_item(world, product, scope)
+                item = listing_item(world, product, scope, lagged.get(product.id, frozenset()))
                 if item is not None:
                     items.append(item)
         items.sort(key=lambda item: (item["minUnitPrice"], item["id"]))

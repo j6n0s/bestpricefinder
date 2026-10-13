@@ -10,6 +10,8 @@ from bpf.gvh.client import (
     GvhClient,
     RequestStats,
     build_user_agent,
+    random_buster_suffix,
+    xlsx_cache_buster,
 )
 from bpf.gvh.errors import (
     GvhBudgetExceeded,
@@ -65,4 +67,6 @@ __all__ = [
     "XlsxRow",
     "build_user_agent",
     "parse_daily_xlsx",
+    "random_buster_suffix",
+    "xlsx_cache_buster",
 ]

@@ -4,6 +4,7 @@ retries, chunking, NOT-FOUND handling, schema drift, budget and the cache-busted
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Callable
 from datetime import date
 from decimal import Decimal
@@ -22,6 +23,8 @@ from bpf.gvh import (
     GvhSchemaError,
     StaleXlsxError,
     build_user_agent,
+    random_buster_suffix,
+    xlsx_cache_buster,
 )
 from bpf.gvh import client as client_module
 from bpf.gvh.xlsx import parse_daily_xlsx
@@ -457,12 +460,74 @@ def test_constructor_validation() -> None:
 
 def test_xlsx_is_cache_busted_and_date_checked(fake: FakeGvh, clock: FakeClock) -> None:
     with make_client(fake.transport(), clock) as client:
-        sheet = client.daily_xlsx(DAY)
+        sheet = client.daily_xlsx(DAY, run_id=42)
     assert fake.requests[0].path == "/excel/arfigyelo_napi_termekadatok.xlsx"
-    assert fake.requests[0].query == {"v": "20261013"}
+    assert fake.requests[0].query == {"v": "20261013-42"}  # data date + ops.ingest_run id
     assert sheet.data_date == DAY
     assert sheet.sheet_name == "Napi feltöltések - 2026-10-13"
     assert len(sheet.rows) > 500
+
+
+def test_xlsx_cache_buster_is_unique_per_run_and_dated_by_the_data_date(
+    fake: FakeGvh, clock: FakeClock
+) -> None:
+    with make_client(fake.transport(), clock) as client:
+        client.daily_xlsx(DAY, run_id=7)
+        client.daily_xlsx(DAY, run_id=8)
+    assert fake.xlsx_busters() == ["20261013-7", "20261013-8"]
+    assert xlsx_cache_buster(date(2026, 1, 5), "123") == "20260105-123"
+
+
+def test_xlsx_cache_buster_outside_a_run_uses_the_injected_suffix(fake: FakeGvh, clock: FakeClock) -> None:
+    suffixes = iter(["t1", "t2"])
+    with make_client(fake.transport(), clock, buster_suffix=lambda: next(suffixes)) as client:
+        client.daily_xlsx(DAY)
+        client.daily_xlsx(DAY)
+    assert fake.xlsx_busters() == ["20261013-t1", "20261013-t2"]
+
+
+def test_xlsx_cache_buster_outside_a_run_is_random_by_default(fake: FakeGvh, clock: FakeClock) -> None:
+    with make_client(fake.transport(), clock) as client:
+        client.daily_xlsx(DAY)
+        client.daily_xlsx(DAY)
+    first, second = fake.xlsx_busters()
+    assert first != second
+    assert all(re.fullmatch(r"20261013-x[0-9a-f]{12}", value) for value in (first, second))
+    assert random_buster_suffix() != random_buster_suffix()
+
+
+@pytest.mark.parametrize("run_id", [0, -1, True, "5"])
+def test_xlsx_rejects_an_invalid_run_id(fake: FakeGvh, clock: FakeClock, run_id: object) -> None:
+    with make_client(fake.transport(), clock) as client, pytest.raises(ValueError, match="run id"):
+        client.daily_xlsx(DAY, run_id=run_id)  # type: ignore[arg-type]
+    assert fake.requests == []
+
+
+@pytest.mark.parametrize("suffix", ["", "a&b=c", "x" * 33, "ü"])
+def test_xlsx_rejects_an_unsafe_buster_suffix(fake: FakeGvh, clock: FakeClock, suffix: str) -> None:
+    with (
+        make_client(fake.transport(), clock, buster_suffix=lambda: suffix) as client,
+        pytest.raises(ValueError, match="cache-buster"),
+    ):
+        client.daily_xlsx(DAY)
+    assert fake.requests == []
+
+
+def test_a_per_run_buster_gets_past_a_copy_cached_before_the_regeneration(
+    fake: FakeGvh, clock: FakeClock
+) -> None:
+    """Trap 4: a run before GVH regenerated the file (about 02:00 UTC) makes the CDN edge cache yesterday's
+    copy under that run's ``v``. Re-using the value (as a per-day buster would) keeps getting the stale copy;
+    the scheduler's retry is a new run with a new value and gets the fresh file."""
+    fake.xlsx_date = date(2026, 10, 12)  # the origin still holds yesterday's file
+    with make_client(fake.transport(), clock) as client:
+        with pytest.raises(StaleXlsxError):
+            client.daily_xlsx(DAY, run_id=1)
+        fake.xlsx_date = None  # regenerated at the origin
+        with pytest.raises(StaleXlsxError):
+            client.daily_xlsx(DAY, run_id=1)  # same cache key: the edge still serves the stale copy
+        assert client.daily_xlsx(DAY, run_id=2).data_date == DAY
+    assert fake.xlsx_busters() == ["20261013-1", "20261013-1", "20261013-2"]
 
 
 def test_the_fake_cdn_serves_a_stale_copy_without_the_cache_buster(fake: FakeGvh) -> None:

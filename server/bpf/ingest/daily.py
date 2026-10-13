@@ -4,14 +4,26 @@ Order (about 1,000-1,700 requests at <= 1 req/s):
 
 1. **Reference** (3 requests): chains, categories, stores (``bpf.ingest.reference``). If GVH cannot be reached
    but reference data is already stored, the run goes on with it (``partial``).
-2. **Daily XLSX** (1 request), cache-busted and checked to be the data date's file. A stale, unreadable or
-   unreachable XLSX fails the run before anything is written: nothing else proves the data date.
+2. **Daily XLSX** (1 request), cache-busted with ``?v=YYYYMMDD-<run id>`` (unique per run, trap 4) and
+   checked to be the data date's file. A stale, unreadable or unreachable XLSX fails the run before anything
+   is written: nothing else proves the data date.
 3. **Listing** of every food leaf with ``limit=48`` paging (about 160 requests): ``productMinAmount`` (the
    price GVH displays) goes to ``product_min_amount``; the ``prices[]`` per-type MINIMA across stores go to
    ``normal_*`` / ``discounted_*`` / ``loyalty_*`` (trap 1). The listing shows at most 3 chains per product
    (trap 2): every product × chain row of the XLSX in a food leaf also gets a ``product_chain_day`` row, so
    the missing chains are completed (their listing columns stay NULL). Products with a unit outside
-   {kg, l, db} are skipped with one warning naming the units (trap 5).
+   {kg, l, db} are skipped with one warning naming the units (trap 5). **Loyalty prices** come only from the
+   listing's ``prices[]`` LOYALTY entries (and, in step 5, the per-store endpoint): the XLSX and
+   ``productMinAmount`` exclude them, so neither ever fills ``loyalty_*`` (trap 4).
+   **Date agreement (trap 10).** The API has no date field and switches day at about 00:00 UTC, so the
+   listing is checked against the dated XLSX: on every product × chain pair present in both, the XLSX
+   ``Minimum ár`` must equal the listing's daily minimum, min(NORMAL, DISCOUNTED) of ``prices[]`` (not
+   ``productMinAmount``, which is the 80 % price; not LOYALTY, which the XLSX excludes). Both are the
+   cheapest store's daily price, so on the same day they agree on about 99.9 % of pairs, while consecutive
+   days differ on 1.2-2.6 %. The agreeing share is always recorded (stat ``api_xlsx_agreement``); above
+   ``API_XLSX_MISMATCH_MAX_SHARE`` (0.6 %) of pairs disagreeing (by more than 0.5 Ft) the run records
+   ``api_xlsx_date_mismatch`` and ends ``partial``. The data are still written (the XLSX is the data date's
+   by its sheet name); a later re-run overwrites the listing columns.
 4. **Write** products and ``product_chain_day`` in one transaction (the archive).
 5. **Per-store prices** (best effort): ``/product/{id}/shop/{ids}`` only for (product, chain) pairs whose
    XLSX ``min < max``, only for products in leaves referenced by the ingredient ontology, and only for the
@@ -30,7 +42,9 @@ none stored, or malformed; the XLSX stale, invalid or unreachable; a listing sch
 or on any unexpected error. Whatever valid data was already fetched is still archived, but a failed day is
 never served (``api.latest`` ignores it).
 ``partial`` when something best-effort is missing (a listing leaf or per-store call failed after retries,
-the request budget ran out, a per-store schema error). ``ok`` otherwise.
+the request budget ran out, a per-store schema error) or when the listing and the XLSX disagree on the day
+(``api_xlsx_date_mismatch``, or ``api_xlsx_date_unchecked`` when no pair could be compared). ``ok``
+otherwise.
 """
 
 from __future__ import annotations
@@ -83,6 +97,13 @@ PACKAGING_MAX = Decimal("99999999.9999")  # numeric(12,4)
 INT4_MAX = 2**31 - 1
 UNIT_PRICE_TOLERANCE = Decimal("0.05")  # |unitAmount - amount/packaging| above 5 % is reported (trap 5)
 HAS_DATA_WINDOW_DAYS = 8  # docs/ENGINE.md Store.has_data rule
+#: Date agreement check (trap 10): the largest share of compared product × chain pairs that may disagree
+#: before the listing is taken to serve another day than the XLSX. Same-day noise is about 0.1 %
+#: (research/gvh-location/notes.md §5: 23 of 22,870 pairs; gap-gvh-promo-and-stability/verify.md (d): 0 of
+#: 1,925); one day of price changes is 1.2-2.6 % of pairs (BUILD-BRIEF §3 "Stability").
+API_XLSX_MISMATCH_MAX_SHARE = Decimal("0.006")
+API_XLSX_TOLERANCE = Decimal("0.5")  # HUF; a larger |XLSX min - listing daily min| is a disagreement
+API_XLSX_MAX_EXAMPLES = 10
 
 
 # ───────────────────────────── rows ─────────────────────────────
@@ -198,9 +219,14 @@ class ChainResolver:
     """Maps GVH chain uuids (listing) and chain names (XLSX) to ``core.chain.id``."""
 
     def __init__(self, chains: Iterable[ChainRef]) -> None:
-        refs = list(chains)  # iterated twice below: never consume a one-shot iterator
+        refs = list(chains)  # iterated more than once below: never consume a one-shot iterator
         self._ids = {chain.id for chain in refs}
         self._by_slug = {chain.slug: chain.id for chain in refs}
+        self._slug_of = {chain.id: chain.slug for chain in refs}
+
+    def slug_of(self, chain_id: str) -> str:
+        """The slug of a known chain id (the id itself when unknown): for readable warnings."""
+        return self._slug_of.get(chain_id, chain_id)
 
     def by_uuid(self, uuid: str, name: str, issues: Issues) -> str | None:
         if uuid in self._ids:
@@ -398,6 +424,111 @@ def build_snapshot(
     snap.stats["pairs_listing_only"] = sum(1 for r in snap.rows.values() if r.has_listing and not r.has_xlsx)
     snap.stats["pairs_varying"] = sum(1 for r in snap.rows.values() if r.varies_by_store)
     return snap
+
+
+def listing_daily_min(row: ChainDayRow) -> Decimal | None:
+    """The listing's daily minimum for one chain: the lower of the ``prices[]`` NORMAL and DISCOUNTED minima.
+
+    This is what the XLSX ``Minimum ár`` reports: the cheapest store's daily price, DISCOUNTED included and
+    LOYALTY excluded (research/gvh-location/notes.md §5; verify.md (d)). ``productMinAmount`` is NOT
+    comparable (it is the price of >= 80 % of stores), and neither is LOYALTY (the XLSX omits it)."""
+    values = [value for value in (row.normal_amount, row.discounted_amount) if value is not None]
+    return min(values) if values else None
+
+
+@dataclass(frozen=True, slots=True)
+class DatePair:
+    """One compared product × chain pair."""
+
+    product_id: str
+    chain_id: str
+    xlsx_min: Decimal
+    listing_min: Decimal
+
+
+@dataclass(frozen=True, slots=True)
+class DateAgreement:
+    """The listing compared with the XLSX on every pair present in both with a price on each side."""
+
+    pairs: int
+    disagreeing: tuple[DatePair, ...]  # sorted by (product id, chain id)
+
+    @property
+    def agreement_share(self) -> float | None:
+        """Share of compared pairs that agree (6 decimals); None when nothing could be compared."""
+        return round((self.pairs - len(self.disagreeing)) / self.pairs, 6) if self.pairs else None
+
+    @property
+    def mismatch_share(self) -> float | None:
+        return round(len(self.disagreeing) / self.pairs, 6) if self.pairs else None
+
+    def exceeds(self, max_share: Decimal) -> bool:
+        """More than ``max_share`` of the compared pairs disagree (exact arithmetic)."""
+        return self.pairs > 0 and Decimal(len(self.disagreeing)) > max_share * self.pairs
+
+
+def date_agreement(snap: Snapshot) -> DateAgreement:
+    """Compare the XLSX minimum with :func:`listing_daily_min` on every product × chain pair that both the
+    listing and the XLSX carry (pure). Pairs from only one source, and pairs without a price on one side, are
+    not counted. A difference above ``API_XLSX_TOLERANCE`` (0.5 Ft) is a disagreement."""
+    pairs = 0
+    disagreeing: list[DatePair] = []
+    for key in sorted(snap.rows):
+        row = snap.rows[key]
+        if not (row.has_listing and row.has_xlsx) or row.xlsx_min is None:
+            continue
+        listing_min = listing_daily_min(row)
+        if listing_min is None:
+            continue
+        pairs += 1
+        if abs(row.xlsx_min - listing_min) > API_XLSX_TOLERANCE:
+            disagreeing.append(DatePair(row.product_id, row.chain_id, row.xlsx_min, listing_min))
+    return DateAgreement(pairs=pairs, disagreeing=tuple(disagreeing))
+
+
+def check_date_agreement(
+    snap: Snapshot,
+    log: RunLog,
+    *,
+    chains: ChainResolver,
+    max_share: Decimal = API_XLSX_MISMATCH_MAX_SHARE,
+) -> DateAgreement:
+    """Trap 10: record the agreement stats and, when the listing looks like another day than the XLSX, the
+    ``api_xlsx_date_mismatch`` warning (the run becomes ``partial``; nothing is withheld)."""
+    agreement = date_agreement(snap)
+    log.stat("api_xlsx_agreement", agreement.agreement_share)
+    log.stat("api_xlsx_pairs_compared", agreement.pairs)
+    log.stat("api_xlsx_pairs_disagreeing", len(agreement.disagreeing))
+    if agreement.pairs == 0:
+        log.warn(
+            "api_xlsx_date_unchecked",
+            "no product x chain pair could be compared between the listing and the XLSX: the listing's day "
+            "is not verified",
+            degrade=True,
+        )
+    elif agreement.exceeds(max_share):
+        log.warn(
+            "api_xlsx_date_mismatch",
+            f"{len(agreement.disagreeing)} of {agreement.pairs} product x chain pairs "
+            f"({agreement.mismatch_share:.2%}) differ between the listing and the XLSX by more than "
+            f"{API_XLSX_TOLERANCE} Ft (threshold {max_share:.1%}): the API may still serve another day than "
+            "the XLSX. The data are kept; re-run the daily ingest later to refresh the listing columns",
+            degrade=True,
+            share=agreement.mismatch_share,
+            threshold=float(max_share),
+            pairs=agreement.pairs,
+            disagreeing=len(agreement.disagreeing),
+            examples=[
+                {
+                    "product": pair.product_id,
+                    "chain": chains.slug_of(pair.chain_id),
+                    "xlsx_min": pair.xlsx_min,
+                    "listing_min": pair.listing_min,
+                }
+                for pair in agreement.disagreeing[:API_XLSX_MAX_EXAMPLES]
+            ],
+        )
+    return agreement
 
 
 def per_store_targets(
@@ -817,13 +948,15 @@ def daily_step(ctx: RunContext, *, budapest_only: bool = True) -> None:
     if not food_leaves:
         raise IngestError("no food leaf categories")
     chains = ChainResolver(fetch_chains(ctx.conn))
-    xlsx = ctx.client.daily_xlsx(ctx.data_date)  # stale / invalid / unreachable: the run fails here
+    # Stale / invalid / unreachable: the run fails here, before anything is written.
+    xlsx = ctx.client.daily_xlsx(ctx.data_date, run_id=ctx.run_id)
     ctx.log.stat("xlsx_rows", len(xlsx.rows))
     ctx.log.stat("food_leaves", len(food_leaves))
     listings, abort = _fetch_listings(ctx, sorted(food_leaves))
     snap = build_snapshot(listings, xlsx, chains=chains, food_leaves=food_leaves, log=ctx.log)
     for name, value in sorted(snap.stats.items()):
         ctx.log.stat(name, value)
+    check_date_agreement(snap, ctx.log, chains=chains)
     writable = history_writable(ctx.conn, ctx.data_date)
     write_snapshot(ctx.conn, snap, ctx.data_date, writable=writable, log=ctx.log)
     if abort is not None:

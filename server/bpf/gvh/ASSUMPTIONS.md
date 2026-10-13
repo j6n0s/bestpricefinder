@@ -1,9 +1,10 @@
 # GVH Árfigyelő: shape assumptions of `bpf.gvh`
 
 The API is undocumented. Everything below comes from BUILD-BRIEF §4.1 and `research/gvh-location/notes.md`
-§1–2, §5–6 (corrected by `verify.md`), `research/gap-gvh-promo-and-stability/notes.md` and
-`research/competitors/verify.md`. **No real response has been checked yet** (the cloud container cannot reach
-GVH; samples were requested in `docs/QUESTIONS.md`, 2026-10-13).
+§1–2, §5–6 (corrected by `verify.md`), `research/gap-gvh-promo-and-stability/notes.md` (corrected by its
+`verify.md`, the 2026-10-13 fact-check) and `research/competitors/verify.md`. **No real response has been
+checked by this code yet** (the cloud container cannot reach GVH; samples were requested in
+`docs/QUESTIONS.md`, 2026-10-13).
 
 **How to check:** put the samples in `server/tests/fixtures/gvh/raw/` (names as in QUESTIONS.md) and run
 `uv run pytest tests/test_gvh_fixtures.py`. A schema error means an assumption below is wrong; an "unknown
@@ -113,21 +114,23 @@ Unknown extra fields are accepted and recorded as drift warnings (`Model.field`)
 
 | # | Assumption | Note |
 |---|---|---|
-| Y1 | URL `https://cdnarfigyeloprodweu.azureedge.net/excel/arfigyelo_napi_termekadatok.xlsx`; the client adds `?v=YYYYMMDD` (the expected data date) to get past stale CDN copies | verify §2(a); the buster is per day, so a copy cached under today's buster before ~02:00 UTC stays for up to `max-age=3600` |
+| Y1 | URL `https://cdnarfigyeloprodweu.azureedge.net/excel/arfigyelo_napi_termekadatok.xlsx`; the client adds a cache-buster **unique per run**, `?v=YYYYMMDD-<run id>` (the expected data date, then the `ops.ingest_run` id; outside a run an injectable suffix, by default `x` + 12 random hex digits). Any unknown query value reaches the origin; the edge then caches that copy under it | gap-gvh-promo-and-stability/verify.md "(d) Timing": the plain URL served copies 6–30+ h old (depending on `Accept-Encoding`) despite `max-age=3600`; verify §2(a). A per-day value is not enough: a run before the ~02:00 UTC regeneration would cache yesterday's file under today's value and the scheduler's retry would get it again |
 | Y2 | Exactly one sheet named `Napi feltöltések - YYYY-MM-DD` (NFC, whitespace-collapsed); that date must equal the data date, else `StaleXlsxError` | other sheets are ignored |
 | Y3 | The first non-empty row is the header; blank rows are skipped | |
 | Y4 | 14 headers, located **by exact text** (order changes are reported as drift, unknown extra headers too; a missing or duplicated header fails): `Termék azonosító`, `Termék név`, `Kategória azonosító`, `Kategória név`, `Üzletlánc név`, `Egység`, `Kiszerelés`, `Minimum ár`, `Maximum ár`, `Minimum egységár`, `Maximum egységár`, `Hány üzletláncban elérhető`, `Hány boltban elérhető`, `Üzletlánc összes boltja` | notes §5, verify §2 |
 | Y5 | Numbers are **text with a decimal comma** (`"1699,0000"`), no thousands separator; integers may be `"296"` or `"296,0000"`; real numeric cells are accepted too. `"1.699,00"`, `"1 699,00"`, `"1699.00"` are rejected | verify §2(b) |
 | Y6 | `Termék azonosító` is a **text** cell (a numeric cell would have lost EAN leading zeros → error) | |
 | Y7 | Required non-empty: product id, product name, category id, chain name, unit. Packaging, prices, unit prices and counts may be empty | |
-| Y8 | One row per product × chain, all 161 categories; min/max = the daily price (DISCOUNTED included, LOYALTY excluded) across the chain's stores | notes §5 |
+| Y8 | One row per product × chain, all 161 categories; min/max = the daily price (DISCOUNTED included, LOYALTY excluded) across the chain's stores. So `Minimum ár` = min over the chain's stores of min(NORMAL, DISCOUNTED) = min(listing `prices[]` NORMAL, DISCOUNTED) on the same day | notes §5 (22,870 pairs, 23 disagreed = 0.1 %); gap-gvh-promo-and-stability/verify.md "(d) Timing" (100 % of pairs; 1,925/1,925 same-day) |
 | Y9 | `Üzletlánc név` matches a chain name from `/chain-stores` under the slug rule (case/accents/extra words ignored) | assumption |
 
 ## Semantics the ingest relies on
 
 | # | Assumption | Source |
 |---|---|---|
-| M1 | `productMinAmount` = price of ≥ 80 % of carrying stores (else the minimum) → `product_min_amount`; `prices[]` minima → `normal_*`/`discounted_*`/`loyalty_*` | verify "biggest correction" |
+| M1 | `productMinAmount` = price of ≥ 80 % of carrying stores (else the minimum), LOYALTY excluded → `product_min_amount`; `prices[]` minima → `normal_*`/`discounted_*`/`loyalty_*` | verify "biggest correction"; gap-gvh-promo-and-stability/verify.md §7 item 3 |
 | M2 | XLSX `min < max` ⇔ the chain's stores charge different daily prices → per-store calls | notes §5, verify §2 |
-| M3 | Retailers upload day-D prices by the end of D-1; the API switches around midnight; the XLSX is built ~02:00 UTC → the data date is "today in Europe/Budapest" at ~04:30 | BUILD-BRIEF §4.1 trap 10 |
+| M3 | Retailers upload day-D prices by the end of D-1; the **API switches at about 00:00 UTC** (02:00 Budapest in summer, 01:00 in winter), not at Budapest midnight, and carries no date; the XLSX is built at 02:00:12 UTC → the ingest runs at ~04:30 Budapest and the data date is "today in Europe/Budapest" | BUILD-BRIEF §4.1 trap 10; gap-gvh-promo-and-stability/verify.md "(d) Timing" |
 | M4 | Tesco store format from the id: `tesco-1xxx` hyper, `tesco-4xxx` Expressz | notes §2 |
+| M5 | **Date agreement** (M3 + Y8): on the same day the XLSX `Minimum ár` and the listing's min(NORMAL, DISCOUNTED) agree on ≈ 99.9 % of product × chain pairs (intraday changes); consecutive days differ on 1.2–2.6 %. The daily ingest compares them on every pair present in both (difference > 0.5 Ft = disagreement), always records the agreeing share (stat `api_xlsx_agreement`) and, above 0.6 % disagreeing, records `api_xlsx_date_mismatch` (share, pair count, ≤ 10 examples) and ends `partial`. `productMinAmount` is not comparable (80 % price), LOYALTY neither (Y8) | notes §5; BUILD-BRIEF §3 "Stability", §4.1 trap 10 |
+| M6 | **Loyalty prices** exist only in the listing/detail `prices[]` (`type: LOYALTY`) and in the per-store endpoint. The XLSX and `productMinAmount` exclude them, so `loyalty_*` is filled from those two sources only (a pair known only from the XLSX has none). In food, Lidl had no LOYALTY entry (0 of 385: Lidl Plus prices are absent) and Aldi no DISCOUNTED one (0 of 420: its promos are lower NORMAL prices) | gap-gvh-promo-and-stability/verify.md §0 rows b–c, §3–4, §7 item 3, "(d) Timing" |

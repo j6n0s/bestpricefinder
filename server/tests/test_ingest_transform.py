@@ -23,10 +23,16 @@ from bpf.gvh.models import (
 from bpf.ingest import budapest_today, chain_slug, store_format
 from bpf.ingest.common import IngestError, RunLog
 from bpf.ingest.daily import (
+    API_XLSX_MISMATCH_MAX_SHARE,
+    ChainDayRow,
     ChainRef,
     ChainResolver,
     Issues,
+    Snapshot,
     build_snapshot,
+    check_date_agreement,
+    date_agreement,
+    listing_daily_min,
     per_store_targets,
     store_price_rows,
 )
@@ -37,6 +43,7 @@ from tests.fakegvh import (
     build_world,
     category_tree,
     chain_stores_json,
+    compared_pairs,
     fake_settings,
     shops_json,
     summarise,
@@ -526,3 +533,220 @@ def test_xlsx_row_of_a_listed_product_attaches_even_in_another_category(
     assert snap.products[product_id].category_id == 50  # the listing's leaf wins
     (mismatch,) = [w for w in log.warnings if w["code"] == "xlsx_listing_mismatch"]
     assert mismatch["items"] == [product_id]
+
+
+# ───────────────────────────── date agreement (trap 10) ─────────────────────────────
+
+
+def _fetch_inputs(fake: FakeGvh, leaves: frozenset[int]) -> tuple[dict[int, CategoryListing], Any]:
+    clock = FakeClock()
+    with GvhClient(
+        fake_settings(), transport=fake.transport(), clock=clock.monotonic, sleep=clock.sleep
+    ) as client:
+        return {leaf: client.products_by_category(leaf) for leaf in sorted(leaves)}, client.daily_xlsx(DAY)
+
+
+def _uuid_pairs(pairs: Any) -> set[tuple[str, str]]:
+    return {(product_id, WORLD.chains[chain].uuid) for product_id, chain in pairs}
+
+
+def test_same_day_listing_and_xlsx_agree_on_every_pair(snap_and_log: tuple[Any, RunLog]) -> None:
+    snap, _ = snap_and_log
+    agreement = date_agreement(snap)
+    assert agreement.pairs == len(compared_pairs(WORLD)) == 632
+    assert agreement.disagreeing == ()
+    assert (agreement.agreement_share, agreement.mismatch_share) == (1.0, 0.0)
+    log = RunLog()
+    check_date_agreement(snap, log, chains=ChainResolver([]))
+    assert log.warnings == []
+    assert not log.degraded
+    assert log.stats == {
+        "api_xlsx_agreement": 1.0,
+        "api_xlsx_pairs_compared": 632,
+        "api_xlsx_pairs_disagreeing": 0,
+    }
+
+
+def test_the_comparable_listing_price_is_min_normal_discounted(snap_and_log: tuple[Any, RunLog]) -> None:
+    """The XLSX minimum is the cheapest store's daily price (DISCOUNTED in, LOYALTY out). The listing's
+    counterpart is min(NORMAL, DISCOUNTED) of prices[], never productMinAmount and never LOYALTY."""
+    snap, _ = snap_and_log
+    outlier = _row(snap, "spar_outlier", "Spar")  # productMinAmount 699 (80 % price), one store at 294
+    assert (outlier.product_min_amount, listing_daily_min(outlier), outlier.xlsx_min) == (699, 294, 294)
+    promo = _row(snap, "penny_promo_all", "Penny")  # NORMAL 379, DISCOUNTED 219
+    assert (listing_daily_min(promo), promo.xlsx_min) == (219, 219)
+    loyalty = _row(snap, "penny_loyalty", "Penny")  # NORMAL 899, LOYALTY 799
+    assert (listing_daily_min(loyalty), loyalty.loyalty_amount, loyalty.xlsx_min) == (899, 799, 899)
+    assert listing_daily_min(ChainDayRow("p", "c", has_listing=True, loyalty_amount=Decimal(5))) is None
+
+
+def test_a_listing_still_on_the_previous_day_is_flagged() -> None:
+    fake = FakeGvh(WORLD, data_date=DAY)
+    fake.listing_lag = 0.02
+    lagged = _uuid_pairs((pid, chain) for pid, chains in fake.lagged().items() for chain in chains)
+    assert len(lagged) == 13  # round(2 % of 632)
+    food = frozenset(leaf.id for leaf in WORLD.leaves.values() if leaf.is_food)
+    listings, xlsx = _fetch_inputs(fake, food)
+    chains = ChainResolver(ChainRef(c.uuid, chain_slug(c.name)) for c in WORLD.chains.values())
+    snap = build_snapshot(listings, xlsx, chains=chains, food_leaves=food, log=RunLog())
+    log = RunLog()
+    agreement = check_date_agreement(snap, log, chains=chains)
+    assert agreement.pairs == 632
+    assert {(p.product_id, p.chain_id) for p in agreement.disagreeing} == lagged
+    assert all(p.listing_min > p.xlsx_min for p in agreement.disagreeing)  # yesterday's price, 8 % higher
+    assert log.degraded
+    (warning,) = log.warnings
+    assert warning["code"] == "api_xlsx_date_mismatch"
+    assert "13 of 632" in warning["message"]
+    assert (warning["share"], warning["threshold"], warning["pairs"], warning["disagreeing"]) == (
+        round(13 / 632, 6),
+        0.006,
+        632,
+        13,
+    )
+    first = agreement.disagreeing[0]
+    assert len(warning["examples"]) == 10
+    assert warning["examples"][0] == {
+        "product": first.product_id,
+        "chain": chain_slug(WORLD.chain_by_uuid(first.chain_id).name),
+        "xlsx_min": str(first.xlsx_min),
+        "listing_min": str(first.listing_min),
+    }
+    assert log.stats["api_xlsx_agreement"] == round(619 / 632, 6)
+    assert log.stats["api_xlsx_pairs_disagreeing"] == 13
+
+
+def _pairs_snapshot(agreeing: int, disagreeing: int) -> Snapshot:
+    snap = Snapshot()
+    for index in range(agreeing + disagreeing):
+        listing = Decimal(100) if index < agreeing else Decimal(110)
+        snap.rows[(f"p{index:04d}", "c")] = ChainDayRow(
+            f"p{index:04d}",
+            "c",
+            has_listing=True,
+            normal_amount=listing,
+            has_xlsx=True,
+            xlsx_min=Decimal(100),
+        )
+    return snap
+
+
+@pytest.mark.parametrize(("disagreeing", "flagged"), [(0, False), (6, False), (7, True), (40, True)])
+def test_the_mismatch_threshold_is_more_than_0_6_percent(disagreeing: int, flagged: bool) -> None:
+    assert Decimal("0.006") == API_XLSX_MISMATCH_MAX_SHARE
+    log = RunLog()
+    agreement = check_date_agreement(
+        _pairs_snapshot(1000 - disagreeing, disagreeing), log, chains=ChainResolver([])
+    )
+    assert agreement.pairs == 1000
+    assert len(agreement.disagreeing) == disagreeing
+    assert log.stats["api_xlsx_agreement"] == (1000 - disagreeing) / 1000  # recorded either way
+    assert log.degraded is flagged
+    if flagged:
+        (warning,) = log.warnings
+        assert warning["code"] == "api_xlsx_date_mismatch"
+        assert len(warning["examples"]) == min(disagreeing, 10)
+    else:
+        assert log.warnings == []
+
+
+def test_the_threshold_is_configurable() -> None:
+    log = RunLog()
+    check_date_agreement(_pairs_snapshot(990, 10), log, chains=ChainResolver([]), max_share=Decimal("0.02"))
+    assert log.warnings == []
+
+
+def test_only_pairs_priced_in_both_sources_are_compared() -> None:
+    def row(pid: str, **values: Any) -> ChainDayRow:
+        return ChainDayRow(pid, "c", **values)
+
+    snap = Snapshot()
+    for item in (
+        row(
+            "tie-low", has_listing=True, normal_amount=Decimal("100.5"), has_xlsx=True, xlsx_min=Decimal(100)
+        ),
+        row("over", has_listing=True, normal_amount=Decimal("100.51"), has_xlsx=True, xlsx_min=Decimal(100)),
+        row(
+            "disc",
+            has_listing=True,
+            normal_amount=Decimal(150),
+            discounted_amount=Decimal(100),
+            has_xlsx=True,
+            xlsx_min=Decimal(100),
+        ),
+        row("xlsx-only", has_xlsx=True, xlsx_min=Decimal(1)),
+        row("listing-only", has_listing=True, normal_amount=Decimal(1)),
+        row(
+            "loyalty-only", has_listing=True, loyalty_amount=Decimal(1), has_xlsx=True, xlsx_min=Decimal(100)
+        ),
+        row("no-xlsx-min", has_listing=True, normal_amount=Decimal(1), has_xlsx=True),
+    ):
+        snap.rows[(item.product_id, item.chain_id)] = item
+    agreement = date_agreement(snap)
+    assert agreement.pairs == 3
+    assert [p.product_id for p in agreement.disagreeing] == ["over"]
+
+
+def test_nothing_to_compare_leaves_the_day_unchecked() -> None:
+    log = RunLog()
+    agreement = check_date_agreement(Snapshot(), log, chains=ChainResolver([]))
+    assert (agreement.pairs, agreement.agreement_share, agreement.mismatch_share) == (0, None, None)
+    assert codes(log) == ["api_xlsx_date_unchecked"]
+    assert log.degraded
+    assert log.stats["api_xlsx_agreement"] is None
+
+
+# ───────────────────────────── loyalty sources (trap 4) ─────────────────────────────
+
+
+def test_loyalty_columns_mirror_the_listing_loyalty_entries_only(snap_and_log: tuple[Any, RunLog]) -> None:
+    """Every loyalty value is the minimum LOYALTY entry of that chain in the listing JSON; pairs the listing
+    does not show (XLSX only) and entries without LOYALTY have none, whatever the XLSX or productMinAmount."""
+    snap, _ = snap_and_log
+    fake = FakeGvh(WORLD, data_date=DAY)
+    expected: dict[tuple[str, str], Decimal] = {}
+    for leaf in sorted({p.category_id for p in snap.products.values()}):
+        offset, count = 0, 1
+        while offset < count:  # every page (leaf 18 has 101 products)
+            target = f"/api/products-by-category/{leaf}?limit=48&offset={offset}"
+            page = json.loads(fake.respond(target).body)  # type: ignore[union-attr]
+            count, offset = page["count"], offset + 48
+            for product in page["products"]:
+                for chain in product["pricesOfChainStores"]:
+                    loyalty = [p["amount"] for p in chain["prices"] if p["type"] == "LOYALTY"]
+                    if loyalty:
+                        expected[(product["id"], chain["id"])] = Decimal(min(loyalty))
+    actual = {key: row.loyalty_amount for key, row in snap.rows.items() if row.loyalty_amount is not None}
+    assert actual == expected
+    assert expected  # the fake has loyalty prices (Penny, Auchan)
+    assert all(row.loyalty_amount is None for row in snap.rows.values() if not row.has_listing)
+    assert all(
+        row.loyalty_amount < row.xlsx_min  # the XLSX daily minimum never includes the card price
+        for row in snap.rows.values()
+        if row.loyalty_amount is not None and row.xlsx_min is not None
+    )
+
+
+def test_loyalty_is_never_taken_from_the_xlsx_or_product_min_amount(snapshot_inputs: tuple[Any, ...]) -> None:
+    """A chain whose listing has no LOYALTY entry keeps loyalty NULL even when the XLSX minimum and
+    productMinAmount are both below its NORMAL price."""
+    listings, xlsx, chains, food = snapshot_inputs
+    from dataclasses import replace
+
+    product_id = WORLD.special["penny_loyalty"]
+    leaf = WORLD.products[product_id].leaf_id
+    body = json.loads(
+        FakeGvh(WORLD, data_date=DAY).respond(f"/api/products-by-category/{leaf}?limit=48").body
+    )  # type: ignore[union-attr]
+    for product in body["products"]:
+        if product["id"] == product_id:
+            (entry,) = product["pricesOfChainStores"]
+            entry["prices"] = [p for p in entry["prices"] if p["type"] != "LOYALTY"]
+            entry["productMinAmount"] = 700
+    page = parse_product_page(json.dumps(body).encode()).value
+    patched = {**listings, leaf: CategoryListing(leaf, page.count, tuple(page.products), 1, 0, False)}
+    rows = tuple(replace(r, min_price=Decimal(650)) if r.product_id == product_id else r for r in xlsx.rows)
+    snap = build_snapshot(patched, replace(xlsx, rows=rows), chains=chains, food_leaves=food, log=RunLog())
+    row = _row(snap, "penny_loyalty", "Penny")
+    assert (row.normal_amount, row.product_min_amount, row.xlsx_min) == (899, 700, 650)
+    assert (row.loyalty_amount, row.loyalty_unit) == (None, None)

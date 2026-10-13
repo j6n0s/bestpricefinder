@@ -115,6 +115,7 @@ class RunContext:
     kind: RunKind
     data_date: date
     log: RunLog
+    run_id: int  # ops.ingest_run.id of this run (also the XLSX cache-buster suffix)
 
 
 @dataclass(frozen=True, slots=True)
@@ -242,7 +243,9 @@ def execute_run(
         bytes_before = client.stats.bytes
         drift_before = dict(client.drift)
         run_id = _start_run(conn, kind, data_date)
-        ctx = RunContext(conn=conn, client=client, kind=kind, data_date=data_date, log=RunLog())
+        ctx = RunContext(
+            conn=conn, client=client, kind=kind, data_date=data_date, log=RunLog(), run_id=run_id
+        )
         log.info("%s ingest run %d started for %s", kind, run_id, data_date.isoformat())
         error: str | None = None
         interrupt: BaseException | None = None

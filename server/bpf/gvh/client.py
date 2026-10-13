@@ -16,14 +16,15 @@ Politeness and robustness (BUILD-BRIEF §4.1 trap 11, research/legal):
 Traps handled here: listing paging always sends ``limit=48`` and walks ``offset`` in steps of 48 until
 ``count`` (the server's default page is 12, so a page shorter than 48 before the end is an error, never a
 silent gap); per-store prices are requested in chunks of at most 200 store ids and
-``PRODUCT-SHOP-PRICES-NOT-FOUND`` maps to "no prices"; the XLSX URL gets the cache-buster ``?v=YYYYMMDD``
-and its sheet date is checked against the expected data date.
+``PRODUCT-SHOP-PRICES-NOT-FOUND`` maps to "no prices"; the XLSX URL gets a cache-buster unique per run,
+``?v=YYYYMMDD-<run id>`` (trap 4), and its sheet date is checked against the expected data date.
 """
 
 from __future__ import annotations
 
 import logging
 import re
+import secrets
 import time
 from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass
@@ -71,6 +72,7 @@ _CONTACT_PLACEHOLDER_RE = re.compile(r"\s*\(\+contact: set BPF_CONTACT_EMAIL\)")
 _ERROR_CODE_RE = re.compile(r"[A-Z]{2,}(?:-[A-Z]{2,}){1,8}")
 _STORE_ID_RE = re.compile(r"[A-Za-z0-9_-]{1,40}")
 _PRODUCT_ID_RE = re.compile(r"[A-Za-z0-9_.-]{1,64}")
+_BUSTER_SUFFIX_RE = re.compile(r"[A-Za-z0-9]{1,32}")
 _LOG_URL_MAX = 160
 
 
@@ -143,11 +145,25 @@ def _check_product_id(product_id: str) -> None:
         raise ValueError(f"invalid GVH product id {product_id!r}")
 
 
+def random_buster_suffix() -> str:
+    """The cache-buster suffix outside an ingest run: ``x`` + 48 random bits in hex. The ``x`` keeps it apart
+    from run ids (digits only), so an ad-hoc fetch never reuses a run's CDN cache key."""
+    return "x" + secrets.token_hex(6)
+
+
+def xlsx_cache_buster(expected_date: date, suffix: str) -> str:
+    """``YYYYMMDD-<suffix>``: the data date, then something unique per run (BUILD-BRIEF §4.1 trap 4)."""
+    if not _BUSTER_SUFFIX_RE.fullmatch(suffix):
+        raise ValueError(f"invalid XLSX cache-buster suffix {suffix!r}")
+    return f"{expected_date.strftime('%Y%m%d')}-{suffix}"
+
+
 class GvhClient:
     """Synchronous GVH client. Use as a context manager (or call :meth:`close`).
 
     ``transport`` replaces the network (``httpx.MockTransport`` in tests); ``clock``/``sleep`` drive the
-    throttle and the retry backoff (monotonic seconds)."""
+    throttle and the retry backoff (monotonic seconds); ``buster_suffix`` makes the XLSX cache-buster suffix
+    when :meth:`daily_xlsx` is called without a run id (default: random, see :func:`random_buster_suffix`)."""
 
     def __init__(
         self,
@@ -160,6 +176,7 @@ class GvhClient:
         max_retries: int = MAX_RETRIES,
         backoff_s: float = DEFAULT_BACKOFF_S,
         timeout_s: float = DEFAULT_TIMEOUT_S,
+        buster_suffix: Callable[[], str] = random_buster_suffix,
     ) -> None:
         if max_requests is not None and max_requests < 1:
             raise ValueError("max_requests must be >= 1")
@@ -176,6 +193,7 @@ class GvhClient:
         self._max_requests = max_requests
         self._max_retries = max_retries
         self._backoff_s = backoff_s
+        self._buster_suffix = buster_suffix
         self._last_start: float | None = None
         self._http = httpx.Client(
             transport=transport,
@@ -435,11 +453,19 @@ class GvhClient:
                 result.setdefault(shop.shopUuid, []).extend(shop.prices)
         return {store_id: tuple(prices) for store_id, prices in result.items()}
 
-    def daily_xlsx(self, expected_date: date) -> DailyXlsx:
-        """The official daily XLSX, cache-busted with ``?v=YYYYMMDD`` and checked to be ``expected_date``'s
-        file (StaleXlsxError otherwise)."""
+    def daily_xlsx(self, expected_date: date, *, run_id: int | None = None) -> DailyXlsx:
+        """The official daily XLSX, checked to be ``expected_date``'s file (StaleXlsxError otherwise).
+
+        The URL carries a cache-buster unique per run, ``?v=YYYYMMDD-<run id>`` (``ops.ingest_run.id``), or
+        ``?v=YYYYMMDD-<suffix>`` from ``buster_suffix`` outside a run. A per-day value is not enough: a copy
+        the CDN cached under it before GVH regenerated the file (about 02:00 UTC) would be served again to the
+        scheduler's retry, and the CDN has kept copies for 6-30+ hours despite ``max-age=3600`` (trap 4).
+        Retries of this one call (5xx, connection errors) reuse the same value."""
+        if run_id is not None and (isinstance(run_id, bool) or not isinstance(run_id, int) or run_id < 1):
+            raise ValueError(f"invalid run id {run_id!r}")
+        suffix = str(run_id) if run_id is not None else self._buster_suffix()
         what = "daily-xlsx"
-        params = {"v": expected_date.strftime("%Y%m%d")}
+        params = {"v": xlsx_cache_buster(expected_date, suffix)}
         response = self._get(self._xlsx_url, what=what, params=params, accept="*/*", xlsx=True)
         self._require_ok(response, what=what, url=self._xlsx_url)
         sheet = parse_daily_xlsx(response.content, expected_date)

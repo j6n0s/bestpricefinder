@@ -23,7 +23,14 @@ import pytest
 
 from bpf.config import Settings
 from bpf.gvh import GvhClient
-from bpf.ingest import IngestBusyError, budapest_today, run_availability, run_daily, run_reference
+from bpf.ingest import (
+    IngestBusyError,
+    budapest_today,
+    chain_slug,
+    run_availability,
+    run_daily,
+    run_reference,
+)
 from bpf.ingest.__main__ import main as cli_main
 from bpf.ingest.common import BUDAPEST, IngestOutcome
 from tests.fakegvh import (
@@ -33,6 +40,7 @@ from tests.fakegvh import (
     FakeGvh,
     FakeWorld,
     build_world,
+    compared_pairs,
     fake_settings,
     summarise,
 )
@@ -291,6 +299,11 @@ def test_daily_run_lifecycle_and_chain_rows(
     assert stats["chains"] == 9
     assert stats["stores"] == 1829
     assert stats["store_price_rows"] > 0
+    # trap 10: the same day's listing and XLSX agree on every compared pair
+    assert stats["api_xlsx_agreement"] == 1.0
+    assert stats["api_xlsx_pairs_compared"] == len(compared_pairs(WORLD))
+    assert stats["api_xlsx_pairs_disagreeing"] == 0
+    assert fake.xlsx_busters() == [f"{TODAY:%Y%m%d}-{outcome.run_id}"]  # trap 4: unique per run
     assert one(admin, "SELECT data_date FROM api.latest") == TODAY
 
     food_pairs = {
@@ -469,7 +482,127 @@ def test_stale_xlsx_fails_the_run_before_anything_is_written(
     run = run_row(admin, outcome.run_id)
     assert (run["status"], run["error"]) == ("failed", outcome.error)
     assert one(admin, "SELECT count(*) FROM core.product_chain_day") == 0
+    assert one(admin, "SELECT count(*) FROM core.product") == 0
     assert one(admin, "SELECT data_date FROM api.latest") is None
+
+
+def test_runs_on_the_same_day_use_distinct_cache_busters(
+    conn: psycopg.Connection, admin: psycopg.Connection
+) -> None:
+    """Trap 4: a run before GVH regenerated the XLSX makes the CDN cache yesterday's copy under its ``v``.
+    The retry later that day is a new run with a new ``v`` (the date part stays the data date), so it gets
+    past that copy; a per-day buster would have been served the stale copy again."""
+    fake = FakeGvh(WORLD, data_date=TODAY)
+    fake.xlsx_date = TODAY - timedelta(days=1)  # the origin still holds yesterday's file
+    early = daily(conn, fake)
+    assert early.status == "failed"
+    assert early.error is not None
+    assert "StaleXlsxError" in early.error
+    fake.xlsx_date = None  # regenerated at the origin; the edge keeps the stale copy under early's v
+    retry = daily(conn, fake)
+    assert retry.status == "ok", retry
+    assert early.run_id is not None
+    assert retry.run_id is not None
+    assert retry.run_id > early.run_id
+    day = f"{TODAY:%Y%m%d}"  # the Budapest data date, although the clock's UTC date is the day before
+    assert fake.xlsx_busters() == [f"{day}-{early.run_id}", f"{day}-{retry.run_id}"]
+    assert fake.cdn_cache == {
+        f"{day}-{early.run_id}": TODAY - timedelta(days=1),
+        f"{day}-{retry.run_id}": TODAY,
+    }
+    assert one(admin, "SELECT data_date FROM api.latest") == TODAY
+
+
+def test_a_listing_still_on_the_previous_day_makes_the_run_partial(
+    conn: psycopg.Connection, admin: psycopg.Connection
+) -> None:
+    """Trap 10: the API switches day at about 00:00 UTC. If the listing still shows yesterday on ~2 % of the
+    pairs (one day of price changes), the run records api_xlsx_date_mismatch and ends partial; the data are
+    kept (the XLSX is today's) and a later re-run refreshes the listing columns."""
+    fake = FakeGvh(WORLD, data_date=TODAY)
+    fake.listing_lag = 0.02
+    lagged = {(pid, WORLD.chains[chain].uuid) for pid, chains in fake.lagged().items() for chain in chains}
+    pairs = len(compared_pairs(WORLD))
+    outcome = daily(conn, fake)
+    assert outcome.status == "partial", outcome
+    assert outcome.error is None
+    (warning,) = [w for w in outcome.warnings if w["code"] == "api_xlsx_date_mismatch"]
+    assert (warning["pairs"], warning["disagreeing"]) == (pairs, len(lagged)) == (632, 13)
+    assert warning["share"] == round(13 / 632, 6) > warning["threshold"] == 0.006
+    assert len(warning["examples"]) == 10
+    slugs = {c.uuid: chain_slug(c.name) for c in WORLD.chains.values()}
+    examples = {(e["product"], e["chain"]) for e in warning["examples"]}
+    assert examples <= {(pid, slugs[chain_id]) for pid, chain_id in lagged}
+    run = run_row(admin, outcome.run_id)
+    assert run["status"] == "partial"
+    assert run["warnings"] == list(outcome.warnings)
+    assert run["stats"]["api_xlsx_agreement"] == round(619 / 632, 6)
+    assert one(admin, "SELECT data_date FROM api.latest") == TODAY  # partial: still served
+    # The listing's (previous-day) daily minimum was archived as fetched; the XLSX columns are today's.
+    stored = {
+        (pid, cid): (xmin, min(v for v in (normal, discounted) if v is not None))
+        for pid, cid, xmin, normal, discounted in admin.execute(
+            "SELECT product_id, chain_id, xlsx_min, normal_amount, discounted_amount "
+            "FROM core.product_chain_day WHERE data_date = %s AND normal_amount IS NOT NULL",
+            (TODAY,),
+        )
+    }
+    assert {key for key, (xmin, listing) in stored.items() if abs(xmin - listing) > Decimal("0.5")} == lagged
+
+    fixed = daily(conn, FakeGvh(WORLD, data_date=TODAY))  # the API has switched: the re-run is clean
+    assert fixed.status == "ok", fixed
+    assert fixed.stats["api_xlsx_agreement"] == 1.0
+    assert (
+        one(
+            admin,
+            "SELECT count(*) FROM core.product_chain_day WHERE data_date = %s "
+            "AND abs(xlsx_min - LEAST(normal_amount, discounted_amount)) > 0.5",
+            (TODAY,),
+        )
+        == 0
+    )
+
+
+def test_same_day_noise_below_the_threshold_keeps_the_run_ok(conn: psycopg.Connection) -> None:
+    fake = FakeGvh(WORLD, data_date=TODAY)
+    fake.listing_lag = 0.003  # 2 of 632 pairs (0.32 %): intraday changes, not another day
+    outcome = daily(conn, fake)
+    assert outcome.status == "ok", outcome
+    assert not {"api_xlsx_date_mismatch", "api_xlsx_date_unchecked"} & set(codes(outcome))
+    assert outcome.stats["api_xlsx_pairs_disagreeing"] == 2
+    assert outcome.stats["api_xlsx_agreement"] == round(630 / 632, 6)
+
+
+def test_loyalty_prices_come_only_from_the_listing(
+    conn: psycopg.Connection, admin: psycopg.Connection
+) -> None:
+    """Trap 4: the XLSX and productMinAmount exclude LOYALTY; card prices come from the listing's prices[]
+    LOYALTY entries only, so pairs known only from the XLSX never carry one."""
+    outcome = daily(conn, FakeGvh(WORLD, data_date=TODAY))
+    assert outcome.status == "ok", outcome
+    row = admin.execute(
+        "SELECT normal_amount, loyalty_amount, loyalty_unit, product_min_amount, xlsx_min "
+        "FROM core.product_chain_day WHERE data_date = %s AND product_id = %s",
+        (TODAY, WORLD.special["penny_loyalty"]),
+    ).fetchone()
+    assert row == (899, 799, Decimal("79.9"), 899, 899)
+    assert one(admin, "SELECT count(*) FROM core.product_chain_day WHERE loyalty_amount IS NOT NULL") > 1
+    assert (
+        one(
+            admin,
+            "SELECT count(*) FROM core.product_chain_day "
+            "WHERE loyalty_amount IS NOT NULL AND normal_amount IS NULL AND discounted_amount IS NULL",
+        )
+        == 0
+    )  # every loyalty value sits next to the listing prices it came with
+    assert (
+        one(
+            admin,
+            "SELECT count(*) FROM core.product_chain_day WHERE loyalty_amount IS NOT NULL "
+            "AND (loyalty_amount = xlsx_min OR loyalty_amount = product_min_amount)",
+        )
+        == 0
+    )
 
 
 def test_listing_schema_change_fails_loudly_but_archives_the_xlsx(
@@ -483,6 +616,7 @@ def test_listing_schema_change_fails_loudly_but_archives_the_xlsx(
     assert "GvhSchemaError" in outcome.error
     assert "productMinAmount" in outcome.error
     assert len(fake.paths("/api/products-by-category")) == 1  # stopped at the first bad page
+    assert outcome.stats["api_xlsx_agreement"] is None  # recorded even when nothing could be compared
     assert one(admin, "SELECT count(*) FROM core.product_chain_day WHERE xlsx_min IS NOT NULL") > 0
     assert one(admin, "SELECT count(*) FROM core.product_chain_day WHERE product_min_amount IS NOT NULL") == 0
     assert one(admin, "SELECT data_date FROM api.latest") is None  # a failed day is never served
