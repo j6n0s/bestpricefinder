@@ -1,0 +1,403 @@
+{
+  "version": 1,
+  "recipes": [
+    {
+      "id": "almas-joghurtos-kevert-suti",
+      "title": "Almás-fahéjas joghurtos kevert süti",
+      "summary": "Egyszerű kevert tészta tojással és joghurttal, a tetején vékony almaszeletekkel és fahéjjal, 20×20 cm-es formában sütve. Négy adag, másnap is jó.",
+      "slots": ["tizorai", "uzsonna"],
+      "servings": 4,
+      "minutes": 65,
+      "tags": ["snack", "edes", "ket_napos", "husmentes", "vegetarianus", "gyerekbarat"],
+      "lines": [
+        {"ingredient_id": "finomliszt", "qty": 0.15, "display": "15 dkg", "optional": false},
+        {"ingredient_id": "sutopor", "qty": 0.006, "display": "fél csomag (6 g)", "optional": false},
+        {"ingredient_id": "so", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "tojas", "qty": 2, "display": "2 db", "optional": false},
+        {"ingredient_id": "cukor", "qty": 0.06, "display": "6 dkg", "optional": false},
+        {"ingredient_id": "joghurt", "qty": 0.1, "display": "10 dkg", "optional": false},
+        {"ingredient_id": "olaj", "qty": 0.03, "display": "2 evőkanál", "optional": false},
+        {"ingredient_id": "alma", "qty": 0.36, "display": "2 közepes", "optional": false},
+        {"ingredient_id": "fahej", "qty": 0.002, "display": "1 lapos teáskanál", "optional": false}
+      ],
+      "steps": [
+        "Melegítsd elő a sütőt 180 fokra (alsó-felső sütés), és bélelj ki egy 20×20 cm-es tepsit vagy sütőformát sütőpapírral.",
+        "Az almákat mosd meg, negyedeld, vágd ki a magházukat, és szeleteld őket vékony, 2–3 mm-es cikkekre. A héjukat nem kell lehámoznod.",
+        "Egy tálban keverd össze a lisztet, a sütőport és a sót. Egy másik tálban habverővel keverd simára a tojásokat a cukorral, majd add hozzá a joghurtot és az olajat, és keverd egyneművé.",
+        "Öntsd a lisztes keveréket a tojásos részhez, és spatulával csak addig keverd, amíg nem marad benne száraz liszt; ha tovább kevered, a süti tömör lesz.",
+        "Simítsd a tésztát a formába, rakd a tetejére sorban, egymásra kissé ráfektetve az almaszeleteket, és szórd meg egyenletesen a fahéjjal.",
+        "Süsd a sütő középső részén 30–35 percig, amíg a teteje aranybarna lesz, és a közepébe szúrt fogpiszkálóra nem tapad nyers tészta.",
+        "Hagyd a formában legalább 15 percig hűlni, majd vágd 8 darabra (adagonként 2 darab). Lefedve, szobahőmérsékleten másnap is jó."
+      ],
+      "tested": false
+    },
+    {
+      "id": "bananos-kefir",
+      "title": "Banános kefir",
+      "summary": "Érett banán kefirrel simára turmixolva, egy csipet fahéjjal.",
+      "slots": ["tizorai", "uzsonna"],
+      "servings": 2,
+      "minutes": 5,
+      "tags": ["snack", "husmentes", "vegetarianus", "gyors", "gyerekbarat"],
+      "lines": [
+        {"ingredient_id": "kefir", "qty": 0.4, "display": "40 dkg", "optional": false},
+        {"ingredient_id": "banan", "qty": 0.17, "display": "1 db (érett)", "optional": false},
+        {"ingredient_id": "fahej", "qty": 0.001, "display": "1 csipet", "optional": false}
+      ],
+      "steps": [
+        "A banánt hámozd meg, és törd vagy vágd kisebb darabokra.",
+        "Tedd turmixgépbe vagy egy magas falú edénybe a kefirrel és a fahéjjal együtt, és turmixold vagy botmixerrel pürésítsd körülbelül fél percig, amíg teljesen sima lesz.",
+        "Töltsd két pohárba, és rögtön tálald, mert állás közben a banán megbarnul. Ha nincs turmixgéped, a banánt villával törd pépesre, és keverd simára a kefirrel."
+      ],
+      "tested": false
+    },
+    {
+      "id": "bundas-kenyer-friss-zoldseggel",
+      "title": "Bundás kenyér friss paradicsommal és uborkával",
+      "summary": "Tojásos-tejes bundában, serpenyőben aranybarnára sütött félbarna kenyér, mellé szeletelt paradicsom és uborka.",
+      "slots": ["reggeli"],
+      "servings": 2,
+      "minutes": 25,
+      "tags": ["reggeli_meleg", "husmentes", "vegetarianus", "gyors", "gyerekbarat"],
+      "lines": [
+        {"ingredient_id": "kenyer_felbarna", "qty": 0.2, "display": "4 vastagabb szelet (20 dkg)", "optional": false},
+        {"ingredient_id": "tojas", "qty": 3, "display": "3 db", "optional": false},
+        {"ingredient_id": "tej", "qty": 0.1, "display": "1 dl", "optional": false},
+        {"ingredient_id": "so", "qty": 0.002, "display": "2 csipet", "optional": false},
+        {"ingredient_id": "olaj", "qty": 0.03, "display": "2 evőkanál", "optional": false},
+        {"ingredient_id": "paradicsom", "qty": 0.2, "display": "2 közepes (20 dkg)", "optional": false},
+        {"ingredient_id": "uborka", "qty": 0.175, "display": "fél kígyóuborka", "optional": false}
+      ],
+      "steps": [
+        "A paradicsomot és az uborkát mosd meg, vágd karikákra, és tedd félre, amíg a kenyér elkészül.",
+        "Egy mély tányérban verd simára villával a tojásokat a tejjel és a sóval.",
+        "Egy nagy serpenyőben hevítsd fel az olaj felét közepes lángon. Két kenyérszeletet forgass meg a tojásos keverékben úgy, hogy mindkét oldaluk bevonódjon, de ne ázzanak szét.",
+        "Tedd a szeleteket a forró olajba, és oldalanként 2–3 percig süsd őket aranybarnára, amíg a tojásbunda mindenhol átsül. A maradék olajjal ugyanígy süsd meg a másik két szeletet is.",
+        "A kész szeleteket tedd papírtörlőre, hogy felszívja a felesleges olajat, majd tálald őket melegen a paradicsommal és az uborkával."
+      ],
+      "tested": false
+    },
+    {
+      "id": "joghurtos-gyumolcstal-foldimogyoroval",
+      "title": "Joghurtos gyümölcstál pirított földimogyoróval",
+      "summary": "Natúr joghurt felkockázott almával és banánkarikákkal, a tetején serpenyőben pirított, durvára vágott földimogyoróval és fahéjjal.",
+      "slots": ["reggeli"],
+      "servings": 2,
+      "minutes": 15,
+      "tags": ["reggeli_hideg", "husmentes", "vegetarianus", "gyors", "gyerekbarat"],
+      "lines": [
+        {"ingredient_id": "joghurt", "qty": 0.4, "display": "40 dkg", "optional": false},
+        {"ingredient_id": "alma", "qty": 0.18, "display": "1 közepes", "optional": false},
+        {"ingredient_id": "banan", "qty": 0.17, "display": "1 db", "optional": false},
+        {"ingredient_id": "mogyoro", "qty": 0.04, "display": "4 dkg (sótlan)", "optional": false},
+        {"ingredient_id": "fahej", "qty": 0.001, "display": "1 csipet", "optional": false}
+      ],
+      "steps": [
+        "Ha nyers földimogyorót használsz, pirítsd száraz serpenyőben közepes lángon 4–5 percig, a serpenyőt gyakran megrázva, amíg illatos lesz és enyhén megbarnul. Hagyd kihűlni, majd vágd durvára. A már pirított mogyorót elég felaprítanod.",
+        "Az almát mosd meg, negyedeld, vágd ki a magházát, és kockázd fel. A banánt hámozd meg, és vágd karikákra.",
+        "Oszd el a joghurtot két tálba, és rendezd rá a gyümölcsöt. Szórd meg a mogyoróval és a fahéjjal, és rögtön tálald, hogy a mogyoró ropogós maradjon."
+      ],
+      "tested": false
+    },
+    {
+      "id": "korozott-rozskenyerrel",
+      "title": "Körözött rozskenyérrel és zöldpaprikával",
+      "summary": "Pirospaprikás, köményes túrókrém tejföllel és apróra vágott hagymával, rozskenyérre kenve, mellé friss zöldpaprika.",
+      "slots": ["reggeli"],
+      "servings": 2,
+      "minutes": 15,
+      "tags": ["reggeli_hideg", "husmentes", "vegetarianus", "gyors"],
+      "lines": [
+        {"ingredient_id": "turo", "qty": 0.2, "display": "20 dkg", "optional": false},
+        {"ingredient_id": "tejfol12", "qty": 0.06, "display": "3 evőkanál", "optional": false},
+        {"ingredient_id": "voroshagyma", "qty": 0.03, "display": "negyed fej", "optional": false},
+        {"ingredient_id": "pirospaprika", "qty": 0.003, "display": "1–2 teáskanál", "optional": false},
+        {"ingredient_id": "komenymag", "qty": 0.001, "display": "fél teáskanál", "optional": false},
+        {"ingredient_id": "so", "qty": 0.003, "display": "fél teáskanál", "optional": false},
+        {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "kenyer_rozs", "qty": 0.16, "display": "4 szelet (16 dkg)", "optional": false},
+        {"ingredient_id": "zoldpaprika", "qty": 0.22, "display": "2 db", "optional": false}
+      ],
+      "steps": [
+        "A hagymát hámozd meg, és vágd nagyon apróra, hogy ne maradjanak benne nagy darabok.",
+        "A túrót tedd egy tálba, és villával törd össze alaposan, amíg nem marad benne nagyobb rög. Add hozzá a tejfölt, és keverd krémesre.",
+        "Keverd bele a hagymát, a pirospaprikát, a köménymagot, a sót és a borsot. Kóstold meg, és ha kell, sózd utána. Ha van rá időd, tedd 10 percre a hűtőbe, hogy az ízek összeérjenek.",
+        "A zöldpaprikát mosd meg, csumázd ki, és vágd csíkokra. Kend a körözöttet a kenyérszeletekre, és tálald a paprikával."
+      ],
+      "tested": false
+    },
+    {
+      "id": "kortes-narancsos-joghurt",
+      "title": "Körtés-narancsos joghurtkehely",
+      "summary": "Natúr joghurt felkockázott körtével és narancsdarabokkal, egy csipet fahéjjal.",
+      "slots": ["tizorai", "uzsonna"],
+      "servings": 2,
+      "minutes": 10,
+      "tags": ["snack", "husmentes", "vegetarianus", "gyors", "gyerekbarat"],
+      "lines": [
+        {"ingredient_id": "joghurt", "qty": 0.3, "display": "30 dkg", "optional": false},
+        {"ingredient_id": "korte", "qty": 0.18, "display": "1 közepes", "optional": false},
+        {"ingredient_id": "narancs", "qty": 0.2, "display": "1 db", "optional": false},
+        {"ingredient_id": "fahej", "qty": 0.001, "display": "1 csipet", "optional": false}
+      ],
+      "steps": [
+        "A narancsot hámozd meg, a fehér belső héjat is szedd le róla, amennyire lehet, majd bontsd gerezdekre, és a gerezdeket vágd 2–3 darabra. Ha magot találsz, szedd ki.",
+        "A körtét mosd meg, negyedeld, vágd ki a magházát, és kockázd fel.",
+        "Oszd el a joghurtot két pohárba vagy kis tálba, rétegezd rá a gyümölcsöt, és szórd meg a fahéjjal. Ha tízóraira viszed, tedd zárható dobozba, és tartsd hűvösen."
+      ],
+      "tested": false
+    },
+    {
+      "id": "kortes-turokrem-piritoson",
+      "title": "Fahéjas-körtés túrókrém pirított rozskenyéren",
+      "summary": "Joghurttal simára kevert, fahéjas túró pirított rozskenyérre kenve, a tetején vékony körteszeletekkel.",
+      "slots": ["reggeli"],
+      "servings": 2,
+      "minutes": 15,
+      "tags": ["reggeli_hideg", "husmentes", "vegetarianus", "gyors"],
+      "lines": [
+        {"ingredient_id": "turo", "qty": 0.2, "display": "20 dkg", "optional": false},
+        {"ingredient_id": "joghurt", "qty": 0.1, "display": "10 dkg", "optional": false},
+        {"ingredient_id": "fahej", "qty": 0.001, "display": "fél teáskanál", "optional": false},
+        {"ingredient_id": "korte", "qty": 0.18, "display": "1 közepes", "optional": false},
+        {"ingredient_id": "citrom", "qty": 0.01, "display": "néhány csepp leve (elhagyható)", "optional": true},
+        {"ingredient_id": "kenyer_rozs", "qty": 0.16, "display": "4 szelet (16 dkg)", "optional": false}
+      ],
+      "steps": [
+        "Tedd a túrót egy tálba, add hozzá a joghurtot és a fahéjat, és villával vagy kézi habverővel keverd krémesre, amíg nem maradnak benne nagyobb rögök.",
+        "A körtét mosd meg, negyedeld, vágd ki a magházát, és szeleteld vékonyra. Ha nem tálalod rögtön, csepegtess rá egy kevés citromlevet, hogy ne barnuljon meg.",
+        "Pirítsd meg a kenyérszeleteket kenyérpirítóban vagy száraz serpenyőben oldalanként 1–2 percig.",
+        "Kend a túrókrémet a pirítósokra, rakd rá a körteszeleteket, és ha szeretnéd, szórj a tetejükre még egy csipet fahéjat."
+      ],
+      "tested": false
+    },
+    {
+      "id": "lagytojas-piritossal",
+      "title": "Lágy tojás vajas pirítóssal és friss zöldséggel",
+      "summary": "Krémes sárgájúra főzött tojás vajas félbarna pirítóssal, mellé szeletelt zöldpaprika és paradicsom.",
+      "slots": ["reggeli"],
+      "servings": 2,
+      "minutes": 15,
+      "tags": ["reggeli_meleg", "husmentes", "vegetarianus", "gyors"],
+      "lines": [
+        {"ingredient_id": "tojas", "qty": 4, "display": "4 db", "optional": false},
+        {"ingredient_id": "kenyer_felbarna", "qty": 0.16, "display": "4 szelet (16 dkg)", "optional": false},
+        {"ingredient_id": "vaj", "qty": 0.02, "display": "2 dkg", "optional": false},
+        {"ingredient_id": "zoldpaprika", "qty": 0.11, "display": "1 db", "optional": false},
+        {"ingredient_id": "paradicsom", "qty": 0.15, "display": "1 nagy (15 dkg)", "optional": false},
+        {"ingredient_id": "so", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false}
+      ],
+      "steps": [
+        "Egy kis lábasban forralj fel annyi vizet, hogy a tojásokat 1–2 cm-rel ellepje. A hűtőből kivett tojásokat tartsd fél percig langyos csapvíz alatt, hogy a forró vízben ne repedjenek meg.",
+        "Egy evőkanállal egyenként, óvatosan engedd a tojásokat a forrásban lévő vízbe. Enyhén gyöngyöző vízben főzd őket 6 percig: így a fehérjük megszilárdul, a sárgájuk krémes marad. Ha keményebben szereted, főzd 9–10 percig.",
+        "Közben pirítsd meg a kenyérszeleteket kenyérpirítóban vagy száraz serpenyőben oldalanként 1–2 percig, kend meg őket vékonyan vajjal, és vágd csíkokra. A zöldpaprikát és a paradicsomot mosd meg, és szeleteld fel.",
+        "A kész tojásokat szűrőkanállal szedd ki, és tartsd őket fél percig hideg víz alatt, hogy ne főjenek tovább. Tedd tojástartóba, egy kiskanállal ütögesd meg a tetejüket, emeld le a héjat, sózd, borsozd meg, és tálald a pirítóssal és a zöldséggel."
+      ],
+      "tested": false
+    },
+    {
+      "id": "paradicsom-mozzarellaval",
+      "title": "Paradicsom mozzarellával és bazsalikommal",
+      "summary": "Felváltva rétegezett paradicsom- és mozzarellaszeletek olívaolajjal, sóval, borssal és szárított bazsalikommal.",
+      "slots": ["tizorai", "uzsonna"],
+      "servings": 2,
+      "minutes": 10,
+      "tags": ["snack", "salata", "husmentes", "vegetarianus", "gyors"],
+      "lines": [
+        {"ingredient_id": "paradicsom", "qty": 0.3, "display": "2 nagy (30 dkg)", "optional": false},
+        {"ingredient_id": "mozzarella", "qty": 0.125, "display": "1 golyó (12,5 dkg)", "optional": false},
+        {"ingredient_id": "olivaolaj", "qty": 0.015, "display": "1 evőkanál", "optional": false},
+        {"ingredient_id": "bazsalikom", "qty": 0.001, "display": "1 csipet (szárított)", "optional": false},
+        {"ingredient_id": "so", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false}
+      ],
+      "steps": [
+        "A paradicsomot mosd meg, vágd ki a szárát, és szeleteld fél centi vastag karikákra.",
+        "A mozzarellát csepegtesd le, itasd szárazra papírtörlővel, és vágd a paradicsomhoz hasonló vastagságú szeletekre.",
+        "Két tányéron rakd a paradicsom- és mozzarellaszeleteket felváltva, egymásra kissé ráfektetve. Sózd, borsozd, szórd meg a morzsolt bazsalikommal, és csepegtesd meg az olívaolajjal.",
+        "Tálalás előtt hagyd 5 percig állni, hogy az ízek összeérjenek."
+      ],
+      "tested": false
+    },
+    {
+      "id": "paradicsomos-rantotta",
+      "title": "Paradicsomos rántotta teljes kiőrlésű kenyérrel",
+      "summary": "Puha, szaftos rántotta hagymán megpárolt friss paradicsommal, teljes kiőrlésű kenyérrel.",
+      "slots": ["reggeli"],
+      "servings": 2,
+      "minutes": 20,
+      "tags": ["reggeli_meleg", "husmentes", "vegetarianus", "gyors"],
+      "lines": [
+        {"ingredient_id": "tojas", "qty": 4, "display": "4 db", "optional": false},
+        {"ingredient_id": "paradicsom", "qty": 0.2, "display": "2 közepes (20 dkg)", "optional": false},
+        {"ingredient_id": "voroshagyma", "qty": 0.06, "display": "fél fej", "optional": false},
+        {"ingredient_id": "olaj", "qty": 0.015, "display": "1 evőkanál", "optional": false},
+        {"ingredient_id": "so", "qty": 0.002, "display": "ízlés szerint", "optional": false},
+        {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "kenyer_tk", "qty": 0.16, "display": "4 szelet (16 dkg)", "optional": false}
+      ],
+      "steps": [
+        "A hagymát hámozd meg, és vágd apró kockákra. A paradicsomot mosd meg, vágd ki a szárát, és kockázd fel kb. 1 cm-es darabokra.",
+        "A tojásokat üsd fel egy tálba, sózd és borsozd meg, majd villával verd fel, amíg a sárgájuk és a fehérjük teljesen elkeveredik.",
+        "Egy serpenyőben hevítsd fel az olajat közepes lángon, és párold rajta a hagymát 3–4 percig, amíg üveges lesz. Add hozzá a paradicsomot, és kevergetve főzd 3–4 percig, amíg kiengedi a levét, és annak nagy része elfő.",
+        "Vedd kisebbre a lángot, öntsd a paradicsomra a tojást, és fakanállal folyamatosan kevergetve süsd 2–3 percig, amíg a tojás mindenhol megszilárdul, de még puha és szaftos marad.",
+        "Tálald azonnal a kenyérrel. Ha pirítósként szereted, a szeleteket előtte pirítsd meg kenyérpirítóban vagy száraz serpenyőben."
+      ],
+      "tested": false
+    },
+    {
+      "id": "paradicsomsalata-fetaval",
+      "title": "Paradicsomos-uborkás saláta fetával és teljes kiőrlésű kenyérrel",
+      "summary": "Görögös saláta friss paradicsomból, uborkából, zöldpaprikából és vékonyra szelt hagymából, morzsolt fetával és olívaolajjal, mellé teljes kiőrlésű kenyér.",
+      "slots": ["reggeli"],
+      "servings": 2,
+      "minutes": 15,
+      "tags": ["reggeli_hideg", "salata", "husmentes", "vegetarianus", "gyors"],
+      "lines": [
+        {"ingredient_id": "paradicsom", "qty": 0.3, "display": "3 közepes (30 dkg)", "optional": false},
+        {"ingredient_id": "uborka", "qty": 0.175, "display": "fél kígyóuborka", "optional": false},
+        {"ingredient_id": "zoldpaprika", "qty": 0.11, "display": "1 db", "optional": false},
+        {"ingredient_id": "voroshagyma", "qty": 0.03, "display": "negyed fej", "optional": false},
+        {"ingredient_id": "feta", "qty": 0.1, "display": "10 dkg", "optional": false},
+        {"ingredient_id": "olivaolaj", "qty": 0.015, "display": "1 evőkanál", "optional": false},
+        {"ingredient_id": "oregano", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "so", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "kenyer_tk", "qty": 0.16, "display": "4 szelet (16 dkg)", "optional": false}
+      ],
+      "steps": [
+        "A paradicsomot, az uborkát és a zöldpaprikát mosd meg. A paradicsomot vágd cikkekre, az uborkát vastagabb félkarikákra, a paprikát pedig csumázd ki, és vágd vékony karikákra.",
+        "A hagymát hámozd meg, és szeleteld nagyon vékonyra. Ha túl erős, áztasd 5 percig hideg vízben, majd csepegtesd le.",
+        "Tedd a zöldségeket egy tálba, sózd meg enyhén (a feta is sós), borsozd, szórd meg az oregánóval, locsold meg az olívaolajjal, és óvatosan forgasd össze.",
+        "Morzsold vagy kockázd a fetát a saláta tetejére, és tálald a kenyérszeletekkel."
+      ],
+      "tested": false
+    },
+    {
+      "id": "repas-almas-salata",
+      "title": "Répás-almás saláta citrommal",
+      "summary": "Frissen reszelt sárgarépa és alma citromlével összeforgatva.",
+      "slots": ["tizorai", "uzsonna"],
+      "servings": 2,
+      "minutes": 10,
+      "tags": ["snack", "salata", "husmentes", "vegetarianus", "gyors", "gyerekbarat"],
+      "lines": [
+        {"ingredient_id": "sargarepa", "qty": 0.2, "display": "2 nagyobb (20 dkg)", "optional": false},
+        {"ingredient_id": "alma", "qty": 0.18, "display": "1 közepes", "optional": false},
+        {"ingredient_id": "citrom", "qty": 0.05, "display": "fél citrom leve", "optional": false}
+      ],
+      "steps": [
+        "A sárgarépát hámozd meg. Az almát mosd meg, negyedeld, és vágd ki a magházát; a héját rajta hagyhatod.",
+        "Reszeld le a répát és az almát a reszelő közepes lyukú oldalán egy tálba.",
+        "Facsard rá a fél citrom levét, és alaposan keverd össze, hogy az alma ne barnuljon meg. Rögtön tálald, vagy lefedve tedd a hűtőbe, és még aznap edd meg."
+      ],
+      "tested": false
+    },
+    {
+      "id": "sajtos-paprikas-omlett",
+      "title": "Sajtos-paprikás omlett",
+      "summary": "Két puha omlett zöldpaprikával és reszelt edami sajttal, félbarna kenyérrel tálalva.",
+      "slots": ["reggeli"],
+      "servings": 2,
+      "minutes": 20,
+      "tags": ["reggeli_meleg", "husmentes", "vegetarianus", "gyors"],
+      "lines": [
+        {"ingredient_id": "tojas", "qty": 4, "display": "4 db", "optional": false},
+        {"ingredient_id": "tej", "qty": 0.03, "display": "2 evőkanál", "optional": false},
+        {"ingredient_id": "zoldpaprika", "qty": 0.11, "display": "1 db", "optional": false},
+        {"ingredient_id": "edami", "qty": 0.05, "display": "5 dkg", "optional": false},
+        {"ingredient_id": "vaj", "qty": 0.02, "display": "2 dkg", "optional": false},
+        {"ingredient_id": "so", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "kenyer_felbarna", "qty": 0.16, "display": "4 szelet (16 dkg)", "optional": false}
+      ],
+      "steps": [
+        "A zöldpaprikát mosd meg, csumázd ki, és vágd apró kockákra. A sajtot reszeld le.",
+        "Egy tálban verd fel villával a tojásokat a tejjel, a sóval és a borssal, amíg egynemű nem lesz.",
+        "Egy 20–22 cm-es tapadásmentes serpenyőben olvaszd meg a vaj felét közepes lángon, és párold rajta a paprika felét 2–3 percig, amíg kissé megpuhul.",
+        "Öntsd rá a tojásos keverék felét, és billentsd meg a serpenyőt, hogy egyenletesen elterüljön. Kis lángon süsd 3–4 percig; közben a széleit spatulával néhányszor emeld meg, hogy a még folyós tojás alácsorogjon.",
+        "Amikor az alja megszilárdult, és a teteje már alig folyós, szórd a sajt felét az omlett egyik felére, hajtsd rá a másik felét, és süsd még 1 percig, amíg a sajt megolvad, és a tojás mindenhol megszilárdul.",
+        "Csúsztasd tányérra, és a maradék hozzávalókból ugyanígy készítsd el a második omlettet. Tálald melegen a kenyérrel."
+      ],
+      "tested": false
+    },
+    {
+      "id": "sajtos-paradicsomos-melegszendvics",
+      "title": "Sajtos-paradicsomos melegszendvics",
+      "summary": "Vékonyan vajazott teljes kiőrlésű kenyér paradicsomkarikákkal és trappista sajttal, sütőben átsütve.",
+      "slots": ["reggeli"],
+      "servings": 2,
+      "minutes": 20,
+      "tags": ["reggeli_meleg", "husmentes", "vegetarianus", "gyors", "gyerekbarat"],
+      "lines": [
+        {"ingredient_id": "kenyer_tk", "qty": 0.16, "display": "4 szelet (16 dkg)", "optional": false},
+        {"ingredient_id": "vaj", "qty": 0.01, "display": "1 dkg", "optional": false},
+        {"ingredient_id": "paradicsom", "qty": 0.15, "display": "1 nagy (15 dkg)", "optional": false},
+        {"ingredient_id": "trappista", "qty": 0.08, "display": "8 dkg", "optional": false},
+        {"ingredient_id": "oregano", "qty": 0.001, "display": "1 csipet (elhagyható)", "optional": true}
+      ],
+      "steps": [
+        "Melegítsd elő a sütőt 200 fokra (alsó-felső sütés), és bélelj ki egy tepsit sütőpapírral.",
+        "A kenyérszeleteket kend meg vékonyan vajjal, és fektesd őket a tepsibe, vajas oldalukkal felfelé.",
+        "A paradicsomot mosd meg, és vágd vékony karikákra; a sajtot reszeld le, vagy szeleteld vékonyra. Rakd a paradicsomot a kenyerekre, ha szereted, szórd meg egy csipet oregánóval, végül halmozd rá a sajtot.",
+        "Süsd a sütő középső részén 8–10 percig, amíg a sajt megolvad, és a széle kissé megpirul. Tálalás előtt hagyd 1–2 percig hűlni, mert a paradicsom belül nagyon forró."
+      ],
+      "tested": false
+    },
+    {
+      "id": "tojasos-zoldseges-szendvics",
+      "title": "Tojásos-zöldséges szendvics",
+      "summary": "Teljes kiőrlésű kenyérből készült szendvics keményre főtt tojással, paradicsommal és uborkával, vékonyan vajazva.",
+      "slots": ["tizorai", "uzsonna"],
+      "servings": 2,
+      "minutes": 25,
+      "tags": ["snack", "husmentes", "vegetarianus", "gyors"],
+      "lines": [
+        {"ingredient_id": "tojas", "qty": 2, "display": "2 db", "optional": false},
+        {"ingredient_id": "kenyer_tk", "qty": 0.16, "display": "4 szelet (16 dkg)", "optional": false},
+        {"ingredient_id": "vaj", "qty": 0.01, "display": "1 dkg", "optional": false},
+        {"ingredient_id": "paradicsom", "qty": 0.1, "display": "1 kisebb (10 dkg)", "optional": false},
+        {"ingredient_id": "uborka", "qty": 0.09, "display": "negyed kígyóuborka", "optional": false},
+        {"ingredient_id": "salata", "qty": 0.02, "display": "2–3 levél (elhagyható)", "optional": true},
+        {"ingredient_id": "so", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false}
+      ],
+      "steps": [
+        "Tedd a tojásokat egy kis lábasba, öntsd fel annyi hideg vízzel, hogy ellepje őket, és forrald fel. Forrástól számítva főzd 9–10 percig, hogy a sárgájuk is teljesen megszilárduljon.",
+        "Öntsd le a forró vizet, hűtsd le a tojásokat hideg vízben, majd hámozd meg, és vágd őket karikákra.",
+        "Közben mosd meg a paradicsomot és az uborkát, és vágd vékony karikákra. Ha van salátalevél, mosd meg, és csepegtesd le alaposan.",
+        "Kend meg vékonyan vajjal a kenyérszeleteket. Két szeletre rakd rá a salátát, a paradicsomot, az uborkát és a tojáskarikákat, sózd és borsozd meg, majd fedd be a másik két szelettel, és vágd félbe.",
+        "Ha tízóraira viszed, csomagold szorosan sütőpapírba, vagy tedd dobozba, és tartsd hűvösen."
+      ],
+      "tested": false
+    },
+    {
+      "id": "turokrem-zoldseghasabokkal",
+      "title": "Fokhagymás túrókrém zöldséghasábokkal",
+      "summary": "Tejföllel kikevert fokhagymás túrókrém mártogatósnak, hozzá ropogós sárgarépa-, paprika- és uborkahasábok.",
+      "slots": ["tizorai", "uzsonna"],
+      "servings": 2,
+      "minutes": 15,
+      "tags": ["snack", "husmentes", "vegetarianus", "gyors"],
+      "lines": [
+        {"ingredient_id": "turo", "qty": 0.125, "display": "12,5 dkg (fél csomag)", "optional": false},
+        {"ingredient_id": "tejfol12", "qty": 0.06, "display": "3 evőkanál", "optional": false},
+        {"ingredient_id": "fokhagyma", "qty": 0.005, "display": "1 kis gerezd", "optional": false},
+        {"ingredient_id": "so", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false},
+        {"ingredient_id": "kapor", "qty": 0.005, "display": "néhány szál (elhagyható)", "optional": true},
+        {"ingredient_id": "sargarepa", "qty": 0.16, "display": "2 közepes (16 dkg)", "optional": false},
+        {"ingredient_id": "zoldpaprika", "qty": 0.11, "display": "1 db", "optional": false},
+        {"ingredient_id": "uborka", "qty": 0.175, "display": "fél kígyóuborka", "optional": false}
+      ],
+      "steps": [
+        "A túrót villával törd össze egy tálban, add hozzá a tejfölt, és keverd krémesre. Ha túl sűrű, keverj bele még egy kanál tejfölt vagy egy kevés hideg vizet.",
+        "A fokhagymát hámozd meg, és reszeld vagy nyomd a krémbe. Sózd, borsozd, és ha van, keverd hozzá az apróra vágott kaprot is.",
+        "A sárgarépát hámozd meg, és vágd kb. 8 cm hosszú, ceruzavastagságú hasábokra. A paprikát csumázd ki, és vágd csíkokra, az uborkát pedig hosszában negyedeld, majd vágd a répához hasonló hosszúságú darabokra.",
+        "Tálald a krémet kis tálkában, körülötte a zöldséghasábokkal, mártogatósnak. Ha tízóraira viszed, a krémet és a zöldséget külön dobozba tedd."
+      ],
+      "tested": false
+    }
+  ]
+}
