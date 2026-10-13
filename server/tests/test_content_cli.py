@@ -136,4 +136,4 @@ def test_module_entry_point_dry_run_on_the_real_data() -> None:
         check=False,
     )
     assert proc.returncode == 0, proc.stderr
-    assert "content valid: 159 ingredients" in proc.stdout
+    assert "content valid: 162 ingredients" in proc.stdout

@@ -350,9 +350,11 @@ def test_every_gvh_ingredient_has_a_reference_price_except_the_documented_ones()
         "egesz_csirke",
         "ementali",
         "feherpecsenye",
+        "gyumolcsjoghurt",
         "hasabburgonya",
         "parizsi",
         "sertes_tarja",
+        "teliszalami",
         "virsli",
     }
 
@@ -410,8 +412,17 @@ def test_real_ontology_tags() -> None:
         "sonka",
         "kolbasz",
         "szalonna",
+        "teliszalami",
     }
-    assert tagged("processed_meat") == {"sonka", "pulykasonka", "kolbasz", "szalonna", "virsli", "parizsi"}
+    assert tagged("processed_meat") == {
+        "sonka",
+        "pulykasonka",
+        "kolbasz",
+        "szalonna",
+        "virsli",
+        "parizsi",
+        "teliszalami",
+    }
     assert tagged("legume") == {"lencse", "szarazbab", "sargaborso", "csicseri", "voros_bab_konzerv"}
     assert tagged("fish") == {"lazac", "tokehal", "harcsa", "ponty", "tonhal_konzerv"}
     assert tagged("poultry") >= {"csirkemell", "csirkecomb", "egesz_csirke", "pulykamell", "pulykasonka"}
@@ -453,15 +464,10 @@ def test_piece_weights_come_from_the_research_or_are_labelled_estimates() -> Non
 
 def test_densities_only_for_dairy_sold_by_volume_and_weight() -> None:
     with_density = {i.id: i.density_kg_per_l for i in REAL.values() if i.density_kg_per_l is not None}
-    assert set(with_density) == {
-        "tejfol12",
-        "tejfol20",
-        "joghurt",
-        "gorog_joghurt",
-        "kefir",
-        "fozotejszin",
-        "habtejszin",
-    }
+    # tejföl, tejszín and joghurt (the research saw főzőtejszín sold per l and per kg); no other conversion.
+    assert set(with_density) == {"tejfol12", "tejfol20", "joghurt", "fozotejszin", "habtejszin"}
+    assert REAL["kefir"].density_kg_per_l is None
+    assert REAL["gorog_joghurt"].density_kg_per_l is None
     assert all(Decimal("0.95") <= d <= Decimal("1.1") for d in with_density.values())
 
 
@@ -637,7 +643,42 @@ EXPECTATIONS: dict[str, tuple[list[str], list[str]]] = {
         ],
     ),
     "rizs": (["B rizs", "MESTER B RIZS 1  KG"], ["enerBiO basmati rizs - 1 kg", "Jázmin rizs"]),
-    "daralt_sertes": ([], ["Darált sertés-marhahús"]),
+    "daralt_sertes": (["S-Budget sertés darálthús 900 g"], ["Darált sertés-marhahús"]),
+    "egesz_csirke": (["S-BUDGET kizsigerelt csirke, aprólék nélkül"], []),
+    "margarin": ([], ["DELMA CHOCO KENHETŐ KRÉM KAKAÓS 200 g"]),  # a cocoa spread misfiled as margarine
+    "feta": ([], ["APETINA CLASSIC SAJT 200G", "TOLLE LIGHT TRAP .FÉL SAJT 700 g QQ"]),  # non-feta cheeses
+    "petrezselyemgyoker": (
+        [],
+        ["Spar hazai szeretem hegykői vegyeszöldség 1kg"],
+    ),  # misfiled mixed vegetables
+    "omlesztett_sajt": (
+        [
+            "Camping natúr kenhető félzsíros ömlesztett sajt 8 db 140 g",
+            "Président zsírszegény ömlesztett sajt 200 g",
+        ],
+        [
+            "Camping sajtos snack, sajtkrém ropogós pálcikával 35 g",
+            "Président füst ízű kenhető zsíros ömlesztett sajtkészítmény 8 db 140 g",
+            "Kisteleki metélőhagymás kenhető, félzsíros ömlesztett sajt 90 g",
+            "Auchan Tipp zöldfűszeres, kenhető, félzsíros ömlesztett sajt 100 g",
+        ],
+    ),
+    "virsli": (
+        ["Pick Pickolino virsli", "S-Budget műbeles virsli 500 g"],
+        ["Gierlinger Premium Bacon roppanós sajtos virsli baconbe göngyölve 300 g"],
+    ),
+    "teliszalami": (
+        ["Karát csemege téliszalámi", "Karát paprikás téliszalámi"],
+        ["Hazánk Kincsei nemespenészes szalámi"],
+    ),
+    "gyumolcsjoghurt": (
+        [
+            "Zott Jogobella élőflórás joghurt 150 g",
+            "Milkeria magvas gyümölcsjoghurt",
+            "Cserpes Sajtműhely ribizlis joghurt 250 g",
+        ],
+        [],
+    ),
     "voroshagyma": (["Vöröshagyma 3 db/csomag", "VÖRÖSHAGYMA LÉDIG QQ"], ["Salátahagyma 3 db"]),
     "banan": (["Banán bandázsolt 5 db/fürt"], ["Főzőbanán lédig"]),
     "tv_paprika": (["Hazai TV paprika 3db", "Étkezési fehér paprika 500 g"], ["Lecsópaprika 750g"]),
@@ -667,7 +708,9 @@ def test_wholemeal_and_plain_pasta_rules_are_disjoint() -> None:
 def test_no_include_rule_is_dead() -> None:
     """Every GVH ingredient with real names in its leaves accepts at least one (no rule matches nothing)."""
     dead = [i for i in REAL if REAL[i].leaf_ids and in_leaves(i) and not accepted(i)]
-    assert dead == ["daralt_sertes"]  # its only sample name is a pork-beef mix, excluded on purpose
+    # Their only sample names are misfiled products, excluded on purpose (see EXPECTATIONS): non-feta white
+    # cheeses in Feta, a cocoa spread in Margarin, mixed vegetables in Petrezselyemgyökér.
+    assert dead == ["feta", "margarin", "petrezselyemgyoker"]
 
 
 def test_rules_through_the_pricing_engine() -> None:
@@ -704,16 +747,41 @@ def test_rules_through_the_pricing_engine() -> None:
 def test_ingredient_counts_by_group_and_tag_are_stable() -> None:
     """Pins the shape of the ontology (update deliberately together with data/ingredients.json)."""
     groups = Counter(ing.list_group for ing in REAL.values())
-    assert sum(groups.values()) == len(REAL) == 159
+    assert sum(groups.values()) == len(REAL) == 162
     assert groups == Counter(
         {
             "zoldseg_gyumolcs": 47,
             "pekaru": 7,
-            "tejtermek_tojas": 23,
-            "hus_hal": 23,
-            "szaraz_tartos": 32,
+            "tejtermek_tojas": 24,
+            "hus_hal": 24,
+            "szaraz_tartos": 33,
             "fagyasztott": 5,
             "fuszer_olaj": 21,
             "egyeb": 1,
         }
     )
+    tags = Counter(tag for ing in REAL.values() for tag in ing.tags)
+    assert tags == Counter(
+        {
+            "vegetable": 38,
+            "dairy": 21,
+            "grain": 18,
+            "spice": 16,
+            "fruit": 13,
+            "red_meat": 11,
+            "poultry": 7,
+            "processed_meat": 7,
+            "sweet": 7,
+            "condiment": 5,
+            "fat_oil": 5,
+            "fish": 5,
+            "legume": 5,
+            "wholegrain": 4,
+            "nut_seed": 3,
+            "potato": 3,
+            "egg": 1,
+        }
+    )
+    assert sorted(i.id for i in REAL.values() if not i.tags) == ["kakaopor", "sutopor", "viz"]
+    assert sum(i.pantry for i in REAL.values()) == 28
+    assert sum(bool(i.leaf_ids) for i in REAL.values()) == 92

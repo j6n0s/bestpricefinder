@@ -143,6 +143,76 @@ def test_load_twice_is_idempotent_and_removed_content_is_deleted(clean: PgCluste
     assert fourth[4] == ["ingredients deleted (no longer in data/ingredients.json): kapor, lazac"]
 
 
+def _write_ksh(path: Path, egg_period: str, egg_price: int, *, with_mushrooms: bool = True) -> None:
+    lines = [
+        "code,name,unit,unit_qty,price,period",
+        f'11001,"Tojás, 10 darab",db,10,{egg_price},{egg_period}',
+    ]
+    if with_mushrooms:
+        lines.append('14111,"Gomba, kg",kg,1,2000,2026-09-01')
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def ksh_rows(cluster: PgCluster) -> list[tuple[Any, ...]]:
+    return rows(cluster, "SELECT code, period, price FROM app.ksh_price ORDER BY code, period")
+
+
+def test_ksh_history_nutrition_and_ingredient_updates(clean: PgCluster, tmp_path: Path) -> None:
+    settings = clean.settings()
+    paths = fixture_paths(tmp_path)
+    # SYNTHETIC composition row (made-up round numbers), linked from one ingredient
+    synthetic = {"code": "T1", "source": "ciqual", "name": "SYNTHETIC test row", "kcal": 100, "protein_g": 10}
+    for key in ("carb_g", "sugar_g", "fat_g", "satfat_g", "fiber_g", "salt_g"):
+        synthetic[key] = None
+    paths.nutrition.write_text(json.dumps({"version": 1, "rows": [synthetic]}), encoding="utf-8")
+    edit_json(paths.ingredients, lambda d: d["ingredients"][4].update(nutrition_code="T1"))  # lencse
+    assert main([], paths=paths, settings=settings) == 0
+    assert rows(clean, "SELECT code, source, kcal, carb_g FROM app.nutrition") == [
+        ("T1", "ciqual", Decimal("100.00"), None)
+    ]
+    assert rows(clean, "SELECT nutrition_code FROM app.ingredient WHERE id = 'lencse'") == [("T1",)]
+    assert runs(clean)[-1][3]["nutrition_inserted"] == 1
+    assert ksh_rows(clean) == [
+        ("11001", date(2026, 9, 1), Decimal("80.00")),
+        ("14111", date(2026, 9, 1), Decimal("2000.00")),
+    ]
+
+    # a new month for eggs: inserted; the September row stays as history; ksh_latest shows October
+    _write_ksh(paths.ksh, "2026-10-01", 900)
+    edit_json(paths.ingredients, lambda d: d["ingredients"][4].update(name_hu="lencse (száraz)"))
+    assert main([], paths=paths, settings=settings) == 0
+    stats = runs(clean)[-1][3]
+    assert (stats["ksh_inserted"], stats["ksh_unchanged"], stats["ksh_deleted"]) == (1, 1, 0)
+    assert (stats["ingredients_updated"], stats["ingredients_unchanged"]) == (1, 9)
+    assert stats["nutrition_unchanged"] == 1
+    assert ksh_rows(clean) == [
+        ("11001", date(2026, 9, 1), Decimal("80.00")),
+        ("11001", date(2026, 10, 1), Decimal("90.00")),
+        ("14111", date(2026, 9, 1), Decimal("2000.00")),
+    ]
+    with clean.connect("api") as conn:
+        assert conn.execute("SELECT period, price FROM api.ksh_latest WHERE code = '11001'").fetchone() == (
+            date(2026, 10, 1),
+            Decimal("90.00"),
+        )
+
+    # reloading the older file: the later row of that code would shadow it, so it is deleted
+    _write_ksh(paths.ksh, "2026-09-01", 800)
+    assert main([], paths=paths, settings=settings) == 0
+    assert runs(clean)[-1][3]["ksh_deleted"] == 1
+    assert ksh_rows(clean) == [
+        ("11001", date(2026, 9, 1), Decimal("80.00")),
+        ("14111", date(2026, 9, 1), Decimal("2000.00")),
+    ]
+
+    # a code no longer in the file (and no longer referenced) stays as history
+    _write_ksh(paths.ksh, "2026-09-01", 800, with_mushrooms=False)
+    edit_json(paths.ingredients, lambda d: d["ingredients"][1].update(ksh_code=None))  # gomba
+    assert main(["--allow-low-coverage"], paths=paths, settings=settings) == 0  # gomba is now unpriced
+    assert ksh_rows(clean)[-1] == ("14111", date(2026, 9, 1), Decimal("2000.00"))
+    assert runs(clean)[-1][3]["ksh_deleted"] == 0
+
+
 def test_loaded_rows_and_api_views(clean: PgCluster, tmp_path: Path) -> None:
     assert main([], paths=fixture_paths(tmp_path), settings=clean.settings()) == 0
     with clean.connect("api") as conn:

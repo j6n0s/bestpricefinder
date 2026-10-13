@@ -1,0 +1,191 @@
+{
+	"version": 1,
+	"source": "research/gvh-location/data/stores.csv",
+	"method": "postal code digits 2-3; centroid = median lat/lon of the district stores (all chains)",
+	"districts": [
+		{
+			"id": "01",
+			"number": 1,
+			"roman": "I",
+			"lat": 47.49703,
+			"lon": 19.03245,
+			"stores": 5
+		},
+		{
+			"id": "02",
+			"number": 2,
+			"roman": "II",
+			"lat": 47.52312,
+			"lon": 19.00589,
+			"stores": 22
+		},
+		{
+			"id": "03",
+			"number": 3,
+			"roman": "III",
+			"lat": 47.56073,
+			"lon": 19.04082,
+			"stores": 31
+		},
+		{
+			"id": "04",
+			"number": 4,
+			"roman": "IV",
+			"lat": 47.56637,
+			"lon": 19.10019,
+			"stores": 23
+		},
+		{
+			"id": "05",
+			"number": 5,
+			"roman": "V",
+			"lat": 47.49626,
+			"lon": 19.05386,
+			"stores": 13
+		},
+		{
+			"id": "06",
+			"number": 6,
+			"roman": "VI",
+			"lat": 47.50759,
+			"lon": 19.05972,
+			"stores": 16
+		},
+		{
+			"id": "07",
+			"number": 7,
+			"roman": "VII",
+			"lat": 47.50066,
+			"lon": 19.06949,
+			"stores": 13
+		},
+		{
+			"id": "08",
+			"number": 8,
+			"roman": "VIII",
+			"lat": 47.49367,
+			"lon": 19.07603,
+			"stores": 24
+		},
+		{
+			"id": "09",
+			"number": 9,
+			"roman": "IX",
+			"lat": 47.47482,
+			"lon": 19.07758,
+			"stores": 29
+		},
+		{
+			"id": "10",
+			"number": 10,
+			"roman": "X",
+			"lat": 47.48512,
+			"lon": 19.14544,
+			"stores": 22
+		},
+		{
+			"id": "11",
+			"number": 11,
+			"roman": "XI",
+			"lat": 47.46404,
+			"lon": 19.03981,
+			"stores": 38
+		},
+		{
+			"id": "12",
+			"number": 12,
+			"roman": "XII",
+			"lat": 47.49123,
+			"lon": 19.01677,
+			"stores": 7
+		},
+		{
+			"id": "13",
+			"number": 13,
+			"roman": "XIII",
+			"lat": 47.53153,
+			"lon": 19.07174,
+			"stores": 34
+		},
+		{
+			"id": "14",
+			"number": 14,
+			"roman": "XIV",
+			"lat": 47.51011,
+			"lon": 19.11667,
+			"stores": 23
+		},
+		{
+			"id": "15",
+			"number": 15,
+			"roman": "XV",
+			"lat": 47.54363,
+			"lon": 19.13846,
+			"stores": 17
+		},
+		{
+			"id": "16",
+			"number": 16,
+			"roman": "XVI",
+			"lat": 47.50996,
+			"lon": 19.18623,
+			"stores": 9
+		},
+		{
+			"id": "17",
+			"number": 17,
+			"roman": "XVII",
+			"lat": 47.48009,
+			"lon": 19.24416,
+			"stores": 13
+		},
+		{
+			"id": "18",
+			"number": 18,
+			"roman": "XVIII",
+			"lat": 47.43318,
+			"lon": 19.18665,
+			"stores": 17
+		},
+		{
+			"id": "19",
+			"number": 19,
+			"roman": "XIX",
+			"lat": 47.46,
+			"lon": 19.14638,
+			"stores": 18
+		},
+		{
+			"id": "20",
+			"number": 20,
+			"roman": "XX",
+			"lat": 47.43775,
+			"lon": 19.10319,
+			"stores": 9
+		},
+		{
+			"id": "21",
+			"number": 21,
+			"roman": "XXI",
+			"lat": 47.4236,
+			"lon": 19.06981,
+			"stores": 19
+		},
+		{
+			"id": "22",
+			"number": 22,
+			"roman": "XXII",
+			"lat": 47.40828,
+			"lon": 19.01964,
+			"stores": 10
+		},
+		{
+			"id": "23",
+			"number": 23,
+			"roman": "XXIII",
+			"lat": 47.41494,
+			"lon": 19.13102,
+			"stores": 7
+		}
+	]
+}

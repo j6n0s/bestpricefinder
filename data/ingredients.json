@@ -623,13 +623,13 @@
       "pantry": false,
       "leaf_ids": [17],
       "include_patterns": [],
-      "exclude_patterns": ["panir", "fustolt", "\\bpac", "marinal", "fuszer", "grill", "sult", "rantott"],
+      "exclude_patterns": ["panir", "fustolt", "\\bpac", "marinal", "fuszer", "sult", "rantott"],
       "product_units": [],
       "ksh_code": null,
       "nutrition_code": null,
       "tags": ["poultry"],
       "perishable_days": 2,
-      "notes": null
+      "notes": "'grill' is deliberately not excluded: 'grillcsirke' also names raw whole broilers (ESTIMATE of this ontology; the research has no sample of it). Seasoned, marinated, smoked and breaded products are excluded."
     },
     {
       "id": "ementali",
@@ -665,7 +665,7 @@
       "nutrition_code": null,
       "tags": ["fruit"],
       "perishable_days": 3,
-      "notes": "Seasonal; few chains list it outside the season."
+      "notes": "Seasonal: 3 grocery chains listed it on 2026-10-12 (research reference prices)."
     },
     {
       "id": "fagy_brokkoli",
@@ -835,7 +835,7 @@
       "list_group": "tejtermek_tojas",
       "unit": "kg",
       "piece_weight_kg": null,
-      "density_kg_per_l": 1.05,
+      "density_kg_per_l": null,
       "pantry": false,
       "leaf_ids": [7],
       "include_patterns": ["gorog", "\\bgor"],
@@ -845,7 +845,7 @@
       "nutrition_code": null,
       "tags": ["dairy"],
       "perishable_days": 7,
-      "notes": "Inside 'Natúr joghurt' (leaf 7), listed only by Tesco and Spar on 2026-10-12 (research): elsewhere it shows as unavailable. Tesco abbreviates it 'Pro görnatjog'. density_kg_per_l 1.05 is an ESTIMATE."
+      "notes": "Inside 'Natúr joghurt' (leaf 7), listed only by Tesco and Spar on 2026-10-12 (research): elsewhere it shows as unavailable. Tesco abbreviates it 'Pro görnatjog'."
     },
     {
       "id": "gorogdinnye",
@@ -882,6 +882,24 @@
       "tags": ["dairy"],
       "perishable_days": 21,
       "notes": null
+    },
+    {
+      "id": "gyumolcsjoghurt",
+      "name_hu": "gyümölcsjoghurt",
+      "list_group": "tejtermek_tojas",
+      "unit": "kg",
+      "piece_weight_kg": null,
+      "density_kg_per_l": null,
+      "pantry": false,
+      "leaf_ids": [84],
+      "include_patterns": [],
+      "exclude_patterns": ["laktozmentes", "\\bivo"],
+      "product_units": [],
+      "ksh_code": null,
+      "nutrition_code": null,
+      "tags": ["dairy", "sweet"],
+      "perishable_days": 14,
+      "notes": "Sweetened fruit yoghurt (leaf 84) for snacks; drinking and lactose-free yoghurts are excluded."
     },
     {
       "id": "habtejszin",
@@ -1087,7 +1105,7 @@
       "list_group": "tejtermek_tojas",
       "unit": "kg",
       "piece_weight_kg": null,
-      "density_kg_per_l": 1.03,
+      "density_kg_per_l": null,
       "pantry": false,
       "leaf_ids": [8],
       "include_patterns": [],
@@ -1097,7 +1115,25 @@
       "nutrition_code": null,
       "tags": ["dairy"],
       "perishable_days": 7,
-      "notes": "Includes kaukázusi kefir. density_kg_per_l 1.03 is an ESTIMATE."
+      "notes": "Includes kaukázusi kefir. No density: the research gives no evidence of litre-priced kefir, so litre products, if GVH lists any, are not converted."
+    },
+    {
+      "id": "keksz",
+      "name_hu": "háztartási keksz",
+      "list_group": "szaraz_tartos",
+      "unit": "kg",
+      "piece_weight_kg": null,
+      "density_kg_per_l": null,
+      "pantry": false,
+      "leaf_ids": [58],
+      "include_patterns": [],
+      "exclude_patterns": [],
+      "product_units": [],
+      "ksh_code": null,
+      "nutrition_code": null,
+      "tags": ["sweet"],
+      "perishable_days": null,
+      "notes": "Plain household biscuit (leaf 58, research key 'keksz')."
     },
     {
       "id": "kelkaposzta",
@@ -1415,13 +1451,13 @@
       "pantry": false,
       "leaf_ids": [11],
       "include_patterns": [],
-      "exclude_patterns": ["laktozmentes", "suto"],
+      "exclude_patterns": ["laktozmentes", "suto", "choco", "csoko", "kakao"],
       "product_units": [],
       "ksh_code": null,
       "nutrition_code": null,
       "tags": ["fat_oil"],
       "perishable_days": 60,
-      "notes": null
+      "notes": "A cocoa spread ('DELMA CHOCO KENHETŐ KRÉM KAKAÓS') sits in this leaf; cocoa and chocolate spreads are excluded, as are baking and lactose-free margarines."
     },
     {
       "id": "marha",
@@ -1595,13 +1631,13 @@
       "pantry": false,
       "leaf_ids": [115],
       "include_patterns": [],
-      "exclude_patterns": ["laktozmentes"],
+      "exclude_patterns": ["laktozmentes", "snack", "palcik", "fust", "sonka", "szalami", "bacon", "gomba", "chili", "paprik", "hagym", "fuszer"],
       "product_units": [],
       "ksh_code": null,
       "nutrition_code": null,
       "tags": ["dairy"],
       "perishable_days": 21,
-      "notes": null
+      "notes": "Plain processed cheese. Cheese snacks ('sajtkrém ropogós pálcikával') and flavoured kinds (smoke, herbs, chives, ham, mushroom…) in the same leaf are excluded."
     },
     {
       "id": "oregano",
@@ -1799,7 +1835,7 @@
       "nutrition_code": null,
       "tags": ["fish"],
       "perishable_days": 2,
-      "notes": "Only about 3 chains list carp (research)."
+      "notes": "3 grocery chains listed carp on 2026-10-12 (research reference prices)."
     },
     {
       "id": "porcukor",
@@ -2015,7 +2051,7 @@
       "nutrition_code": null,
       "tags": ["vegetable"],
       "perishable_days": 21,
-      "notes": "piece_weight_kg 0.08 is a research ESTIMATE. Bunches ('csomós', priced per db at about 0.5 kg) are left out through product_units kg, because one carrot's weight would misprice a bunch."
+      "notes": "piece_weight_kg 0.08 is a research ESTIMATE. Bunches ('csomós', priced per db) are left out through product_units kg, because one carrot's weight would misprice a bunch."
     },
     {
       "id": "savanyu_kaposzta",
@@ -2378,6 +2414,24 @@
       "notes": "density_kg_per_l 1.02 is an ESTIMATE of this ontology."
     },
     {
+      "id": "teliszalami",
+      "name_hu": "téliszalámi",
+      "list_group": "hus_hal",
+      "unit": "kg",
+      "piece_weight_kg": null,
+      "density_kg_per_l": null,
+      "pantry": false,
+      "leaf_ids": [25],
+      "include_patterns": ["teli ?szalami"],
+      "exclude_patterns": [],
+      "product_units": [],
+      "ksh_code": null,
+      "nutrition_code": null,
+      "tags": ["red_meat", "processed_meat"],
+      "perishable_days": 30,
+      "notes": "Leaf 25 also holds other salamis ('nemespenészes szalámi'); only products named téliszalámi are kept."
+    },
+    {
       "id": "teszta",
       "name_hu": "száraztészta (durum vagy tojásos)",
       "list_group": "szaraz_tartos",
@@ -2591,7 +2645,7 @@
       "nutrition_code": null,
       "tags": ["potato"],
       "perishable_days": 10,
-      "notes": "Seasonal; often absent from GVH outside early summer."
+      "notes": "Seasonal: 2 grocery chains listed it on 2026-10-12 (research reference prices)."
     },
     {
       "id": "ujhagyma",
@@ -2657,13 +2711,13 @@
       "pantry": false,
       "leaf_ids": [23],
       "include_patterns": [],
-      "exclude_patterns": [],
+      "exclude_patterns": ["sajt", "bacon"],
       "product_units": [],
       "ksh_code": null,
       "nutrition_code": null,
       "tags": ["processed_meat"],
       "perishable_days": 7,
-      "notes": null
+      "notes": "Cheese-filled and bacon-wrapped wieners ('sajtos virsli baconbe göngyölve') are excluded."
     },
     {
       "id": "viz",

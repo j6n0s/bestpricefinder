@@ -102,14 +102,58 @@ def test_threshold_is_inclusive() -> None:
     assert not below.ok
 
 
-def test_missing_price_fails_the_recipe_and_is_reported() -> None:
+def test_missing_non_gvh_price_fails_the_recipe_and_is_reported() -> None:
     cov = recipe_coverage(_recipe(("lencse", "1", False), ("kapor", "0.01", False)), ING, prices())
-    assert cov.missing == ("kapor",)
-    assert not cov.ok
+    assert cov.missing == cov.missing_other == ("kapor",)
+    assert cov.missing_gvh == ()
+    assert cov.share == 1  # the priced part alone would pass...
+    assert not cov.ok  # ...but the unpriced non-GVH line could be worth anything
     report = render_report([cov], price_note="test", full=True)
-    assert "FAIL r: no price for kapor" in report
-    assert "Ingredients without a price in the DB, the reference CSV or KSH: kapor" in report
+    assert "FAIL r: no price for kapor (not GVH-mapped, so the share is unknown)" in report
+    assert (
+        "Non-GVH ingredients without a price in KSH or the reference CSV (their recipes fail): kapor"
+        in report
+    )
     assert "MISSING PRICE" in report
+
+
+def test_missing_gvh_price_gives_a_lower_bound() -> None:
+    """An unpriced GVH line can only raise the GVH share, so it is left out and the share is a lower bound."""
+    fixed = {"lencse": UnitPrice(Decimal(900), "reference"), "gomba": UnitPrice(Decimal(100), "ksh")}
+    passing = recipe_coverage(
+        _recipe(("lencse", "1", False), ("sertescomb", "1", False), ("gomba", "1", False)), ING, fixed
+    )
+    assert passing.missing == passing.missing_gvh == ("sertescomb",)
+    assert (passing.gvh_cost, passing.total_cost) == (Decimal(900), Decimal(1000))
+    assert passing.lower_bound
+    assert passing.ok  # 90 % without the pork; any pork price raises it
+    failing = recipe_coverage(
+        _recipe(("lencse", "1", False), ("sertescomb", "1", False), ("gomba", "2", False)), ING, fixed
+    )
+    assert failing.share == Decimal(900) / Decimal(1100)
+    assert not failing.ok
+    report = render_report([passing, failing], price_note="test", full=True)
+    assert "ok (lower bound)" in report
+    assert "LOW (lower bound)" in report
+    assert "FAIL r: 81.8% < 90.0% (lower bound: no price for sertescomb)" in report
+    assert "(left out; the share is a lower bound): sertescomb" in report
+    assert "Non-GVH ingredients" not in report
+
+
+def test_only_unpriced_gvh_lines_pass() -> None:
+    cov = recipe_coverage(_recipe(("sertescomb", "1", False), ("lazac", "1", False)), ING, {})
+    assert cov.missing_gvh == ("sertescomb", "lazac")
+    assert cov.share is None
+    assert cov.ok  # every counted line is GVH-mapped: 100 % whatever the prices
+    mixed = recipe_coverage(_recipe(("sertescomb", "1", False), ("kapor", "1", False)), ING, {})
+    assert (mixed.missing_gvh, mixed.missing_other) == (("sertescomb",), ("kapor",))
+    assert not mixed.ok
+
+
+def test_repeated_ingredient_is_reported_once() -> None:
+    cov = recipe_coverage(_recipe(("kapor", "0.01", False), ("kapor", "0.02", False)), ING, {})
+    assert cov.missing == cov.missing_other == ("kapor",)
+    assert len(cov.lines) == 2
 
 
 def test_recipe_of_only_pantry_or_optional_lines_passes_with_no_share() -> None:

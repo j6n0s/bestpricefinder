@@ -7,8 +7,10 @@
   ``updated_at`` bumped); unchanged recipes are not touched; recipes absent from the files are deleted
   (their lines go with them, ``ON DELETE CASCADE``).
 * ``app.ksh_price``: upsert per (period, code) with the price per ONE unit (``price / unit_qty``; the table
-  has no ``unit_qty`` column, see :mod:`bpf.content.ksh`); rows of a period present in the file but no longer
-  in it are deleted, older periods are kept as history.
+  has no ``unit_qty`` column, see :mod:`bpf.content.ksh`). For every code in the file, rows of a LATER
+  period are deleted, so that ``api.ksh_latest`` returns exactly the file's row (e.g. after reloading an
+  older file). Rows of earlier periods are kept as history, and so are rows of codes no longer in the file
+  (no ingredient can reference those: ``ksh_code`` is checked against the file).
 * ``ops.ingest_run``: a ``content`` row is committed as ``running`` first, set to ``ok`` (with stats and
   warnings) inside the content transaction, or to ``failed`` (with the error) after a rollback.
 
@@ -246,6 +248,7 @@ def sync_recipes(conn: psycopg.Connection, recipes: Iterable[Recipe]) -> tuple[d
 
 
 def sync_ksh(conn: psycopg.Connection, rows: Iterable[KshPrice]) -> dict[str, int]:
+    """Upsert the file's rows and delete later-period rows of the same codes (see the module docstring)."""
     stats = _new_stats("ksh")
     periods: list[object] = []
     codes: list[str] = []
@@ -263,9 +266,9 @@ def sync_ksh(conn: psycopg.Connection, rows: Iterable[KshPrice]) -> dict[str, in
             periods.append(row.period)
             codes.append(row.code)
         cur.execute(
-            "DELETE FROM app.ksh_price p WHERE p.period = ANY(%(periods)s::date[]) AND NOT EXISTS ("
-            "SELECT 1 FROM unnest(%(periods)s::date[], %(codes)s::text[]) AS f(period, code) "
-            "WHERE f.period = p.period AND f.code = p.code)",
+            "DELETE FROM app.ksh_price p "
+            "USING unnest(%(codes)s::text[], %(periods)s::date[]) AS f(code, period) "
+            "WHERE p.code = f.code AND p.period > f.period",
             {"periods": periods, "codes": codes},
         )
         stats["ksh_deleted"] = cur.rowcount

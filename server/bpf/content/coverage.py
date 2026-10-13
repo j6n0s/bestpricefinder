@@ -11,9 +11,14 @@ quantity × a unit price in the ingredient's canonical unit:
 * other ingredients: their KSH ara0044 row when they have one, else the research reference price.
 
 The research reference prices (``ingredient_reference_prices.csv``) are joined on the ingredient id, or on
-the research key in :data:`REFERENCE_ALIASES` where our id differs. A line whose ingredient has no price
-from any source makes the recipe fail (its share cannot be known), and the ingredient is reported.
-``share`` = GVH-mapped cost / total cost; a recipe passes when share >= 0.90.
+the research key in :data:`REFERENCE_ALIASES` where our id differs.
+
+``share`` = GVH-mapped cost / total cost; a recipe passes when share >= 0.90. Lines whose ingredient has no
+price from any source are reported, and:
+
+* a GVH-mapped line without a price is left out of both sums. Adding a GVH cost can only raise the share,
+  so the share is then a **lower bound**: a recipe that passes on it passes for any price of that line;
+* a non-GVH line without a price makes the recipe fail, because its share cannot be known.
 """
 
 from __future__ import annotations
@@ -89,22 +94,41 @@ class LineCost:
 @dataclass(frozen=True, slots=True)
 class RecipeCoverage:
     recipe_id: str
-    gvh_cost: Decimal
-    total_cost: Decimal
-    missing: tuple[str, ...]  # ingredient ids without any price
+    gvh_cost: Decimal  # priced GVH-mapped lines only
+    total_cost: Decimal  # every priced counted line
+    missing: tuple[str, ...]  # ingredient ids without any price, in line order
     lines: tuple[LineCost, ...]
     threshold: Decimal = COVERAGE_THRESHOLD
 
     @property
+    def missing_gvh(self) -> tuple[str, ...]:
+        """GVH-mapped ingredients without a price: left out, so :attr:`share` is a lower bound."""
+        return _unique(ln.ingredient_id for ln in self.lines if ln.gvh and ln.cost is None)
+
+    @property
+    def missing_other(self) -> tuple[str, ...]:
+        """Non-GVH ingredients without a price: the share cannot be known, so the recipe fails."""
+        return _unique(ln.ingredient_id for ln in self.lines if not ln.gvh and ln.cost is None)
+
+    @property
+    def lower_bound(self) -> bool:
+        return bool(self.missing_gvh)
+
+    @property
     def share(self) -> Decimal | None:
-        """GVH-mapped share of the estimated cost; None when no counted line has a cost."""
+        """GVH-mapped share of the priced lines' cost; None when no counted line has a cost."""
         return self.gvh_cost / self.total_cost if self.total_cost > 0 else None
 
     @property
     def ok(self) -> bool:
-        if self.missing:
+        """Passes the rule. With no priced cost, every counted line is GVH-mapped (or there is none)."""
+        if self.missing_other:
             return False
         return self.total_cost == 0 or self.gvh_cost >= self.threshold * self.total_cost
+
+
+def _unique(ids: Iterable[str]) -> tuple[str, ...]:
+    return tuple(dict.fromkeys(ids))
 
 
 # ───────────────────────────── price sources ─────────────────────────────
@@ -339,21 +363,39 @@ def render_report(results: Sequence[RecipeCoverage], *, price_note: str, full: b
         width = max([len(r.recipe_id) for r in results] + [6])
         out.append(f"{'recipe':<{width}}  {'share':>7}  {'GVH Ft':>8}  {'total Ft':>8}  status")
         for r in results:
-            status = "ok" if r.ok else ("MISSING PRICE" if r.missing else "LOW")
             out.append(
                 f"{r.recipe_id:<{width}}  {_percent(r.share):>7}  {_ft(r.gvh_cost):>8}  "
-                f"{_ft(r.total_cost):>8}  {status}"
+                f"{_ft(r.total_cost):>8}  {_status(r)}"
             )
     failing = [r for r in results if not r.ok]
     out.append(f"{len(results)} recipe(s), {len(failing)} failing.")
-    for r in failing:
-        reason = (
-            f"no price for {', '.join(r.missing)}"
-            if r.missing
-            else f"{_percent(r.share)} < {_percent(r.threshold)}"
+    out.extend(f"FAIL {r.recipe_id}: {_reason(r)}" for r in failing)
+    gvh_unpriced = sorted({ing_id for r in results for ing_id in r.missing_gvh})
+    other_unpriced = sorted({ing_id for r in results for ing_id in r.missing_other})
+    if gvh_unpriced:
+        out.append(
+            "GVH-mapped ingredients without a price in the DB or the reference CSV (left out; the share is a "
+            f"lower bound): {', '.join(gvh_unpriced)}"
         )
-        out.append(f"FAIL {r.recipe_id}: {reason}")
-    unpriced = sorted({ing_id for r in results for ing_id in r.missing})
-    if unpriced:
-        out.append(f"Ingredients without a price in the DB, the reference CSV or KSH: {', '.join(unpriced)}")
+    if other_unpriced:
+        out.append(
+            "Non-GVH ingredients without a price in KSH or the reference CSV (their recipes fail): "
+            f"{', '.join(other_unpriced)}"
+        )
     return "\n".join(out)
+
+
+def _status(r: RecipeCoverage) -> str:
+    if r.missing_other:
+        return "MISSING PRICE"
+    status = "ok" if r.ok else "LOW"
+    return f"{status} (lower bound)" if r.lower_bound else status
+
+
+def _reason(r: RecipeCoverage) -> str:
+    if r.missing_other:
+        return f"no price for {', '.join(r.missing_other)} (not GVH-mapped, so the share is unknown)"
+    reason = f"{_percent(r.share)} < {_percent(r.threshold)}"
+    if r.lower_bound:
+        reason += f" (lower bound: no price for {', '.join(r.missing_gvh)})"
+    return reason

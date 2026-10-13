@@ -1,0 +1,398 @@
+/*
+ * Heti kosár: design tokens and base styles.
+ * - Colours: light and dark (prefers-color-scheme). Text pairs meet WCAG AA 4.5:1, form-control borders and
+ *   the focus ring 3:1; src/lib/contrast.test.ts checks every pair listed there against these values.
+ * - System fonts only; no external requests of any kind.
+ * - No inline styles anywhere (the CSP has no 'unsafe-inline'): style with classes.
+ */
+
+:root {
+	color-scheme: light dark;
+
+	--color-bg: #f6f7f4;
+	--color-surface: #ffffff;
+	--color-surface-alt: #eef1ec;
+	--color-text: #1b1f1c;
+	--color-text-muted: #4d5550;
+	--color-border: #6f7873;
+	--color-border-subtle: #d5dbd6;
+	--color-primary: #1b6b45;
+	--color-primary-hover: #145536;
+	--color-on-primary: #ffffff;
+	--color-focus: #1f4fd1;
+	--color-danger: #b3261e;
+	--color-on-danger: #ffffff;
+	--color-danger-bg: #fdecea;
+	--color-danger-text: #8c1d18;
+	--color-warning-bg: #fff3cd;
+	--color-warning-text: #5c4100;
+	--color-warning-border: #a07700;
+	--color-info-bg: #e7eefc;
+	--color-info-text: #1d3a7a;
+	--color-success-bg: #e3f4ea;
+	--color-success-text: #145536;
+	--color-neutral-bg: #e6e9e6;
+	--color-neutral-text: #2f3531;
+
+	--font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+	--font-size-sm: 0.875rem;
+	--font-size-base: 1rem;
+	--font-size-lg: 1.125rem;
+	--font-size-xl: 1.375rem;
+	--font-size-2xl: 1.75rem;
+	--line-height: 1.5;
+
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.5rem;
+	--space-6: 2rem;
+	--space-7: 3rem;
+
+	--radius-sm: 4px;
+	--radius-md: 8px;
+	--radius-lg: 14px;
+	--radius-pill: 999px;
+
+	/* Minimum touch target (WCAG 2.5.5 / platform guidelines). */
+	--tap: 44px;
+	--nav-height: 64px;
+	--content-max: 48rem;
+	--focus-ring: 3px solid var(--color-focus);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-bg: #111412;
+		--color-surface: #1a1e1b;
+		--color-surface-alt: #232824;
+		--color-text: #e9ede9;
+		--color-text-muted: #b3bcb6;
+		--color-border: #87918b;
+		--color-border-subtle: #343b36;
+		--color-primary: #7ad3a0;
+		--color-primary-hover: #9be0b7;
+		--color-on-primary: #0b1d12;
+		--color-focus: #8fb4ff;
+		--color-danger: #ff8a80;
+		--color-on-danger: #2a0a07;
+		--color-danger-bg: #3b1513;
+		--color-danger-text: #ffb4ab;
+		--color-warning-bg: #3a2c00;
+		--color-warning-text: #ffd978;
+		--color-warning-border: #c99a1a;
+		--color-info-bg: #1b2a4a;
+		--color-info-text: #c3d5ff;
+		--color-success-bg: #143022;
+		--color-success-text: #a6e6c0;
+		--color-neutral-bg: #2a302c;
+		--color-neutral-text: #dfe5e0;
+	}
+}
+
+/* ───────────── base ───────────── */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	min-width: 320px;
+	background: var(--color-bg);
+	color: var(--color-text);
+	font-family: var(--font-sans);
+	font-size: var(--font-size-base);
+	line-height: var(--line-height);
+	overflow-wrap: break-word;
+}
+
+.app-root {
+	display: contents;
+}
+
+h1,
+h2,
+h3 {
+	line-height: 1.25;
+	margin: 0 0 var(--space-3);
+}
+
+h1 {
+	font-size: var(--font-size-2xl);
+}
+
+h2 {
+	font-size: var(--font-size-xl);
+}
+
+h3 {
+	font-size: var(--font-size-lg);
+}
+
+p,
+ul,
+ol {
+	margin: 0 0 var(--space-3);
+}
+
+a {
+	color: var(--color-primary);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.15em;
+}
+
+a:hover {
+	color: var(--color-primary-hover);
+	text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+	outline: var(--focus-ring);
+	outline-offset: 2px;
+}
+
+img,
+svg {
+	max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+
+/* ───────────── utilities ───────────── */
+
+.visually-hidden {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	margin: -1px !important;
+	padding: 0 !important;
+	overflow: hidden !important;
+	clip: rect(0 0 0 0) !important;
+	clip-path: inset(50%) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+
+/* SvelteKit's route announcer (its inline style is replaced by this class in vite.config.ts). */
+.sveltekit-announcer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+.skip-link {
+	position: absolute;
+	left: var(--space-2);
+	top: -100px;
+	z-index: 100;
+	display: inline-flex;
+	align-items: center;
+	min-height: var(--tap);
+	padding: 0 var(--space-4);
+	background: var(--color-surface);
+	color: var(--color-primary);
+	border: 2px solid var(--color-primary);
+	border-radius: var(--radius-md);
+	font-weight: 600;
+}
+
+.skip-link:focus {
+	top: var(--space-2);
+}
+
+.muted {
+	color: var(--color-text-muted);
+}
+
+.small {
+	font-size: var(--font-size-sm);
+}
+
+.stack > * + * {
+	margin-top: var(--space-4);
+}
+
+.card {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border-subtle);
+	border-radius: var(--radius-lg);
+	padding: var(--space-4);
+}
+
+.card > :last-child {
+	margin-bottom: 0;
+}
+
+.notice {
+	border-radius: var(--radius-md);
+	padding: var(--space-3) var(--space-4);
+	border: 1px solid transparent;
+}
+
+.notice > :last-child {
+	margin-bottom: 0;
+}
+
+.notice-info {
+	background: var(--color-info-bg);
+	color: var(--color-info-text);
+}
+
+.notice-warning {
+	background: var(--color-warning-bg);
+	color: var(--color-warning-text);
+	border-color: var(--color-warning-border);
+}
+
+.notice-success {
+	background: var(--color-success-bg);
+	color: var(--color-success-text);
+}
+
+.notice-danger {
+	background: var(--color-danger-bg);
+	color: var(--color-danger-text);
+}
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-2);
+	min-height: var(--tap);
+	min-width: var(--tap);
+	padding: var(--space-2) var(--space-4);
+	border: 2px solid transparent;
+	border-radius: var(--radius-md);
+	font-weight: 600;
+	line-height: 1.25;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.btn:disabled {
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+.btn-primary {
+	background: var(--color-primary);
+	color: var(--color-on-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+	background: var(--color-primary-hover);
+	color: var(--color-on-primary);
+}
+
+.btn-secondary {
+	background: var(--color-surface);
+	color: var(--color-text);
+	border-color: var(--color-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+	background: var(--color-surface-alt);
+	color: var(--color-text);
+}
+
+.btn-danger {
+	background: var(--color-danger);
+	color: var(--color-on-danger);
+}
+
+.btn-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3);
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+}
+
+.field > label,
+.field-label {
+	font-weight: 600;
+}
+
+.input,
+.select {
+	min-height: var(--tap);
+	width: 100%;
+	max-width: 100%;
+	padding: var(--space-2) var(--space-3);
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+}
+
+.choice-group {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	min-width: 0;
+}
+
+.choice-group > legend {
+	font-weight: 600;
+	padding: 0;
+	margin-bottom: var(--space-2);
+}
+
+.choice {
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+	min-height: var(--tap);
+	padding: var(--space-1) var(--space-2);
+	border-radius: var(--radius-md);
+	cursor: pointer;
+}
+
+.choice:hover {
+	background: var(--color-surface-alt);
+}
+
+.choice input {
+	width: 1.25rem;
+	height: 1.25rem;
+	margin: 0;
+	flex: none;
+	accent-color: var(--color-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
