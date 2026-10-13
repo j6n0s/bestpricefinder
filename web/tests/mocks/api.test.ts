@@ -50,6 +50,19 @@ describe('synthetic mock API', () => {
 		expect(result).toEqual({ status: 422, body: { error: 'invalid_request', fields: ['lat', 'lon'] } });
 	});
 
+	it('ranks stores with competition ranks (ties share a rank)', () => {
+		const result = handleMockApi(
+			'POST',
+			'/api/quote',
+			JSON.stringify({
+				lines: [{ ingredient_id: 'voros_lencse', qty: 1 }],
+				store_ids: ['synthetic-lidl-1', 'synthetic-aldi-1', 'synthetic-lidl-2']
+			})
+		);
+		const ranks = (result.body as { ranking: { store_id: string; rank: number }[] }).ranking.map((r) => r.rank);
+		expect(ranks).toEqual([1, 2, 3]);
+	});
+
 	it('is clearly synthetic', () => {
 		for (const store of MOCK_STORES) expect(store.id).toMatch(/^synthetic-/);
 		const meta = handleMockApi('GET', '/api/meta').body as { data_date: string };

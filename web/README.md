@@ -80,6 +80,10 @@ tests/e2e/                     Playwright smoke test, static test server
   `ksh` when a KSH estimate is shown). Unpriced lines get `<Badge kind="no_price" />`, KSH values
   `<Badge kind="ksh_estimate" />`, untested recipes `<Badge kind="untested" />`. "Legolcsóbb" only with the
   server's `scope_note_hu`. No product images, no retailer logos: chain names as plain text.
+- **Ties and deals** (BUILD-BRIEF §4.1 traps 12–13): `cheapest_chains` is a tie group and tied stores share a
+  `rank`; show every member of a tie, order a tie by distance, never by chain or store name, and never
+  hard-code a "cheapest chain". `price_type: DISCOUNTED` may be shown only as the plain text
+  `core.price_discounted` ("kedvezményes ár (GVH-jelölés)"), never as an "akció"/deal badge.
 - **Personal data** (plan, household, pantry, exclusions, location, ticks, language) is read and written only
   through `$lib/storage`. It never goes to the server, except what an endpoint needs: recipe ids and
   servings, ingredient ids and quantities, store ids, and the plan request fields. **Never send

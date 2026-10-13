@@ -180,7 +180,8 @@ const summaryA: RecipeSummary = {
 	tags: ['fozelek', 'huvelyes', 'husmentes'],
 	tested: false,
 	cost_per_serving_from: 312.5,
-	cheapest_chain: 'lidl',
+	// A tie group (BUILD-BRIEF §4.1 trap 13): both chains cost the same per serving.
+	cheapest_chains: ['aldi', 'lidl'],
 	priced_share: 0.94
 };
 
@@ -194,7 +195,7 @@ const summaryB: RecipeSummary = {
 	tags: ['foetel', 'baromfi', 'gyors'],
 	tested: true,
 	cost_per_serving_from: null,
-	cheapest_chain: null,
+	cheapest_chains: [],
 	priced_share: 0
 };
 
@@ -238,7 +239,7 @@ export const MOCK_RECIPE_DETAILS: Record<string, RecipeDetail> = {
 			}
 		],
 		chain_costs: [
-			{ chain: 'aldi', cost_per_serving: 330, priced_share: 0.94, missing: [] },
+			{ chain: 'aldi', cost_per_serving: 312.5, priced_share: 0.94, missing: [] },
 			{ chain: 'lidl', cost_per_serving: 312.5, priced_share: 0.94, missing: [] },
 			{ chain: 'spar', cost_per_serving: null, priced_share: 0, missing: ['voros_lencse', 'voroshagyma'] }
 		],
@@ -363,11 +364,13 @@ function mockQuote(body: Record<string, unknown>): MockResult {
 			lines: quoteLines
 		});
 	}
+	// Competition ranking on whole forints: ties share a rank (1, 1, 3), store id orders a tie for determinism.
+	const whole = (s: StoreQuoteOut): number => Math.round(s.checkout_total);
 	const ranking = [...stores]
-		.sort((a, b) => a.checkout_total - b.checkout_total || (a.store_id < b.store_id ? -1 : 1))
-		.map((s, i) => ({
+		.sort((a, b) => whole(a) - whole(b) || (a.store_id < b.store_id ? -1 : 1))
+		.map((s) => ({
 			store_id: s.store_id,
-			rank: i + 1,
+			rank: 1 + stores.filter((other) => whole(other) < whole(s)).length,
 			checkout_total: s.checkout_total,
 			penalized_total: s.checkout_total,
 			missing_count: 0

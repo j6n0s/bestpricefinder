@@ -37,6 +37,8 @@ export const coreHu = {
 	badge_assumed: 'elérhetőség nem ellenőrzött',
 	badge_pantry: 'valószínűleg otthon van',
 	badge_stale: 'nem friss',
+	// Plain text only: DISCOUNTED is not a deal flag, so never an "akció" badge (docs/API.md).
+	price_discounted: 'kedvezményes ár (GVH-jelölés)',
 
 	loading: 'Betöltés…',
 	retry: 'Újra',

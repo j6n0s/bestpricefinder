@@ -73,6 +73,7 @@ describe('legal texts (BUILD-BRIEF §8)', () => {
 		expect(translate('hu', 'core.attribution_ksh')).toBe('Forrás: KSH');
 		expect(translate('hu', 'core.badge_no_price')).toBe('nincs ár');
 		expect(translate('hu', 'core.badge_untested')).toBe('kipróbálatlan recept');
+		expect(translate('hu', 'core.price_discounted')).toBe('kedvezményes ár (GVH-jelölés)');
 	});
 
 	it('names the app neutrally, without GVH or Árfigyelő in the name', () => {

@@ -38,6 +38,11 @@ export const SLOTS_5: readonly Slot[] = SLOTS;
 export const UNITS = ['kg', 'l', 'db'] as const;
 export type Unit = (typeof UNITS)[number];
 
+/**
+ * Reported for transparency only. DISCOUNTED is NOT a weekly-deal flag (Aldi never sets it, and it also marks
+ * long-running reductions): the UI may say "kedvezményes ár (GVH-jelölés)" in plain text, never show an
+ * "akció"/deal badge based on it (docs/API.md "Price types and deals").
+ */
 export type PriceType = 'NORMAL' | 'DISCOUNTED' | 'LOYALTY';
 export type PriceScope = 'store' | 'chain';
 export type AvailabilityKind = 'confirmed' | 'assumed';
@@ -211,8 +216,12 @@ export interface RecipeSummary {
 	tested: boolean;
 	/** cheapest chain-typical used cost per serving across grocery chains (HUF); null if unpriced */
 	cost_per_serving_from: number | null;
-	cheapest_chain: ChainSlug | null;
-	/** 0..1, share of cost covered by priced lines at cheapest_chain */
+	/**
+	 * Every grocery chain tied at cost_per_serving_from (equal in whole forints). A tie group, never an order:
+	 * the UI must not single out one chain of a tie (BUILD-BRIEF §4.1 trap 13).
+	 */
+	cheapest_chains: ChainSlug[];
+	/** 0..1, share of cost priced at the cheapest chain(s) (the lowest share of a tie) */
 	priced_share: number;
 }
 
@@ -362,6 +371,10 @@ export interface StoreQuoteOut {
 
 export interface RankOut {
 	store_id: StoreId;
+	/**
+	 * Competition rank: tied stores share it (1, 1, 3). The order inside a tie group means nothing; the client
+	 * orders a tie by distance and never by chain or store name.
+	 */
 	rank: number;
 	checkout_total: number;
 	penalized_total: number;

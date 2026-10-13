@@ -38,6 +38,7 @@ export const coreEn: Messages<typeof coreHu> = {
 	badge_assumed: 'availability not confirmed',
 	badge_pantry: 'probably at home',
 	badge_stale: 'not current',
+	price_discounted: 'reduced price (GVH label)',
 
 	loading: 'Loading…',
 	retry: 'Retry',
