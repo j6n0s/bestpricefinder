@@ -99,12 +99,12 @@ Response:
   - `sweets ≤2`;
   - `variety` (no repeat inside `no_repeat_days` except `ket_napos` recipes on the next day);
   - `budget`, when set;
-- `warnings`: machine codes.
+- `warnings`: machine codes; the client maps them to HU/EN text. The codes are `slot_pool_empty:<slot>`, `slot_pool_too_small:<slot>`, `no_fish_recipe_available`, `no_legume_recipe_available`, `no_meat_free_recipe_available:<slot>`, `no_potato_free_recipe_available:<slot>`, `red_meat_cap_unreachable`, `sweets_cap_unreachable`, `budget_unreachable` and `recipe_cost_missing`. The rule details are in docs/ENGINE.md.
 
 The same `seed` and input always give the same plan.
 
 ### `POST /api/plan/check`
-Request: `{days: [{index, meals}], people, red_meat_g_per_person_week, weekly_budget}`. Response: `{checks}`. The client uses it to re-check a plan the user edited.
+Request: `{days: [{index, meals}], people, red_meat_g_per_person_week, no_repeat_days, weekly_budget}`. Response: `{checks}`. The client uses it to re-check a plan the user edited, passing the same `no_repeat_days` it used for the suggestion.
 
 ### `GET /api/ingredients/{id}/history?chain=&days=`
 Our own daily archive. Per chain, the cheapest matching product's chain-typical unit price per day, in the ingredient's canonical unit.

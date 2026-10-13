@@ -30,7 +30,8 @@ resolve_price(product: Product, store: Store, cat: Catalogue, *, include_loyalty
 
 pack_options(ing: Ingredient, store: Store, cat: Catalogue, *, include_loyalty: bool = False) -> tuple[PackOption, ...]
     # candidate_products -> resolve_price -> PackOption in canonical units.
-    # Variable weight (product.unit_title folded == "kg", or no packaging): size None, price per canonical unit.
+    # Variable weight (product.unit_title folded == "kg", or no packaging on a kg/l product): size None, price per
+    # canonical unit. A db product without packaging is a pack of 1 piece (never bought in fractional pieces).
     # Packs whose unit price deviates >5 % from amount/packaging are still usable; unit_price is recomputed
     # from amount / canonical pack size (never trust GVH unitAmount blindly).
 
@@ -51,8 +52,11 @@ rank_stores(quotes: Sequence[StoreQuote]) -> tuple[StoreRank, ...]
     # missing_count still counts). Sort by penalized_total, then missing_count, then store id.
 
 suggest_split(quotes: Sequence[StoreQuote], *, threshold: Decimal = Decimal(1500)) -> SplitSuggestion | None
-    # Best pair of stores: each line goes to the cheaper of the two (lines missing at both are ignored
-    # for both). Return only if total <= best single penalized_total - threshold.
+    # Best pair of stores: each line goes to the cheaper of the two (lines missing at both stay out of the
+    # assignment and out of `total`). The pair is compared on a penalized basis: total + the median cost of the
+    # lines missing at both, over the quotes outside the pair. Returned only if that penalized total <= best
+    # single penalized_total - threshold; `saving` = best single penalized_total - pair penalized total.
+    # `total` = the amount paid at the two stores. store_ids lists the better-ranked store first.
 
 recipe_chain_costs(recipe: Recipe, cat: Catalogue) -> tuple[ChainRecipeCost, ...]
     # One entry per grocery chain (Chain.is_grocery), sorted by chain slug. Chain-typical:
@@ -81,7 +85,8 @@ suggest_plan(recipes: Sequence[Recipe], ingredients: Mapping[str, Ingredient], r
 check_plan(days: Sequence[PlanDay], recipes: Mapping[str, Recipe], ingredients: Mapping[str, Ingredient],
            *, people: int, red_meat_g_per_person_week: int = 600,
            weekly_budget: Decimal | None = None,
-           recipe_cost_per_serving: Mapping[str, Decimal] | None = None) -> tuple[RuleCheck, ...]
+           recipe_cost_per_serving: Mapping[str, Decimal] | None = None,
+           no_repeat_days: int = 5) -> tuple[RuleCheck, ...]
 ```
 Rules (per 7-day block, from public healthy-eating principles; **no MDOSZ/OKOSTÁNYÉR naming or content**):
 - `fish`: ≥1 meal with a `hal` recipe.
@@ -98,23 +103,31 @@ Selection is a deterministic, seeded constraint search:
 2. Repair rule violations with local search.
 3. Prefer reusing the same perishable ingredients within a week (leftover-aware). Score: minimise the count of distinct perishable ingredients per week.
 
+Rule details (as implemented; keep the API and UI wording consistent with them):
+- A repeat means `day2 - day1 < no_repeat_days`: 5 allows day 0 and day 5, 1 forbids only same-day repeats, and 0 turns the rule off. Snacks (tizorai, uzsonna) use `min(2, no_repeat_days)`; so does any pair where one of the two meals is a snack. Two-day (`ket_napos`) recipes are paired greedily from the first day, so a third day in a row counts as a repeat.
+- Partial weeks: the red-meat cap and the budget are pro rata (`cap × days // 7`, rounded down). Count rules (fish, legume, meat-free day) report `n/a` (ok) for blocks shorter than 4 days. The sweets cap of 2 is not pro rata.
+- Potato runs and repeats are followed across week boundaries and reported in the later week. A meat-free day needs at least one meal.
+- Optional recipe lines count towards red meat and potato. Budget: a meal without a cost estimate fails that week's budget; a budget with no cost table gives the warning `recipe_cost_missing` and no budget check.
+- Invalid input raises `ValueError`, and unknown recipe or ingredient ids raise `KeyError` (the API validates first).
+- Warning codes: `slot_pool_empty:<slot>`, `slot_pool_too_small:<slot>`, `no_fish_recipe_available`, `no_legume_recipe_available`, `no_meat_free_recipe_available:<slot>`, `no_potato_free_recipe_available:<slot>`, `red_meat_cap_unreachable`, `sweets_cap_unreachable`, `budget_unreachable`, `recipe_cost_missing`.
+
 If the pool cannot satisfy a rule, return the best plan with a failing check and a warning (e.g. `no_fish_recipe_available`); never loop forever. The time budget is 200 ms for 31 days × 5 slots.
 
 ## `bpf.gvh` (HTTP client, the only module that talks to GVH)
-`GvhClient(settings, *, transport: httpx.BaseTransport | None = None)`. It is synchronous and uses `httpx.Client`. Throttle: ≤1 req/s (`gvh_min_interval_s`), 30 s timeout, at most 3 retries with backoff on 5xx and connection errors (never on 4xx). The UA comes from settings and must contain a contact address. Methods return validated pydantic models and raise `GvhSchemaError` on unexpected shapes:
+`GvhClient(settings, *, transport: httpx.BaseTransport | None = None, clock=..., sleep=..., max_requests=None, max_retries=3, backoff_s=..., timeout_s=30)`. It is synchronous and uses `httpx.Client`. Throttle: ≤1 req/s (`gvh_min_interval_s`), 30 s timeout, at most 3 retries with backoff on 5xx and connection errors (never on 4xx). The UA comes from settings and must contain a contact address. Methods return validated pydantic models and raise `GvhSchemaError` on unexpected shapes:
 - `categories()`, `chain_stores()`, `shops()`;
-- `products_by_category(leaf_id, *, shop_ids=None)`, which iterates every page with `limit=48`;
+- `products_by_category(leaf_id, *, shop_ids=None)`, which iterates every page with `limit=48` and returns a `CategoryListing` (`count`, `pages`, `duplicates`, `count_changed`, the validated products);
 - `product(product_id)`;
-- `product_shop_prices(product_id, store_ids)`, which chunks into ≤200 ids per call and maps `PRODUCT-SHOP-PRICES-NOT-FOUND` to an empty result;
-- `daily_xlsx(expected_date)`, which is cache-busted (`?v=YYYYMMDD`), checks that the sheet name `Napi feltöltések - YYYY-MM-DD` equals `expected_date` (else raises `StaleXlsxError`), parses decimal-comma text to Decimal and validates the header.
+- `product_shop_prices(product_id, store_ids)`, which chunks into ≤200 ids per call, maps `PRODUCT-SHOP-PRICES-NOT-FOUND` to an empty result and returns `dict[store_id, tuple[PriceEntry, ...]]`;
+- `daily_xlsx(expected_date)`, returning a `DailyXlsx`, which is cache-busted (`?v=YYYYMMDD`), checks that the sheet name `Napi feltöltések - YYYY-MM-DD` equals `expected_date` (else raises `StaleXlsxError`), parses decimal-comma text to Decimal and validates the header.
 
-## `bpf.ingest` (CLI `python -m bpf.ingest {reference|daily|availability} [--date YYYY-MM-DD] [--budapest-only]`)
-Runs as `bpf_ingest`. Each run inserts an `ops.ingest_run` row (`running` → `ok` | `partial` | `failed`, with request and byte counts, warnings and stats). The run is idempotent per data date (upsert today's rows; history is append-only by trigger). The order is ARCHITECTURE.md "Data flow". The data date is today in Europe/Budapest. Unit validation: products with a unit outside {kg, l, db} are skipped, with a warning listing them. Per-store calls only for (product, chain) pairs whose XLSX `min < max`, for Budapest stores, in leaves referenced by `data/ingredients.json` (the leaf set is read from `api.ingredient`).
+## `bpf.ingest` (CLI `python -m bpf.ingest {reference|daily|availability} [--date YYYY-MM-DD] [--all-stores] [--all-food] [--max-requests N] [-v]`; exit 0 ok, 1 failed, 2 usage error, 3 partial)
+Runs as `bpf_ingest`. Each run inserts an `ops.ingest_run` row (`running` → `ok` | `partial` | `failed`, with request and byte counts, warnings and stats). The run is idempotent per data date (upsert today's rows; history is append-only by trigger). The order is ARCHITECTURE.md "Data flow". The data date is today in Europe/Budapest. Unit validation: products with a unit outside {kg, l, db} are skipped, with a warning listing them. Per-store calls only for (product, chain) pairs whose XLSX `min < max`, for Budapest stores, in leaves referenced by the ontology (the leaf set is read from `app.ingredient.leaf_ids`; `bpf_ingest` has no SELECT on the `api` views except `api.latest`). Per-store prices are for Budapest stores by default (`--all-stores` for all). Availability refreshes the ontology's leaves by default (`--all-food` for every food product). `daily` runs the reference step first. A stale XLSX fails the run before anything is written; the scheduler retries later. `BPF_CONTACT_EMAIL` is required (it goes into the User-Agent).
 
 ## `bpf.content` (CLI `python -m bpf.content [--dry-run] [--coverage-report] [--allow-low-coverage] [--convert-ksh RAW]`)
 See docs/DATA.md.
 
 ## `bpf.api`
-**`Store.has_data` rule (repo):** if no store has a `has_data_date` (no availability or per-store run yet), every store is `has_data=True`. Otherwise `has_data = has_data_date is not None and data_date - has_data_date <= 8 days`. The ingest sets `has_data_date` to the data date for every store that appears in that day's `store_price_day` rows or in a fresh `availableInShops` list.
+**`Store.has_data` rule (repo):** while no `availability` run (status ok or partial) has finished within the last 8 days, every store is `has_data=True` (per-store rows alone exist only for Budapest stores of chains whose prices vary, so they cannot tell which stores have data). Otherwise `has_data = has_data_date is not None and data_date - has_data_date <= 8 days`. The ingest sets `has_data_date` to the data date for every store that appears in that day's `store_price_day` rows or in a fresh `availableInShops` list.
 
 `create_app(settings: Settings | None = None, *, catalogue_provider: CatalogueProvider | None = None) -> FastAPI`. `CatalogueProvider` loads a `Catalogue` from the `api.*` views as `bpf_api`, caches it per `data_date` (it re-checks `api.latest` at most once every 60 s) and is replaceable in tests. Run with `uvicorn bpf.api.app:app` (a module-level `app = create_app()` built lazily) or `python -m bpf.api` (binds 127.0.0.1:8000 by default).

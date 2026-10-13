@@ -410,6 +410,7 @@ class PlanCheckRequest(_In):
     days: list[PlanDayIO] = Field(min_length=1, max_length=31)
     people: int = Field(default=2, ge=1, le=12)
     red_meat_g_per_person_week: int = Field(default=600, ge=0, le=3000)
+    no_repeat_days: int = Field(default=5, ge=0, le=14)
     weekly_budget: int | None = Field(default=None, ge=0, le=1_000_000)
 
 

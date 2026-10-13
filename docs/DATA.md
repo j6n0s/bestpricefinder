@@ -33,7 +33,7 @@ Validation (the loader fails loudly):
 - Every `leaf_ids` entry is a GVH food leaf (`core.category.is_leaf AND is_food` when the DB has categories; otherwise checked against `research/gap-gvh-promo-and-stability/data/leaf_categories.csv`).
 - Every regex compiles, is ≤120 characters and is lower-case ASCII (`fold_name` output never contains upper case or accents).
 - `unit=db` or a `db` in `product_units` requires `piece_weight_kg`.
-- `pantry=true` marks staples listed under "valószínűleg otthon van". A pantry ingredient may keep `leaf_ids` (oil, flour); it is then priced whenever the client includes it in a quote. Without `leaf_ids` and `ksh_code` it is never priced.
+- `pantry=true` marks staples listed under "valószínűleg otthon van". A pantry ingredient may keep `leaf_ids` (oil, flour); it is then priced whenever the client includes it in a quote. A pantry ingredient without `leaf_ids` is never priced (its `ksh_code` is ignored in quotes).
 - `ksh_code` must exist in the KSH file.
 - Tags are from the vocabulary.
 

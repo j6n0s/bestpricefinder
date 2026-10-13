@@ -18,6 +18,7 @@ dependencies = [
 
 [project.scripts]
 bpf-migrate = "bpf.migrate:main"
+bpf-ingest = "bpf.ingest.__main__:main"
 
 [dependency-groups]
 dev = [
