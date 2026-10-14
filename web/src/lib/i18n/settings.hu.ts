@@ -16,7 +16,7 @@ export const settingsHu = {
 
 	stores_title: 'Boltok keresése',
 	radius_label: 'Keresési sugár',
-	radius_hint: 'Ennyi távolságon belül keressük a boltokat ({min}–{max} km).',
+	radius_hint: '{min}–{max} km',
 
 	language_title: 'Nyelv',
 	language_hu: 'Magyar',
@@ -27,11 +27,11 @@ export const settingsHu = {
 	location_status_unset: 'Nincs engedélyezve.',
 	// {time} is a date-time ("2026. 10. 13. 4:31"); {date} is a date that already ends with a full stop.
 	location_status_granted: 'Engedélyezve. A hozzávetőleges helyzet ideje: {time}.',
-	location_status_declined: 'Elutasítva. Kerületet bármikor választhatsz.',
+	location_status_declined: 'Elutasítva.',
 	location_revoke: 'Engedély visszavonása',
 	location_revoked:
 		'A tárolt helyzetet töröltük. A böngésző engedélyét a böngésző beállításaiban is visszavonhatod.',
-	location_source_label: 'A távolságokat innen számoljuk:',
+	location_source_label: 'Kiindulási pont:',
 	location_source_none: 'még nincs megadva.',
 	location_source_device: 'a készülék hozzávetőleges helyzete.',
 	location_use_district: 'Kerület használata',
@@ -40,7 +40,6 @@ export const settingsHu = {
 	exclusions_title: 'Kizárt alapanyagok és címkék',
 
 	clear_title: 'Adatok törlése',
-	clear_description: 'A terv, a kosár és minden beállítás törlődik erről a készülékről.',
 	clear_button: 'Minden adat törlése',
 	clear_confirm_title: 'Biztosan törlöd az összes adatot?',
 	clear_confirm_text: 'A törlés nem vonható vissza.',

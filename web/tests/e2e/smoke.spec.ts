@@ -360,6 +360,10 @@ test('the sources page shows the GVH attribution with the data date, KSH licence
 	await expect(page.getByRole('link', { name: 'CC BY 4.0 licenc' })).toBeVisible();
 	await expect(page.getByText('A helyzetedet, a címedet vagy bármilyen személyes azonosítót soha nem küldjük el.', { exact: false })).toBeVisible();
 	await expect(page.getByText('Nem használunk sütiket, analitikát vagy követőkódot', { exact: false })).toBeVisible();
+	// The target of the "Adatvédelem" link next to every location button.
+	await page.goto('/forrasok#src-privacy');
+	await expect(page.locator('#src-privacy')).toHaveText('Adatvédelem');
+	await expect(page.locator('#src-privacy')).toBeInViewport();
 	await expect(page.getByTestId('disclaimer')).toHaveCount(2);
 	const cookies = await page.context().cookies();
 	expect(cookies).toEqual([]);

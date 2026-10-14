@@ -10,7 +10,6 @@ export const listHu = {
 		'A böngésző nem engedi az adatok mentését (például privát módban). A pipák és a választásaid csak addig maradnak meg, amíg ezt a lapot be nem zárod.',
 
 	no_plan_title: 'Még nincs heti terved',
-	no_plan_text: 'A bevásárlólista a heti tervből készül. Készíts előbb egy tervet.',
 	to_plan: 'Heti terv készítése',
 
 	range_label: 'Melyik napokra vásárolsz?',
@@ -41,7 +40,6 @@ export const listHu = {
 	restore_line_named: '{name} visszarakása a listára',
 
 	pantry_title: 'Valószínűleg otthon van',
-	pantry_note: 'Jelöld, ha valami nincs otthon.',
 	not_at_home: 'Nincs otthon',
 	not_at_home_named: 'Nincs otthon: {name}',
 	pantry_on_list: 'a listán',
@@ -61,7 +59,7 @@ export const listHu = {
 	origin_done: 'Kész',
 	use_my_location: 'Saját helyzetem használata',
 	or_district: 'Vagy válassz budapesti kerületet',
-	origin_device: 'Kiindulási pont: a készülék hozzávetőleges helyzete ({time} állapot szerint).',
+	origin_device: 'Kiindulási pont: a helyzeted ({time}).',
 	refresh_position: 'Helyzet frissítése',
 	position_stale: 'Ez a helyzet több mint egy napja készült. Ha máshol vagy, frissítsd, vagy válassz kerületet.',
 	origin_district: 'Kiindulási pont: {district}.',
@@ -70,10 +68,10 @@ export const listHu = {
 	radius_settings: 'Sugár módosítása a beállításokban',
 	stores_loading: 'Közeli boltok keresése…',
 	stores_error_title: 'A boltok listája most nem érhető el',
-	candidates_one: '{count} bolt {radius} távolságon belül, lánconként legfeljebb 3.',
-	candidates_other: '{count} bolt {radius} távolságon belül, lánconként legfeljebb 3.',
-	without_data_one: '{count} közeli bolt nem szerepel, mert nincs róla áradat.',
-	without_data_other: '{count} közeli bolt nem szerepel, mert nincs róluk áradat.',
+	candidates_one: '{count} bolt {radius} távolságon belül.',
+	candidates_other: '{count} bolt {radius} távolságon belül.',
+	without_data_one: '{count} közeli boltról nincs áradat.',
+	without_data_other: '{count} közeli boltról nincs áradat.',
 	no_stores_in_range: '{radius} távolságon belül nincs olyan bolt, amelyről van áradat.',
 	one_store_in_range: '{radius} távolságon belül csak 1 bolt van, így nincs mivel összehasonlítani.',
 	widen_radius: 'Keresés {radius} távolságon belül',
@@ -106,7 +104,7 @@ export const listHu = {
 	store_title: 'Lista: {store}',
 	store_total: 'Fizetendő: {total}',
 	ksh_total:
-		'Becsült országos átlagár (KSH) a GVH-ban nem szereplő tételekre: {total}. Ezt nem számoltuk bele a fizetendő összegbe.',
+		'Becsült országos átlagár (KSH): {total}, nincs benne a fizetendő összegben.',
 	scope_legend:
 		'Bolti ár: ennek a boltnak a GVH Árfigyelőbe jelentett ára. Lánc ár: a lánc boltjainak többségében érvényes ár, ebben a boltban eltérhet.',
 	scope_store: 'bolti ár',
@@ -150,7 +148,6 @@ export const listHu = {
 	tag_ket_napos: 'Kétnapos étel',
 	exclude_ingredients_title: 'Kizárt alapanyagok',
 	exclude_search_label: 'Alapanyag keresése',
-	exclude_search_hint: 'Legalább 2 betű; ékezet nélkül is kereshetsz.',
 	exclude_results_one: '{count} találat',
 	exclude_results_other: '{count} találat',
 	exclude_no_results: 'Nincs ilyen nevű alapanyag, vagy már kizártad.',

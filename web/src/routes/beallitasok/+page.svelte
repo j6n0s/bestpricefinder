@@ -262,7 +262,6 @@
 
 <section class="card" aria-labelledby="set-clear">
 	<h2 id="set-clear">{t('settings.clear_title')}</h2>
-	<p class="muted">{t('settings.clear_description')}</p>
 	<button type="button" class="btn btn-danger" onclick={askClear}>{t('settings.clear_button')}</button>
 </section>
 

@@ -5,8 +5,9 @@
 	  extra walk and stop are worth. Its stops are numbered in walking order, drawn on a schematic map (no map
 	  tiles, nothing sent anywhere) and linked to OpenStreetMap one by one (the store's public position only).
 	When no route is worth it, the card says so and why. Prices are the server's per-line checkout costs; the
-	scope note and the data date follow in the ranking and the source line right below (BUILD-BRIEF §8.2,
-	§8.6). How the options are chosen is behind a closed "Hogyan számoljuk?" disclosure. Ties are never broken
+	scope note with the data date ("a kiválasztott boltok közül, a … GVH-adatok alapján", BUILD-BRIEF §8.6) is
+	one muted line under the title, which also says that the walk counts; the source line follows the ranking
+	(§8.2). How the options are chosen is behind a closed "Hogyan számoljuk?" disclosure. Ties are never broken
 	by name.
 -->
 <script lang="ts">
@@ -16,9 +17,10 @@
 	import StoreLine from '$lib/components/list/StoreLine.svelte';
 	import { formatDistance, formatMoney } from '$lib/format';
 	import type { LatLon } from '$lib/geo';
-	import { t, tp } from '$lib/i18n';
+	import { i18n, t, tp } from '$lib/i18n';
 	import { DEFAULT_JOURNEY_OPTIONS } from '$lib/journey/journey';
 	import { osmLink, shoppingView } from '$lib/journey/view';
+	import { scopeNote } from '$lib/list/ranking';
 	import { chainLabel, storeAddress } from '$lib/list/stores';
 	import JourneyMap from './JourneyMap.svelte';
 
@@ -76,6 +78,7 @@
 	{@const journey = view.journey}
 	<section class="options" aria-labelledby="{id}-title" data-testid="shopping-options">
 		<h3 id="{id}-title">{t('journey.title')}</h3>
+		<p class="small muted scope" data-testid="options-scope">{t('journey.scope', { note: scopeNote(quote, i18n.lang) })}</p>
 
 		{#if view.nowhere.length > 0}
 			<p class="notice notice-warning" data-testid="nowhere">

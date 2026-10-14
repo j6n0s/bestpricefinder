@@ -380,7 +380,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Kosár');
 			await expect(page.getByRole('navigation', { name: 'Fő navigáció' }).getByRole('link', { name: 'Kosár' })).toHaveAttribute('aria-current', 'page');
 			await expect(page.getByTestId('cart-count')).toHaveText('0 tétel');
-			await expect(page.getByTestId('cart')).toContainText('A kosarad még üres: válassz a termékek közül.');
+			await expect(page.getByTestId('cart')).toContainText('A kosarad még üres.');
 
 			// Only goods with store prices, by shop section, then name; the list starts open for an empty cart.
 			const browse = page.getByTestId('browse');
@@ -455,6 +455,18 @@ for (const viewport of VIEWPORTS) {
 			// Nothing is asked or fetched before the user chooses where to search from.
 			await page.getByRole('link', { name: 'Hol a legolcsóbb?' }).click();
 			await expect(page.getByRole('heading', { name: 'Hol a legolcsóbb a közelben?' })).toBeInViewport();
+			await expect(page.getByTestId('location-privacy').getByRole('link', { name: 'Adatvédelem' })).toHaveAttribute(
+				'href',
+				'/forrasok#src-privacy'
+			);
+			// The privacy line comes BEFORE the button that asks the browser (BUILD-BRIEF §8.8), also for screen readers.
+			expect(
+				await page.evaluate(() => {
+					const line = document.querySelector('[data-testid="location-privacy"]');
+					const button = [...document.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Saját helyzetem használata');
+					return Boolean(line && button && line.compareDocumentPosition(button) & Node.DOCUMENT_POSITION_FOLLOWING);
+				})
+			).toBe(true);
 			expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
 			expect(rec.requests.filter((r) => r.url.includes('/api/stores') || r.url.includes('/api/quote'))).toEqual([]);
 			await expectAccessible(page, `cart ${viewport.name} before location`);
@@ -474,6 +486,9 @@ for (const viewport of VIEWPORTS) {
 			// One store: Penny has everything for 5,280 Ft (Spar too, for 6,900 Ft; Aldi has no coffee).
 			const options = page.getByTestId('shopping-options');
 			await expect(options.getByRole('heading', { level: 3 })).toHaveText('Hol vásárolj?');
+			await expect(options.getByTestId('options-scope')).toHaveText(
+				'A sétát is beszámítva, a kiválasztott boltok közül, a 2026-10-13-i GVH-adatok alapján.'
+			);
 			await expect(options.getByTestId('nowhere')).toHaveCount(0);
 			const single = options.getByTestId('option-single');
 			await expect(single).toHaveAttribute('data-store-id', 'synthetic-penny-k');
@@ -598,7 +613,7 @@ test.describe('cart details', () => {
 		await expect(options.getByTestId('option-single').getByTestId('single-total')).toHaveText(sp('4 330 Ft'));
 		await expect(options.getByTestId('option-journey')).toHaveCount(0);
 		await expect(options.getByTestId('no-journey')).toHaveText(
-			sp('Most egy bolt a legjobb: több boltba menni legfeljebb 180 Ft-ot spórolna, ami nem éri meg a plusz utat.')
+			sp('Most egy bolt a legjobb: több bolttal legfeljebb 180 Ft-ot spórolnál.')
 		);
 		await expectClean(page, rec);
 	});

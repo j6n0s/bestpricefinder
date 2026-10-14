@@ -565,6 +565,14 @@ for (const viewport of VIEWPORTS) {
 				'href',
 				'/forrasok#src-privacy'
 			);
+			// The privacy line comes BEFORE the button that asks the browser (BUILD-BRIEF §8.8), also for screen readers.
+			expect(
+				await page.evaluate(() => {
+					const line = document.querySelector('[data-testid="location-privacy"]');
+					const button = [...document.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Saját helyzetem használata');
+					return Boolean(line && button && line.compareDocumentPosition(button) & Node.DOCUMENT_POSITION_FOLLOWING);
+				})
+			).toBe(true);
 			expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
 			expect(rec.requests.filter((r) => r.url.includes('/api/stores') || r.url.includes('/api/quote'))).toEqual([]);
 			await expectAccessible(page, `list ${viewport.name} before location`);
@@ -572,7 +580,7 @@ for (const viewport of VIEWPORTS) {
 
 			await page.getByRole('button', { name: 'Saját helyzetem használata' }).click();
 			await expect(page.getByTestId('origin')).toContainText(
-				`Kiindulási pont: a készülék hozzávetőleges helyzete (${sp('2026. 10. 13. 10:00')} állapot szerint).`
+				`Kiindulási pont: a helyzeted (${sp('2026. 10. 13. 10:00')}).`
 			);
 			await expect(page.getByTestId('origin')).toBeFocused();
 			expect(await page.evaluate(() => window.__geoCalls)).toEqual([{ enableHighAccuracy: false, timeout: 10_000, maximumAge: 600_000 }]);
@@ -582,7 +590,7 @@ for (const viewport of VIEWPORTS) {
 
 			// Candidates: grocery, with data, in 1.5 km, at most 3 per chain; only their ids are sent.
 			await expect(page.getByTestId('candidates')).toContainText(sp('8 bolt 1,5 km távolságon belül'));
-			await expect(page.getByTestId('candidates')).toContainText('1 közeli bolt nem szerepel, mert nincs róla áradat.');
+			await expect(page.getByTestId('candidates')).toContainText('1 közeli boltról nincs áradat.');
 			await expect(page.getByTestId('store-ranking')).toBeVisible();
 			expect(rec.quoteBodies).toHaveLength(1);
 			const sent = rec.quoteBodies[0];
@@ -634,6 +642,10 @@ for (const viewport of VIEWPORTS) {
 			// 2,990 Ft/kg: 2,400 Ft saved, far more than the 500 Ft stop + 150 Ft/km × 1.4 km extra walk).
 			const options = page.getByTestId('shopping-options');
 			await expect(options.getByRole('heading', { level: 3 })).toHaveText('Hol vásárolj?');
+			// Scoped and dated (BUILD-BRIEF §8.6), and the walk counts in the choice.
+			await expect(options.getByTestId('options-scope')).toHaveText(
+				'A sétát is beszámítva, a kiválasztott boltok közül, a 2026-10-13-i GVH-adatok alapján.'
+			);
 			await expect(options.getByTestId('nowhere')).toHaveText(
 				'2 tételnek egyik közeli boltban sincs ára: csiperkegomba, friss bazsalikom'
 			);
@@ -698,6 +710,10 @@ for (const viewport of VIEWPORTS) {
 			await expect(storeList.getByTestId('ksh-total')).toContainText(sp('600 Ft'));
 			await expect(storeList.getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
 			await expect(storeList.getByTestId('attribution-ksh')).toContainText('Forrás: KSH');
+			await expect(storeList.getByTestId('attribution-ksh').getByRole('link', { name: /Forrás: KSH/ })).toHaveAttribute(
+				'href',
+				'https://www.ksh.hu/stadat_files/ara/hu/ara0044.html'
+			);
 			await expect(storeList.getByTestId('disclaimer')).toHaveText(DISCLAIMER);
 			// Ticks are shared with the main list.
 			await expect(line('voroshagyma').getByRole('checkbox')).toBeChecked();
@@ -876,7 +892,7 @@ test.describe('another tab', () => {
 		const rec = await harness(page);
 		await seed(page, seededState({ location: DEVICE_LOCATION }));
 		await page.goto('/lista');
-		await expect(page.getByTestId('origin')).toContainText('a készülék hozzávetőleges helyzete');
+		await expect(page.getByTestId('origin')).toContainText('a helyzeted');
 		await expect(page.getByTestId('rank-row').first()).toBeVisible();
 
 		const settings = await context.newPage();
@@ -904,7 +920,7 @@ test.describe('another tab', () => {
 		const rec = await harness(page);
 		await seed(page, seededState({ location: DEVICE_LOCATION }));
 		await page.goto('/lista');
-		await expect(page.getByTestId('origin')).toContainText('a készülék hozzávetőleges helyzete');
+		await expect(page.getByTestId('origin')).toContainText('a helyzeted');
 
 		const settings = await context.newPage();
 		const other = await harness(settings);
@@ -962,8 +978,8 @@ test.describe('excluded ingredients and tap water', () => {
 		await expect(page.getByText('7 tétel a listán')).toBeVisible();
 		await expect(page.getByRole('checkbox', { name: /^natúr joghurt/ })).toHaveCount(0);
 
-		// The pantry section says in one line what to do; water has no "nincs otthon" switch.
-		await expect(page.getByText('Jelöld, ha valami nincs otthon.')).toBeVisible();
+		// The pantry section: its title and the "Nincs otthon" switches say what to do; water has no switch.
+		await expect(page.getByRole('heading', { level: 2, name: 'Valószínűleg otthon van' })).toBeVisible();
 		await expect(page.getByRole('checkbox', { name: 'Nincs otthon: víz' })).toHaveCount(0);
 		await expect(page.getByRole('checkbox', { name: 'Nincs otthon: napraforgóolaj' })).toBeVisible();
 
@@ -1017,7 +1033,7 @@ test.describe('where to shop: one store or a route', () => {
 		await expect(options.getByTestId('option-single')).toHaveAttribute('data-store-id', 'synthetic-lidl-a');
 		await expect(options.getByTestId('option-journey')).toHaveCount(0);
 		await expect(options.getByTestId('no-journey')).toHaveText(
-			`Most egy bolt a legjobb: több boltba menni legfeljebb ${sp('108 Ft')}-ot spórolna, ami nem éri meg a plusz utat.`
+			`Most egy bolt a legjobb: több bolttal legfeljebb ${sp('108 Ft')}-ot spórolnál.`
 		);
 		await expectAccessible(page, 'list one store is best');
 		await expectClean(page, rec);
@@ -1064,7 +1080,7 @@ test.describe('a stored device position', () => {
 		await page.goto('/lista');
 
 		await expect(page.getByTestId('origin')).toContainText(
-			`Kiindulási pont: a készülék hozzávetőleges helyzete (${sp('2026. 10. 10. 10:00')} állapot szerint).`
+			`Kiindulási pont: a helyzeted (${sp('2026. 10. 10. 10:00')}).`
 		);
 		await expect(page.getByTestId('position-stale')).toContainText('több mint egy napja');
 		// The chooser is open so the position can be updated, but the stored one is still used meanwhile.

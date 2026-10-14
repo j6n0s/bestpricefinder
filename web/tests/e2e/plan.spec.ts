@@ -32,7 +32,8 @@ const STORAGE_KEY = 'hetikosar.state';
 const DATE_HU = '2026. 10. 13.';
 /** A hu-HU date as the app renders it: no-break spaces, so it never wraps (src/lib/format.ts). */
 const nb = (text: string): string => text.replaceAll(' ', '\u00a0');
-const ATTRIBUTION = `Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`;
+/** Plan prices are chain-typical, and the source line says so (BUILD-BRIEF §8.6). */
+const ATTRIBUTION = `Lánc-jellemző árak. Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`;
 const DISCLAIMER = 'Nem hivatalos alkalmazás, nem áll kapcsolatban a Gazdasági Versenyhivatallal.';
 /** 10:00 in Budapest on Tuesday 2026-10-13. */
 const NOW = new Date('2026-10-13T08:00:00Z');
@@ -544,7 +545,7 @@ test.describe('plan details', () => {
 		await page.getByRole('button', { name: `Csere (Kedd, ${DATE_HU}, vacsora)` }).click();
 		const dialog = page.getByRole('dialog', { name: 'Étel választása' });
 		await expect(dialog.getByText('A beállításokban kizárt címkéjű recepteket nem mutatjuk.')).toBeVisible();
-		await expect(dialog.getByText('A kizárt alapanyagokat a kézi választásnál nem szűrjük', { exact: false })).toBeVisible();
+		await expect(dialog.getByText('A kizárt alapanyagokat itt nem szűrjük', { exact: false })).toBeVisible();
 		await expect(dialog.getByRole('button', { name: /Minta sült harcsa/ })).toHaveCount(0);
 		await dialog.getByLabel('Keresés a receptek címében').fill('harcsa');
 		await expect(dialog.getByText('Nincs a keresésnek megfelelő recept ehhez az étkezéshez.')).toBeVisible();
@@ -752,7 +753,7 @@ test.describe('English and dark mode', () => {
 		const title = page.getByTestId('meal-0-ebed').getByRole('link');
 		expect(await title.evaluate((el) => el.closest('[lang]')?.getAttribute('lang'))).toBe('hu');
 		expect(await page.getByRole('heading', { level: 1 }).evaluate((el) => el.closest('[lang]')?.getAttribute('lang'))).toBe('en');
-		await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(`Source: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`);
+		await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(`Chain-typical prices. Source: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`);
 		await expectNoHorizontalScroll(page);
 		await expectTouchTargets(page);
 		await expectAccessible(page, 'plan en dark 320');

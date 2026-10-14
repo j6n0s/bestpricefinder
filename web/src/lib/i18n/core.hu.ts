@@ -22,6 +22,8 @@ export const coreHu = {
 
 	attribution_gvh: 'Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), {date}',
 	attribution_gvh_undated: 'Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), az adatok dátuma nem ismert',
+	// Before the source line where the prices are chain-typical (recipes, plan): BUILD-BRIEF §8.6.
+	attribution_chain_typical: 'Lánc-jellemző árak.',
 	attribution_ksh: 'Forrás: KSH',
 	attribution_ksh_period: 'Forrás: KSH, {period}',
 	attribution_ksh_label: 'becsült országos átlagár (KSH)',

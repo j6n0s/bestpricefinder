@@ -213,7 +213,7 @@
 {/if}
 
 {#if !plan}
-	<EmptyState title={t('list.no_plan_title')} message={t('list.no_plan_text')}>
+	<EmptyState title={t('list.no_plan_title')}>
 		<a class="btn btn-primary" href="/terv">{t('list.to_plan')}</a>
 	</EmptyState>
 {:else}

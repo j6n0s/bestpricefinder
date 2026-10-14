@@ -154,11 +154,9 @@
 					autocomplete="off"
 					spellcheck="false"
 					maxlength={40}
-					aria-describedby="{id}-hint"
 					bind:value={query}
 					bind:this={searchInput}
 				/>
-				<p id="{id}-hint" class="small muted">{t('list.exclude_search_hint')}</p>
 			</div>
 			<p class="visually-hidden" role="status">
 				{#if searching}{tp('list.exclude_results', results.length)}{/if}

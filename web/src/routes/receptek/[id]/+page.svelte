@@ -131,7 +131,7 @@
 		<section class="card" aria-labelledby="costs-title">
 			<h2 id="costs-title">{t('recipes.costs_title')}</h2>
 			<ChainCostTable costs={detail.chain_costs} lines={detail.lines} {names} />
-			<Attribution dataDate={detail.data_date} />
+			<Attribution dataDate={detail.data_date} chainTypical />
 		</section>
 
 		{#if detail.nutrition}

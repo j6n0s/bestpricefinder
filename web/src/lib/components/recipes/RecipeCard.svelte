@@ -30,7 +30,7 @@
 	{/if}
 	<TagList tags={recipe.tags} />
 	<p class="price-line">
-		<RecipePrice {recipe} {names} />
+		<RecipePrice {recipe} {names} compact />
 	</p>
 </article>
 

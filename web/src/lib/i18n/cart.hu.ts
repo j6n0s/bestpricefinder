@@ -10,7 +10,7 @@ export const cartHu = {
 	cart_title: 'A kosarad',
 	cart_count_one: '{count} tétel',
 	cart_count_other: '{count} tétel',
-	cart_empty: 'A kosarad még üres: válassz a termékek közül.',
+	cart_empty: 'A kosarad még üres.',
 	to_prices: 'Hol a legolcsóbb?',
 	clear: 'Kosár ürítése',
 	cleared: 'Kiürítetted a kosarat.',

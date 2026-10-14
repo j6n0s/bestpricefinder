@@ -76,7 +76,6 @@
 		{#if dots.length > 0}
 			<span class="legend"><span class="swatch swatch-other" aria-hidden="true"></span>{t('journey.map_legend_nearby')}</span>
 		{/if}
-		<span>{t('journey.map_note')}</span>
 	</figcaption>
 </figure>
 

@@ -3,6 +3,7 @@ import type { Messages } from './types';
 
 export const journeyEn: Messages<typeof journeyHu> = {
 	title: 'Where to shop',
+	scope: 'Walking included, {note}.',
 
 	single_title: 'In one store',
 	single_all: 'Everything is here.',
@@ -37,7 +38,7 @@ export const journeyEn: Messages<typeof journeyHu> = {
 	hide_lists: 'Hide the list by store',
 	lists_title: 'What to buy where',
 
-	no_journey_saving: 'One store is best right now: more stores would save at most {saving}, not worth the extra walk.',
+	no_journey_saving: 'One store is best right now: more stores would save at most {saving}.',
 	no_journey_cheaper: 'One store is best right now: more stores would not be cheaper.',
 	nowhere_one: '{count} item has no price at any nearby store:',
 	nowhere_other: '{count} items have no price at any nearby store:',
@@ -45,7 +46,6 @@ export const journeyEn: Messages<typeof journeyHu> = {
 
 	map_label: 'Sketch of the route: {route}.',
 	map_route_origin: 'starting point',
-	map_note: 'A sketch without streets, north up.',
 	map_legend_origin: 'Starting point',
 	map_legend_stop: 'Store on the route',
 	map_legend_nearby: 'Other nearby store'

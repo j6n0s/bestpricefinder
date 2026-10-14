@@ -54,7 +54,6 @@ export const planEn: Messages<typeof planHu> = {
 	picker_title: 'Choose a meal',
 	picker_target: '{day}, {slot}',
 	picker_search_label: 'Search recipe titles',
-	picker_search_hint: 'Accents are optional; type at least 2 letters.',
 	picker_results_one: '{count} recipe to choose from',
 	picker_results_other: '{count} recipes to choose from',
 	picker_none: 'No recipe for this meal matches the search.',
@@ -62,7 +61,7 @@ export const planEn: Messages<typeof planHu> = {
 	picker_close: 'Close',
 	picker_excluded_tags: 'Recipes with a tag you excluded in the settings are not shown.',
 	picker_excluded_ingredients:
-		'Excluded ingredients are not filtered when you choose by hand: check the recipe’s ingredients first.',
+		'Excluded ingredients are not filtered here: check the ingredients.',
 
 	checks_title: 'Week summary',
 	checks_loading: 'Checking…',

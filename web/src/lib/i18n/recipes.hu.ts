@@ -11,7 +11,6 @@ export const recipesHu = {
 	filter_tag_label: 'Címke',
 	filter_all: 'Mindegyik',
 	search_label: 'Keresés a címben',
-	search_hint: 'Ékezet nélkül is kereshetsz, legalább 2 betűvel.',
 	filters_reset: 'Szűrők törlése',
 	results_one: '{count} recept',
 	results_other: '{count} recept',
@@ -56,22 +55,22 @@ export const recipesHu = {
 	servings_decrease: 'Eggyel kevesebb adag',
 	servings_increase: 'Eggyel több adag',
 	scaled_note_one:
-		'A mennyiségeket {count} adagra számoltuk át az eredeti, {original} adagos receptből. Kerekített, közelítő értékek.',
+		'{count} adagra átszámolva az eredeti {original} adagból, kerekítve.',
 	scaled_note_other:
-		'A mennyiségeket {count} adagra számoltuk át az eredeti, {original} adagos receptből. Kerekített, közelítő értékek.',
+		'{count} adagra átszámolva az eredeti {original} adagból, kerekítve.',
 	optional: 'elhagyható',
 	excluded: 'a beállításokban kizártad',
 	steps_title: 'Elkészítés',
 
 	costs_title: 'Ár láncok szerint',
-	costs_caption: 'Lánc-jellemző ár adagonként, a legalacsonyabbtól a legmagasabbig',
+	costs_caption: 'Lánc-jellemző ár adagonként',
 	costs_col_chain: 'Lánc',
 	costs_col_price: 'Ár/adag',
 	costs_rank: '{rank}.',
 	costs_tie: 'holtverseny',
 	costs_partial: 'részleges ár',
 	costs_partial_note:
-		'A részleges árú láncok nincsenek a sorrendben: náluk a recept becsült költségének kevesebb mint 90\u00a0%\u2011ára van ár, így az áruk nem hasonlítható össze a többiekével.',
+		'A részleges árú láncok nincsenek a sorrendben: náluk a recept költségének kevesebb mint 90\u00a0%\u2011ára van ár.',
 	costs_missing: 'Ár nélkül:',
 	costs_none: 'Ehhez a recepthez még nincs lánconkénti ár.',
 
@@ -93,7 +92,7 @@ export const recipesHu = {
 	add_slot_label: 'Étkezés',
 	add_button: 'Hozzáadás a tervhez',
 	add_no_plan:
-		'Még nincs terved. A hozzáadással egy mától induló 7 napos terv készül, a többi étkezés üresen marad.',
+		'Még nincs terved. Hozzáadáskor egy mától induló 7 napos terv készül.',
 	add_replaces: 'Ebben az étkezésben már van egy recept, a hozzáadás lecseréli.',
 	add_already: 'Ez a recept már ebben az étkezésben van.',
 	add_done: 'Hozzáadtuk a tervhez: {day}, {slot}.',

@@ -9,7 +9,7 @@ export const cartEn: Messages<typeof cartHu> = {
 	cart_title: 'Your cart',
 	cart_count_one: '{count} item',
 	cart_count_other: '{count} items',
-	cart_empty: 'Your cart is empty: pick from the goods.',
+	cart_empty: 'Your cart is empty.',
 	to_prices: 'Where is it cheapest?',
 	clear: 'Empty the cart',
 	cleared: 'You emptied the cart.',

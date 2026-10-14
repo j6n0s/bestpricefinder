@@ -1,6 +1,6 @@
 <!--
 	Where the nearby stores are measured from (BUILD-BRIEF §8.8). The card's title says what the position is
-	for and one line beside the button says it stays on the device (with a link to the privacy page); the
+	for and one line before the button says it stays on the device (with a link to the privacy page); the
 	browser is asked for a position only when the user presses "Saját helyzetem használata" (low accuracy, 10 s
 	timeout, rounded to about 100 m, kept on this device; only store ids are ever sent). The Budapest district
 	picker is the alternative. The outcome is reported through `onlocation`; the page saves it with $lib/storage.
@@ -75,6 +75,7 @@
 	<h3 id="{id}-title" tabindex="-1" bind:this={heading}>{t('list.origin_title')}</h3>
 
 	<div class="locate">
+		<LocationPrivacy />
 		{#if pending}
 			<Spinner label={t('core.location_pending')} showLabel />
 		{:else}
@@ -82,7 +83,6 @@
 				{t('list.use_my_location')}
 			</button>
 		{/if}
-		<LocationPrivacy />
 	</div>
 
 	<div role="status" class="feedback">
@@ -120,7 +120,7 @@
 	}
 
 	.locate :global([data-testid='location-privacy']) {
-		margin: var(--space-2) 0 0;
+		margin: 0 0 var(--space-2);
 	}
 
 	.feedback p {

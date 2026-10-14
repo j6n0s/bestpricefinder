@@ -461,7 +461,7 @@
 			{/each}
 
 			{#if recipes}
-				<Attribution dataDate={recipes.data_date} />
+				<Attribution dataDate={recipes.data_date} chainTypical />
 			{/if}
 		{/if}
 	</section>

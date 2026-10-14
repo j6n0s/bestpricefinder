@@ -148,7 +148,6 @@
 	{#if sections.pantry.length > 0}
 		<section class="group pantry" aria-labelledby="{id}-pantry">
 			<h2 id="{id}-pantry">{t('list.pantry_title')}</h2>
-			<p class="small muted">{t('list.pantry_note')}</p>
 			<ul class="lines">
 				{#each sections.pantry as line (line.ingredient_id)}
 					{@const missing = lineKind(line, choices) === 'pantry_missing'}

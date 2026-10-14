@@ -72,10 +72,8 @@
 			spellcheck="false"
 			bind:this={search}
 			bind:value={query}
-			aria-describedby="picker-search-hint"
 			aria-controls="picker-options"
 		/>
-		<p id="picker-search-hint" class="small muted">{t('plan.picker_search_hint')}</p>
 	</div>
 
 	{#if excludedTags.length > 0}
@@ -115,7 +113,7 @@
 		<p id="picker-options">{t('plan.picker_none')}</p>
 	{/if}
 
-	<Attribution {dataDate} />
+	<Attribution {dataDate} chainTypical />
 </dialog>
 
 <style>

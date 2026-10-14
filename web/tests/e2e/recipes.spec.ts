@@ -24,7 +24,8 @@ const STORAGE_KEY = 'hetikosar.state';
 const DATE_HU = '2026. 10. 13.';
 /** A hu-HU date as the app renders it: no-break spaces, so it never wraps (src/lib/format.ts). */
 const nb = (text: string): string => text.replaceAll(' ', '\u00a0');
-const ATTRIBUTION = `Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`;
+/** Recipe prices are chain-typical, and the source line says so (BUILD-BRIEF §8.6). */
+const ATTRIBUTION = `Lánc-jellemző árak. Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`;
 const DISCLAIMER = 'Nem hivatalos alkalmazás, nem áll kapcsolatban a Gazdasági Versenyhivatallal.';
 /** 10:00 in Budapest on Tuesday 2026-10-13. */
 const NOW = new Date('2026-10-13T08:00:00Z');
@@ -253,9 +254,10 @@ for (const viewport of VIEWPORTS) {
 			await expect(lencse).not.toContainText('kipróbálatlan recept');
 			await expect(lencse.getByRole('list', { name: 'Címkék' }).getByRole('listitem')).toHaveText(['főzelék', 'hüvelyes', 'húsmentes']);
 			await expect(lencse.getByTestId('recipe-price')).toHaveText('313 Ft/adag-tól (Aldi, Lidl)');
-			await expect(lencse).toContainText('az ár a hozzávalók 94 %\u2011át fedi le');
+			// The cards use the short caveat; the detail page says it in full.
+			await expect(lencse).toContainText('részleges ár (94\u00a0%)');
 			await expect(card(page, HARCSA.title)).not.toContainText('kipróbálatlan recept');
-			await expect(card(page, HARCSA.title)).not.toContainText('fedi le');
+			await expect(card(page, HARCSA.title)).not.toContainText('részleges ár');
 			await expect(card(page, CSIRKE.title)).toContainText('nincs ár');
 			await expect(card(page, CSIRKE.title).getByTestId('recipe-price')).toHaveCount(0);
 			await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
@@ -363,7 +365,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(qty('so')).toHaveText('ízlés szerint');
 			await expect(qty('napraforgoolaj')).toHaveText('1 evőkanál');
 			await expect(page.getByTestId('scaled-note')).toHaveText(
-				'A mennyiségeket 2 adagra számoltuk át az eredeti, 4 adagos receptből. Kerekített, közelítő értékek.'
+				'2 adagra átszámolva az eredeti 4 adagból, kerekítve.'
 			);
 			for (let i = 0; i < 4; i += 1) await more.click();
 			await expect(page.getByTestId('servings-value')).toHaveText('6 adag');
@@ -380,7 +382,7 @@ for (const viewport of VIEWPORTS) {
 
 			// Chain costs: cheapest first, the tie shares rank 1, unpriced last, coverage and missing items named.
 			const table = page.getByRole('table').filter({ has: page.getByText('Lánc-jellemző ár adagonként') });
-			await expect(table.locator('caption')).toHaveText('Lánc-jellemző ár adagonként, a legalacsonyabbtól a legmagasabbig');
+			await expect(table.locator('caption')).toHaveText('Lánc-jellemző ár adagonként');
 			const rows = table.locator('tbody tr');
 			await expect(rows).toHaveCount(6);
 			expect(await rows.evaluateAll((trs) => trs.map((tr) => tr.getAttribute('data-testid')))).toEqual([
@@ -599,14 +601,14 @@ test.describe('English at 320 px', () => {
 		await page.goto('/receptek');
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Recipes');
 		await expect(card(page, LENCSE.title).getByTestId('recipe-price')).toHaveText('from 313 Ft/serving (Aldi, Lidl)');
-		await expect(card(page, LENCSE.title)).toContainText('the price covers 94% of the ingredients');
+		await expect(card(page, LENCSE.title)).toContainText('partial price (94%)');
 		await expect(card(page, CSIRKE.title)).toContainText('no price');
 		await expect(card(page, TUROS.title)).not.toContainText('untested recipe');
 		const langOf = (locator: ReturnType<Page['locator']>) => locator.evaluate((el) => el.closest('[lang]')?.getAttribute('lang'));
 		// Hungarian content inside the English page is marked as Hungarian (WCAG 3.1.2), the UI as English.
 		expect(await langOf(page.getByRole('link', { name: LENCSE.title }))).toBe('hu');
 		expect(await langOf(page.getByRole('heading', { level: 1 }))).toBe('en');
-		await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(`Source: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`);
+		await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(`Chain-typical prices. Source: GVH Árfigyelő (arfigyelo.gvh.hu), ${DATE_HU}`);
 		await expectNoHorizontalScroll(page);
 		await expectTouchTargets(page);
 		await expectAccessible(page, 'recipes en 320 list');
@@ -628,13 +630,13 @@ test.describe('English at 320 px', () => {
 		expect(await langOf(page.locator('ul.ingredients .name').first())).toBe('hu');
 		expect(await langOf(page.getByRole('heading', { level: 2, name: 'Method' }))).toBe('en');
 		await expect(page.getByTestId('chain-cost-auchan').getByRole('rowheader')).toHaveText('Auchan partial price');
-		await expect(page.getByRole('table').first().locator('caption')).toHaveText('Chain-typical price per serving, from lowest to highest');
+		await expect(page.getByRole('table').first().locator('caption')).toHaveText('Chain-typical price per serving');
 		await expect(page.getByTestId('chain-cost-aldi').getByRole('rowheader')).toHaveText('1. Aldi tie');
 		await expect(page.getByTestId('chain-cost-tesco')).toContainText('the price covers 92% of the ingredients');
 		await expect(page.getByTestId('add-to-plan').getByLabel('Day').locator('option').first()).toHaveText(`Tuesday, ${DATE_HU}`);
 		await page.getByRole('button', { name: 'One serving fewer' }).click();
 		await expect(page.getByTestId('scaled-note')).toHaveText(
-			'Quantities are scaled to 3 servings from the original 4-serving recipe. They are rounded, approximate values.'
+			'Scaled to 3 servings from the original 4, rounded.'
 		);
 		await expectNoHorizontalScroll(page);
 		await expectTouchTargets(page);

@@ -104,9 +104,7 @@
 				autocomplete="off"
 				spellcheck="false"
 				bind:value={recipeFilters.q}
-				aria-describedby="filter-q-hint"
 			/>
-			<p id="filter-q-hint" class="small muted">{t('recipes.search_hint')}</p>
 		</div>
 	</div>
 	{#if active}
@@ -121,7 +119,7 @@
 {:else if response}
 	<p class="count" role="status" data-testid="recipe-count">{tp('recipes.results', filtered.length)}</p>
 	{#if filtered.length === 0}
-		<EmptyState message={t('recipes.no_results')}>
+		<EmptyState title={t('recipes.no_results')}>
 			{#if active}
 				<button type="button" class="btn btn-secondary" onclick={resetFilters}>{t('recipes.filters_reset')}</button>
 			{/if}
@@ -133,7 +131,7 @@
 			{/each}
 		</ul>
 	{/if}
-	<Attribution dataDate={response.data_date} />
+	<Attribution dataDate={response.data_date} chainTypical />
 {/if}
 
 <style>
@@ -149,10 +147,6 @@
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		gap: var(--space-3);
-	}
-
-	.field p {
-		margin: 0;
 	}
 
 	@media (min-width: 40rem) {

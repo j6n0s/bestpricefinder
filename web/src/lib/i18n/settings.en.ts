@@ -18,7 +18,7 @@ export const settingsEn: Messages<typeof settingsHu> = {
 
 	stores_title: 'Store search',
 	radius_label: 'Search radius',
-	radius_hint: 'Stores are searched within this distance ({min}–{max} km).',
+	radius_hint: '{min}–{max} km',
 
 	language_title: 'Language',
 	language_hu: 'Magyar',
@@ -28,10 +28,10 @@ export const settingsEn: Messages<typeof settingsHu> = {
 	location_status_label: 'Location',
 	location_status_unset: 'Not allowed.',
 	location_status_granted: 'Allowed. Approximate location taken at {time}.',
-	location_status_declined: 'Declined. You can choose a district at any time.',
+	location_status_declined: 'Declined.',
 	location_revoke: 'Revoke permission',
 	location_revoked: 'The stored location has been deleted. You can also revoke the permission in the browser settings.',
-	location_source_label: 'Distances are measured from:',
+	location_source_label: 'Starting point:',
 	location_source_none: 'not set yet.',
 	location_source_device: 'your device’s approximate location.',
 	location_use_district: 'Use the district',
@@ -40,7 +40,6 @@ export const settingsEn: Messages<typeof settingsHu> = {
 	exclusions_title: 'Excluded ingredients and tags',
 
 	clear_title: 'Delete data',
-	clear_description: 'Deletes your plan, cart and settings from this device.',
 	clear_button: 'Delete all data',
 	clear_confirm_title: 'Delete all data?',
 	clear_confirm_text: 'This cannot be undone.',

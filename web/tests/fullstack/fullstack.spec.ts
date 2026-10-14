@@ -298,7 +298,8 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	for (const check of week0) {
 		await expect(page.getByTestId('plan-week-0').getByTestId(`check-${check.rule}`)).toHaveAttribute('data-ok', String(check.ok));
 	}
-	await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(loose(attribution));
+	// Recipe and plan prices are chain-typical, and the source line says so (BUILD-BRIEF §8.6).
+	await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(loose(`Lánc-jellemző árak. ${attribution}`));
 	await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(loose(DISCLAIMER));
 	await expectClean(page, seen, '/terv');
 
@@ -347,7 +348,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	const quoted = page.waitForResponse(isApiPost('/api/quote'));
 	await page.getByRole('button', { name: 'Saját helyzetem használata' }).click();
 	await expect(page.getByTestId('origin')).toContainText(
-		/Kiindulási pont: a készülék hozzávetőleges helyzete \(\d{4}\.\s\d{2}\.\s\d{2}\.\s\d{1,2}:\d{2} állapot szerint\)\./
+		/Kiindulási pont: a helyzeted \(\d{4}\.\s\d{2}\.\s\d{2}\.\s\d{1,2}:\d{2}\)\./
 	);
 	const quoteResponse = await quoted;
 	expect(quoteResponse.status()).toBe(200);
@@ -394,7 +395,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	const withoutData = inRadius.filter((store) => !store.has_data).length;
 	await expect(page.getByTestId('candidates')).toContainText(loose(`${expectedIds.size} bolt 1,5 km távolságon belül`, false));
 	if (withoutData > 0) {
-		await expect(page.getByTestId('candidates')).toContainText(loose(`${withoutData} közeli bolt nem szerepel, mert nincs`, false));
+		await expect(page.getByTestId('candidates')).toContainText(loose(`${withoutData} közeli boltról nincs áradat`, false));
 	} else {
 		await expect(page.getByTestId('candidates')).not.toContainText('nem szerepel');
 	}
@@ -536,7 +537,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Receptek');
 	await expect(page.getByTestId('recipe-card')).toHaveCount(recipes.length);
 	await expect(page.getByTestId('recipe-count')).toHaveText(loose(`${recipes.length} recept`));
-	await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(loose(attribution));
+	await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(loose(`Lánc-jellemző árak. ${attribution}`));
 	const recipeId = plan.days[0]?.meals.ebed ?? '';
 	const detailLoaded = page.waitForResponse((response) => response.url() === `${BASE_URL}/api/recipes/${encodeURIComponent(recipeId)}`);
 	await page
@@ -579,7 +580,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 		}
 	}
 	await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(
-		loose(`Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${dateHu(detail.data_date ?? '')}`)
+		loose(`Lánc-jellemző árak. Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${dateHu(detail.data_date ?? '')}`)
 	);
 	await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(loose(DISCLAIMER));
 	await page.screenshot({ path: test.info().outputPath('recipe-detail.png'), fullPage: true });

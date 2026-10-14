@@ -5,6 +5,8 @@
  */
 export const journeyHu = {
 	title: 'Hol vásárolj?',
+	// Scope and date of the options (BUILD-BRIEF §8.6); {note} is the server's scope note.
+	scope: 'A sétát is beszámítva, {note}.',
 
 	single_title: 'Egy boltban',
 	single_all: 'Itt minden megvan.',
@@ -39,7 +41,7 @@ export const journeyHu = {
 	hide_lists: 'A boltonkénti lista elrejtése',
 	lists_title: 'Mit hol vegyél?',
 
-	no_journey_saving: 'Most egy bolt a legjobb: több boltba menni legfeljebb {saving}-ot spórolna, ami nem éri meg a plusz utat.',
+	no_journey_saving: 'Most egy bolt a legjobb: több bolttal legfeljebb {saving}-ot spórolnál.',
 	no_journey_cheaper: 'Most egy bolt a legjobb: több boltban nem lenne olcsóbb.',
 	nowhere_one: '{count} tételnek egyik közeli boltban sincs ára:',
 	nowhere_other: '{count} tételnek egyik közeli boltban sincs ára:',
@@ -47,7 +49,6 @@ export const journeyHu = {
 
 	map_label: 'A körút vázlata: {route}.',
 	map_route_origin: 'kiindulási pont',
-	map_note: 'Vázlat utcák nélkül, észak felül.',
 	map_legend_origin: 'Kiindulási pont',
 	map_legend_stop: 'Bolt a körúton',
 	map_legend_nearby: 'Más közeli bolt'

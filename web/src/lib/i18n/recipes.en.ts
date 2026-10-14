@@ -10,7 +10,6 @@ export const recipesEn: Messages<typeof recipesHu> = {
 	filter_tag_label: 'Tag',
 	filter_all: 'All',
 	search_label: 'Search titles',
-	search_hint: 'Accents are optional; type at least 2 letters.',
 	filters_reset: 'Clear filters',
 	results_one: '{count} recipe',
 	results_other: '{count} recipes',
@@ -55,22 +54,22 @@ export const recipesEn: Messages<typeof recipesHu> = {
 	servings_decrease: 'One serving fewer',
 	servings_increase: 'One serving more',
 	scaled_note_one:
-		'Quantities are scaled to {count} serving from the original {original}-serving recipe. They are rounded, approximate values.',
+		'Scaled to {count} serving from the original {original}, rounded.',
 	scaled_note_other:
-		'Quantities are scaled to {count} servings from the original {original}-serving recipe. They are rounded, approximate values.',
+		'Scaled to {count} servings from the original {original}, rounded.',
 	optional: 'optional',
 	excluded: 'you excluded it in the settings',
 	steps_title: 'Method',
 
 	costs_title: 'Price by chain',
-	costs_caption: 'Chain-typical price per serving, from lowest to highest',
+	costs_caption: 'Chain-typical price per serving',
 	costs_col_chain: 'Chain',
 	costs_col_price: 'Price/serving',
 	costs_rank: '{rank}.',
 	costs_tie: 'tie',
 	costs_partial: 'partial price',
 	costs_partial_note:
-		"Chains with a partial price are not ranked: they price less than 90% of the recipe's estimated cost, so their price cannot be compared with the others.",
+		"Chains with a partial price are not ranked: they price less than 90% of the recipe's cost.",
 	costs_missing: 'No price:',
 	costs_none: 'There are no prices by chain for this recipe yet.',
 
@@ -92,7 +91,7 @@ export const recipesEn: Messages<typeof recipesHu> = {
 	add_slot_label: 'Meal',
 	add_button: 'Add to the plan',
 	add_no_plan:
-		'You have no plan yet. Adding starts a 7-day plan from today; the other meals stay empty.',
+		'You have no plan yet. Adding starts a 7-day plan from today.',
 	add_replaces: 'This meal already has a recipe; adding replaces it.',
 	add_already: 'This recipe is already in this meal.',
 	add_done: 'Added to the plan: {day}, {slot}.',

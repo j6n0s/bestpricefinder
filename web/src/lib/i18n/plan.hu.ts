@@ -56,7 +56,6 @@ export const planHu = {
 	picker_title: 'Étel választása',
 	picker_target: '{day}, {slot}',
 	picker_search_label: 'Keresés a receptek címében',
-	picker_search_hint: 'Ékezet nélkül is kereshetsz, legalább 2 betűvel.',
 	picker_results_one: '{count} választható recept',
 	picker_results_other: '{count} választható recept',
 	picker_none: 'Nincs a keresésnek megfelelő recept ehhez az étkezéshez.',
@@ -64,7 +63,7 @@ export const planHu = {
 	picker_close: 'Bezárás',
 	picker_excluded_tags: 'A beállításokban kizárt címkéjű recepteket nem mutatjuk.',
 	picker_excluded_ingredients:
-		'A kizárt alapanyagokat a kézi választásnál nem szűrjük: választás előtt nézd meg a recept hozzávalóit.',
+		'A kizárt alapanyagokat itt nem szűrjük: nézd meg a hozzávalókat.',
 
 	checks_title: 'A hét összesítése',
 	checks_loading: 'Ellenőrzés…',

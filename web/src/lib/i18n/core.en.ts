@@ -23,6 +23,7 @@ export const coreEn: Messages<typeof coreHu> = {
 
 	attribution_gvh: 'Source: GVH Árfigyelő (arfigyelo.gvh.hu), {date}',
 	attribution_gvh_undated: 'Source: GVH Árfigyelő (arfigyelo.gvh.hu), data date unknown',
+	attribution_chain_typical: 'Chain-typical prices.',
 	attribution_ksh: 'Source: KSH',
 	attribution_ksh_period: 'Source: KSH, {period}',
 	attribution_ksh_label: 'estimated national average price (KSH)',

@@ -7,7 +7,6 @@ export const listEn: Messages<typeof listHu> = {
 		'Your browser does not allow saving data (for example in private mode). Your ticks and choices are kept only until you close this tab.',
 
 	no_plan_title: 'No weekly plan yet',
-	no_plan_text: 'The shopping list is made from your weekly plan. Make a plan first.',
 	to_plan: 'Make a weekly plan',
 
 	range_label: 'Which days are you shopping for?',
@@ -38,7 +37,6 @@ export const listEn: Messages<typeof listHu> = {
 	restore_line_named: 'Put {name} back on the list',
 
 	pantry_title: 'Probably at home',
-	pantry_note: 'Mark what you don’t have.',
 	not_at_home: 'Not at home',
 	not_at_home_named: 'Not at home: {name}',
 	pantry_on_list: 'on the list',
@@ -58,7 +56,7 @@ export const listEn: Messages<typeof listHu> = {
 	origin_done: 'Done',
 	use_my_location: 'Use my location',
 	or_district: 'Or pick a Budapest district',
-	origin_device: 'Starting point: the approximate location of this device as of {time}.',
+	origin_device: 'Starting point: your location ({time}).',
 	refresh_position: 'Update location',
 	position_stale: 'This location is more than a day old. If you are somewhere else, update it or choose a district.',
 	origin_district: 'Starting point: {district}.',
@@ -67,10 +65,10 @@ export const listEn: Messages<typeof listHu> = {
 	radius_settings: 'Change the radius in the settings',
 	stores_loading: 'Looking for nearby stores…',
 	stores_error_title: 'The store list is not available right now',
-	candidates_one: '{count} store within {radius}, at most 3 per chain.',
-	candidates_other: '{count} stores within {radius}, at most 3 per chain.',
-	without_data_one: '{count} nearby store is not shown because it has no price data.',
-	without_data_other: '{count} nearby stores are not shown because they have no price data.',
+	candidates_one: '{count} store within {radius}.',
+	candidates_other: '{count} stores within {radius}.',
+	without_data_one: 'No price data for {count} nearby store.',
+	without_data_other: 'No price data for {count} nearby stores.',
 	no_stores_in_range: 'There is no store with price data within {radius}.',
 	one_store_in_range: 'There is only 1 store within {radius}, so there is nothing to compare it with.',
 	widen_radius: 'Search within {radius}',
@@ -103,7 +101,7 @@ export const listEn: Messages<typeof listHu> = {
 	store_title: 'List: {store}',
 	store_total: 'To pay: {total}',
 	ksh_total:
-		'Estimated national average price (KSH) for the items GVH does not cover: {total}. It is not included in the amount to pay.',
+		'Estimated national average price (KSH): {total}, not included in the amount to pay.',
 	scope_legend:
 		'Store price: the price this store reported to GVH Árfigyelő. Chain price: the price at most of the chain’s stores; it may differ in this store.',
 	scope_store: 'store price',
@@ -147,7 +145,6 @@ export const listEn: Messages<typeof listHu> = {
 	tag_ket_napos: 'Two-day dish',
 	exclude_ingredients_title: 'Excluded ingredients',
 	exclude_search_label: 'Search ingredients',
-	exclude_search_hint: 'At least 2 letters; accents are optional.',
 	exclude_results_one: '{count} result',
 	exclude_results_other: '{count} results',
 	exclude_no_results: 'No ingredient with that name, or it is already excluded.',
