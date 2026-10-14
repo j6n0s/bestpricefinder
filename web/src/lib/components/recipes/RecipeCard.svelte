@@ -13,9 +13,11 @@
 	interface Props {
 		recipe: RecipeSummary;
 		names: ReadonlyMap<ChainSlug, string>;
+		/** false when the page says once that every recipe shown is untested. */
+		showUntested?: boolean;
 	}
 
-	let { recipe, names }: Props = $props();
+	let { recipe, names, showUntested = true }: Props = $props();
 </script>
 
 <article class="card recipe" aria-labelledby="recipe-{recipe.id}" data-testid="recipe-card">
@@ -25,7 +27,7 @@
 			<span>{tp('recipes.minutes', recipe.minutes)}</span>
 		{/if}
 		<span>{tp('recipes.servings', recipe.servings)}</span>
-		{#if !recipe.tested}
+		{#if showUntested && !recipe.tested}
 			<Badge kind="untested" />
 		{/if}
 	</p>

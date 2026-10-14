@@ -6,6 +6,7 @@ import type { ChainCostOut, RecipeSummary, Slot } from '../api/types';
 import {
 	SERVINGS_MAX,
 	SERVINGS_MIN,
+	allUntested,
 	chainCostRows,
 	chainList,
 	chainName,
@@ -339,5 +340,15 @@ describe('chainCostRows (server ranks, tie-aware, BUILD-BRIEF §4.1 trap 13)', (
 
 	it('is empty for no chain costs', () => {
 		expect(chainCostRows([], names)).toEqual([]);
+	});
+});
+
+describe('allUntested', () => {
+	it('is true only for a non-empty set of untested recipes', () => {
+		expect(allUntested([{ tested: false }, { tested: false }])).toBe(true);
+		expect(allUntested([{ tested: false }, { tested: true }])).toBe(false);
+		expect(allUntested([{ tested: true }])).toBe(false);
+		expect(allUntested([])).toBe(false);
+		expect(allUntested(new Set([{ tested: false }]))).toBe(true); // any iterable
 	});
 });

@@ -436,7 +436,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 		const tied = (rankCount.get(entry.rank) ?? 0) > 1;
 		expect(row.text.includes('holtverseny'), `tie label at ${row.id}`).toBe(tied);
 		if (entry.missing_count > 0) expect(norm(row.text)).toContain(`${entry.missing_count} tétel hiányzik`);
-		const penalty = norm(row.text).match(/A sorrendben a hiányzó tételek becsült árával: (\d[\d ]*) Ft/);
+		const penalty = norm(row.text).match(/A teljes lista becsült ára: (\d[\d ]*) Ft/);
 		if (entry.missing_count > 0 && whole(entry.penalized_total) !== whole(entry.checkout_total)) {
 			expect(Number(penalty?.[1]?.replaceAll(' ', '')), `penalized total at ${row.id}`).toBe(whole(entry.penalized_total));
 		} else {

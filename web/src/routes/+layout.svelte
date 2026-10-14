@@ -109,6 +109,12 @@
 		margin: var(--space-2) 0 0;
 	}
 
+	/* A price view shows the disclaimer next to its source line (<Attribution>): the footer's copy would repeat
+	   the same sentence a few lines below, so it is hidden there. Every other page keeps the footer's. */
+	.shell:global(:has(main [data-testid='disclaimer'])) .footer :global([data-testid='disclaimer']) {
+		display: none;
+	}
+
 	.footer a {
 		display: inline-flex;
 		align-items: center;

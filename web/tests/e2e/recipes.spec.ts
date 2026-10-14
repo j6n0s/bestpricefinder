@@ -252,7 +252,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(lencse).toContainText('kipróbálatlan recept');
 			await expect(lencse.getByRole('list', { name: 'Címkék' }).getByRole('listitem')).toHaveText(['főzelék', 'hüvelyes', 'húsmentes']);
 			await expect(lencse.getByTestId('recipe-price')).toHaveText('≈ 313 Ft/adag-tól (Aldi, Lidl)');
-			await expect(lencse).toContainText('az ár a hozzávalók 94 %-át fedi le');
+			await expect(lencse).toContainText('az ár a hozzávalók 94 %\u2011át fedi le');
 			await expect(card(page, HARCSA.title)).not.toContainText('kipróbálatlan recept');
 			await expect(card(page, HARCSA.title)).not.toContainText('fedi le');
 			await expect(card(page, CSIRKE.title)).toContainText('nincs ár');
@@ -265,9 +265,15 @@ for (const viewport of VIEWPORTS) {
 			await page.screenshot({ path: screenshot(`recipes-${viewport.name}-list`), fullPage: true });
 
 			// Slot, tag and accent-insensitive search, filtered on the device.
+			await expect(page.getByTestId('untested-note')).toHaveCount(0); // a tested recipe is shown too
 			await page.getByLabel('Étkezés').selectOption({ label: 'Reggeli' });
 			await expect(cardTitles(page)).toHaveText([TUROS.title]);
 			await expect(page.getByTestId('recipe-count')).toHaveText('1 recept');
+			// Only untested recipes shown: said once above the list, not on every card.
+			await expect(page.getByTestId('untested-note')).toHaveText(
+				'Az itt látható receptek mind kipróbálatlanok: saját, eredeti receptek, amelyeket még senki nem főzött meg.'
+			);
+			await expect(card(page, TUROS.title)).not.toContainText('kipróbálatlan recept');
 			await page.getByLabel('Étkezés').selectOption({ label: 'Mindegyik' });
 			await expect(page.getByLabel('Címke').locator('option')).toHaveText([
 				'Mindegyik', 'főzelék', 'főétel', 'hideg reggeli', 'kisétkezés', 'húsmentes', 'hal', 'hüvelyes', 'baromfi', 'édes', 'gyors'
@@ -394,13 +400,13 @@ for (const viewport of VIEWPORTS) {
 			await expect(rows.nth(0).getByRole('cell')).toContainText('655 Ft');
 			await expect(rows.nth(1).getByRole('cell')).toContainText('655 Ft');
 			await expect(rows.nth(3).getByRole('cell')).toContainText('720 Ft');
-			await expect(rows.nth(3).getByRole('cell')).toContainText('az ár a hozzávalók 92 %-át fedi le');
+			await expect(rows.nth(3).getByRole('cell')).toContainText('az ár a hozzávalók 92 %\u2011át fedi le');
 			await expect(rows.nth(3).getByRole('cell')).toContainText('Ár nélkül: citrom');
 			await expect(rows.nth(3).getByRole('rowheader')).toHaveText('4. Tesco');
 			// The partial chain: shown with its coverage, unranked, after the ranked ones, and explained.
 			await expect(rows.nth(4).getByRole('rowheader')).toHaveText('Auchan részleges ár');
 			await expect(rows.nth(4).getByRole('cell')).toContainText('400 Ft');
-			await expect(rows.nth(4).getByRole('cell')).toContainText('az ár a hozzávalók 50 %-át fedi le');
+			await expect(rows.nth(4).getByRole('cell')).toContainText('az ár a hozzávalók 50 %\u2011át fedi le');
 			await expect(page.getByTestId('chain-costs-partial-note')).toContainText('A részleges árú láncok nincsenek a sorrendben');
 			await expect(rows.nth(5).getByRole('rowheader')).toHaveText('Spar');
 			await expect(rows.nth(5).getByRole('cell')).toContainText('nincs ár');
@@ -417,7 +423,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(nutrition.getByRole('row', { name: /Energia/ })).toHaveText('Energia512 kcal');
 			await expect(nutrition.getByRole('row', { name: /Fehérje/ })).toHaveText('Fehérje31,3 g');
 			await expect(nutrition.getByRole('row', { name: /Só/ })).toHaveText('Só1,2 g');
-			await expect(page.getByText('A hozzávalók 86 %-ára van tápérték-adat; a többi nélkül számoltunk.')).toBeVisible();
+			await expect(page.getByText('A hozzávalók 86 %\u2011ára van tápérték-adat; a többi nélkül számoltunk.')).toBeVisible();
 			await expect(page.getByRole('link', { name: 'Szintetikus tápérték-forrás (teszt)' })).toHaveAttribute('href', 'https://example.org/synthetic');
 
 			// Adding without a plan starts a 7-day plan from today with only this meal.
@@ -496,7 +502,7 @@ test.describe('recipe details', () => {
 		await expect(page.getByTestId('ingredient-voros_lencse')).not.toContainText('kizártad');
 		await expect(page.getByRole('heading', { name: 'Tápérték adagonként' })).toHaveCount(0);
 		await expect(page.getByTestId('nutrition')).toHaveCount(0);
-		await expect(page.locator('main .intro')).toContainText('az ár a hozzávalók 94 %-át fedi le');
+		await expect(page.locator('main .intro')).toContainText('az ár a hozzávalók 94 %\u2011át fedi le');
 		await expectClean(page, api);
 	});
 

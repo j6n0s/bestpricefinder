@@ -64,7 +64,9 @@
 									<rect class="track" x="0" y="0" width="100" height="8" rx="2" />
 									<rect class="fill" x="0" y="0" width={row.barPercent} height="8" rx="2" />
 								</svg>
-								<span class="detail">{t('recipes.coverage', { percent: row.coveragePercent })}</span>
+								{#if row.coveragePercent < 100}
+									<span class="detail">{t('recipes.coverage', { percent: row.coveragePercent })}</span>
+								{/if}
 							{:else}
 								<Badge kind="no_price" />
 							{/if}

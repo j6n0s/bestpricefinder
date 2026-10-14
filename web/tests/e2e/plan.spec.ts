@@ -356,6 +356,8 @@ for (const viewport of VIEWPORTS) {
 			// Every view with prices: the GVH source line with the data date, and the disclaimer near it.
 			await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
 			await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
+			// ...and the footer does not repeat it a few lines below (it does on pages without prices).
+			await expect(page.locator('footer').getByTestId('disclaimer')).toBeHidden();
 
 			const stored = await storedPlan(page);
 			expect(stored).toMatchObject({ startDate: '2026-10-13', seed: 0, slots: 3, noRepeatDays: 5 });

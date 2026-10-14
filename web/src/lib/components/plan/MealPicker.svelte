@@ -12,7 +12,7 @@
 	import Badge from '$lib/components/Badge.svelte';
 	import RecipePrice from '$lib/components/recipes/RecipePrice.svelte';
 	import { t, tp } from '$lib/i18n';
-	import { eligibleRecipes } from '$lib/plan/recipes';
+	import { allUntested, eligibleRecipes } from '$lib/plan/recipes';
 
 	interface Props {
 		slot: Slot;
@@ -36,6 +36,7 @@
 	let query = $state('');
 
 	const options = $derived(eligibleRecipes(recipes, slot, excludedTags, query));
+	const noneTested = $derived(allUntested(options));
 
 	onMount(() => {
 		if (dialog && !dialog.open) dialog.showModal();
@@ -89,6 +90,9 @@
 	<p class="count small" role="status">{tp('plan.picker_results', options.length)}</p>
 
 	{#if options.length > 0}
+		{#if noneTested}
+			<p class="notice notice-info small" data-testid="untested-note">{t('recipes.untested_all')}</p>
+		{/if}
 		<ul class="options" id="picker-options">
 			{#each options as recipe (recipe.id)}
 				<li>
@@ -103,7 +107,7 @@
 							{#if recipe.minutes !== null}
 								<span>{tp('recipes.minutes', recipe.minutes)}</span>
 							{/if}
-							{#if !recipe.tested}
+							{#if !noneTested && !recipe.tested}
 								<Badge kind="untested" />
 							{/if}
 							{#if recipe.id === currentId}

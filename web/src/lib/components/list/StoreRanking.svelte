@@ -49,14 +49,23 @@
 				<p class="where small">
 					{address}{#if row.distanceKm !== null}{address ? ' · ' : ''}<span class="distance">{formatDistance(row.distanceKm)}</span>{/if}
 				</p>
-				<p class="total">
-					{t('list.total_label')}: <strong data-testid="rank-total">{formatMoney(row.checkoutTotal)}</strong>
-				</p>
-				{#if row.missingCount > 0}
-					<p><Badge tone="warning">{tp('list.missing', row.missingCount)}</Badge></p>
-				{/if}
 				{#if hasPenalty(row)}
-					<p class="small muted">{t('list.penalized', { total: formatMoney(row.penalizedTotal) })}</p>
+					<!-- The figure the order uses comes first, so the order never looks wrong next to a lower
+					     "Fizetendő" of a store where more items are missing. -->
+					<p class="total" data-testid="rank-penalized">
+						{t('list.penalized_label')}: <strong>{formatMoney(row.penalizedTotal)}</strong>
+					</p>
+					<p class="paid">
+						<span>{t('list.total_label')}: <strong data-testid="rank-total">{formatMoney(row.checkoutTotal)}</strong></span>
+						<Badge tone="warning">{tp('list.missing', row.missingCount)}</Badge>
+					</p>
+				{:else}
+					<p class="total">
+						{t('list.total_label')}: <strong data-testid="rank-total">{formatMoney(row.checkoutTotal)}</strong>
+					</p>
+					{#if row.missingCount > 0}
+						<p><Badge tone="warning">{tp('list.missing', row.missingCount)}</Badge></p>
+					{/if}
 				{/if}
 				{#if row.assumedCount > 0}
 					<p class="small muted">{tp('list.assumed', row.assumedCount)}</p>
@@ -124,6 +133,13 @@
 
 	.total strong {
 		font-size: var(--font-size-lg);
+	}
+
+	.paid {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-1) var(--space-2);
 	}
 
 	@media (min-width: 48rem) {

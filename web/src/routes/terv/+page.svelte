@@ -47,7 +47,7 @@
 		unknownPlanRecipeIds,
 		type PlanLength
 	} from '$lib/plan/plan';
-	import { chainNameMap } from '$lib/plan/recipes';
+	import { allUntested, chainNameMap } from '$lib/plan/recipes';
 	import { isPersistent, load, onExternalChange, update, type StoredPlan } from '$lib/storage';
 
 	type CheckStatus = 'idle' | 'loading' | 'ready' | 'error';
@@ -96,6 +96,18 @@
 	const knownIds = $derived(recipes ? new Set(recipes.recipes.map((r) => r.id)) : null);
 	const names = $derived(chainNameMap(meta.data?.chains));
 	const weeks = $derived(plan ? planWeeks(plan) : []);
+	/** Every planned recipe is untested: say it once above the days instead of on every meal. */
+	const noneTested = $derived(
+		allUntested(
+			weeks
+				.flatMap((week) => week.days)
+				.flatMap((day) => day.meals)
+				.flatMap((meal) => {
+					const recipe = meal.recipeId === null ? undefined : recipeById.get(meal.recipeId);
+					return recipe ? [recipe] : [];
+				})
+		)
+	);
 	const unknownIds = $derived(plan && recipes ? unknownPlanRecipeIds(plan, recipes.recipes) : []);
 	const exclusionCount = $derived(settings.exclusions.tags.length + settings.exclusions.ingredients.length);
 	/** "2026. 10. 13. – 2026. 10. 19.", or one date when both ends are the same day; "" when undated. */
@@ -428,6 +440,10 @@
 				<ErrorState error={checkError} title={t('plan.checks_error')} onretry={runCheck} />
 			{/if}
 
+			{#if noneTested}
+				<p class="notice notice-info small" data-testid="untested-note">{t('recipes.untested_all')}</p>
+			{/if}
+
 			{#each weeks as week (week.week)}
 				{@const weekChecks = checksForWeek(checks, week.week)}
 				{@const weekRange = rangeText(week.days[0]?.date, week.days.at(-1)?.date)}
@@ -454,6 +470,7 @@
 								{names}
 								onchange={openPicker}
 								onclear={removeMeal}
+								showUntested={!noneTested}
 							/>
 						{/each}
 					</div>

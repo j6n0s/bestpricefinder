@@ -163,6 +163,8 @@ for (const viewport of VIEWPORTS) {
 				await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
 				await expect(page.getByTestId('data-status')).toContainText(`Adatok: ${DATE_HU}`);
 				await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
+				// The disclaimer is always visible: in the footer, or next to the prices in the page itself.
+				await expect(page.getByTestId('disclaimer').filter({ visible: true }).first()).toBeVisible();
 				const nav = page.getByRole('navigation', { name: 'Fő navigáció' });
 				await expect(nav).toBeVisible();
 				if (route.nav) {

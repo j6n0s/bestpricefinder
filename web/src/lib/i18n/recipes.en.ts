@@ -2,6 +2,7 @@ import type { recipesHu } from './recipes.hu';
 import type { Messages } from './types';
 
 export const recipesEn: Messages<typeof recipesHu> = {
+	untested_all: 'All the recipes shown here are untested: our own original recipes that nobody has cooked yet.',
 	title: 'Recipes',
 	intro: 'Our own original recipes, for 3 or 5 meals a day.',
 	error_title: 'The recipes could not be loaded',

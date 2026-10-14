@@ -20,9 +20,11 @@
 		names: ReadonlyMap<ChainSlug, string>;
 		onchange: (dayIndex: number, slot: Slot) => void;
 		onclear: (dayIndex: number, slot: Slot) => void;
+		/** false when the page says once that every recipe of the plan is untested. */
+		showUntested?: boolean;
 	}
 
-	let { day, recipes, recipesLoaded, names, onchange, onclear }: Props = $props();
+	let { day, recipes, recipesLoaded, names, onchange, onclear, showUntested = true }: Props = $props();
 
 	const label = $derived(dayLabel(day, i18n.lang));
 	const titleId = $derived(`plan-day-${day.index}`);
@@ -41,7 +43,7 @@
 						<span class="muted">{t('plan.meal_empty')}</span>
 					{:else if recipe}
 						<a class="title" href="/receptek/{encodeURIComponent(recipe.id)}" lang="hu">{recipe.title}</a>
-						{#if !recipe.tested}
+						{#if showUntested && !recipe.tested}
 							<Badge kind="untested" />
 						{/if}
 						<span class="hint small"><RecipePrice {recipe} {names} compact /></span>

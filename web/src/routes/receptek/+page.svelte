@@ -16,7 +16,7 @@
 	import { getMeta } from '$lib/meta.svelte';
 	import { slotLabel } from '$lib/plan/checks';
 	import { recipeFilters, resetRecipeFilters } from '$lib/plan/filters.svelte';
-	import { chainNameMap, filterRecipes, tagLabelKey } from '$lib/plan/recipes';
+	import { allUntested, chainNameMap, filterRecipes, tagLabelKey } from '$lib/plan/recipes';
 
 	const meta = getMeta();
 
@@ -33,6 +33,7 @@
 			q: recipeFilters.q
 		})
 	);
+	const noneTested = $derived(allUntested(filtered));
 	/** Tags that occur in the library (vocabulary order), plus the selected one. */
 	const tagOptions = $derived(
 		RECIPE_TAGS.flatMap((tag) => {
@@ -127,9 +128,12 @@
 			{/if}
 		</EmptyState>
 	{:else}
+		{#if noneTested}
+			<p class="notice notice-info small" data-testid="untested-note">{t('recipes.untested_all')}</p>
+		{/if}
 		<ul class="list">
 			{#each filtered as recipe (recipe.id)}
-				<li><RecipeCard {recipe} {names} /></li>
+				<li><RecipeCard {recipe} {names} showUntested={!noneTested} /></li>
 			{/each}
 		</ul>
 	{/if}

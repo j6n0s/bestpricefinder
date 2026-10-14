@@ -617,7 +617,10 @@ for (const viewport of VIEWPORTS) {
 			await expect(rows.nth(4)).not.toContainText('holtverseny');
 			await expect(rows.nth(4)).toContainText('2 tétel elérhetősége nem biztos');
 			await expect(rows.nth(6)).toContainText('1 tétel hiányzik');
-			await expect(rows.nth(6)).toContainText(sp('A sorrendben a hiányzó tételek becsült árával: 8 152 Ft'));
+			await expect(rows.nth(6)).toContainText(sp('A teljes lista becsült ára: 8 152 Ft'));
+			// The figure the order uses comes before the store's own "Fizetendő" (fewer items, so lower).
+			const rowText = (await rows.nth(6).textContent()) ?? '';
+			expect(rowText.indexOf('A teljes lista becsült ára')).toBeLessThan(rowText.indexOf('Fizetendő'));
 			await expect(page.getByTestId('split')).toContainText(sp('Két boltban 2 400 Ft-tal olcsóbb'));
 			await expect(page.locator('main').getByTestId('attribution-gvh').first()).toHaveText(ATTRIBUTION);
 			await expect(page.locator('main').getByTestId('disclaimer').first()).toHaveText(DISCLAIMER);

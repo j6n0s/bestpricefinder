@@ -3,6 +3,8 @@
  * are always shown with the source and the data date (BUILD-BRIEF §8.2). No health claims (§8.7).
  */
 export const recipesHu = {
+	untested_all:
+		'Az itt látható receptek mind kipróbálatlanok: saját, eredeti receptek, amelyeket még senki nem főzött meg.',
 	title: 'Receptek',
 	intro: 'Saját, eredeti receptek, a napi 3 vagy 5 étkezéshez.',
 	error_title: 'A receptek betöltése nem sikerült',
@@ -25,7 +27,7 @@ export const recipesHu = {
 	tags_label: 'Címkék',
 	price_from: '≈ {price}/adag-tól ({chains})',
 	price_from_plain: '≈ {price}/adag-tól',
-	coverage: 'az ár a hozzávalók {percent}\u00a0%-át fedi le',
+	coverage: 'az ár a hozzávalók {percent}\u00a0%\u2011át fedi le',
 	coverage_short: 'részleges ár ({percent}\u00a0%)',
 	price_note:
 		'Az adagonkénti ár lánc-jellemző ár a GVH napi adataiból (a lánc boltjainak többségében érvényes ár), a kamrában lévő és az elhagyható hozzávalók nélkül. Egy-egy bolt ára eltérhet.',
@@ -74,7 +76,7 @@ export const recipesHu = {
 	costs_tie: 'holtverseny',
 	costs_partial: 'részleges ár',
 	costs_partial_note:
-		'A részleges árú láncok nincsenek a sorrendben: náluk a recept becsült költségének kevesebb mint 90\u00a0%-ára van ár, így az áruk nem hasonlítható össze a többiekével.',
+		'A részleges árú láncok nincsenek a sorrendben: náluk a recept becsült költségének kevesebb mint 90\u00a0%\u2011ára van ár, így az áruk nem hasonlítható össze a többiekével.',
 	costs_missing: 'Ár nélkül:',
 	costs_none: 'Ehhez a recepthez még nincs lánconkénti ár.',
 
@@ -89,7 +91,7 @@ export const recipesHu = {
 	nutrition_satfat: 'ebből telített zsírsavak',
 	nutrition_fiber: 'Rost',
 	nutrition_salt: 'Só',
-	nutrition_coverage: 'A hozzávalók {percent}\u00a0%-ára van tápérték-adat; a többi nélkül számoltunk.',
+	nutrition_coverage: 'A hozzávalók {percent}\u00a0%\u2011ára van tápérték-adat; a többi nélkül számoltunk.',
 
 	add_title: 'Hozzáadás a tervhez',
 	add_day_label: 'Nap',
