@@ -22,14 +22,15 @@ from bpf.gvh.models import (
     parse_shops,
 )
 
+# Key order and JSON types as in the real listing samples of 2026-10-14 (tests/fixtures/gvh/raw/pbc-*.json).
 CHAIN = {
     "id": "c1",
     "name": "Spar",
     "priceSameEverywhere": True,
-    "productMinAmount": 699,
+    "productMinAmount": 699.0,
     "prices": [
-        {"type": "NORMAL", "amount": 294, "unitAmount": 588.0, "sameAmountEverywhere": False},
-        {"type": "DISCOUNTED", "amount": 279, "unitAmount": 558.0, "sameAmountEverywhere": True},
+        {"type": "NORMAL", "amount": 294.0, "unitAmount": 588.0, "sameAmountEverywhere": False},
+        {"type": "DISCOUNTED", "amount": 279.0, "unitAmount": 558.0, "sameAmountEverywhere": True},
     ],
 }
 PRODUCT = {
@@ -39,7 +40,9 @@ PRODUCT = {
     "unit": "kg",
     "unitTitle": "csomag",
     "bulk": False,
-    "packaging": 0.5,
+    "returnType": None,
+    "returnFee": 0,
+    "packaging": "0.5",
     "categoryPath": "tartos_elelmiszer_ital/teszta/szarazteszta",
     "minUnitPrice": 1398.0,
     "pricesOfChainStores": [CHAIN],
@@ -55,10 +58,11 @@ def chain(**changes: Any) -> bytes:
 
 
 def test_listing_page_parses_with_exact_decimals() -> None:
-    parsed = parse_product_page(page(packaging=0.285))
+    parsed = parse_product_page(page(packaging="0.285", minUnitPrice=1031.579))
     product = parsed.value.products[0]
     assert parsed.drift == ()
-    assert product.packaging == Decimal("0.285")  # parsed from the JSON text, never through float
+    assert product.packaging == Decimal("0.285")
+    assert product.minUnitPrice == Decimal("1031.579")  # parsed from the JSON text, never through float
     entry = product.pricesOfChainStores[0]
     assert entry.productMinAmount == Decimal(699)
     assert [p.type for p in entry.prices] == ["NORMAL", "DISCOUNTED"]
@@ -77,6 +81,14 @@ def test_listing_page_parses_with_exact_decimals() -> None:
         (page(id=5997490112823), "id"),
         (page(unit=None), "unit"),
         (page(packaging="0,5"), "packaging"),
+        (page(packaging=0.5), "packaging"),  # GVH sends packaging as a string; a number is a shape change
+        (page(packaging=""), "packaging"),
+        (page(packaging=" 0.5"), "packaging"),
+        (page(packaging="-1"), "packaging"),
+        (page(packaging="1e3"), "packaging"),
+        (page(packaging="NaN"), "packaging"),
+        (page(packaging=True), "packaging"),
+        (page(returnFee="0"), "returnFee"),
     ],
 )
 def test_wrong_types_fail_loudly(body: bytes, location: str) -> None:
@@ -98,10 +110,16 @@ def test_missing_required_chain_fields_fail_loudly(field: str) -> None:
         parse_product_page(page(pricesOfChainStores=[entry]))
 
 
+@pytest.mark.parametrize(
+    ("text", "value"), [("1", "1"), ("0.5", "0.5"), ("0.175", "0.175"), ("12.25", "12.25")]
+)
+def test_packaging_strings_parse_exactly(text: str, value: str) -> None:
+    assert parse_product_page(page(packaging=text)).value.products[0].packaging == Decimal(value)
+
+
 def test_documented_but_unused_fields_are_optional() -> None:
-    product = {
-        k: v for k, v in PRODUCT.items() if k not in {"imageUrl", "bulk", "categoryPath", "minUnitPrice"}
-    }
+    unused = {"imageUrl", "bulk", "categoryPath", "minUnitPrice", "returnType", "returnFee"}
+    product = {k: v for k, v in PRODUCT.items() if k not in unused}
     parsed = parse_product_page(json.dumps({"products": [product], "count": 1}).encode())
     assert parsed.drift == ()
 
@@ -140,69 +158,121 @@ def test_not_json_fails_loudly(body: bytes) -> None:
         parse_json(body, what="x")
 
 
-def test_roots_must_have_the_documented_type() -> None:
-    with pytest.raises(GvhSchemaError, match="JSON array"):
-        parse_shops(b'{"shops": []}')
+@pytest.mark.parametrize(
+    ("parse", "key"),
+    [(parse_categories, "categories"), (parse_chain_stores, "chainStores"), (parse_shops, "shops")],
+)
+def test_reference_bodies_are_wrapped_objects(parse: Any, key: str) -> None:
+    """Real samples (2026-10-14): ``{"categories": [...]}``, ``{"chainStores": [...]}``, ``{"shops": []}``."""
+    assert parse(json.dumps({key: []}).encode()).value == ()
+    with pytest.raises(GvhSchemaError, match=f"expected a JSON object with '{key}'"):
+        parse(b"[]")
+    with pytest.raises(GvhSchemaError, match=f"{key}: missing"):
+        parse(b'{"items": []}')
+    assert parse(json.dumps({key: [], "total": 0}).encode()).drift[0].endswith(".total")
+
+
+def test_listing_root_must_be_an_object() -> None:
     with pytest.raises(GvhSchemaError, match="products"):
         parse_product_page(b"[]")
 
 
 def test_categories_accept_every_leaf_terminator() -> None:
     body = json.dumps(
-        [
-            {
-                "id": 1001,
-                "name": "Tejtermék, sajt, tojás",
-                "path": "tejtermek_sajt_tojas",
-                "categoryNodes": [
-                    {"id": 1, "name": "a", "path": "t/a", "categoryNodes": []},
-                    {"id": 2, "name": "b", "path": "t/b", "categoryNodes": None},
-                    {"id": 3, "name": "c", "path": "t/c"},
-                ],
-            }
-        ]
+        {
+            "categories": [
+                {
+                    "id": 1001,
+                    "name": "Tejtermék, sajt, tojás",
+                    "path": "tejtermek_sajt_tojas",
+                    "icon": None,
+                    "categoryNodes": [
+                        {"id": 1, "name": "a", "path": "t/a", "icon": None, "categoryNodes": []},
+                        {"id": 2, "name": "b", "path": "t/b", "categoryNodes": None},
+                        {"id": 3, "name": "c", "path": "t/c"},
+                    ],
+                }
+            ]
+        }
     ).encode()
-    (top,) = parse_categories(body).value
+    parsed = parse_categories(body)
+    (top,) = parsed.value
     assert [n.id for n in top.categoryNodes or []] == [1, 2, 3]
+    assert parsed.drift == ()
 
 
 def test_category_ids_must_be_integers() -> None:
-    with pytest.raises(GvhSchemaError, match="0.id"):
-        parse_categories(b'[{"id": "1001", "name": "x", "path": "x"}]')
+    with pytest.raises(GvhSchemaError, match="categories.0.id"):
+        parse_categories(b'{"categories": [{"id": "1001", "name": "x", "path": "x"}]}')
 
 
 def test_chain_stores_and_shops() -> None:
     chains = parse_chain_stores(
-        b'[{"uuid": "u1", "name": "M\\u00fcller", "imageUrl": "https://x.invalid/l.png"}]'
+        b'{"chainStores": [{"uuid": "u1", "name": "M\\u00fcller", "imageUrl": "mueller"}]}'
     )
     assert chains.value[0].name == "Müller"
     shop = {
         "uuid": "lidl-316",
         "postalCode": "1027",
-        "city": "Budapest",
+        "city": "BUDAPEST",
         "address": "Csalogány u. 43",
         "chainStoreUuid": "u1",
         "location": {"latitude": 47.50813, "longitude": 19.03156},
         "openingTime": "Nyitvatartás: 06:30-21:30",
     }
-    (parsed,) = parse_shops(json.dumps([shop]).encode()).value
+
+    def shops(*items: dict[str, Any]) -> bytes:
+        return json.dumps({"shops": list(items)}).encode()
+
+    (parsed,) = parse_shops(shops(shop)).value
     assert parsed.location is not None
     assert parsed.location.latitude == Decimal("47.50813")
     no_hours = {k: v for k, v in shop.items() if k != "openingTime"}
-    assert parse_shops(json.dumps([no_hours, {**shop, "location": None}]).encode()).drift == ()
-    with pytest.raises(GvhSchemaError, match="postalCode"):
-        parse_shops(json.dumps([{**shop, "postalCode": 1027}]).encode())
+    assert parse_shops(shops(no_hours, {**shop, "location": None, "openingTime": ""})).drift == ()
+    with pytest.raises(GvhSchemaError, match="shops.0.postalCode"):
+        parse_shops(shops({**shop, "postalCode": 1027}))
     with pytest.raises(GvhSchemaError, match="chainStoreUuid: missing"):
-        parse_shops(json.dumps([{k: v for k, v in shop.items() if k != "chainStoreUuid"}]).encode())
+        parse_shops(shops({k: v for k, v in shop.items() if k != "chainStoreUuid"}))
 
 
-def test_detail_accepts_both_chain_list_names() -> None:
-    entry = {"id": "c1", "name": "Spar", "availableInShops": ["spar-110"], "prices": [], "pricesMax": []}
-    for key in ("chainStores", "pricesOfChainStores"):
-        detail = parse_product_detail(json.dumps({"id": "1", key: [entry]}).encode()).value
-        assert detail.chainStores[0].availableInShops == ["spar-110"]
+# The real detail (tests/fixtures/gvh/raw/product-*.json): chain entries carry "uuid", not "id".
+DETAIL_CHAIN = {
+    "uuid": "c1",
+    "name": "Spar",
+    "imageUrl": "spar",
+    "prices": [{"type": "NORMAL", "amount": 294.0, "unitAmount": 588.0}],
+    "pricesMax": [],
+    "priceSameEverywhere": False,
+    "availableInShops": ["spar-110"],
+}
+
+
+def test_detail_chain_entries_use_uuid() -> None:
+    body = {
+        "id": "1",
+        "name": "x",
+        "imageUrl": "https://cdn.example.invalid/p.jpg",
+        "unit": "kg",
+        "unitTitle": "csomag",
+        "bulk": False,
+        "returnType": None,
+        "returnFee": 0,
+        "packaging": "0.5",
+        "categoryId": "50",
+        "categoryPath": "a/b/c",
+        "chainStores": [DETAIL_CHAIN],
+    }
+    parsed = parse_product_detail(json.dumps(body).encode())
+    assert parsed.drift == ()
+    assert parsed.value.chainStores[0].uuid == "c1"
+    assert parsed.value.chainStores[0].availableInShops == ["spar-110"]
+    listing_style = {"id": "c1", **{k: v for k, v in DETAIL_CHAIN.items() if k != "uuid"}}
+    with pytest.raises(GvhSchemaError, match="uuid: missing"):
+        parse_product_detail(json.dumps({"id": "1", "chainStores": [listing_style]}).encode())
     with pytest.raises(GvhSchemaError, match="availableInShops: missing"):
-        parse_product_detail(json.dumps({"id": "1", "chainStores": [{"id": "c1"}]}).encode())
+        parse_product_detail(json.dumps({"id": "1", "chainStores": [{"uuid": "c1"}]}).encode())
+    with pytest.raises(GvhSchemaError, match="chainStores: missing"):
+        parse_product_detail(json.dumps({"id": "1", "pricesOfChainStores": [DETAIL_CHAIN]}).encode())
     with pytest.raises(GvhSchemaError, match="chainStores: missing"):
         parse_product_detail(b'{"id": "1"}')
 
@@ -214,7 +284,10 @@ def test_shop_prices_and_not_found() -> None:
     )
     assert ok is not None
     assert ok.value.shops[0].prices[0].amount == Decimal(2101)
-    body = json.dumps({"statusCode": 404, "message": SHOP_PRICES_NOT_FOUND}).encode()
+    body = json.dumps(
+        {"code": SHOP_PRICES_NOT_FOUND, "message": "Not found prices by product and shops uuid!"}
+    )
+    body = body.encode()  # the real 404 body (tests/fixtures/gvh/raw/product-shop-notfound.json)
     assert is_shop_prices_not_found(404, body)
     assert is_shop_prices_not_found(400, body)
     assert is_shop_prices_not_found(500, body)  # the status is undocumented: the code decides

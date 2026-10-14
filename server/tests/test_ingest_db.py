@@ -238,16 +238,17 @@ def test_reference_run_upserts_chains_categories_and_stores(
 def test_reference_skips_stores_that_would_violate_checks(
     conn: psycopg.Connection, admin: psycopg.Connection
 ) -> None:
-    def add_bad_stores(shops: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    def add_bad_stores(body: dict[str, Any]) -> dict[str, Any]:
+        shops = body["shops"]
         template = shops[0]
-        return [
-            *shops,
+        shops += [
             dict(template, uuid="bad id!"),
             dict(template, uuid="zz-swapped", location={"latitude": 19.05, "longitude": 47.5}),
             dict(template, uuid="zz-far", location={"latitude": 52.2, "longitude": 21.0}),
             dict(template, uuid="zz-noloc", location=None),
             dict(template, uuid="zz-badpc", postalCode="H-1011"),
         ]
+        return body
 
     fake = FakeGvh(WORLD, data_date=TODAY)
     with client_for(patched(fake, "/api/shops", add_bad_stores)) as client:
@@ -627,11 +628,11 @@ def test_leaves_gvh_no_longer_lists_are_not_fetched(
 ) -> None:
     assert daily(conn, FakeGvh(WORLD, data_date=TODAY)).status == "ok"
 
-    def drop_leaf_50(tree: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        for top in tree:
+    def drop_leaf_50(body: dict[str, Any]) -> dict[str, Any]:
+        for top in body["categories"]:
             for l2 in top["categoryNodes"]:
                 l2["categoryNodes"] = [leaf for leaf in l2["categoryNodes"] if leaf["id"] != 50]
-        return tree
+        return body
 
     fake = FakeGvh(WORLD, data_date=TODAY)
     outcome = daily(conn, fake, transport=patched(fake, "/api/categories", drop_leaf_50))

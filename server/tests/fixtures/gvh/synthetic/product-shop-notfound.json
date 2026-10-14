@@ -1,4 +1,4 @@
 {
- "statusCode": 404,
- "message": "PRODUCT-SHOP-PRICES-NOT-FOUND"
+ "code": "PRODUCT-SHOP-PRICES-NOT-FOUND",
+ "message": "Not found prices by product and shops uuid!"
 }

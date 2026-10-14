@@ -3,24 +3,26 @@
   {
    "id": "5994038219631",
    "name": "Példatej vöröshagyma 1 db",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5994038219631.jpg",
    "unit": "db",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 37,
+   "minUnitPrice": 37.0,
    "pricesOfChainStores": [
     {
      "id": "aaaf447d-da4c-518e-966a-bdae24170972",
      "name": "Lidl",
      "priceSameEverywhere": true,
-     "productMinAmount": 51,
+     "productMinAmount": 51.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 51,
-       "unitAmount": 51,
+       "amount": 51.0,
+       "unitAmount": 51.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -29,12 +31,12 @@
      "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
      "name": "Penny",
      "priceSameEverywhere": true,
-     "productMinAmount": 37,
+     "productMinAmount": 37.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 37,
-       "unitAmount": 37,
+       "amount": 37.0,
+       "unitAmount": 37.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -43,12 +45,12 @@
      "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
      "name": "Spar",
      "priceSameEverywhere": true,
-     "productMinAmount": 47,
+     "productMinAmount": 47.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 47,
-       "unitAmount": 47,
+       "amount": 47.0,
+       "unitAmount": 47.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -58,24 +60,26 @@
   {
    "id": "5992913138220",
    "name": "Tesztmalom vöröshagyma 1 db",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5992913138220.jpg",
    "unit": "db",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 38,
+   "minUnitPrice": 38.0,
    "pricesOfChainStores": [
     {
      "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
      "name": "Aldi",
      "priceSameEverywhere": true,
-     "productMinAmount": 49,
+     "productMinAmount": 49.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 49,
-       "unitAmount": 49,
+       "amount": 49.0,
+       "unitAmount": 49.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -84,12 +88,12 @@
      "id": "aaaf447d-da4c-518e-966a-bdae24170972",
      "name": "Lidl",
      "priceSameEverywhere": true,
-     "productMinAmount": 38,
+     "productMinAmount": 38.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 38,
-       "unitAmount": 38,
+       "amount": 38.0,
+       "unitAmount": 38.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -98,12 +102,12 @@
      "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
      "name": "Penny",
      "priceSameEverywhere": true,
-     "productMinAmount": 49,
+     "productMinAmount": 49.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 49,
-       "unitAmount": 49,
+       "amount": 49.0,
+       "unitAmount": 49.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -113,24 +117,26 @@
   {
    "id": "5998156795565",
    "name": "Kísérleti vöröshagyma 1 db",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5998156795565.jpg",
    "unit": "db",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 38,
+   "minUnitPrice": 38.0,
    "pricesOfChainStores": [
     {
      "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
      "name": "Tesco",
      "priceSameEverywhere": true,
-     "productMinAmount": 38,
+     "productMinAmount": 38.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 38,
-       "unitAmount": 38,
+       "amount": 38.0,
+       "unitAmount": 38.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -140,24 +146,26 @@
   {
    "id": "5993445412598",
    "name": "Tesztmalom vöröshagyma 1 db",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5993445412598.jpg",
    "unit": "db",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 40,
+   "minUnitPrice": 40.0,
    "pricesOfChainStores": [
     {
      "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
      "name": "Tesco",
      "priceSameEverywhere": true,
-     "productMinAmount": 40,
+     "productMinAmount": 40.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 40,
-       "unitAmount": 40,
+       "amount": 40.0,
+       "unitAmount": 40.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -167,11 +175,13 @@
   {
    "id": "5992826887840",
    "name": "Tesztmalom vöröshagyma 6 db",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5992826887840.jpg",
    "unit": "db",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 6,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "6",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
    "minUnitPrice": 41.83,
    "pricesOfChainStores": [
@@ -179,11 +189,11 @@
      "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
      "name": "Tesco",
      "priceSameEverywhere": true,
-     "productMinAmount": 251,
+     "productMinAmount": 251.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 251,
+       "amount": 251.0,
        "unitAmount": 41.83,
        "sameAmountEverywhere": true
       }
@@ -194,24 +204,26 @@
   {
    "id": "aldi-151320",
    "name": "Tesztmalom vöröshagyma 6 db",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-aldi-151320.jpg",
    "unit": "db",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 6,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "6",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 42,
+   "minUnitPrice": 42.0,
    "pricesOfChainStores": [
     {
      "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
      "name": "Aldi",
      "priceSameEverywhere": true,
-     "productMinAmount": 252,
+     "productMinAmount": 252.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 252,
-       "unitAmount": 42,
+       "amount": 252.0,
+       "unitAmount": 42.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -221,30 +233,32 @@
   {
    "id": "2999252867993",
    "name": "Vöröshagyma lédig",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-2999252867993.jpg",
    "unit": "kg",
    "unitTitle": "kg",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 189,
+   "minUnitPrice": 189.0,
    "pricesOfChainStores": [
     {
      "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
      "name": "Penny",
      "priceSameEverywhere": true,
-     "productMinAmount": 189,
+     "productMinAmount": 189.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 189,
-       "unitAmount": 189,
+       "amount": 189.0,
+       "unitAmount": 189.0,
        "sameAmountEverywhere": true
       },
       {
        "type": "LOYALTY",
-       "amount": 161,
-       "unitAmount": 161,
+       "amount": 161.0,
+       "unitAmount": 161.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -254,24 +268,26 @@
   {
    "id": "5999212528516",
    "name": "Próbakert vöröshagyma 500 g",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5999212528516.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 0.5,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "0.5",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 194,
+   "minUnitPrice": 194.0,
    "pricesOfChainStores": [
     {
      "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
      "name": "Spar",
      "priceSameEverywhere": true,
-     "productMinAmount": 97,
+     "productMinAmount": 97.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 97,
-       "unitAmount": 194,
+       "amount": 97.0,
+       "unitAmount": 194.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -281,24 +297,26 @@
   {
    "id": "2999363845150",
    "name": "Vöröshagyma lédig",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-2999363845150.jpg",
    "unit": "kg",
    "unitTitle": "kg",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 210,
+   "minUnitPrice": 210.0,
    "pricesOfChainStores": [
     {
      "id": "aaaf447d-da4c-518e-966a-bdae24170972",
      "name": "Lidl",
      "priceSameEverywhere": true,
-     "productMinAmount": 210,
+     "productMinAmount": 210.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 210,
-       "unitAmount": 210,
+       "amount": 210.0,
+       "unitAmount": 210.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -308,24 +326,26 @@
   {
    "id": "aldi-585165",
    "name": "Próbakert vöröshagyma 250 g",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-aldi-585165.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 0.25,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "0.25",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 220,
+   "minUnitPrice": 220.0,
    "pricesOfChainStores": [
     {
      "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
      "name": "Aldi",
      "priceSameEverywhere": true,
-     "productMinAmount": 55,
+     "productMinAmount": 55.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 55,
-       "unitAmount": 220,
+       "amount": 55.0,
+       "unitAmount": 220.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -335,24 +355,26 @@
   {
    "id": "2999763291551",
    "name": "Vöröshagyma lédig",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-2999763291551.jpg",
    "unit": "kg",
    "unitTitle": "kg",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 227,
+   "minUnitPrice": 227.0,
    "pricesOfChainStores": [
     {
      "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
      "name": "Aldi",
      "priceSameEverywhere": true,
-     "productMinAmount": 227,
+     "productMinAmount": 227.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 227,
-       "unitAmount": 227,
+       "amount": 227.0,
+       "unitAmount": 227.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -362,24 +384,26 @@
   {
    "id": "penny-7238",
    "name": "Próbakert vöröshagyma 500 g",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-penny-7238.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 0.5,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "0.5",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 240,
+   "minUnitPrice": 240.0,
    "pricesOfChainStores": [
     {
      "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
      "name": "Penny",
      "priceSameEverywhere": true,
-     "productMinAmount": 120,
+     "productMinAmount": 120.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 120,
-       "unitAmount": 240,
+       "amount": 120.0,
+       "unitAmount": 240.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -389,24 +413,26 @@
   {
    "id": "5992199207054",
    "name": "Mintafarm vöröshagyma 3 db-os háló",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5992199207054.jpg",
    "unit": "csomag",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "zoldseg_gyumolcs/zoldseg/voroshagyma",
-   "minUnitPrice": 299,
+   "minUnitPrice": 299.0,
    "pricesOfChainStores": [
     {
      "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
      "name": "Aldi",
      "priceSameEverywhere": true,
-     "productMinAmount": 299,
+     "productMinAmount": 299.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 299,
-       "unitAmount": 299,
+       "amount": 299.0,
+       "unitAmount": 299.0,
        "sameAmountEverywhere": true
       }
      ]

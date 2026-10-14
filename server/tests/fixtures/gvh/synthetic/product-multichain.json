@@ -1,33 +1,35 @@
 {
  "id": "5994828418336",
  "name": "Példatej natúr joghurt 150 g",
- "imageUrl": null,
+ "imageUrl": "https://cdn.example.invalid/images/product-image-5994828418336.jpg",
  "unit": "kg",
  "unitTitle": "csomag",
  "bulk": true,
- "packaging": 0.15,
+ "returnType": null,
+ "returnFee": 0,
+ "packaging": "0.15",
+ "categoryId": "7",
  "categoryPath": "tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt",
- "minUnitPrice": 793.33,
  "chainStores": [
   {
-   "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+   "uuid": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
    "name": "Aldi",
+   "imageUrl": "aldi",
    "prices": [
     {
      "type": "NORMAL",
-     "amount": 139,
+     "amount": 139.0,
      "unitAmount": 926.67
     }
    ],
    "pricesMax": [
     {
      "type": "NORMAL",
-     "amount": 139,
+     "amount": 139.0,
      "unitAmount": 926.67
     }
    ],
    "priceSameEverywhere": true,
-   "productMinAmount": 139,
    "availableInShops": [
     "aldi-J001",
     "aldi-J002",
@@ -220,24 +222,24 @@
    ]
   },
   {
-   "id": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+   "uuid": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
    "name": "Auchan",
+   "imageUrl": "auchan",
    "prices": [
     {
      "type": "NORMAL",
-     "amount": 119,
+     "amount": 119.0,
      "unitAmount": 793.33
     }
    ],
    "pricesMax": [
     {
      "type": "NORMAL",
-     "amount": 119,
+     "amount": 119.0,
      "unitAmount": 793.33
     }
    ],
    "priceSameEverywhere": true,
-   "productMinAmount": 119,
    "availableInShops": [
     "auchan-002",
     "auchan-003",
@@ -246,24 +248,24 @@
    ]
   },
   {
-   "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+   "uuid": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
    "name": "Penny",
+   "imageUrl": "penny",
    "prices": [
     {
      "type": "NORMAL",
-     "amount": 145,
+     "amount": 145.0,
      "unitAmount": 966.67
     }
    ],
    "pricesMax": [
     {
      "type": "NORMAL",
-     "amount": 145,
+     "amount": 145.0,
      "unitAmount": 966.67
     }
    ],
    "priceSameEverywhere": true,
-   "productMinAmount": 145,
    "availableInShops": [
     "penny-1",
     "penny-10",
@@ -516,24 +518,24 @@
    ]
   },
   {
-   "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "uuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
    "name": "Spar",
+   "imageUrl": "spar",
    "prices": [
     {
      "type": "NORMAL",
-     "amount": 129,
-     "unitAmount": 860
+     "amount": 129.0,
+     "unitAmount": 860.0
     }
    ],
    "pricesMax": [
     {
      "type": "NORMAL",
-     "amount": 129,
-     "unitAmount": 860
+     "amount": 129.0,
+     "unitAmount": 860.0
     }
    ],
    "priceSameEverywhere": true,
-   "productMinAmount": 129,
    "availableInShops": [
     "spar-101",
     "spar-102",
@@ -578,24 +580,24 @@
    ]
   },
   {
-   "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+   "uuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
    "name": "Tesco",
+   "imageUrl": "tesco",
    "prices": [
     {
      "type": "NORMAL",
-     "amount": 149,
+     "amount": 149.0,
      "unitAmount": 993.33
     }
    ],
    "pricesMax": [
     {
      "type": "NORMAL",
-     "amount": 155,
+     "amount": 155.0,
      "unitAmount": 1033.33
     }
    ],
    "priceSameEverywhere": false,
-   "productMinAmount": 149,
    "availableInShops": [
     "tesco-1001",
     "tesco-1002",

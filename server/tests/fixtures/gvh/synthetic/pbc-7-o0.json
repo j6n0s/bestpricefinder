@@ -3,24 +3,26 @@
   {
    "id": "5995237894469",
    "name": "Szintetika natúr joghurt 250 g",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5995237894469.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 0.25,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "0.25",
    "categoryPath": "tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt",
-   "minUnitPrice": 396,
+   "minUnitPrice": 396.0,
    "pricesOfChainStores": [
     {
      "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
      "name": "Aldi",
      "priceSameEverywhere": true,
-     "productMinAmount": 103,
+     "productMinAmount": 103.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 103,
-       "unitAmount": 412,
+       "amount": 103.0,
+       "unitAmount": 412.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -29,12 +31,12 @@
      "id": "aaaf447d-da4c-518e-966a-bdae24170972",
      "name": "Lidl",
      "priceSameEverywhere": true,
-     "productMinAmount": 104,
+     "productMinAmount": 104.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 104,
-       "unitAmount": 416,
+       "amount": 104.0,
+       "unitAmount": 416.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -43,12 +45,12 @@
      "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
      "name": "Penny",
      "priceSameEverywhere": true,
-     "productMinAmount": 99,
+     "productMinAmount": 99.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 99,
-       "unitAmount": 396,
+       "amount": 99.0,
+       "unitAmount": 396.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -58,24 +60,26 @@
   {
    "id": "5994195528171",
    "name": "Kísérleti natúr joghurt 200 g",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5994195528171.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 0.2,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "0.2",
    "categoryPath": "tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt",
-   "minUnitPrice": 450,
+   "minUnitPrice": 450.0,
    "pricesOfChainStores": [
     {
      "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
      "name": "Tesco",
      "priceSameEverywhere": true,
-     "productMinAmount": 90,
+     "productMinAmount": 90.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 90,
-       "unitAmount": 450,
+       "amount": 90.0,
+       "unitAmount": 450.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -85,24 +89,26 @@
   {
    "id": "aldi-936569",
    "name": "Szintetika natúr joghurt 500 g",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-aldi-936569.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 0.5,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "0.5",
    "categoryPath": "tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt",
-   "minUnitPrice": 504,
+   "minUnitPrice": 504.0,
    "pricesOfChainStores": [
     {
      "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
      "name": "Aldi",
      "priceSameEverywhere": true,
-     "productMinAmount": 252,
+     "productMinAmount": 252.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 252,
-       "unitAmount": 504,
+       "amount": 252.0,
+       "unitAmount": 504.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -112,11 +118,13 @@
   {
    "id": "5994828418336",
    "name": "Példatej natúr joghurt 150 g",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5994828418336.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 0.15,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "0.15",
    "categoryPath": "tejtermek_sajt_tojas/joghurt_turo_kefir/natur_joghurt",
    "minUnitPrice": 926.67,
    "pricesOfChainStores": [
@@ -124,11 +132,11 @@
      "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
      "name": "Aldi",
      "priceSameEverywhere": true,
-     "productMinAmount": 139,
+     "productMinAmount": 139.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 139,
+       "amount": 139.0,
        "unitAmount": 926.67,
        "sameAmountEverywhere": true
       }
@@ -138,11 +146,11 @@
      "id": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
      "name": "Penny",
      "priceSameEverywhere": true,
-     "productMinAmount": 145,
+     "productMinAmount": 145.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 145,
+       "amount": 145.0,
        "unitAmount": 966.67,
        "sameAmountEverywhere": true
       }
@@ -152,11 +160,11 @@
      "id": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
      "name": "Tesco",
      "priceSameEverywhere": true,
-     "productMinAmount": 149,
+     "productMinAmount": 149.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 149,
+       "amount": 149.0,
        "unitAmount": 993.33,
        "sameAmountEverywhere": false
       }

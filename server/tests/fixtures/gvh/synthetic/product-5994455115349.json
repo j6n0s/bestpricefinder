@@ -1,33 +1,35 @@
 {
  "id": "5994455115349",
  "name": "Próbakert spagetti 500 g",
- "imageUrl": null,
+ "imageUrl": "https://cdn.example.invalid/images/product-image-5994455115349.jpg",
  "unit": "kg",
  "unitTitle": "csomag",
  "bulk": true,
- "packaging": 0.5,
+ "returnType": null,
+ "returnFee": 0,
+ "packaging": "0.5",
+ "categoryId": "50",
  "categoryPath": "tartos_elelmiszer_ital/teszta_haztartasikeksz/szarazteszta",
- "minUnitPrice": 1398,
  "chainStores": [
   {
-   "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "uuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
    "name": "Spar",
+   "imageUrl": "spar",
    "prices": [
     {
      "type": "NORMAL",
-     "amount": 294,
-     "unitAmount": 588
+     "amount": 294.0,
+     "unitAmount": 588.0
     }
    ],
    "pricesMax": [
     {
      "type": "NORMAL",
-     "amount": 699,
-     "unitAmount": 1398
+     "amount": 699.0,
+     "unitAmount": 1398.0
     }
    ],
    "priceSameEverywhere": false,
-   "productMinAmount": 699,
    "availableInShops": [
     "spar-101",
     "spar-102",

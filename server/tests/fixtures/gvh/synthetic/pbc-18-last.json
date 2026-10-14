@@ -3,24 +3,26 @@
   {
    "id": "5992023733254",
    "name": "Szintetika csirkemellfilé 1 kg",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5992023733254.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
-   "minUnitPrice": 2303,
+   "minUnitPrice": 2303.0,
    "pricesOfChainStores": [
     {
      "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
      "name": "Spar",
      "priceSameEverywhere": true,
-     "productMinAmount": 2303,
+     "productMinAmount": 2303.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 2303,
-       "unitAmount": 2303,
+       "amount": 2303.0,
+       "unitAmount": 2303.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -30,24 +32,26 @@
   {
    "id": "aldi-597675",
    "name": "Példatej csirkemellfilé 1 kg",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-aldi-597675.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
-   "minUnitPrice": 2308,
+   "minUnitPrice": 2308.0,
    "pricesOfChainStores": [
     {
      "id": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
      "name": "Aldi",
      "priceSameEverywhere": true,
-     "productMinAmount": 2308,
+     "productMinAmount": 2308.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 2308,
-       "unitAmount": 2308,
+       "amount": 2308.0,
+       "unitAmount": 2308.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -57,24 +61,26 @@
   {
    "id": "5993799746431",
    "name": "Szintetika csirkemellfilé 500 g",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5993799746431.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 0.5,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "0.5",
    "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
-   "minUnitPrice": 2312,
+   "minUnitPrice": 2312.0,
    "pricesOfChainStores": [
     {
      "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
      "name": "Spar",
      "priceSameEverywhere": true,
-     "productMinAmount": 1156,
+     "productMinAmount": 1156.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 1156,
-       "unitAmount": 2312,
+       "amount": 1156.0,
+       "unitAmount": 2312.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -84,24 +90,26 @@
   {
    "id": "5993794954657",
    "name": "Mintafarm csirkemellfilé 1 kg",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5993794954657.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 1,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "1",
    "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
-   "minUnitPrice": 2316,
+   "minUnitPrice": 2316.0,
    "pricesOfChainStores": [
     {
      "id": "a1edce05-bc72-5d71-821d-4089b8f96216",
      "name": "Spar",
      "priceSameEverywhere": true,
-     "productMinAmount": 2316,
+     "productMinAmount": 2316.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 2316,
-       "unitAmount": 2316,
+       "amount": 2316.0,
+       "unitAmount": 2316.0,
        "sameAmountEverywhere": true
       }
      ]
@@ -111,24 +119,26 @@
   {
    "id": "5991628161646",
    "name": "Mintafarm csirkemellfilé 250 g",
-   "imageUrl": null,
+   "imageUrl": "https://cdn.example.invalid/images/product-image-5991628161646.jpg",
    "unit": "kg",
    "unitTitle": "csomag",
    "bulk": false,
-   "packaging": 0.25,
+   "returnType": null,
+   "returnFee": 0,
+   "packaging": "0.25",
    "categoryPath": "hus_hal_felvagott/szarnyas/csirkemell",
-   "minUnitPrice": 2324,
+   "minUnitPrice": 2324.0,
    "pricesOfChainStores": [
     {
      "id": "aaaf447d-da4c-518e-966a-bdae24170972",
      "name": "Lidl",
      "priceSameEverywhere": true,
-     "productMinAmount": 581,
+     "productMinAmount": 581.0,
      "prices": [
       {
        "type": "NORMAL",
-       "amount": 581,
-       "unitAmount": 2324,
+       "amount": 581.0,
+       "unitAmount": 2324.0,
        "sameAmountEverywhere": true
       }
      ]

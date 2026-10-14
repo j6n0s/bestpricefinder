@@ -136,6 +136,21 @@ def _num(value: Decimal) -> int | float:
     return int(value) if value == value.to_integral_value() else float(value)
 
 
+def _money(value: Decimal | int) -> float:
+    """A price as the real API sends it: always a JSON float (``715.0``, ``428.57``)."""
+    return float(value)
+
+
+def _decimal_text(value: Decimal) -> str:
+    """``packaging`` as the real API sends it: a plain decimal string (``"1"``, ``"0.5"``, ``"0.175"``)."""
+    return format(value.normalize(), "f")
+
+
+def chain_logo_key(name: str) -> str:
+    """The real ``imageUrl`` of a chain is a logo key (``"spar"``, ``"mueller"``), not a URL."""
+    return fold(name.replace("ü", "ue").replace("Ü", "Ue")).replace(" ", "")
+
+
 def _comma(value: Decimal | int, places: int = 4) -> str:
     """XLSX text number with a decimal comma, e.g. Decimal('1699') -> '1699,0000'."""
     return f"{Decimal(value):.{places}f}".replace(".", ",")
@@ -248,21 +263,21 @@ def leaf_magnitudes() -> Mapping[int, tuple[str, Decimal]]:
     return found
 
 
+def _node(node_id: int, name: str, path: str) -> dict[str, Any]:
+    return {"id": node_id, "name": name, "path": path, "icon": None, "categoryNodes": []}
+
+
 def category_tree(leaves: Sequence[FakeLeaf]) -> list[dict[str, Any]]:
-    """The documented /categories shape: an array of top nodes ``{id, name, path, categoryNodes}``."""
+    """The top nodes ``{id, name, path, icon, categoryNodes}`` of /categories (real sample 2026-10-14)."""
     tops: dict[int, dict[str, Any]] = {}
     l2s: dict[int, dict[str, Any]] = {}
     for leaf in leaves:
         top_path, l2_path = leaf.path.split("/")[0], "/".join(leaf.path.split("/")[:2])
-        top = tops.setdefault(
-            leaf.top_id, {"id": leaf.top_id, "name": leaf.top_name, "path": top_path, "categoryNodes": []}
-        )
+        top = tops.setdefault(leaf.top_id, _node(leaf.top_id, leaf.top_name, top_path))
         if leaf.l2_id not in l2s:
-            l2s[leaf.l2_id] = {"id": leaf.l2_id, "name": leaf.l2_name, "path": l2_path, "categoryNodes": []}
+            l2s[leaf.l2_id] = _node(leaf.l2_id, leaf.l2_name, l2_path)
             top["categoryNodes"].append(l2s[leaf.l2_id])
-        l2s[leaf.l2_id]["categoryNodes"].append(
-            {"id": leaf.id, "name": leaf.name, "path": leaf.path, "categoryNodes": []}
-        )
+        l2s[leaf.l2_id]["categoryNodes"].append(_node(leaf.id, leaf.name, leaf.path))
     return [tops[top_id] for top_id in sorted(tops)]
 
 
@@ -693,6 +708,7 @@ def build_world(
 
 
 def shops_json(world: FakeWorld) -> list[dict[str, Any]]:
+    """The items of /shops (the body wraps them: ``{"shops": [...]}``)."""
     return [
         {
             "uuid": s.id,
@@ -701,17 +717,16 @@ def shops_json(world: FakeWorld) -> list[dict[str, Any]]:
             "address": s.address,
             "chainStoreUuid": world.chains[s.chain].uuid,
             "location": {"latitude": s.lat, "longitude": s.lon},
-            "openingTime": s.opening,
+            "openingTime": s.opening or "",  # the real API sends "" when there is none
         }
         for s in world.stores.values()
     ]
 
 
 def chain_stores_json(world: FakeWorld) -> list[dict[str, Any]]:
-    # imageUrl would be a retailer logo on the real API: the fake uses a placeholder, the client ignores it.
+    """The items of /chain-stores (the body wraps them: ``{"chainStores": [...]}``)."""
     return [
-        {"uuid": c.uuid, "name": c.name, "imageUrl": "https://cdn.example.invalid/chain.png"}
-        for c in world.chains.values()
+        {"uuid": c.uuid, "name": c.name, "imageUrl": chain_logo_key(c.name)} for c in world.chains.values()
     ]
 
 
@@ -723,8 +738,8 @@ def _price_list(
     for price_type in sorted(amounts, key=order.index):
         entry: dict[str, Any] = {
             "type": price_type,
-            "amount": amounts[price_type],
-            "unitAmount": _num(product.unit_amount(amounts[price_type])),
+            "amount": _money(amounts[price_type]),
+            "unitAmount": _money(product.unit_amount(amounts[price_type])),
         }
         if same is not None:
             entry["sameAmountEverywhere"] = same[price_type]
@@ -749,22 +764,24 @@ def listing_item(
     if not summaries:
         return None
     shown = shown_chains(summaries)
-    return {
+    return {  # key order and JSON types as in the real samples of 2026-10-14
         "id": product.id,
         "name": product.name,
-        "imageUrl": None,
+        "imageUrl": _image_url(product),
         "unit": product.unit,
         "unitTitle": product.unit_title,
         "bulk": False,
-        "packaging": _num(product.packaging),
+        "returnType": None,
+        "returnFee": 0,
+        "packaging": _decimal_text(product.packaging),
         "categoryPath": _path_of(world, product.leaf_id),
-        "minUnitPrice": _num(min(product.unit_amount(s.product_min_amount) for s in shown)),
+        "minUnitPrice": _money(min(product.unit_amount(s.product_min_amount) for s in shown)),
         "pricesOfChainStores": [
             {
                 "id": world.chains[s.chain].uuid,
                 "name": s.chain,
                 "priceSameEverywhere": s.listing_same,
-                "productMinAmount": s.product_min_amount,
+                "productMinAmount": _money(s.product_min_amount),
                 "prices": _price_list(product, s.mins, s.same_amount),
             }
             for s in sorted(shown, key=lambda s: s.chain)
@@ -772,26 +789,33 @@ def listing_item(
     }
 
 
+def _image_url(product: FakeProduct) -> str:
+    # The real API links a retailer photo; the client never fetches or stores it (BUILD-BRIEF §8.3).
+    return f"https://cdn.example.invalid/images/product-image-{product.id}.jpg"
+
+
 def detail_json(world: FakeWorld, product: FakeProduct) -> dict[str, Any]:
     summaries = [s for offer in product.offers if (s := summarise(offer)) is not None]
-    return {
+    return {  # key order and JSON types as in the real samples of 2026-10-14
         "id": product.id,
         "name": product.name,
-        "imageUrl": None,
+        "imageUrl": _image_url(product),
         "unit": product.unit,
         "unitTitle": product.unit_title,
         "bulk": True,  # differs from the listing on the real API too (research/gvh-location §1)
-        "packaging": _num(product.packaging),
+        "returnType": None,
+        "returnFee": 0,
+        "packaging": _decimal_text(product.packaging),
+        "categoryId": str(product.leaf_id),
         "categoryPath": _path_of(world, product.leaf_id),
-        "minUnitPrice": _num(min(product.unit_amount(s.product_min_amount) for s in summaries)),
-        "chainStores": [
+        "chainStores": [  # every chain; "uuid" (not "id"), no productMinAmount
             {
-                "id": world.chains[s.chain].uuid,
+                "uuid": world.chains[s.chain].uuid,
                 "name": s.chain,
+                "imageUrl": chain_logo_key(s.chain),
                 "prices": _price_list(product, s.mins, None),
                 "pricesMax": _price_list(product, s.maxs, None),
                 "priceSameEverywhere": s.detail_same,
-                "productMinAmount": s.product_min_amount,
                 "availableInShops": list(s.stores),
             }
             for s in summaries
@@ -810,7 +834,7 @@ def shop_prices_json(product: FakeProduct, store_ids: Sequence[str]) -> dict[str
                 {
                     "shopUuid": store,
                     "prices": [
-                        {"type": t, "amount": a, "unitAmount": _num(product.unit_amount(a))}
+                        {"type": t, "amount": _money(a), "unitAmount": _money(product.unit_amount(a))}
                         for t, a in prices
                     ],
                 }
@@ -1019,7 +1043,7 @@ class FakeGvh:
         if fault == "connect":
             return "connect"
         if isinstance(fault, int):
-            return _json(fault, {"statusCode": fault, "message": "INJECTED-FAULT"})
+            return _json(fault, {"code": "INJECTED-FAULT", "message": "Injected fault"})
         if path == XLSX_PATH:
             return self._xlsx(query)
         if not path.startswith(self.api_prefix + "/"):
@@ -1041,29 +1065,31 @@ class FakeGvh:
 
     def _api(self, path: str, raw_path: str, query: Mapping[str, str]) -> FakeResponse:
         world = self.world
-        if path == "/categories":
-            return _json(200, category_tree(list(world.leaves.values())))
+        if path == "/categories":  # the reference bodies are wrapped objects (real samples, 2026-10-14)
+            return _json(200, {"categories": category_tree(list(world.leaves.values()))})
         if path == "/chain-stores":
-            return _json(200, chain_stores_json(world))
+            return _json(200, {"chainStores": chain_stores_json(world)})
         if path == "/shops":
-            return _json(200, shops_json(world))
+            return _json(200, {"shops": shops_json(world)})
         if match := re.fullmatch(r"/products-by-category/(\d+)", path):
             return self._listing(int(match.group(1)), query)
         if path == "/search" and len(fold(query.get("q", ""))) < 3:
             # research/gvh-location/notes.md §1: a 2-character q is HTTP 400 SEARCH-INPUT-ERROR (longer
             # queries are not modelled: the app never searches; they get the SPA page like any unknown path)
-            return _json(400, {"statusCode": 400, "message": "SEARCH-INPUT-ERROR"})
+            return _json(400, {"code": "SEARCH-INPUT-ERROR", "message": "Invalid search parameter"})
         if match := re.fullmatch(r"/product/([^/]+)/shop/([^/]+)", raw_path):
             product = world.products.get(unquote(match.group(1)))
             ids = [s for s in unquote(match.group(2)).split(",") if s]
             payload = shop_prices_json(product, ids) if product else None
             if payload is None:
-                return _json(404, {"statusCode": 404, "message": NOT_FOUND})
+                return _json(
+                    404, {"code": NOT_FOUND, "message": "Not found prices by product and shops uuid!"}
+                )
             return _json(200, payload)
         if match := re.fullmatch(r"/product/([^/]+)", raw_path):
             product = world.products.get(unquote(match.group(1)))
             if product is None:
-                return _json(404, {"statusCode": 404, "message": "PRODUCT-NOT-FOUND"})
+                return _json(404, {"code": "PRODUCT-NOT-FOUND", "message": "Product not found"})
             return _json(200, detail_json(world, product))
         return FakeResponse(200, _SPA, "text/html; charset=utf-8")  # the real site's SPA fallback
 
@@ -1073,7 +1099,7 @@ class FakeGvh:
             limit = 12 if self.ignore_limit or "limit" not in query else min(int(query["limit"]), 48)
             offset = int(query.get("offset", "0"))
         except ValueError:
-            return _json(400, {"statusCode": 400, "message": "VALIDATION-ERROR"})
+            return _json(400, {"code": "VALIDATION-ERROR", "message": "Invalid parameter"})
         leaf_ids = (
             [category_id]
             if category_id in world.leaves
@@ -1217,10 +1243,8 @@ def synthetic_fixtures(data_date: date = date(2026, 10, 13)) -> dict[str, tuple[
         "product-shop-notfound.json": get(f"/api/product/{world.special['spar_outlier']}/shop/tesco-4062"),
     }
     status, shops = get("/api/shops")
-    out["shops-head.json"] = (
-        status,
-        json.dumps(json.loads(shops)[:40], ensure_ascii=False, separators=(",", ":")).encode(),
-    )
+    head = {"shops": json.loads(shops)["shops"][:40]}
+    out["shops-head.json"] = (status, json.dumps(head, ensure_ascii=False, separators=(",", ":")).encode())
     return out
 
 

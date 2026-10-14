@@ -1,482 +1,484 @@
-[
- {
-  "uuid": "spar-110",
-  "postalCode": "1011",
-  "city": "Budapest I.",
-  "address": "Batthyány tér 5-6",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.506062,
-   "longitude": 19.038035
+{
+ "shops": [
+  {
+   "uuid": "spar-110",
+   "postalCode": "1011",
+   "city": "Budapest I.",
+   "address": "Batthyány tér 5-6",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.506062,
+    "longitude": 19.038035
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-220",
-  "postalCode": "1011",
-  "city": "BUDAPEST",
-  "address": "Batthyány tér 5-6.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.50616,
-   "longitude": 19.03808
+  {
+   "uuid": "dm-220",
+   "postalCode": "1011",
+   "city": "BUDAPEST",
+   "address": "Batthyány tér 5-6.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.50616,
+    "longitude": 19.03808
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-197",
-  "postalCode": "1013",
-  "city": "Budapest",
-  "address": "Alagút utca 5-7.",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.49703,
-   "longitude": 19.03245
+  {
+   "uuid": "spar-197",
+   "postalCode": "1013",
+   "city": "Budapest",
+   "address": "Alagút utca 5-7.",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.49703,
+    "longitude": 19.03245
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "aldi-J179",
-  "postalCode": "1016",
-  "city": "Budapest",
-  "address": "Mészáros utca 56/A",
-  "chainStoreUuid": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
-  "location": {
-   "latitude": 47.491114,
-   "longitude": 19.031097
+  {
+   "uuid": "aldi-J179",
+   "postalCode": "1016",
+   "city": "Budapest",
+   "address": "Mészáros utca 56/A",
+   "chainStoreUuid": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+   "location": {
+    "latitude": 47.491114,
+    "longitude": 19.031097
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-363",
-  "postalCode": "1016",
-  "city": "Budapest",
-  "address": "Krisztina krt. 65-67.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.4967653,
-   "longitude": 19.0317985
+  {
+   "uuid": "dm-363",
+   "postalCode": "1016",
+   "city": "Budapest",
+   "address": "Krisztina krt. 65-67.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.4967653,
+    "longitude": 19.0317985
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "tesco-4064",
-  "postalCode": "1020",
-  "city": "Budapest",
-  "address": "Galoca u. 22.",
-  "chainStoreUuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
-  "location": {
-   "latitude": 47.5515213,
-   "longitude": 18.9642296
+  {
+   "uuid": "tesco-4064",
+   "postalCode": "1020",
+   "city": "Budapest",
+   "address": "Galoca u. 22.",
+   "chainStoreUuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+   "location": {
+    "latitude": 47.5515213,
+    "longitude": 18.9642296
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-8264",
-  "postalCode": "1021",
-  "city": "Budapest",
-  "address": "Hűvösvölgyi út. 138..",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.53763,
-   "longitude": 18.966444
+  {
+   "uuid": "spar-8264",
+   "postalCode": "1021",
+   "city": "Budapest",
+   "address": "Hűvösvölgyi út. 138..",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.53763,
+    "longitude": 18.966444
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-139",
-  "postalCode": "1021",
-  "city": "Budapest",
-  "address": "Hűvösvölgyi út 138.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.53768,
-   "longitude": 18.96638
+  {
+   "uuid": "dm-139",
+   "postalCode": "1021",
+   "city": "Budapest",
+   "address": "Hűvösvölgyi út 138.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.53768,
+    "longitude": 18.96638
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-308",
-  "postalCode": "1023",
-  "city": "Budapest",
-  "address": "Bécsi út 33-35.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.52717,
-   "longitude": 19.03827
+  {
+   "uuid": "dm-308",
+   "postalCode": "1023",
+   "city": "Budapest",
+   "address": "Bécsi út 33-35.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.52717,
+    "longitude": 19.03827
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-174",
-  "postalCode": "1024",
-  "city": "Budapest",
-  "address": "Lövőház u. 2-6",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.508788,
-   "longitude": 19.027246
+  {
+   "uuid": "spar-174",
+   "postalCode": "1024",
+   "city": "Budapest",
+   "address": "Lövőház u. 2-6",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.508788,
+    "longitude": 19.027246
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-407",
-  "postalCode": "1024",
-  "city": "Budapest",
-  "address": "Lövőház utca 2-6.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.5089792,
-   "longitude": 19.0266522
+  {
+   "uuid": "dm-407",
+   "postalCode": "1024",
+   "city": "Budapest",
+   "address": "Lövőház utca 2-6.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.5089792,
+    "longitude": 19.0266522
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-191",
-  "postalCode": "1024",
-  "city": "Budapest",
-  "address": "Retek u. 4.",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.508069,
-   "longitude": 19.025903
+  {
+   "uuid": "spar-191",
+   "postalCode": "1024",
+   "city": "Budapest",
+   "address": "Retek u. 4.",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.508069,
+    "longitude": 19.025903
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "rossmann-241",
-  "postalCode": "1024",
-  "city": "Budapest",
-  "address": "Lövőház utca 2-6.",
-  "chainStoreUuid": "05ebbb5a-e919-55fe-9e1f-9f0d6b62a731",
-  "location": {
-   "latitude": 47.50836,
-   "longitude": 19.02651
+  {
+   "uuid": "rossmann-241",
+   "postalCode": "1024",
+   "city": "Budapest",
+   "address": "Lövőház utca 2-6.",
+   "chainStoreUuid": "05ebbb5a-e919-55fe-9e1f-9f0d6b62a731",
+   "location": {
+    "latitude": 47.50836,
+    "longitude": 19.02651
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-8257",
-  "postalCode": "1025",
-  "city": "Budapest",
-  "address": "Törökvész u. 87-91",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.529338,
-   "longitude": 19.005061
+  {
+   "uuid": "spar-8257",
+   "postalCode": "1025",
+   "city": "Budapest",
+   "address": "Törökvész u. 87-91",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.529338,
+    "longitude": 19.005061
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-100",
-  "postalCode": "1025",
-  "city": "Budapest",
-  "address": "Törökvész út 87-91.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.5290574,
-   "longitude": 19.005256
+  {
+   "uuid": "dm-100",
+   "postalCode": "1025",
+   "city": "Budapest",
+   "address": "Törökvész út 87-91.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.5290574,
+    "longitude": 19.005256
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-430",
-  "postalCode": "1026",
-  "city": "Budapest",
-  "address": "Gábor Áron utca 74-78/A",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.5225813,
-   "longitude": 19.0147782
+  {
+   "uuid": "dm-430",
+   "postalCode": "1026",
+   "city": "Budapest",
+   "address": "Gábor Áron utca 74-78/A",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.5225813,
+    "longitude": 19.0147782
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-8262",
-  "postalCode": "1026",
-  "city": "Budapest",
-  "address": "Gábor Áron u. 74-78.",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.522315,
-   "longitude": 19.015081
+  {
+   "uuid": "spar-8262",
+   "postalCode": "1026",
+   "city": "Budapest",
+   "address": "Gábor Áron u. 74-78.",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.522315,
+    "longitude": 19.015081
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "tesco-4037",
-  "postalCode": "1026",
-  "city": "Budapest",
-  "address": "Bimbó út 133.",
-  "chainStoreUuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
-  "location": {
-   "latitude": 47.5210304,
-   "longitude": 19.0065308
+  {
+   "uuid": "tesco-4037",
+   "postalCode": "1026",
+   "city": "Budapest",
+   "address": "Bimbó út 133.",
+   "chainStoreUuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+   "location": {
+    "latitude": 47.5210304,
+    "longitude": 19.0065308
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "aldi-J110",
-  "postalCode": "1026",
-  "city": "Budapest",
-  "address": "Pasaréti út 98.",
-  "chainStoreUuid": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
-  "location": {
-   "latitude": 47.523664,
-   "longitude": 18.99382
+  {
+   "uuid": "aldi-J110",
+   "postalCode": "1026",
+   "city": "Budapest",
+   "address": "Pasaréti út 98.",
+   "chainStoreUuid": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+   "location": {
+    "latitude": 47.523664,
+    "longitude": 18.99382
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-318",
-  "postalCode": "1026",
-  "city": "Budapest",
-  "address": "Pázsit utca 2.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.51631,
-   "longitude": 18.9999
+  {
+   "uuid": "dm-318",
+   "postalCode": "1026",
+   "city": "Budapest",
+   "address": "Pázsit utca 2.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.51631,
+    "longitude": 18.9999
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-115",
-  "postalCode": "1027",
-  "city": "Budapest",
-  "address": "Margit körút 50-52.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.5109,
-   "longitude": 19.03223
+  {
+   "uuid": "dm-115",
+   "postalCode": "1027",
+   "city": "Budapest",
+   "address": "Margit körút 50-52.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.5109,
+    "longitude": 19.03223
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "rossmann-222",
-  "postalCode": "1027",
-  "city": "Budapest",
-  "address": "Margit körút 3.",
-  "chainStoreUuid": "05ebbb5a-e919-55fe-9e1f-9f0d6b62a731",
-  "location": {
-   "latitude": 47.51477,
-   "longitude": 19.03749
+  {
+   "uuid": "rossmann-222",
+   "postalCode": "1027",
+   "city": "Budapest",
+   "address": "Margit körút 3.",
+   "chainStoreUuid": "05ebbb5a-e919-55fe-9e1f-9f0d6b62a731",
+   "location": {
+    "latitude": 47.51477,
+    "longitude": 19.03749
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "lidl-316",
-  "postalCode": "1027",
-  "city": "Budapest",
-  "address": "Csalogány u. 43",
-  "chainStoreUuid": "aaaf447d-da4c-518e-966a-bdae24170972",
-  "location": {
-   "latitude": 47.50813,
-   "longitude": 19.03156
+  {
+   "uuid": "lidl-316",
+   "postalCode": "1027",
+   "city": "Budapest",
+   "address": "Csalogány u. 43",
+   "chainStoreUuid": "aaaf447d-da4c-518e-966a-bdae24170972",
+   "location": {
+    "latitude": 47.50813,
+    "longitude": 19.03156
+   },
+   "openingTime": "Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00"
   },
-  "openingTime": "Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00"
- },
- {
-  "uuid": "dm-390",
-  "postalCode": "1028",
-  "city": "Budapest",
-  "address": "Hidegkúti út 1.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.544591,
-   "longitude": 18.9609646
+  {
+   "uuid": "dm-390",
+   "postalCode": "1028",
+   "city": "Budapest",
+   "address": "Hidegkúti út 1.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.544591,
+    "longitude": 18.9609646
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "tesco-4078",
-  "postalCode": "1028",
-  "city": "Budapest",
-  "address": "Máriaremetei út 72",
-  "chainStoreUuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
-  "location": {
-   "latitude": 47.5482712,
-   "longitude": 18.9529209
+  {
+   "uuid": "tesco-4078",
+   "postalCode": "1028",
+   "city": "Budapest",
+   "address": "Máriaremetei út 72",
+   "chainStoreUuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+   "location": {
+    "latitude": 47.5482712,
+    "longitude": 18.9529209
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-194",
-  "postalCode": "1028",
-  "city": "Budapest",
-  "address": "Hidegkúti út 167.",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.563949,
-   "longitude": 18.961992
+  {
+   "uuid": "spar-194",
+   "postalCode": "1028",
+   "city": "Budapest",
+   "address": "Hidegkúti út 167.",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.563949,
+    "longitude": 18.961992
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "lidl-352",
-  "postalCode": "1028",
-  "city": "Budapest",
-  "address": "Máriaremetei út 1.",
-  "chainStoreUuid": "aaaf447d-da4c-518e-966a-bdae24170972",
-  "location": {
-   "latitude": 47.54506,
-   "longitude": 18.96289
+  {
+   "uuid": "lidl-352",
+   "postalCode": "1028",
+   "city": "Budapest",
+   "address": "Máriaremetei út 1.",
+   "chainStoreUuid": "aaaf447d-da4c-518e-966a-bdae24170972",
+   "location": {
+    "latitude": 47.54506,
+    "longitude": 18.96289
+   },
+   "openingTime": "Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00"
   },
-  "openingTime": "Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00"
- },
- {
-  "uuid": "tesco-4043",
-  "postalCode": "1030",
-  "city": "Budapest",
-  "address": "Matyas Kiraly u. 1.",
-  "chainStoreUuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
-  "location": {
-   "latitude": 47.5859108,
-   "longitude": 19.0453606
+  {
+   "uuid": "tesco-4043",
+   "postalCode": "1030",
+   "city": "Budapest",
+   "address": "Matyas Kiraly u. 1.",
+   "chainStoreUuid": "f8f3811e-310b-50cc-a289-52f4a6c4c5e3",
+   "location": {
+    "latitude": 47.5859108,
+    "longitude": 19.0453606
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "rossmann-372",
-  "postalCode": "1031",
-  "city": "Budapest",
-  "address": "Mészkő utca 2-4.",
-  "chainStoreUuid": "05ebbb5a-e919-55fe-9e1f-9f0d6b62a731",
-  "location": {
-   "latitude": 47.580657,
-   "longitude": 19.030509
+  {
+   "uuid": "rossmann-372",
+   "postalCode": "1031",
+   "city": "Budapest",
+   "address": "Mészkő utca 2-4.",
+   "chainStoreUuid": "05ebbb5a-e919-55fe-9e1f-9f0d6b62a731",
+   "location": {
+    "latitude": 47.580657,
+    "longitude": 19.030509
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-11",
-  "postalCode": "1031",
-  "city": "Budapest",
-  "address": "Monostori u. 3.",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.573008,
-   "longitude": 19.049383
+  {
+   "uuid": "spar-11",
+   "postalCode": "1031",
+   "city": "Budapest",
+   "address": "Monostori u. 3.",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.573008,
+    "longitude": 19.049383
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "dm-408",
-  "postalCode": "1032",
-  "city": "Budapest",
-  "address": "Bécsi út 154.",
-  "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
-  "location": {
-   "latitude": 47.5473089,
-   "longitude": 19.0278057
+  {
+   "uuid": "dm-408",
+   "postalCode": "1032",
+   "city": "Budapest",
+   "address": "Bécsi út 154.",
+   "chainStoreUuid": "a062cb11-7da0-537f-88e2-6b0445064150",
+   "location": {
+    "latitude": 47.5473089,
+    "longitude": 19.0278057
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-8265",
-  "postalCode": "1032",
-  "city": "Budapest",
-  "address": "Bécsi u.",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.5431,
-   "longitude": 19.0289
+  {
+   "uuid": "spar-8265",
+   "postalCode": "1032",
+   "city": "Budapest",
+   "address": "Bécsi u.",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.5431,
+    "longitude": 19.0289
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-8218",
-  "postalCode": "1032",
-  "city": "Budapest III.",
-  "address": "Bécsi u. 154.",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.546497,
-   "longitude": 19.028357
+  {
+   "uuid": "spar-8218",
+   "postalCode": "1032",
+   "city": "Budapest III.",
+   "address": "Bécsi u. 154.",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.546497,
+    "longitude": 19.028357
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-63",
-  "postalCode": "1032",
-  "city": "Budapest",
-  "address": "Vörösvári út 98.",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.54581,
-   "longitude": 19.03309
+  {
+   "uuid": "spar-63",
+   "postalCode": "1032",
+   "city": "Budapest",
+   "address": "Vörösvári út 98.",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.54581,
+    "longitude": 19.03309
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "spar-13",
-  "postalCode": "1033",
-  "city": "Budapest",
-  "address": "Szérűskert utca 018910/23",
-  "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
-  "location": {
-   "latitude": 47.55668,
-   "longitude": 19.04451
+  {
+   "uuid": "spar-13",
+   "postalCode": "1033",
+   "city": "Budapest",
+   "address": "Szérűskert utca 018910/23",
+   "chainStoreUuid": "a1edce05-bc72-5d71-821d-4089b8f96216",
+   "location": {
+    "latitude": 47.55668,
+    "longitude": 19.04451
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "auchan-007",
-  "postalCode": "1033",
-  "city": "Budapest",
-  "address": "Szentendrei út 115.",
-  "chainStoreUuid": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
-  "location": {
-   "latitude": 47.5593514,
-   "longitude": 19.0499436
+  {
+   "uuid": "auchan-007",
+   "postalCode": "1033",
+   "city": "Budapest",
+   "address": "Szentendrei út 115.",
+   "chainStoreUuid": "39fa611c-9524-55cd-877f-00bda0ffe5e2",
+   "location": {
+    "latitude": 47.5593514,
+    "longitude": 19.0499436
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "aldi-J049",
-  "postalCode": "1033",
-  "city": "Budapest",
-  "address": "Huszti út 33.",
-  "chainStoreUuid": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
-  "location": {
-   "latitude": 47.55488,
-   "longitude": 19.04082
+  {
+   "uuid": "aldi-J049",
+   "postalCode": "1033",
+   "city": "Budapest",
+   "address": "Huszti út 33.",
+   "chainStoreUuid": "0b76cffb-51af-51d8-b966-287b2d1a5d58",
+   "location": {
+    "latitude": 47.55488,
+    "longitude": 19.04082
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "penny-58",
-  "postalCode": "1033",
-  "city": "Budapest",
-  "address": "Huszti út 36.",
-  "chainStoreUuid": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
-  "location": {
-   "latitude": 47.55663,
-   "longitude": 19.039715
+  {
+   "uuid": "penny-58",
+   "postalCode": "1033",
+   "city": "Budapest",
+   "address": "Huszti út 36.",
+   "chainStoreUuid": "4b9b5f4e-1a20-537f-b531-59cc4df3ab96",
+   "location": {
+    "latitude": 47.55663,
+    "longitude": 19.039715
+   },
+   "openingTime": ""
   },
-  "openingTime": null
- },
- {
-  "uuid": "lidl-177",
-  "postalCode": "1033",
-  "city": "Budapest",
-  "address": "Huszti út 20",
-  "chainStoreUuid": "aaaf447d-da4c-518e-966a-bdae24170972",
-  "location": {
-   "latitude": 47.55278,
-   "longitude": 19.03975
+  {
+   "uuid": "lidl-177",
+   "postalCode": "1033",
+   "city": "Budapest",
+   "address": "Huszti út 20",
+   "chainStoreUuid": "aaaf447d-da4c-518e-966a-bdae24170972",
+   "location": {
+    "latitude": 47.55278,
+    "longitude": 19.03975
+   },
+   "openingTime": "Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00"
   },
-  "openingTime": "Nyitvatartás: 06:30-21:30#Nyitvatartás - Vasárnap: 07:00-19:00"
- },
- {
-  "uuid": "rossmann-212",
-  "postalCode": "1035",
-  "city": "Budapest",
-  "address": "Flórián tér 6-9.",
-  "chainStoreUuid": "05ebbb5a-e919-55fe-9e1f-9f0d6b62a731",
-  "location": {
-   "latitude": 47.54264,
-   "longitude": 19.04042
-  },
-  "openingTime": null
- }
-]
+  {
+   "uuid": "rossmann-212",
+   "postalCode": "1035",
+   "city": "Budapest",
+   "address": "Flórián tér 6-9.",
+   "chainStoreUuid": "05ebbb5a-e919-55fe-9e1f-9f0d6b62a731",
+   "location": {
+    "latitude": 47.54264,
+    "longitude": 19.04042
+   },
+   "openingTime": ""
+  }
+ ]
+}

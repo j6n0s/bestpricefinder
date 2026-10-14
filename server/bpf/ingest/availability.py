@@ -63,7 +63,7 @@ def availability_rows(
         issues.add("detail_id_mismatch", f"{product_id} -> {detail.id[:64]}")
     rows: dict[str, AvailabilityRow] = {}
     for chain in detail.chainStores:
-        chain_id = chains.by_uuid(chain.id, chain.name or "", issues)
+        chain_id = chains.by_uuid(chain.uuid, chain.name or "", issues)
         if chain_id is None:
             continue
         if chain_id in rows:

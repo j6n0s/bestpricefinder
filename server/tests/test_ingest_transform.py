@@ -111,7 +111,7 @@ def test_chain_slug_needs_letters() -> None:
 
 
 def test_chain_rows_from_the_fake() -> None:
-    chains = parse_chain_stores(json.dumps(chain_stores_json(WORLD)).encode()).value
+    chains = parse_chain_stores(json.dumps({"chainStores": chain_stores_json(WORLD)}).encode()).value
     log = RunLog()
     rows = {row.slug: row for row in chain_rows(chains, log)}
     assert sorted(rows) == ["aldi", "auchan", "dm", "lidl", "muller", "penny", "rossmann", "spar", "tesco"]
@@ -187,7 +187,7 @@ def _shop(**changes: Any) -> dict[str, Any]:
 
 
 def test_real_store_list_converts_completely() -> None:
-    shops = parse_shops(json.dumps(shops_json(WORLD)).encode()).value
+    shops = parse_shops(json.dumps({"shops": shops_json(WORLD)}).encode()).value
     log = RunLog()
     rows = store_rows(shops, _chains(), log)
     assert len(rows) == 1829
@@ -203,7 +203,7 @@ def test_real_store_list_converts_completely() -> None:
 
 
 def test_only_the_known_coordinate_error_is_an_outlier() -> None:
-    shops = parse_shops(json.dumps(shops_json(WORLD)).encode()).value
+    shops = parse_shops(json.dumps({"shops": shops_json(WORLD)}).encode()).value
     rows = store_rows(shops, _chains(), RunLog())
     outliers = coordinate_outliers(rows)
     assert [store_id for store_id, _ in outliers] == ["rossmann-364"]  # Zalaegerszeg, Platán sor 8
@@ -213,19 +213,21 @@ def test_only_the_known_coordinate_error_is_an_outlier() -> None:
 def test_invalid_stores_are_skipped_or_nulled_never_crash() -> None:
     shops = parse_shops(
         json.dumps(
-            [
-                _shop(uuid="zz-ok"),
-                _shop(uuid="bad id!"),
-                _shop(uuid="x" * 41),
-                _shop(uuid="zz-ok"),  # duplicate
-                _shop(uuid="zz-chain", chainStoreUuid="unknown"),
-                _shop(uuid="zz-noloc", location=None),
-                _shop(uuid="zz-swapped", location={"latitude": 19.05, "longitude": 47.5}),
-                _shop(uuid="zz-north", location={"latitude": 49.01, "longitude": 19.0}),
-                _shop(uuid="zz-edge", location={"latitude": 49.0, "longitude": 23.5}),
-                _shop(uuid="zz-pc", postalCode="H-1011"),
-                _shop(uuid="zz-city", city="x" * 101, address="   ", openingTime="y" * 501),
-            ]
+            {
+                "shops": [
+                    _shop(uuid="zz-ok"),
+                    _shop(uuid="bad id!"),
+                    _shop(uuid="x" * 41),
+                    _shop(uuid="zz-ok"),  # duplicate
+                    _shop(uuid="zz-chain", chainStoreUuid="unknown"),
+                    _shop(uuid="zz-noloc", location=None),
+                    _shop(uuid="zz-swapped", location={"latitude": 19.05, "longitude": 47.5}),
+                    _shop(uuid="zz-north", location={"latitude": 49.01, "longitude": 19.0}),
+                    _shop(uuid="zz-edge", location={"latitude": 49.0, "longitude": 23.5}),
+                    _shop(uuid="zz-pc", postalCode="H-1011"),
+                    _shop(uuid="zz-city", city="x" * 101, address="   ", openingTime="y" * 501),
+                ]
+            }
         ).encode()
     ).value
     log = RunLog()
@@ -249,7 +251,9 @@ def test_invalid_stores_are_skipped_or_nulled_never_crash() -> None:
 
 
 def test_category_tree_flattens_with_food_flags() -> None:
-    nodes = parse_categories(json.dumps(category_tree(list(WORLD.leaves.values()))).encode()).value
+    nodes = parse_categories(
+        json.dumps({"categories": category_tree(list(WORLD.leaves.values()))}).encode()
+    ).value
     log = RunLog()
     rows = category_rows(nodes, log)
     assert log.warnings == []
@@ -270,19 +274,19 @@ def test_missing_food_top_is_reported_and_none_fails() -> None:
     tree = category_tree(list(WORLD.leaves.values()))
     renamed = [dict(node, name="Pékáru és más") if node["id"] == 1046 else node for node in tree]
     log = RunLog()
-    rows = category_rows(parse_categories(json.dumps(renamed).encode()).value, log)
+    rows = category_rows(parse_categories(json.dumps({"categories": renamed}).encode()).value, log)
     assert codes(log) == ["food_category_missing"]
     assert not {r.id: r for r in rows}[46].is_food
     non_food = [node for node in tree if node["id"] not in {1001, 1015, 1028, 1046, 1050, 1068}]
     with pytest.raises(IngestError, match="food top"):
-        category_rows(parse_categories(json.dumps(non_food).encode()).value, RunLog())
+        category_rows(parse_categories(json.dumps({"categories": non_food}).encode()).value, RunLog())
 
 
 def test_duplicate_category_ids_fail() -> None:
     tree = category_tree(list(WORLD.leaves.values()))
     tree[0]["categoryNodes"][0]["categoryNodes"].append({"id": 18, "name": "dup", "path": "x"})
     with pytest.raises(IngestError, match="18 appears twice"):
-        category_rows(parse_categories(json.dumps(tree).encode()).value, RunLog())
+        category_rows(parse_categories(json.dumps({"categories": tree}).encode()).value, RunLog())
 
 
 # ───────────────────────────── listing + XLSX -> product_chain_day ─────────────────────────────
@@ -417,7 +421,9 @@ def test_inconsistent_unit_prices_and_out_of_range_values_are_reported(
     body = json.loads(FakeGvh(WORLD, data_date=DAY).respond("/api/products-by-category/50?limit=48").body)  # type: ignore[union-attr]
     item = body["products"][0]
     entry = item["pricesOfChainStores"][0]
-    entry["prices"][0]["unitAmount"] = entry["prices"][0]["amount"] / item["packaging"] * 2  # 100 % off
+    entry["prices"][0]["unitAmount"] = (
+        entry["prices"][0]["amount"] / float(item["packaging"]) * 2
+    )  # 100 % off
     entry["productMinAmount"] = -5
     page = parse_product_page(json.dumps({"products": [item], "count": 1}).encode()).value
     listing = CategoryListing(50, 1, tuple(page.products), 1, 0, False)

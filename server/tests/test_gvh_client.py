@@ -262,7 +262,7 @@ def test_timeouts_are_retried(clock: FakeClock) -> None:
         calls.append(request)
         if len(calls) == 1:
             raise httpx.ReadTimeout("slow", request=request)
-        return httpx.Response(200, json=[{"uuid": "c", "name": "Lidl", "imageUrl": None}])
+        return httpx.Response(200, json={"chainStores": [{"uuid": "c", "name": "Lidl", "imageUrl": "lidl"}]})
 
     with make_client(httpx.MockTransport(handler), clock) as client:
         assert [c.name for c in client.chain_stores()] == ["Lidl"]
@@ -499,7 +499,8 @@ def test_the_xlsx_gets_the_larger_response_budget(clock: FakeClock) -> None:
 
 
 def test_a_slow_but_finished_response_within_its_budget_is_read_whole(clock: FakeClock) -> None:
-    body = gzip.compress(json.dumps([{"uuid": "c", "name": "Lidl", "imageUrl": None}]).encode())
+    chains = {"chainStores": [{"uuid": "c", "name": "Lidl", "imageUrl": "lidl"}]}
+    body = gzip.compress(json.dumps(chains).encode())
     pieces = [body[i : i + 8] for i in range(0, len(body), 8)]
     stream = TrickleStream(clock, pieces, step=client_module.API_RESPONSE_BUDGET_S / (len(pieces) + 1))
     calls: list[httpx.Request] = []
@@ -702,7 +703,7 @@ def test_shop_prices_not_found_with_any_error_status_is_final(clock: FakeClock, 
 
     def route(request: httpx.Request) -> tuple[int, object]:
         calls.append(request)
-        return status, {"statusCode": status, "message": "PRODUCT-SHOP-PRICES-NOT-FOUND"}
+        return status, {"code": "PRODUCT-SHOP-PRICES-NOT-FOUND", "message": "Not found prices"}
 
     with make_client(json_handler(route), clock) as client:
         assert client.product_shop_prices("123", ["spar-110"]) == {}

@@ -1,8 +1,8 @@
 """Pydantic models of the (undocumented) GVH Árfigyelő JSON API, and pure parse functions.
 
-Shapes come from BUILD-BRIEF §4.1 and research/gvh-location (notes.md §1-2, verify.md). Every assumption is
-listed in ``ASSUMPTIONS.md`` next to this file so it can be checked against real samples
-(``server/tests/fixtures/gvh/raw/``).
+Shapes come from BUILD-BRIEF §4.1 and research/gvh-location (notes.md §1-2, verify.md), corrected against
+the real samples captured on 2026-10-14 (``server/tests/fixtures/gvh/raw/``). Every assumption, and what the
+samples showed, is listed in ``ASSUMPTIONS.md`` next to this file.
 
 Validation policy ("fail loudly", BUILD-BRIEF §4.1 trap 11):
 
@@ -21,12 +21,13 @@ from __future__ import annotations
 
 import json
 import math
+import re
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from decimal import Decimal
 from typing import Annotated, Literal
 
-from pydantic import AliasChoices, BaseModel, BeforeValidator, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, BeforeValidator, ConfigDict, ValidationError
 
 from bpf.gvh.errors import GvhSchemaError
 
@@ -57,6 +58,21 @@ def _json_decimal(value: object) -> Decimal:
 
 JsonDecimal = Annotated[Decimal, BeforeValidator(_json_decimal)]
 
+_DECIMAL_STRING_RE = re.compile(r"\d{1,9}(?:\.\d{1,9})?")
+
+
+def _decimal_string(value: object) -> Decimal:
+    """A JSON *string* holding a plain non-negative decimal (``"1"``, ``"0.5"``, ``"0.175"``): how GVH sends
+    ``packaging``. Rejects JSON numbers, booleans, empty strings, commas, signs, exponents and spaces."""
+    if not isinstance(value, str):
+        raise ValueError(f"expected a decimal string, got {type(value).__name__}")
+    if not _DECIMAL_STRING_RE.fullmatch(value):
+        raise ValueError("expected a decimal string such as '0.5'")
+    return Decimal(value)
+
+
+DecimalString = Annotated[Decimal, BeforeValidator(_decimal_string)]
+
 
 class GvhModel(BaseModel):
     """Strict, immutable, extra fields allowed (and reported as drift)."""
@@ -68,20 +84,30 @@ class GvhModel(BaseModel):
 
 
 class CategoryNode(GvhModel):
-    """``GET /categories``: the root is a JSON array of top-level nodes."""
+    """One node of ``GET /categories`` (the body is ``{"categories": [top-level nodes]}``)."""
 
     id: int
     name: str
     path: str
+    icon: str | None = None  # null in every real node seen; never used
     categoryNodes: list[CategoryNode] | None = None  # absent, null or [] on leaves
 
 
+class CategoriesResponse(GvhModel):
+    categories: list[CategoryNode]
+
+
 class ChainStore(GvhModel):
-    """``GET /chain-stores``: one retail chain. ``imageUrl`` (a logo) is never stored or shown."""
+    """One chain of ``GET /chain-stores`` (the body is ``{"chainStores": [...]}``). ``imageUrl`` is a logo key
+    such as ``"spar"``; it is never stored or shown."""
 
     uuid: str
     name: str
     imageUrl: str | None = None
+
+
+class ChainStoresResponse(GvhModel):
+    chainStores: list[ChainStore]
 
 
 class ShopLocation(GvhModel):
@@ -90,7 +116,8 @@ class ShopLocation(GvhModel):
 
 
 class Shop(GvhModel):
-    """``GET /shops``: one store. ``openingTime`` is filled in almost only for Lidl."""
+    """One store of ``GET /shops`` (the body is ``{"shops": [...]}``). ``openingTime`` is filled in almost
+    only for Lidl (``""`` elsewhere)."""
 
     uuid: str
     chainStoreUuid: str
@@ -99,6 +126,10 @@ class Shop(GvhModel):
     address: str | None
     location: ShopLocation | None
     openingTime: str | None = None
+
+
+class ShopsResponse(GvhModel):
+    shops: list[Shop]
 
 
 # ───────────────────────────── prices and products ─────────────────────────────
@@ -128,12 +159,14 @@ class ListingProduct(GvhModel):
     id: str
     name: str
     unit: str  # kg | l | db (others are skipped by the ingest)
-    unitTitle: str | None  # "kg" = sold by weight (lédig/counter), "csomag" = fixed pack
-    packaging: JsonDecimal | None  # pack size in `unit`
+    unitTitle: str | None  # "kg" = sold by weight (lédig/counter); "csomag" or "db" = fixed pack
+    packaging: DecimalString | None  # pack size in `unit`, sent as a string ("0.175")
     bulk: bool | None = None  # unreliable (differs between listing and detail)
     imageUrl: str | None = None  # never used (retailer IP, BUILD-BRIEF §8.3)
-    categoryPath: object = None  # documented, unused; its type is not known
+    categoryPath: str | None = None  # e.g. "hus_hal_felvagott/szarnyas/csirkemell"; unused
     minUnitPrice: JsonDecimal | None = None  # documented, unused
+    returnType: str | None = None  # deposit-return scheme marker (null in every sample); unused
+    returnFee: JsonDecimal | None = None  # deposit in Ft, refundable, not part of the price; unused
     pricesOfChainStores: list[ListingChainPrices]
 
 
@@ -145,33 +178,33 @@ class ProductPage(GvhModel):
 
 
 class DetailChain(GvhModel):
-    """One chain in ``GET /product/{id}``: every chain selling the product (no 3-chain cap)."""
+    """One chain in ``GET /product/{id}``: every chain selling the product (no 3-chain cap). Unlike the
+    listing, the chain is ``uuid`` (not ``id``) and there is no ``productMinAmount``."""
 
-    id: str
+    uuid: str  # chain uuid (= ChainStore.uuid)
     name: str | None = None
+    imageUrl: str | None = None  # logo key such as "spar"; never used
     prices: list[PriceEntry] | None = None
     pricesMax: list[PriceEntry] | None = None
     priceSameEverywhere: bool | None = None  # literal in the detail (trap 3)
-    productMinAmount: JsonDecimal | None = None
     availableInShops: list[str]  # store uuids that report a price for the product
 
 
 class ProductDetail(GvhModel):
-    """``GET /product/{id}``. research/gvh-location/notes.md §1 calls the chain list ``chainStores``; the
-    listing's name ``pricesOfChainStores`` is accepted too (see ASSUMPTIONS.md)."""
+    """``GET /product/{id}``."""
 
     id: str
-    chainStores: list[DetailChain] = Field(
-        validation_alias=AliasChoices("chainStores", "pricesOfChainStores")
-    )
+    chainStores: list[DetailChain]
     name: str | None = None
     unit: str | None = None
     unitTitle: str | None = None
-    packaging: JsonDecimal | None = None
+    packaging: DecimalString | None = None
     bulk: bool | None = None
     imageUrl: str | None = None
-    categoryPath: object = None
-    minUnitPrice: JsonDecimal | None = None
+    categoryId: str | None = None  # the leaf id as a string ("18"); unused
+    categoryPath: str | None = None
+    returnType: str | None = None
+    returnFee: JsonDecimal | None = None
 
 
 class ShopPrice(GvhModel):
@@ -241,32 +274,32 @@ def validate_model[M: GvhModel](model: type[M], data: object, *, what: str) -> P
     return Parsed(obj, tuple(sorted(collect_drift(obj))))
 
 
-def validate_list[M: GvhModel](model: type[M], data: object, *, what: str) -> Parsed[tuple[M, ...]]:
-    """The root must be a JSON array of ``model`` objects."""
-    if not isinstance(data, list):
-        raise GvhSchemaError(f"{what}: expected a JSON array at the root, got {type(data).__name__}")
-    items: list[M] = []
-    for index, element in enumerate(data):
-        try:
-            items.append(model.model_validate(element))
-        except ValidationError as exc:
-            raise _schema_error(what, exc, prefix=str(index)) from None
-    return Parsed(tuple(items), tuple(sorted(collect_drift(items))))
+def _validate_wrapped(model: type[GvhModel], key: str, data: object, *, what: str) -> Parsed[tuple]:
+    """A reference body ``{"<key>": [...]}``: the list's items, and the drift of the wrapper and items."""
+    if not isinstance(data, dict):
+        raise GvhSchemaError(
+            f"{what}: expected a JSON object with {key!r} at the root, got {type(data).__name__}"
+        )
+    parsed = validate_model(model, data, what=what)
+    return Parsed(tuple(getattr(parsed.value, key)), parsed.drift)
 
 
 def parse_categories(content: bytes, *, content_type: str | None = None) -> Parsed[tuple[CategoryNode, ...]]:
     what = "categories"
-    return validate_list(CategoryNode, parse_json(content, what=what, content_type=content_type), what=what)
+    data = parse_json(content, what=what, content_type=content_type)
+    return _validate_wrapped(CategoriesResponse, "categories", data, what=what)
 
 
 def parse_chain_stores(content: bytes, *, content_type: str | None = None) -> Parsed[tuple[ChainStore, ...]]:
     what = "chain-stores"
-    return validate_list(ChainStore, parse_json(content, what=what, content_type=content_type), what=what)
+    data = parse_json(content, what=what, content_type=content_type)
+    return _validate_wrapped(ChainStoresResponse, "chainStores", data, what=what)
 
 
 def parse_shops(content: bytes, *, content_type: str | None = None) -> Parsed[tuple[Shop, ...]]:
     what = "shops"
-    return validate_list(Shop, parse_json(content, what=what, content_type=content_type), what=what)
+    data = parse_json(content, what=what, content_type=content_type)
+    return _validate_wrapped(ShopsResponse, "shops", data, what=what)
 
 
 def parse_product_page(
