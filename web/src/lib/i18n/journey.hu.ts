@@ -11,8 +11,8 @@ export const journeyHu = {
 	single_title: 'Egy boltban',
 	single_all: 'Itt minden megvan.',
 	single_all_available: 'Itt minden megvan, ami a közelben kapható.',
-	single_missing_one: '{count} tétel itt nincs:',
-	single_missing_other: '{count} tétel itt nincs:',
+	single_missing_one: '{count} tétel csak máshol kapható:',
+	single_missing_other: '{count} tétel csak máshol kapható:',
 	total_label: 'Fizetendő',
 	walk_round: 'Séta oda-vissza: {distance} légvonalban.',
 

@@ -8,8 +8,8 @@ export const journeyEn: Messages<typeof journeyHu> = {
 	single_title: 'In one store',
 	single_all: 'Everything is here.',
 	single_all_available: 'Everything sold nearby is here.',
-	single_missing_one: '{count} item is not here:',
-	single_missing_other: '{count} items are not here:',
+	single_missing_one: '{count} item only elsewhere nearby:',
+	single_missing_other: '{count} items only elsewhere nearby:',
 	total_label: 'To pay',
 	walk_round: 'Walk there and back: {distance} as the crow flies.',
 

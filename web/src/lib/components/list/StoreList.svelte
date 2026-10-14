@@ -32,6 +32,11 @@
 		kshUrl: string | null;
 		/** Bound by the parent to move focus here when a store is chosen. */
 		heading?: HTMLHeadingElement;
+		/**
+		 * true (the offline copy): the list closes with its own method note and source line. false: the page
+		 * shows them once, at the bottom, for every price on it.
+		 */
+		standalone?: boolean;
 	}
 
 	let {
@@ -45,7 +50,8 @@
 		dataDate,
 		kshPeriod,
 		kshUrl,
-		heading = $bindable()
+		heading = $bindable(),
+		standalone = true
 	}: Props = $props();
 	const id = $props.id();
 
@@ -65,13 +71,9 @@
 	{#if store.missing.length > 0}
 		<p><Badge tone="warning">{tp('list.missing', store.missing.length)}</Badge></p>
 	{/if}
-	{#if store.assumed_count > 0}
-		<p class="small muted">{tp('list.assumed', store.assumed_count)}</p>
-	{/if}
 	{#if store.ksh_estimate_total > 0}
 		<p class="small" data-testid="ksh-total">{t('list.ksh_total', { total: formatMoney(store.ksh_estimate_total) })}</p>
 	{/if}
-	<HowCalculated testid="scope-how"><p>{t('list.scope_legend')}</p></HowCalculated>
 
 	{#each groups as group (group.group)}
 		<div class="group">
@@ -89,7 +91,10 @@
 		</div>
 	{/each}
 
-	<Attribution {dataDate} {ksh} {kshPeriod} {kshUrl} />
+	{#if standalone}
+		<HowCalculated testid="scope-how"><p>{t('list.scope_legend')}</p></HowCalculated>
+		<Attribution {dataDate} {ksh} {kshPeriod} {kshUrl} />
+	{/if}
 </section>
 
 <style>

@@ -12,8 +12,6 @@ export const coreHu = {
 	// The language switch shows the OTHER language's name, in that language.
 	lang_toggle_text: 'English',
 
-	data_date: 'Adatok: {date}',
-	data_loading: 'Adatok betöltése…',
 	data_unavailable: 'Az adatok dátuma most nem érhető el.',
 	data_none: 'Még nincs áradat.',
 	data_stale: 'Az árak nem frissek',

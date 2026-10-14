@@ -396,7 +396,7 @@
 		</div>
 
 		<details class="other card">
-			<summary>{t('plan.other_plan')}</summary>
+			<summary class="disclosure">{t('plan.other_plan')}</summary>
 			<PlanForm
 				bind:startDate
 				bind:length

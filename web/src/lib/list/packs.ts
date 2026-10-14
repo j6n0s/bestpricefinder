@@ -23,6 +23,18 @@ export function formatAmount(qty: number, unit: Unit, lang: Lang): string {
 	return formatQty(qty, unit, lang);
 }
 
+/**
+ * An amount on the shopping list, rounded the way it is bought: whole pieces, rounded up (4,833 bay leaves are
+ * 5 db), and kilograms and litres to at most 2 decimals ("1,39 kg"); grams and millilitres are whole already.
+ * Only the display: the quote still gets the exact amount.
+ */
+export function listAmount(qty: number, unit: Unit, lang: Lang): string {
+	if (!Number.isFinite(qty)) return DASH;
+	if (unit === 'db') return formatQty(Math.max(1, Math.ceil(qty - 1e-9)), unit, lang);
+	if (qty >= 1) return formatQty(Math.round(qty * 100) / 100, unit, lang);
+	return formatAmount(qty, unit, lang);
+}
+
 /** "2 × 175 g" for whole packs; null for a sold-by-weight pick (its weight is shown instead). */
 export function packsText(pick: Pick<PickOut, 'count' | 'option'>, unit: Unit, lang: Lang): string | null {
 	const size = pick.option.pack_size;

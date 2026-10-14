@@ -525,10 +525,11 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	}
 	if (chosen.ksh_estimate_total > 0) {
 		expect(forints(await storeList.getByTestId('ksh-total').textContent())).toBe(whole(chosen.ksh_estimate_total));
-		await expect(storeList.getByTestId('attribution-ksh')).toContainText('Forrás: KSH');
+		await expect(page.locator('main').getByTestId('attribution-ksh')).toContainText('Forrás: KSH');
 	}
-	await expect(storeList.getByTestId('attribution-gvh')).toHaveText(loose(attribution));
-	await expect(storeList.getByTestId('disclaimer')).toHaveText(loose(DISCLAIMER));
+	// One source line and disclaimer for the whole page, at the bottom.
+	await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText([loose(attribution)]);
+	await expect(page.locator('main').getByTestId('disclaimer')).toHaveText([loose(DISCLAIMER)]);
 	await page.screenshot({ path: test.info().outputPath('lista-store.png'), fullPage: true });
 	await expectClean(page, seen, '/lista');
 
@@ -711,7 +712,7 @@ test('cart -> nearby stores -> one store or a route, on the real stack', async (
 		}
 	}
 	const singleMissing = [...sold].filter((id) => !costsAt(singleId).has(id));
-	if (singleMissing.length > 0) await expect(single).toContainText(loose(`${singleMissing.length} tétel itt nincs:`, false));
+	if (singleMissing.length > 0) await expect(single).toContainText(loose(`${singleMissing.length} tétel csak máshol kapható:`, false));
 
 	// The route, when there is one: every good on it is bought where it is cheapest among its stops, each stop buys
 	// something, and it beats the single store (more goods, or a lower total plus walk plus stops).

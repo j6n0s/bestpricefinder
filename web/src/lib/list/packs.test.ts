@@ -1,7 +1,7 @@
 // All data in this file is SYNTHETIC test data (see README.md in this folder).
 import { describe, expect, it } from 'vitest';
 import type { PackOptionOut } from '../api/types';
-import { formatAmount, leftoverText, packsText, unitPriceText } from './packs';
+import { formatAmount, leftoverText, listAmount, packsText, unitPriceText } from './packs';
 
 const NBSP = '\u00a0';
 const sp = (text: string): string => text.replaceAll(' ', NBSP);
@@ -77,5 +77,22 @@ describe('leftoverText', () => {
 		expect(leftoverText(0.0004, 'kg', 'hu')).toBeNull();
 		expect(leftoverText(null, 'kg', 'hu')).toBeNull();
 		expect(leftoverText(-0.1, 'kg', 'hu')).toBeNull();
+	});
+});
+
+describe('listAmount', () => {
+	it('rounds pieces up to whole pieces, the way they are bought', () => {
+		expect(listAmount(4.833, 'db', 'hu')).toBe(sp('5 db'));
+		expect(listAmount(0.5, 'db', 'hu')).toBe(sp('1 db'));
+		expect(listAmount(2, 'db', 'hu')).toBe(sp('2 db'));
+		expect(listAmount(3.0000000001, 'db', 'hu')).toBe(sp('3 db'));
+	});
+
+	it('keeps at most 2 decimals for kilograms and litres, and grams and millilitres below 1', () => {
+		expect(listAmount(1.384, 'kg', 'hu')).toBe(sp('1,38 kg'));
+		expect(listAmount(5.048, 'l', 'hu')).toBe(sp('5,05 l'));
+		expect(listAmount(1.2, 'kg', 'hu')).toBe(sp('1,2 kg'));
+		expect(listAmount(0.3, 'kg', 'hu')).toBe(sp('300 g'));
+		expect(listAmount(0.05, 'l', 'hu')).toBe(sp('50 ml'));
 	});
 });

@@ -337,11 +337,11 @@ for (const viewport of VIEWPORTS) {
 			]);
 
 			// Neutral factual chips from the suggestion's checks.
-			await expect(chip(page, 'fish')).toContainText('Hal: 0 (cél: legalább 1)');
+			await expect(chip(page, 'fish')).toContainText('Hal 0 legalább 1');
 			await expect(chip(page, 'fish')).toHaveAttribute('data-ok', 'false');
-			await expect(chip(page, 'legume')).toContainText('Hüvelyes: 7 (cél: legalább 1)');
-			await expect(chip(page, 'red_meat')).toContainText('Vörös hús: 600 g/fő (cél: legfeljebb 600 g/fő)');
-			await expect(chip(page, 'variety')).toContainText('Változatosság: 0 ismétlés (cél: 0 ismétlés 5 napon belül)');
+			await expect(chip(page, 'legume')).toContainText('Hüvelyes 7 legalább 1');
+			await expect(chip(page, 'red_meat')).toContainText('Vörös hús 600 g/fő legfeljebb 600 g/fő');
+			await expect(chip(page, 'variety')).toContainText('Változatosság 0 ismétlés 5 napon belül');
 			await expect(week0(page).getByRole('list', { name: 'A hét összesítése' }).getByRole('listitem')).toHaveCount(7);
 
 			// Meals link to their recipes, with the chain-typical price hint; the untested badge is on the recipe
@@ -394,9 +394,9 @@ for (const viewport of VIEWPORTS) {
 			await expect(day0Dinner.getByTestId('recipe-coverage')).toHaveCount(0);
 
 			// The edit is re-checked with the plan's variety window; the chip updates.
-			await expect(chip(page, 'fish')).toContainText('Hal: 1 (cél: legalább 1)');
+			await expect(chip(page, 'fish')).toContainText('Hal 1 legalább 1');
 			await expect(chip(page, 'fish')).toHaveAttribute('data-ok', 'true');
-			await expect(chip(page, 'red_meat')).toContainText('Vörös hús: 450 g/fő (cél: legfeljebb 600 g/fő)');
+			await expect(chip(page, 'red_meat')).toContainText('Vörös hús 450 g/fő legfeljebb 600 g/fő');
 			expect(api.checks.length).toBe(checksBefore + 1);
 			expect(api.checks.at(-1)).toMatchObject({ people: 2, red_meat_g_per_person_week: 600, no_repeat_days: 5 });
 			expect(api.checks.at(-1)?.days[0]).toEqual({ index: 0, meals: { reggeli: TUROS.id, ebed: LENCSE.id, vacsora: HARCSA.id } });
@@ -428,7 +428,7 @@ for (const viewport of VIEWPORTS) {
 			const checksBeforeOpen = api.checks.length;
 			await add.getByRole('link', { name: 'Terv megnyitása' }).click();
 			await expect(page.getByTestId('meal-2-ebed').getByRole('link')).toHaveText(HARCSA.title);
-			await expect(chip(page, 'fish')).toContainText('Hal: 2 (cél: legalább 1)');
+			await expect(chip(page, 'fish')).toContainText('Hal 2 legalább 1');
 			expect(api.checks.length).toBe(checksBeforeOpen + 1);
 			await expectClean(page, api);
 		});
@@ -476,7 +476,7 @@ test.describe('plan details', () => {
 		const checks = api.checks.length;
 		await page.reload();
 		await expect(page.locator('[data-testid^="plan-day-"]')).toHaveCount(7);
-		await expect(chip(page, 'fish')).toContainText('Hal: 0 (cél: legalább 1)');
+		await expect(chip(page, 'fish')).toContainText('Hal 0 legalább 1');
 		await expect.poll(() => api.checks.length).toBeGreaterThan(checks);
 		expect(api.suggests).toHaveLength(1);
 		await expectClean(page, api);
@@ -491,8 +491,8 @@ test.describe('plan details', () => {
 		expect(api.suggests[0]).toMatchObject({ days: 19 });
 		await expect(page.getByRole('heading', { level: 3, name: /^3\. hét/ })).toContainText('2026. 10. 27. – 2026. 10. 31.');
 		await expect(page.getByTestId('plan-day-18').getByRole('heading')).toHaveText('Szombat, 2026. 10. 31.');
-		await expect(chip(page, 'fish', 2)).toContainText('Hal: 0 (cél: legalább 1)');
-		await expect(chip(page, 'red_meat', 2)).toContainText('(cél: legfeljebb 428 g/fő)');
+		await expect(chip(page, 'fish', 2)).toContainText('Hal 0 legalább 1');
+		await expect(chip(page, 'red_meat', 2)).toContainText('legfeljebb 428 g/fő');
 
 		// A start date late in the month: a 3-day plan, whose count rules are not assessed.
 		await page.getByText('Más kezdőnap vagy időtartam').click();
@@ -503,7 +503,7 @@ test.describe('plan details', () => {
 		await expect(page.locator('[data-testid^="plan-day-"]')).toHaveCount(3);
 		// Random seeds are pinned to 0 here, and a new plan never reuses the current plan's seed: 0 -> 1.
 		expect(api.suggests[1]).toMatchObject({ days: 3, seed: 1 });
-		await expect(chip(page, 'fish')).toContainText('Hal: nem értékeljük, mert ez a hét 4 napnál rövidebb');
+		await expect(chip(page, 'fish')).toContainText('Hal – 4 napnál rövidebb hét');
 		expect(await storedPlan(page)).toMatchObject({ startDate: '2026-10-29' });
 		await expect(page.getByTestId('plan-summary')).toContainText('2026. 10. 29. – 2026. 10. 31., 3 nap');
 
@@ -676,7 +676,7 @@ test.describe('plan details', () => {
 		failCheck = false;
 		await page.getByRole('alert').getByRole('button', { name: 'Újra' }).click();
 		await expect(page.getByRole('alert')).toHaveCount(0);
-		await expect(chip(page, 'legume')).toContainText('Hüvelyes: 6 (cél: legalább 1)');
+		await expect(chip(page, 'legume')).toContainText('Hüvelyes 6 legalább 1');
 		await expectClean(page, api, /status of 503/);
 	});
 
@@ -716,7 +716,7 @@ test.describe('plan details', () => {
 			red_meat_g_per_person_week: 600,
 			no_repeat_days: 4
 		});
-		await expect(chip(page, 'fish')).toContainText('Hal: nem értékeljük, mert ez a hét 4 napnál rövidebb');
+		await expect(chip(page, 'fish')).toContainText('Hal – 4 napnál rövidebb hét');
 		await expectClean(page, api);
 	});
 
@@ -744,8 +744,8 @@ test.describe('English and dark mode', () => {
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Weekly plan');
 		await expect(page.getByTestId('plan-start-chosen')).toHaveText(`Tuesday, ${DATE_HU}`);
 		await page.getByRole('button', { name: 'Make a plan' }).click();
-		await expect(chip(page, 'fish')).toContainText('Fish: 0 (target: at least 1)');
-		await expect(chip(page, 'potato')).toContainText('Potato: 1 day in a row (target: at most 1)');
+		await expect(chip(page, 'fish')).toContainText('Fish 0 at least 1');
+		await expect(chip(page, 'potato')).toContainText('Potato 1 day in a row, at most 1');
 		await expect(page.getByTestId('meal-0-ebed')).toContainText('from 313 Ft/serving (Aldi, Lidl)');
 		await expect(page.getByTestId('plan-warnings')).toContainText('There are few recipes to choose for this meal, so some may repeat: breakfast.');
 		await expect(page.getByRole('button', { name: `Change (Tuesday, ${DATE_HU}, dinner)` })).toBeVisible();

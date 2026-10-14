@@ -631,7 +631,8 @@ for (const viewport of VIEWPORTS) {
 			await expect(rows.nth(0)).toContainText(sp('6 701 Ft'));
 			await expect(rows.nth(0)).toContainText(sp('300 m'));
 			await expect(rows.nth(4)).not.toContainText('holtverseny');
-			await expect(rows.nth(4)).toContainText('2 tétel elérhetősége nem biztos');
+			// Unconfirmed availability is shown line by line on the store's list, not on the ranking cards.
+			await expect(rows.nth(4)).not.toContainText('elérhetősége nem biztos');
 			await expect(rows.nth(6)).toContainText('1 tétel hiányzik');
 			await expect(rows.nth(6)).toContainText(sp('A teljes lista becsült ára: 8 152 Ft'));
 			// The figure the order uses comes before the store's own "Fizetendő" (fewer items, so lower).
@@ -643,7 +644,7 @@ for (const viewport of VIEWPORTS) {
 			const options = page.getByTestId('shopping-options');
 			await expect(options.getByRole('heading', { level: 3 })).toHaveText('Hol vásárolj?');
 			// Scoped and dated (BUILD-BRIEF §8.6), and the walk counts in the choice.
-			await expect(options.getByTestId('options-scope')).toHaveText(
+			await expect(page.getByTestId('options-scope')).toHaveText(
 				'A sétát is beszámítva, a kiválasztott boltok közül, a 2026-10-13-i GVH-adatok alapján.'
 			);
 			await expect(options.getByTestId('nowhere')).toHaveText(
@@ -708,13 +709,14 @@ for (const viewport of VIEWPORTS) {
 			await expect(line('gomba')).toContainText('becsült országos átlagár (KSH)');
 			await expect(line('gomba')).toContainText(sp('600 Ft-tól, nincs benne a fizetendő összegben'));
 			await expect(storeList.getByTestId('ksh-total')).toContainText(sp('600 Ft'));
-			await expect(storeList.getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
-			await expect(storeList.getByTestId('attribution-ksh')).toContainText('Forrás: KSH');
-			await expect(storeList.getByTestId('attribution-ksh').getByRole('link', { name: /Forrás: KSH/ })).toHaveAttribute(
+			// One source line for the whole page, at the bottom, with the KSH source when the list has a KSH value.
+			await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText([ATTRIBUTION]);
+			await expect(page.locator('main').getByTestId('attribution-ksh')).toContainText('Forrás: KSH');
+			await expect(page.locator('main').getByTestId('attribution-ksh').getByRole('link', { name: /Forrás: KSH/ })).toHaveAttribute(
 				'href',
 				'https://www.ksh.hu/stadat_files/ara/hu/ara0044.html'
 			);
-			await expect(storeList.getByTestId('disclaimer')).toHaveText(DISCLAIMER);
+			await expect(page.locator('main').getByTestId('disclaimer')).toHaveText([DISCLAIMER]);
 			// Ticks are shared with the main list.
 			await expect(line('voroshagyma').getByRole('checkbox')).toBeChecked();
 			await page.screenshot({ path: screenshotPath(`list-${viewport.name}-store`), fullPage: true });
@@ -723,10 +725,14 @@ for (const viewport of VIEWPORTS) {
 			// The store list's sections are not landmarks of their own: one "Zöldség, gyümölcs" region only.
 			await expect(page.getByRole('region', { name: 'Zöldség, gyümölcs', exact: true })).toHaveCount(1);
 			// What "bolti ár" and "lánc ár" mean is one tap away, behind a disclosure that starts closed.
-			const scopeHow = storeList.getByTestId('scope-how');
-			await expect(scopeHow.getByText('Bolti ár: ennek a boltnak', { exact: false })).toBeHidden();
-			await scopeHow.getByText('Hogyan számoljuk?').click();
-			await expect(scopeHow.getByText('Bolti ár: ennek a boltnak', { exact: false })).toBeVisible();
+			// The page's one "Hogyan számoljuk?", at the bottom: the scope of the options, the route and ranking
+			// rules, and what "bolti ár" / "lánc ár" mean.
+			await expect(page.getByText('Hogyan számoljuk?')).toHaveCount(1);
+			const how = page.getByTestId('results-how');
+			await expect(how.getByText('Bolti ár: ennek a boltnak', { exact: false })).toBeHidden();
+			await how.getByText('Hogyan számoljuk?').click();
+			await expect(how.getByText('Bolti ár: ennek a boltnak', { exact: false })).toBeVisible();
+			await expect(how.getByTestId('options-scope')).toBeVisible();
 
 			// At Spar the lentils are not available, and the weighed chicken costs a fraction of a forint
 			// (1,2 kg × 3 738 Ft = 4 485,6 Ft): "Fizetendő" is the server's exact total (7 252,6 Ft), shown rounded.
@@ -808,7 +814,7 @@ for (const viewport of VIEWPORTS) {
 				radiusKm: 2,
 				location: { consent: 'unset', source: 'district', districtId: '11', approx: null }
 			});
-			await expect(page.getByTestId('origin')).toContainText(sp('Keresési sugár: 2,0 km.'));
+			await expect(page.getByTestId('candidates')).toContainText(sp('2 bolt 2,0 km távolságon belül'));
 
 			// "Kész" closes the chooser and moves focus to the starting point.
 			await page.getByRole('button', { name: 'Kész' }).click();
@@ -1089,7 +1095,7 @@ test.describe('a stored device position', () => {
 		expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
 
 		await page.getByRole('button', { name: 'Kész' }).click();
-		await page.getByRole('button', { name: 'Helyzet frissítése' }).click();
+		await page.getByRole('button', { name: 'Másik kiindulási pont' }).click();
 		await expect(page.getByRole('heading', { name: 'Honnan keressük a boltokat?' })).toBeFocused();
 		expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
 		await expectClean(page, rec);

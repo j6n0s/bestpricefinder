@@ -13,7 +13,7 @@
 	import { i18n, t, tp } from '$lib/i18n';
 	import { groupLabelKey, groupLines } from '$lib/list/groups';
 	import { canBeBought, isBought, isIncludedExclusion, lineKind, listSections, type LineChoices } from '$lib/list/lines';
-	import { formatAmount } from '$lib/list/packs';
+	import { listAmount } from '$lib/list/packs';
 
 	interface Props {
 		lines: readonly ListLineOut[];
@@ -40,9 +40,11 @@
 	const bought = $derived(lines.filter((line) => isBought(line, choices)));
 	const groups = $derived(groupLines(bought));
 	const doneCount = $derived(bought.filter((line) => checked.has(line.ingredient_id)).length);
+	/** The staples "probably at home"; tap water is never bought, so it is not listed at all. */
+	const pantry = $derived(sections.pantry.filter((line) => canBeBought(line.ingredient_id)));
 
 	function amount(line: ListLineOut): string {
-		return formatAmount(line.qty, line.unit, i18n.lang);
+		return listAmount(line.qty, line.unit, i18n.lang);
 	}
 
 	async function remove(ingredientId: string): Promise<void> {
@@ -113,8 +115,10 @@
 								data-line-check={line.ingredient_id}
 								onchange={(event) => ontogglecheck(line.ingredient_id, event.currentTarget.checked)}
 							/>
-							<span class="name" lang="hu">{line.name_hu}</span>
-							<span class="qty">{amount(line)}</span>
+							<span class="text">
+								<span class="name" lang="hu">{line.name_hu}</span>
+								<span class="qty">{amount(line)}</span>
+							</span>
 						</label>
 						{#if isIncludedExclusion(line, choices)}
 							<Badge tone="warning">{t('list.line_excluded')}</Badge>
@@ -124,7 +128,7 @@
 						{:else}
 							<button
 								type="button"
-								class="btn btn-secondary icon"
+								class="btn btn-ghost icon"
 								aria-label={t('list.remove_line', { name: line.name_hu })}
 								onclick={() => remove(line.ingredient_id)}
 							>
@@ -145,14 +149,16 @@
 		</section>
 	{/each}
 
-	{#if sections.pantry.length > 0}
+	{#if pantry.length > 0}
 		<section class="group pantry" aria-labelledby="{id}-pantry">
 			<h2 id="{id}-pantry">{t('list.pantry_title')}</h2>
+			<!-- The switch's label once, over its column; every switch is also named "Nincs otthon: <name>". -->
+			<p class="pantry-head small muted" aria-hidden="true">{t('list.not_at_home')}</p>
 			<ul class="lines">
-				{#each sections.pantry as line (line.ingredient_id)}
+				{#each pantry as line (line.ingredient_id)}
 					{@const missing = lineKind(line, choices) === 'pantry_missing'}
 					<li class="line">
-						<span class="item">
+						<span class="item text">
 							<span class="name" lang="hu">{line.name_hu}</span>
 							<span class="qty">{amount(line)}</span>
 							{#if missing}
@@ -167,7 +173,6 @@
 									aria-label={t('list.not_at_home_named', { name: line.name_hu })}
 									onchange={(event) => onnotathome(line.ingredient_id, event.currentTarget.checked)}
 								/>
-								<span>{t('list.not_at_home')}</span>
 							</label>
 						{/if}
 					</li>
@@ -304,9 +309,22 @@
 		min-width: 0;
 	}
 
-	.name {
+	/* Name and amount on one line when they fit; otherwise the amount moves under the name, so a long word
+	   ("petrezselyemgyökér") is never broken in the middle on a narrow phone. */
+	.text {
+		display: flex;
 		flex: 1 1 auto;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0 var(--space-3);
 		min-width: 0;
+	}
+
+	.name {
+		flex: 0 1 auto;
+		min-width: 0;
+		max-width: 100%;
 	}
 
 	.qty {
@@ -327,6 +345,13 @@
 
 	.toggle {
 		flex: none;
+		justify-content: center;
+		min-width: var(--tap);
+	}
+
+	.pantry-head {
+		margin: 0 0 var(--space-1);
+		text-align: right;
 	}
 
 	.removed {

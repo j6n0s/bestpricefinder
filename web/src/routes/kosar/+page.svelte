@@ -211,7 +211,7 @@
 								/>
 								<button
 									type="button"
-									class="btn btn-secondary remove"
+									class="btn btn-ghost remove"
 									aria-label={t('cart.remove_named', { name: line.name_hu })}
 									onclick={() => setQty(line.ingredient_id, null, 'cart')}
 								>
@@ -230,7 +230,7 @@
 	</section>
 
 	<details class="card browse" bind:open={browseOpen} data-testid="browse">
-		<summary>
+		<summary class="disclosure">
 			<h2>{listLines.length === 0 ? t('cart.browse_title') : t('cart.browse_more')}</h2>
 		</summary>
 		<div class="field">
@@ -332,38 +332,58 @@
 		margin: var(--space-4) 0 var(--space-2);
 	}
 
+	/* Each section's goods in one framed list, one row per good, divided by lines. */
 	.rows {
 		list-style: none;
 		margin: 0;
 		padding: 0;
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-md);
 	}
 
 	.row {
 		display: flex;
-		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
 		gap: var(--space-2) var(--space-3);
-		padding: var(--space-2) 0;
+		padding: var(--space-2) var(--space-3);
 	}
 
 	.row + .row {
 		border-top: 1px solid var(--color-border-subtle);
 	}
 
+	/* Bold: the goods in the cart (in the cart and, in the goods list, the ones already added). */
+	.cart .name,
 	.row.in-cart .name {
 		font-weight: 600;
 	}
 
 	.name {
-		flex: 1 1 9rem;
+		flex: 1 1 auto;
 		min-width: 0;
 	}
 
 	.controls {
 		display: inline-flex;
+		flex: none;
 		align-items: center;
+		justify-content: center;
 		gap: var(--space-2);
+	}
+
+	/* Phones: the name on its own line, the controls centred under it. */
+	@media (max-width: 30rem) {
+		.row {
+			flex-direction: column;
+			align-items: stretch;
+			gap: var(--space-1);
+			text-align: center;
+		}
+
+		.controls {
+			align-self: center;
+		}
 	}
 
 	.remove {

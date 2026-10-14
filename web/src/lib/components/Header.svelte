@@ -1,13 +1,12 @@
 <!--
-	App header: name, the price data date from /api/meta (with a warning when the data is stale) and the
-	language switch. The data date is shown on every page, so the user always knows how fresh prices are.
+	App header: the app's name and the language switch. The price data date is not repeated here: every view
+	that shows prices carries the source line with the date (Attribution, BUILD-BRIEF §8.2). The header speaks
+	only when something is wrong: the prices are stale, there is no price data yet, or /api/meta failed.
 -->
 <script lang="ts">
 	import { formatDate } from '$lib/format';
 	import { i18n, setLanguage, t } from '$lib/i18n';
 	import { getMeta } from '$lib/meta.svelte';
-	import Badge from './Badge.svelte';
-	import Spinner from './Spinner.svelte';
 
 	const meta = getMeta();
 	const dataDate = $derived(formatDate(meta.data?.data_date ?? null));
@@ -31,23 +30,14 @@
 			{t('core.lang_toggle_text')}
 		</button>
 	</div>
-	<div class="status small" data-testid="data-status">
-		{#if meta.status === 'ready' && meta.data}
-			{#if dataDate}
-				<span>{t('core.data_date', { date: dataDate })}</span>
-				{#if meta.data.stale}
-					<Badge kind="stale" />
-				{/if}
-			{:else}
-				<span>{t('core.data_none')}</span>
-			{/if}
-		{:else if meta.status === 'error'}
+	{#if meta.status === 'ready' && meta.data && !dataDate}
+		<p class="status small" data-testid="data-status">{t('core.data_none')}</p>
+	{:else if meta.status === 'error'}
+		<div class="status small" data-testid="data-status">
 			<span>{t('core.data_unavailable')}</span>
 			<button type="button" class="btn btn-secondary retry" onclick={() => meta.reload()}>{t('core.retry')}</button>
-		{:else}
-			<Spinner label={t('core.data_loading')} showLabel />
-		{/if}
-	</div>
+		</div>
+	{/if}
 	{#if meta.status === 'ready' && meta.data?.stale && dataDate}
 		<p class="notice notice-warning small stale" role="status">
 			<strong>{t('core.data_stale')}.</strong>
@@ -67,7 +57,8 @@
 	.bar,
 	.status,
 	.stale {
-		max-width: var(--content-max);
+		/* The same column as <main> (whose padding is inside its max-width). */
+		max-width: calc(var(--content-max) - 2 * var(--space-4));
 		margin-inline: auto;
 	}
 

@@ -99,7 +99,6 @@ describe('translate', () => {
 	it('fills placeholders', () => {
 		expect(translate('hu', 'core.district_name', { roman: 'XI' })).toBe('XI. kerület');
 		expect(translate('en', 'core.district_name', { roman: 'XI' })).toBe('District XI');
-		expect(translate('hu', 'core.data_date', { date: '2026. 10. 13.' })).toBe('Adatok: 2026. 10. 13.');
 	});
 
 	it('leaves a missing placeholder visible instead of printing undefined', () => {
@@ -128,10 +127,10 @@ describe('plurals', () => {
 	it('chooses one/other per language', () => {
 		expect(pluralKey('en', 'settings.people_value', 1)).toBe('settings.people_value_one');
 		expect(pluralKey('en', 'settings.people_value', 2)).toBe('settings.people_value_other');
-		expect(translatePlural('en', 'settings.people_value', 1)).toBe('1 person');
-		expect(translatePlural('en', 'settings.people_value', 3)).toBe('3 people');
-		expect(translatePlural('hu', 'settings.people_value', 1)).toBe('1 fő');
-		expect(translatePlural('hu', 'settings.people_value', 12)).toBe('12 fő');
+		expect(translatePlural('en', 'settings.people_value', 1)).toBe('1\u00a0person');
+		expect(translatePlural('en', 'settings.people_value', 3)).toBe('3\u00a0people');
+		expect(translatePlural('hu', 'settings.people_value', 1)).toBe('1\u00a0fő');
+		expect(translatePlural('hu', 'settings.people_value', 12)).toBe('12\u00a0fő');
 	});
 });
 
@@ -171,7 +170,7 @@ describe('current language state', () => {
 		localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, language: 'en' }));
 		const { i18n, setLanguage, tp } = await import('./index');
 		expect(i18n.lang).toBe('en');
-		expect(tp('settings.people_value', 2)).toBe('2 people');
+		expect(tp('settings.people_value', 2)).toBe('2\u00a0people');
 		setLanguage('de' as 'hu');
 		expect(i18n.lang).toBe('en');
 	});

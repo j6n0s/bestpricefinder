@@ -163,7 +163,7 @@ for (const viewport of VIEWPORTS) {
 				const watcher = await watch(page);
 				await page.goto(route.path);
 				await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
-				await expect(page.getByTestId('data-status')).toContainText(`Adatok: ${DATE_HU}`);
+				await expect(page.getByTestId('data-status')).toHaveCount(0);
 				await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
 				// The disclaimer is always visible: in the footer, or next to the prices in the page itself.
 				await expect(page.getByTestId('disclaimer').filter({ visible: true }).first()).toBeVisible();
@@ -227,7 +227,7 @@ for (const viewport of FOCUS_VIEWPORTS) {
 			for (const route of ROUTES) {
 				await page.goto(route.path);
 				await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
-				await expect(page.getByTestId('data-status')).toContainText(`Adatok: ${DATE_HU}`);
+				await expect(page.getByTestId('data-status')).toHaveCount(0);
 				if (route.path === '/terv') await expect(page.locator('[data-testid^="plan-day-"]').first()).toBeVisible();
 				if (route.path === '/lista') await expect(page.getByText('2 tétel a listán')).toBeVisible();
 				await expectFocusNotObscured(page, `${viewport.name} ${route.path}`);
@@ -309,7 +309,7 @@ test.describe('narrowest phone in English', () => {
 		await page.getByRole('button', { name: 'English' }).click();
 		for (const route of ROUTES) {
 			await page.goto(route.path);
-			await expect(page.getByTestId('data-status')).toContainText(`Data: ${DATE_HU}`);
+			await expect(page.getByTestId('data-status')).toHaveCount(0);
 			await expectNavLabelsFit(page);
 			await expectNoHorizontalScroll(page);
 			await page.screenshot({ path: screenshotPath(`en-phone-320-${slug(route.path)}`), fullPage: true });
@@ -380,7 +380,7 @@ test('switches to English and back, persisting the choice', async ({ page }) => 
 	await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Weekly meals, shopping list, nearby prices');
 	await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Settings' })).toBeVisible();
-	await expect(page.getByTestId('data-status')).toContainText(`Data: ${DATE_HU}`);
+	await expect(page.getByTestId('data-status')).toHaveCount(0);
 	// The Hungarian disclaimer stays verbatim, followed by its translation.
 	const disclaimer = page.locator('footer').getByTestId('disclaimer');
 	await expect(disclaimer).toContainText(DISCLAIMER);
@@ -638,7 +638,7 @@ test.describe('accessibility', () => {
 		for (const path of ['/', '/beallitasok', '/forrasok', '/receptek/minta-lencsefozelek']) {
 			await page.goto(path);
 			await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-			await expect(page.getByTestId('data-status')).toContainText('Adatok:');
+			await expect(page.getByTestId('data-status')).toHaveCount(0);
 			const small = await page.evaluate(() => {
 				const targets = document.querySelectorAll<HTMLElement>(
 					'button, select, input:not([type="radio"]):not([type="checkbox"]), nav a, .btn, label.choice, .skip-link'
@@ -677,8 +677,8 @@ test.describe('dark mode', () => {
 		for (const route of ROUTES) {
 			await page.goto(route.path);
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
-			await expect(page.getByTestId('data-status')).toContainText('Adatok:');
-			expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(31, 18, 12)');
+			await expect(page.getByTestId('data-status')).toHaveCount(0);
+			expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(0, 0, 0)');
 			await expectTextContrast(page, `dark ${route.path}`);
 			await expectHeadingOrder(page, `dark ${route.path}`);
 			await page.screenshot({ path: screenshotPath(`dark-phone-360-${slug(route.path)}`), fullPage: true });
@@ -697,17 +697,18 @@ test.describe('motion', () => {
 				release = done;
 			});
 			const watcher = await watch(page, async (method, url, body) => {
-				if (url.startsWith('/api/meta')) await gate;
+				if (url.startsWith('/api/recipes')) await gate;
 				return handleMockApi(method, url, body);
 			});
-			await page.goto('/');
+			// The recipe list shows a spinner until /api/recipes answers.
+			await page.goto('/receptek');
 			const ring = page.locator('.spinner .ring').first();
 			await expect(ring).toBeVisible();
 			const animation = await ring.evaluate((el) => getComputedStyle(el).animationName);
 			if (reducedMotion === 'reduce') expect(animation).toBe('none');
 			else expect(animation).not.toBe('none');
 			release();
-			await expect(page.getByTestId('data-status')).toContainText(`Adatok: ${DATE_HU}`);
+			await expect(page.getByTestId('recipe-card').first()).toBeVisible();
 			await expectClean(watcher);
 		});
 	}
@@ -724,7 +725,8 @@ test('shows an error with retry when /api/meta fails, then recovers', async ({ p
 	await expect(page.getByTestId('data-status')).toContainText('Az adatok dátuma most nem érhető el.');
 	fail = false;
 	await page.getByTestId('data-status').getByRole('button', { name: 'Újra' }).click();
-	await expect(page.getByTestId('data-status')).toContainText(`Adatok: ${DATE_HU}`);
+	// Recovered: the header has no data line when all is well (the date is on every price view).
+	await expect(page.getByTestId('data-status')).toHaveCount(0);
 	await expectClean(watcher, /status of 500/);
 });
 
@@ -761,13 +763,13 @@ test.describe('offline', () => {
 		page.on('pageerror', (error) => pageErrors.push(String(error)));
 		try {
 			await page.goto(`${origin}/`);
-			await expect(page.getByTestId('data-status')).toContainText(`Adatok: ${DATE_HU}`);
+			await expect(page.getByTestId('data-status')).toHaveCount(0);
 			await page.evaluate(async () => {
 				await navigator.serviceWorker.ready;
 			});
 			await page.reload();
 			await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
-			await expect(page.getByTestId('data-status')).toContainText(`Adatok: ${DATE_HU}`);
+			await expect(page.getByTestId('data-status')).toHaveCount(0);
 
 			const caches = await page.evaluate(async () => {
 				const names = await window.caches.keys();
@@ -794,7 +796,7 @@ test.describe('offline', () => {
 
 			await page.reload();
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Heti étrend, bevásárlólista, közeli árak');
-			await expect(page.getByTestId('data-status')).toContainText(`Adatok: ${DATE_HU}`);
+			await expect(page.getByTestId('data-status')).toHaveCount(0);
 			await expect(page.getByText('Nincs internetkapcsolat. A legutóbb betöltött adatokat látod.')).toBeVisible();
 
 			await page.getByRole('navigation', { name: 'Fő navigáció' }).getByRole('link', { name: 'Beállítások' }).click();

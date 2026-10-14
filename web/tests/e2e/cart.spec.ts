@@ -486,7 +486,7 @@ for (const viewport of VIEWPORTS) {
 			// One store: Penny has everything for 5,280 Ft (Spar too, for 6,900 Ft; Aldi has no coffee).
 			const options = page.getByTestId('shopping-options');
 			await expect(options.getByRole('heading', { level: 3 })).toHaveText('Hol vásárolj?');
-			await expect(options.getByTestId('options-scope')).toHaveText(
+			await expect(page.getByTestId('options-scope')).toHaveText(
 				'A sétát is beszámítva, a kiválasztott boltok közül, a 2026-10-13-i GVH-adatok alapján.'
 			);
 			await expect(options.getByTestId('nowhere')).toHaveCount(0);
@@ -581,7 +581,7 @@ test.describe('cart details', () => {
 		const single = options.getByTestId('option-single');
 		await expect(single).toHaveAttribute('data-store-id', 'synthetic-aldi-k');
 		await expect(single.getByTestId('single-total')).toHaveText(sp('900 Ft'));
-		await expect(single).toContainText('1 tétel itt nincs: őrölt kávé');
+		await expect(single).toContainText('1 tétel csak máshol kapható: őrölt kávé');
 		const route = options.getByTestId('option-journey');
 		await expect(route.getByRole('heading', { level: 4 })).toHaveText('Körút: 2 bolt');
 		await expect(route.getByTestId('journey-total')).toHaveText(sp('4 500 Ft'));

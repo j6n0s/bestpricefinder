@@ -33,7 +33,9 @@
 		font-size: var(--font-size-lg);
 	}
 
+	/* One centred column of equal buttons. */
 	.btn-row {
+		grid-template-columns: minmax(min(100%, 14rem), 20rem);
 		justify-content: center;
 	}
 </style>

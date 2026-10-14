@@ -3,8 +3,9 @@
  *
  * The API reports each check with Hungarian `value` and `limit` strings ("2 hal", "≥ 1", "450 g/fő",
  * "≤ 600 g/fő", "n/a", …; server/bpf/planner/rules.py). The numbers are read out of them and put into the
- * UI language's own sentence, e.g. "Hal: 2 (cél: legalább 1)", formatted hu-HU. When a string does not have
- * the expected shape, the server's own text is shown instead (`plan.check_fallback`), never a guess.
+ * UI language's own words, formatted hu-HU: a tile of the rule's name, the value and the target ("Hal", "2",
+ * "legalább 1"). When a string does not have the expected shape, the server's own text is shown instead
+ * (`plan.check_fallback_target`), never a guess.
  * The wording is neutral and factual (no health claims, BUILD-BRIEF §8.7).
  */
 import { SLOTS, type RuleCheckOut, type RuleName, type Slot } from '../api/types';
@@ -60,10 +61,21 @@ export function ruleLabel(rule: RuleName, lang: Lang): string {
 	return translate(lang, RULE_LABEL[rule]);
 }
 
-/** The check as one sentence in `lang`, e.g. "Hal: 2 (cél: legalább 1)". */
-export function checkText(check: RuleCheckOut, lang: Lang): string {
+/** A weekly check as the week summary shows it: the rule's name, its value and the target. */
+export interface CheckParts {
+	label: string;
+	value: string;
+	target: string;
+}
+
+/** The check's parts in `lang`, e.g. { label: "Hal", value: "2", target: "legalább 1" }. */
+export function checkParts(check: RuleCheckOut, lang: Lang): CheckParts {
 	const label = Object.hasOwn(RULE_LABEL, check.rule) ? ruleLabel(check.rule, lang) : check.rule;
-	const fallback = (): string => translate(lang, 'plan.check_fallback', { label, value: check.value, limit: check.limit });
+	const fallback = (): CheckParts => ({
+		label,
+		value: check.value,
+		target: translate(lang, 'plan.check_fallback_target', { limit: check.limit })
+	});
 	const value = firstInt(check.value);
 	const limit = firstInt(check.limit);
 
@@ -72,36 +84,61 @@ export function checkText(check: RuleCheckOut, lang: Lang): string {
 		case 'legume':
 		case 'meat_free_day':
 			if (check.value.trim() === NOT_APPLICABLE) {
-				return translate(lang, 'plan.check_not_applicable', { label, days: COUNT_RULE_MIN_DAYS });
+				return { label, value: '–', target: translate(lang, 'plan.check_not_applicable_target', { days: COUNT_RULE_MIN_DAYS }) };
 			}
 			if (value === null || limit === null) return fallback();
-			return translate(lang, 'plan.check_at_least', { label, value: formatNumber(value), min: formatNumber(limit) });
+			return { label, value: formatNumber(value), target: translate(lang, 'plan.check_target_at_least', { min: formatNumber(limit) }) };
 		case 'red_meat':
 			if (value === null || limit === null) return fallback();
-			return translate(lang, 'plan.check_red_meat', { label, value: formatNumber(value), max: formatNumber(limit) });
+			return {
+				label,
+				value: translate(lang, 'plan.check_red_meat_value', { value: formatNumber(value) }),
+				target: translate(lang, 'plan.check_red_meat_target', { max: formatNumber(limit) })
+			};
 		case 'potato':
 			if (value === null || limit === null) return fallback();
-			return translatePlural(lang, 'plan.check_potato', value, { label, max: formatNumber(limit) });
+			return {
+				label,
+				value: translatePlural(lang, 'plan.check_potato_value', value),
+				target: translate(lang, 'plan.check_potato_target', { max: formatNumber(limit) })
+			};
 		case 'sweets':
 			if (value === null || limit === null) return fallback();
-			return translate(lang, 'plan.check_at_most', { label, value: formatNumber(value), max: formatNumber(limit) });
+			return { label, value: formatNumber(value), target: translate(lang, 'plan.check_target_at_most', { max: formatNumber(limit) }) };
 		case 'variety': {
 			const windows = [...check.limit.matchAll(/(\d+) napon belül/g)].map((match) => Number(match[1]));
 			const [days, snackDays] = windows;
 			if (value === null || days === undefined) return fallback();
-			if (snackDays === undefined) return translatePlural(lang, 'plan.check_variety', value, { label, days });
-			return translatePlural(lang, 'plan.check_variety_snacks', value, { label, days, snack_days: snackDays });
+			return {
+				label,
+				value: translatePlural(lang, 'plan.check_variety_value', value),
+				target:
+					snackDays === undefined
+						? translate(lang, 'plan.check_variety_target', { days })
+						: translate(lang, 'plan.check_variety_snacks_target', { days, snack_days: snackDays })
+			};
 		}
 		case 'budget': {
 			if (value === null || limit === null) return fallback();
 			const unpriced = /\+\s*(\d+)/.exec(check.value);
-			const params = { label, value: formatMoney(value), max: formatMoney(limit) };
-			if (!unpriced) return translate(lang, 'plan.check_budget', params);
-			return translatePlural(lang, 'plan.check_budget_unpriced', Number(unpriced[1]), params);
+			const money = formatMoney(value);
+			return {
+				label,
+				value: unpriced
+					? translatePlural(lang, 'plan.check_budget_unpriced_value', Number(unpriced[1]), { value: money })
+					: money,
+				target: translate(lang, 'plan.check_target_at_most', { max: formatMoney(limit) })
+			};
 		}
 		default:
 			return fallback();
 	}
+}
+
+/** The check in one line, e.g. "Hal: 2 (legalább 1)". */
+export function checkText(check: RuleCheckOut, lang: Lang): string {
+	const { label, value, target } = checkParts(check, lang);
+	return `${label}: ${value} (${target})`;
 }
 
 const PLAIN_WARNINGS: Readonly<Record<string, PlainKey>> = {

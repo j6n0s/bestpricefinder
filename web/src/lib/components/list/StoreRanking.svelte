@@ -3,12 +3,12 @@
 	ranking is always shown with the server's scope note ("a kiválasztott boltok közül, a … GVH-adatok
 	alapján", BUILD-BRIEF §8.6). Tied stores share a rank, are all marked as tied and are ordered by distance,
 	never by chain or store name (trap 13). Chain names are plain text (no logos). How "Fizetendő" and the order
-	are worked out is behind a closed "Hogyan számoljuk?" disclosure.
+	are worked out is in the "Hogyan számoljuk?" disclosure after the ranking (NearbyPrices); which items'
+	availability is not confirmed is on the store's own list, line by line.
 -->
 <script lang="ts">
 	import type { ChainSlug, QuoteResponse, StoreId, StoreOut } from '$lib/api/types';
 	import Badge from '$lib/components/Badge.svelte';
-	import HowCalculated from '$lib/components/HowCalculated.svelte';
 	import { formatDistance, formatMoney } from '$lib/format';
 	import { i18n, t, tp } from '$lib/i18n';
 	import { hasPenalty, scopeNote, type RankRow } from '$lib/list/ranking';
@@ -29,8 +29,7 @@
 
 <section class="ranking" aria-labelledby="{id}-title" data-testid="store-ranking">
 	<h3 id="{id}-title">{t('list.ranking_title')}</h3>
-	<p data-testid="ranking-scope">{t('list.ranking_scope', { note: scopeNote(quote, i18n.lang) })}</p>
-	<HowCalculated testid="ranking-how"><p>{t('list.ranking_basis')}</p></HowCalculated>
+	<p class="small muted" data-testid="ranking-scope">{t('list.ranking_scope', { note: scopeNote(quote, i18n.lang) })}</p>
 
 	<ol class="ranks">
 		{#each rows as row (row.storeId)}
@@ -68,9 +67,6 @@
 					{#if row.missingCount > 0}
 						<p><Badge tone="warning">{tp('list.missing', row.missingCount)}</Badge></p>
 					{/if}
-				{/if}
-				{#if row.assumedCount > 0}
-					<p class="small muted">{tp('list.assumed', row.assumedCount)}</p>
 				{/if}
 				<button
 					type="button"

@@ -72,7 +72,10 @@ const PAIRS: readonly [string, string, number][] = [
 	['color-border', 'color-bg', 3],
 	['color-focus', 'color-bg', 3],
 	['color-focus', 'color-surface', 3],
-	['color-focus', 'color-surface-alt', 3]
+	['color-focus', 'color-surface-alt', 3],
+	// The borders that carry a state on their own (the week summary: met / not met).
+	['color-success-border', 'color-surface', 3],
+	['color-warning-border', 'color-surface', 3]
 ];
 
 describe.each([

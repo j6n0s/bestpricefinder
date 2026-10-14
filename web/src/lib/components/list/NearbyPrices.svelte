@@ -21,16 +21,19 @@
 	import type { ListLineOut, QtyLineIn, QuoteRequest, QuoteResponse, StoreId, StoreOut } from '$lib/api/types';
 	import Attribution from '$lib/components/Attribution.svelte';
 	import ErrorState from '$lib/components/ErrorState.svelte';
+	import HowCalculated from '$lib/components/HowCalculated.svelte';
 	import ShoppingOptions from '$lib/components/journey/ShoppingOptions.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { districtById } from '$lib/districts';
 	import { formatDateTime, formatDistance, formatMoney } from '$lib/format';
 	import { groceryChainSet } from '$lib/geo';
 	import { i18n, t, tp } from '$lib/i18n';
+	import { DEFAULT_JOURNEY_OPTIONS } from '$lib/journey/journey';
 	import { loadStores } from '$lib/list/data';
 	import { buildQuoteRequest } from '$lib/list/lines';
 	import { saveLastQuote, savedQuoteFor } from '$lib/list/offline';
 	import { rankingRows, scopeNote } from '$lib/list/ranking';
+	import { hasKshEstimate } from '$lib/list/storeview';
 	import { chainLabel, chainNames, distanceMap, nearbyCandidates, storeAddress, widerRadius } from '$lib/list/stores';
 	import { validQuote, validStores } from '$lib/list/validate';
 	import { isStale, originFromLocation } from '$lib/location';
@@ -279,16 +282,12 @@
 				{origin.source === 'device'
 					? t('list.origin_device', { time: formatDateTime(location.approx?.at) })
 					: t('list.origin_district', { district: districtName })}
-				{t('list.radius_info', { radius: radiusText })}
 			</p>
 			{#if stale}
 				<p class="notice notice-warning" data-testid="position-stale">{t('list.position_stale')}</p>
 			{/if}
 			<div class="btn-row">
 				{#if !choosing}
-					{#if origin.source === 'device'}
-						<button type="button" class="btn btn-secondary" onclick={openChooser}>{t('list.refresh_position')}</button>
-					{/if}
 					<button type="button" class="btn btn-secondary" onclick={openChooser}>{t('list.change_origin')}</button>
 				{/if}
 				<a class="btn btn-secondary" href="/beallitasok">{t('list.radius_settings')}</a>
@@ -368,7 +367,6 @@
 						{ontogglecheck}
 					/>
 					<StoreRanking {quote} {rows} stores={storesById} {names} {chosenStoreId} onchoose={chooseStore} />
-					<Attribution dataDate={quote.data_date} />
 					{#if chosenStore}
 						<StoreList
 							store={chosenStore}
@@ -382,8 +380,28 @@
 							kshPeriod={meta.data?.ksh_period ?? null}
 							kshUrl={meta.data?.attribution.ksh.url ?? null}
 							bind:heading={storeHeading}
+							standalone={false}
 						/>
 					{/if}
+					<!-- Once per page, at the bottom: the source line for every price above (BUILD-BRIEF §8.2), then
+					     the one method note (options, route, ranking, store and chain prices), closed until asked. -->
+					<Attribution
+						dataDate={quote.data_date}
+						ksh={chosenStore ? hasKshEstimate(chosenStore) : false}
+						kshPeriod={meta.data?.ksh_period ?? null}
+						kshUrl={meta.data?.attribution.ksh.url ?? null}
+					/>
+					<HowCalculated testid="results-how">
+						<p data-testid="options-scope">{t('journey.scope', { note: scopeNote(quote, i18n.lang) })}</p>
+						<p>
+							{t('journey.how', {
+								stop: formatMoney(DEFAULT_JOURNEY_OPTIONS.extraStopFt),
+								km: formatMoney(DEFAULT_JOURNEY_OPTIONS.perKmFt)
+							})}
+						</p>
+						<p>{t('list.ranking_basis')}</p>
+						<p>{t('list.scope_legend')}</p>
+					</HowCalculated>
 				</div>
 			{:else if request}
 				<Spinner label={t('list.quote_loading')} showLabel announce={false} />

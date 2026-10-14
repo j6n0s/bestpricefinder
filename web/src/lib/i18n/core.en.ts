@@ -13,8 +13,6 @@ export const coreEn: Messages<typeof coreHu> = {
 	nav_settings: 'Settings',
 	lang_toggle_text: 'Magyar',
 
-	data_date: 'Data: {date}',
-	data_loading: 'Loading data…',
 	data_unavailable: 'The data date is not available right now.',
 	data_none: 'No price data yet.',
 	data_stale: 'Prices are not up to date',

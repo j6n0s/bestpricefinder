@@ -5,22 +5,19 @@
 	  extra walk and stop are worth. Its stops are numbered in walking order, drawn on a schematic map (no map
 	  tiles, nothing sent anywhere) and linked to OpenStreetMap one by one (the store's public position only).
 	When no route is worth it, the card says so and why. Prices are the server's per-line checkout costs; the
-	scope note with the data date ("a kiválasztott boltok közül, a … GVH-adatok alapján", BUILD-BRIEF §8.6) is
-	one muted line under the title, which also says that the walk counts; the source line follows the ranking
-	(§8.2). How the options are chosen is behind a closed "Hogyan számoljuk?" disclosure. Ties are never broken
-	by name.
+	scope note with the data date ("A sétát is beszámítva, a kiválasztott boltok közül, a … GVH-adatok
+	alapján") is in the page's one "Hogyan számoljuk?" disclosure at the bottom, and the ranking below states
+	its scope and date (BUILD-BRIEF §8.6); the source line with the date closes the page (§8.2). How the options are chosen is in the "Hogyan számoljuk?" disclosure after the ranking
+	(NearbyPrices). Ties are never broken by name.
 -->
 <script lang="ts">
 	import type { ChainSlug, QuoteResponse, StoreId, StoreOut } from '$lib/api/types';
 	import Badge from '$lib/components/Badge.svelte';
-	import HowCalculated from '$lib/components/HowCalculated.svelte';
 	import StoreLine from '$lib/components/list/StoreLine.svelte';
 	import { formatDistance, formatMoney } from '$lib/format';
 	import type { LatLon } from '$lib/geo';
-	import { i18n, t, tp } from '$lib/i18n';
-	import { DEFAULT_JOURNEY_OPTIONS } from '$lib/journey/journey';
+	import { t, tp } from '$lib/i18n';
 	import { osmLink, shoppingView } from '$lib/journey/view';
-	import { scopeNote } from '$lib/list/ranking';
 	import { chainLabel, storeAddress } from '$lib/list/stores';
 	import JourneyMap from './JourneyMap.svelte';
 
@@ -78,7 +75,6 @@
 	{@const journey = view.journey}
 	<section class="options" aria-labelledby="{id}-title" data-testid="shopping-options">
 		<h3 id="{id}-title">{t('journey.title')}</h3>
-		<p class="small muted scope" data-testid="options-scope">{t('journey.scope', { note: scopeNote(quote, i18n.lang) })}</p>
 
 		{#if view.nowhere.length > 0}
 			<p class="notice notice-warning" data-testid="nowhere">
@@ -227,14 +223,6 @@
 			</section>
 		{/if}
 
-		<HowCalculated testid="journey-how">
-			<p>
-				{t('journey.how', {
-					stop: formatMoney(DEFAULT_JOURNEY_OPTIONS.extraStopFt),
-					km: formatMoney(DEFAULT_JOURNEY_OPTIONS.perKmFt)
-				})}
-			</p>
-		</HowCalculated>
 	</section>
 {/if}
 

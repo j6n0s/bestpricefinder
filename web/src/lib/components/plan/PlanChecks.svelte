@@ -1,12 +1,13 @@
 <!--
-	One week's rule checks as neutral, factual chips: "Hal: 2 (cél: legalább 1)". A chip whose target is not
-	met is marked with "!" and a visible border; screen readers hear "teljesül" / "nem teljesül".
-	No health claims (BUILD-BRIEF §8.7).
+	One week's rule checks as a grid of equal tiles: the rule's name, the value and the target ("Hal", "2",
+	"legalább 1"). A met target has a green border, a missed one an amber border and background; there are no
+	icons. Screen readers hear "teljesül" / "nem teljesül". Neutral, factual wording: no health claims
+	(BUILD-BRIEF §8.7).
 -->
 <script lang="ts">
 	import type { RuleCheckOut } from '$lib/api/types';
 	import { i18n, t } from '$lib/i18n';
-	import { checkText } from '$lib/plan/checks';
+	import { checkParts } from '$lib/plan/checks';
 
 	interface Props {
 		checks: readonly RuleCheckOut[];
@@ -19,9 +20,11 @@
 
 <ul class="checks" aria-labelledby={labelledBy}>
 	{#each checks as check (check.rule)}
+		{@const parts = checkParts(check, i18n.lang)}
 		<li class="check" class:miss={!check.ok} data-testid="check-{check.rule}" data-ok={check.ok}>
-			<span class="mark" aria-hidden="true">{check.ok ? '✓' : '!'}</span>
-			<span class="text">{checkText(check, i18n.lang)}</span>
+			<span class="label">{parts.label}</span>
+			<span class="value">{parts.value}</span>
+			<span class="target">{parts.target}</span>
 			<span class="visually-hidden">({check.ok ? t('plan.check_ok') : t('plan.check_not_ok')})</span>
 		</li>
 	{/each}
@@ -29,8 +32,8 @@
 
 <style>
 	.checks {
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
 		gap: var(--space-2);
 		list-style: none;
 		margin: 0;
@@ -38,26 +41,40 @@
 	}
 
 	.check {
-		display: inline-flex;
-		align-items: baseline;
-		gap: var(--space-2);
-		max-width: 100%;
-		padding: var(--space-1) var(--space-3);
-		border: 1px solid var(--color-border-subtle);
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 0;
+		padding: var(--space-2) var(--space-3);
+		border: 2px solid var(--color-success-border);
 		border-radius: var(--radius-md);
-		background: var(--color-neutral-bg);
-		color: var(--color-neutral-text);
-		font-size: var(--font-size-sm);
+		background: var(--color-surface);
+		color: var(--color-text);
 	}
 
 	.miss {
+		border-color: var(--color-warning-border);
 		background: var(--color-warning-bg);
 		color: var(--color-warning-text);
-		border-color: var(--color-warning-border);
 	}
 
-	.mark {
-		flex: none;
+	.label {
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+	}
+
+	.value {
+		font-size: var(--font-size-lg);
 		font-weight: 700;
+		line-height: 1.25;
+	}
+
+	.target {
+		font-size: var(--font-size-sm);
+		color: var(--color-text-muted);
+	}
+
+	.miss .target {
+		color: inherit;
 	}
 </style>

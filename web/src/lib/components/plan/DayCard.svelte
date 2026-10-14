@@ -51,7 +51,7 @@
 				<div class="actions">
 					<button
 						type="button"
-						class="btn btn-secondary"
+						class={meal.recipeId === null ? 'btn btn-secondary' : 'btn btn-ghost'}
 						id="meal-change-{day.index}-{meal.slot}"
 						onclick={() => onchange(day.index, meal.slot)}
 					>
@@ -59,7 +59,7 @@
 						<span class="visually-hidden">{target}</span>
 					</button>
 					{#if meal.recipeId !== null}
-						<button type="button" class="btn btn-secondary" onclick={() => onclear(day.index, meal.slot)}>
+						<button type="button" class="btn btn-ghost" onclick={() => onclear(day.index, meal.slot)}>
 							{t('plan.meal_clear')}
 							<span class="visually-hidden">{target}</span>
 						</button>
