@@ -7,6 +7,10 @@
 
 > Clone https://github.com/j6n0s/bestpricefinder and switch to the branch `claude/practical-newton-fdz8jp`. Read `AGENTS.md`, then do everything in `docs/LOCAL_AGENT.md`, Part A. Ask me for the contact e-mail to send in the User-Agent. Don't do Part B unless I ask.
 
+**Part A was done on 2026-10-14.** For the small follow-up (Part C), paste this instead:
+
+> In your clone of https://github.com/j6n0s/bestpricefinder, run `git switch claude/practical-newton-fdz8jp && git pull --no-rebase`. Read `AGENTS.md`, then do `docs/LOCAL_AGENT.md`, Part C. Ask me for the contact e-mail.
+
 ## Why this is needed
 
 The app takes its prices from GVH Árfigyelő. The cloud agent builds and tests it, but its container cannot reach these three hosts (the egress proxy answers 403):
@@ -141,3 +145,37 @@ This checks what the cloud cannot: PostgreSQL 18 and (on a Mac) the macOS paths,
    - the counts that `deploy/local/doctor.sh` prints.
 
    Commit only that entry, and only if something needs fixing. Never commit `.env`, `pg-admin.env`, the backup key (it belongs in `~/.config/bestpricefinder/`, outside the repository), `.data/`, `pgdata/`, `backups/` or `log/`.
+
+## Part C: the follow-up capture (2026-10-14; about 2 minutes)
+
+Part A worked. Every parser has since been fixed against your samples, and the tool now reads the wrapped reference bodies (`{"shops": […]}`) correctly. Two samples are still missing:
+
+- **`product-shop-ok`:** the per-store prices of one product. The tool could not find a Budapest Tesco store in the wrapped `/shops` body.
+- **`product-multichain`:** a product sold by at least 4 chains. The tool now picks one from the XLSX column "Hány üzletláncban elérhető".
+
+Same rules as above. From `server/`:
+
+```sh
+uv sync
+uv run pytest tests/test_capture_tool.py -q   # all must pass
+uv run python tools/capture_gvh_samples.py --contact THE_USERS_EMAIL --only product-shop-ok,product-multichain
+uv run pytest tests/test_gvh_fixtures.py -v
+```
+
+**What the run does:**
+
+- **Requests:** about 5 to 20 requests at most, one per 1.2 s: the XLSX once (read for the candidates, not saved), `/shops`, the detail of product 2804780000000, up to 15 candidate details, and the per-store prices.
+- **Files it rewrites:**
+  - `shops-head.json`, now cut to the first 40 shops as originally intended;
+  - `product-2804780000000.json`, refreshed.
+- **Files it adds:** `product-multichain.json` and `product-shop-ok.json`.
+
+**What to report and push:** report in a new QUESTIONS.md entry, in the same form as A4. Then commit only these paths, and pull before you push:
+
+- `server/tests/fixtures/gvh/raw`
+- `docs/QUESTIONS.md`
+
+**If something goes wrong:**
+
+- **The tool stops with `STOPPED`:** follow A2.
+- **A `(skipped)` line:** report it. Don't retry with other products by hand.

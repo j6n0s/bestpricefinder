@@ -103,8 +103,19 @@ def test_shops_head_is_truncated_and_untouched(captured: Captured) -> None:
     head = json.loads((out / "shops-head.json").read_bytes())
     meta = json.loads((out / "shops-head.meta.json").read_text())
     full = json.loads(fake.respond("/api/shops").body)  # type: ignore[union-attr]
-    assert head == full[:40]
-    assert meta["full_count"] == len(full)
+    assert head == {"shops": full["shops"][:40]}  # the wrapper is kept, the list is cut to 40
+    assert meta["full_count"] == len(full["shops"]) > 40
+    assert meta["truncated_to"] == 40
+
+
+def test_multichain_candidate_comes_from_the_xlsx_chain_count(captured: Captured) -> None:
+    out, fake, *_ = captured
+    meta = json.loads((out / "product-multichain.meta.json").read_text())
+    xlsx_meta = json.loads((out / "xlsx-sample.meta.json").read_text())
+    assert xlsx_meta["products_sold_by_4_or_more_chains"] >= 1
+    detail = json.loads((out / "product-multichain.json").read_bytes())
+    assert detail["id"] == meta["product_id"]
+    assert meta["chains"] == len(detail["chainStores"]) >= 4
 
 
 def test_listing_pages_and_shop_ok_requests(captured: Captured) -> None:
@@ -200,7 +211,8 @@ def test_redirects_are_not_followed_and_ksh_file_is_kept_verbatim(tmp_path: Path
         ["--contact", "ops@example.com", "--min-interval", "0.2"],  # real hosts: never faster than 1 req/s
     ],
 )
-def test_refuses_impolite_settings(argv: list[str]) -> None:
+def test_refuses_impolite_settings(argv: list[str], monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(capture.httpx, "Client", _no_network)
     with pytest.raises(SystemExit) as raised:
         capture.main(argv)
     assert raised.value.code == 2
@@ -268,6 +280,7 @@ def test_odd_answers_are_saved_as_received_and_optional_items_are_skipped(
         )
         capture.capture_gvh(
             cap,
+            wanted=frozenset(capture.ITEMS),
             product_a="A",
             product_b="B",
             notfound_product="A",
@@ -284,3 +297,67 @@ def test_odd_answers_are_saved_as_received_and_optional_items_are_skipped(
     out = capsys.readouterr().out
     assert "none of 1 products tried is sold by >= 4 chains (skipped)" in out
     assert "product-shop-ok           no Budapest Tesco store" in out
+
+
+def test_only_makes_just_the_requests_the_named_items_need(tmp_path: Path) -> None:
+    """The follow-up run of 2026-10-14: product-shop-ok and product-multichain were skipped the first time."""
+    world = build_world()
+    fake = FakeGvh(world, data_date=date(2026, 10, 13))
+    special = world.special
+    with fake.serve() as srv:
+        code = capture.main(
+            [
+                "--contact",
+                "ops@example.com",
+                "--out",
+                str(tmp_path),
+                "--base-url",
+                srv.api_base,
+                "--xlsx-url",
+                srv.xlsx_url,
+                "--min-interval",
+                "0",
+                "--product-a",
+                special["tesco_zone"],
+                "--only",
+                "product-shop-ok,product-multichain",
+            ]
+        )
+    assert code == 0
+    written = {p.name.removesuffix(".json") for p in _json_files(tmp_path)}
+    assert written == {
+        "shops-head",
+        f"product-{special['tesco_zone']}",
+        "product-multichain",
+        "product-shop-ok",
+    }
+    assert not (tmp_path / "xlsx-sample.xlsx").exists()  # read for the candidates, not saved
+    paths = [r.path for r in fake.requests]
+    assert not any("/products-by-category/" in p or p in ("/api/categories", "/api/search") for p in paths)
+    assert sum(p.endswith(".xlsx") for p in paths) == 1
+    assert len(paths) <= 6
+    for path in _json_files(tmp_path):
+        assert parse_fixture(path).drift == (), path.name
+
+
+def test_a_named_multichain_product_skips_the_xlsx(tmp_path: Path) -> None:
+    world = build_world()
+    fake = FakeGvh(world, data_date=date(2026, 10, 13))
+    with fake.serve() as srv:
+        argv = ["--contact", "ops@example.com", "--out", str(tmp_path), "--base-url", srv.api_base]
+        argv += ["--xlsx-url", srv.xlsx_url, "--min-interval", "0", "--only", "product-multichain"]
+        assert capture.main([*argv, "--multichain-product", world.special["multichain"]]) == 0
+    assert [r.path for r in fake.requests] == [f"/api/product/{world.special['multichain']}"]
+    assert json.loads((tmp_path / "product-multichain.meta.json").read_text())["chains"] >= 4
+
+
+def _no_network(*args: object, **kwargs: object) -> None:
+    raise AssertionError("the tool must refuse before opening any connection")
+
+
+@pytest.mark.parametrize("only", ["", "pbc,nonsense", " , "])
+def test_only_rejects_unknown_items(only: str, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(capture.httpx, "Client", _no_network)
+    with pytest.raises(SystemExit) as raised:
+        capture.main(["--contact", "ops@example.com", "--only", only, "--no-ksh"])
+    assert raised.value.code == 2

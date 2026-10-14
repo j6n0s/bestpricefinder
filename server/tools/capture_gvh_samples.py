@@ -10,10 +10,16 @@ server/tests/test_gvh_fixtures.py read:
     data/ksh/raw/<file> (+ .meta.json)               the KSH file exactly as downloaded
 
 Politeness: at most one request per 1.2 s, a User-Agent with your contact e-mail, no retries, no redirects,
-and a full stop at the first 403, 429 or 5xx. 18-33 requests in total.
+and a full stop at the first 403, 429 or 5xx. 18-33 requests in total; a follow-up run with ``--only`` makes
+only the requests the named items need.
+
+The reference bodies are wrapped objects (``{"shops": [...]}``, ``{"chainStores": [...]}``; real samples of
+2026-10-14). The multichain product is picked from the XLSX column "Hány üzletláncban elérhető" (>= 4).
 
 Usage (from server/):
     uv run python tools/capture_gvh_samples.py --contact you@example.com
+    uv run python tools/capture_gvh_samples.py --contact you@example.com \
+        --only product-shop-ok,product-multichain
     uv run pytest tests/test_gvh_fixtures.py -v      # checks every parser against the new samples
 
 Nothing here is used by the app; it is a one-off data-collection tool.
@@ -26,7 +32,7 @@ import io
 import json
 import sys
 import time
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -55,8 +61,24 @@ KEPT_HEADERS = (
     "x-cache",
 )
 XLSX_ROWS = 150
+XLSX_ID = "Termék azonosító"
+XLSX_CHAINS = "Hány üzletláncban elérhető"
 SHOPS_KEPT = 40
 MULTICHAIN_TRIES = 15
+#: What --only can name. "pbc" = the six listing pages, "products" = the two named product details.
+ITEMS = (
+    "categories",
+    "chain-stores",
+    "shops-head",
+    "pbc",
+    "products",
+    "product-multichain",
+    "product-shop-ok",
+    "product-shop-notfound",
+    "search-400",
+    "xlsx",
+    "ksh",
+)
 
 
 class Stopped(Exception):
@@ -133,11 +155,16 @@ def _chain_entries(detail: Any) -> list[dict[str, Any]]:
     return []
 
 
-def _budapest_shops(shops: Any, chain_id: str | None) -> list[str]:
-    if not isinstance(shops, list):
-        return []
+def _unwrap(body: Any, key: str) -> list[Any] | None:
+    """The item list of a reference body: ``{"<key>": [...]}`` (the real shape, 2026-10-14) or a bare list."""
+    if isinstance(body, dict) and isinstance(body.get(key), list):
+        return body[key]
+    return body if isinstance(body, list) else None
+
+
+def _budapest_shops(shops: list[Any] | None, chain_id: str | None) -> list[str]:
     found = []
-    for shop in shops:
+    for shop in shops or []:
         if not isinstance(shop, dict):
             continue
         postal = str(shop.get("postalCode") or "")
@@ -148,46 +175,28 @@ def _budapest_shops(shops: Any, chain_id: str | None) -> list[str]:
     return found
 
 
-def capture_gvh(
-    cap: Capture, *, product_a: str, product_b: str, notfound_product: str, notfound_store: str, shop_ids: str
-) -> None:
-    print(f"GVH API {cap.base}")
-    cap.api("categories", "/categories")
-    chains = cap.api("chain-stores", "/chain-stores")
+def capture_shops(cap: Capture) -> list[Any] | None:
+    """``/shops``, saved as ``shops-head`` with only the first 40 shops (inside the wrapper, if any)."""
     url = cap.base + "/shops"
     response = cap.get(url)
     try:
-        shops = response.json() if response.status_code == 200 else None
+        body = response.json() if response.status_code == 200 else None
     except ValueError:
-        shops = None  # not JSON: saved as received, and the fixture test will say so
-    head = shops[:SHOPS_KEPT] if isinstance(shops, list) else shops
-    body = json.dumps(head, ensure_ascii=False).encode() if isinstance(shops, list) else response.content
-    cap.save(
-        "shops-head",
-        url,
-        response,
-        body,
-        full_count=len(shops) if isinstance(shops, list) else None,
-        truncated_to=SHOPS_KEPT if isinstance(shops, list) else None,
-    )
+        body = None  # not JSON: saved as received, and the fixture test will say so
+    shops = _unwrap(body, "shops")
+    if shops is None:
+        cap.save("shops-head", url, response, response.content, full_count=None, truncated_to=None)
+        return None
+    head: Any = {**body, "shops": shops[:SHOPS_KEPT]} if isinstance(body, dict) else shops[:SHOPS_KEPT]
+    content = json.dumps(head, ensure_ascii=False, separators=(",", ":")).encode()
+    cap.save("shops-head", url, response, content, full_count=len(shops), truncated_to=SHOPS_KEPT)
+    return shops
 
-    first = cap.api("pbc-18-o0", "/products-by-category/18", {"limit": 48, "offset": 0})
-    count = first.get("count") if isinstance(first, dict) else None
-    if isinstance(count, int) and count > 48:
-        cap.api("pbc-18-last", "/products-by-category/18", {"limit": 48, "offset": ((count - 1) // 48) * 48})
-    cap.api("pbc-18-default", "/products-by-category/18")
-    cap.api("pbc-18-shops", "/products-by-category/18", {"limit": 48, "offset": 0, "shopIds": shop_ids})
-    onions = cap.api("pbc-40-o0", "/products-by-category/40", {"limit": 48, "offset": 0})
-    yoghurts = cap.api("pbc-7-o0", "/products-by-category/7", {"limit": 48, "offset": 0})
 
-    detail_a = cap.api(f"product-{product_a}", f"/product/{product_a}")
-    cap.api(f"product-{product_b}", f"/product/{product_b}")
-
-    # The listing shows at most 3 chains, so only the detail tells; products listed with 3 chains go first.
-    listed = [p for listing in (first, yoghurts, onions) for p in _products(listing)]
-    listed.sort(key=lambda p: -len(p.get("pricesOfChainStores") or []))
-    candidates = [str(p["id"]) for p in listed if p.get("id") and str(p["id"]) not in (product_a, product_b)]
-    for pid in list(dict.fromkeys(candidates))[:MULTICHAIN_TRIES]:
+def capture_multichain(cap: Capture, candidates: Sequence[str]) -> None:
+    """The first candidate whose detail lists >= 4 chains, saved as ``product-multichain``."""
+    tried = list(dict.fromkeys(c for c in candidates if c))[:MULTICHAIN_TRIES]
+    for pid in tried:
         url = f"{cap.base}/product/{pid}"
         response = cap.get(url)
         try:
@@ -198,45 +207,95 @@ def capture_gvh(
             cap.save(
                 "product-multichain", url, response, response.content, product_id=pid, chains=len(entries)
             )
-            break
-    else:
-        print(
-            f"  product-multichain        none of {min(len(set(candidates)), MULTICHAIN_TRIES)} products "
-            "tried is sold by >= 4 chains (skipped)"
-        )
+            return
+    print(f"  product-multichain        none of {len(tried)} products tried is sold by >= 4 chains (skipped)")
 
-    chain_list = chains if isinstance(chains, list) else []
-    tesco = next(
-        (
-            c.get("uuid")
-            for c in chain_list
-            if isinstance(c, dict) and str(c.get("name", "")).lower().startswith("tesco")
-        ),
-        None,
+
+def capture_gvh(
+    cap: Capture,
+    *,
+    wanted: frozenset[str],
+    product_a: str,
+    product_b: str,
+    notfound_product: str,
+    notfound_store: str,
+    shop_ids: str,
+    multichain_candidates: Sequence[str] = (),
+) -> None:
+    """The API samples in ``wanted`` (see ITEMS). ``product-shop-ok`` also refreshes ``shops-head`` and
+    ``product-<a>``, whose data it needs."""
+    print(f"GVH API {cap.base}")
+    if "categories" in wanted:
+        cap.api("categories", "/categories")
+    chains = (
+        _unwrap(cap.api("chain-stores", "/chain-stores"), "chainStores") if "chain-stores" in wanted else None
     )
-    carried: set[str] = set()
-    for entry in _chain_entries(detail_a):
-        shops_of = entry.get("availableInShops")
-        if isinstance(shops_of, list):
-            carried.update(str(s) for s in shops_of)
-    budapest_tesco = [s for s in _budapest_shops(shops, tesco) if not carried or s in carried][:5]
-    if budapest_tesco:
-        ids = ",".join(budapest_tesco)
-        cap.api("product-shop-ok", f"/product/{product_a}/shop/{ids}")
-    else:
-        print("  product-shop-ok           no Budapest Tesco store found for the product (skipped)")
-    cap.api("product-shop-notfound", f"/product/{notfound_product}/shop/{notfound_store}")
-    cap.api("search-400", "/search", {"q": "so"})
+    shops = capture_shops(cap) if wanted & {"shops-head", "product-shop-ok"} else None
+
+    listings: list[Any] = []
+    if "pbc" in wanted:
+        first = cap.api("pbc-18-o0", "/products-by-category/18", {"limit": 48, "offset": 0})
+        count = first.get("count") if isinstance(first, dict) else None
+        if isinstance(count, int) and count > 48:
+            last = ((count - 1) // 48) * 48
+            cap.api("pbc-18-last", "/products-by-category/18", {"limit": 48, "offset": last})
+        else:
+            print(f"  pbc-18-last               one page only (count {count}) (skipped)")
+        cap.api("pbc-18-default", "/products-by-category/18")
+        cap.api("pbc-18-shops", "/products-by-category/18", {"limit": 48, "offset": 0, "shopIds": shop_ids})
+        onions = cap.api("pbc-40-o0", "/products-by-category/40", {"limit": 48, "offset": 0})
+        yoghurts = cap.api("pbc-7-o0", "/products-by-category/7", {"limit": 48, "offset": 0})
+        listings = [first, yoghurts, onions]
+
+    detail_a = None
+    if wanted & {"products", "product-shop-ok"}:
+        detail_a = cap.api(f"product-{product_a}", f"/product/{product_a}")
+    if "products" in wanted:
+        cap.api(f"product-{product_b}", f"/product/{product_b}")
+
+    if "product-multichain" in wanted:
+        # The XLSX says how many chains sell a product; the listing shows at most 3, so it can only hint.
+        listed = [p for listing in listings for p in _products(listing)]
+        listed.sort(key=lambda p: -len(p.get("pricesOfChainStores") or []))
+        hinted = [str(p["id"]) for p in listed if p.get("id")]
+        known = {product_a, product_b}
+        capture_multichain(cap, [c for c in [*multichain_candidates, *hinted] if c not in known])
+
+    if "product-shop-ok" in wanted:
+        tesco = next(
+            (
+                c.get("uuid")
+                for c in chains or []
+                if isinstance(c, dict) and str(c.get("name", "")).lower().startswith("tesco")
+            ),
+            None,
+        )
+        carried: set[str] = set()
+        for entry in _chain_entries(detail_a):
+            shops_of = entry.get("availableInShops")
+            if isinstance(shops_of, list):
+                carried.update(str(s) for s in shops_of)
+        budapest_tesco = [s for s in _budapest_shops(shops, tesco) if not carried or s in carried][:5]
+        if budapest_tesco:
+            cap.api("product-shop-ok", f"/product/{product_a}/shop/{','.join(budapest_tesco)}")
+        else:
+            print("  product-shop-ok           no Budapest Tesco store found for the product (skipped)")
+    if "product-shop-notfound" in wanted:
+        cap.api("product-shop-notfound", f"/product/{notfound_product}/shop/{notfound_store}")
+    if "search-400" in wanted:
+        cap.api("search-400", "/search", {"q": "so"})
 
 
-def capture_xlsx(cap: Capture, today: str) -> None:
+def capture_xlsx(cap: Capture, today: str, *, save: bool = True) -> list[str]:
+    """Today's XLSX: saved cut down to the header + 150 rows (when ``save``). Returns the product ids sold by
+    the most chains (>= 4, column "Hány üzletláncban elérhető"), best first: the multichain candidates."""
     url = f"{cap.xlsx_url}?{urlencode({'v': today.replace('-', '') + '-capture'})}"
     print(f"Daily XLSX {url}")
     response = cap.get(url)
     if response.status_code != 200:
         print(f"  xlsx-sample.xlsx          HTTP {response.status_code} (skipped)")
         cap.report.append({"name": "xlsx-sample.xlsx", "status": response.status_code})
-        return
+        return []
     source = openpyxl.load_workbook(io.BytesIO(response.content), read_only=True)
     sheet = source.worksheets[0]
     source_sheets = list(source.sheetnames)
@@ -246,11 +305,25 @@ def capture_xlsx(cap: Capture, today: str) -> None:
         raise RuntimeError("openpyxl created a workbook without a sheet")
     target.title = sheet.title
     total = 0
+    id_col = count_col = None
+    chain_counts: dict[str, int] = {}
     for index, row in enumerate(sheet.iter_rows(values_only=True)):
+        if index == 0:
+            header = [str(cell).strip() if cell is not None else "" for cell in row]
+            id_col = header.index(XLSX_ID) if XLSX_ID in header else None
+            count_col = header.index(XLSX_CHAINS) if XLSX_CHAINS in header else None
+        elif id_col is not None and count_col is not None:
+            pid, chains = row[id_col], str(row[count_col] or "").strip()
+            if pid and chains.isdigit() and int(chains) >= 4:
+                chain_counts[str(pid).strip()] = int(chains)
         if index <= XLSX_ROWS:
             target.append(list(row))  # the values keep their type: text stays text (decimal commas)
         total += 1
     source.close()
+    candidates = sorted(chain_counts, key=lambda pid: (-chain_counts[pid], pid))
+    if not save:
+        print(f"  xlsx (not saved)          {len(candidates)} products sold by >= 4 chains")
+        return candidates
     buffer = io.BytesIO()
     out.save(buffer)
     cap.out.mkdir(parents=True, exist_ok=True)
@@ -265,12 +338,14 @@ def capture_xlsx(cap: Capture, today: str) -> None:
         "kept_data_rows": min(XLSX_ROWS, total - 1),
         "sheet_name": sheet.title,
         "all_sheet_names": source_sheets,
+        "products_sold_by_4_or_more_chains": len(candidates),
         "synthetic": False,
     }
     (cap.out / "xlsx-sample.meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n")
     cap.report.append({"name": "xlsx-sample.xlsx", "status": 200, **meta})
     kept = meta["kept_data_rows"]
     print(f"  xlsx-sample.xlsx          sheet {sheet.title!r}, kept {kept} of {total - 1} data rows")
+    return candidates
 
 
 def capture_ksh(cap: Capture, url: str, out: Path) -> None:
@@ -312,11 +387,23 @@ def main(argv: Iterable[str] | None = None) -> int:
     parser.add_argument("--notfound-product", help="product for product-shop-notfound (default: --product-a)")
     parser.add_argument("--notfound-store", default="tesco-4062")
     parser.add_argument("--shop-ids", default="tesco-4030,lidl-274")
+    parser.add_argument("--multichain-product", help="a product id sold by >= 4 chains, tried first")
+    parser.add_argument(
+        "--only",
+        help=f"capture only these items, comma-separated, from: {', '.join(ITEMS)} (default: all)",
+    )
     parser.add_argument("--min-interval", type=float, default=1.2, help="seconds between requests (>= 1)")
     args = parser.parse_args(list(argv) if argv is not None else None)
     if "@" not in args.contact:
         parser.error("--contact must be an e-mail address")
-    urls = (args.base_url, args.xlsx_url) + (() if args.no_ksh else (args.ksh_url,))
+    wanted = frozenset(ITEMS)
+    if args.only is not None:  # an empty --only is an error, never "everything"
+        wanted = frozenset(item.strip() for item in args.only.split(",") if item.strip())
+        if not wanted or not wanted <= frozenset(ITEMS):
+            parser.error(f"--only takes items from: {', '.join(ITEMS)}")
+    if args.no_ksh:
+        wanted -= {"ksh"}
+    urls = (args.base_url, args.xlsx_url) + ((args.ksh_url,) if "ksh" in wanted else ())
     hosts = {urlsplit(u).hostname for u in urls}
     if args.min_interval < 1.0 and not hosts <= {"127.0.0.1", "localhost"}:
         parser.error("--min-interval below 1 s is only allowed against a local test server")
@@ -332,16 +419,22 @@ def main(argv: Iterable[str] | None = None) -> int:
     with httpx.Client(timeout=60.0, follow_redirects=False) as client:
         cap.client = client
         try:
-            capture_gvh(
-                cap,
-                product_a=args.product_a,
-                product_b=args.product_b,
-                notfound_product=args.notfound_product or args.product_a,
-                notfound_store=args.notfound_store,
-                shop_ids=args.shop_ids,
-            )
-            capture_xlsx(cap, today)
-            if not args.no_ksh:
+            candidates: list[str] = [args.multichain_product] if args.multichain_product else []
+            # The XLSX first: it names the products sold by >= 4 chains (the multichain candidates).
+            if "xlsx" in wanted or ("product-multichain" in wanted and not args.multichain_product):
+                candidates += capture_xlsx(cap, today, save="xlsx" in wanted)
+            if wanted - {"xlsx", "ksh"}:
+                capture_gvh(
+                    cap,
+                    wanted=wanted,
+                    product_a=args.product_a,
+                    product_b=args.product_b,
+                    notfound_product=args.notfound_product or args.product_a,
+                    notfound_store=args.notfound_store,
+                    shop_ids=args.shop_ids,
+                    multichain_candidates=candidates,
+                )
+            if "ksh" in wanted:
                 capture_ksh(cap, args.ksh_url, args.ksh_out)
         except Stopped as error:
             stopped = error
