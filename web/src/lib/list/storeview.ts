@@ -41,14 +41,3 @@ export function storeGroups(store: Pick<StoreQuoteOut, 'lines'>, listLines: read
 export function hasKshEstimate(store: Pick<StoreQuoteOut, 'lines'>): boolean {
 	return store.lines.some((line) => line.status === 'ksh_estimate' && line.ksh_estimate !== null);
 }
-
-/**
- * True when some priced line costs a fraction of a forint (sold by weight: price × exact weight). Each line is
- * shown rounded to whole forints while the total is the server's exact sum, so the shown lines may not add up
- * to the shown total; the view then says why. (No arithmetic on money here: the total stays the server's.)
- */
-export function hasFractionalCosts(store: Pick<StoreQuoteOut, 'lines'>): boolean {
-	return store.lines.some(
-		(line) => line.status === 'priced' && line.checkout_cost !== null && !Number.isInteger(line.checkout_cost)
-	);
-}

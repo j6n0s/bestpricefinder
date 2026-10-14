@@ -1,7 +1,8 @@
 <!--
 	"Kamra": the pantry staples (GET /api/ingredients, `pantry: true`). Ticked = "otthon van" (the default):
 	the staple stays off the shopping list and out of the store prices. Unticking stores it in
-	StoredState.pantry.notAtHome (the same switch as "nincs otthon" on the list), on this device only.
+	StoredState.pantry.notAtHome (the same switch as "nincs otthon" on the list), on this device only. The
+	group's label says what a tick does; there is no intro paragraph.
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
@@ -56,8 +57,6 @@
 </script>
 
 <div class="pantry-settings" data-testid="pantry-settings">
-	<p>{t('list.pantry_settings_intro')}</p>
-	<p class="small muted">{t('list.device_only')}</p>
 	{#if !persistent}
 		<p class="notice notice-warning" role="status">{t('list.storage_unavailable')}</p>
 	{/if}

@@ -124,3 +124,47 @@ The user asked for a cart and for "one store vs a route" with a map. These decis
 - **Verification:**
   - Web: svelte-check clean; vitest 622 (the route planner is checked against an independent brute force on 60 random cases); Playwright e2e 109 (new `cart.spec.ts` at 320/360/1280 px and in English, with the expected totals and routes worked out by hand).
   - Full stack (`test:fullstack`, phone + desktop): 4 passed. The new cart test checks every total, stop, item assignment and walking order on screen against the real API's quote. Server unchanged.
+
+## 2026-10-14 — local session — Part B (local run on macOS) results, review findings, and the design hand-off
+**Design work moves to you:** branch `design/pixel-kitchen`. Read `docs/DESIGN_HANDOFF.md` first; it holds the user's latest UI requirements and the to-do list.
+
+**Environment:** macOS 27.0.1 arm64, PostgreSQL 18.6 (Homebrew), Python 3.14.8, uv 0.13.1, Node 22.23.3.
+- ⚠️ With Node 26, `npx playwright install chromium` downloads but hangs while extracting. Consider an upper bound in `engines`, or say "use Node 22" in the docs.
+- On this Mac psql prints its messages in Ukrainian (system locale).
+
+**RUNNING.md §1–8**, run in a fresh clone at ~/src/bestpricefinder:
+- db-init: ok. Hardening verified: listens on 127.0.0.1/::1:5544 only, SCRAM only, strict pg_hba with reject lines, socket and data dirs 0700, a password-less login refused, no secret in the server log.
+- load-content: ok; 3 migrations, 162 ingredients, 41 recipes, 61 KSH rows, **0 nutrition rows**, so recipes have no nutrition yet.
+- reference: ok; 3 requests, 1 expected warning (the Rossmann coordinate).
+- daily: ok; **483 requests**, about 8 minutes, 4 warnings, including a **new schema drift: unknown field `ShopPrice.uuid`** in the per-store answer (accepted). Please declare it in ASSUMPTIONS.md.
+- availability: started, then **stopped by the user after about 30 minutes**, so it is incomplete. doctor.sh was not run. The user asked to stop the app; everything is stopped.
+
+**Tests on this Mac:**
+- server: 2,537/2,539. The 2 failures are `test_db_conninfo.py::test_scripts_psql_never_sends_the_admin_password_to_an_impostor[cleartext|md5]`. They assert psql's **English** error text, while psql here answers in Ukrainian. The security property itself held (no password was sent), and both pass with `LC_ALL=C`. Please make the assertion locale-independent, e.g. force `LC_MESSAGES=C` in the subprocess env.
+- vitest: 622/622.
+- e2e: 108/109; the flaky picker test passed 30/30 when run alone.
+- **fullstack: 4/4 on PostgreSQL 18**, the first PG18 run.
+
+**Independent review**, 12 agents with adversarial verification; no high-severity findings. Confirmed medium findings, for your backlog:
+1. `server/bpf/pricing/ranking.py`: missing items are imputed at the median, not penalised, so a store missing most of the list can rank #1. Seen live: the fullstack log ranked "spar-169 (23 missing)" first.
+2. `server/bpf/pricing/packs.py`: unitTitle 'kg' makes any product variable-weight, so fixed 1 kg bags are bought in fractions. With real sample data, 0.12 kg of onion priced at 33 Ft instead of 277 Ft.
+3. `web/src/lib/journey/view.ts:137`: the "no route" note can state a false saving ceiling or a false "nem lenne olcsóbb".
+4. `journey.ts:287`: "Egy boltban" is chosen by price plus walking but presented as the cheapest, with no explanation.
+5. `journey/view.ts:70`: the route treats 'assumed' availability as confirmed ("Itt minden megvan").
+6. `storage.ts:202`: the cart and the list share one offline `lastQuote` slot and overwrite each other.
+Lows worth a look:
+- chain-typical prices for pse=false pairs are shown without "-tól";
+- the history view ignores the XLSX fallback;
+- `suggest_split` breaks ties by store id;
+- `api.latest` serves partial runs;
+- an all-NOT-FOUND per-store result is silent;
+- the UPDATE grant plus OLD-only trigger on history;
+- doctor does not check that backups ran;
+- the privacy text does not mention the OSM link or the IP the rate limiter uses.
+Full notes: the reviewers' files were local only, so ask the user if you need details.
+
+**Manual try-out notes:**
+- two-day (`ket_napos`) meals repeat on the next day with no "maradék" label on the plan;
+- the bay leaf shows as "1,667 db";
+- tap water ("víz") is offered with a "Nincs otthon" toggle in the pantry;
+- a 1-frame race in the smoke test was fixed on the design branch (see DESIGN_HANDOFF.md).

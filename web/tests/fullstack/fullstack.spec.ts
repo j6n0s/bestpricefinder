@@ -340,7 +340,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	// ── c. "Hol a legolcsóbb a közelben?": the explanation first, then the device's position ──
 	await expect(page.getByRole('heading', { level: 2, name: 'Hol a legolcsóbb a közelben?' })).toBeVisible();
 	await expect(page.getByRole('heading', { name: 'Honnan keressük a boltokat?' })).toBeVisible();
-	await expect(page.getByText('csak a kiválasztott boltok azonosítóit küldjük el', { exact: false })).toBeVisible();
+	await expect(page.getByTestId('location-privacy')).toHaveText('A helyzeted nem kerül a szerverre. Adatvédelem');
 	expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
 	expect(seen.requests.filter((r) => r.url.includes('/api/stores') || r.url.includes('/api/quote'))).toEqual([]);
 

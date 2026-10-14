@@ -4,8 +4,6 @@
  */
 export const cartHu = {
 	title: 'Kosár',
-	intro:
-		'Válogasd össze, mit vennél, és megmutatjuk, hol a legolcsóbb a közelben: egy boltban, vagy egy rövid körúton. A kosarad csak ezen a készüléken marad.',
 	loading: 'Termékek betöltése…',
 	error_title: 'A termékek betöltése nem sikerült',
 
@@ -24,7 +22,6 @@ export const cartHu = {
 	browse_title: 'Termékek',
 	browse_more: 'További termékek',
 	search_label: 'Keresés a termékek között',
-	search_hint: 'Ékezet nélkül is kereshetsz. Csak a bolti árral rendelkező termékeket mutatjuk.',
 	goods_count_one: '{count} termék',
 	goods_count_other: '{count} termék',
 	no_results: 'Nincs ilyen termék.',

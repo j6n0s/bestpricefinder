@@ -1,14 +1,16 @@
 <!--
-	Where the nearby stores are measured from (BUILD-BRIEF §8.8). The explanation comes first; the browser is
-	asked for a position only when the user presses "Saját helyzetem használata" (low accuracy, 10 s timeout,
-	rounded to about 100 m, kept on this device; only store ids are ever sent). The Budapest district picker
-	is the alternative. The outcome is reported through `onlocation`; the page saves it with $lib/storage.
+	Where the nearby stores are measured from (BUILD-BRIEF §8.8). The card's title says what the position is
+	for and one line beside the button says it stays on the device (with a link to the privacy page); the
+	browser is asked for a position only when the user presses "Saját helyzetem használata" (low accuracy, 10 s
+	timeout, rounded to about 100 m, kept on this device; only store ids are ever sent). The Budapest district
+	picker is the alternative. The outcome is reported through `onlocation`; the page saves it with $lib/storage.
 	Every new location is built from the STORED one (load()), not from the `location` prop: another tab may have
 	revoked the position or deleted everything since this page read it, and that must never be written back.
 -->
 <script lang="ts">
 	import { tick } from 'svelte';
 	import DistrictPicker from '$lib/components/DistrictPicker.svelte';
+	import LocationPrivacy from '$lib/components/LocationPrivacy.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { t, type PlainKey } from '$lib/i18n';
 	import { locateForList } from '$lib/list/locate';
@@ -71,9 +73,6 @@
 
 <section class="card origin" aria-labelledby="{id}-title">
 	<h3 id="{id}-title" tabindex="-1" bind:this={heading}>{t('list.origin_title')}</h3>
-	<p>{t('list.nearby_why')}</p>
-	<p>{t('core.location_device_only')}</p>
-	<p class="small muted">{t('core.location_approx')}</p>
 
 	<div class="locate">
 		{#if pending}
@@ -83,6 +82,7 @@
 				{t('list.use_my_location')}
 			</button>
 		{/if}
+		<LocationPrivacy />
 	</div>
 
 	<div role="status" class="feedback">
@@ -91,8 +91,13 @@
 		{/if}
 	</div>
 
-	<p class="or">{t('list.or_district')}</p>
-	<DistrictPicker value={location.source === 'district' ? location.districtId : null} onchange={chooseDistrict} />
+	<div class="or">
+		<DistrictPicker
+			label={t('list.or_district')}
+			value={location.source === 'district' ? location.districtId : null}
+			onchange={chooseDistrict}
+		/>
+	</div>
 
 	{#if hasOrigin}
 		<div class="btn-row done">
@@ -111,7 +116,11 @@
 	}
 
 	.locate {
-		margin: var(--space-4) 0 var(--space-2);
+		margin: var(--space-3) 0 var(--space-2);
+	}
+
+	.locate :global([data-testid='location-privacy']) {
+		margin: var(--space-2) 0 0;
 	}
 
 	.feedback p {

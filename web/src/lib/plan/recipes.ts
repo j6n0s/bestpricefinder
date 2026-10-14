@@ -21,19 +21,6 @@ import { formatNumber } from '../format';
 import type { PlainKey } from '../i18n/messages';
 import { isSlot } from './checks';
 
-/**
- * True when there is at least one recipe and none of them is tested. A view showing only untested recipes
- * says so once (recipes.untested_all) instead of repeating the "kipróbálatlan recept" badge on every one.
- */
-export function allUntested(recipes: Iterable<Pick<RecipeSummary, 'tested'>>): boolean {
-	let any = false;
-	for (const recipe of recipes) {
-		if (recipe.tested) return false;
-		any = true;
-	}
-	return any;
-}
-
 /** Servings stepper bounds on the recipe page. */
 export const SERVINGS_MIN = 1;
 export const SERVINGS_MAX = 24;

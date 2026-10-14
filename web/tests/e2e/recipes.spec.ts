@@ -249,9 +249,10 @@ for (const viewport of VIEWPORTS) {
 			await expect(lencse.getByRole('link', { name: LENCSE.title })).toHaveAttribute('href', '/receptek/minta-lencse');
 			await expect(lencse).toContainText('30 perc');
 			await expect(lencse).toContainText('4 adag');
-			await expect(lencse).toContainText('kipróbálatlan recept');
+			// "kipróbálatlan recept" is on the detail page only, never on the cards (LENCSE is untested).
+			await expect(lencse).not.toContainText('kipróbálatlan recept');
 			await expect(lencse.getByRole('list', { name: 'Címkék' }).getByRole('listitem')).toHaveText(['főzelék', 'hüvelyes', 'húsmentes']);
-			await expect(lencse.getByTestId('recipe-price')).toHaveText('≈ 313 Ft/adag-tól (Aldi, Lidl)');
+			await expect(lencse.getByTestId('recipe-price')).toHaveText('313 Ft/adag-tól (Aldi, Lidl)');
 			await expect(lencse).toContainText('az ár a hozzávalók 94 %\u2011át fedi le');
 			await expect(card(page, HARCSA.title)).not.toContainText('kipróbálatlan recept');
 			await expect(card(page, HARCSA.title)).not.toContainText('fedi le');
@@ -265,15 +266,11 @@ for (const viewport of VIEWPORTS) {
 			await page.screenshot({ path: screenshot(`recipes-${viewport.name}-list`), fullPage: true });
 
 			// Slot, tag and accent-insensitive search, filtered on the device.
-			await expect(page.getByTestId('untested-note')).toHaveCount(0); // a tested recipe is shown too
 			await page.getByLabel('Étkezés').selectOption({ label: 'Reggeli' });
 			await expect(cardTitles(page)).toHaveText([TUROS.title]);
 			await expect(page.getByTestId('recipe-count')).toHaveText('1 recept');
-			// Only untested recipes shown: said once above the list, not on every card.
-			await expect(page.getByTestId('untested-note')).toHaveText(
-				'Az itt látható receptek mind kipróbálatlanok: saját, eredeti receptek, amelyeket még senki nem főzött meg.'
-			);
-			await expect(card(page, TUROS.title)).not.toContainText('kipróbálatlan recept');
+			// Only untested recipes shown: no banner about it and no badge on the cards either.
+			await expect(page.locator('main')).not.toContainText('kipróbálatlan');
 			await page.getByLabel('Étkezés').selectOption({ label: 'Mindegyik' });
 			await expect(page.getByLabel('Címke').locator('option')).toHaveText([
 				'Mindegyik', 'főzelék', 'főétel', 'hideg reggeli', 'kisétkezés', 'húsmentes', 'hal', 'hüvelyes', 'baromfi', 'édes', 'gyors'
@@ -342,7 +339,7 @@ for (const viewport of VIEWPORTS) {
 				'H2 Hozzáadás a tervhez'
 			]);
 			await expect(page.locator('main')).not.toContainText('kipróbálatlan recept');
-			await expect(page.locator('main .intro').getByTestId('recipe-price')).toHaveText('≈ 655 Ft/adag-tól (Aldi, Lidl)');
+			await expect(page.locator('main .intro').getByTestId('recipe-price')).toHaveText('655 Ft/adag-tól (Aldi, Lidl)');
 
 			// Ingredients at the recipe's own servings: the display texts verbatim; pantry and optional marked.
 			const qty = (id: string) => page.getByTestId(`ingredient-${id}`).getByTestId('ingredient-qty');
@@ -601,10 +598,10 @@ test.describe('English at 320 px', () => {
 		const api = await setup(page, { language: 'en' });
 		await page.goto('/receptek');
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Recipes');
-		await expect(card(page, LENCSE.title).getByTestId('recipe-price')).toHaveText('from ≈ 313 Ft/serving (Aldi, Lidl)');
+		await expect(card(page, LENCSE.title).getByTestId('recipe-price')).toHaveText('from 313 Ft/serving (Aldi, Lidl)');
 		await expect(card(page, LENCSE.title)).toContainText('the price covers 94% of the ingredients');
 		await expect(card(page, CSIRKE.title)).toContainText('no price');
-		await expect(card(page, TUROS.title)).toContainText('untested recipe');
+		await expect(card(page, TUROS.title)).not.toContainText('untested recipe');
 		const langOf = (locator: ReturnType<Page['locator']>) => locator.evaluate((el) => el.closest('[lang]')?.getAttribute('lang'));
 		// Hungarian content inside the English page is marked as Hungarian (WCAG 3.1.2), the UI as English.
 		expect(await langOf(page.getByRole('link', { name: LENCSE.title }))).toBe('hu');

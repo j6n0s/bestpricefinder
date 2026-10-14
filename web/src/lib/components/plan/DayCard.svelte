@@ -1,11 +1,10 @@
 <!--
 	One plan day: every planned slot with its recipe (linked), the recipe's price hint, and buttons to change
-	or remove the meal. The change button keeps its id when the slot is empty ("Választás") or filled
+	or remove the meal. Whether a recipe is untested is shown on its detail page, not on every meal. The change button keeps its id when the slot is empty ("Választás") or filled
 	("Csere"), so focus can return to it after the picker closes.
 -->
 <script lang="ts">
 	import type { ChainSlug, RecipeSummary, Slot } from '$lib/api/types';
-	import Badge from '$lib/components/Badge.svelte';
 	import RecipePrice from '$lib/components/recipes/RecipePrice.svelte';
 	import { i18n, t } from '$lib/i18n';
 	import { slotLabel, slotLabelLower } from '$lib/plan/checks';
@@ -20,11 +19,9 @@
 		names: ReadonlyMap<ChainSlug, string>;
 		onchange: (dayIndex: number, slot: Slot) => void;
 		onclear: (dayIndex: number, slot: Slot) => void;
-		/** false when the page says once that every recipe of the plan is untested. */
-		showUntested?: boolean;
 	}
 
-	let { day, recipes, recipesLoaded, names, onchange, onclear, showUntested = true }: Props = $props();
+	let { day, recipes, recipesLoaded, names, onchange, onclear }: Props = $props();
 
 	const label = $derived(dayLabel(day, i18n.lang));
 	const titleId = $derived(`plan-day-${day.index}`);
@@ -43,9 +40,6 @@
 						<span class="muted">{t('plan.meal_empty')}</span>
 					{:else if recipe}
 						<a class="title" href="/receptek/{encodeURIComponent(recipe.id)}" lang="hu">{recipe.title}</a>
-						{#if showUntested && !recipe.tested}
-							<Badge kind="untested" />
-						{/if}
 						<span class="hint small"><RecipePrice {recipe} {names} compact /></span>
 					{:else if recipesLoaded}
 						<span class="title">{meal.recipeId}</span>

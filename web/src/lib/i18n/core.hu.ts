@@ -52,6 +52,8 @@ export const coreHu = {
 	error_invalid_response: 'A szerver váratlan választ adott.',
 	error_generic: 'Váratlan hiba történt. Próbáld újra.',
 	empty_title: 'Nincs megjeleníthető elem',
+	// A method note behind a closed disclosure (HowCalculated.svelte): the page shows numbers, not paragraphs.
+	how_calculated: 'Hogyan számoljuk?',
 
 	slot_reggeli: 'Reggeli',
 	slot_tizorai: 'Tízórai',
@@ -67,12 +69,8 @@ export const coreHu = {
 	district_picker_label: 'Budapesti kerület',
 	district_picker_none: 'Válassz kerületet',
 	location_title: 'Közeli boltok a helyzeted alapján',
-	location_why: 'A közeli boltok megtalálásához a készülék hozzávetőleges helyzetét használjuk.',
-	location_device_only:
-		'A távolságokat a készüléked számolja ki. A helyzeted soha nem kerül a szerverre: csak a kiválasztott boltok azonosítóit küldjük el az árak lekéréséhez.',
-	location_approx:
-		'Pontos helyzet nem kell. Csak ezen a készüléken tároljuk, kb. 100 méterre kerekítve, és bármikor törölheted.',
-	location_alternative: 'Ha nem szeretnéd, válassz inkább budapesti kerületet.',
+	location_privacy: 'A helyzeted nem kerül a szerverre.',
+	privacy_link: 'Adatvédelem',
 	location_open: 'Helyzet használata…',
 	location_allow: 'Rendben, kérem a helyzetet',
 	location_cancel: 'Mégse',
@@ -86,16 +84,7 @@ export const coreHu = {
 	location_error_insecure: 'A helymeghatározás csak biztonságos (https) kapcsolaton működik. Válassz kerületet.',
 
 	home_title: 'Heti étrend, bevásárlólista, közeli árak',
-	home_lead:
-		'Tervezd meg a hét étkezéseit, állítsd össze belőle a bevásárlólistát, és nézd meg, mennyibe kerül a közeli boltokban.',
-	home_steps_title: 'Így működik',
-	home_step_plan: 'Válassz recepteket a hét napjaira, napi 3 vagy 5 étkezéssel.',
-	home_step_list: 'A hozzávalókat egyetlen bevásárlólistába összesítjük.',
-	home_step_stores: 'A lista árát a közeli boltokra számoljuk ki, a GVH Árfigyelő napi adataiból.',
 	home_cta_plan: 'Heti terv készítése',
 	home_cta_recipes: 'Receptek böngészése',
-	home_cta_cart: 'Kosár összeállítása',
-	home_cart_note:
-		'Csak néhány dolgot vennél? A Kosárban terv nélkül is összeválogathatod, és megmutatjuk, melyik közeli boltban a legolcsóbb, vagy melyik rövid körúton.',
-	home_privacy: 'A terved és a beállításaid csak ezen a készüléken maradnak.'
+	home_cta_cart: 'Kosár összeállítása'
 } as const;

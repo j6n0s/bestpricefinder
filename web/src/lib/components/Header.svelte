@@ -84,8 +84,9 @@
 		gap: var(--space-2);
 		min-height: var(--tap);
 		color: var(--color-text);
+		font-family: var(--font-title);
 		font-weight: 700;
-		font-size: var(--font-size-lg);
+		font-size: var(--font-size-xl);
 		text-decoration: none;
 	}
 

@@ -3,7 +3,6 @@ import type { Messages } from './types';
 
 export const planEn: Messages<typeof planHu> = {
 	title: 'Weekly plan',
-	intro: 'Plan the rest of the month week by week. The plan stays on this device only.',
 	storage_unavailable:
 		'The browser does not allow saving data (for example in private mode). The plan is kept only until you close this tab.',
 
@@ -27,7 +26,6 @@ export const planEn: Messages<typeof planHu> = {
 	to_list: 'Go to the shopping list',
 
 	empty_title: 'You have no plan yet',
-	empty_text: 'Choose a start date and a length, then ask for a suggestion with “Make a plan”.',
 	plan_heading: 'Your plan',
 	plan_range: '{from} – {to}',
 	plan_days_one: '{count} day',
@@ -52,8 +50,6 @@ export const planEn: Messages<typeof planHu> = {
 	meal_unknown: 'This recipe is no longer available.',
 	unknown_recipes_one: 'The plan has {count} recipe that is no longer available. Change or remove it.',
 	unknown_recipes_other: 'The plan has {count} recipes that are no longer available. Change or remove them.',
-	cost_note:
-		'Prices per serving are chain-typical prices from the daily GVH data (the price in most of the chain’s stores); a single store’s price may differ.',
 
 	picker_title: 'Choose a meal',
 	picker_target: '{day}, {slot}',
@@ -69,7 +65,6 @@ export const planEn: Messages<typeof planHu> = {
 		'Excluded ingredients are not filtered when you choose by hand: check the recipe’s ingredients first.',
 
 	checks_title: 'Week summary',
-	checks_intro: 'A factual summary of the week’s meals against the planner’s weekly rules.',
 	checks_loading: 'Checking…',
 	checks_error: 'The plan could not be checked right now.',
 	check_ok: 'met',

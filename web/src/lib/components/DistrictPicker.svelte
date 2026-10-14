@@ -7,9 +7,11 @@
 		/** "01".."23" or null. */
 		value: string | null;
 		onchange: (districtId: string | null) => void;
+		/** The field's label; "Budapesti kerület" by default. */
+		label?: string;
 	}
 
-	let { value, onchange }: Props = $props();
+	let { value, onchange, label }: Props = $props();
 	const id = $props.id();
 
 	function handleChange(event: Event & { currentTarget: HTMLSelectElement }): void {
@@ -19,7 +21,7 @@
 </script>
 
 <div class="field">
-	<label for="{id}-district">{t('core.district_picker_label')}</label>
+	<label for="{id}-district">{label ?? t('core.district_picker_label')}</label>
 	<select id="{id}-district" class="select" value={value ?? ''} onchange={handleChange}>
 		<option value="">{t('core.district_picker_none')}</option>
 		{#each DISTRICTS as district (district.id)}

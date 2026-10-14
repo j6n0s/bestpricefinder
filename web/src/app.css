@@ -1,40 +1,44 @@
 /*
  * Heti kosár: design tokens and base styles.
+ * - Look: plain and standard, in warm kitchen colours: cream, paprika red, butter and espresso.
  * - Colours: light and dark (prefers-color-scheme). Text pairs meet WCAG AA 4.5:1, form-control borders and
  *   the focus ring 3:1; src/lib/contrast.test.ts checks every pair listed there against these values.
- * - System fonts only; no external requests of any kind.
+ * - Fonts: system fonts for reading; Courier New (an installed system font, never downloaded) for titles only.
+ *   No external requests of any kind.
  * - No inline styles anywhere (the CSP has no 'unsafe-inline'): style with classes.
  */
 
 :root {
 	color-scheme: light dark;
 
-	--color-bg: #f6f7f4;
-	--color-surface: #ffffff;
-	--color-surface-alt: #eef1ec;
-	--color-text: #1b1f1c;
-	--color-text-muted: #4d5550;
-	--color-border: #6f7873;
-	--color-border-subtle: #d5dbd6;
-	--color-primary: #1b6b45;
-	--color-primary-hover: #145536;
+	--color-bg: #fdf0dc;
+	--color-surface: #fffaf2;
+	--color-surface-alt: #f6e0bf;
+	--color-text: #3a1f12;
+	--color-text-muted: #6b4532;
+	--color-border: #8a6551;
+	--color-border-subtle: #e8cba3;
+	--color-primary: #a8321a;
+	--color-primary-hover: #8a2512;
 	--color-on-primary: #ffffff;
-	--color-focus: #1f4fd1;
+	--color-focus: #1d4e89;
 	--color-danger: #b3261e;
 	--color-on-danger: #ffffff;
-	--color-danger-bg: #fdecea;
+	--color-danger-bg: #fde4dc;
 	--color-danger-text: #8c1d18;
-	--color-warning-bg: #fff3cd;
-	--color-warning-text: #5c4100;
+	--color-warning-bg: #ffedbf;
+	--color-warning-text: #5c3d00;
 	--color-warning-border: #a07700;
-	--color-info-bg: #e7eefc;
-	--color-info-text: #1d3a7a;
-	--color-success-bg: #e3f4ea;
-	--color-success-text: #145536;
-	--color-neutral-bg: #e6e9e6;
-	--color-neutral-text: #2f3531;
+	--color-info-bg: #f3e6d6;
+	--color-info-text: #4a2a17;
+	--color-success-bg: #e7f0d8;
+	--color-success-text: #2f5016;
+	--color-neutral-bg: #efe1cd;
+	--color-neutral-text: #3d2a1e;
 
 	--font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+	/* Titles: Courier New where installed (macOS, iOS, Windows), then the platform's typewriter/monospace font. */
+	--font-title: 'Courier New', Courier, 'Nimbus Mono PS', 'Liberation Mono', monospace;
 	--font-size-sm: 0.875rem;
 	--font-size-base: 1rem;
 	--font-size-lg: 1.125rem;
@@ -50,10 +54,12 @@
 	--space-6: 2rem;
 	--space-7: 3rem;
 
-	--radius-sm: 4px;
-	--radius-md: 8px;
+	--radius-sm: 6px;
+	--radius-md: 10px;
 	--radius-lg: 14px;
 	--radius-pill: 999px;
+	/* A light, ordinary card shadow. */
+	--shadow-card: 0 1px 2px rgb(58 31 18 / 0.06), 0 2px 8px rgb(58 31 18 / 0.06);
 
 	/* Minimum touch target (WCAG 2.5.5 / platform guidelines). */
 	--tap: 44px;
@@ -64,30 +70,31 @@
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--color-bg: #111412;
-		--color-surface: #1a1e1b;
-		--color-surface-alt: #232824;
-		--color-text: #e9ede9;
-		--color-text-muted: #b3bcb6;
-		--color-border: #87918b;
-		--color-border-subtle: #343b36;
-		--color-primary: #7ad3a0;
-		--color-primary-hover: #9be0b7;
-		--color-on-primary: #0b1d12;
-		--color-focus: #8fb4ff;
-		--color-danger: #ff8a80;
+		--color-bg: #1f120c;
+		--color-surface: #2b1a12;
+		--color-surface-alt: #3a2418;
+		--color-text: #fff1df;
+		--color-text-muted: #e8cfb8;
+		--color-border: #b8957c;
+		--color-border-subtle: #4a3022;
+		--color-primary: #f6ad3a;
+		--color-primary-hover: #ffc368;
+		--color-on-primary: #2a140b;
+		--color-focus: #a6d8ff;
+		--color-danger: #ff8a7a;
 		--color-on-danger: #2a0a07;
-		--color-danger-bg: #3b1513;
-		--color-danger-text: #ffb4ab;
-		--color-warning-bg: #3a2c00;
+		--color-danger-bg: #45161a;
+		--color-danger-text: #ffb8ab;
+		--color-warning-bg: #3d2c06;
 		--color-warning-text: #ffd978;
 		--color-warning-border: #c99a1a;
-		--color-info-bg: #1b2a4a;
-		--color-info-text: #c3d5ff;
-		--color-success-bg: #143022;
-		--color-success-text: #a6e6c0;
-		--color-neutral-bg: #2a302c;
-		--color-neutral-text: #dfe5e0;
+		--color-info-bg: #3d2a1c;
+		--color-info-text: #f5dcc4;
+		--color-success-bg: #203316;
+		--color-success-text: #bfe6a0;
+		--color-neutral-bg: #3a2a20;
+		--color-neutral-text: #f0e2d4;
+		--shadow-card: 0 1px 2px rgb(0 0 0 / 0.35);
 	}
 }
 
@@ -132,6 +139,14 @@ h1 {
 
 h2 {
 	font-size: var(--font-size-xl);
+}
+
+/* Titles in Courier New; body text keeps the system font. */
+h1,
+h2 {
+	font-family: var(--font-title);
+	font-weight: 700;
+	letter-spacing: -0.01em;
 }
 
 h3 {
@@ -237,6 +252,7 @@ textarea {
 	background: var(--color-surface);
 	border: 1px solid var(--color-border-subtle);
 	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-card);
 	padding: var(--space-4);
 }
 

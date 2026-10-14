@@ -12,6 +12,8 @@
 	- Every edit (change or remove a meal) re-checks the weekly rules with POST /api/plan/check, using the
 	  plan's own no_repeat_days.
 	- Recipe prices are chain-typical estimates: the page shows the GVH source line with the data date.
+	- No intro or method paragraphs: the title, the form's labels and buttons and the numbers say what to do.
+	  Whether a recipe is untested is shown on its detail page.
 -->
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
@@ -47,7 +49,7 @@
 		unknownPlanRecipeIds,
 		type PlanLength
 	} from '$lib/plan/plan';
-	import { allUntested, chainNameMap } from '$lib/plan/recipes';
+	import { chainNameMap } from '$lib/plan/recipes';
 	import { isPersistent, load, onExternalChange, update, type StoredPlan } from '$lib/storage';
 
 	type CheckStatus = 'idle' | 'loading' | 'ready' | 'error';
@@ -96,18 +98,6 @@
 	const knownIds = $derived(recipes ? new Set(recipes.recipes.map((r) => r.id)) : null);
 	const names = $derived(chainNameMap(meta.data?.chains));
 	const weeks = $derived(plan ? planWeeks(plan) : []);
-	/** Every planned recipe is untested: say it once above the days instead of on every meal. */
-	const noneTested = $derived(
-		allUntested(
-			weeks
-				.flatMap((week) => week.days)
-				.flatMap((day) => day.meals)
-				.flatMap((meal) => {
-					const recipe = meal.recipeId === null ? undefined : recipeById.get(meal.recipeId);
-					return recipe ? [recipe] : [];
-				})
-		)
-	);
 	const unknownIds = $derived(plan && recipes ? unknownPlanRecipeIds(plan, recipes.recipes) : []);
 	const exclusionCount = $derived(settings.exclusions.tags.length + settings.exclusions.ingredients.length);
 	/** "2026. 10. 13. – 2026. 10. 19.", or one date when both ends are the same day; "" when undated. */
@@ -354,7 +344,6 @@
 </svelte:head>
 
 <h1>{t('plan.title')}</h1>
-<p class="muted">{t('plan.intro')}</p>
 
 {#if !persistent}
 	<p class="notice notice-warning" role="status">{t('plan.storage_unavailable')}</p>
@@ -440,10 +429,6 @@
 				<ErrorState error={checkError} title={t('plan.checks_error')} onretry={runCheck} />
 			{/if}
 
-			{#if noneTested}
-				<p class="notice notice-info small" data-testid="untested-note">{t('recipes.untested_all')}</p>
-			{/if}
-
 			{#each weeks as week (week.week)}
 				{@const weekChecks = checksForWeek(checks, week.week)}
 				{@const weekRange = rangeText(week.days[0]?.date, week.days.at(-1)?.date)}
@@ -457,7 +442,6 @@
 					{#if weekChecks.length > 0}
 						<div class="checks card" aria-busy={checkStatus === 'loading'}>
 							<h4 id="week-{week.week}-checks">{t('plan.checks_title')}</h4>
-							<p class="small muted">{t('plan.checks_intro')}</p>
 							<PlanChecks checks={weekChecks} labelledBy="week-{week.week}-checks" />
 						</div>
 					{/if}
@@ -470,7 +454,6 @@
 								{names}
 								onchange={openPicker}
 								onclear={removeMeal}
-								showUntested={!noneTested}
 							/>
 						{/each}
 					</div>
@@ -478,7 +461,6 @@
 			{/each}
 
 			{#if recipes}
-				<p class="small muted cost-note">{t('plan.cost_note')}</p>
 				<Attribution dataDate={recipes.data_date} />
 			{/if}
 		{/if}
@@ -486,7 +468,7 @@
 {:else}
 	<section class="card new-plan" aria-labelledby="new-plan-heading">
 		<h2 id="new-plan-heading">{t('plan.form_title')}</h2>
-		<p><strong>{t('plan.empty_title')}.</strong> {t('plan.empty_text')}</p>
+		<p class="muted">{t('plan.empty_title')}.</p>
 		<PlanForm
 			bind:startDate
 			bind:length
@@ -515,10 +497,6 @@
 {/if}
 
 <style>
-	h1 + p {
-		margin-bottom: var(--space-4);
-	}
-
 	.announce > :global(p) {
 		margin: 0 0 var(--space-4);
 	}
@@ -587,7 +565,7 @@
 
 	.checks h4 {
 		font-size: var(--font-size-base);
-		margin: 0 0 var(--space-1);
+		margin: 0 0 var(--space-2);
 	}
 
 	.days > :global(* + *) {
@@ -596,9 +574,5 @@
 
 	.new-plan {
 		margin-bottom: var(--space-4);
-	}
-
-	.cost-note {
-		margin-top: var(--space-5);
 	}
 </style>

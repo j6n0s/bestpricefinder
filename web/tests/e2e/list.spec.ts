@@ -557,9 +557,14 @@ for (const viewport of VIEWPORTS) {
 			expect(await storedJson(page, STORAGE_KEY)).toMatchObject({ pantry: { notAtHome: ['napraforgoolaj'] } });
 			await expect(page.getByText('8 tétel a listán')).toBeVisible();
 
-			// The explanation comes first: nothing is asked or fetched before the user chooses.
+			// The explanation comes first (the heading, and one line with the privacy page a tap away): nothing is
+			// asked or fetched before the user chooses.
 			await expect(page.getByRole('heading', { name: 'Honnan keressük a boltokat?' })).toBeVisible();
-			await expect(page.getByText('csak a kiválasztott boltok azonosítóit küldjük el', { exact: false })).toBeVisible();
+			await expect(page.getByTestId('location-privacy')).toHaveText('A helyzeted nem kerül a szerverre. Adatvédelem');
+			await expect(page.getByTestId('location-privacy').getByRole('link', { name: 'Adatvédelem' })).toHaveAttribute(
+				'href',
+				'/forrasok#src-privacy'
+			);
 			expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
 			expect(rec.requests.filter((r) => r.url.includes('/api/stores') || r.url.includes('/api/quote'))).toEqual([]);
 			await expectAccessible(page, `list ${viewport.name} before location`);
@@ -689,7 +694,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(line('friss_bazsalikom')).toContainText('nincs ár');
 			await expect(line('friss_bazsalikom')).toContainText(sp('Kell: 1 db'));
 			await expect(line('gomba')).toContainText('becsült országos átlagár (KSH)');
-			await expect(line('gomba')).toContainText(sp('≈ 600 Ft, nincs benne a fizetendő összegben'));
+			await expect(line('gomba')).toContainText(sp('kb. 600 Ft, nincs benne a fizetendő összegben'));
 			await expect(storeList.getByTestId('ksh-total')).toContainText(sp('600 Ft'));
 			await expect(storeList.getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
 			await expect(storeList.getByTestId('attribution-ksh')).toContainText('Forrás: KSH');
@@ -701,15 +706,19 @@ for (const viewport of VIEWPORTS) {
 			await expectAccessible(page, `list ${viewport.name} store list`);
 			// The store list's sections are not landmarks of their own: one "Zöldség, gyümölcs" region only.
 			await expect(page.getByRole('region', { name: 'Zöldség, gyümölcs', exact: true })).toHaveCount(1);
-			// Every priced line is a whole forint at Lidl: no rounding note.
-			await expect(storeList.getByTestId('store-total-rounding')).toHaveCount(0);
+			// What "bolti ár" and "lánc ár" mean is one tap away, behind a disclosure that starts closed.
+			const scopeHow = storeList.getByTestId('scope-how');
+			await expect(scopeHow.getByText('Bolti ár: ennek a boltnak', { exact: false })).toBeHidden();
+			await scopeHow.getByText('Hogyan számoljuk?').click();
+			await expect(scopeHow.getByText('Bolti ár: ennek a boltnak', { exact: false })).toBeVisible();
 
-			// At Spar the lentils are not available, and the weighed chicken costs a fraction of a forint: the
-			// rounded lines may not add up to the exact total, and the view says so.
+			// At Spar the lentils are not available, and the weighed chicken costs a fraction of a forint
+			// (1,2 kg × 3 738 Ft = 4 485,6 Ft): "Fizetendő" is the server's exact total (7 252,6 Ft), shown rounded.
 			await chooseButton(page, 'Spar', 'synthetic-spar-a').click();
 			await expect(storeList.getByRole('heading', { level: 3 })).toHaveText('Lista: Spar');
 			await expect(line('voros_lencse')).toContainText('nincs ebben a boltban');
-			await expect(storeList.getByTestId('store-total-rounding')).toContainText('egész forintra kerekítve');
+			await expect(line('csirkemellfile')).toContainText(sp('4 486 Ft'));
+			await expect(storeList.getByTestId('store-total')).toHaveText(sp('Fizetendő: 7 253 Ft'));
 			await chooseButton(page, 'Lidl', 'synthetic-lidl-a').click();
 
 			// The chosen store is remembered for this list, in the one stored document (no key of its own); after
@@ -953,8 +962,8 @@ test.describe('excluded ingredients and tap water', () => {
 		await expect(page.getByText('7 tétel a listán')).toBeVisible();
 		await expect(page.getByRole('checkbox', { name: /^natúr joghurt/ })).toHaveCount(0);
 
-		// The pantry note no longer promises a price for every staple; water has no "nincs otthon" switch.
-		await expect(page.getByText('ha van rá bolti ár', { exact: false })).toBeVisible();
+		// The pantry section says in one line what to do; water has no "nincs otthon" switch.
+		await expect(page.getByText('Jelöld, ha valami nincs otthon.')).toBeVisible();
 		await expect(page.getByRole('checkbox', { name: 'Nincs otthon: víz' })).toHaveCount(0);
 		await expect(page.getByRole('checkbox', { name: 'Nincs otthon: napraforgóolaj' })).toBeVisible();
 

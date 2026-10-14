@@ -52,6 +52,7 @@ export const coreEn: Messages<typeof coreHu> = {
 	error_invalid_response: 'The server sent an unexpected answer.',
 	error_generic: 'An unexpected error happened. Try again.',
 	empty_title: 'Nothing to show',
+	how_calculated: 'How is this calculated?',
 
 	slot_reggeli: 'Breakfast',
 	slot_tizorai: 'Morning snack',
@@ -67,12 +68,8 @@ export const coreEn: Messages<typeof coreHu> = {
 	district_picker_label: 'Budapest district',
 	district_picker_none: 'Choose a district',
 	location_title: 'Nearby stores from your location',
-	location_why: 'To find stores near you, the app uses your device’s approximate location.',
-	location_device_only:
-		'Distances are computed on your device. Your location is never sent to the server: only the ids of the stores you pick are sent to look up prices.',
-	location_approx:
-		'An exact position is not needed. It is stored on this device only, rounded to about 100 metres, and you can delete it at any time.',
-	location_alternative: 'If you prefer not to, choose a Budapest district instead.',
+	location_privacy: 'Your location never leaves this device.',
+	privacy_link: 'Privacy',
 	location_open: 'Use my location…',
 	location_allow: 'OK, get my location',
 	location_cancel: 'Cancel',
@@ -86,15 +83,7 @@ export const coreEn: Messages<typeof coreHu> = {
 	location_error_insecure: 'Location only works over a secure (https) connection. Choose a district.',
 
 	home_title: 'Weekly meals, shopping list, nearby prices',
-	home_lead: 'Plan the week’s meals, turn them into a shopping list, and see what it costs at the stores near you.',
-	home_steps_title: 'How it works',
-	home_step_plan: 'Pick recipes for the days of the week, with 3 or 5 meals a day.',
-	home_step_list: 'The ingredients are combined into one shopping list.',
-	home_step_stores: 'The list is priced at the stores near you, from the daily GVH Árfigyelő data.',
 	home_cta_plan: 'Make a weekly plan',
 	home_cta_recipes: 'Browse recipes',
-	home_cta_cart: 'Build a cart',
-	home_cart_note:
-		'Only buying a few things? Pick them in the Cart, no plan needed, and we show which nearby store is cheapest, or which short route.',
-	home_privacy: 'Your plan and settings stay on this device only.'
+	home_cta_cart: 'Build a cart'
 };

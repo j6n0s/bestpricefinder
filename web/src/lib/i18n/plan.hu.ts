@@ -5,7 +5,6 @@
  */
 export const planHu = {
 	title: 'Heti terv',
-	intro: 'Tervezd meg a hónap hátralévő részét hétről hétre. A terv csak ezen a készüléken marad.',
 	storage_unavailable:
 		'A böngésző nem engedi az adatok mentését (például privát módban). A terv csak addig marad meg, amíg ezt a lapot be nem zárod.',
 
@@ -29,7 +28,6 @@ export const planHu = {
 	to_list: 'Tovább a bevásárlólistához',
 
 	empty_title: 'Még nincs terved',
-	empty_text: 'Válassz kezdőnapot és időtartamot, majd a „Terv készítése” gombbal kérj javaslatot.',
 	plan_heading: 'A terved',
 	plan_range: '{from} – {to}',
 	plan_days_one: '{count} nap',
@@ -54,8 +52,6 @@ export const planHu = {
 	meal_unknown: 'Ez a recept már nem érhető el.',
 	unknown_recipes_one: 'A tervben {count} olyan recept van, amely már nem érhető el. Cseréld le vagy töröld.',
 	unknown_recipes_other: 'A tervben {count} olyan recept van, amely már nem érhető el. Cseréld le vagy töröld őket.',
-	cost_note:
-		'Az adagonkénti árak lánc-jellemző árak a GVH napi adataiból (a lánc boltjainak többségében érvényes ár); egy-egy bolt ára eltérhet.',
 
 	picker_title: 'Étel választása',
 	picker_target: '{day}, {slot}',
@@ -71,7 +67,6 @@ export const planHu = {
 		'A kizárt alapanyagokat a kézi választásnál nem szűrjük: választás előtt nézd meg a recept hozzávalóit.',
 
 	checks_title: 'A hét összesítése',
-	checks_intro: 'Tényszerű összesítés a hét étkezéseiről, a tervező heti szabályai szerint.',
 	checks_loading: 'Ellenőrzés…',
 	checks_error: 'A terv ellenőrzése most nem sikerült.',
 	check_ok: 'teljesül',

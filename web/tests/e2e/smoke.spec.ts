@@ -278,14 +278,22 @@ for (const width of [320, 360, 390]) {
 							})
 						);
 					expect(outside, `${route.path}: labels outside their tab`).toEqual([]);
-					// The layout keeps the end of the page clear of the taller bar.
-					const clearance = await page.evaluate(() => {
-						const nav = [...document.querySelectorAll('nav')].find((n) => getComputedStyle(n).position === 'fixed');
-						const shell = document.querySelector('.shell');
-						if (!nav || !shell) return 0;
-						return Number.parseFloat(getComputedStyle(shell).paddingBottom) - nav.getBoundingClientRect().height;
-					});
-					expect(clearance, `${route.path}: bottom padding at least the bar's height`).toBeGreaterThanOrEqual(-0.5);
+					// The layout keeps the end of the page clear of the taller bar. BottomNav publishes the bar's height
+					// from a ResizeObserver, which runs at the next rendering step after the text grows; reading it once,
+					// right after the injected style, raced that step (measured on 2026-10-14: −54.8 px immediately,
+					// +0.2 px two frames later, on the original design too). So poll until the layout has settled.
+					await expect
+						.poll(
+							() =>
+								page.evaluate(() => {
+									const nav = [...document.querySelectorAll('nav')].find((n) => getComputedStyle(n).position === 'fixed');
+									const shell = document.querySelector('.shell');
+									if (!nav || !shell) return 0;
+									return Number.parseFloat(getComputedStyle(shell).paddingBottom) - nav.getBoundingClientRect().height;
+								}),
+							{ message: `${route.path}: bottom padding at least the bar's height` }
+						)
+						.toBeGreaterThanOrEqual(-0.5);
 				}
 			});
 		}
@@ -534,7 +542,12 @@ test.describe('location consent', () => {
 
 		await page.getByRole('button', { name: 'Helyzet használata…' }).click();
 		await expect(page.getByRole('heading', { name: 'Közeli boltok a helyzeted alapján' })).toBeFocused();
-		await expect(page.getByText('A helyzeted soha nem kerül a szerverre', { exact: false })).toBeVisible();
+		// One line says where the position goes, with the privacy page one tap away.
+		await expect(page.getByTestId('location-privacy')).toHaveText('A helyzeted nem kerül a szerverre. Adatvédelem');
+		await expect(page.getByTestId('location-privacy').getByRole('link', { name: 'Adatvédelem' })).toHaveAttribute(
+			'href',
+			'/forrasok#src-privacy'
+		);
 		expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
 		await expectNoHorizontalScroll(page);
 		await page.screenshot({ path: screenshotPath('phone-360-location-explainer'), fullPage: true });
@@ -661,7 +674,7 @@ test.describe('dark mode', () => {
 			await page.goto(route.path);
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
 			await expect(page.getByTestId('data-status')).toContainText('Adatok:');
-			expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(17, 20, 18)');
+			expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(31, 18, 12)');
 			await expectTextContrast(page, `dark ${route.path}`);
 			await expectHeadingOrder(page, `dark ${route.path}`);
 			await page.screenshot({ path: screenshotPath(`dark-phone-360-${slug(route.path)}`), fullPage: true });

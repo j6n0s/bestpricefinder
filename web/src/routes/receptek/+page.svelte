@@ -1,7 +1,8 @@
 <!--
 	Recipe list ("Receptek"): GET /api/recipes once, then filtered on the device by slot, tag and an
 	accent-insensitive title search (the same folding as the API's `q`). Prices are chain-typical estimates,
-	so the page carries the GVH source line with the data date (BUILD-BRIEF §8.2).
+	so the page carries the GVH source line with the data date (BUILD-BRIEF §8.2). No intro or method note:
+	the title, the filters and the cards speak for themselves; "kipróbálatlan recept" is on the detail page.
 -->
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
@@ -16,7 +17,7 @@
 	import { getMeta } from '$lib/meta.svelte';
 	import { slotLabel } from '$lib/plan/checks';
 	import { recipeFilters, resetRecipeFilters } from '$lib/plan/filters.svelte';
-	import { allUntested, chainNameMap, filterRecipes, tagLabelKey } from '$lib/plan/recipes';
+	import { chainNameMap, filterRecipes, tagLabelKey } from '$lib/plan/recipes';
 
 	const meta = getMeta();
 
@@ -33,7 +34,6 @@
 			q: recipeFilters.q
 		})
 	);
-	const noneTested = $derived(allUntested(filtered));
 	/** Tags that occur in the library (vocabulary order), plus the selected one. */
 	const tagOptions = $derived(
 		RECIPE_TAGS.flatMap((tag) => {
@@ -72,7 +72,6 @@
 </svelte:head>
 
 <h1>{t('recipes.title')}</h1>
-<p class="muted">{t('recipes.intro')}</p>
 
 <form class="filters card" role="search" aria-labelledby="filters-title" onsubmit={(event) => event.preventDefault()}>
 	<h2 id="filters-title" class="visually-hidden">{t('recipes.filters_title')}</h2>
@@ -128,24 +127,16 @@
 			{/if}
 		</EmptyState>
 	{:else}
-		{#if noneTested}
-			<p class="notice notice-info small" data-testid="untested-note">{t('recipes.untested_all')}</p>
-		{/if}
 		<ul class="list">
 			{#each filtered as recipe (recipe.id)}
-				<li><RecipeCard {recipe} {names} showUntested={!noneTested} /></li>
+				<li><RecipeCard {recipe} {names} /></li>
 			{/each}
 		</ul>
 	{/if}
-	<p class="small muted note">{t('recipes.price_note')}</p>
 	<Attribution dataDate={response.data_date} />
 {/if}
 
 <style>
-	h1 + p {
-		margin-bottom: var(--space-4);
-	}
-
 	.filters {
 		margin-bottom: var(--space-4);
 	}
@@ -186,9 +177,5 @@
 
 	.list li + li {
 		margin-top: var(--space-3);
-	}
-
-	.note {
-		margin-top: var(--space-5);
 	}
 </style>

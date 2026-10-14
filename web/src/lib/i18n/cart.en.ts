@@ -3,8 +3,6 @@ import type { Messages } from './types';
 
 export const cartEn: Messages<typeof cartHu> = {
 	title: 'Cart',
-	intro:
-		'Pick what you want to buy and we show where it is cheapest nearby: in one store, or on a short route. Your cart stays on this device only.',
 	loading: 'Loading the goods…',
 	error_title: 'The goods could not be loaded',
 
@@ -23,7 +21,6 @@ export const cartEn: Messages<typeof cartHu> = {
 	browse_title: 'Goods',
 	browse_more: 'More goods',
 	search_label: 'Search the goods',
-	search_hint: 'Accents are optional. Only goods with store prices are shown.',
 	goods_count_one: '{count} item',
 	goods_count_other: '{count} items',
 	no_results: 'No such item.',

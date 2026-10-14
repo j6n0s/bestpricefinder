@@ -29,7 +29,7 @@
 	const kshHref = $derived(safeKshUrl(kshUrl));
 </script>
 
-<div class="attribution small" data-testid="attribution">
+<div class="attribution small muted" data-testid="attribution">
 	<p data-testid="attribution-gvh">
 		{date ? t('core.attribution_gvh', { date }) : t('core.attribution_gvh_undated')}
 	</p>

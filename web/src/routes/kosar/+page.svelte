@@ -167,7 +167,6 @@
 </svelte:head>
 
 <h1>{t('cart.title')}</h1>
-<p class="muted">{t('cart.intro')}</p>
 
 {#if !persistent}
 	<p class="notice notice-warning" role="status">{t('list.storage_unavailable')}</p>
@@ -244,9 +243,7 @@
 				maxlength="40"
 				bind:value={query}
 				bind:this={searchInput}
-				aria-describedby="goods-search-hint"
 			/>
-			<p id="goods-search-hint" class="small muted">{t('cart.search_hint')}</p>
 		</div>
 		<p class="small" role="status" data-testid="goods-count">{tp('cart.goods_count', shown.length)}</p>
 		{#if fullNotice}
@@ -405,10 +402,6 @@
 
 	.field {
 		margin-top: var(--space-3);
-	}
-
-	.field p {
-		margin: 0;
 	}
 
 	.nearby-anchor:focus {

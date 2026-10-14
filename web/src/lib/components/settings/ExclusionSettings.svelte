@@ -2,7 +2,8 @@
 	"Kizárt alapanyagok és címkék": recipe tags and ingredients left out of the plan suggestions. Diet
 	preferences can be health data (GDPR Art. 9, BUILD-BRIEF §8.9): they are stored only on this device
 	(StoredState.exclusions) and sent only with POST /api/plan/suggest, which uses them for that computation and
-	never stores them. Limits: 20 tags and 50 ingredients (the API's limits).
+	never stores them (the sources and privacy page says so). Limits: 20 tags and 50 ingredients (the API's
+	limits). The section heading and the labels say what this does; there is no intro paragraph.
 -->
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
@@ -95,7 +96,6 @@
 </script>
 
 <div class="exclusions" data-testid="exclusion-settings">
-	<p>{t('list.exclusions_intro')}</p>
 	{#if !persistent}
 		<p class="notice notice-warning" role="status">{t('list.storage_unavailable')}</p>
 	{/if}

@@ -6,7 +6,6 @@
  */
 export const listHu = {
 	title: 'Bevásárlólista',
-	intro: 'A terv hozzávalói egy listában, boltrészlegek szerint. A pipák és a választásaid csak ezen a készüléken maradnak.',
 	storage_unavailable:
 		'A böngésző nem engedi az adatok mentését (például privát módban). A pipák és a választásaid csak addig maradnak meg, amíg ezt a lapot be nem zárod.',
 
@@ -42,15 +41,13 @@ export const listHu = {
 	restore_line_named: '{name} visszarakása a listára',
 
 	pantry_title: 'Valószínűleg otthon van',
-	pantry_note:
-		'Ezeket nem tesszük a listára. Ha valamelyik nincs otthon, jelöld meg: felkerül a listára, és ha van rá bolti ár (például az olajra, a lisztre, a cukorra), beleszámoljuk a boltok árába. A legtöbb fűszernek és a sónak nincs bolti ára.',
+	pantry_note: 'Jelöld, ha valami nincs otthon.',
 	not_at_home: 'Nincs otthon',
 	not_at_home_named: 'Nincs otthon: {name}',
 	pantry_on_list: 'a listán',
 
 	excluded_title: 'Kizárt alapanyagok',
-	excluded_note:
-		'Ezeket a beállításokban kizártad, ezért nem tesszük a listára és nem árazzuk. Ha valamelyikre mégis szükséged van, tedd a listára.',
+	excluded_note: 'A beállításokban kizártad, ezért nincs a listán.',
 	buy_anyway: 'Mégis megveszem',
 	buy_anyway_named: 'Mégis megveszem: {name}',
 	line_excluded: 'kizárt alapanyag',
@@ -60,12 +57,10 @@ export const listHu = {
 		'Nincs kapcsolat a szerverrel, ezért a kiválasztott bolt legutóbb betöltött listáját látod ({time} állapot). A boltok sorrendje kapcsolat nélkül nem érhető el.',
 
 	nearby_title: 'Hol a legolcsóbb a közelben?',
-	nearby_why:
-		'A lista ára főleg attól függ, melyik láncok boltjai vannak a közeledben. Megkeressük a közeli boltokat, és mindegyikben kiszámoljuk, mennyibe kerül a lista.',
 	origin_title: 'Honnan keressük a boltokat?',
 	origin_done: 'Kész',
 	use_my_location: 'Saját helyzetem használata',
-	or_district: 'Vagy válassz budapesti kerületet, ha nem szeretnéd megadni a helyzetedet:',
+	or_district: 'Vagy válassz budapesti kerületet',
 	origin_device: 'Kiindulási pont: a készülék hozzávetőleges helyzete ({time} állapot szerint).',
 	refresh_position: 'Helyzet frissítése',
 	position_stale: 'Ez a helyzet több mint egy napja készült. Ha máshol vagy, frissítsd, vagy válassz kerületet.',
@@ -110,8 +105,6 @@ export const listHu = {
 
 	store_title: 'Lista: {store}',
 	store_total: 'Fizetendő: {total}',
-	store_total_rounding:
-		'A tételek ára egész forintra kerekítve látszik, a fizetendő összeg pedig a pontos árakból számolt, ezért néhány forinttal eltérhet a tételek összegétől.',
 	ksh_total:
 		'Becsült országos átlagár (KSH) a GVH-ban nem szereplő tételekre: {total}. Ezt nem számoltuk bele a fizetendő összegbe.',
 	scope_legend:
@@ -122,7 +115,7 @@ export const listHu = {
 	need: 'Kell: {qty}',
 	by_weight: '{qty}, mérve',
 	leftover: 'Marad kb. {qty}',
-	ksh_value: '≈ {price}, nincs benne a fizetendő összegben',
+	ksh_value: 'kb. {price}, nincs benne a fizetendő összegben',
 	alternatives_one: '{count} másik termék ebben a boltban',
 	alternatives_other: '{count} másik termék ebben a boltban',
 	alternative_pack: '{pack}: {price}',
@@ -140,15 +133,10 @@ export const listHu = {
 	group_fuszer_olaj: 'Fűszer, olaj',
 	group_egyeb: 'Egyéb',
 
-	pantry_settings_intro:
-		'A „valószínűleg otthon van” alapanyagokat (só, fűszerek, olaj…) nem tesszük a bevásárlólistára, amíg be vannak jelölve. Vedd ki a jelölést annál, ami nincs otthon: felkerül a listára, és ha van rá bolti ár, a boltok árába is beleszámoljuk.',
-	pantry_settings_legend: 'Otthon van',
+	pantry_settings_legend: 'Otthon van, nem kerül a listára',
 	pantry_settings_loading: 'Alapanyagok betöltése…',
 	pantry_settings_empty: 'Nincs ilyen alapanyag.',
-	device_only: 'Csak ezen a készüléken tároljuk.',
 
-	exclusions_intro:
-		'Amit itt kizársz, azt a heti terv javaslataiból kihagyjuk, a kizárt alapanyagokat pedig a bevásárlólistára sem tesszük. Csak ezen a készüléken tároljuk; a szerver csak a javaslat kiszámításához kapja meg, és nem tárolja.',
 	exclude_tags_legend: 'Kizárt receptcímkék',
 	tag_hal: 'Hal',
 	tag_baromfi: 'Baromfi',

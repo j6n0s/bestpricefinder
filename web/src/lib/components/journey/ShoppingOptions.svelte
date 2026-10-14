@@ -5,18 +5,20 @@
 	  extra walk and stop are worth. Its stops are numbered in walking order, drawn on a schematic map (no map
 	  tiles, nothing sent anywhere) and linked to OpenStreetMap one by one (the store's public position only).
 	When no route is worth it, the card says so and why. Prices are the server's per-line checkout costs; the
-	scope note and the data date stay next to them (BUILD-BRIEF §8.2, §8.6). Ties are never broken by name.
+	scope note and the data date follow in the ranking and the source line right below (BUILD-BRIEF §8.2,
+	§8.6). How the options are chosen is behind a closed "Hogyan számoljuk?" disclosure. Ties are never broken
+	by name.
 -->
 <script lang="ts">
 	import type { ChainSlug, QuoteResponse, StoreId, StoreOut } from '$lib/api/types';
 	import Badge from '$lib/components/Badge.svelte';
+	import HowCalculated from '$lib/components/HowCalculated.svelte';
 	import StoreLine from '$lib/components/list/StoreLine.svelte';
 	import { formatDistance, formatMoney } from '$lib/format';
 	import type { LatLon } from '$lib/geo';
-	import { i18n, t, tp } from '$lib/i18n';
+	import { t, tp } from '$lib/i18n';
 	import { DEFAULT_JOURNEY_OPTIONS } from '$lib/journey/journey';
 	import { osmLink, shoppingView } from '$lib/journey/view';
-	import { scopeNote } from '$lib/list/ranking';
 	import { chainLabel, storeAddress } from '$lib/list/stores';
 	import JourneyMap from './JourneyMap.svelte';
 
@@ -74,7 +76,6 @@
 	{@const journey = view.journey}
 	<section class="options" aria-labelledby="{id}-title" data-testid="shopping-options">
 		<h3 id="{id}-title">{t('journey.title')}</h3>
-		<p>{t('journey.intro', { note: scopeNote(quote, i18n.lang) })}</p>
 
 		{#if view.nowhere.length > 0}
 			<p class="notice notice-warning" data-testid="nowhere">
@@ -223,12 +224,14 @@
 			</section>
 		{/if}
 
-		<p class="small muted how">
-			{t('journey.how', {
-				stop: formatMoney(DEFAULT_JOURNEY_OPTIONS.extraStopFt),
-				km: formatMoney(DEFAULT_JOURNEY_OPTIONS.perKmFt)
-			})}
-		</p>
+		<HowCalculated testid="journey-how">
+			<p>
+				{t('journey.how', {
+					stop: formatMoney(DEFAULT_JOURNEY_OPTIONS.extraStopFt),
+					km: formatMoney(DEFAULT_JOURNEY_OPTIONS.perKmFt)
+				})}
+			</p>
+		</HowCalculated>
 	</section>
 {/if}
 
@@ -333,9 +336,5 @@
 
 	.lines > :global(li + li) {
 		border-top: 1px solid var(--color-border-subtle);
-	}
-
-	.how {
-		margin-top: var(--space-4);
 	}
 </style>

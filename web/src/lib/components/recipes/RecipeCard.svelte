@@ -1,11 +1,10 @@
 <!--
-	A recipe in the list: title (link to the detail page), time, the "kipróbálatlan recept" badge for
-	tested=false, tags, summary, and the chain-typical price per serving ("≈ 313 Ft/adag-tól (Aldi, Lidl)").
-	The page renders the source line (<Attribution>) once for all cards.
+	A recipe in the list: title (link to the detail page), time, servings, tags, summary, and the chain-typical
+	price per serving ("313 Ft/adag-tól (Aldi, Lidl)"). The "kipróbálatlan recept" badge is on the detail page
+	only. The page renders the source line (<Attribution>) once for all cards.
 -->
 <script lang="ts">
 	import type { ChainSlug, RecipeSummary } from '$lib/api/types';
-	import Badge from '$lib/components/Badge.svelte';
 	import { tp } from '$lib/i18n';
 	import RecipePrice from './RecipePrice.svelte';
 	import TagList from './TagList.svelte';
@@ -13,11 +12,9 @@
 	interface Props {
 		recipe: RecipeSummary;
 		names: ReadonlyMap<ChainSlug, string>;
-		/** false when the page says once that every recipe shown is untested. */
-		showUntested?: boolean;
 	}
 
-	let { recipe, names, showUntested = true }: Props = $props();
+	let { recipe, names }: Props = $props();
 </script>
 
 <article class="card recipe" aria-labelledby="recipe-{recipe.id}" data-testid="recipe-card">
@@ -27,9 +24,6 @@
 			<span>{tp('recipes.minutes', recipe.minutes)}</span>
 		{/if}
 		<span>{tp('recipes.servings', recipe.servings)}</span>
-		{#if showUntested && !recipe.tested}
-			<Badge kind="untested" />
-		{/if}
 	</p>
 	{#if recipe.summary}
 		<p class="summary" lang="hu">{recipe.summary}</p>

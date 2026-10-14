@@ -3,7 +3,6 @@ import type { Messages } from './types';
 
 export const listEn: Messages<typeof listHu> = {
 	title: 'Shopping list',
-	intro: 'The ingredients of your plan in one list, by shop section. Your ticks and choices stay on this device.',
 	storage_unavailable:
 		'Your browser does not allow saving data (for example in private mode). Your ticks and choices are kept only until you close this tab.',
 
@@ -39,15 +38,13 @@ export const listEn: Messages<typeof listHu> = {
 	restore_line_named: 'Put {name} back on the list',
 
 	pantry_title: 'Probably at home',
-	pantry_note:
-		'These are not put on the list. If one of them is not at home, mark it: it goes on the list, and where there is a store price (for oil, flour or sugar, for example) it counts in the store prices. Most spices and salt have no store price.',
+	pantry_note: 'Mark what you don’t have.',
 	not_at_home: 'Not at home',
 	not_at_home_named: 'Not at home: {name}',
 	pantry_on_list: 'on the list',
 
 	excluded_title: 'Excluded ingredients',
-	excluded_note:
-		'You excluded these in the settings, so they are not put on the list or priced. If you need one of them anyway, put it on the list.',
+	excluded_note: 'Excluded in your settings, so not on the list.',
 	buy_anyway: 'Buy anyway',
 	buy_anyway_named: 'Buy anyway: {name}',
 	line_excluded: 'excluded ingredient',
@@ -57,12 +54,10 @@ export const listEn: Messages<typeof listHu> = {
 		'No connection to the server, so you see the chosen store’s list as last loaded ({time}). The store ranking is not available without a connection.',
 
 	nearby_title: 'Where is it cheapest nearby?',
-	nearby_why:
-		'What the list costs depends mostly on which chains have stores near you. We find the nearby stores and work out what the list costs in each of them.',
 	origin_title: 'Where should we look for stores?',
 	origin_done: 'Done',
 	use_my_location: 'Use my location',
-	or_district: 'Or choose a Budapest district if you prefer not to share your location:',
+	or_district: 'Or pick a Budapest district',
 	origin_device: 'Starting point: the approximate location of this device as of {time}.',
 	refresh_position: 'Update location',
 	position_stale: 'This location is more than a day old. If you are somewhere else, update it or choose a district.',
@@ -107,8 +102,6 @@ export const listEn: Messages<typeof listHu> = {
 
 	store_title: 'List: {store}',
 	store_total: 'To pay: {total}',
-	store_total_rounding:
-		'Item prices are shown rounded to whole forints, while the amount to pay is worked out from the exact prices, so it can differ from the sum of the items by a few forints.',
 	ksh_total:
 		'Estimated national average price (KSH) for the items GVH does not cover: {total}. It is not included in the amount to pay.',
 	scope_legend:
@@ -119,7 +112,7 @@ export const listEn: Messages<typeof listHu> = {
 	need: 'Needed: {qty}',
 	by_weight: '{qty}, weighed',
 	leftover: 'About {qty} left over',
-	ksh_value: '≈ {price}, not included in the amount to pay',
+	ksh_value: 'about {price}, not included in the amount to pay',
 	alternatives_one: '{count} other product in this store',
 	alternatives_other: '{count} other products in this store',
 	alternative_pack: '{pack}: {price}',
@@ -137,15 +130,10 @@ export const listEn: Messages<typeof listHu> = {
 	group_fuszer_olaj: 'Spices and oil',
 	group_egyeb: 'Other',
 
-	pantry_settings_intro:
-		'Ingredients that are "probably at home" (salt, spices, oil…) are not put on the shopping list while they are ticked. Untick what is not at home: it goes on the list, and where there is a store price, it counts in the store prices.',
-	pantry_settings_legend: 'At home',
+	pantry_settings_legend: 'At home, kept off the list',
 	pantry_settings_loading: 'Loading ingredients…',
 	pantry_settings_empty: 'There are no such ingredients.',
-	device_only: 'Stored only on this device.',
 
-	exclusions_intro:
-		'What you exclude here is left out of the weekly plan suggestions, and excluded ingredients are not put on the shopping list either. It is stored only on this device; the server receives it only to work out a suggestion and does not store it.',
 	exclude_tags_legend: 'Excluded recipe tags',
 	tag_hal: 'Fish',
 	tag_baromfi: 'Poultry',

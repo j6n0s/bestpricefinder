@@ -3,10 +3,7 @@
  * are always shown with the source and the data date (BUILD-BRIEF §8.2). No health claims (§8.7).
  */
 export const recipesHu = {
-	untested_all:
-		'Az itt látható receptek mind kipróbálatlanok: saját, eredeti receptek, amelyeket még senki nem főzött meg.',
 	title: 'Receptek',
-	intro: 'Saját, eredeti receptek, a napi 3 vagy 5 étkezéshez.',
 	error_title: 'A receptek betöltése nem sikerült',
 
 	filters_title: 'Szűrés',
@@ -25,12 +22,10 @@ export const recipesHu = {
 	servings_one: '{count} adag',
 	servings_other: '{count} adag',
 	tags_label: 'Címkék',
-	price_from: '≈ {price}/adag-tól ({chains})',
-	price_from_plain: '≈ {price}/adag-tól',
+	price_from: '{price}/adag-tól ({chains})',
+	price_from_plain: '{price}/adag-tól',
 	coverage: 'az ár a hozzávalók {percent}\u00a0%\u2011át fedi le',
 	coverage_short: 'részleges ár ({percent}\u00a0%)',
-	price_note:
-		'Az adagonkénti ár lánc-jellemző ár a GVH napi adataiból (a lánc boltjainak többségében érvényes ár), a kamrában lévő és az elhagyható hozzávalók nélkül. Egy-egy bolt ára eltérhet.',
 
 	tag_leves: 'leves',
 	tag_fozelek: 'főzelék',

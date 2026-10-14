@@ -1,7 +1,6 @@
 /** Settings page ("Beállítások"). */
 export const settingsHu = {
 	title: 'Beállítások',
-	intro: 'Ezeket a beállításokat csak ezen a készüléken tároljuk.',
 	storage_unavailable:
 		'A böngésző nem engedi az adatok mentését (például privát módban). A beállítások csak addig maradnak meg, amíg ezt a lapot be nem zárod.',
 
@@ -41,8 +40,7 @@ export const settingsHu = {
 	exclusions_title: 'Kizárt alapanyagok és címkék',
 
 	clear_title: 'Adatok törlése',
-	clear_description:
-		'Törli az összes ezen a készüléken tárolt adatot: a tervet, a kosarat, a beállításokat, a kamrát, a kizárásokat, a helyzetet és a lista pipáit.',
+	clear_description: 'A terv, a kosár és minden beállítás törlődik erről a készülékről.',
 	clear_button: 'Minden adat törlése',
 	clear_confirm_title: 'Biztosan törlöd az összes adatot?',
 	clear_confirm_text: 'A törlés nem vonható vissza.',

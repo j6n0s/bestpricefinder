@@ -3,7 +3,6 @@ import type { Messages } from './types';
 
 export const settingsEn: Messages<typeof settingsHu> = {
 	title: 'Settings',
-	intro: 'These settings are stored on this device only.',
 	storage_unavailable:
 		'The browser does not allow saving data (for example in private mode). Your settings last only until you close this tab.',
 
@@ -41,8 +40,7 @@ export const settingsEn: Messages<typeof settingsHu> = {
 	exclusions_title: 'Excluded ingredients and tags',
 
 	clear_title: 'Delete data',
-	clear_description:
-		'Deletes all data stored on this device: the plan, the cart, the settings, the pantry, the exclusions, the location and the list ticks.',
+	clear_description: 'Deletes your plan, cart and settings from this device.',
 	clear_button: 'Delete all data',
 	clear_confirm_title: 'Delete all data?',
 	clear_confirm_text: 'This cannot be undone.',

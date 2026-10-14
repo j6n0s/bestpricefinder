@@ -1,7 +1,8 @@
 <!--
-	Location consent flow (BUILD-BRIEF §8.8): the browser is asked for a position ONLY after this explanation
+	Location consent flow (BUILD-BRIEF §8.8): the browser is asked for a position ONLY after this card (its
+	title says what the position is for, one line says it stays on the device, with a link to the privacy page)
 	and an explicit "OK". The position is approximate (enableHighAccuracy: false), rounded to about 100 m,
-	stored on this device only and never sent to the server. Choosing a district is offered as the alternative.
+	stored on this device only and never sent to the server. The page offers the district picker beside it.
 
 	The component saves the outcome through the storage module and reports the new StoredLocation.
 -->
@@ -10,6 +11,7 @@
 	import { t, type PlainKey } from '$lib/i18n';
 	import { declinedLocation, grantedLocation, requestApproxPosition, type LocateFailure } from '$lib/location';
 	import { load, update, type StoredLocation } from '$lib/storage';
+	import LocationPrivacy from './LocationPrivacy.svelte';
 	import Spinner from './Spinner.svelte';
 
 	interface Props {
@@ -73,10 +75,7 @@
 	{#if phase === 'explain'}
 		<section class="card explain" aria-labelledby="{id}-title">
 			<h3 id="{id}-title" tabindex="-1" bind:this={heading}>{t('core.location_title')}</h3>
-			<p>{t('core.location_why')}</p>
-			<p>{t('core.location_device_only')}</p>
-			<p>{t('core.location_approx')}</p>
-			<p class="muted">{t('core.location_alternative')}</p>
+			<LocationPrivacy />
 			<div class="btn-row">
 				<button type="button" class="btn btn-primary" onclick={allow}>{t('core.location_allow')}</button>
 				<button type="button" class="btn btn-secondary" onclick={cancel}>{t('core.location_cancel')}</button>

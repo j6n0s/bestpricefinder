@@ -2,9 +2,7 @@ import type { recipesHu } from './recipes.hu';
 import type { Messages } from './types';
 
 export const recipesEn: Messages<typeof recipesHu> = {
-	untested_all: 'All the recipes shown here are untested: our own original recipes that nobody has cooked yet.',
 	title: 'Recipes',
-	intro: 'Our own original recipes, for 3 or 5 meals a day.',
 	error_title: 'The recipes could not be loaded',
 
 	filters_title: 'Filter',
@@ -23,12 +21,10 @@ export const recipesEn: Messages<typeof recipesHu> = {
 	servings_one: '{count} serving',
 	servings_other: '{count} servings',
 	tags_label: 'Tags',
-	price_from: 'from ≈ {price}/serving ({chains})',
-	price_from_plain: 'from ≈ {price}/serving',
+	price_from: 'from {price}/serving ({chains})',
+	price_from_plain: 'from {price}/serving',
 	coverage: 'the price covers {percent}% of the ingredients',
 	coverage_short: 'partial price ({percent}%)',
-	price_note:
-		'The price per serving is a chain-typical price from the daily GVH data (the price in most of the chain’s stores), without pantry staples and optional ingredients. A single store’s price may differ.',
 
 	tag_leves: 'soup',
 	tag_fozelek: 'vegetable stew',

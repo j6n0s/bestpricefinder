@@ -18,8 +18,8 @@ import { chromium } from '@playwright/test';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = resolve(HERE, '../static/icons');
 
-const GREEN = '#1b6b45';
-const WHITE = '#ffffff';
+const GREEN = '#a8321a';
+const WHITE = '#fff8ee';
 
 /** The basket on a 512 grid, centred on (256, 256). */
 const BASKET = [

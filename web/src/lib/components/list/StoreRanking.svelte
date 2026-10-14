@@ -2,11 +2,13 @@
 	The nearby stores ranked by what the list costs there (POST /api/quote `ranking`), cheapest first. The
 	ranking is always shown with the server's scope note ("a kiválasztott boltok közül, a … GVH-adatok
 	alapján", BUILD-BRIEF §8.6). Tied stores share a rank, are all marked as tied and are ordered by distance,
-	never by chain or store name (trap 13). Chain names are plain text (no logos).
+	never by chain or store name (trap 13). Chain names are plain text (no logos). How "Fizetendő" and the order
+	are worked out is behind a closed "Hogyan számoljuk?" disclosure.
 -->
 <script lang="ts">
 	import type { ChainSlug, QuoteResponse, StoreId, StoreOut } from '$lib/api/types';
 	import Badge from '$lib/components/Badge.svelte';
+	import HowCalculated from '$lib/components/HowCalculated.svelte';
 	import { formatDistance, formatMoney } from '$lib/format';
 	import { i18n, t, tp } from '$lib/i18n';
 	import { hasPenalty, scopeNote, type RankRow } from '$lib/list/ranking';
@@ -28,7 +30,7 @@
 <section class="ranking" aria-labelledby="{id}-title" data-testid="store-ranking">
 	<h3 id="{id}-title">{t('list.ranking_title')}</h3>
 	<p data-testid="ranking-scope">{t('list.ranking_scope', { note: scopeNote(quote, i18n.lang) })}</p>
-	<p class="small muted">{t('list.ranking_basis')}</p>
+	<HowCalculated testid="ranking-how"><p>{t('list.ranking_basis')}</p></HowCalculated>
 
 	<ol class="ranks">
 		{#each rows as row (row.storeId)}

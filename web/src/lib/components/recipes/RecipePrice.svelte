@@ -1,5 +1,5 @@
 <!--
-	A recipe's chain-typical price per serving: "≈ 313 Ft/adag-tól (Aldi, Lidl)". Every chain of a tie is
+	A recipe's chain-typical price per serving: "313 Ft/adag-tól (Aldi, Lidl)". Every chain of a tie is
 	named, in the server's order (never one chain singled out); "nincs ár" when the recipe cannot be priced.
 	When the price covers less than the whole recipe (priced_share < 1) the caveat is ALWAYS shown (contract
 	v1.2): in full ("az ár a hozzávalók 94 %-át fedi le") or, with `compact`, short ("részleges ár (94 %)").

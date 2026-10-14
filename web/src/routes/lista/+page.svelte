@@ -217,8 +217,6 @@
 		<a class="btn btn-primary" href="/terv">{t('list.to_plan')}</a>
 	</EmptyState>
 {:else}
-	<p class="muted">{t('list.intro')}</p>
-
 	<div class="card range-card">
 		<RangePicker {plan} {today} value={range} onchange={chooseRange} />
 	</div>

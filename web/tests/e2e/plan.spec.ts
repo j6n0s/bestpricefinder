@@ -343,13 +343,14 @@ for (const viewport of VIEWPORTS) {
 			await expect(chip(page, 'variety')).toContainText('Változatosság: 0 ismétlés (cél: 0 ismétlés 5 napon belül)');
 			await expect(week0(page).getByRole('list', { name: 'A hét összesítése' }).getByRole('listitem')).toHaveCount(7);
 
-			// Meals link to their recipes, with the chain-typical price hint and the untested badge.
+			// Meals link to their recipes, with the chain-typical price hint; the untested badge is on the recipe
+			// page only, not on every meal.
 			const day0Dinner = page.getByTestId('meal-0-vacsora');
 			await expect(day0Dinner.getByRole('link')).toHaveText(RAKOTT.title);
-			await expect(day0Dinner).toContainText('≈ 410 Ft/adag-tól (Aldi)');
-			await expect(day0Dinner).toContainText('kipróbálatlan recept');
+			await expect(day0Dinner).toContainText('410 Ft/adag-tól (Aldi)');
+			await expect(day0Dinner).not.toContainText('kipróbálatlan recept');
 			await expect(page.getByTestId('meal-1-ebed')).toContainText('nincs ár');
-			await expect(page.getByTestId('meal-0-ebed')).toContainText('≈ 313 Ft/adag-tól (Aldi, Lidl)');
+			await expect(page.getByTestId('meal-0-ebed')).toContainText('313 Ft/adag-tól (Aldi, Lidl)');
 			// priced_share < 1 always comes with a caveat (contract v1.2), short in the plan cards.
 			await expect(page.getByTestId('meal-0-ebed').getByTestId('recipe-coverage')).toHaveText('részleges ár (94 %)');
 			await expect(day0Dinner.getByTestId('recipe-coverage')).toHaveText('részleges ár (97 %)');
@@ -744,7 +745,7 @@ test.describe('English and dark mode', () => {
 		await page.getByRole('button', { name: 'Make a plan' }).click();
 		await expect(chip(page, 'fish')).toContainText('Fish: 0 (target: at least 1)');
 		await expect(chip(page, 'potato')).toContainText('Potato: 1 day in a row (target: at most 1)');
-		await expect(page.getByTestId('meal-0-ebed')).toContainText('from ≈ 313 Ft/serving (Aldi, Lidl)');
+		await expect(page.getByTestId('meal-0-ebed')).toContainText('from 313 Ft/serving (Aldi, Lidl)');
 		await expect(page.getByTestId('plan-warnings')).toContainText('There are few recipes to choose for this meal, so some may repeat: breakfast.');
 		await expect(page.getByRole('button', { name: `Change (Tuesday, ${DATE_HU}, dinner)` })).toBeVisible();
 		// Recipe titles are Hungarian content: marked as such inside the English page (WCAG 3.1.2).

@@ -131,7 +131,6 @@
 		<section class="card" aria-labelledby="costs-title">
 			<h2 id="costs-title">{t('recipes.costs_title')}</h2>
 			<ChainCostTable costs={detail.chain_costs} lines={detail.lines} {names} />
-			<p class="small muted">{t('recipes.price_note')}</p>
 			<Attribution dataDate={detail.data_date} />
 		</section>
 

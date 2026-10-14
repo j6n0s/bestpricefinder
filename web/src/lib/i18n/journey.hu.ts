@@ -5,7 +5,6 @@
  */
 export const journeyHu = {
 	title: 'Hol vásárolj?',
-	intro: 'Két lehetőség, {note}: minden egy boltban, vagy egy rövid körút, ha az megéri.',
 
 	single_title: 'Egy boltban',
 	single_all: 'Itt minden megvan.',
@@ -44,7 +43,7 @@ export const journeyHu = {
 	no_journey_cheaper: 'Most egy bolt a legjobb: több boltban nem lenne olcsóbb.',
 	nowhere_one: '{count} tételnek egyik közeli boltban sincs ára:',
 	nowhere_other: '{count} tételnek egyik közeli boltban sincs ára:',
-	how: 'Hogyan választunk? Előbb az számít, hogy minél több tételt megkapj, aztán az ár. Egy plusz bolt csak akkor kerül a körútba, ha legalább {stop}-ot spórolsz vele, és minden plusz kilométerért további {km}-ot. A távolság légvonalban értendő, a valódi gyalogút hosszabb.',
+	how: 'Előbb az számít, hogy minél több tételt megkapj, aztán az ár. Egy plusz bolt csak akkor kerül a körútba, ha legalább {stop}-ot spórolsz vele, és minden plusz kilométerért további {km}-ot. A távolság légvonalban értendő, a valódi gyalogút hosszabb.',
 
 	map_label: 'A körút vázlata: {route}.',
 	map_route_origin: 'kiindulási pont',
