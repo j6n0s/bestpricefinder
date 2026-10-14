@@ -409,10 +409,10 @@ for (const viewport of VIEWPORTS) {
 			// Add: a sensible first amount, about how many pieces; − / + along round amounts.
 			await page.getByRole('button', { name: 'Kosárba: alma' }).click();
 			await expect(goodRow(page, 'alma').getByRole('status')).toHaveAccessibleName(sp('alma: 500 g'));
-			await expect(goodRow(page, 'alma')).toContainText('kb. 3 db');
+			await expect(goodRow(page, 'alma')).toContainText(sp('3 db'));
 			await goodRow(page, 'alma').getByRole('button', { name: 'Több: alma' }).click();
 			await expect(goodRow(page, 'alma').getByRole('status')).toHaveAccessibleName(sp('alma: 750 g'));
-			await expect(goodRow(page, 'alma')).toContainText('kb. 4 db');
+			await expect(goodRow(page, 'alma')).toContainText(sp('4 db'));
 			await goodRow(page, 'alma').getByRole('button', { name: 'Kevesebb: alma' }).click();
 			await expect(goodRow(page, 'alma').getByRole('status')).toHaveAccessibleName(sp('alma: 500 g'));
 			await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
@@ -495,7 +495,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(single).toContainText('Penny');
 			await expect(single.getByTestId('single-total')).toHaveText(sp('5 280 Ft'));
 			await expect(single).toContainText('Itt minden megvan.');
-			await expect(single).toContainText(sp('Séta oda-vissza: kb. 1,2 km, légvonalban.'));
+			await expect(single).toContainText(sp('Séta oda-vissza: 1,2 km légvonalban.'));
 
 			// The route: Aldi (nearest) for apples, milk and eggs (950 Ft), then Penny for the coffee (3,600 Ft):
 			// 4,550 Ft, 730 Ft less, for a 1.43 km round instead of 1.2 km (worth more than 500 Ft + 150 Ft/km).
@@ -503,7 +503,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(route.getByRole('heading', { level: 4 })).toHaveText('Körút: 2 bolt');
 			await expect(route.getByTestId('journey-total')).toHaveText(sp('4 550 Ft'));
 			await expect(route).toContainText(sp('730 Ft-tal olcsóbb, mint egy boltban.'));
-			await expect(route.getByTestId('journey-walk')).toHaveText(sp('Séta: kb. 1,4 km légvonalban, 230 m-rel több, mint egy boltba.'));
+			await expect(route.getByTestId('journey-walk')).toHaveText(sp('Séta: 1,4 km légvonalban, 230 m-rel több, mint egy boltba.'));
 			const stops = route.getByTestId('journey-stops').locator(':scope > li');
 			expect(await stops.evaluateAll((els) => els.map((el) => el.getAttribute('data-store-id')))).toEqual([
 				'synthetic-aldi-k',

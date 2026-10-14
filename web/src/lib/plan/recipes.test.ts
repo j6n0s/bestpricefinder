@@ -115,7 +115,7 @@ describe('scaleDisplay (real display texts from data/recipes)', () => {
 		expect(scaleDisplay('40 dkg', 0.5)).toBe('20 dkg');
 		expect(scaleDisplay('1,2 kg érett paradicsom', 0.5)).toBe('0,6 kg érett paradicsom');
 		expect(scaleDisplay('1,5 l', 2)).toBe('3 l');
-		expect(scaleDisplay('kb. 7,5 dl', 0.5)).toBe('kb. 3,8 dl');
+		expect(scaleDisplay('7,5 dl', 0.5)).toBe('3,8 dl');
 		expect(scaleDisplay('2 gerezd', 0.75)).toBe('1,5 gerezd');
 		expect(scaleDisplay('1 teáskanál', 0.25)).toBe('0,25 teáskanál');
 	});
@@ -125,7 +125,7 @@ describe('scaleDisplay (real display texts from data/recipes)', () => {
 		expect(scaleDisplay('42 dkg (40 dkg a nokedlihez, 2 dkg a habaráshoz)', 0.5)).toBe(
 			'21 dkg (20 dkg a nokedlihez, 1 dkg a habaráshoz)'
 		);
-		expect(scaleDisplay('4 egész comb (kb. 1,2 kg)', 0.5)).toBe('2 egész comb (kb. 0,6 kg)');
+		expect(scaleDisplay('4 egész comb (1,2 kg)', 0.5)).toBe('2 egész comb (0,6 kg)');
 	});
 
 	it('scales ranges and keeps their dash', () => {
@@ -156,7 +156,7 @@ describe('scaleDisplay (real display texts from data/recipes)', () => {
 	it('understands "egy" as a whole word only', () => {
 		expect(scaleDisplay('1 kg (egy kisebb fej)', 2)).toBe('2 kg (2 kisebb fej)');
 		expect(scaleDisplay('1 kg (egy kisebb fej)', 0.5)).toBe('0,5 kg (0,5 kisebb fej)');
-		expect(scaleDisplay('kb. 30 dkg (egy kisebb fej fele)', 2)).toBe('kb. 60 dkg (2 kisebb fej fele)');
+		expect(scaleDisplay('30 dkg (egy kisebb fej fele)', 2)).toBe('60 dkg (2 kisebb fej fele)');
 		expect(scaleDisplay('Egy csipet', 3)).toBe('3 csipet');
 		expect(scaleDisplay('egyszerű', 2)).toBe('egyszerű');
 		expect(scaleDisplay('egyenként', 2)).toBe('egyenként');

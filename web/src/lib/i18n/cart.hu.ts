@@ -33,5 +33,5 @@ export const cartHu = {
 	more_named: 'Több: {name}',
 	remove_named: 'Törlés a kosárból: {name}',
 	qty_named: '{name}: {qty}',
-	pieces: 'kb. {count} db'
+	pieces: '{count}\u00a0db'
 } as const;

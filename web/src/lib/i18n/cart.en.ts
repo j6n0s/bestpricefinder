@@ -32,5 +32,5 @@ export const cartEn: Messages<typeof cartHu> = {
 	more_named: 'More: {name}',
 	remove_named: 'Remove from cart: {name}',
 	qty_named: '{name}: {qty}',
-	pieces: 'about {count} pcs'
+	pieces: '{count}\u00a0pcs'
 };

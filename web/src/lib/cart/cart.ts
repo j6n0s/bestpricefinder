@@ -59,7 +59,7 @@ export function atMaximum(qty: number, unit: Unit): boolean {
 	return qty >= top - 1e-9;
 }
 
-/** About how many pieces `qty` kg is, for goods with a typical piece weight ("kb. 3 db"); null otherwise. */
+/** About how many pieces `qty` kg is, for goods with a typical piece weight ("3 db"); null otherwise. */
 export function approxPieces(qty: number, ingredient: Pick<IngredientOut, 'unit' | 'piece_weight_kg'>): number | null {
 	const weight = ingredient.piece_weight_kg;
 	if (ingredient.unit !== 'kg' || weight === null || !(weight > 0)) return null;

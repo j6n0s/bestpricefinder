@@ -54,7 +54,7 @@
         {"ingredient_id": "sargarepa", "qty": 0.2, "display": "2 közepes (20 dkg)", "optional": false},
         {"ingredient_id": "petrezselyemgyoker", "qty": 0.15, "display": "1–2 db (15 dkg)", "optional": false},
         {"ingredient_id": "burgonya", "qty": 0.6, "display": "60 dkg", "optional": false},
-        {"ingredient_id": "viz", "qty": 2.5, "display": "kb. 2,5 l", "optional": false},
+        {"ingredient_id": "viz", "qty": 2.5, "display": "2,5 l", "optional": false},
         {"ingredient_id": "so", "qty": 0.015, "display": "ízlés szerint", "optional": false},
         {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false},
         {"ingredient_id": "finomliszt", "qty": 0.1, "display": "10 dkg (a csipetkéhez)", "optional": true},
@@ -65,7 +65,7 @@
         "Egy nagy, vastag aljú lábasban hevítsd fel az olajat, és közepes lángon párold rajta a hagymát 6–8 percig, amíg puha és üveges lesz. Add hozzá a húst, emeld fel a lángot, és kevergetve pirítsd 5 percig, amíg minden oldalán elveszíti a nyers színét.",
         "Húzd le a lábast a tűzről, szórd rá a pirospaprikát, a köménymagot és a fokhagymát, keverd össze, és rögtön önts rá 2 dl vizet, hogy a paprika meg ne égjen. Sózd meg enyhén.",
         "Tedd vissza a tűzre, fedd le, és kis lángon párold 70–90 percig, amíg a hús majdnem puha. Közben időnként keverd meg, és ha elfőne a leve, pótolj egy keveset.",
-        "Add hozzá a répát, a petrezselyemgyökeret, a zöldpaprikát és a paradicsomot, öntsd fel kb. 2 liter vízzel, és forrald fel. Fedő alatt, kis lángon főzd 15 percig.",
+        "Add hozzá a répát, a petrezselyemgyökeret, a zöldpaprikát és a paradicsomot, öntsd fel 2 liter vízzel, és forrald fel. Fedő alatt, kis lángon főzd 15 percig.",
         "Szűrd le a burgonyát, tedd a levesbe, és főzd további 15–20 percig, amíg a burgonya és a hús is teljesen megpuhul. Ízesítsd sóval és borssal.",
         "Ha csipetkét is szeretnél, gyúrd össze a lisztet a tojással és egy csipet sóval kemény tésztává; ha túl száraz, adj hozzá néhány csepp vizet. Vékonyra lapítva csipkedj belőle apró darabokat a forró levesbe, és főzd 4–5 percig, amíg feljönnek a leves tetejére.",
         "Ha másnap is ebből eszel, a maradékot hűtsd le minél előbb, és legkésőbb két órán belül tedd hűtőbe. Másnap forrald fel újra, és ha besűrűsödött, adj hozzá egy kevés vizet."
@@ -158,7 +158,7 @@
       ],
       "steps": [
         "Melegítsd elő a sütőt 200 fokra (alsó-felső sütés). A zsemlét áztasd 5 percre hideg vízbe, majd nyomkodd ki alaposan.",
-        "A fasírthoz reszeld le a fél hagymát, és zúzz össze 1 gerezd fokhagymát. Keverd össze a darált húst a zsemlével, a tojással, a reszelt hagymával, a fokhagymával, a majoránnával, 1 teáskanál sóval és egy csipet borssal. Vizes kézzel formázz belőle 12 lapos, kb. 1,5 cm vastag pogácsát.",
+        "A fasírthoz reszeld le a fél hagymát, és zúzz össze 1 gerezd fokhagymát. Keverd össze a darált húst a zsemlével, a tojással, a reszelt hagymával, a fokhagymával, a majoránnával, 1 teáskanál sóval és egy csipet borssal. Vizes kézzel formázz belőle 12 lapos, 1,5 cm vastag pogácsát.",
         "Kend ki a tepsit 1 evőkanál olajjal, tedd bele a fasírtokat, és süsd 20–25 percig; félidőben fordítsd meg őket. Akkor jók, ha a közepük sem rózsaszín, és a kiengedett lé átlátszó.",
         "Közben a kelkáposztáról szedd le a sérült külső leveleket, negyedeld el, vágd ki a torzsáját, majd szeleteld 1 cm-es csíkokra, és mosd meg. A burgonyát hámozd meg, és vágd 1 cm-es kockákra.",
         "Tedd a kelkáposztát és a burgonyát egy lábasba, öntsd fel 6 dl vízzel, add hozzá a köménymagot, sózd meg, és fedő alatt, kis lángon főzd 12–15 percig, amíg megpuhulnak.",
@@ -181,7 +181,7 @@
         {"ingredient_id": "olaj", "qty": 0.04, "display": "2 evőkanál és 2 teáskanál", "optional": false},
         {"ingredient_id": "pirospaprika", "qty": 0.005, "display": "2 teáskanál", "optional": false},
         {"ingredient_id": "baberlevel", "qty": 2, "display": "2 levél", "optional": false},
-        {"ingredient_id": "viz", "qty": 0.75, "display": "kb. 7,5 dl", "optional": false},
+        {"ingredient_id": "viz", "qty": 0.75, "display": "7,5 dl", "optional": false},
         {"ingredient_id": "tejfol20", "qty": 0.2, "display": "20 dkg", "optional": false},
         {"ingredient_id": "finomliszt", "qty": 0.03, "display": "3 evőkanál", "optional": false},
         {"ingredient_id": "majoranna", "qty": 0.001, "display": "1 teáskanál", "optional": false},
@@ -193,7 +193,7 @@
       "steps": [
         "A burgonyát hámozd meg, és vágd 1,5 cm-es kockákra. A hagymát aprítsd finomra.",
         "Egy lábasban hevíts fel 2 evőkanál olajat, és közepes lángon párold rajta a hagymát 4–5 percig, amíg üveges lesz. Húzd le a tűzről, keverd bele a pirospaprikát, majd add hozzá a burgonyát, és keverd át.",
-        "Öntsd fel annyi vízzel, hogy éppen ellepje (kb. 7 dl), tedd bele a babérleveleket, sózd meg, és fedő alatt, kis lángon főzd 15–18 percig, amíg a burgonya megpuhul.",
+        "Öntsd fel annyi vízzel, hogy éppen ellepje (7 dl), tedd bele a babérleveleket, sózd meg, és fedő alatt, kis lángon főzd 15–18 percig, amíg a burgonya megpuhul.",
         "Egy tálban keverd simára a tejfölt a liszttel és fél dl hideg vízzel, majd keverj hozzá egy merőkanál forró főzőlevet. Kevergetve öntsd a burgonyához, és kis lángon főzd még 5 percig, amíg besűrűsödik. Ha sűrűbben szereted, nyomj szét a lábas falánál néhány burgonyakockát.",
         "Ízesítsd majoránnával, borssal, sóval, és ha szereted, egy kevés ecettel. Vedd ki a babérleveleket.",
         "Egy tapadásmentes serpenyőben hevítsd fel a maradék olajat közepes lángon, üsd bele a tojásokat, sózd meg őket, és süsd 3–4 percig, amíg a fehérjük teljesen megszilárdul. A főzelékre csúsztatva tálald."
@@ -261,7 +261,7 @@
         "A lencsét öblítsd át, és bő, sótlan vízben főzd 25–30 percig, amíg teljesen megpuhul. Szűrd le alaposan, és hagyd 10 percig gőzölögni, hogy minél szárazabb legyen.",
         "Közben a zsemlét áztasd 5 percre hideg vízbe, majd erősen nyomkodd ki. A hagymát aprítsd finomra, és 1 evőkanál olajon párold 5 percig; a végén adj hozzá 2 gerezd zúzott fokhagymát.",
         "A lencsét krumplinyomóval vagy villával törd össze úgy, hogy maradjanak benne egész szemek is. Keverd hozzá a zsemlét, a hagymát, a tojásokat, a majoránnát, a pirospaprikát, 1 teáskanál sót, egy csipet borsot és 2 evőkanál lisztet. A massza akkor jó, ha formázható; ha túl lágy, adj hozzá még egy kevés lisztet. Pihentesd 10 percig.",
-        "Vizes kézzel formázz belőle 12 lapos, kb. 1,5 cm vastag pogácsát, és forgasd meg őket vékonyan a maradék lisztben.",
+        "Vizes kézzel formázz belőle 12 lapos, 1,5 cm vastag pogácsát, és forgasd meg őket vékonyan a maradék lisztben.",
         "Egy nagy serpenyőben hevíts fel 4 evőkanál olajat közepes lángon, és két adagban süsd a fasírtokat oldalanként 3–4 percig, amíg aranybarna kérget kapnak. Óvatosan fordítsd meg őket, mert melegen még puhák. Papírtörlőn csepegtesd le.",
         "A salátához az uborkát gyaluld vékony karikákra, sózd meg enyhén, és 10 perc múlva nyomkodd ki a levét. Keverd össze a joghurttal, a maradék zúzott fokhagymával és egy csipet borssal, és hidegen tálald a fasírt mellé. Ha szeretnéd, kenyeret is adhatsz hozzá."
       ],
@@ -279,7 +279,7 @@
         {"ingredient_id": "lencse", "qty": 0.4, "display": "40 dkg", "optional": false},
         {"ingredient_id": "fokhagyma", "qty": 0.01, "display": "2 gerezd", "optional": false},
         {"ingredient_id": "baberlevel", "qty": 2, "display": "2 levél", "optional": false},
-        {"ingredient_id": "viz", "qty": 1.4, "display": "kb. 1,4 l", "optional": false},
+        {"ingredient_id": "viz", "qty": 1.4, "display": "1,4 l", "optional": false},
         {"ingredient_id": "voroshagyma", "qty": 0.12, "display": "1 fej", "optional": false},
         {"ingredient_id": "olaj", "qty": 0.03, "display": "2 evőkanál", "optional": false},
         {"ingredient_id": "finomliszt", "qty": 0.03, "display": "3 evőkanál", "optional": false},
@@ -317,7 +317,7 @@
         {"ingredient_id": "petrezselyemgyoker", "qty": 0.1, "display": "1 nagyobb (10 dkg)", "optional": false},
         {"ingredient_id": "fokhagyma", "qty": 0.01, "display": "2 gerezd", "optional": false},
         {"ingredient_id": "baberlevel", "qty": 2, "display": "2 levél", "optional": false},
-        {"ingredient_id": "viz", "qty": 2.2, "display": "kb. 2,2 l", "optional": false},
+        {"ingredient_id": "viz", "qty": 2.2, "display": "2,2 l", "optional": false},
         {"ingredient_id": "voroshagyma", "qty": 0.12, "display": "1 fej", "optional": false},
         {"ingredient_id": "olaj", "qty": 0.03, "display": "2 evőkanál", "optional": false},
         {"ingredient_id": "finomliszt", "qty": 0.03, "display": "3 evőkanál", "optional": false},
@@ -355,7 +355,7 @@
         {"ingredient_id": "olivaolaj", "qty": 0.03, "display": "2 evőkanál", "optional": false},
         {"ingredient_id": "oregano", "qty": 0.001, "display": "1 teáskanál", "optional": false},
         {"ingredient_id": "cukor", "qty": 0.005, "display": "1 teáskanál", "optional": false},
-        {"ingredient_id": "viz", "qty": 0.5, "display": "kb. 5 dl", "optional": false},
+        {"ingredient_id": "viz", "qty": 0.5, "display": "5 dl", "optional": false},
         {"ingredient_id": "teszta", "qty": 0.4, "display": "40 dkg spagetti", "optional": false},
         {"ingredient_id": "trappista", "qty": 0.08, "display": "8 dkg", "optional": false},
         {"ingredient_id": "so", "qty": 0.012, "display": "ízlés szerint", "optional": false},
@@ -364,7 +364,7 @@
       "steps": [
         "A lencsét öblítsd át. A paradicsomok tetejét vágd be keresztben, forrázd le 1 percre forró vízzel, hámozd meg, és vágd apró kockákra. A sárgarépát reszeld le finomra, a hagymát és a fokhagymát aprítsd fel.",
         "Egy lábasban hevítsd fel az olívaolajat, és közepes lángon párold a hagymát 4–5 percig. Add hozzá a répát, és párold 3 percig, majd a fokhagymát még 1 percig.",
-        "Tedd bele a paradicsomot, a lencsét, az oregánót és a cukrot, öntsd fel 4 dl vízzel, és forrald fel. Fedő alatt, kis lángon főzd, amíg a lencse megpuhul és a ragu besűrűsödik: vörös lencsével kb. 15–20, barnával 30–35 percig. Közben kevergesd, és ha kell, pótold a vizet. A végén sózd és borsozd.",
+        "Tedd bele a paradicsomot, a lencsét, az oregánót és a cukrot, öntsd fel 4 dl vízzel, és forrald fel. Fedő alatt, kis lángon főzd, amíg a lencse megpuhul és a ragu besűrűsödik: vörös lencsével 15–20, barnával 30–35 percig. Közben kevergesd, és ha kell, pótold a vizet. A végén sózd és borsozd.",
         "Közben a spagettit főzd meg bő, sós vízben a csomagoláson írt ideig, szűrd le, és tegyél félre egy kevés főzővizet.",
         "Keverd össze a tésztát a raguval; ha túl sűrű, lazítsd egy kevés főzővízzel. A sajtot reszeld le, és tálaláskor szórd a tetejére."
       ],
@@ -411,13 +411,13 @@
       "minutes": 75,
       "tags": ["foetel", "baromfi", "ket_napos"],
       "lines": [
-        {"ingredient_id": "csirkecomb", "qty": 1.2, "display": "4 egész comb (kb. 1,2 kg)", "optional": false},
+        {"ingredient_id": "csirkecomb", "qty": 1.2, "display": "4 egész comb (1,2 kg)", "optional": false},
         {"ingredient_id": "voroshagyma", "qty": 0.24, "display": "2 fej", "optional": false},
         {"ingredient_id": "olaj", "qty": 0.03, "display": "2 evőkanál", "optional": false},
         {"ingredient_id": "pirospaprika", "qty": 0.01, "display": "1 púpozott evőkanál", "optional": false},
         {"ingredient_id": "zoldpaprika", "qty": 0.22, "display": "2 db", "optional": false},
         {"ingredient_id": "paradicsom", "qty": 0.2, "display": "2 db", "optional": false},
-        {"ingredient_id": "viz", "qty": 0.5, "display": "kb. 5 dl (3 dl a szafthoz, 2 dl a nokedlihez)", "optional": false},
+        {"ingredient_id": "viz", "qty": 0.5, "display": "5 dl (3 dl a szafthoz, 2 dl a nokedlihez)", "optional": false},
         {"ingredient_id": "tejfol20", "qty": 0.2, "display": "20 dkg", "optional": false},
         {"ingredient_id": "finomliszt", "qty": 0.42, "display": "42 dkg (40 dkg a nokedlihez, 2 dkg a habaráshoz)", "optional": false},
         {"ingredient_id": "tojas", "qty": 2, "display": "2 db (a nokedlihez)", "optional": false},
@@ -428,8 +428,8 @@
         "A combokat az ízületnél vágd ketté alsó és felső combra; ha szeretnéd, a bőrüket lehúzhatod. A hagymát aprítsd finomra, a zöldpaprikát és a paradicsomot vágd nagyobb darabokra.",
         "Egy széles lábasban hevítsd fel az olajat, és közepes lángon párold a hagymát 8–10 percig, amíg puha és halvány aranyszínű lesz.",
         "Húzd le a tűzről, keverd bele a pirospaprikát, és rögtön önts rá 1 dl vizet. Tedd bele a csirkét, sózd, borsozd, forgasd meg a szaftban, majd add hozzá a zöldpaprikát és a paradicsomot.",
-        "Fedd le, és kis lángon párold 40–45 percig, amíg a hús a csontnál is megpuhul; közben néha fordítsd meg a darabokat, és ha kell, pótolj egy kevés vizet (összesen kb. 3 dl-t). Akkor kész, ha megszúrva a kifolyó lé átlátszó, és a csont mellett sem rózsaszín a hús.",
-        "Közben a nokedlihez keverd ki a 40 dkg lisztet a tojásokkal, 1 teáskanál sóval és kb. 2 dl vízzel sűrű, ragacsos tésztává, és pihentesd 10 percig. Forralj fel egy nagy fazék sós vizet.",
+        "Fedd le, és kis lángon párold 40–45 percig, amíg a hús a csontnál is megpuhul; közben néha fordítsd meg a darabokat, és ha kell, pótolj egy kevés vizet (összesen 3 dl-t). Akkor kész, ha megszúrva a kifolyó lé átlátszó, és a csont mellett sem rózsaszín a hús.",
+        "Közben a nokedlihez keverd ki a 40 dkg lisztet a tojásokkal, 1 teáskanál sóval és 2 dl vízzel sűrű, ragacsos tésztává, és pihentesd 10 percig. Forralj fel egy nagy fazék sós vizet.",
         "Nokedliszaggatón keresztül, adagonként szaggasd a tésztát a lobogó vízbe. Amikor a galuskák feljönnek a víz tetejére, főzd még 1–2 percig, szedd ki szűrőkanállal, és öblítsd át langyos vízzel, hogy ne ragadjanak össze.",
         "Vedd ki a csirkét a szaftból. A tejfölt keverd simára a 2 dkg liszttel, keverj hozzá egy merőkanál forró szaftot, majd kevergetve öntsd a mártásba. Forrald fel, főzd 3–4 percig, tedd vissza a csirkét, és a nokedlivel tálald.",
         "Ha két napra főzöd, a maradékot hűtsd le, és két órán belül tedd hűtőbe; a csirkét a mártással és a nokedlit külön dobozban tárold. Másnap a csirkét lassan, kevergetve melegítsd át forrásig."
@@ -507,7 +507,7 @@
       "minutes": 85,
       "tags": ["foetel", "hal"],
       "lines": [
-        {"ingredient_id": "ponty", "qty": 0.8, "display": "4 szelet (kb. 80 dkg)", "optional": false},
+        {"ingredient_id": "ponty", "qty": 0.8, "display": "4 szelet (80 dkg)", "optional": false},
         {"ingredient_id": "burgonya", "qty": 1, "display": "1 kg", "optional": false},
         {"ingredient_id": "voroshagyma", "qty": 0.12, "display": "1 fej", "optional": false},
         {"ingredient_id": "zoldpaprika", "qty": 0.22, "display": "2 db", "optional": false},
@@ -539,7 +539,7 @@
       "lines": [
         {"ingredient_id": "rizs", "qty": 0.15, "display": "15 dkg", "optional": false},
         {"ingredient_id": "viz", "qty": 0.3, "display": "3 dl (a rizshez)", "optional": false},
-        {"ingredient_id": "brokkoli", "qty": 0.6, "display": "1 nagy fej (kb. 60 dkg)", "optional": false},
+        {"ingredient_id": "brokkoli", "qty": 0.6, "display": "1 nagy fej (60 dkg)", "optional": false},
         {"ingredient_id": "csirkemell", "qty": 0.5, "display": "50 dkg", "optional": false},
         {"ingredient_id": "voroshagyma", "qty": 0.12, "display": "1 fej", "optional": false},
         {"ingredient_id": "fokhagyma", "qty": 0.01, "display": "2 gerezd", "optional": false},
@@ -556,7 +556,7 @@
         "A brokkolit szedd rózsáira, a szárát hámozd meg és szeleteld fel. Sós, forrásban lévő vízben főzd 3 percig, majd szűrd le.",
         "A csirkemellet vágd 1,5 cm-es kockákra, a hagymát aprítsd fel. 1 evőkanál olajon párold a hagymát 3 percig, add hozzá a húst, és közepes lángon pirítsd 5–6 percig, amíg minden oldala kifehéredik. Keverd bele a zúzott fokhagymát és a pirospaprikát, sózd és borsozd.",
         "Melegítsd elő a sütőt 190 fokra (alsó-felső sütés). A sajtot reszeld le. A tejfölt keverd ki a tojásokkal és egy csipet sóval.",
-        "Egy kb. 20×30 cm-es tűzálló tálat kenj ki olajjal. Terítsd el benne a rizst, rá a csirkét, a tetejére a brokkolit. Öntsd rá egyenletesen a tejfölös keveréket, és szórd meg a sajttal.",
+        "Egy 20×30 cm-es tűzálló tálat kenj ki olajjal. Terítsd el benne a rizst, rá a csirkét, a tetejére a brokkolit. Öntsd rá egyenletesen a tejfölös keveréket, és szórd meg a sajttal.",
         "Süsd 30–35 percig, amíg a teteje aranybarna, és az öntet a közepén is megszilárdul; ekkorra a csirke is teljesen átsül. Szeletelés előtt pihentesd 5 percig."
       ],
       "tested": false
@@ -577,7 +577,7 @@
         {"ingredient_id": "fokhagyma", "qty": 0.01, "display": "2 gerezd", "optional": false},
         {"ingredient_id": "zoldpaprika", "qty": 0.11, "display": "1 db", "optional": false},
         {"ingredient_id": "paradicsom", "qty": 0.1, "display": "1 db", "optional": false},
-        {"ingredient_id": "viz", "qty": 0.3, "display": "kb. 3 dl", "optional": false},
+        {"ingredient_id": "viz", "qty": 0.3, "display": "3 dl", "optional": false},
         {"ingredient_id": "teszta", "qty": 0.36, "display": "36 dkg (pl. orsó- vagy szarvacskatészta)", "optional": false},
         {"ingredient_id": "so", "qty": 0.012, "display": "ízlés szerint", "optional": false},
         {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false}
@@ -586,7 +586,7 @@
         "A húst vágd 2–3 cm-es kockákra. A hagymát aprítsd nagyon finomra, a fokhagymát zúzd össze, a zöldpaprikát és a paradicsomot vágd kisebb darabokra.",
         "Egy vastag aljú lábasban hevítsd fel az olajat, és közepes lángon, gyakran kevergetve párold a hagymát 10 percig, amíg puha és aranysárga lesz.",
         "Add hozzá a húst, emeld fel a lángot, és kevergetve pirítsd 5 percig, amíg minden oldala kifehéredik. Húzd le a tűzről, keverd bele a pirospaprikát és a fokhagymát, és rögtön önts rá 1 dl vizet. Sózd, borsozd.",
-        "Tedd vissza a tűzre, fedd le, és nagyon kis lángon párold. A hús nagyrészt a saját levében fő: csak akkor önts alá egy-egy kevés vizet, ha a leve elfőtt (összesen kb. 2 dl-t). 30 perc után add hozzá a zöldpaprikát és a paradicsomot.",
+        "Tedd vissza a tűzre, fedd le, és nagyon kis lángon párold. A hús nagyrészt a saját levében fő: csak akkor önts alá egy-egy kevés vizet, ha a leve elfőtt (összesen 2 dl-t). 30 perc után add hozzá a zöldpaprikát és a paradicsomot.",
         "Összesen 60–75 perc párolás után a hús villával könnyen szétválik. Ekkor vedd le a fedőt, és 5–10 percig forrald, hogy a szaft sűrű és fényes legyen. Kóstold meg, és ha kell, sózd utána.",
         "Közben főzd meg a tésztát bő, sós vízben a csomagoláson írt ideig, és szűrd le. A pörkölttel tálald.",
         "Ha két napra főzöd, a pörköltet hűtsd le, és két órán belül tedd hűtőbe; a tésztát külön tárold. Másnap egy kevés vízzel, kevergetve forrald fel."
@@ -602,13 +602,13 @@
       "minutes": 35,
       "tags": ["foetel", "hal"],
       "lines": [
-        {"ingredient_id": "lazac", "qty": 0.5, "display": "4 szelet (kb. 50 dkg)", "optional": false},
+        {"ingredient_id": "lazac", "qty": 0.5, "display": "4 szelet (50 dkg)", "optional": false},
         {"ingredient_id": "citrom", "qty": 0.1, "display": "1 db", "optional": false},
         {"ingredient_id": "fokhagyma", "qty": 0.01, "display": "2 gerezd", "optional": false},
         {"ingredient_id": "olivaolaj", "qty": 0.045, "display": "3 evőkanál", "optional": false},
         {"ingredient_id": "rizs", "qty": 0.25, "display": "25 dkg", "optional": false},
         {"ingredient_id": "viz", "qty": 0.5, "display": "5 dl (a rizshez)", "optional": false},
-        {"ingredient_id": "brokkoli", "qty": 0.5, "display": "1 nagy fej (kb. 50 dkg)", "optional": false},
+        {"ingredient_id": "brokkoli", "qty": 0.5, "display": "1 nagy fej (50 dkg)", "optional": false},
         {"ingredient_id": "so", "qty": 0.012, "display": "ízlés szerint", "optional": false},
         {"ingredient_id": "bors", "qty": 0.001, "display": "1 csipet", "optional": false}
       ],
@@ -645,7 +645,7 @@
       "steps": [
         "Melegítsd elő a sütőt 200 fokra (hőlégkeveréssel 180 fokra). A burgonyát hámozd meg, és vágd 2–3 cm-es cikkekre. A sárgarépát vágd vastag karikákra, a hagymát nyolcadold, a zöldpaprikát csíkozd fel.",
         "Egy nagy tepsiben forgasd össze a zöldségeket 2 evőkanál olajjal, a rozmaringgal, a pirospaprikával, 1 teáskanál sóval és egy csipet borssal. Terítsd el egy rétegben, és süsd 20 percig.",
-        "Közben a pulykamellet vágd 4 egyforma, kb. 2 cm vastag szeletre. Dörzsöld be őket a maradék olajjal, a zúzott fokhagymával, sóval és borssal.",
+        "Közben a pulykamellet vágd 4 egyforma, 2 cm vastag szeletre. Dörzsöld be őket a maradék olajjal, a zúzott fokhagymával, sóval és borssal.",
         "Keverd át a zöldségeket, fektesd rájuk a húsokat, és süsd további 20–25 percig, amíg a pulyka a közepén is teljesen átsül (nem rózsaszín, és a kiengedett lé átlátszó), a burgonya pedig puha, és a széle megpirul.",
         "Tálalás előtt hagyd a húst 5 percig pihenni, hogy szaftos maradjon."
       ],
@@ -694,7 +694,7 @@
         {"ingredient_id": "tojas", "qty": 1, "display": "1 db", "optional": false},
         {"ingredient_id": "pirospaprika", "qty": 0.003, "display": "1 teáskanál", "optional": false},
         {"ingredient_id": "paradicsom", "qty": 1.2, "display": "1,2 kg érett paradicsom", "optional": false},
-        {"ingredient_id": "viz", "qty": 0.6, "display": "kb. 6 dl", "optional": false},
+        {"ingredient_id": "viz", "qty": 0.6, "display": "6 dl", "optional": false},
         {"ingredient_id": "olaj", "qty": 0.03, "display": "2 evőkanál", "optional": false},
         {"ingredient_id": "finomliszt", "qty": 0.03, "display": "3 evőkanál", "optional": false},
         {"ingredient_id": "cukor", "qty": 0.04, "display": "3 evőkanál, ízlés szerint", "optional": false},
@@ -779,7 +779,7 @@
       "lines": [
         {"ingredient_id": "sargarepa", "qty": 0.25, "display": "3 közepes (25 dkg)", "optional": false},
         {"ingredient_id": "petrezselyemgyoker", "qty": 0.15, "display": "2 kisebb (15 dkg)", "optional": false},
-        {"ingredient_id": "karfiol", "qty": 0.3, "display": "kb. 30 dkg (egy kisebb fej fele)", "optional": false},
+        {"ingredient_id": "karfiol", "qty": 0.3, "display": "30 dkg (egy kisebb fej fele)", "optional": false},
         {"ingredient_id": "zoldborso", "qty": 0.15, "display": "15 dkg (fagyasztott)", "optional": false},
         {"ingredient_id": "voroshagyma", "qty": 0.06, "display": "fél fej", "optional": false},
         {"ingredient_id": "olaj", "qty": 0.015, "display": "1 evőkanál", "optional": false},

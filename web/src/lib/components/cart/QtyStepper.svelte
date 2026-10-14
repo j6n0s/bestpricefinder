@@ -13,7 +13,7 @@
 		name: string;
 		qty: number;
 		unit: Unit;
-		/** "kb. 3 db" for goods sold by weight that have a typical piece weight. */
+		/** "3 db" for goods sold by weight that have a typical piece weight. */
 		pieces?: number | null;
 		onchange: (qty: number | null) => void;
 	}

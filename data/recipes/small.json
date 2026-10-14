@@ -238,7 +238,7 @@
         {"ingredient_id": "kenyer_tk", "qty": 0.16, "display": "4 szelet (16 dkg)", "optional": false}
       ],
       "steps": [
-        "A hagymát hámozd meg, és vágd apró kockákra. A paradicsomot mosd meg, vágd ki a szárát, és kockázd fel kb. 1 cm-es darabokra.",
+        "A hagymát hámozd meg, és vágd apró kockákra. A paradicsomot mosd meg, vágd ki a szárát, és kockázd fel 1 cm-es darabokra.",
         "A tojásokat üsd fel egy tálba, sózd és borsozd meg, majd villával verd fel, amíg a sárgájuk és a fehérjük teljesen elkeveredik.",
         "Egy serpenyőben hevítsd fel az olajat közepes lángon, és párold rajta a hagymát 3–4 percig, amíg üveges lesz. Add hozzá a paradicsomot, és kevergetve főzd 3–4 percig, amíg kiengedi a levét, és annak nagy része elfő.",
         "Vedd kisebbre a lángot, öntsd a paradicsomra a tojást, és fakanállal folyamatosan kevergetve süsd 2–3 percig, amíg a tojás mindenhol megszilárdul, de még puha és szaftos marad.",
@@ -394,7 +394,7 @@
       "steps": [
         "A túrót villával törd össze egy tálban, add hozzá a tejfölt, és keverd krémesre. Ha túl sűrű, keverj bele még egy kanál tejfölt vagy egy kevés hideg vizet.",
         "A fokhagymát hámozd meg, és reszeld vagy nyomd a krémbe. Sózd, borsozd, és ha van, keverd hozzá az apróra vágott kaprot is.",
-        "A sárgarépát hámozd meg, és vágd kb. 8 cm hosszú, ceruzavastagságú hasábokra. A paprikát csumázd ki, és vágd csíkokra, az uborkát pedig hosszában negyedeld, majd vágd a répához hasonló hosszúságú darabokra.",
+        "A sárgarépát hámozd meg, és vágd 8 cm hosszú, ceruzavastagságú hasábokra. A paprikát csumázd ki, és vágd csíkokra, az uborkát pedig hosszában negyedeld, majd vágd a répához hasonló hosszúságú darabokra.",
         "Tálald a krémet kis tálkában, körülötte a zöldséghasábokkal, mártogatósnak. Ha tízóraira viszed, a krémet és a zöldséget külön dobozba tedd."
       ],
       "tested": false
