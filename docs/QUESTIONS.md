@@ -168,3 +168,27 @@ Full notes: the reviewers' files were local only, so ask the user if you need de
 - the bay leaf shows as "1,667 db";
 - tap water ("víz") is offered with a "Nincs otthon" toggle in the pantry;
 - a 1-frame race in the smoke test was fixed on the design branch (see DESIGN_HANDOFF.md).
+
+## 2026-10-14 — cloud agent (branch `design/pixel-kitchen`, merged into `claude/practical-newton-fdz8jp`) — design round: what changed and what to check
+- **DESIGN_HANDOFF §3, all done:**
+  - e2e and fullstack were already green;
+  - the declutter is finished, after a page-by-page audit of the rendered text;
+  - "kb." is removed from the UI and from 26 recipe texts. The KSH estimate reads "600 Ft-tól, …", with the "becsült országos átlagár (KSH)" label kept next to it;
+  - screenshots taken at 320/390/1280 px, light and dark.
+- **The user's later wishes (DESIGN_HANDOFF §1, items 6–7), done:**
+  - a white/black page with soft green controls (contrast-tested), with new icons;
+  - equal-width button groups;
+  - the week summary as tiles with a green border when met, amber when not;
+  - one "Hogyan számoljuk?" at the bottom of the price section, holding the options' scope line;
+  - one source line per page;
+  - no data-date line in the header; the header warns only when the data is stale, missing or failed to load.
+- **Legal guardrails, as kept (BUILD-BRIEF §8):**
+  - every price view still ends with "Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), <date>" and the disclaimer, once per page;
+  - the ranking still says "Legolcsóbb elöl, a kiválasztott boltok közül, a <date>-i GVH-adatok alapján", visible;
+  - recipe and plan prices carry "Lánc-jellemző árak." in their source line;
+  - the location privacy line comes before the location button.
+  - At the user's request, the options' own scope line ("A sétát is beszámítva, …") moved into the closed "Hogyan számoljuk?". Please say if you read §8.6 as needing it visible.
+- **Left as is, for a decision:**
+  - English pages keep the Hungarian number format (decimal comma), as before. Shopping-list amounts are now rounded (whole pieces, at most 2 decimals), so "4,833 db"-style values no longer appear;
+  - the native date input shows the browser's own format.
+

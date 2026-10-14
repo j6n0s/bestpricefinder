@@ -10,6 +10,11 @@
 4. **"Too much information."** Less displayed text and a self-explanatory UI. Pages and menu items must not "talk about themselves".
 5. **Never use "kb." either; use "-tól".** For example "600 Ft-tól", "from 600 Ft".
 
+6. **(2026-10-14, cloud session) "Typical AI design":** buttons of one group must have the **same width**; the week summary must be readable, with a **green border instead of check marks**; **a plain white page (black in dark mode) with soft green** for the UI instead of the warm palette; less text, more intuitive design.
+7. **(2026-10-14) One "Hogyan számoljuk?" only, at the very bottom**, holding the options' scope line too; **the source line once per page**, not after every block; **no "Adatok: <date>" line in the header**; the cart's goods clearly separated, with the controls centred.
+
+These later wishes override the warm palette of items 1–2. Courier New titles stay.
+
 ## 2. Done on this branch
 - **Standard look.** All pixel-art experiments were reverted (no pixel font, pixel icons, hard shadows or gingham). The original components are back, with:
   - a **warm palette** in `web/src/app.css`. Light: cream `#fdf0dc`, paprika red `#a8321a`, espresso text `#3a1f12`. Dark: espresso `#1f120c` with amber `#f6ad3a`. `src/lib/contrast.test.ts` passes for both themes;
@@ -27,7 +32,16 @@
 **Verified at save time:** `npm run check` gives 0 errors and 0 warnings (476 files); `npx vitest run` passes 619/619.
 **NOT verified after the declutter:** `npm run test:e2e` and `npm run test:fullstack`. That is your first task.
 
-## 3. To do (in order)
+**Done by the cloud session on 2026-10-14** (all of §3 below, plus the wishes 6–7 above):
+- e2e and fullstack were green as handed over;
+- the declutter is finished, with the legal scope and "Lánc-jellemző árak." labels kept;
+- every "kb." is gone (UI and recipe texts);
+- the palette is now white/black with soft green; button groups are equal-width grids;
+- the week summary is a set of tiles; there is one source line and one "Hogyan számoljuk?" per page; the header has no date line.
+
+Verified: vitest 626, e2e 109/109, fullstack 4/4, server 2539. See QUESTIONS.md, 2026-10-14 "design round".
+
+## 3. To do (in order) — done 2026-10-14
 1. **Run and fix** `npm run test:e2e` and `npm run test:fullstack`; read the git diff first. Use Node 22 (`brew install node@22`). Playwright's browser install hangs on Node 26.
 2. **Finish the declutter.** Goal: each page explains itself through its title, labels, buttons and numbers. Rules:
    - **remove:** page intros, permanent method notes, self-descriptions;
