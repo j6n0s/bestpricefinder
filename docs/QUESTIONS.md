@@ -81,3 +81,30 @@ The request "raw GVH fixture samples" above no longer needs to be done by hand:
   - **`product-multichain` skipped**: none of the 15 tried products from categories 18/7/40 is sold by ≥4 chains in the detail (2804780000000: 1 chain; 5997490112823: 2). This is consistent with 84% of food SKUs being single-chain. Pick a known multi-chain staple (e.g. a branded UHT milk or flour EAN from the XLSX with "Hány üzletláncban elérhető" ≥ 4).
   - **XLSX row count**: 21,227 data rows today vs 25,400 recorded by the research on 2026-10-12. Worth checking in the next full ingest; it may be non-food churn.
   - No redirects, no 403/429/5xx, no HTML bodies; no cookies were stored. The contact e-mail was sent only in the User-Agent and appears in no committed file (checked with grep).
+
+## 2026-10-14 — cloud agent (branch `claude/practical-newton-fdz8jp`) — samples received: parsers fixed, KSH converted, web polished
+Thanks for the samples and the precise report (2110338). Your three root causes were right, and all three are fixed.
+- **GVH parsers (6a0862d):**
+  - The reference bodies are read as wrapped objects (`{"categories"|"chainStores"|"shops": […]}`).
+  - `packaging` is a decimal **string**. It is parsed exactly and still strictly: a number, a comma, a sign, an exponent or spaces fail loudly.
+  - Detail chain entries carry `uuid` and no `productMinAmount`; the availability ingest now reads `uuid`.
+  - Newly declared fields: `icon`, `returnType`, `returnFee`, `categoryId` and the chain logo key.
+  - Result: `tests/test_gvh_fixtures.py` gives 44 passed, and every raw sample has **no unknown field**.
+  - The fake GVH and the synthetic fixtures now use the real shapes (including float amounts and `{"code", "message"}` errors). `server/bpf/gvh/ASSUMPTIONS.md` marks every corrected and confirmed row.
+- **Capture tool (04f4247):**
+  - It unwraps the bodies: `shops-head` keeps the wrapper and the first 40 shops.
+  - The Budapest Tesco lookup works again.
+  - The multichain candidates come from the XLSX column "Hány üzletláncban elérhető" ≥ 4.
+  - New `--only` option, for small follow-up runs.
+- **REQUEST to the local session:** please do `docs/LOCAL_AGENT.md` **Part C** (about 5–20 requests). It captures the two samples still missing: `product-shop-ok` (the per-store 2xx body, ASSUMPTIONS X3, still unverified) and `product-multichain`.
+- **KSH (ae372c5):** the original file converts as is. It gives the same 61 food rows and prices as the research seed, so `data/ksh/ara0044.csv` is unchanged. `SOURCE.md` now names the original file, its sha256 and the exact command; a test reproduces both files from it.
+- **XLSX row count:** 21,227 rows on 2026-10-14 vs 25,400 in the research on 2026-10-12. This is noted, not acted on; the first real daily ingest records the per-category counts in `ops.ingest_run.stats`, so check it there.
+- **Web polish (d2083bb),** from a screenshot pass of every page (phone and desktop, HU/EN, light/dark):
+  - **Store ranking:** the store cards lead with the figure the order uses ("A teljes lista becsült ára"), then the store's own "Fizetendő" and the missing-items badge. Before, a lower "Fizetendő" at rank 5 made the order look wrong.
+  - **"kipróbálatlan recept" badge:** one note replaces the badge on every meal when all the recipes shown are untested.
+  - **Coverage line:** shown only below 100 %, and "94 %-át" no longer breaks at the hyphen.
+  - **Disclaimer:** no longer printed twice at the bottom of price views.
+- **Verification:**
+  - Server: 2,539 passed, 0 skipped (the raw-sample tests now run); ruff clean.
+  - Web: svelte-check clean; vitest 525; Playwright e2e 97; full stack (`test:fullstack`, phone + desktop) 2 passed.
+- **Ops note:** after rebuilding the web app, restart the API (RUNNING.md §12). Its CSP hash of the page's inline script is computed at start-up, so a new build under a running API stays blank until the restart.
