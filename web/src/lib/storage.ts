@@ -5,7 +5,8 @@
  * exclusions (diet preferences are health data, GDPR Art. 9), location consent, the chosen district or the
  * approximate location, the shopping-list choices (range, and per list the ticks, removed lines, excluded
  * lines bought anyway and the chosen store), the last loaded list and the chosen store's last quote (so the
- * list still works offline in the shop) and the UI language all live under ONE key (`hetikosar.state`), as
+ * list still works offline in the shop), the cart (the goods picked by hand, their ticks and chosen store) and
+ * the UI language all live under ONE key (`hetikosar.state`), as
  * one versioned JSON document. There is no other key: the list choices that used to live under
  * `hetikosar.list` are part of this document now.
  *
@@ -69,6 +70,9 @@ const MAX_EXCLUDED_TAGS = 20;
 const MAX_EXCLUDED_INGREDIENTS = 50;
 const MAX_PLAN_DAYS = 31;
 const DISTRICT_ID = /^(0[1-9]|1\d|2[0-3])$/;
+/** Goods in the cart (src/lib/cart/cart.ts MAX_CART_LINES) and their largest quantity (the API's bound). */
+const MAX_CART_LINES = 100;
+const MAX_CART_QTY = 1000;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 /** "Ez a hét", "Jövő hét", "Az egész terv" (src/lib/list/range.ts). */
@@ -155,6 +159,22 @@ export interface StoredLocation {
 	approx: ApproxPosition | null;
 }
 
+/** One good in the cart, in its ingredient's unit (kg, l, db). */
+export interface StoredCartLine {
+	ingredientId: string;
+	qty: number;
+}
+
+/** The cart ("Kosár"): goods picked by hand, independent of the plan. */
+export interface StoredCart {
+	/** In the order they were added. */
+	lines: StoredCartLine[];
+	/** Goods ticked off in the shop. */
+	checked: string[];
+	/** The store chosen for the cart's list, or null. */
+	storeId: string | null;
+}
+
 export interface StoredState {
 	version: typeof STORAGE_VERSION;
 	language: Lang;
@@ -180,6 +200,7 @@ export interface StoredState {
 	lastList: SavedList | null;
 	/** The chosen store's last quote (offline copy), or null. */
 	lastQuote: SavedQuote | null;
+	cart: StoredCart;
 }
 
 export function defaultState(): StoredState {
@@ -195,7 +216,8 @@ export function defaultState(): StoredState {
 		location: { consent: 'unset', source: 'none', districtId: null, approx: null },
 		list: { range: 'this_week', entries: [] },
 		lastList: null,
-		lastQuote: null
+		lastQuote: null,
+		cart: { lines: [], checked: [], storeId: null }
 	};
 }
 
@@ -326,6 +348,33 @@ function sanitiseSavedQuote(value: unknown): SavedQuote | null {
 	return { body, savedAt, dataDate, store };
 }
 
+/** The cart: valid, unique goods with 0 < qty <= 1000 (rounded to 0.001), at most 100; invalid lines are dropped. */
+function sanitiseCart(value: unknown): StoredCart {
+	if (!isRecord(value)) return defaultState().cart;
+	const lines: StoredCartLine[] = [];
+	const seen = new Set<string>();
+	if (Array.isArray(value.lines)) {
+		for (const item of value.lines) {
+			if (lines.length >= MAX_CART_LINES) break;
+			if (!isRecord(item)) continue;
+			const { ingredientId, qty } = item;
+			if (typeof ingredientId !== 'string' || !ID_PATTERNS.ingredient.test(ingredientId) || seen.has(ingredientId)) {
+				continue;
+			}
+			if (!isFiniteNumber(qty)) continue;
+			const rounded = Math.round(qty * 1000) / 1000;
+			if (!(rounded > 0 && rounded <= MAX_CART_QTY)) continue;
+			seen.add(ingredientId);
+			lines.push({ ingredientId, qty: rounded });
+		}
+	}
+	return {
+		lines,
+		checked: idList(value.checked, ID_PATTERNS.ingredient, MAX_CART_LINES),
+		storeId: typeof value.storeId === 'string' && ID_PATTERNS.store.test(value.storeId) ? value.storeId : null
+	};
+}
+
 /** The list choices: a known range, and at most 12 valid entries with unique keys (the first one wins). */
 function sanitiseList(value: unknown): StoredList {
 	if (!isRecord(value)) return defaultState().list;
@@ -390,7 +439,8 @@ function sanitiseV1(raw: Record<string, unknown>): StoredState {
 		// The global `checkedItems` of earlier builds is dropped: ticks are kept per list (ListEntry.checked).
 		list: sanitiseList(raw.list),
 		lastList: sanitiseSavedList(raw.lastList),
-		lastQuote: sanitiseSavedQuote(raw.lastQuote)
+		lastQuote: sanitiseSavedQuote(raw.lastQuote),
+		cart: sanitiseCart(raw.cart)
 	};
 }
 

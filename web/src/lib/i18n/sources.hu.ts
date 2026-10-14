@@ -30,7 +30,7 @@ export const sourcesHu = {
 	privacy_title: 'Adatvédelem',
 	device_title: 'Ami a készülékeden marad',
 	device_plan:
-		'a heti terv, a bevásárlólista pipái és választásai, valamint a legutóbb betöltött lista és a kiválasztott bolt árai (hogy kapcsolat nélkül is használható legyen)',
+		'a heti terv és a kosár, a bevásárlólista pipái és választásai, valamint a legutóbb betöltött lista és a kiválasztott bolt árai (hogy kapcsolat nélkül is használható legyen)',
 	device_household: 'a háztartás mérete, az étkezések száma és a keresési sugár',
 	device_pantry: 'a kamra és a kizárt alapanyagok, címkék',
 	device_location: 'a helymeghatározás engedélye, a választott kerület vagy a hozzávetőleges helyzet',

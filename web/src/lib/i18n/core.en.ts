@@ -6,7 +6,7 @@ export const coreEn: Messages<typeof coreHu> = {
 	page_title: '{page} · Heti kosár',
 	skip_to_content: 'Skip to content',
 	nav_label: 'Main navigation',
-	nav_home: 'Home',
+	nav_cart: 'Cart',
 	nav_plan: 'Weekly plan',
 	nav_recipes: 'Recipes',
 	nav_list: 'List',
@@ -93,5 +93,8 @@ export const coreEn: Messages<typeof coreHu> = {
 	home_step_stores: 'The list is priced at the stores near you, from the daily GVH Árfigyelő data.',
 	home_cta_plan: 'Make a weekly plan',
 	home_cta_recipes: 'Browse recipes',
+	home_cta_cart: 'Build a cart',
+	home_cart_note:
+		'Only buying a few things? Pick them in the Cart, no plan needed, and we show which nearby store is cheapest, or which short route.',
 	home_privacy: 'Your plan and settings stay on this device only.'
 };

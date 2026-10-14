@@ -159,7 +159,8 @@ const fullState = (): StoredState => ({
 				}
 			]
 		}
-	}
+	},
+	cart: { lines: [{ ingredientId: 'alma', qty: 0.75 }, { ingredientId: 'tojas', qty: 10 }], checked: ['alma'], storeId: 'synthetic-lidl-1' }
 });
 
 describe('defaults', () => {
@@ -465,6 +466,60 @@ describe('field validation', () => {
 			expect(state.location.approx).toBeNull();
 			expect(state.location.source).toBe('none');
 		}
+	});
+});
+
+describe('the cart', () => {
+	it('defaults to an empty cart, and an old document without one gets it', () => {
+		expect(defaultState().cart).toEqual({ lines: [], checked: [], storeId: null });
+		const { cart: _dropped, ...withoutCart } = fullState();
+		expect(migrate(withoutCart).cart).toEqual({ lines: [], checked: [], storeId: null });
+	});
+
+	it('keeps valid lines and drops invalid, repeated or out-of-range ones', () => {
+		const cart = migrate({
+			...fullState(),
+			cart: {
+				lines: [
+					{ ingredientId: 'alma', qty: 0.5 },
+					{ ingredientId: 'alma', qty: 2 }, // repeated: the first one wins
+					{ ingredientId: 'tej', qty: 1.23456 }, // rounded to 0.001
+					{ ingredientId: 'Bad Id!', qty: 1 },
+					{ ingredientId: 'sajt', qty: 0 },
+					{ ingredientId: 'vaj', qty: -1 },
+					{ ingredientId: 'liszt', qty: 1001 },
+					{ ingredientId: 'rizs', qty: '1' },
+					{ ingredientId: 'tojas', qty: Number.NaN },
+					'nonsense',
+					{ ingredientId: 'kenyer', qty: 1000 }
+				],
+				checked: ['alma', 'alma', 'Bad Id!', 'tej'],
+				storeId: 'spar-110'
+			}
+		}).cart;
+		expect(cart.lines).toEqual([
+			{ ingredientId: 'alma', qty: 0.5 },
+			{ ingredientId: 'tej', qty: 1.235 },
+			{ ingredientId: 'kenyer', qty: 1000 }
+		]);
+		expect(cart.checked).toEqual(['alma', 'tej']);
+		expect(cart.storeId).toBe('spar-110');
+	});
+
+	it('keeps at most 100 goods, and drops a bad store id or a cart that is not an object', () => {
+		const lines = Array.from({ length: 150 }, (_, i) => ({ ingredientId: `g${i}`, qty: 1 }));
+		expect(migrate({ ...fullState(), cart: { lines, checked: [], storeId: 'bad id' } }).cart).toMatchObject({
+			storeId: null
+		});
+		expect(migrate({ ...fullState(), cart: { lines, checked: [], storeId: null } }).cart.lines).toHaveLength(100);
+		expect(migrate({ ...fullState(), cart: [] }).cart).toEqual({ lines: [], checked: [], storeId: null });
+	});
+
+	it('survives a save and load, and "Minden adat törlése" empties it', () => {
+		update({ cart: { lines: [{ ingredientId: 'alma', qty: 0.75 }], checked: ['alma'], storeId: 'lidl-274' } });
+		expect(load().cart).toEqual({ lines: [{ ingredientId: 'alma', qty: 0.75 }], checked: ['alma'], storeId: 'lidl-274' });
+		clearAll();
+		expect(load().cart).toEqual({ lines: [], checked: [], storeId: null });
 	});
 });
 

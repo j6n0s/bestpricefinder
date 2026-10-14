@@ -5,8 +5,10 @@
 	   within the radius (at most 3 per chain, 25 in all); fewer than 2: suggest a wider radius;
 	3. POST /api/quote with the bought lines and the store ids ONLY (never coordinates; sorted by id, so their
 	   order says nothing about distances);
-	4. the ranking with the scope note and the source, the optional 2-store split, and the list for the chosen
-	   store. Without a connection, the chosen store's last list ($lib/list/offline), dated.
+	4. "Hol vásárolj?" (ShoppingOptions): the best single store and, when it pays off, a route through 2–3 stores
+	   with a schematic map, computed on the device ($lib/journey); then the full ranking with the scope note and
+	   the source, and the list for the chosen store. Without a connection, the chosen store's last list
+	   ($lib/list/offline), dated.
 
 	Screen readers: one status region that always exists (`nearby-status`) says what happened after each step
 	(how many stores, too few stores, the cheapest stores, prices updating), WCAG 4.1.3. The stored device
@@ -19,6 +21,7 @@
 	import type { ListLineOut, QtyLineIn, QuoteRequest, QuoteResponse, StoreId, StoreOut } from '$lib/api/types';
 	import Attribution from '$lib/components/Attribution.svelte';
 	import ErrorState from '$lib/components/ErrorState.svelte';
+	import ShoppingOptions from '$lib/components/journey/ShoppingOptions.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { districtById } from '$lib/districts';
 	import { formatDateTime, formatDistance, formatMoney } from '$lib/format';
@@ -34,7 +37,6 @@
 	import { getMeta } from '$lib/meta.svelte';
 	import type { SavedQuote, StoredLocation } from '$lib/storage';
 	import OriginChooser from './OriginChooser.svelte';
-	import SplitSuggestion from './SplitSuggestion.svelte';
 	import StoreList from './StoreList.svelte';
 	import StoreRanking from './StoreRanking.svelte';
 
@@ -234,10 +236,6 @@
 		return address ? `${chain}, ${address}` : chain;
 	}
 
-	function lineName(ingredientId: string): string {
-		return lineNames.get(ingredientId) ?? ingredientId;
-	}
-
 	function retryQuote(): void {
 		quoteAttempt += 1;
 	}
@@ -358,10 +356,18 @@
 					<Spinner label={t('list.quote_updating')} showLabel announce={false} />
 				{/if}
 				<div class="results" aria-busy={updating}>
+					<ShoppingOptions
+						{quote}
+						stores={storesById}
+						{names}
+						origin={{ lat: origin.lat, lon: origin.lon }}
+						{lineNames}
+						{chosenStoreId}
+						{checked}
+						onchoose={chooseStore}
+						{ontogglecheck}
+					/>
 					<StoreRanking {quote} {rows} stores={storesById} {names} {chosenStoreId} onchoose={chooseStore} />
-					{#if quote.split}
-						<SplitSuggestion split={quote.split} stores={quote.stores} {storeLabel} {lineName} />
-					{/if}
 					<Attribution dataDate={quote.data_date} />
 					{#if chosenStore}
 						<StoreList

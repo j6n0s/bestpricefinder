@@ -107,14 +107,6 @@ export const listHu = {
 	chosen_store: 'Kiválasztva',
 	choose_store_named: 'Lista ennél a boltnál: {store}',
 
-	split_title: 'Két boltban {saving}-tal olcsóbb',
-	split_text: 'Ha a tételeket {first} és {second} között osztod meg, összesen {total} a fizetendő.',
-	split_details: 'Melyik tétel hova?',
-	split_store: '{store}:',
-	split_missing_one: '{count} tétel egyik boltban sem kapható:',
-	split_missing_other: '{count} tétel egyik boltban sem kapható:',
-	split_total_excludes_one: 'A fizetendő összeg ezt a tételt nem tartalmazza.',
-	split_total_excludes_other: 'A fizetendő összeg ezeket a tételeket nem tartalmazza.',
 
 	store_title: 'Lista: {store}',
 	store_total: 'Fizetendő: {total}',

@@ -4,7 +4,7 @@ export const coreHu = {
 	page_title: '{page} · Heti kosár',
 	skip_to_content: 'Ugrás a tartalomra',
 	nav_label: 'Fő navigáció',
-	nav_home: 'Kezdőlap',
+	nav_cart: 'Kosár',
 	nav_plan: 'Heti terv',
 	nav_recipes: 'Receptek',
 	nav_list: 'Lista',
@@ -94,5 +94,8 @@ export const coreHu = {
 	home_step_stores: 'A lista árát a közeli boltokra számoljuk ki, a GVH Árfigyelő napi adataiból.',
 	home_cta_plan: 'Heti terv készítése',
 	home_cta_recipes: 'Receptek böngészése',
+	home_cta_cart: 'Kosár összeállítása',
+	home_cart_note:
+		'Csak néhány dolgot vennél? A Kosárban terv nélkül is összeválogathatod, és megmutatjuk, melyik közeli boltban a legolcsóbb, vagy melyik rövid körúton.',
 	home_privacy: 'A terved és a beállításaid csak ezen a készüléken maradnak.'
 } as const;

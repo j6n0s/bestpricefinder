@@ -1,6 +1,7 @@
 /**
  * Full-stack end-to-end test (docs/E2E.md, docs/PROGRESS.md step 8): week plan -> shopping list -> nearby stores
- * -> store totals -> recipes, in the production build served by the REAL API, against a REAL PostgreSQL filled
+ * -> store totals -> recipes, and cart -> nearby stores -> one store or a route, in the production build served by
+ * the REAL API, against a REAL PostgreSQL filled
  * by the REAL ingest and content loader. Nothing inside our own system is mocked: no `page.route` answers an
  * /api call here. The only stand-in is the GVH Árfigyelő itself (tests/fakegvh.py): its stores are the REAL
  * store list, its products and prices are SYNTHETIC test data (never real prices, never shipped).
@@ -12,6 +13,7 @@
 import { readFileSync } from 'node:fs';
 import { expect, test, type APIRequestContext, type Locator, type Page } from '@playwright/test';
 import type {
+	IngredientsResponse,
 	ListRequest,
 	ListResponse,
 	MetaResponse,
@@ -605,4 +607,172 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	};
 	await test.info().attach('summary.json', { body: JSON.stringify(summary, null, 1), contentType: 'application/json' });
 	console.log(`[fullstack ${test.info().project.name}] ${JSON.stringify(summary)}`);
+});
+
+// ───────────────────────────── the cart ─────────────────────────────
+
+/** How many goods the cart test puts in the cart (spread over the catalogue). */
+const CART_GOODS = 12;
+/** The route rules of src/lib/journey/journey.ts (DEFAULT_JOURNEY_OPTIONS), checked independently here. */
+const EXTRA_STOP_FT = 500;
+const PER_KM_FT = 150;
+
+test('cart -> nearby stores -> one store or a route, on the real stack', async ({ page, request }) => {
+	expect(BASE_URL, `${BASE_URL_ENV} (set by global-setup.ts)`).not.toBe('');
+	const seen = await watch(page);
+	const { ingredients } = await getJson<IngredientsResponse>(request, '/api/ingredients');
+	const goods = ingredients.filter((good) => good.priced_by === 'gvh' && good.id !== 'viz');
+	const goodById = new Map(goods.map((good) => [good.id, good]));
+	expect(goods.length, 'goods with store prices').toBeGreaterThan(CART_GOODS);
+
+	// ── the goods: every ingredient with store prices (never tap water) ──
+	await openPage(page, '/kosar');
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Kosár');
+	await expect(page.getByTestId('goods-count')).toHaveText(loose(`${goods.length} termék`));
+	const shownIds = await page.getByTestId('good').evaluateAll((els) => els.map((el) => el.getAttribute('data-ingredient-id') ?? ''));
+	expect([...shownIds].sort()).toEqual(goods.map((good) => good.id).sort());
+
+	// ── the cart: goods spread over the shop sections, each at its first amount ──
+	const picked = Array.from({ length: CART_GOODS }, (_, i) => shownIds[Math.floor((i * shownIds.length) / CART_GOODS)] ?? '');
+	expect(new Set(picked).size).toBe(CART_GOODS);
+	for (const id of picked) {
+		await page.locator(`[data-testid="good"][data-ingredient-id="${id}"]`).getByRole('button', { name: /^Kosárba: / }).click();
+	}
+	await expect(page.getByTestId('cart-count')).toHaveText(loose(`${CART_GOODS} tétel`));
+	await expect(page.getByTestId('cart-line')).toHaveCount(CART_GOODS);
+
+	const quoted = page.waitForResponse(isApiPost('/api/quote'));
+	await page.getByRole('button', { name: 'Saját helyzetem használata' }).click();
+	const quoteResponse = await quoted;
+	expect(quoteResponse.status()).toBe(200);
+	const sent = quoteResponse.request().postDataJSON() as QuoteRequest;
+	const quote = (await quoteResponse.json()) as QuoteResponse;
+	// Only ids and amounts, in the cart's order; the store ids sorted (they must not reveal the distances).
+	expect(Object.keys(sent).sort()).toEqual(['include_loyalty', 'lines', 'store_ids']);
+	expect(sent.lines).toEqual(
+		picked.map((id) => {
+			const unit = goodById.get(id)?.unit;
+			return { ingredient_id: id, qty: id === 'tojas' ? 10 : unit === 'kg' ? 0.5 : 1 };
+		})
+	);
+	expect(sent.store_ids).toEqual([...sent.store_ids].sort());
+	expect(sent.store_ids.length, 'stores near Nyugati tér').toBeGreaterThanOrEqual(5);
+
+	// ── "Hol vásárolj?", checked against the quote with the rules worked out independently here ──
+	const { stores } = await getJson<StoresResponse>(request, '/api/stores');
+	const storeById = new Map(stores.map((store) => [store.id, store]));
+	const pointOf = (id: string): { lat: number; lon: number } => {
+		const store = storeById.get(id);
+		if (!store || store.lat === null || store.lon === null) throw new Error(`no position for ${id}`);
+		return { lat: store.lat, lon: store.lon };
+	};
+	/** store -> good -> checkout cost, for the priced lines only. */
+	const costs = new Map(
+		quote.stores.map((store) => [
+			store.store_id,
+			new Map(store.lines.filter((line) => line.status === 'priced' && line.checkout_cost !== null).map((line) => [line.ingredient_id, line.checkout_cost ?? 0]))
+		])
+	);
+	const costsAt = (id: string): Map<string, number> => costs.get(id) ?? new Map<string, number>();
+	const sold = new Set([...costs.values()].flatMap((byGood) => [...byGood.keys()]));
+	expect(sold.size, 'something in the cart is sold nearby').toBeGreaterThan(0);
+	const whole = (value: number): number => Math.round(value);
+	const sum = (values: Iterable<number>): number => [...values].reduce((total, value) => total + value, 0);
+	const routeKm = (ids: readonly string[]): number => {
+		const points = [ORIGIN_ROUNDED, ...ids.map(pointOf), ORIGIN_ROUNDED];
+		return sum(points.slice(1).map((point, index) => haversineKm(points[index] ?? point, point)));
+	};
+
+	const options = page.getByTestId('shopping-options');
+	await expect(options.getByRole('heading', { level: 3 })).toHaveText('Hol vásárolj?');
+	const nowhere = picked.filter((id) => !sold.has(id));
+	if (nowhere.length > 0) {
+		await expect(options.getByTestId('nowhere')).toContainText(loose(`${nowhere.length} tételnek egyik közeli boltban sincs ára:`, false));
+		for (const id of nowhere) await expect(options.getByTestId('nowhere')).toContainText(goodById.get(id)?.name_hu ?? id);
+	} else {
+		await expect(options.getByTestId('nowhere')).toHaveCount(0);
+	}
+
+	// One store: the most goods first, then the total plus the walk there and back.
+	const single = options.getByTestId('option-single');
+	const singleId = (await single.getAttribute('data-store-id')) ?? '';
+	expect(sent.store_ids).toContain(singleId);
+	const singleTotal = sum(costsAt(singleId).values());
+	const singleCoverage = costsAt(singleId).size;
+	const singleScore = singleTotal + PER_KM_FT * routeKm([singleId]);
+	expect(forints(await single.getByTestId('single-total').textContent()), 'the single store total').toBe(whole(singleTotal));
+	for (const other of sent.store_ids) {
+		const coverage = costsAt(other).size;
+		expect(coverage, `${other} has no more goods than the single store`).toBeLessThanOrEqual(singleCoverage);
+		if (coverage === singleCoverage) {
+			const score = sum(costsAt(other).values()) + PER_KM_FT * routeKm([other]);
+			expect(score, `${other} is no better than the single store`).toBeGreaterThanOrEqual(singleScore - 1e-6);
+		}
+	}
+	const singleMissing = [...sold].filter((id) => !costsAt(singleId).has(id));
+	if (singleMissing.length > 0) await expect(single).toContainText(loose(`${singleMissing.length} tétel itt nincs:`, false));
+
+	// The route, when there is one: every good on it is bought where it is cheapest among its stops, each stop buys
+	// something, and it beats the single store (more goods, or a lower total plus walk plus stops).
+	const route = options.getByTestId('option-journey');
+	let routeSummary: string;
+	if ((await route.count()) > 0) {
+		const stopIds = await route
+			.getByTestId('journey-stops')
+			.locator(':scope > li')
+			.evaluateAll((els) => els.map((el) => el.getAttribute('data-store-id') ?? ''));
+		expect(stopIds.length).toBeGreaterThanOrEqual(2);
+		expect(stopIds.length).toBeLessThanOrEqual(3);
+		await route.locator('button[aria-expanded]').click();
+		const lists = await options
+			.getByTestId('journey-lists')
+			.locator('.stop-list')
+			.evaluateAll((els) => els.map((el) => [...el.querySelectorAll('[data-testid="store-line"]')].map((line) => line.getAttribute('data-ingredient-id') ?? '')));
+		expect(lists).toHaveLength(stopIds.length);
+		const covered = [...sold].filter((id) => stopIds.some((stop) => costsAt(stop).has(id)));
+		expect(lists.flat().sort(), 'every good sold on the route is on exactly one stop').toEqual([...covered].sort());
+		let total = 0;
+		for (const [index, stop] of stopIds.entries()) {
+			const items = lists[index] ?? [];
+			expect(items.length, `stop ${index + 1} buys something`).toBeGreaterThan(0);
+			for (const id of items) {
+				const here = costsAt(stop).get(id);
+				expect(here, `${id} is sold at ${stop}`).toBeDefined();
+				for (const other of stopIds) {
+					const there = costsAt(other).get(id);
+					if (there !== undefined) expect(here ?? Infinity, `${id} is cheapest at ${stop}`).toBeLessThanOrEqual(there);
+				}
+			}
+			const subtotal = sum(items.map((id) => costsAt(stop).get(id) ?? 0));
+			total += subtotal;
+			const stopText = norm(await route.getByTestId('journey-stops').locator(':scope > li').nth(index).textContent());
+			expect(stopText).toContain(`${items.length} tétel, `);
+			expect(forints(stopText.slice(stopText.indexOf(`${items.length} tétel, `))), `subtotal of stop ${index + 1}`).toBe(whole(subtotal));
+		}
+		expect(forints(await route.getByTestId('journey-total').textContent()), 'the route total').toBe(whole(total));
+		const routeScore = total + PER_KM_FT * routeKm(stopIds) + EXTRA_STOP_FT * (stopIds.length - 1);
+		if (covered.length === singleCoverage) expect(routeScore, 'the route is worth its walk').toBeLessThan(singleScore);
+		else expect(covered.length, 'the route gets more goods').toBeGreaterThan(singleCoverage);
+		// The stops are walked in their shortest order.
+		const orders = (ids: string[]): string[][] =>
+			ids.length <= 1 ? [ids] : ids.flatMap((id, index) => orders([...ids.slice(0, index), ...ids.slice(index + 1)]).map((rest) => [id, ...rest]));
+		for (const order of orders(stopIds)) expect(routeKm(stopIds), `shorter than ${order.join(' -> ')}`).toBeLessThanOrEqual(routeKm(order) + 1e-9);
+		await expect(route.getByTestId('journey-map').getByTestId('map-stop')).toHaveCount(stopIds.length);
+		routeSummary = `${stopIds.length} stops, ${whole(total)} Ft, ${covered.length} goods`;
+	} else {
+		routeSummary = (await options.getByTestId('no-journey').count()) > 0 ? norm(await options.getByTestId('no-journey').textContent()) : 'no route';
+	}
+	await expect(page.locator('main')).not.toContainText(/47[.,]51|19[.,]05/); // the position is never shown
+	await page.screenshot({ path: test.info().outputPath('kosar-options.png'), fullPage: true });
+	await expectClean(page, seen, '/kosar');
+
+	const summary = {
+		cart: picked.length,
+		stores: sent.store_ids.length,
+		nowhere: nowhere.length,
+		single: `${singleId} ${whole(singleTotal)} Ft, ${singleCoverage} goods`,
+		route: routeSummary
+	};
+	await test.info().attach('cart-summary.json', { body: JSON.stringify(summary, null, 1), contentType: 'application/json' });
+	console.log(`[fullstack cart ${test.info().project.name}] ${JSON.stringify(summary)}`);
 });

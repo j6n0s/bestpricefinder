@@ -1,22 +1,13 @@
 /**
- * Display helpers for the POST /api/quote answer: the store ranking, the 2-store split and the per-line
- * price labels.
+ * Display helpers for the POST /api/quote answer: the store ranking and the per-line price labels. (The
+ * server's 2-store `split` is not shown: the route planner in src/lib/journey covers it, with distances.)
  *
  * Ties (BUILD-BRIEF §4.1 trap 13, docs/API.md): stores with the same `rank` are a tie group. The server's
  * order inside a group means nothing, so the client orders a group by distance (nearest first) and never by
  * chain or store name; equal distances keep the server's order. Every member of a tie is shown as tied.
  */
 import type { PlainKey } from '../i18n/messages';
-import type {
-	ChainSlug,
-	IngredientId,
-	PriceScope,
-	PriceType,
-	QuoteResponse,
-	SplitOut,
-	StoreId,
-	StoreQuoteOut
-} from '../api/types';
+import type { ChainSlug, PriceScope, PriceType, QuoteResponse, StoreId, StoreQuoteOut } from '../api/types';
 
 export interface RankRow {
 	storeId: StoreId;
@@ -73,37 +64,6 @@ export function rankingRows(
 /** True when the missing lines' estimate changes the shown total (in whole forints). */
 export function hasPenalty(row: Pick<RankRow, 'missingCount' | 'checkoutTotal' | 'penalizedTotal'>): boolean {
 	return row.missingCount > 0 && Math.round(row.penalizedTotal) !== Math.round(row.checkoutTotal);
-}
-
-export interface SplitPart {
-	storeId: StoreId;
-	/** Ingredient ids bought at this store, in the server's assignment order. */
-	ingredientIds: IngredientId[];
-}
-
-/** The two stores of a split (better-ranked first, as the server sends them) with their lines. */
-export function splitParts(split: Pick<SplitOut, 'store_ids' | 'assignment'>): SplitPart[] {
-	return split.store_ids.map((storeId) => ({
-		storeId,
-		ingredientIds: Object.entries(split.assignment)
-			.filter(([, assigned]) => assigned === storeId)
-			.map(([ingredientId]) => ingredientId)
-	}));
-}
-
-/**
- * The lines neither store of a split sells (`missing` at both): the server leaves them out of the split's
- * `assignment` and `total`, so the card must name them. In the first store's line order, each once.
- */
-export function splitMissing(
-	split: Pick<SplitOut, 'store_ids'>,
-	stores: readonly Pick<StoreQuoteOut, 'store_id' | 'missing'>[]
-): IngredientId[] {
-	const first = stores.find((store) => store.store_id === split.store_ids[0]);
-	const second = stores.find((store) => store.store_id === split.store_ids[1]);
-	if (!first || !second) return [];
-	const atSecond = new Set(second.missing);
-	return [...new Set(first.missing)].filter((ingredientId) => atSecond.has(ingredientId));
 }
 
 /**

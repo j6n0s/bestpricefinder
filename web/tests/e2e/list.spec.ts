@@ -4,7 +4,7 @@
  * Every /api answer here is SYNTHETIC test data (see src/lib/list/README.md and tests/mocks/README.md): store
  * ids "synthetic-…", addresses "Minta utca …", product names "Szintetikus …" and every price are invented.
  * The quote mock behaves like the server's contract (docs/API.md): penalized totals, competition ranks with
- * ties, a 2-store split only when it saves at least 1,500 Ft.
+ * ties. ("Hol vásárolj?", the single store and the route, is computed on the device from these answers.)
  *
  * Covered at 320×640, 360×740 and 1280×800: list -> location consent -> ranking -> pick a store -> grouped store list,
  * and the district-picker path (with "too few stores, widen the radius"); plus a refused location, the pantry
@@ -476,8 +476,11 @@ async function seed(page: Page, state: Record<string, unknown>): Promise<void> {
 	);
 }
 
+/** The store's "Lista ennél a boltnál" button in the ranking (the "Egy boltban" card has one for its store too). */
 function chooseButton(page: Page, chain: string, storeId: string): ReturnType<Page['getByRole']> {
-	return page.getByRole('button', { name: `Lista ennél a boltnál: ${chain}, 1051 Budapest, ${addressOf(storeId)}`, exact: true });
+	return page
+		.getByTestId('store-ranking')
+		.getByRole('button', { name: `Lista ennél a boltnál: ${chain}, 1051 Budapest, ${addressOf(storeId)}`, exact: true });
 }
 
 const VIEWPORTS = [
@@ -621,7 +624,38 @@ for (const viewport of VIEWPORTS) {
 			// The figure the order uses comes before the store's own "Fizetendő" (fewer items, so lower).
 			const rowText = (await rows.nth(6).textContent()) ?? '';
 			expect(rowText.indexOf('A teljes lista becsült ára')).toBeLessThan(rowText.indexOf('Fizetendő'));
-			await expect(page.getByTestId('split')).toContainText(sp('Két boltban 2 400 Ft-tal olcsóbb'));
+			// "Hol vásárolj?" (worked out by hand from the synthetic prices and positions): the single store is Lidl A
+			// (the nearest of the tied Lidl/Aldi stores); the route adds Tesco A for the chicken (990 instead of
+			// 2,990 Ft/kg: 2,400 Ft saved, far more than the 500 Ft stop + 150 Ft/km × 1.4 km extra walk).
+			const options = page.getByTestId('shopping-options');
+			await expect(options.getByRole('heading', { level: 3 })).toHaveText('Hol vásárolj?');
+			await expect(options.getByTestId('nowhere')).toHaveText(
+				'2 tételnek egyik közeli boltban sincs ára: csiperkegomba, friss bazsalikom'
+			);
+			const single = options.getByTestId('option-single');
+			await expect(single).toHaveAttribute('data-store-id', 'synthetic-lidl-a');
+			await expect(single.getByTestId('single-total')).toHaveText(sp('6 701 Ft'));
+			await expect(single).toContainText('Itt minden megvan, ami a közelben kapható.');
+			const route = options.getByTestId('option-journey');
+			await expect(route.getByRole('heading', { level: 4 })).toHaveText('Körút: 2 bolt');
+			await expect(route.getByTestId('journey-total')).toHaveText(sp('4 301 Ft'));
+			await expect(route).toContainText(sp('2 400 Ft-tal olcsóbb, mint egy boltban.'));
+			const stops = route.getByTestId('journey-stops').locator(':scope > li');
+			expect(await stops.evaluateAll((els) => els.map((el) => el.getAttribute('data-store-id')))).toEqual([
+				'synthetic-lidl-a',
+				'synthetic-tesco-a'
+			]);
+			await expect(stops.nth(0)).toContainText('sárgarépa, vöröshagyma, natúr joghurt, vörös lencse, napraforgóolaj');
+			await expect(stops.nth(1)).toContainText('csirkemellfilé');
+			await expect(stops.nth(1)).toContainText(sp('1 tétel, 1 188 Ft'));
+			await expect(route.getByTestId('journey-map').getByTestId('map-stop')).toHaveCount(2);
+			// The map link holds only the store's own (public) position, never the user's.
+			const tesco = STORE_BY_ID.get('synthetic-tesco-a')!;
+			await expect(stops.nth(1).getByRole('link')).toHaveAttribute(
+				'href',
+				`https://www.openstreetmap.org/?mlat=${tesco.lat!.toFixed(5)}&mlon=${tesco.lon!.toFixed(5)}#map=18/${tesco.lat!.toFixed(5)}/${tesco.lon!.toFixed(5)}`
+			);
+			await expect(page.locator('main')).not.toContainText(/47[.,]496|19[.,]054/); // the position is never shown
 			await expect(page.locator('main').getByTestId('attribution-gvh').first()).toHaveText(ATTRIBUTION);
 			await expect(page.locator('main').getByTestId('disclaimer').first()).toHaveText(DISCLAIMER);
 			await expect(page.locator('main')).not.toContainText(/akció/i);
@@ -944,34 +978,69 @@ test.describe('excluded ingredients and tap water', () => {
 	});
 });
 
-test.describe('the 2-store split', () => {
+test.describe('where to shop: one store or a route', () => {
 	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
 
-	test('names the lines neither store sells and says the total leaves them out', async ({ page }) => {
-		const unavailableAtSplit = (quote: QuoteResponse): QuoteResponse => ({
+	/** Tesco A's chicken at 2,900 Ft/kg: the route would save 3,588 − 3,480 = 108 Ft, less than it costs. */
+	function dearChicken(quote: QuoteResponse): QuoteResponse {
+		return {
 			...quote,
 			stores: quote.stores.map((store) =>
-				store.store_id === 'synthetic-lidl-a' || store.store_id === 'synthetic-tesco-a'
-					? {
+				store.store_id !== 'synthetic-tesco-a'
+					? store
+					: {
 							...store,
-							missing: [...store.missing, 'friss_bazsalikom'],
 							lines: store.lines.map((line) =>
-								line.ingredient_id === 'friss_bazsalikom' ? emptyLine(line.ingredient_id, line.qty, line.unit, 'unavailable') : line
+								line.ingredient_id === 'csirkemellfile'
+									? packLine(line.ingredient_id, line.qty, line.unit, option('csirkemellfilé', null, 2900, 2900))
+									: line
 							)
 						}
-					: store
 			)
-		});
-		const rec = await harness(page, { quote: unavailableAtSplit });
-		await seed(page, seededState());
+		};
+	}
+
+	test('says why no route is suggested when it would save too little', async ({ page }) => {
+		const rec = await harness(page, { quote: dearChicken });
+		await seed(page, seededState({ location: DEVICE_LOCATION }));
 		await page.goto('/lista');
-		await page.getByLabel('Budapesti kerület').selectOption('05');
-		const split = page.getByTestId('split');
-		await expect(split).toContainText(sp('Két boltban'));
-		await expect(split.getByTestId('split-missing')).toContainText('1 tétel egyik boltban sem kapható:');
-		await expect(split.getByTestId('split-missing')).toContainText('friss bazsalikom');
-		await expect(split).toContainText('A fizetendő összeg ezt a tételt nem tartalmazza.');
-		await expectAccessible(page, 'list split with missing lines');
+		const options = page.getByTestId('shopping-options');
+		await expect(options.getByTestId('option-single')).toHaveAttribute('data-store-id', 'synthetic-lidl-a');
+		await expect(options.getByTestId('option-journey')).toHaveCount(0);
+		await expect(options.getByTestId('no-journey')).toHaveText(
+			`Most egy bolt a legjobb: több boltba menni legfeljebb ${sp('108 Ft')}-ot spórolna, ami nem éri meg a plusz utat.`
+		);
+		await expectAccessible(page, 'list one store is best');
+		await expectClean(page, rec);
+	});
+
+	test('the list by store: each stop with its own lines; a tick there is the list’s tick', async ({ page }) => {
+		const rec = await harness(page);
+		await seed(page, seededState({ location: DEVICE_LOCATION }));
+		await page.goto('/lista');
+		const route = page.getByTestId('option-journey');
+		const show = route.getByRole('button', { name: 'Bevásárlólista boltonként' });
+		await expect(show).toHaveAttribute('aria-expanded', 'false');
+		await expect(page.getByTestId('journey-lists')).toHaveCount(0);
+		await show.click();
+		const hide = route.getByRole('button', { name: 'A boltonkénti lista elrejtése' });
+		await expect(hide).toHaveAttribute('aria-expanded', 'true');
+		const lists = page.getByTestId('journey-lists');
+		await expect(lists.getByRole('heading', { level: 5 })).toHaveText([
+			`1. Lidl, 1051 Budapest, ${addressOf('synthetic-lidl-a')}`,
+			`2. Tesco, 1051 Budapest, ${addressOf('synthetic-tesco-a')}`
+		]);
+		await expect(lists.getByTestId('store-line')).toHaveCount(6);
+		await expect(lists.getByTestId('store-line').last()).toContainText('Szintetikus csirkemellfilé');
+		await lists.getByRole('checkbox', { name: 'csirkemellfilé' }).check();
+		expect(await storedJson(page, STORAGE_KEY)).toMatchObject({
+			list: { entries: [{ key: '2026-10-11T18:00:00.000Z|this_week', checked: ['csirkemellfile'] }] }
+		});
+		// The same tick shows in the shopping list above.
+		await expect(page.getByRole('checkbox', { name: 'csirkemellfilé' }).first()).toBeChecked();
+		await expectAccessible(page, 'list route lists');
+		await hide.click();
+		await expect(page.getByTestId('journey-lists')).toHaveCount(0);
 		await expectClean(page, rec);
 	});
 });

@@ -1,6 +1,7 @@
 <!--
 	Main navigation: a fixed bottom tab bar on narrow screens, a plain row under the header on wide ones.
-	Icons are simple original line drawings; every tab has a visible text label.
+	Icons are simple original line drawings; every tab has a visible text label. Five tabs (the most that fit at
+	320 px with enlarged text): the home page is reached through the app name in the header.
 	While the bar is fixed, its real height (it grows when the user enlarges text or spacing) is published as
 	`--nav-reserved` on <html>, so the layout's bottom padding and scroll padding keep content clear of it.
 	(A CSSOM write, which the CSP allows; no style attribute in the markup.)
@@ -18,7 +19,11 @@
 	}
 
 	const ITEMS: readonly Item[] = [
-		{ href: '/', label: 'core.nav_home', icon: 'M3 11 12 4l9 7M5.5 9.5V20h4.5v-6h4v6h4.5V9.5' },
+		{
+			href: '/kosar',
+			label: 'core.nav_cart',
+			icon: 'M3 4.5h2.4l2.4 10.5h10.4l2.1-7.5H6.2M10 19.5m-1.3 0a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0-2.6 0M17 19.5m-1.3 0a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0-2.6 0'
+		},
 		{ href: '/terv', label: 'core.nav_plan', icon: 'M4 6h16v14H4zM4 10h16M8.5 3.5v4M15.5 3.5v4M8 14h3M13 14h3M8 17h3' },
 		{
 			href: '/receptek',

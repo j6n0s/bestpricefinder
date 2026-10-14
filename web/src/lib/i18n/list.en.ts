@@ -104,14 +104,6 @@ export const listEn: Messages<typeof listHu> = {
 	chosen_store: 'Chosen',
 	choose_store_named: 'List for this store: {store}',
 
-	split_title: '{saving} cheaper in two stores',
-	split_text: 'If you split the items between {first} and {second}, you pay {total} in all.',
-	split_details: 'Which item where?',
-	split_store: '{store}:',
-	split_missing_one: '{count} item is sold in neither store:',
-	split_missing_other: '{count} items are sold in neither store:',
-	split_total_excludes_one: 'The amount to pay does not include this item.',
-	split_total_excludes_other: 'The amount to pay does not include these items.',
 
 	store_title: 'List: {store}',
 	store_total: 'To pay: {total}',

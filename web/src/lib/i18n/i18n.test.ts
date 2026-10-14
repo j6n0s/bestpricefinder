@@ -3,8 +3,8 @@ import { STORAGE_KEY, resetForTests } from '../storage';
 import { DICTIONARIES, EN, HU, NAMESPACES, allKeys, interpolate, lookup, placeholders, pluralKey, translate, translatePlural } from './messages';
 
 describe('dictionary parity', () => {
-	it('has the six namespaces', () => {
-		expect([...NAMESPACES].sort()).toEqual(['core', 'list', 'plan', 'recipes', 'settings', 'sources']);
+	it('has the eight namespaces', () => {
+		expect([...NAMESPACES].sort()).toEqual(['cart', 'core', 'journey', 'list', 'plan', 'recipes', 'settings', 'sources']);
 	});
 
 	it('hu and en have identical key sets', () => {

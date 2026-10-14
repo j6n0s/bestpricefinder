@@ -8,8 +8,12 @@
  * Plurals: a message pair "<key>_one" / "<key>_other" is chosen with Intl.PluralRules (see `pluralKey`).
  */
 import type { Lang } from '../storage';
+import { cartEn } from './cart.en';
+import { cartHu } from './cart.hu';
 import { coreEn } from './core.en';
 import { coreHu } from './core.hu';
+import { journeyEn } from './journey.en';
+import { journeyHu } from './journey.hu';
 import { listEn } from './list.en';
 import { listHu } from './list.hu';
 import { planEn } from './plan.en';
@@ -27,6 +31,8 @@ export const HU = {
 	plan: planHu,
 	recipes: recipesHu,
 	list: listHu,
+	journey: journeyHu,
+	cart: cartHu,
 	settings: settingsHu,
 	sources: sourcesHu
 } as const;
@@ -39,6 +45,8 @@ export const EN: { readonly [N in Namespace]: Messages<Source[N]> } = {
 	plan: planEn,
 	recipes: recipesEn,
 	list: listEn,
+	journey: journeyEn,
+	cart: cartEn,
 	settings: settingsEn,
 	sources: sourcesEn
 };

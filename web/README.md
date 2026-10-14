@@ -74,7 +74,7 @@ src/service-worker.ts          offline support (see below)
 static/                        manifest.webmanifest ("Heti kosár" / "Kosár"), icons (original artwork)
 scripts/                       gen-districts.mjs, gen-icons.mjs
 tests/mocks/                   SYNTHETIC API data (see its README) + handler
-tests/e2e/                     Playwright specs (smoke, plan, recipes, list), a11y.ts checks, static test server
+tests/e2e/                     Playwright specs (smoke, plan, recipes, list, cart), a11y.ts checks, static test server
 ```
 
 ## Features
@@ -83,7 +83,8 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list), a1
 |---|---|---|---|---|
 | Heti terv (plan) | `src/routes/terv` | `src/lib/components/plan/` (PlanForm, DayCard, MealPicker, PlanChecks, PlanWarnings) | `src/lib/plan/` (plan.ts, checks.ts, dates.ts, labels.ts) | `tests/e2e/plan.spec.ts` |
 | Receptek (recipes) | `src/routes/receptek`, `receptek/[id]` | `src/lib/components/recipes/` (RecipeCard, RecipePrice, ChainCostTable, IngredientList, ServingsStepper, NutritionTable, AddToPlan, TagList) | `src/lib/plan/recipes.ts`, `filters.svelte.ts` | `tests/e2e/recipes.spec.ts` |
-| Bevásárlólista + közeli árak (list) | `src/routes/lista` | `src/lib/components/list/` (RangePicker, ShoppingList, NearbyPrices, OriginChooser, StoreRanking, SplitSuggestion, StoreList, StoreLine) | `src/lib/list/` (see `src/lib/list/README.md`) | `tests/e2e/list.spec.ts` |
+| Bevásárlólista + közeli árak (list) | `src/routes/lista` | `src/lib/components/list/` (RangePicker, ShoppingList, NearbyPrices, OriginChooser, StoreRanking, StoreList, StoreLine), `src/lib/components/journey/` (ShoppingOptions, JourneyMap) | `src/lib/list/` (see `src/lib/list/README.md`), `src/lib/journey/` (see its README) | `tests/e2e/list.spec.ts` |
+| Kosár (cart) | `src/routes/kosar` | `src/lib/components/cart/` (QtyStepper), and the list's NearbyPrices + ShoppingOptions | `src/lib/cart/cart.ts`, `src/lib/journey/` | `tests/e2e/cart.spec.ts` |
 | Kamra, kizárások (settings) | `src/routes/beallitasok` | `src/lib/components/settings/` (PantrySettings, ExclusionSettings) | `src/lib/list/settings.ts` | `tests/e2e/list.spec.ts`, `smoke.spec.ts` |
 
 - **Plan:** POST /api/plan/suggest makes the plan, POST /api/plan/check re-checks it after every edit (with the
@@ -106,13 +107,25 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list), a1
   removed lines, "mégis megveszem" and the chosen store are kept per list (plan + range), so a new plan or
   range starts with no ticks; then "Hol a legolcsóbb a közelben?": stores chosen ON THE DEVICE, POST
   /api/quote with store ids only (sorted by id: their order must not reveal the distances), the ranking
-  (competition ranks, a tie ordered by distance, never by name), the optional 2-store split (naming the lines
-  neither store sells, which its total leaves out) and the list for the chosen store (with a note when
+  (competition ranks, a tie ordered by distance, never by name), "Hol vásárolj?" (below) and the list for the
+  chosen store (with a note when
   weighed lines are fractions of a forint, so the rounded lines need not add up to the exact total).
   `DISCOUNTED` is the plain text "kedvezményes ár (GVH-jelölés)", never a deal badge. The device position is
   shown with its time; one over a day old is flagged and the chooser opens (the browser is asked only on a
   click). A status region (`nearby-status`) announces the store count, too few stores, the cheapest stores and
   price updates.
+- **Hol vásárolj? (one store or a route):** worked out ON THE DEVICE from the quote's per-line checkout costs
+  and the stores' positions (`$lib/journey`): the best single store, and a route through 2–3 stores when it gets
+  more of the goods or saves more than it costs to walk (500 Ft per extra stop + 150 Ft per km, as the crow
+  flies), each good bought at the stop where it is cheapest. The route is drawn as a schematic SVG map (no
+  tiles, no request anywhere), listed stop by stop with an OpenStreetMap link holding only the store's own
+  public position, and can be shown as a list per store. When the route is not worth it, the page says how
+  much it would have saved. Ties are never broken by chain or store name. Shown on `/lista` and `/kosar`.
+- **Cart (Kosár):** goods with store prices (`priced_by: "gvh"`, never tap water) browsed by shop section or
+  searched without accents, put in a cart with − / + amounts along round steps (`QTY_LADDERS`; eggs by 10),
+  "kb. N db" for goods with a piece weight. The cart is `StoredState.cart` (personal data, on the device only;
+  at most 100 goods); goods that lose their store price are flagged and leave the cart at its next change.
+  Clearing can be undone. Only ingredient ids and amounts go to POST /api/quote, with the nearby store ids.
 - **Offline in the shop:** the last list POST /api/list returned and the chosen store's part of the last
   quote are kept in the storage document (`lastList`, `lastQuote`, `$lib/list/offline`). When a request fails
   for lack of a connection and the request body is the same, the page shows that copy, dated ("a legutóbb

@@ -22,7 +22,9 @@ const STORAGE_KEY = 'hetikosar.state';
 const BUILD_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '../../build');
 
 const ROUTES = [
-	{ path: '/', heading: 'Heti étrend, bevásárlólista, közeli árak', nav: 'Kezdőlap' },
+	// Home has no tab (the app name in the header leads there): the five tabs are the most that fit at 320 px.
+	{ path: '/', heading: 'Heti étrend, bevásárlólista, közeli árak', nav: null },
+	{ path: '/kosar', heading: 'Kosár', nav: 'Kosár' },
 	{ path: '/terv', heading: 'Heti terv', nav: 'Heti terv' },
 	{ path: '/receptek', heading: 'Receptek', nav: 'Receptek' },
 	// The recipe title is the detail page's h1 (it says "Recept" only while loading or on an error).

@@ -42,7 +42,7 @@ export const settingsEn: Messages<typeof settingsHu> = {
 
 	clear_title: 'Delete data',
 	clear_description:
-		'Deletes all data stored on this device: the plan, the settings, the pantry, the exclusions, the location and the list ticks.',
+		'Deletes all data stored on this device: the plan, the cart, the settings, the pantry, the exclusions, the location and the list ticks.',
 	clear_button: 'Delete all data',
 	clear_confirm_title: 'Delete all data?',
 	clear_confirm_text: 'This cannot be undone.',

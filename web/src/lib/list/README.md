@@ -10,7 +10,7 @@ Pure TypeScript helpers for `/lista` and the pantry and exclusion settings. The 
 | `lines.ts` | Buy / pantry ("valószínűleg otthon van") / excluded (settings; "mégis megveszem" per list) / removed lines, tap water never bought, the POST /api/quote body (ids, quantities and store ids only, store ids sorted by id so their order says nothing about distances). No on-hand quantities: a staple is at home or "nincs otthon". |
 | `groups.ts` | Shop sections in the docs/DATA.md order, with Hungarian and English names. |
 | `stores.ts` | Candidate stores ON THE DEVICE (`pickNearestPerChain`: grocery, has data, ≤3 per chain, ≤25), wider radius, labels. |
-| `ranking.ts` | Ranking rows (ties ordered by distance, never by name), split parts and the lines neither split store sells, price labels (DISCOUNTED is never an "akció" badge). |
+| `ranking.ts` | Ranking rows (ties ordered by distance, never by name), price labels (DISCOUNTED is never an "akció" badge). "Hol vásárolj?" (one store or a route) is in `src/lib/journey/`. |
 | `storeview.ts` | The chosen store's lines grouped by section; whether some line costs a fraction of a forint (rounding note). |
 | `packs.ts` | "2 × 175 g", "1,5 kg", "2 990 Ft/kg" (hu-HU numbers). |
 | `prefs.ts` | Range, and per list the ticks, removed lines, excluded lines bought anyway and the chosen store: `StoredState.list` in the one stored document of `$lib/storage` (key `hetikosar.state`; no key of its own). |

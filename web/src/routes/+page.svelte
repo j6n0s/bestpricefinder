@@ -13,6 +13,7 @@
 	<div class="btn-row">
 		<a class="btn btn-primary" href="/terv">{t('core.home_cta_plan')}</a>
 		<a class="btn btn-secondary" href="/receptek">{t('core.home_cta_recipes')}</a>
+		<a class="btn btn-secondary" href="/kosar">{t('core.home_cta_cart')}</a>
 	</div>
 </section>
 
@@ -24,6 +25,8 @@
 		<li>{t('core.home_step_stores')}</li>
 	</ol>
 </section>
+
+<p class="cart-note">{t('core.home_cart_note')}</p>
 
 <p class="muted privacy">{t('core.home_privacy')}</p>
 
@@ -44,6 +47,7 @@
 		margin-top: var(--space-2);
 	}
 
+	.cart-note,
 	.privacy {
 		margin-top: var(--space-4);
 	}

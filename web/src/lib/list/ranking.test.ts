@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import type { QuoteResponse, RankOut, StoreQuoteOut } from '../api/types';
 import { translate } from '../i18n/messages';
-import { hasPenalty, priceScopeKey, priceTypeKey, rankingRows, scopeNote, splitMissing, splitParts } from './ranking';
+import { hasPenalty, priceScopeKey, priceTypeKey, rankingRows, scopeNote } from './ranking';
 
 function storeQuote(id: string, chain: string, total: number, assumed = 0): StoreQuoteOut {
 	return {
@@ -97,20 +97,6 @@ describe('hasPenalty', () => {
 	});
 });
 
-describe('splitParts', () => {
-	it('lists each store with its lines, in the server order', () => {
-		expect(
-			splitParts({
-				store_ids: ['s-lidl', 's-tesco'],
-				assignment: { repa: 's-lidl', csirkemell: 's-tesco', rizs: 's-lidl' }
-			})
-		).toEqual([
-			{ storeId: 's-lidl', ingredientIds: ['repa', 'rizs'] },
-			{ storeId: 's-tesco', ingredientIds: ['csirkemell'] }
-		]);
-	});
-});
-
 describe('price labels', () => {
 	it('never turns DISCOUNTED into an "akció"/deal badge', () => {
 		const key = priceTypeKey('DISCOUNTED');
@@ -150,29 +136,5 @@ describe('scopeNote', () => {
 		expect(translate('hu', 'list.ranking_scope', { note: scopeNote(quote, 'hu') })).toBe(
 			'Legolcsóbb elöl, a kiválasztott boltok közül, a 2026-10-13-i GVH-adatok alapján.'
 		);
-	});
-});
-
-describe('splitMissing', () => {
-	const store = (store_id: string, missing: string[]) => ({ store_id, missing });
-
-	it('returns the lines neither store of the split sells, in the first store’s order', () => {
-		const stores = [
-			store('synthetic-lidl-a', ['lencse', 'bazsalikom', 'tojas']),
-			store('synthetic-aldi-a', []),
-			store('synthetic-tesco-a', ['tojas', 'lencse'])
-		];
-		expect(splitMissing({ store_ids: ['synthetic-lidl-a', 'synthetic-tesco-a'] }, stores)).toEqual(['lencse', 'tojas']);
-		expect(splitMissing({ store_ids: ['synthetic-tesco-a', 'synthetic-lidl-a'] }, stores)).toEqual(['tojas', 'lencse']);
-	});
-
-	it('is empty when the other store covers every missing line, or a store is unknown', () => {
-		const stores = [store('a-1', ['lencse']), store('b-1', ['tojas'])];
-		expect(splitMissing({ store_ids: ['a-1', 'b-1'] }, stores)).toEqual([]);
-		expect(splitMissing({ store_ids: ['a-1', 'x-1'] }, stores)).toEqual([]);
-	});
-
-	it('lists a line once even when a store repeats it', () => {
-		expect(splitMissing({ store_ids: ['a-1', 'b-1'] }, [store('a-1', ['so', 'so']), store('b-1', ['so'])])).toEqual(['so']);
 	});
 });

@@ -42,7 +42,7 @@ export const settingsHu = {
 
 	clear_title: 'Adatok törlése',
 	clear_description:
-		'Törli az összes ezen a készüléken tárolt adatot: a tervet, a beállításokat, a kamrát, a kizárásokat, a helyzetet és a lista pipáit.',
+		'Törli az összes ezen a készüléken tárolt adatot: a tervet, a kosarat, a beállításokat, a kamrát, a kizárásokat, a helyzetet és a lista pipáit.',
 	clear_button: 'Minden adat törlése',
 	clear_confirm_title: 'Biztosan törlöd az összes adatot?',
 	clear_confirm_text: 'A törlés nem vonható vissza.',
