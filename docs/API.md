@@ -83,6 +83,7 @@ Statuses: `priced`, `pantry` (a pantry staple with no GVH mapping, such as spice
 Per store: `checkout_total`, `used_total`, `missing`, `assumed_count`, `ksh_estimate_total`.
 - `ranking`: sorted by `penalized_total` = `checkout_total` + for each missing line the median checkout cost of that line at the other requested stores that have it. **Ties share a rank** (1, 1, 3): equal whole-forint penalized totals and equal missing counts. The order inside a tie group carries no meaning; the client orders it by distance. Ties are never broken by chain or store name (BUILD-BRIEF §4.1 trap 13).
 - `split`: the best 2-store split, only if it saves at least 1,500 Ft against the best single store; otherwise `null`.
+  The web client no longer shows it (2026-10-14): its "Hol vásárolj?" compares one store with a route of up to 3 stores, worked out on the device from the per-line costs and the stores' distances (`web/src/lib/journey/`). The field stays in the contract.
 - Also: `scope_note_hu` / `scope_note_en`, `attribution`, `data_date`.
 
 Unknown store or ingredient: 422 with the field path. No successful ingest yet: 503 `no_data`.

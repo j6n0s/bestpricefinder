@@ -1,6 +1,6 @@
 # Progress and hand-off (read this first, cloud agent)
 
-**Last updated:** 2026-10-13 by the cloud agent (steps 1–8 done; step 9 in progress). Earlier: 01:50 CEST by the local research session "Meal planning app idea analysis".
+**Last updated:** 2026-10-14 by the cloud agent (steps 1–8 done, plus the cart and route feature; step 9 in progress). Earlier: 01:50 CEST by the local research session "Meal planning app idea analysis".
 **Decision by the user (2026-10-13):** a **cloud-based agent writes the code**. The local session did the research and laid the foundation below, then pushed.
 **Communication:** the local session and the cloud agent cannot message each other. Use the repo:
 - questions and decisions go in `docs/QUESTIONS.md` (append; date and sign each entry);
@@ -74,6 +74,10 @@ The user relays anything urgent.
   - Show the disclaimer and "Forrás: GVH Árfigyelő, [dátum]" on every price view.
 - [x] **8. Integration**: FastAPI serves `web/build` plus `/api`. Run an end-to-end test of a week plan → list → nearby stores → store totals. Add a daily scheduler entry (launchd or cron) for the ingest. _(done 2026-10-13 by the cloud agent: `docs/E2E.md` (`cd web && npm run test:fullstack`), `docs/RUNNING.md`, `deploy/local/` scripts and scheduler. Tested on PostgreSQL 16 and with a synthetic GVH only; still to do on the Mac: run it on PostgreSQL 18 and against real GVH data)_
 - [ ] **9. Security review**: dependency audit (`pip-audit`, `npm audit`), the role-privilege tests above as automated tests, an input-fuzz test of the API, a CSP check, and a secrets scan before every push.
+- [x] **Extra, asked by the user on 2026-10-14: Kosár (cart) + "Hol vásárolj?" (one store or a route).** _(done 2026-10-14 by the cloud agent; web only, no server or schema change; see QUESTIONS.md 2026-10-14 "cart and route")_
+  - `/kosar`: browse or search the goods that have store prices, − / + amounts, kept on the device only.
+  - On `/kosar` and `/lista`: the best single store and, when it pays off, a route through 2–3 stores with a schematic map, worked out on the device (`web/src/lib/journey/README.md`). It replaces the server's 2-store `split` in the UI.
+  - The bottom bar's first tab is now "Kosár"; the home page is reached through the app name.
 
 ## Founder-only items (agents must not do these)
 - File the GVH re-use request; the draft is in `research/gap-gvh-reuse-legal-route/request_draft_hu.txt`.

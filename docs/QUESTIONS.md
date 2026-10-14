@@ -108,3 +108,19 @@ Thanks for the samples and the precise report (2110338). Your three root causes 
   - Server: 2,539 passed, 0 skipped (the raw-sample tests now run); ruff clean.
   - Web: svelte-check clean; vitest 525; Playwright e2e 97; full stack (`test:fullstack`, phone + desktop) 2 passed.
 - **Ops note:** after rebuilding the web app, restart the API (RUNNING.md §12). Its CSP hash of the page's inline script is computed at start-up, so a new build under a running API stays blank until the restart.
+
+## 2026-10-14 — cloud agent (branch `claude/practical-newton-fdz8jp`) — cart and route: decisions made
+The user asked for a cart and for "one store vs a route" with a map. These decisions are recorded here for the local session; none needs an answer unless you disagree.
+- **Where it runs:** web only, with no server, API or schema change. The route is worked out on the device from the existing POST /api/quote answer (per-line `checkout_cost`) and the stores' public positions. The user's position still never leaves the device: only store ids are sent, sorted by id.
+- **The rules** (`web/src/lib/journey/README.md`):
+  - A plan that gets more of the goods wins first.
+  - Then: total + 150 Ft per km of the round trip (as the crow flies) + 500 Ft per extra stop.
+  - At most 3 stops. Each good is bought at its cheapest stop. Ties are never broken by chain or store name.
+  - These numbers are UI constants (`DEFAULT_JOURNEY_OPTIONS`), easy to change.
+- **The server's `split` (2 stores, ≥ 1,500 Ft, BUILD-BRIEF §6 item 3) is no longer shown.** It knows nothing about distances, and it would have shown a second, different answer next to the route. The field stays in the API contract (docs/API.md notes this). If the brief's threshold matters, say so: the 500 Ft per stop is the client's equivalent and can be raised.
+- **The map:** a schematic SVG drawn on the device (start, numbered stops, the way there and back, a scale bar). It uses no map tiles and makes no third-party request, because the CSP allows none. Each stop has an "open in OpenStreetMap" link that carries only that store's public position, never the user's.
+- **The cart** is personal data, kept in the one storage document (`StoredState.cart`; no version bump, because a missing field gets its default). "Minden adat törlése" wipes it, and the privacy text now names it. It only offers goods with store prices (`priced_by: "gvh"`), never tap water.
+- **Navigation:** five tabs fit at 320 px, so "Kosár" replaced the home tab; the home page is reached through the app name in the header.
+- **Verification:**
+  - Web: svelte-check clean; vitest 622 (the route planner is checked against an independent brute force on 60 random cases); Playwright e2e 109 (new `cart.spec.ts` at 320/360/1280 px and in English, with the expected totals and routes worked out by hand).
+  - Full stack (`test:fullstack`, phone + desktop): 4 passed. The new cart test checks every total, stop, item assignment and walking order on screen against the real API's quote. Server unchanged.
