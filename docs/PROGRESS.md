@@ -39,7 +39,7 @@ The user relays anything urgent.
   - applies `db/migrations/*.sql` in order inside one transaction each, prefixed with `SET ROLE bpf_owner`;
   - records version and sha256 in `public.schema_migrations`;
   - refuses to run if an applied file's checksum changed.
-- [x] **3. GVH client + ingest** _(done 2026-10-13 by the cloud agent: `server/bpf/gvh/`, `server/bpf/ingest/`, CLI `bpf-ingest`. **Built against the documented shapes only:** the assumptions are listed in `server/bpf/gvh/ASSUMPTIONS.md`, and the real-sample tests run automatically once `server/tests/fixtures/gvh/raw/` exists; see QUESTIONS.md)_ (`bpf/gvh/`, `bpf/ingest/`). Handle every trap in BUILD-BRIEF §4.1:
+- [x] **3. GVH client + ingest** _(done 2026-10-13 by the cloud agent: `server/bpf/gvh/`, `server/bpf/ingest/`, CLI `bpf-ingest`. The assumptions are listed in `server/bpf/gvh/ASSUMPTIONS.md`. **Checked against real samples on 2026-10-14** (`server/tests/fixtures/gvh/raw/`, captured by a local session): three wrong shapes were fixed, and every parser now passes on the samples with no unknown field. Still to capture: `product-shop-ok` and `product-multichain` (docs/LOCAL_AGENT.md Part C); see QUESTIONS.md)_ (`bpf/gvh/`, `bpf/ingest/`). Handle every trap in BUILD-BRIEF §4.1:
   - `limit=48` paging;
   - `productMinAmount` vs `prices[]`;
   - the 3-chain listing cap;
@@ -49,7 +49,7 @@ The user relays anything urgent.
   - pydantic validation that fails loudly on schema drift.
 
   The daily run order is in ARCHITECTURE.md. Record each run in `ops.ingest_run`. Tests use recorded fixture JSON; take small fresh samples, and never commit large raw dumps.
-- [x] **4. Content** in `data/`, with `docs/DATA.md` documenting the formats: _(done 2026-10-13 by the cloud agent: 162 ingredients, 41 original recipes (all `tested=false` until a human cooks them), the KSH seed and the loader `server/bpf/content/`; see `data/CONTENT_REPORT.md`. Leaf ids were checked against the 2026-10-12 research leaf list, because GVH is unreachable from the cloud)_
+- [x] **4. Content** in `data/`, with `docs/DATA.md` documenting the formats: _(done 2026-10-13 by the cloud agent: 162 ingredients, 41 original recipes (all `tested=false` until a human cooks them), the KSH seed (converted on 2026-10-14 from the original ara0044 file; identical to the research copy) and the loader `server/bpf/content/`; see `data/CONTENT_REPORT.md`. Leaf ids were checked against the 2026-10-12 research leaf list, because GVH is unreachable from the cloud)_
   - `ingredients.json`: ontology rows matching `app.ingredient`. Seed from `research/recipe-coverage/out/ingredient_mapping.csv`, then verify the leaf ids against live `/api/categories`.
   - `recipes.json`: 30–40 **original**, GVH-native Hungarian recipes. Each needs ≥90% of its cost in GVH-priced ingredients; breakfasts are built from bread, túró, joghurt, eggs, vegetables and fruit; mark them `tested=false` until a human cooks them.
   - `ksh/ara0044.csv`: CC BY 4.0, ISO-8859-2 source.
