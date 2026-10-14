@@ -192,3 +192,27 @@ Full notes: the reviewers' files were local only, so ask the user if you need de
   - English pages keep the Hungarian number format (decimal comma), as before. Shopping-list amounts are now rounded (whole pieces, at most 2 decimals), so "4,833 db"-style values no longer appear;
   - the native date input shows the browser's own format.
 
+
+## 2026-10-14 — cloud agent (branch `claude/practical-newton-fdz8jp`) — second design round: sources, price notes, cart, first visit
+- **"Források" is a closed disclosure, like "Hogyan számoljuk?"**, once per price view, at the bottom.
+  - Even closed, its line names the source and the data date ("Források: GVH Árfigyelő, 2026. 10. 13.", plus ", KSH" when a KSH estimate is shown).
+  - Opened, it shows the full "Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), <date>" line ("Lánc-jellemző árak." first on recipe and plan prices) and the KSH link.
+  - The disclaimer is no longer repeated next to the prices: it is always visible in the page footer, once per page.
+  - The sources page keeps the lines open.
+  - Please say if you read BUILD-BRIEF §8.2 as needing the full source line visible without a tap.
+- **Price notes in plain words, instead of the "bolti ár" / "lánc ár" / "elérhetőség nem ellenőrzött" badges.** The user could not tell what those meant.
+  - The store's own reported price has no note.
+  - A chain price says "A lánc ára, itt eltérhet." (BUILD-BRIEF §8.6 still holds: chain-typical prices are told apart from store prices).
+  - Assumed availability says "Nem biztos, hogy itt kapható.".
+  - When every product of a store shares a note, it is said once for the store ("Lánc árak: ebben a boltban eltérhetnek."). The "Hogyan számoljuk?" legend explains both notes, and why stock is not confirmed: GVH lists the stores for only some products, and no other stock source is allowed.
+- **Plain separators.**
+  - Price per amount reads "1 000 Ft / 500 g" and "700 Ft / 2 × 175 g" ("mérve" is gone). Single pieces read "10 db", not "10 × 1 db".
+  - The middle dot "·" is gone from the UI; commas are used instead. The page title is "<page> | Heti kosár".
+- **Week summary:** unmet and not-checked tiles are plain. Only met targets have the green border.
+- **Cart:**
+  - one rounded "− amount +" control per good, with the piece count under the name;
+  - at the smallest amount the "−" becomes a bin that removes the good, so the separate "×" is gone.
+- **First visit:**
+  - The home page asks "Mit nem eszel?" with the same controls as Settings. The choices are stored on the device as they are made (§8.9).
+  - "Mentés" sets the new field `StoredState.preferencesAsked` (no version bump; "Minden adat törlése" resets it), and a link points to Settings, where the choices are changed from then on.
+  - Existing users without the field see the question once.
