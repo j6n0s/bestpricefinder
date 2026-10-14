@@ -1,0 +1,14 @@
+{
+  "url": "https://cdnarfigyeloprodweu.azureedge.net/excel/arfigyelo_napi_termekadatok.xlsx?v=20261014-capture",
+  "status": 200,
+  "fetched_at_utc": "2026-10-14T10:24:02Z",
+  "last_modified": "Wed, 14 Oct 2026 02:00:12 GMT",
+  "original_bytes": 1722938,
+  "original_data_rows": 21227,
+  "kept_data_rows": 150,
+  "sheet_name": "Napi feltöltések - 2026-10-14",
+  "all_sheet_names": [
+    "Napi feltöltések - 2026-10-14"
+  ],
+  "synthetic": false
+}

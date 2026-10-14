@@ -1,0 +1,14 @@
+{"name": "categories", "status": 200, "bytes": 24657}
+{"name": "chain-stores", "status": 200, "bytes": 755}
+{"name": "shops-head", "status": 200, "bytes": 416188, "full_count": null, "truncated_to": null}
+{"name": "pbc-18-o0", "status": 200, "bytes": 20944}
+{"name": "pbc-18-default", "status": 200, "bytes": 7225}
+{"name": "pbc-18-shops", "status": 200, "bytes": 5815}
+{"name": "pbc-40-o0", "status": 200, "bytes": 11928}
+{"name": "pbc-7-o0", "status": 200, "bytes": 30868}
+{"name": "product-2804780000000", "status": 200, "bytes": 1961}
+{"name": "product-5997490112823", "status": 200, "bytes": 4471}
+{"name": "product-shop-notfound", "status": 404, "bytes": 154}
+{"name": "search-400", "status": 400, "bytes": 66}
+{"name": "xlsx-sample.xlsx", "status": 200, "url": "https://cdnarfigyeloprodweu.azureedge.net/excel/arfigyelo_napi_termekadatok.xlsx?v=20261014-capture", "fetched_at_utc": "2026-10-14T10:24:02Z", "last_modified": "Wed, 14 Oct 2026 02:00:12 GMT", "original_bytes": 1722938, "original_data_rows": 21227, "kept_data_rows": 150, "sheet_name": "Napi feltöltések - 2026-10-14", "all_sheet_names": ["Napi feltöltések - 2026-10-14"], "synthetic": false}
+{"name": "ksh/ara0044.csv", "status": 200, "bytes": 119988}

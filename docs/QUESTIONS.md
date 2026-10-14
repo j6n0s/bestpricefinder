@@ -58,3 +58,26 @@ The request "raw GVH fixture samples" above no longer needs to be done by hand:
   - It was tested against the fake GVH server (`tests/test_capture_tool.py`).
 - **Brief for a local session:** `docs/LOCAL_AGENT.md`, Part A (Part B, the PG18/macOS run, is optional). It says what to paste into the session, the rules, the commands, and how to report back here.
 - Small change in `tests/fakegvh.py`: `/api/search` with a query under 3 characters now answers HTTP 400 `SEARCH-INPUT-ERROR`, as research/gvh-location/notes.md §1 recorded.
+
+## 2026-10-14 — local session — raw GVH/KSH samples captured
+- Captured with server/tools/capture_gvh_samples.py at 2026-10-14 12:23:24–12:24:03 Europe/Budapest (one run, no stop, no retry). Statuses: categories 200, chain-stores 200, shops-head 200, pbc-18-o0 200, pbc-18-default 200, pbc-18-shops 200, pbc-40-o0 200, pbc-7-o0 200, product-2804780000000 200, product-5997490112823 200, product-shop-notfound 404, search-400 400; **skipped:** pbc-18-last (count 36 ≤ 48, no second page), product-multichain, product-shop-ok (see below).
+- XLSX: sheet "Napi feltöltések - 2026-10-14", 21,227 data rows (150 kept), Last-Modified Wed, 14 Oct 2026 02:00:12 GMT, 1,722,938 bytes, fetched with `?v=20261014-capture`.
+- KSH: `data/ksh/raw/ara0044.csv`, 119,988 bytes, HTTP 200, `content-type: application/octet-stream`. It is the real data file: ISO-8859-2, `;`-separated, wide format (title row "1.2.1.8. Egyes termékek és szolgáltatások fogyasztói átlagára (nyers adatok), havonta", then a header row `Kódszám;Megnevezés;2017. január;…`).
+- tests/test_gvh_fixtures.py: **23 passed / 21 failed.** Three root causes explain all 21 failures:
+  1. **Wrapped roots.**
+     - Affected tests: `test_raw_sample_parses[categories.json]`, `[chain-stores.json]` and `[shops-head.json]`, each failing with `GvhSchemaError: <x>: expected a JSON array at the root, got dict`.
+     - Real shapes: `{"categories":[…9 top nodes…]}`, `{"chainStores":[…9…]}` and `{"shops":[…1,830…]}`.
+     - Shop items have the keys `uuid, postalCode, city, address, chainStoreUuid, location, openingTime`; chain items have `uuid, name, imageUrl`.
+  2. **`packaging` is a JSON string** (`"1"`, `"0.5"`), both in listings and in the product detail. All `pbc-*` failures and `test_raw_default_page_size` fail on `products.N.packaging: value_error`.
+  3. **Product detail chain entries use `uuid`, not `id`.**
+     - Affected tests: `[product-2804780000000.json]` and `[product-5997490112823.json]`, failing with `chainStores.0.id: missing; packaging: value_error`.
+     - Detail chain keys: `uuid, name, imageUrl, prices, pricesMax, priceSameEverywhere, availableInShops`.
+     - The detail root also has `categoryId` and `returnType`/`returnFee`.
+     - Listing chain entries do use `id`: `id, name, priceSameEverywhere, productMinAmount, prices`. Listing products also carry `returnType, returnFee, minUnitPrice`.
+  - Every `test_raw_sample_has_no_unknown_fields[...]` failure is the same parse error, so unknown fields could not be evaluated yet.
+  - Passed: `test_raw_xlsx_sample_parses_without_drift[xlsx-sample.xlsx]` (no XLSX column drift); `product-shop-notfound` (body `{"code":"PRODUCT-SHOP-PRICES-NOT-FOUND","message":…}`); `search-400` (body `{"code":"SEARCH-INPUT-ERROR","message":"Invalid search parameter"}`).
+- Surprises and tool notes (code not changed, per the brief):
+  - **Wrapped roots in the capture tool too.** Because `/shops` is wrapped, `shops-head.json` holds the **full** body (1,830 shops, 416 KB; `full_count`/`truncated_to` are null), not the first 40. The Budapest-Tesco lookup also found nothing, so `product-shop-ok` was skipped. Fix: unwrap `shops`/`chainStores` in the tool, then capture `product-shop-ok` in a later run.
+  - **`product-multichain` skipped**: none of the 15 tried products from categories 18/7/40 is sold by ≥4 chains in the detail (2804780000000: 1 chain; 5997490112823: 2). This is consistent with 84% of food SKUs being single-chain. Pick a known multi-chain staple (e.g. a branded UHT milk or flour EAN from the XLSX with "Hány üzletláncban elérhető" ≥ 4).
+  - **XLSX row count**: 21,227 data rows today vs 25,400 recorded by the research on 2026-10-12. Worth checking in the next full ingest; it may be non-food churn.
+  - No redirects, no 403/429/5xx, no HTML bodies; no cookies were stored. The contact e-mail was sent only in the User-Agent and appears in no committed file (checked with grep).
