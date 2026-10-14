@@ -300,7 +300,10 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	}
 	// Recipe and plan prices are chain-typical, and the source line says so (BUILD-BRIEF §8.6).
 	await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(loose(`Lánc-jellemző árak. ${attribution}`));
-	await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(loose(DISCLAIMER));
+	// "Források" is closed, but its line still names the source and the data date; the disclaimer is in the footer.
+	await expect(page.locator('main').getByTestId('attribution-summary')).toHaveText(loose(`Források: GVH Árfigyelő, ${dateHu(STATE.data_date)}`));
+	await expect(page.locator('main').getByTestId('disclaimer')).toHaveCount(0);
+	await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(loose(DISCLAIMER));
 	await expectClean(page, seen, '/terv');
 
 	// ── b. /lista: the list of this plan from the real /api/list ──
@@ -456,7 +459,8 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	await expect(page.getByTestId('ranking-scope')).toHaveText(`Legolcsóbb elöl, ${quote.scope_note_hu}.`);
 	expect(quote.scope_note_hu).toContain(STATE.data_date);
 	await expect(page.locator('main').getByTestId('attribution-gvh').first()).toHaveText(loose(attribution));
-	await expect(page.locator('main').getByTestId('disclaimer').first()).toHaveText(loose(DISCLAIMER));
+	await expect(page.locator('main').getByTestId('disclaimer')).toHaveCount(0);
+	await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(loose(DISCLAIMER));
 	await expect(page.locator('body')).not.toContainText(/akció/i);
 
 	// ── d. the cheapest store (rank 1, the nearest of a tie): its list, grouped, with packs and costs ──
@@ -537,9 +541,13 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 		expect(forints(await storeList.getByTestId('ksh-total').textContent())).toBe(whole(chosen.ksh_estimate_total));
 		await expect(page.locator('main').getByTestId('attribution-ksh')).toContainText('Forrás: KSH');
 	}
-	// One source line and disclaimer for the whole page, at the bottom.
+	// One "Források" for the whole page, at the bottom; the disclaimer once, in the footer.
 	await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText([loose(attribution)]);
-	await expect(page.locator('main').getByTestId('disclaimer')).toHaveText([loose(DISCLAIMER)]);
+	await expect(page.locator('main').getByTestId('attribution-summary')).toHaveText([
+		loose(`Források: GVH Árfigyelő, ${dateHu(STATE.data_date)}${chosen.ksh_estimate_total > 0 ? ', KSH' : ''}`)
+	]);
+	await expect(page.locator('main').getByTestId('disclaimer')).toHaveCount(0);
+	await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(loose(DISCLAIMER));
 	await page.screenshot({ path: test.info().outputPath('lista-store.png'), fullPage: true });
 	await expectClean(page, seen, '/lista');
 
@@ -593,7 +601,8 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(
 		loose(`Lánc-jellemző árak. Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), ${dateHu(detail.data_date ?? '')}`)
 	);
-	await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(loose(DISCLAIMER));
+	await expect(page.locator('main').getByTestId('disclaimer')).toHaveCount(0);
+	await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(loose(DISCLAIMER));
 	await page.screenshot({ path: test.info().outputPath('recipe-detail.png'), fullPage: true });
 
 	// ── f, g. throughout: clean console, CSP, same origin only, never a coordinate ──
