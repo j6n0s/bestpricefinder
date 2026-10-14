@@ -1,7 +1,7 @@
 /** Core UI strings (shell, shared components, location, errors, badges, home page). Hungarian = source. */
 export const coreHu = {
 	app_name: 'Heti kosár',
-	page_title: '{page} · Heti kosár',
+	page_title: '{page} | Heti kosár',
 	skip_to_content: 'Ugrás a tartalomra',
 	nav_label: 'Fő navigáció',
 	nav_cart: 'Kosár',
@@ -18,6 +18,10 @@ export const coreHu = {
 	data_stale_detail: 'Az árak azóta változhattak. A legutóbbi áradatok dátuma: {date}',
 	offline: 'Nincs internetkapcsolat. A legutóbb betöltött adatokat látod.',
 
+	// The closed "Források" disclosure still names the source and the data date (BUILD-BRIEF §8.2).
+	sources_summary: 'Források: GVH Árfigyelő, {date}',
+	sources_summary_undated: 'Források: GVH Árfigyelő, az adatok dátuma nem ismert',
+	sources_summary_ksh: ', KSH',
 	attribution_gvh: 'Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), {date}',
 	attribution_gvh_undated: 'Forrás: GVH Árfigyelő (arfigyelo.gvh.hu), az adatok dátuma nem ismert',
 	// Before the source line where the prices are chain-typical (recipes, plan): BUILD-BRIEF §8.6.
@@ -33,7 +37,6 @@ export const coreHu = {
 	badge_ksh_estimate: 'becsült országos átlagár (KSH)',
 	badge_no_store_data: 'nincs áradat',
 	badge_unavailable: 'nincs ebben a boltban',
-	badge_assumed: 'elérhetőség nem ellenőrzött',
 	badge_pantry: 'valószínűleg otthon van',
 	badge_stale: 'nem friss',
 	// Plain text only: DISCOUNTED is not a deal flag, so never an "akció" badge (docs/API.md).
@@ -86,5 +89,9 @@ export const coreHu = {
 	home_title: 'Heti étrend, bevásárlólista, közeli árak',
 	home_cta_plan: 'Heti terv készítése',
 	home_cta_recipes: 'Receptek böngészése',
-	home_cta_cart: 'Kosár összeállítása'
+	home_cta_cart: 'Kosár összeállítása',
+	home_prefs_title: 'Mit nem eszel?',
+	home_prefs_save: 'Mentés',
+	home_prefs_saved: 'Elmentve.',
+	home_prefs_edit: 'Módosítás a Beállításokban'
 } as const;

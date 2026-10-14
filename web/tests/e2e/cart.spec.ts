@@ -418,10 +418,11 @@ for (const viewport of VIEWPORTS) {
 			await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
 			expect(await storedCart(page)).toEqual({ lines: [{ ingredientId: 'alma', qty: 0.5 }], checked: [], storeId: null });
 
-			// − at the smallest amount takes the good out again.
+			// At the smallest amount the − is a bin that takes the good out again.
 			await page.getByRole('button', { name: 'Kosárba: kenyér' }).click();
 			await expect(goodRow(page, 'kenyer').getByRole('status')).toHaveAccessibleName(sp('kenyér: 1 db'));
-			await goodRow(page, 'kenyer').getByRole('button', { name: 'Kevesebb: kenyér' }).click();
+			await expect(goodRow(page, 'kenyer').getByRole('button', { name: 'Kevesebb: kenyér' })).toHaveCount(0);
+			await goodRow(page, 'kenyer').getByRole('button', { name: 'Törlés a kosárból: kenyér' }).click();
 			await expect(page.getByRole('button', { name: 'Kosárba: kenyér' })).toBeVisible();
 			await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
 
@@ -511,10 +512,10 @@ for (const viewport of VIEWPORTS) {
 			]);
 			await expect(stops.nth(0)).toContainText(sp('200 m a kiindulási ponttól'));
 			await expect(stops.nth(0)).toContainText('alma, tej, tojás');
-			await expect(stops.nth(0)).toContainText(sp('3 tétel, 950 Ft'));
+			await expect(stops.nth(0)).toContainText(sp('950 Ft / 3 tétel'));
 			await expect(stops.nth(1)).toContainText(sp('630 m az előző bolttól'));
 			await expect(stops.nth(1)).toContainText('őrölt kávé');
-			await expect(stops.nth(1)).toContainText(sp('1 tétel, 3 600 Ft'));
+			await expect(stops.nth(1)).toContainText(sp('3 600 Ft / 1 tétel'));
 			await expect(route).toContainText(sp('Vissza a kiindulási pontig: 600 m.'));
 			const map = route.getByTestId('journey-map');
 			await expect(map.getByTestId('map-stop')).toHaveCount(2);
@@ -624,7 +625,7 @@ test.describe('cart details', () => {
 			page,
 			cartState([
 				{ ingredientId: 'alma', qty: 0.5 },
-				{ ingredientId: 'tej', qty: 1 }
+				{ ingredientId: 'tej', qty: 0.25 }
 			])
 		);
 		await page.goto('/kosar');
@@ -637,13 +638,16 @@ test.describe('cart details', () => {
 		await page.getByRole('button', { name: 'Kosárba: banán' }).focus();
 		await page.keyboard.press('Enter');
 		await expect(goodRow(page, 'banan').getByRole('button', { name: 'Több: banán' })).toBeFocused();
-		// … and back: − at the smallest amount, the focus returns to "Kosárba".
+		// … and back: − down to the smallest amount, where it turns into the bin; the focus returns to "Kosárba".
 		const less = goodRow(page, 'banan').getByRole('button', { name: 'Kevesebb: banán' });
-		for (let step = 0; step < 6; step++) await less.press('Enter'); // 500 -> 400 -> 300 -> 250 -> 200 -> 100 g -> out
+		for (let step = 0; step < 5; step++) await less.press('Enter'); // 500 -> 400 -> 300 -> 250 -> 200 -> 100 g
+		const bin = goodRow(page, 'banan').getByRole('button', { name: 'Törlés a kosárból: banán' });
+		await expect(bin).toBeFocused();
+		await bin.press('Enter');
 		await expect(page.getByRole('button', { name: 'Kosárba: banán' })).toBeFocused();
 
-		// The × in the cart: the line goes, the focus goes to the cart's heading.
-		await page.getByRole('button', { name: 'Törlés a kosárból: tej' }).press('Enter');
+		// The bin in the cart (tej is at its smallest amount): the line goes, the focus goes to the cart's heading.
+		await page.getByTestId('cart').getByRole('button', { name: 'Törlés a kosárból: tej' }).press('Enter');
 		await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
 		await expect(page.getByRole('heading', { level: 2, name: /A kosarad/ })).toBeFocused();
 
@@ -709,7 +713,7 @@ test.describe('in English', () => {
 		await page.goto('/kosar');
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Cart');
 		await expect(page.getByTestId('cart-count')).toHaveText('4 items');
-		await expect(page.getByRole('button', { name: 'Remove from cart: alma' })).toBeVisible();
+		await expect(page.getByTestId('cart').getByRole('button', { name: 'Less: alma' })).toBeVisible();
 		await page.getByRole('button', { name: 'Use my location' }).click();
 		const options = page.getByTestId('shopping-options');
 		await expect(options.getByRole('heading', { level: 3 })).toHaveText('Where to shop');

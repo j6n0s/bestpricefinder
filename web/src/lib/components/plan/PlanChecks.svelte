@@ -1,13 +1,13 @@
 <!--
 	One week's rule checks as a grid of equal tiles: the rule's name, the value and the target ("Hal", "2",
-	"legalább 1"). A met target has a green border, a missed one an amber border and background; there are no
-	icons. Screen readers hear "teljesül" / "nem teljesül". Neutral, factual wording: no health claims
+	"legalább 1"). A met target has a green border; a missed or not checked one is a plain tile, not coloured.
+	No icons. Screen readers hear "teljesül" / "nem teljesül". Neutral, factual wording: no health claims
 	(BUILD-BRIEF §8.7).
 -->
 <script lang="ts">
 	import type { RuleCheckOut } from '$lib/api/types';
 	import { i18n, t } from '$lib/i18n';
-	import { checkParts } from '$lib/plan/checks';
+	import { checkParts, notApplicable } from '$lib/plan/checks';
 
 	interface Props {
 		checks: readonly RuleCheckOut[];
@@ -21,7 +21,7 @@
 <ul class="checks" aria-labelledby={labelledBy}>
 	{#each checks as check (check.rule)}
 		{@const parts = checkParts(check, i18n.lang)}
-		<li class="check" class:miss={!check.ok} data-testid="check-{check.rule}" data-ok={check.ok}>
+		<li class="check" class:met={check.ok && !notApplicable(check)} data-testid="check-{check.rule}" data-ok={check.ok}>
 			<span class="label">{parts.label}</span>
 			<span class="value">{parts.value}</span>
 			<span class="target">{parts.target}</span>
@@ -46,16 +46,14 @@
 		gap: 2px;
 		min-width: 0;
 		padding: var(--space-2) var(--space-3);
-		border: 2px solid var(--color-success-border);
+		border: 2px solid var(--color-border-subtle);
 		border-radius: var(--radius-md);
 		background: var(--color-surface);
 		color: var(--color-text);
 	}
 
-	.miss {
-		border-color: var(--color-warning-border);
-		background: var(--color-warning-bg);
-		color: var(--color-warning-text);
+	.met {
+		border-color: var(--color-success-border);
 	}
 
 	.label {
@@ -72,9 +70,5 @@
 	.target {
 		font-size: var(--font-size-sm);
 		color: var(--color-text-muted);
-	}
-
-	.miss .target {
-		color: inherit;
 	}
 </style>

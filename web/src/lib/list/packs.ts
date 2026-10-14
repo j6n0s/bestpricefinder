@@ -35,10 +35,14 @@ export function listAmount(qty: number, unit: Unit, lang: Lang): string {
 	return formatAmount(qty, unit, lang);
 }
 
-/** "2 × 175 g" for whole packs; null for a sold-by-weight pick (its weight is shown instead). */
+/**
+ * "2 × 175 g" for whole packs, "10 db" for single pieces; null for a sold-by-weight pick (its weight is shown
+ * instead).
+ */
 export function packsText(pick: Pick<PickOut, 'count' | 'option'>, unit: Unit, lang: Lang): string | null {
 	const size = pick.option.pack_size;
 	if (size === null || !Number.isFinite(size) || size <= 0) return null;
+	if (unit === 'db' && size === 1) return formatQty(pick.count, unit, lang);
 	return `${pick.count}${NBSP}×${NBSP}${formatAmount(size, unit, lang)}`;
 }
 

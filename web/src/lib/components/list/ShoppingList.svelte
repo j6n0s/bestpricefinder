@@ -89,7 +89,7 @@
 		<p tabindex="-1" bind:this={summaryLine} data-testid="list-summary">
 			<strong>{tp('list.summary', bought.length)}</strong>
 			{#if bought.length > 0}
-				<span class="muted">· {t('list.checked_count', { done: doneCount, total: bought.length })}</span>
+				<span class="muted">, {t('list.checked_count', { done: doneCount, total: bought.length })}</span>
 			{/if}
 		</p>
 		{#if doneCount > 0}

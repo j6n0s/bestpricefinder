@@ -87,6 +87,7 @@ const fullState = (): StoredState => ({
 	},
 	pantry: { notAtHome: ['napraforgoolaj'] },
 	exclusions: { tags: ['hal', 'sertes'], ingredients: ['tej'] },
+	preferencesAsked: true,
 	location: { consent: 'granted', source: 'device', districtId: '11', approx: { lat: 47.477, lon: 19.047, at: '2026-10-13T08:00:00.000Z' } },
 	list: {
 		range: 'next_week',
@@ -466,6 +467,29 @@ describe('field validation', () => {
 			expect(state.location.approx).toBeNull();
 			expect(state.location.source).toBe('none');
 		}
+	});
+});
+
+describe('the first-visit question', () => {
+	it('is not answered by default, and an old document without the field asks it once', () => {
+		expect(load().preferencesAsked).toBe(false);
+		const { preferencesAsked: _dropped, ...old } = fullState();
+		fake.map.set(STORAGE_KEY, JSON.stringify(old));
+		resetForTests();
+		expect(load().preferencesAsked).toBe(false);
+		expect(load().exclusions).toEqual(fullState().exclusions);
+	});
+
+	it('is kept only as true, and "Minden adat törlése" asks it again', () => {
+		for (const bad of ['true', 1, null, {}]) {
+			fake.map.set(STORAGE_KEY, JSON.stringify({ ...fullState(), preferencesAsked: bad }));
+			resetForTests();
+			expect(load().preferencesAsked).toBe(false);
+		}
+		expect(update({ preferencesAsked: true }).preferencesAsked).toBe(true);
+		expect((stored() as StoredState).preferencesAsked).toBe(true);
+		clearAll();
+		expect(load().preferencesAsked).toBe(false);
 	});
 });
 

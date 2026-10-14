@@ -32,7 +32,7 @@
 		if (days === 0) return t('list.range_empty');
 		const count = tp('list.range_days', days);
 		if (info.from === null || info.to === null) return count;
-		return `${t('list.range_dates', { from: formatDate(info.from), to: formatDate(info.to) })} · ${count}`;
+		return `${t('list.range_dates', { from: formatDate(info.from), to: formatDate(info.to) })}, ${count}`;
 	}
 </script>
 

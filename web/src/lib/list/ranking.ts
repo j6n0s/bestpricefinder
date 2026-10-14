@@ -7,7 +7,7 @@
  * chain or store name; equal distances keep the server's order. Every member of a tie is shown as tied.
  */
 import type { PlainKey } from '../i18n/messages';
-import type { ChainSlug, PriceScope, PriceType, QuoteResponse, StoreId, StoreQuoteOut } from '../api/types';
+import type { AvailabilityKind, ChainSlug, PriceScope, PriceType, QuoteLineOut, QuoteResponse, StoreId, StoreQuoteOut } from '../api/types';
 
 export interface RankRow {
 	storeId: StoreId;
@@ -82,9 +82,38 @@ export function priceTypeKey(type: PriceType): PlainKey | null {
 	}
 }
 
-/** "bolti ár" (this store's own reported price) or "lánc ár" (the price at most of the chain's stores). */
-export function priceScopeKey(scope: PriceScope): PlainKey {
-	return scope === 'store' ? 'list.scope_store' : 'list.scope_chain';
+/**
+ * What to know about a product's price at this store, in plain words. The store's own reported price needs no
+ * note; the chain's price is told apart from it (BUILD-BRIEF §8.6): "A lánc ára, itt eltérhet."; and when no
+ * data says the store stocks the product (the chain sells it, so it is assumed): "Nem biztos, hogy itt kapható."
+ */
+export function priceNoteKeys(option: { price_scope: PriceScope; availability: AvailabilityKind }): NoteKey[] {
+	const keys: NoteKey[] = [];
+	if (option.price_scope === 'chain') keys.push('list.note_chain');
+	if (option.availability === 'assumed') keys.push('list.note_assumed');
+	return keys;
+}
+
+export type NoteKey = 'list.note_chain' | 'list.note_assumed';
+
+/** The once-per-store wording of a note that every product there shares. */
+export const SHARED_NOTE: Readonly<Record<NoteKey, PlainKey>> = {
+	'list.note_chain': 'list.note_chain_all',
+	'list.note_assumed': 'list.note_assumed_all'
+};
+
+/**
+ * The notes that every product of these lines carries (the picks and the alternatives of the priced lines):
+ * they are said once for the store ("Lánc árak: ebben a boltban eltérhetnek.") instead of on every line.
+ */
+export function sharedNoteKeys(
+	lines: readonly Pick<QuoteLineOut, 'status' | 'picks' | 'alternatives'>[]
+): NoteKey[] {
+	const options = lines
+		.filter((line) => line.status === 'priced')
+		.flatMap((line) => [...line.picks.map((pick) => pick.option), ...line.alternatives]);
+	if (options.length === 0) return [];
+	return (Object.keys(SHARED_NOTE) as NoteKey[]).filter((key) => options.every((option) => priceNoteKeys(option).includes(key)));
 }
 
 /** The quote's scope note in the UI language ("a kiválasztott boltok közül, a … GVH-adatok alapján"). */

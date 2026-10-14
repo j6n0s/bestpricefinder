@@ -201,6 +201,10 @@
 		font-size: var(--font-size-base);
 	}
 
+	.field {
+		margin-top: var(--space-3);
+	}
+
 	.excluded,
 	.results {
 		list-style: none;

@@ -509,7 +509,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Bevásárlólista');
 			const thisWeek = page.getByRole('radio', { name: /Ez a hét/ });
 			await expect(thisWeek).toBeChecked();
-			await expect(page.locator('label').filter({ has: thisWeek })).toContainText(`2026. 10. 12. – 2026. 10. 18. · 7 nap`);
+			await expect(page.locator('label').filter({ has: thisWeek })).toContainText(`2026. 10. 12. – 2026. 10. 18., 7 nap`);
 
 			// This week: 7 lunches and 4 dinners, 2 people each, summed per recipe.
 			await expect(page.getByRole('heading', { level: 2, name: 'Zöldség, gyümölcs' })).toBeVisible();
@@ -665,7 +665,7 @@ for (const viewport of VIEWPORTS) {
 			]);
 			await expect(stops.nth(0)).toContainText('sárgarépa, vöröshagyma, natúr joghurt, vörös lencse, napraforgóolaj');
 			await expect(stops.nth(1)).toContainText('csirkemellfilé');
-			await expect(stops.nth(1)).toContainText(sp('1 tétel, 1 188 Ft'));
+			await expect(stops.nth(1)).toContainText(sp('1 188 Ft / 1 tétel'));
 			await expect(route.getByTestId('journey-map').getByTestId('map-stop')).toHaveCount(2);
 			// The map link holds only the store's own (public) position, never the user's.
 			const tesco = STORE_BY_ID.get('synthetic-tesco-a')!;
@@ -675,7 +675,10 @@ for (const viewport of VIEWPORTS) {
 			);
 			await expect(page.locator('main')).not.toContainText(/47[.,]496|19[.,]054/); // the position is never shown
 			await expect(page.locator('main').getByTestId('attribution-gvh').first()).toHaveText(ATTRIBUTION);
-			await expect(page.locator('main').getByTestId('disclaimer').first()).toHaveText(DISCLAIMER);
+			// "Források", closed like "Hogyan számoljuk?", still names the source and the date; the disclaimer is in the footer.
+			await expect(page.locator('main').getByTestId('attribution-summary')).toHaveText([`Források: GVH Árfigyelő, ${DATE_HU}`]);
+			await expect(page.locator('main').getByTestId('disclaimer')).toHaveCount(0);
+			await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
 			await expect(page.locator('main')).not.toContainText(/akció/i);
 
 			// Pick a store: its list, grouped by section, with packs, labels and the KSH estimate kept apart.
@@ -694,29 +697,32 @@ for (const viewport of VIEWPORTS) {
 			const line = (id: string) => storeList.locator(`[data-ingredient-id="${id}"]`);
 			await expect(line('natur_joghurt')).toContainText(sp('3 × 175 g'));
 			await expect(line('natur_joghurt')).toContainText(sp('Marad 25 g'));
-			await expect(line('natur_joghurt')).toContainText('lánc ár');
-			await expect(line('csirkemellfile')).toContainText(sp('1,2 kg, mérve'));
-			await expect(line('csirkemellfile')).toContainText(sp('3 588 Ft'));
+			await expect(line('natur_joghurt')).toContainText('A lánc ára, itt eltérhet.');
+			await expect(line('csirkemellfile')).toContainText(sp('3 588 Ft / 1,2 kg'));
 			await expect(line('csirkemellfile')).toContainText('kedvezményes ár (GVH-jelölés)');
-			await expect(line('csirkemellfile')).toContainText('bolti ár');
+			await expect(line('csirkemellfile')).not.toContainText('lánc ára'); // the store's own price: no note
 			await expect(line('voroshagyma')).toContainText(sp('Marad 700 g'));
 			await line('voroshagyma').getByText('2 másik termék ebben a boltban').click();
-			await expect(line('voroshagyma')).toContainText(sp('500 g: 299 Ft (598 Ft/kg)'));
-			await expect(line('voroshagyma')).toContainText(sp('mérve: 399 Ft/kg'));
+			await expect(line('voroshagyma')).toContainText(sp('299 Ft / 500 g (598 Ft/kg)'));
+			await expect(line('voroshagyma')).toContainText(sp('399 Ft/kg'));
 			await expect(line('napraforgoolaj')).toContainText(sp('Marad 950 ml'));
 			await expect(line('friss_bazsalikom')).toContainText('nincs ár');
 			await expect(line('friss_bazsalikom')).toContainText(sp('Kell: 1 db'));
 			await expect(line('gomba')).toContainText('becsült országos átlagár (KSH)');
 			await expect(line('gomba')).toContainText(sp('600 Ft-tól, nincs benne a fizetendő összegben'));
 			await expect(storeList.getByTestId('ksh-total')).toContainText(sp('600 Ft'));
-			// One source line for the whole page, at the bottom, with the KSH source when the list has a KSH value.
-			await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText([ATTRIBUTION]);
-			await expect(page.locator('main').getByTestId('attribution-ksh')).toContainText('Forrás: KSH');
-			await expect(page.locator('main').getByTestId('attribution-ksh').getByRole('link', { name: /Forrás: KSH/ })).toHaveAttribute(
+			// One "Források" for the whole page, at the bottom, with the KSH source when the list has a KSH value.
+			const sources = page.locator('main').getByTestId('attribution');
+			await expect(sources).toHaveCount(1);
+			await expect(sources.getByTestId('attribution-summary')).toHaveText(`Források: GVH Árfigyelő, ${DATE_HU}, KSH`);
+			await sources.getByTestId('attribution-summary').click();
+			await expect(sources.getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
+			await expect(sources.getByTestId('attribution-ksh')).toContainText('Forrás: KSH');
+			await expect(sources.getByTestId('attribution-ksh').getByRole('link', { name: /Forrás: KSH/ })).toHaveAttribute(
 				'href',
 				'https://www.ksh.hu/stadat_files/ara/hu/ara0044.html'
 			);
-			await expect(page.locator('main').getByTestId('disclaimer')).toHaveText([DISCLAIMER]);
+			await expect(page.locator('main').getByTestId('disclaimer')).toHaveCount(0);
 			// Ticks are shared with the main list.
 			await expect(line('voroshagyma').getByRole('checkbox')).toBeChecked();
 			await page.screenshot({ path: screenshotPath(`list-${viewport.name}-store`), fullPage: true });
@@ -729,9 +735,9 @@ for (const viewport of VIEWPORTS) {
 			// rules, and what "bolti ár" / "lánc ár" mean.
 			await expect(page.getByText('Hogyan számoljuk?')).toHaveCount(1);
 			const how = page.getByTestId('results-how');
-			await expect(how.getByText('Bolti ár: ennek a boltnak', { exact: false })).toBeHidden();
+			await expect(how.getByText('Megjegyzés nélkül az ár ennek a boltnak', { exact: false })).toBeHidden();
 			await how.getByText('Hogyan számoljuk?').click();
-			await expect(how.getByText('Bolti ár: ennek a boltnak', { exact: false })).toBeVisible();
+			await expect(how.getByText('Megjegyzés nélkül az ár ennek a boltnak', { exact: false })).toBeVisible();
 			await expect(how.getByTestId('options-scope')).toBeVisible();
 
 			// At Spar the lentils are not available, and the weighed chicken costs a fraction of a forint
@@ -878,13 +884,13 @@ test.describe('ticks per list', () => {
 		await page.getByRole('button', { name: 'Terv készítése' }).click();
 		await expect(page.getByRole('heading', { level: 2, name: 'A terved' })).toBeFocused();
 		await nav.getByRole('link', { name: 'Lista' }).click();
-		await expect(page.getByText(/Kipipálva: 0 \/ \d+/)).toBeVisible();
+		await expect(page.getByText(/kipipálva: 0 \/ \d+/)).toBeVisible();
 		await expect(page.getByRole('checkbox', { checked: true })).toHaveCount(0);
 
 		// "Pipák törlése" removes itself: focus goes to the first line, never to <body>.
 		await onion.check();
 		await page.getByRole('button', { name: 'Pipák törlése' }).click();
-		await expect(page.getByText(/Kipipálva: 0 \/ \d+/)).toBeVisible();
+		await expect(page.getByText(/kipipálva: 0 \/ \d+/)).toBeVisible();
 		await expect(page.locator('input[data-line-check]').first()).toBeFocused();
 		expect(await page.evaluate(() => document.activeElement !== document.body)).toBe(true);
 		await expectClean(page, rec);

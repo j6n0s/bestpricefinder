@@ -29,7 +29,7 @@
 	<p>
 		<a href={GVH_URL} rel="noopener noreferrer" target="_blank">{t('sources.gvh_link')}</a>
 	</p>
-	<Attribution {dataDate} showDisclaimer={false} />
+	<Attribution {dataDate} collapsible={false} />
 </section>
 
 <section class="card" aria-labelledby="src-ksh">

@@ -324,7 +324,7 @@ for (const viewport of VIEWPORTS) {
 					no_repeat_days: 5
 				}
 			]);
-			await expect(page.getByTestId('plan-summary')).toContainText(`${DATE_HU} – 2026. 10. 19., 7 nap · 2 fő · napi 3 étkezés`);
+			await expect(page.getByTestId('plan-summary')).toContainText(`${DATE_HU} – 2026. 10. 19., 7 nap, 2 fő, napi 3 étkezés`);
 			await expect(page.locator('[data-testid^="plan-day-"]')).toHaveCount(7);
 			await expect(page.getByTestId('plan-day-0').getByRole('heading')).toHaveText(`Kedd, ${DATE_HU}`);
 			await expect(page.getByTestId('plan-day-6').getByRole('heading')).toHaveText('Hétfő, 2026. 10. 19.');
@@ -355,11 +355,12 @@ for (const viewport of VIEWPORTS) {
 			// priced_share < 1 always comes with a caveat (contract v1.2), short in the plan cards.
 			await expect(page.getByTestId('meal-0-ebed').getByTestId('recipe-coverage')).toHaveText('részleges ár (94 %)');
 			await expect(day0Dinner.getByTestId('recipe-coverage')).toHaveText('részleges ár (97 %)');
-			// Every view with prices: the GVH source line with the data date, and the disclaimer near it.
+			// Every view with prices: "Források" names the source and the data date even closed; opened, the full line.
+			await expect(page.locator('main').getByTestId('attribution-summary')).toHaveText(`Források: GVH Árfigyelő, ${DATE_HU}`);
 			await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
-			await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
-			// ...and the footer does not repeat it a few lines below (it does on pages without prices).
-			await expect(page.locator('footer').getByTestId('disclaimer')).toBeHidden();
+			// The disclaimer is shown once, in the footer.
+			await expect(page.locator('main').getByTestId('disclaimer')).toHaveCount(0);
+			await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
 
 			const stored = await storedPlan(page);
 			expect(stored).toMatchObject({ startDate: '2026-10-13', seed: 0, slots: 3, noRepeatDays: 5 });
@@ -512,7 +513,7 @@ test.describe('plan details', () => {
 		await page.getByLabel('A hónap végéig (1 nap)').check();
 		await page.getByRole('button', { name: 'Terv készítése' }).click();
 		await expect(page.locator('[data-testid^="plan-day-"]')).toHaveCount(1);
-		await expect(page.getByTestId('plan-summary')).toContainText('2026. 10. 31., 1 nap · 2 fő');
+		await expect(page.getByTestId('plan-summary')).toContainText('2026. 10. 31., 1 nap, 2 fő');
 		await expect(page.getByRole('heading', { level: 3, name: /^1\. hét/ })).toHaveText('1. hét 2026. 10. 31.');
 		await expectNoHorizontalScroll(page);
 		await expectClean(page, api);

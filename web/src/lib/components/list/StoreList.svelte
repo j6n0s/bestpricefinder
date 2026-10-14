@@ -1,8 +1,9 @@
 <!--
 	The list for the chosen store, grouped by shop section (docs/DATA.md order): what to pick up, the packs and
 	what it costs there. The total is the server's checkout total; KSH estimates are labelled and never added
-	to it. Store prices and chain-typical prices are labelled apart (BUILD-BRIEF §8.6; what the two labels mean
-	is behind a closed "Hogyan számoljuk?" disclosure), and the GVH source with its data date and the disclaimer
+	to it. Chain-typical prices are told apart from the store's own in plain words (BUILD-BRIEF §8.6): once for
+	the store when every product shares the note, else on the lines that have it (the legend is behind a closed
+	"Hogyan számoljuk?" disclosure), and the GVH source with its data date and the disclaimer
 	close the view (§8.1–8.2).
 	The shop sections are plain groups under h4 headings, not landmarks: the shopping list above already has a
 	named region per section, and two regions with the same name would be indistinguishable.
@@ -15,6 +16,7 @@
 	import { formatDistance, formatMoney } from '$lib/format';
 	import { t, tp } from '$lib/i18n';
 	import { groupLabelKey } from '$lib/list/groups';
+	import { SHARED_NOTE, sharedNoteKeys } from '$lib/list/ranking';
 	import { hasKshEstimate, storeGroups } from '$lib/list/storeview';
 	import { storeAddress } from '$lib/list/stores';
 	import StoreLine from './StoreLine.svelte';
@@ -58,18 +60,22 @@
 	const groups = $derived(storeGroups(store, listLines));
 	const address = $derived(storeAddress(storeInfo));
 	const ksh = $derived(hasKshEstimate(store));
+	const shared = $derived(sharedNoteKeys(store.lines));
 </script>
 
 <section class="store-list" aria-labelledby="{id}-title" data-testid="store-list">
 	<h3 id="{id}-title" tabindex="-1" bind:this={heading}>{t('list.store_title', { store: chainName })}</h3>
 	{#if address || distanceKm !== null}
 		<p class="muted">
-			{address}{#if distanceKm !== null}{address ? ' · ' : ''}<span class="distance">{formatDistance(distanceKm)}</span>{/if}
+			{address}{#if distanceKm !== null}{address ? ', ' : ''}<span class="distance">{formatDistance(distanceKm)}</span>{/if}
 		</p>
 	{/if}
 	<p class="total" data-testid="store-total">{t('list.store_total', { total: formatMoney(store.checkout_total) })}</p>
 	{#if store.missing.length > 0}
 		<p><Badge tone="warning">{tp('list.missing', store.missing.length)}</Badge></p>
+	{/if}
+	{#if shared.length > 0}
+		<p class="small muted" data-testid="store-notes">{shared.map((key) => t(SHARED_NOTE[key])).join(' ')}</p>
 	{/if}
 	{#if store.ksh_estimate_total > 0}
 		<p class="small" data-testid="ksh-total">{t('list.ksh_total', { total: formatMoney(store.ksh_estimate_total) })}</p>
@@ -85,6 +91,7 @@
 						name={view.name}
 						checked={checked.has(view.line.ingredient_id)}
 						{ontogglecheck}
+						omit={shared}
 					/>
 				{/each}
 			</ul>

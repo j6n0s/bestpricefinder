@@ -61,6 +61,11 @@ export function ruleLabel(rule: RuleName, lang: Lang): string {
 	return translate(lang, RULE_LABEL[rule]);
 }
 
+/** The count rules are not checked in a week shorter than COUNT_RULE_MIN_DAYS days ("n/a"). */
+export function notApplicable(check: RuleCheckOut): boolean {
+	return check.value.trim() === NOT_APPLICABLE;
+}
+
 /** A weekly check as the week summary shows it: the rule's name, its value and the target. */
 export interface CheckParts {
 	label: string;
@@ -83,7 +88,7 @@ export function checkParts(check: RuleCheckOut, lang: Lang): CheckParts {
 		case 'fish':
 		case 'legume':
 		case 'meat_free_day':
-			if (check.value.trim() === NOT_APPLICABLE) {
+			if (notApplicable(check)) {
 				return { label, value: '–', target: translate(lang, 'plan.check_not_applicable_target', { days: COUNT_RULE_MIN_DAYS }) };
 			}
 			if (value === null || limit === null) return fallback();

@@ -260,8 +260,9 @@ for (const viewport of VIEWPORTS) {
 			await expect(card(page, HARCSA.title)).not.toContainText('részleges ár');
 			await expect(card(page, CSIRKE.title)).toContainText('nincs ár');
 			await expect(card(page, CSIRKE.title).getByTestId('recipe-price')).toHaveCount(0);
+			await expect(page.locator('main').getByTestId('attribution-summary')).toHaveText(`Források: GVH Árfigyelő, ${DATE_HU}`);
 			await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
-			await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
+			await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
 			await expectNoHorizontalScroll(page);
 			await expectTouchTargets(page);
 			await expectAccessible(page, `recipes ${viewport.name} list`);
@@ -329,7 +330,7 @@ for (const viewport of VIEWPORTS) {
 			// The recipe title is the h1, the small "Recept" label a paragraph, every section an h2.
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText(HARCSA.title);
 			await expect(page.locator('main .intro .kind')).toHaveText('Recept');
-			await expect(page).toHaveTitle(`${HARCSA.title} · Heti kosár`);
+			await expect(page).toHaveTitle(`${HARCSA.title} | Heti kosár`);
 			expect(
 				await page.locator('main').locator('h1, h2, h3, h4, h5, h6').evaluateAll((hs) => hs.map((h) => `${h.tagName} ${h.textContent?.trim()}`))
 			).toEqual([
@@ -413,8 +414,9 @@ for (const viewport of VIEWPORTS) {
 			await expect(rows.nth(5).locator('svg')).toHaveCount(0);
 			const bars = await rows.locator('rect.fill').evaluateAll((rects) => rects.map((rect) => Number(rect.getAttribute('width'))));
 			expect(bars).toEqual([91, 91, 97.2, 100, 55.5]);
+			await expect(page.locator('main').getByTestId('attribution-summary')).toHaveText(`Források: GVH Árfigyelő, ${DATE_HU}`);
 			await expect(page.locator('main').getByTestId('attribution-gvh')).toHaveText(ATTRIBUTION);
-			await expect(page.locator('main').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
+			await expect(page.locator('footer').getByTestId('disclaimer')).toHaveText(DISCLAIMER);
 
 			// Nutrition: factual numbers, coverage and source.
 			const nutrition = page.getByTestId('nutrition');

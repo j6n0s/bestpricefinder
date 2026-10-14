@@ -385,23 +385,25 @@
 					{/if}
 					<!-- Once per page, at the bottom: the source line for every price above (BUILD-BRIEF §8.2), then
 					     the one method note (options, route, ranking, store and chain prices), closed until asked. -->
-					<Attribution
-						dataDate={quote.data_date}
-						ksh={chosenStore ? hasKshEstimate(chosenStore) : false}
-						kshPeriod={meta.data?.ksh_period ?? null}
-						kshUrl={meta.data?.attribution.ksh.url ?? null}
-					/>
-					<HowCalculated testid="results-how">
-						<p data-testid="options-scope">{t('journey.scope', { note: scopeNote(quote, i18n.lang) })}</p>
-						<p>
-							{t('journey.how', {
-								stop: formatMoney(DEFAULT_JOURNEY_OPTIONS.extraStopFt),
-								km: formatMoney(DEFAULT_JOURNEY_OPTIONS.perKmFt)
-							})}
-						</p>
-						<p>{t('list.ranking_basis')}</p>
-						<p>{t('list.scope_legend')}</p>
-					</HowCalculated>
+					<div class="page-notes">
+						<Attribution
+							dataDate={quote.data_date}
+							ksh={chosenStore ? hasKshEstimate(chosenStore) : false}
+							kshPeriod={meta.data?.ksh_period ?? null}
+							kshUrl={meta.data?.attribution.ksh.url ?? null}
+						/>
+						<HowCalculated testid="results-how">
+							<p data-testid="options-scope">{t('journey.scope', { note: scopeNote(quote, i18n.lang) })}</p>
+							<p>
+								{t('journey.how', {
+									stop: formatMoney(DEFAULT_JOURNEY_OPTIONS.extraStopFt),
+									km: formatMoney(DEFAULT_JOURNEY_OPTIONS.perKmFt)
+								})}
+							</p>
+							<p>{t('list.ranking_basis')}</p>
+							<p>{t('list.scope_legend')}</p>
+						</HowCalculated>
+					</div>
 				</div>
 			{:else if request}
 				<Spinner label={t('list.quote_loading')} showLabel announce={false} />
@@ -451,5 +453,10 @@
 
 	.results > :global(* + *) {
 		margin-top: var(--space-5);
+	}
+
+	/* "Források" and "Hogyan számoljuk?": two closed one-liners kept together at the bottom. */
+	div.page-notes > :global(*) {
+		margin-top: 0;
 	}
 </style>

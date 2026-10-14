@@ -1,7 +1,8 @@
 <!--
-	One line of the list at the chosen store: the products to buy (plain-text names, never images), the packs
-	("2 × 175 g"), the checkout cost, the leftover, the price labels and the alternatives. "nincs ebben a
-	boltban", "nincs ár" and the labelled KSH estimate (never part of the total) for lines without a store price.
+	One line of the list at the chosen store: the products to buy (plain-text names, never images), each pick as
+	price per amount ("1 000 Ft / 500 g", "700 Ft / 2 × 175 g"), the checkout cost, the leftover, the price notes
+	and the alternatives. "nincs ebben a boltban", "nincs ár" and the labelled KSH estimate (never part of the
+	total) for lines without a store price.
 -->
 <script lang="ts">
 	import type { PackOptionOut, QuoteLineOut } from '$lib/api/types';
@@ -9,16 +10,18 @@
 	import { formatMoney } from '$lib/format';
 	import { i18n, t, tp } from '$lib/i18n';
 	import { formatAmount, leftoverText, packsText, unitPriceText } from '$lib/list/packs';
-	import { priceScopeKey, priceTypeKey } from '$lib/list/ranking';
+	import { priceNoteKeys, priceTypeKey, type NoteKey } from '$lib/list/ranking';
 
 	interface Props {
 		line: QuoteLineOut;
 		name: string;
 		checked: boolean;
 		ontogglecheck: (ingredientId: string, on: boolean) => void;
+		/** Notes said once for the whole store (every product there shares them), so not on this line. */
+		omit?: readonly NoteKey[];
 	}
 
-	let { line, name, checked, ontogglecheck }: Props = $props();
+	let { line, name, checked, ontogglecheck, omit = [] }: Props = $props();
 
 	const lang = $derived(i18n.lang);
 	const leftover = $derived(leftoverText(line.leftover_qty, line.unit, lang));
@@ -29,9 +32,7 @@
 	}
 
 	function alternativeText(option: PackOptionOut): string {
-		if (option.pack_size === null) {
-			return t('list.alternative_weight', { price: unitPriceText(option.unit_price, line.unit, lang) });
-		}
+		if (option.pack_size === null) return unitPriceText(option.unit_price, line.unit, lang);
 		const pack = t('list.alternative_pack', {
 			pack: formatAmount(option.pack_size, line.unit, lang),
 			price: formatMoney(option.pack_price)
@@ -39,6 +40,18 @@
 		return `${pack} ${t('list.unit_price', { price: unitPriceText(option.unit_price, line.unit, lang) })}`;
 	}
 </script>
+
+<!-- The price notes in plain words ("A lánc ára, itt eltérhet.", "Nem biztos, hogy itt kapható.") and the GVH
+     price label (loyalty or reduced price); nothing for the store's own normal price. -->
+{#snippet notes(option: PackOptionOut, type: string | null)}
+	{@const keys = priceNoteKeys(option).filter((key) => !omit.includes(key))}
+	{#if keys.length > 0 || type}
+		<span class="notes small muted">
+			{#each keys as key (key)}<span>{t(key)}</span>{/each}
+			{#if type}<span>{type}</span>{/if}
+		</span>
+	{/if}
+{/snippet}
 
 <li class="line" class:done={checked} data-testid="store-line" data-ingredient-id={line.ingredient_id}>
 	<div class="head">
@@ -73,17 +86,9 @@
 				<li>
 					<span class="product" lang="hu">{pick.option.product_name}</span>
 					<span class="pack">
-						{packs ?? t('list.by_weight', { qty: formatAmount(pick.qty, line.unit, lang) })} · {formatMoney(pick.cost)}
+						{t('list.price_per', { price: formatMoney(pick.cost), qty: packs ?? formatAmount(pick.qty, line.unit, lang) })}
 					</span>
-					<span class="labels">
-						<Badge tone="neutral">{t(priceScopeKey(pick.option.price_scope))}</Badge>
-						{#if pick.option.availability === 'assumed'}
-							<Badge kind="assumed" />
-						{/if}
-						{#if type}
-							<span class="small">{type}</span>
-						{/if}
-					</span>
+					{@render notes(pick.option, type)}
 				</li>
 			{/each}
 		</ul>
@@ -99,15 +104,7 @@
 						<li>
 							<span class="product" lang="hu">{option.product_name}</span>
 							<span class="pack">{alternativeText(option)}</span>
-							<span class="labels">
-								<Badge tone="neutral">{t(priceScopeKey(option.price_scope))}</Badge>
-								{#if option.availability === 'assumed'}
-									<Badge kind="assumed" />
-								{/if}
-								{#if type}
-									<span class="small">{type}</span>
-								{/if}
-							</span>
+							{@render notes(option, type)}
 						</li>
 					{/each}
 				</ul>
@@ -194,11 +191,10 @@
 		color: var(--color-text-muted);
 	}
 
-	.labels {
+	.notes {
 		display: inline-flex;
 		flex-wrap: wrap;
-		align-items: center;
-		gap: var(--space-1) var(--space-2);
+		gap: 0 var(--space-2);
 	}
 
 	.alternatives summary {

@@ -55,6 +55,10 @@ describe('packsText', () => {
 		expect(packsText({ count: 3, option: option(1) }, 'l', 'hu')).toBe(sp('3 × 1 l'));
 	});
 
+	it('is just the count for single pieces', () => {
+		expect(packsText({ count: 10, option: option(1) }, 'db', 'hu')).toBe(sp('10 db'));
+	});
+
 	it('is null for sold-by-weight picks and invalid sizes', () => {
 		expect(packsText({ count: 1, option: option(null) }, 'kg', 'hu')).toBeNull();
 		expect(packsText({ count: 1, option: option(0) }, 'kg', 'hu')).toBeNull();

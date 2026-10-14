@@ -381,7 +381,7 @@
 			<h2 id="plan-heading" tabindex="-1" bind:this={planHeading}>{t('plan.plan_heading')}</h2>
 			<p class="summary" data-testid="plan-summary">
 				{planRange || t('plan.plan_undated')},
-				{tp('plan.plan_days', plan.days.length)} · {tp('settings.people_value', settings.people)} ·
+				{tp('plan.plan_days', plan.days.length)}, {tp('settings.people_value', settings.people)},
 				{t('plan.slots_value', { count: plan.slots })}
 			</p>
 			<div class="btn-row">

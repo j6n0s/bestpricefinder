@@ -1,5 +1,5 @@
 <!--
-	App shell: skip link, header (data date), offline notice, page content, footer (disclaimer + sources link)
+	App shell: skip link, header (data status), offline notice, page content, footer (disclaimer + sources link)
 	and the bottom navigation. /api/meta is loaded once here and shared with every page via context
 	(`getMeta()` from $lib/meta.svelte).
 -->
@@ -109,8 +109,8 @@
 		margin: var(--space-2) 0 0;
 	}
 
-	/* A price view shows the disclaimer next to its source line (<Attribution>): the footer's copy would repeat
-	   the same sentence a few lines below, so it is hidden there. Every other page keeps the footer's. */
+	/* A page that shows the disclaimer itself (the sources page) hides the footer's copy, so it is not repeated a
+	   few lines below. Every other page, the price views included, shows it once, in the footer. */
 	.shell:global(:has(main [data-testid='disclaimer'])) .footer :global([data-testid='disclaimer']) {
 		display: none;
 	}

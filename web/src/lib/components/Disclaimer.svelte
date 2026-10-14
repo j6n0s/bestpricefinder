@@ -4,15 +4,9 @@
 -->
 <script lang="ts">
 	import { i18n, t, translate } from '$lib/i18n';
-
-	interface Props {
-		compact?: boolean;
-	}
-
-	let { compact = false }: Props = $props();
 </script>
 
-<p class="disclaimer" class:small={compact} data-testid="disclaimer">
+<p class="disclaimer" data-testid="disclaimer">
 	<span lang="hu">{translate('hu', 'core.disclaimer')}</span>
 	{#if i18n.lang !== 'hu'}
 		<span>{t('core.disclaimer')}</span>

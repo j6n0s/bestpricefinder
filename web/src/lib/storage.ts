@@ -6,7 +6,7 @@
  * approximate location, the shopping-list choices (range, and per list the ticks, removed lines, excluded
  * lines bought anyway and the chosen store), the last loaded list and the chosen store's last quote (so the
  * list still works offline in the shop), the cart (the goods picked by hand, their ticks and chosen store) and
- * the UI language all live under ONE key (`hetikosar.state`), as
+ * the UI language, and whether the first-visit question about foods has been answered, all live under ONE key (`hetikosar.state`), as
  * one versioned JSON document. There is no other key: the list choices that used to live under
  * `hetikosar.list` are part of this document now.
  *
@@ -193,6 +193,8 @@ export interface StoredState {
 		tags: RecipeTag[];
 		ingredients: string[];
 	};
+	/** The first-visit question "Mit nem eszel?" was saved; from then on the exclusions are edited in Settings. */
+	preferencesAsked: boolean;
 	location: StoredLocation;
 	/** Shopping-list choices: the range, and per list the ticks, removed lines and the chosen store. */
 	list: StoredList;
@@ -213,6 +215,7 @@ export function defaultState(): StoredState {
 		plan: null,
 		pantry: { notAtHome: [] },
 		exclusions: { tags: [], ingredients: [] },
+		preferencesAsked: false,
 		location: { consent: 'unset', source: 'none', districtId: null, approx: null },
 		list: { range: 'this_week', entries: [] },
 		lastList: null,
@@ -435,6 +438,7 @@ function sanitiseV1(raw: Record<string, unknown>): StoredState {
 		plan: sanitisePlan(raw.plan),
 		pantry: sanitisePantry(raw.pantry),
 		exclusions: sanitiseExclusions(raw.exclusions),
+		preferencesAsked: raw.preferencesAsked === true,
 		location: sanitiseLocation(raw.location),
 		// The global `checkedItems` of earlier builds is dropped: ticks are kept per list (ListEntry.checked).
 		list: sanitiseList(raw.list),

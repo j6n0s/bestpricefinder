@@ -275,7 +275,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	expect(suggestResponse.request().postDataJSON()).toMatchObject({ days: DAYS, slots: 3, people: PEOPLE });
 	const plan = (await suggestResponse.json()) as PlanResponse;
 	await expect(page.getByRole('heading', { level: 2, name: 'A terved' })).toBeFocused();
-	await expect(page.getByTestId('plan-summary')).toContainText(loose(`${DAYS} nap · ${PEOPLE} fő · napi 3 étkezés`, false));
+	await expect(page.getByTestId('plan-summary')).toContainText(loose(`${DAYS} nap, ${PEOPLE} fő, napi 3 étkezés`, false));
 	expect(plan.days).toHaveLength(DAYS);
 	await expect(page.locator('[data-testid^="plan-day-"]')).toHaveCount(DAYS);
 	await expect(page.locator('[data-testid^="meal-"]')).toHaveCount(DAYS * SLOTS_3.length);
@@ -496,6 +496,13 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	);
 	expect(shownGroups).toEqual(expectedGroups);
 	await expect(storeList.getByTestId('store-line')).toHaveCount(chosen.lines.length);
+	// A note every product of the store shares is said once, above the lines; otherwise on the lines that have it.
+	const options = chosen.lines.filter((line) => line.status === 'priced').flatMap((line) => [...line.picks.map((pick) => pick.option), ...line.alternatives]);
+	const allChain = options.length > 0 && options.every((option) => option.price_scope === 'chain');
+	const allAssumed = options.length > 0 && options.every((option) => option.availability === 'assumed');
+	if (allChain) await expect(storeList.getByTestId('store-notes')).toContainText('Lánc árak: ebben a boltban eltérhetnek.');
+	if (allAssumed) await expect(storeList.getByTestId('store-notes')).toContainText('Nem biztos, hogy minden termék kapható itt.');
+	if (!allChain && !allAssumed) await expect(storeList.getByTestId('store-notes')).toHaveCount(0);
 	for (const line of chosen.lines) {
 		const element = storeList.locator(`[data-testid="store-line"][data-ingredient-id="${line.ingredient_id}"]`);
 		await expect(element).toHaveCount(1);
@@ -508,10 +515,13 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 			line.picks.forEach((pick, index) => {
 				const ui = picks[index];
 				expect(norm(ui?.product)).toBe(norm(pick.option.product_name));
-				expect(forints(norm(ui?.pack).split(' · ').at(-1)), `pick cost of ${line.ingredient_id}`).toBe(whole(pick.cost));
-				if (pick.option.pack_size !== null) expect(norm(ui?.pack)).toMatch(new RegExp(`^${pick.count} × `));
-				else expect(norm(ui?.pack)).toContain('mérve');
-				expect(norm(ui?.text)).toContain(pick.option.price_scope === 'store' ? 'bolti ár' : 'lánc ár');
+				// "1 000 Ft / 500 g", "700 Ft / 2 × 175 g": the price per amount.
+				expect(forints(norm(ui?.pack).split(' / ')[0]), `pick cost of ${line.ingredient_id}`).toBe(whole(pick.cost));
+				if (pick.option.pack_size !== null) expect(norm(ui?.pack)).toMatch(new RegExp(` / ${pick.count} × `));
+				if (pick.option.price_scope === 'chain' && !allChain) expect(norm(ui?.text)).toContain('A lánc ára, itt eltérhet.');
+				else expect(norm(ui?.text)).not.toContain('lánc ára');
+				if (pick.option.availability === 'assumed' && !allAssumed) expect(norm(ui?.text)).toContain('Nem biztos, hogy itt kapható.');
+				else expect(norm(ui?.text)).not.toContain('Nem biztos');
 			});
 		} else if (line.status === 'unavailable') {
 			await expect(element).toContainText('nincs ebben a boltban');
@@ -748,8 +758,8 @@ test('cart -> nearby stores -> one store or a route, on the real stack', async (
 			const subtotal = sum(items.map((id) => costsAt(stop).get(id) ?? 0));
 			total += subtotal;
 			const stopText = norm(await route.getByTestId('journey-stops').locator(':scope > li').nth(index).textContent());
-			expect(stopText).toContain(`${items.length} tétel, `);
-			expect(forints(stopText.slice(stopText.indexOf(`${items.length} tétel, `))), `subtotal of stop ${index + 1}`).toBe(whole(subtotal));
+			expect(stopText).toContain(` / ${items.length} tétel`);
+			expect(forints(stopText.slice(0, stopText.indexOf(` / ${items.length} tétel`)).split(', ').at(-1)), `subtotal of stop ${index + 1}`).toBe(whole(subtotal));
 		}
 		expect(forints(await route.getByTestId('journey-total').textContent()), 'the route total').toBe(whole(total));
 		const routeScore = total + PER_KM_FT * routeKm(stopIds) + EXTRA_STOP_FT * (stopIds.length - 1);

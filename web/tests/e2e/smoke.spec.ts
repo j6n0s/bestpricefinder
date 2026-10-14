@@ -439,6 +439,43 @@ test.describe('settings', () => {
 		await expectClean(watcher);
 	});
 
+	test('asks what you do not eat on the first visit; after "Mentés" it is changed in the settings', async ({ page }) => {
+		const watcher = await watch(page);
+		await page.goto('/');
+		const card = page.getByTestId('home-preferences');
+		await expect(card.getByRole('heading', { level: 2 })).toHaveText('Mit nem eszel?');
+		await card.getByLabel('Hal').check();
+		await card.getByLabel('Alapanyag keresése').fill('csiperke');
+		await card.getByRole('button', { name: 'csiperkegomba kizárása' }).click();
+		// Kept on this device as soon as they are chosen (BUILD-BRIEF §8.9), never sent on their own.
+		expect(await storedState(page)).toMatchObject({ exclusions: { tags: ['hal'], ingredients: ['gomba'] }, preferencesAsked: false });
+		expect(watcher.requests.filter((request) => request.body.includes('gomba'))).toEqual([]);
+		await expectAccessible(page, 'home first visit');
+		await page.screenshot({ path: screenshotPath('home-first-visit-360'), fullPage: true });
+
+		await card.getByRole('button', { name: 'Mentés' }).click();
+		await expect(card).toHaveCount(0);
+		const saved = page.getByTestId('home-preferences-saved');
+		await expect(saved).toBeFocused();
+		await expect(saved).toContainText('Elmentve.');
+		expect(await storedState(page)).toMatchObject({ preferencesAsked: true });
+
+		// From now on the choices are changed in the settings.
+		await saved.getByRole('link', { name: 'Módosítás a Beállításokban' }).click();
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Beállítások');
+		const settings = page.getByTestId('exclusion-settings');
+		await expect(settings.getByLabel('Hal')).toBeChecked();
+		await settings.getByRole('button', { name: 'csiperkegomba visszavétele' }).click();
+		expect(await storedState(page)).toMatchObject({ exclusions: { tags: ['hal'], ingredients: [] }, preferencesAsked: true });
+
+		// The question is not asked again.
+		await page.goto('/');
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Heti étrend, bevásárlólista, közeli árak');
+		await expect(page.getByTestId('home-preferences')).toHaveCount(0);
+		await expect(page.getByTestId('home-preferences-saved')).toHaveCount(0);
+		await expectClean(watcher);
+	});
+
 	test('people stay within 1–12', async ({ page }) => {
 		const watcher = await watch(page);
 		await page.goto('/beallitasok');

@@ -15,7 +15,6 @@
 		| 'ksh_estimate'
 		| 'no_store_data'
 		| 'unavailable'
-		| 'assumed'
 		| 'pantry'
 		| 'stale';
 	type Tone = 'neutral' | 'info' | 'warning' | 'danger' | 'success';
@@ -32,7 +31,6 @@
 		ksh_estimate: { key: 'core.badge_ksh_estimate', tone: 'info' },
 		no_store_data: { key: 'core.badge_no_store_data', tone: 'neutral' },
 		unavailable: { key: 'core.badge_unavailable', tone: 'danger' },
-		assumed: { key: 'core.badge_assumed', tone: 'neutral' },
 		pantry: { key: 'core.badge_pantry', tone: 'success' },
 		stale: { key: 'core.badge_stale', tone: 'warning' }
 	};

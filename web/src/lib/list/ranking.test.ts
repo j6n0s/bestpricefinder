@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import type { QuoteResponse, RankOut, StoreQuoteOut } from '../api/types';
 import { translate } from '../i18n/messages';
-import { hasPenalty, priceScopeKey, priceTypeKey, rankingRows, scopeNote } from './ranking';
+import { hasPenalty, priceNoteKeys, priceTypeKey, rankingRows, scopeNote, sharedNoteKeys } from './ranking';
 
 function storeQuote(id: string, chain: string, total: number, assumed = 0): StoreQuoteOut {
 	return {
@@ -113,10 +113,31 @@ describe('price labels', () => {
 		expect(priceTypeKey('NORMAL')).toBeNull();
 	});
 
-	it('distinguishes store prices from chain prices', () => {
-		expect(translate('hu', priceScopeKey('store'))).toBe('bolti ár');
-		expect(translate('hu', priceScopeKey('chain'))).toBe('lánc ár');
-		expect(translate('en', priceScopeKey('chain'))).toBe('chain price');
+	it('tells chain prices and unconfirmed stock apart from the own store price, in plain words', () => {
+		const notes = (price_scope: 'store' | 'chain', availability: 'confirmed' | 'assumed', lang: 'hu' | 'en' = 'hu') =>
+			priceNoteKeys({ price_scope, availability }).map((key) => translate(lang, key));
+		expect(notes('store', 'confirmed')).toEqual([]);
+		expect(notes('chain', 'confirmed')).toEqual(['A lánc ára, itt eltérhet.']);
+		expect(notes('chain', 'assumed')).toEqual(['A lánc ára, itt eltérhet.', 'Nem biztos, hogy itt kapható.']);
+		expect(notes('store', 'assumed', 'en')).toEqual(['May not be stocked here.']);
+	});
+
+	it('says a note once for the store when every product there shares it', () => {
+		const opt = (price_scope: 'store' | 'chain', availability: 'confirmed' | 'assumed') => ({ price_scope, availability });
+		const line = (status: 'priced' | 'unavailable', picks: ReturnType<typeof opt>[], alternatives: ReturnType<typeof opt>[] = []) => ({
+			status,
+			picks: picks.map((option) => ({ count: 1, qty: 1, cost: 1, option })),
+			alternatives
+		});
+		const shared = (lines: ReturnType<typeof line>[]) => sharedNoteKeys(lines as never);
+		expect(shared([line('priced', [opt('chain', 'assumed')]), line('priced', [opt('chain', 'confirmed')])])).toEqual(['list.note_chain']);
+		expect(shared([line('priced', [opt('chain', 'assumed')], [opt('chain', 'assumed')])])).toEqual(['list.note_chain', 'list.note_assumed']);
+		// One store price (a pick or an alternative) keeps the chain note on the lines.
+		expect(shared([line('priced', [opt('chain', 'confirmed')], [opt('store', 'confirmed')])])).toEqual([]);
+		expect(shared([line('priced', [opt('store', 'confirmed')]), line('priced', [opt('chain', 'confirmed')])])).toEqual([]);
+		// Lines without prices do not count; no priced line, no shared note.
+		expect(shared([line('unavailable', []), line('priced', [opt('chain', 'confirmed')])])).toEqual(['list.note_chain']);
+		expect(shared([line('unavailable', [])])).toEqual([]);
 	});
 });
 

@@ -48,7 +48,7 @@
 					{/if}
 				</div>
 				<p class="where small">
-					{address}{#if row.distanceKm !== null}{address ? ' · ' : ''}<span class="distance">{formatDistance(row.distanceKm)}</span>{/if}
+					{address}{#if row.distanceKm !== null}{address ? ', ' : ''}<span class="distance">{formatDistance(row.distanceKm)}</span>{/if}
 				</p>
 				{#if hasPenalty(row)}
 					<!-- The figure the order uses comes first, so the order never looks wrong next to a lower

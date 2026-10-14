@@ -199,25 +199,20 @@
 				<ul class="rows">
 					{#each group.lines as line (line.ingredient_id)}
 						{@const ingredient = byId.get(line.ingredient_id)}
+						{@const pieces = ingredient ? approxPieces(line.qty, ingredient) : null}
 						<li class="row" data-testid="cart-line" data-ingredient-id={line.ingredient_id}>
-							<span class="name" lang="hu">{line.name_hu}</span>
-							<span class="controls">
-								<QtyStepper
-									name={line.name_hu}
-									qty={line.qty}
-									unit={line.unit}
-									pieces={ingredient ? approxPieces(line.qty, ingredient) : null}
-									onchange={(qty) => setQty(line.ingredient_id, qty, 'cart')}
-								/>
-								<button
-									type="button"
-									class="btn btn-ghost remove"
-									aria-label={t('cart.remove_named', { name: line.name_hu })}
-									onclick={() => setQty(line.ingredient_id, null, 'cart')}
-								>
-									<span aria-hidden="true">×</span>
-								</button>
+							<span class="name">
+								<span lang="hu">{line.name_hu}</span>
+								{#if pieces !== null}
+									<span class="pieces small muted">{t('cart.pieces', { count: pieces })}</span>
+								{/if}
 							</span>
+							<QtyStepper
+								name={line.name_hu}
+								qty={line.qty}
+								unit={line.unit}
+								onchange={(qty) => setQty(line.ingredient_id, qty, 'cart')}
+							/>
 						</li>
 					{/each}
 				</ul>
@@ -261,26 +256,29 @@
 					<ul class="rows">
 						{#each group.lines as good (good.id)}
 							{@const qty = qtyById.get(good.id)}
+							{@const pieces = qty !== undefined ? approxPieces(qty, good) : null}
 							<li class="row" class:in-cart={qty !== undefined} data-testid="good" data-ingredient-id={good.id}>
-								<span class="name" lang="hu">{good.name_hu}</span>
-								<span class="controls">
-									{#if qty !== undefined}
-										<QtyStepper
-											name={good.name_hu}
-											{qty}
-											unit={good.unit}
-											pieces={approxPieces(qty, good)}
-											onchange={(next) => setQty(good.id, next, 'browse')}
-										/>
-									{:else}
-										<button
-											type="button"
-											class="btn btn-secondary add"
-											aria-label={t('cart.add_named', { name: good.name_hu })}
-											onclick={() => add(good)}>{t('cart.add')}</button
-										>
+								<span class="name">
+									<span lang="hu">{good.name_hu}</span>
+									{#if pieces !== null}
+										<span class="pieces small muted">{t('cart.pieces', { count: pieces })}</span>
 									{/if}
 								</span>
+								{#if qty !== undefined}
+									<QtyStepper
+										name={good.name_hu}
+										{qty}
+										unit={good.unit}
+										onchange={(next) => setQty(good.id, next, 'browse')}
+									/>
+								{:else}
+									<button
+										type="button"
+										class="btn btn-secondary add"
+										aria-label={t('cart.add_named', { name: good.name_hu })}
+										onclick={() => add(good)}>{t('cart.add')}</button
+									>
+								{/if}
 							</li>
 						{/each}
 					</ul>
@@ -359,37 +357,24 @@
 		font-weight: 600;
 	}
 
+	/* The name, with the piece count under it; the − amount + control (or "Kosárba") on the right. */
 	.name {
+		display: flex;
+		flex-direction: column;
 		flex: 1 1 auto;
 		min-width: 0;
+		overflow-wrap: anywhere;
 	}
 
-	.controls {
-		display: inline-flex;
+	.pieces {
+		font-weight: 400;
+	}
+
+	/* "Kosárba" is as wide and as round as the − amount + control it turns into. */
+	.add {
 		flex: none;
-		align-items: center;
-		justify-content: center;
-		gap: var(--space-2);
-	}
-
-	/* Phones: the name on its own line, the controls centred under it. */
-	@media (max-width: 30rem) {
-		.row {
-			flex-direction: column;
-			align-items: stretch;
-			gap: var(--space-1);
-			text-align: center;
-		}
-
-		.controls {
-			align-self: center;
-		}
-	}
-
-	.remove {
-		min-width: var(--tap);
-		padding: 0;
-		font-size: var(--font-size-lg);
+		min-width: calc(2 * var(--tap) + 4rem + 2px);
+		border-radius: 999px;
 	}
 
 	.undo {

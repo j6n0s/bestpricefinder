@@ -3,7 +3,7 @@ import type { Messages } from './types';
 
 export const coreEn: Messages<typeof coreHu> = {
 	app_name: 'Heti kosár',
-	page_title: '{page} · Heti kosár',
+	page_title: '{page} | Heti kosár',
 	skip_to_content: 'Skip to content',
 	nav_label: 'Main navigation',
 	nav_cart: 'Cart',
@@ -19,6 +19,9 @@ export const coreEn: Messages<typeof coreHu> = {
 	data_stale_detail: 'Prices may have changed since. Latest price data: {date}',
 	offline: 'You are offline. You are seeing the most recently loaded data.',
 
+	sources_summary: 'Sources: GVH Árfigyelő, {date}',
+	sources_summary_undated: 'Sources: GVH Árfigyelő, data date unknown',
+	sources_summary_ksh: ', KSH',
 	attribution_gvh: 'Source: GVH Árfigyelő (arfigyelo.gvh.hu), {date}',
 	attribution_gvh_undated: 'Source: GVH Árfigyelő (arfigyelo.gvh.hu), data date unknown',
 	attribution_chain_typical: 'Chain-typical prices.',
@@ -33,7 +36,6 @@ export const coreEn: Messages<typeof coreHu> = {
 	badge_ksh_estimate: 'estimated national average price (KSH)',
 	badge_no_store_data: 'no price data',
 	badge_unavailable: 'not in this store',
-	badge_assumed: 'availability not confirmed',
 	badge_pantry: 'probably at home',
 	badge_stale: 'not current',
 	price_discounted: 'reduced price (GVH label)',
@@ -84,5 +86,9 @@ export const coreEn: Messages<typeof coreHu> = {
 	home_title: 'Weekly meals, shopping list, nearby prices',
 	home_cta_plan: 'Make a weekly plan',
 	home_cta_recipes: 'Browse recipes',
-	home_cta_cart: 'Build a cart'
+	home_cta_cart: 'Build a cart',
+	home_prefs_title: 'What do you not eat?',
+	home_prefs_save: 'Save',
+	home_prefs_saved: 'Saved.',
+	home_prefs_edit: 'Change it in Settings'
 };

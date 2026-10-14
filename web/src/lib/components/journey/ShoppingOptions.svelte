@@ -18,6 +18,7 @@
 	import type { LatLon } from '$lib/geo';
 	import { t, tp } from '$lib/i18n';
 	import { osmLink, shoppingView } from '$lib/journey/view';
+	import { SHARED_NOTE, sharedNoteKeys } from '$lib/list/ranking';
 	import { chainLabel, storeAddress } from '$lib/list/stores';
 	import JourneyMap from './JourneyMap.svelte';
 
@@ -164,8 +165,7 @@
 									<p class="small muted">
 										{stop.number === 1
 											? t('journey.leg_first', { distance: formatDistance(stop.legKm) })
-											: t('journey.leg_next', { distance: formatDistance(stop.legKm) })}
-										·
+											: t('journey.leg_next', { distance: formatDistance(stop.legKm) })},
 										{tp('journey.stop_items', stop.items.length, { subtotal: formatMoney(stop.subtotal) })}
 									</p>
 									<p class="small" lang="hu">{itemNames(stop.items)}</p>
@@ -205,17 +205,19 @@
 			<section id="{id}-lists" class="lists" aria-labelledby="{id}-lists-title" data-testid="journey-lists">
 				<h4 id="{id}-lists-title">{t('journey.lists_title')}</h4>
 				{#each journey.stops as stop (stop.storeId)}
+					{@const lines = stop.items.flatMap((ingredientId) => quotedLine(stop.storeId, ingredientId) ?? [])}
+					{@const shared = sharedNoteKeys(lines)}
 					<div class="card stop-list">
 						<h5>
 							{t('journey.stop_heading', { number: stop.number, store: storeText(stop.storeId, stop.chain) })}
 						</h5>
 						<p class="small muted">{tp('journey.stop_items', stop.items.length, { subtotal: formatMoney(stop.subtotal) })}</p>
+						{#if shared.length > 0}
+							<p class="small muted" data-testid="store-notes">{shared.map((key) => t(SHARED_NOTE[key])).join(' ')}</p>
+						{/if}
 						<ul class="lines">
-							{#each stop.items as ingredientId (ingredientId)}
-								{@const line = quotedLine(stop.storeId, ingredientId)}
-								{#if line}
-									<StoreLine {line} name={nameOf(ingredientId)} checked={checked.has(ingredientId)} {ontogglecheck} />
-								{/if}
+							{#each lines as line (line.ingredient_id)}
+								<StoreLine {line} name={nameOf(line.ingredient_id)} checked={checked.has(line.ingredient_id)} {ontogglecheck} omit={shared} />
 							{/each}
 						</ul>
 					</div>
