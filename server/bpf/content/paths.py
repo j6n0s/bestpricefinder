@@ -12,6 +12,8 @@ INGREDIENTS_PATH: Path = DATA_DIR / "ingredients.json"
 RECIPES_DIR: Path = DATA_DIR / "recipes"
 KSH_PATH: Path = DATA_DIR / "ksh" / "ara0044.csv"
 KSH_SOURCE_PATH: Path = DATA_DIR / "ksh" / "SOURCE.md"
+#: The original ara0044 file from ksh.hu (fetched 2026-10-14 by a local session), the seed's input.
+KSH_RAW_PATH: Path = DATA_DIR / "ksh" / "raw" / "ara0044.csv"
 NUTRITION_PATH: Path = DATA_DIR / "nutrition" / "nutrition.json"
 
 #: GVH leaf list of 2026-10-12, used to check ``leaf_ids`` when the DB has no categories (docs/DATA.md).

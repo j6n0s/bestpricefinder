@@ -3,11 +3,11 @@
 - **Table:** KSH STADAT ara0044, "Egyes termékek és szolgáltatások fogyasztói átlagára (nyers adatok), havonta", <https://www.ksh.hu/stadat_files/ara/hu/ara0044.html>.
 - **Licence:** CC BY 4.0 (<https://www.ksh.hu/copyright>). Attribution, required wherever a value is shown: "Forrás: KSH" with a link to <https://www.ksh.hu/stadat_files/ara/hu/ara0044.html>.
 - **Use in the app:** "becsült országos átlagár (KSH)", a monthly national average. Never show it as a store price.
-- **Converted from:** `research/alt-price-sources/data/ksh_ara0044_latest_avg_prices.csv`, the copy of the table made by the research stream `alt-price-sources` on 2026-10-12 (latest month 2026-09; the table was last updated by KSH on 2026-10-07). **It was not re-fetched from ksh.hu**, because ksh.hu is blocked from the build environment. Replace this seed by converting the original file once it is available: `python -m bpf.content --convert-ksh <raw file>`.
-- **Input sha256:** `99a742cfe954724182111d560a358f7941cc5469f786808100f10ef9185c8f42`
-- **Input format:** research (utf-8)
-- **Fetched:** 2026-10-12
-- **Command:** `python -m bpf.content --convert-ksh research/alt-price-sources/data/ksh_ara0044_latest_avg_prices.csv --ksh-format research --ksh-fetched 2026-10-12`
+- **Converted from:** `data/ksh/raw/ara0044.csv`, the original file downloaded from <https://www.ksh.hu/stadat_files/ara/hu/ara0044.csv>.
+- **Input sha256:** `506df2082faa372bb2f8e3774aff1b5d9867edd87b8c99bc39fddb7eab61976e`
+- **Input format:** stadat (iso-8859-2 (with windows-1250 punctuation))
+- **Fetched:** 2026-10-14
+- **Command:** `python -m bpf.content --convert-ksh data/ksh/raw/ara0044.csv --ksh-format stadat --ksh-fetched 2026-10-14 --ksh-url https://www.ksh.hu/stadat_files/ara/hu/ara0044.csv`
 - **Rows:** 61 food rows kept; 6 food rows dropped (listed below); 108 non-food rows dropped.
 - **Periods:** 2026-07-01, 2026-09-01 (each row carries the month of its latest published value).
 
@@ -24,6 +24,6 @@
 | 12101 | Sertészsír, 400–500 g (kivéve mangalica) | unit cannot be normalised to kg, l or db |
 | 13801 | Háztartási keksz, csomagolt 800–1000 g, csomag | unit cannot be normalised to kg, l or db |
 | 14310 | Dobozos narancslé, 100%-os gyümölcstartalom, 1 l, doboz | unit cannot be normalised to kg, l or db |
-| 14425 | Csemegekukorica-konzerv, dobozp | unit cannot be normalised to kg, l or db |
+| 14425 | Csemegekukorica-konzerv, doboz | unit cannot be normalised to kg, l or db |
 | 15101 | Hasábburgonya, gyorsfagyasztott, félkész, 750–1000 g, csomag | unit cannot be normalised to kg, l or db |
-| 15201 | Bors, fekete, őrölt, 16–25 g, csomagr | unit cannot be normalised to kg, l or db |
+| 15201 | Bors, fekete, őrölt, 16–25 g, csomag | unit cannot be normalised to kg, l or db |

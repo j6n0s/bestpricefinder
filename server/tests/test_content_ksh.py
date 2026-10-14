@@ -25,7 +25,7 @@ from bpf.content.ksh_convert import (
     read_research,
     read_stadat,
 )
-from bpf.content.paths import KSH_PATH, KSH_RESEARCH_CSV, KSH_SOURCE_PATH
+from bpf.content.paths import KSH_PATH, KSH_RAW_PATH, KSH_RESEARCH_CSV, KSH_SOURCE_PATH
 
 REPO = Path(__file__).resolve().parents[2]
 GAP_KSH = REPO / "research/gap-healthy-plan-priceability/data/ksh_ara0044_latest.csv"
@@ -288,30 +288,48 @@ def test_read_research_rejects_a_wrong_header_and_bad_rows() -> None:
 # ───────────────────────────── the committed seed ─────────────────────────────
 
 
-def test_committed_seed_is_reproducible_from_the_research_copy(tmp_path: Path) -> None:
+KSH_RAW_URL = "https://www.ksh.hu/stadat_files/ara/hu/ara0044.csv"
+
+
+def test_committed_seed_is_reproducible_from_the_original_file(tmp_path: Path) -> None:
+    """data/ksh/ara0044.csv and SOURCE.md are exactly what the command recorded in SOURCE.md writes."""
     out_csv, out_md = tmp_path / "ara0044.csv", tmp_path / "SOURCE.md"
     result = convert_ksh_file(
-        KSH_RESEARCH_CSV,
-        raw_format="research",
-        fetched=date(2026, 10, 12),
+        KSH_RAW_PATH,
+        raw_format="stadat",
+        fetched=date(2026, 10, 14),
+        url=KSH_RAW_URL,
         csv_path=out_csv,
         source_path=out_md,
     )
     assert out_csv.read_bytes() == KSH_PATH.read_bytes()
     assert out_md.read_bytes() == KSH_SOURCE_PATH.read_bytes()
-    assert result.sha256 == hashlib.sha256(KSH_RESEARCH_CSV.read_bytes()).hexdigest()
+    assert result.sha256 == hashlib.sha256(KSH_RAW_PATH.read_bytes()).hexdigest()
+    assert result.conversion.encoding.startswith("iso-8859-2")
+
+
+def test_the_research_copy_converts_to_the_same_rows(tmp_path: Path) -> None:
+    """Cross-check: the research copy (2026-10-12) and the original file (2026-10-14) give identical rows."""
+    out_csv = tmp_path / "ara0044.csv"
+    convert_ksh_file(
+        KSH_RESEARCH_CSV,
+        raw_format="research",
+        fetched=date(2026, 10, 12),
+        csv_path=out_csv,
+        source_path=tmp_path / "SOURCE.md",
+    )
+    assert out_csv.read_bytes() == KSH_PATH.read_bytes()
 
 
 def test_source_md_states_origin_licence_and_checksum() -> None:
     text = KSH_SOURCE_PATH.read_text(encoding="utf-8")
-    sha = hashlib.sha256(KSH_RESEARCH_CSV.read_bytes()).hexdigest()
+    sha = hashlib.sha256(KSH_RAW_PATH.read_bytes()).hexdigest()
     assert sha in text
     assert "CC BY 4.0" in text
     assert '"Forrás: KSH"' in text
-    assert "research/alt-price-sources/data/ksh_ara0044_latest_avg_prices.csv" in text
-    assert "not re-fetched" in text
-    assert "blocked" in text
-    assert "https://www.ksh.hu/stadat_files/ara/hu/ara0044.html" in text
+    assert "`data/ksh/raw/ara0044.csv`, the original file downloaded from <" + KSH_RAW_URL + ">" in text
+    assert "https://www.ksh.hu/stadat_files/ara/hu/ara0044.html" in text  # the attribution link
+    assert f"--ksh-url {KSH_RAW_URL}`" in text
 
 
 def test_seed_names_match_the_independently_decoded_research_table() -> None:

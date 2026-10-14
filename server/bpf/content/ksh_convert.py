@@ -9,9 +9,10 @@ Inputs
 per item (code = 5 digits). Numbers use a decimal comma and space/no-break-space thousand separators; ``..``,
 ``–``, ``-``, ``x`` or an empty cell mean "no value". The file is declared ISO-8859-2; KSH files also use the
 Windows-1250 punctuation in 0x80–0x9F (0x96 = "–", seen in the research copy), which is decoded as such. A
-UTF-8 file is accepted too (and recorded as such). The exact layout of the raw file has not been seen yet
-(ksh.hu is unreachable from the build environment), so every structural surprise stops the conversion
-with an error that says what was expected.
+UTF-8 file is accepted too (and recorded as such). The real file (fetched 2026-10-14 by a local session,
+kept in ``data/ksh/raw/``) has a title row, then the header ``Kódszám;Megnevezés;2017. január;…`` and ``..``
+for the months not published yet; every other structural surprise stops the conversion with an error that
+says what was expected.
 
 ``research``: ``research/alt-price-sources/data/ksh_ara0044_latest_avg_prices.csv`` (UTF-8, columns
 ``ksh_code,item,avg_price_huf,month``), the research copy that seeds the repository until a raw file can be
@@ -490,6 +491,8 @@ def convert_ksh_file(
     command = (
         f"python -m bpf.content --convert-ksh {raw_display} --ksh-format {raw_format} --ksh-fetched {when}"
     )
+    if url != KSH_TABLE_URL:  # so that the recorded command reproduces SOURCE.md exactly
+        command += f" --ksh-url {url}"
     source = render_source_md(
         conversion,
         raw_display=raw_display,
