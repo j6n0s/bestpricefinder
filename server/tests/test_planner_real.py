@@ -39,7 +39,6 @@ EXCUSED_BY: dict[str, str] = {
     "no_meat_free_recipe_available": "meat_free_day",
     "no_potato_free_recipe_available": "potato",
     "red_meat_cap_unreachable": "red_meat",
-    "sweets_cap_unreachable": "sweets",
     "budget_unreachable": "budget",
     "recipe_cost_missing": "budget",
 }

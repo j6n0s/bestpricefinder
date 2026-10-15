@@ -216,3 +216,15 @@ Full notes: the reviewers' files were local only, so ask the user if you need de
   - The home page asks "Mit nem eszel?" with the same controls as Settings. The choices are stored on the device as they are made (§8.9).
   - "Mentés" sets the new field `StoredState.preferencesAsked` (no version bump; "Minden adat törlése" resets it), and a link points to Settings, where the choices are changed from then on.
   - Existing users without the field see the question once.
+
+## 2026-10-15 — cloud agent (branch `claude/practical-newton-fdz8jp`) — the sweets rule is removed
+- At the user's request ("az édességet vedd ki a rendszerből!"), the weekly `sweets` rule (≤2 meals with an `edes` recipe) is gone everywhere:
+  - the planner no longer caps, repairs or guides sweet meals;
+  - `check_plan` / `suggest_plan` report one rule fewer per week;
+  - the API drops `sweets` from `RuleName` and the `sweets_cap_unreachable` warning (docs/openapi.json and the web types regenerated);
+  - the week summary has no "Édesség" tile.
+- Kept:
+  - the sweet recipes themselves;
+  - the `edes` recipe tag, still offered as an exclusion ("Édes étel"), so anyone can leave sweet dishes out entirely.
+- BUILD-BRIEF.md §6 still lists "sweets ≤2" among the weekly rules. That file belongs to the foundation, so it is left as is; this entry overrides it.
+- data/CONTENT_REPORT.md is a dated feasibility report and still shows the old rule. Re-run it when the content changes next.

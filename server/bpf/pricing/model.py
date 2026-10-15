@@ -393,7 +393,7 @@ class PlanRequest:
 @dataclass(frozen=True, slots=True)
 class RuleCheck:
     week: int  # 0-based week index (7-day blocks from day 0)
-    rule: Literal["fish", "legume", "meat_free_day", "red_meat", "potato", "sweets", "variety", "budget"]
+    rule: Literal["fish", "legume", "meat_free_day", "red_meat", "potato", "variety", "budget"]
     ok: bool
     value: str  # human-readable measured value, e.g. "2 hal", "420 g/fő"
     limit: str  # e.g. "≥ 1", "≤ 600 g/fő"

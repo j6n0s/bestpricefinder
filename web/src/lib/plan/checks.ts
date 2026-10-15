@@ -20,7 +20,6 @@ export const RULE_ORDER: readonly RuleName[] = [
 	'meat_free_day',
 	'red_meat',
 	'potato',
-	'sweets',
 	'variety',
 	'budget'
 ];
@@ -36,7 +35,6 @@ const RULE_LABEL: Readonly<Record<RuleName, PlainKey>> = {
 	meat_free_day: 'plan.rule_meat_free_day',
 	red_meat: 'plan.rule_red_meat',
 	potato: 'plan.rule_potato',
-	sweets: 'plan.rule_sweets',
 	variety: 'plan.rule_variety',
 	budget: 'plan.rule_budget'
 };
@@ -107,9 +105,6 @@ export function checkParts(check: RuleCheckOut, lang: Lang): CheckParts {
 				value: translatePlural(lang, 'plan.check_potato_value', value),
 				target: translate(lang, 'plan.check_potato_target', { max: formatNumber(limit) })
 			};
-		case 'sweets':
-			if (value === null || limit === null) return fallback();
-			return { label, value: formatNumber(value), target: translate(lang, 'plan.check_target_at_most', { max: formatNumber(limit) }) };
 		case 'variety': {
 			const windows = [...check.limit.matchAll(/(\d+) napon belül/g)].map((match) => Number(match[1]));
 			const [days, snackDays] = windows;
@@ -150,7 +145,6 @@ const PLAIN_WARNINGS: Readonly<Record<string, PlainKey>> = {
 	no_fish_recipe_available: 'plan.warning_no_fish_recipe_available',
 	no_legume_recipe_available: 'plan.warning_no_legume_recipe_available',
 	red_meat_cap_unreachable: 'plan.warning_red_meat_cap_unreachable',
-	sweets_cap_unreachable: 'plan.warning_sweets_cap_unreachable',
 	budget_unreachable: 'plan.warning_budget_unreachable',
 	recipe_cost_missing: 'plan.warning_recipe_cost_missing'
 };

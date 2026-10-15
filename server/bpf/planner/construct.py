@@ -7,7 +7,7 @@ Assigning a meal propagates every enforced rule (see ``Construct.assign``):
 * ``variety``: the meal leaves the domains of the cells inside the no-repeat window. A ``ket_napos`` meal may
   stay in the same slot on the next day; runs of three are cut (the rule pairs days greedily).
 * ``potato``: the first main potato meal of a day removes potato meals from the main cells of both neighbours.
-* ``sweets`` / ``red_meat`` / ``budget``: per-block bounds; values that cannot fit any more are removed.
+* ``red_meat`` / ``budget``: per-block bounds; values that cannot fit any more are removed.
 * ``fish`` / ``legume`` / ``meat_free_day``: a block fails as soon as no cell (no day) can still satisfy the
   rule; when exactly one cell (day) can, its domain is restricted (unit propagation).
 
@@ -21,7 +21,7 @@ on the input and the seed.
 Rules that the pool analysis proved impossible are not enforced (the local search minimises them later), and
 the variety rule is not enforced for slots marked ``relaxed``: there the value order only avoids repeats.
 With ``enforce=False`` nothing is enforced: one pass, never failing, guided only by the value order (avoid
-repeats, prefer light, cheap, non-sweet and potato-free meals and the fish / legume meals a block lacks); it
+repeats, prefer light, cheap and potato-free meals and the fish / legume meals a block lacks); it
 starts the local search when the enforcing constructions run out of nodes.
 """
 
@@ -33,7 +33,7 @@ from collections.abc import Mapping, Sequence
 from decimal import Decimal
 
 from .facts import MAIN_POS
-from .rules import COUNT_RULE_MIN_DAYS, SWEETS_MAX, WEEK_DAYS, Limits, Meal
+from .rules import COUNT_RULE_MIN_DAYS, WEEK_DAYS, Limits, Meal
 
 NEED_BONUS = 0.5
 """Order bonus for a meal that gives the block a fish / legume meal it still lacks."""
@@ -48,11 +48,11 @@ appeared in 20 four-week plans)."""
 REPEAT_PENALTY = 4.0
 """Order penalty per repeat, in slots where the variety rule is relaxed."""
 HOPELESS_PENALTY = 4.0
-"""For a rule not enforced in the block (proved impossible, or ``enforce=False``): order penalty for a sweet
-meal (``sweets``), a main-slot potato meal (``potato``) and, scaled by the meal's rank from lightest /
-cheapest (0) to heaviest / most expensive or unpriced (1), for red meat (``red_meat``) and cost (``budget``).
+"""For a rule not enforced in the block (proved impossible, or ``enforce=False``): order penalty for a
+main-slot potato meal (``potato``) and, scaled by the meal's rank from lightest / cheapest (0) to heaviest /
+most expensive or unpriced (1), for red meat (``red_meat``) and cost (``budget``).
 The plan then breaks those rules as little as it can; the local search finishes the job."""
-GUIDED_RULES = frozenset({"red_meat", "sweets", "budget"})
+GUIDED_RULES = frozenset({"red_meat", "budget"})
 """The bounded block rules, which ``enforce=False`` only follows through the value order."""
 CONSTRAINING_PENALTY = 1.0
 """From the second attempt on: order penalty per open neighbour cell that still has the meal, weighted by one
@@ -132,7 +132,6 @@ class Construct:
         self.fish_mask = mask("fish")
         self.legume_mask = mask("legume")
         self.free_mask = mask("meat_free")
-        self.sweet_mask = mask("sweet")
         self.potato_mask = mask("potato")
         self.priced_mask = sum(1 << m for m, meal in enumerate(meals) if meal.cost is not None)
         self.enforce = enforce
@@ -154,7 +153,6 @@ class Construct:
         self.need_legume: list[bool] = []
         self.need_free: list[bool] = []
         self.cap_red: list[bool] = []
-        self.cap_sweets: list[bool] = []
         self.cap_budget: list[bool] = []
         for b, days in enumerate(self.block_days):
             dead = unenforced[b]
@@ -163,7 +161,6 @@ class Construct:
             self.need_legume.append(counted and "legume" not in dead)
             self.need_free.append(counted and "meat_free_day" not in dead)
             self.cap_red.append("red_meat" not in dead)
-            self.cap_sweets.append("sweets" not in dead)
             self.cap_budget.append(lim.budget is not None and "budget" not in dead)
         self.red_limit = [lim.red_limit_g(len(days)) * lim.red_den for days in self.block_days]
         self.budget_limit = [
@@ -204,8 +201,6 @@ class Construct:
             anywhere = [0.0] * count
             in_main = [0.0] * count
             for m, meal in enumerate(meals):
-                if "sweets" in dead and meal.sweet:
-                    anywhere[m] += HOPELESS_PENALTY
                 if "red_meat" in dead:
                     anywhere[m] += HOPELESS_PENALTY * red_rank[m]
                 if "budget" in dead and lim.budget is not None:
@@ -257,7 +252,6 @@ class Construct:
         n_blocks = self.n_blocks
         self.b_fish = [0] * n_blocks
         self.b_legume = [0] * n_blocks
-        self.b_sweets = [0] * n_blocks
         self.b_red = [0] * n_blocks
         self.b_red_rest = [sum(self.red_min[self.pos[i]] for i in cells) for cells in self.block_cells]
         self.b_cost = [Decimal(0)] * n_blocks
@@ -384,7 +378,6 @@ class Construct:
         dom[i] = bit
         self.b_fish[b] += meal.fish
         self.b_legume[b] += meal.legume
-        self.b_sweets[b] += meal.sweet
         self.b_red[b] += meal.red_units
         self.b_red_rest[b] -= self.red_min[pos]
         if meal.cost is not None:
@@ -416,13 +409,6 @@ class Construct:
                     for j in self.main_day_cells[day2]:
                         if val[j] < 0 and not self._restrict(j, ~self.potato_mask, touched):
                             return False
-        if meal.sweet and self.cap_sweets[b]:
-            if self.b_sweets[b] > SWEETS_MAX:
-                return False
-            if self.b_sweets[b] == SWEETS_MAX:
-                for j in self.block_cells[b]:
-                    if val[j] < 0 and not self._restrict(j, ~self.sweet_mask):
-                        return False
         if self.cap_red[b] and meal.red_units > self.red_min[pos] and not self._fit_red(b):
             return False
         if self.cap_budget[b]:
@@ -484,7 +470,6 @@ class Construct:
         self.val[i] = -1
         self.b_fish[b] -= meal.fish
         self.b_legume[b] -= meal.legume
-        self.b_sweets[b] -= meal.sweet
         self.b_red[b] -= meal.red_units
         self.b_red_rest[b] += self.red_min[pos]
         if meal.cost is not None:

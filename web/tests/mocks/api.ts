@@ -421,7 +421,7 @@ const isInt = (value: unknown, min: number, max: number): value is number =>
 /**
  * The weekly rule results for a plan, computed from the plan and the SYNTHETIC recipe tags, in the server's
  * string format (server/bpf/planner/rules.py): per 7-day week (day index ÷ 7) fish, legume, meat_free_day,
- * red_meat, potato, sweets and variety, plus budget when a weekly budget is set. The count rules apply from
+ * red_meat, potato and variety, plus budget when a weekly budget is set. The count rules apply from
  * 4 planned days of a week ("n/a" below that). `library` defaults to the mocks' own recipes.
  */
 export function computeMockChecks(
@@ -467,7 +467,6 @@ export function computeMockChecks(
 			applies ? { week, rule, ok: n >= 1, value: `${n} ${noun}`, limit: '≥ 1' } : { week, rule, ok: true, value: 'n/a', limit: '≥ 1' };
 		const redMeat = SYNTHETIC_RED_MEAT_G * meals.filter((id) => has(id, 'sertes') || has(id, 'marha')).length;
 		const redCap = Math.floor((options.redMeatGPerPersonWeek * weekDays.length) / 7);
-		const sweets = count('edes');
 		const weekRepeats = repeats.get(week) ?? 0;
 		checks.push(
 			countRule('fish', count('hal'), 'hal'),
@@ -475,7 +474,6 @@ export function computeMockChecks(
 			countRule('meat_free_day', freeDays, 'húsmentes nap'),
 			{ week, rule: 'red_meat', ok: redMeat <= redCap, value: `${redMeat} g/fő`, limit: `≤ ${redCap} g/fő` },
 			{ week, rule: 'potato', ok: true, value: '0 nap egymás után', limit: '≤ 1 nap egymás után' },
-			{ week, rule: 'sweets', ok: sweets <= 2, value: `${sweets} édes`, limit: '≤ 2' },
 			{
 				week,
 				rule: 'variety',

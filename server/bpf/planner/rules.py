@@ -11,8 +11,6 @@ principles (docs/ENGINE.md "bpf.planner"):
   to whole grams: ``cap x days // 7``.
 * ``potato``: no two consecutive days with a ``potato`` ingredient in a main meal (reggeli, ebed, vacsora).
   Runs are followed across block boundaries; a run is reported in the block where it continues.
-* ``sweets``: <= 2 meals with an ``edes`` recipe (the same cap for shorter blocks; only red meat and budget
-  are pro rata).
 * ``variety``: a recipe never repeats within ``no_repeat_days`` days (``day2 - day1 < window`` is a repeat,
   so a window of 1 forbids only same-day repeats and 0 disables the rule). Snacks (tizorai, uzsonna) may
   repeat more often: any pair that involves a snack slot uses ``min(2, no_repeat_days)``. Exception: a
@@ -53,7 +51,6 @@ from .facts import (
 
 WEEK_DAYS = 7
 COUNT_RULE_MIN_DAYS = 4
-SWEETS_MAX = 2
 SNACK_WINDOW_DAYS = 2
 DEFAULT_NO_REPEAT_DAYS = 5
 """Default variety window, shared by ``check_plan`` and ``PlanRequest.no_repeat_days``."""
@@ -71,7 +68,6 @@ class Meal:
     recipe_id: str
     fish: int
     legume: int
-    sweet: int
     meat_free: bool
     two_day: bool
     potato: bool
@@ -91,7 +87,6 @@ def compile_meals(
             recipe_id=f.recipe_id,
             fish=int(f.fish),
             legume=int(f.legume),
-            sweet=int(f.sweet),
             meat_free=f.meat_free,
             two_day=f.two_day,
             potato=f.potato,
@@ -145,7 +140,6 @@ class BlockTotals:
         "perish",
         "perish_distinct",
         "red",
-        "sweets",
         "unpriced",
     )
 
@@ -153,7 +147,6 @@ class BlockTotals:
         self.days = days  # plan days in this block (1..7)
         self.fish = 0
         self.legume = 0
-        self.sweets = 0
         self.red = 0
         self.cost = Decimal(0)
         self.unpriced = 0
@@ -172,7 +165,6 @@ class BlockTotals:
         self.free_days += int(is_free) - int(was_free)
         self.fish += sign * meal.fish
         self.legume += sign * meal.legume
-        self.sweets += sign * meal.sweet
         self.red += sign * meal.red_units
         if meal.cost is None:
             self.unpriced += sign
@@ -217,8 +209,6 @@ def block_failures(t: BlockTotals, lim: Limits) -> list[str]:
             failed.append("meat_free_day")
     if not red_ok(t, lim):
         failed.append("red_meat")
-    if t.sweets > SWEETS_MAX:
-        failed.append("sweets")
     if not budget_ok(t, lim):
         failed.append("budget")
     return failed
@@ -332,13 +322,6 @@ def week_checks(
             ok=potato_run <= 1,
             value=f"{potato_run} nap egymás után",
             limit="≤ 1 nap egymás után",
-        ),
-        RuleCheck(
-            week=week,
-            rule="sweets",
-            ok=t.sweets <= SWEETS_MAX,
-            value=f"{t.sweets} édes",
-            limit=f"≤ {SWEETS_MAX}",
         ),
         RuleCheck(
             week=week, rule="variety", ok=repeats == 0, value=f"{repeats} ismétlés", limit=variety_limit

@@ -147,7 +147,6 @@ function computeChecks(days: PlanDayIO[], noRepeatDays: number): RuleCheckOut[] 
 			count('meat_free_day', freeDays, 'húsmentes nap'),
 			{ week, rule: 'red_meat', ok: red <= cap, value: `${red} g/fő`, limit: `≤ ${cap} g/fő` },
 			{ week, rule: 'potato', ok: maxRun <= 1, value: `${maxRun} nap egymás után`, limit: '≤ 1 nap egymás után' },
-			{ week, rule: 'sweets', ok: true, value: '0 édes', limit: '≤ 2' },
 			{ week, rule: 'variety', ok: true, value: '0 ismétlés', limit: `0 ismétlés ${noRepeatDays} napon belül` }
 		);
 	}

@@ -3,9 +3,10 @@
 "M0-sized" = ``rich_library(lib_seed, mains=16, breakfasts=6, snacks=6)``: slot pools only just large enough
 for the 5-day no-repeat window, the size of the first real library milestone. On these the planner used to
 miss plans that meet every rule. Now, for lib_seed 0-5, SLOTS_5 x 7 days, SLOTS_5 x 31 days and SLOTS_3 x 31
-days, seeds 0-11: every plan meets every rule that the pool analysis does not prove impossible, and where it
-proves one impossible (libs 1 and 5 with snacks: half of the snacks are sweet), the proof is checked here by
-exhausting the search on the sub-problem, and each rule alone is shown satisfiable.
+days, seeds 0-11: every plan meets every rule, with no warning (libs 1 and 5, whose snacks are half sweet,
+used to give up snack variety for the sweets cap, removed on 2026-10-15). Where the pool analysis proves a
+rule impossible (the potato-heavy library below), the proof is checked by exhausting the search on the
+sub-problem, and each rule alone is shown satisfiable.
 """
 
 from __future__ import annotations
@@ -23,11 +24,7 @@ from tests.test_planner_synth import INGREDIENTS, rich_library, seeded
 
 M0_CONFIGS: list[tuple[tuple[Slot, ...], int]] = [(SLOTS_5, 7), (SLOTS_5, 31), (SLOTS_3, 31)]
 M0_SEEDS = range(12)
-SNACKS_TOO_FEW = ("slot_pool_too_small:tizorai", "slot_pool_too_small:uzsonna")
-SWEET_SNACK_LIBRARIES = frozenset({1, 5})
-"""lib_seeds whose snacks are half sweet: 3 plain snacks cannot fill 4 snack cells in every 2 days, so keeping
-the variety rule needs >= 3 sweet snacks a week (the cap is 2)."""
-BLOCK_RULES = frozenset({"fish", "legume", "meat_free_day", "red_meat", "sweets", "budget"})
+BLOCK_RULES = frozenset({"fish", "legume", "meat_free_day", "red_meat", "budget"})
 UNLIMITED = 10**7
 
 
@@ -43,13 +40,10 @@ def plan_for(recipes: Sequence[Recipe], slots: tuple[Slot, ...], days: int, seed
 @pytest.mark.parametrize("lib_seed", range(6))
 def test_m0_library_meets_every_satisfiable_rule(lib_seed: int, slots: tuple[Slot, ...], days: int) -> None:
     lib = m0_library(lib_seed)
-    sweet_snacks = lib_seed in SWEET_SNACK_LIBRARIES and slots == SLOTS_5
     for seed in M0_SEEDS:
         plan = plan_for(lib, slots, days, seed)
-        assert plan.warnings == (SNACKS_TOO_FEW if sweet_snacks else ()), seed
+        assert plan.warnings == (), seed
         assert failing(plan) <= excused(plan), (seed, [c for c in plan.checks if not c.ok])
-        if sweet_snacks:  # variety gives way, the sweets cap holds
-            assert failing(plan) == {"variety"}, seed
 
 
 def prove(
@@ -71,21 +65,6 @@ def prove(
     found = builder.solve(seeded(0), UNLIMITED)
     assert builder.nodes < UNLIMITED  # a complete search, not a budget cut
     return found is not None, s
-
-
-@pytest.mark.parametrize("lib_seed", sorted(SWEET_SNACK_LIBRARIES))
-def test_sweet_snack_libraries_cannot_keep_variety_and_the_sweets_cap(lib_seed: int) -> None:
-    """In rich_library only snacks are sweet and snack recipes serve only the snack slots, so the snack
-    sub-problem decides the sweets cap and the snack repeats: exhausting it proves the warning."""
-    lib = m0_library(lib_seed)
-    snacks: tuple[Slot, ...] = ("tizorai", "uzsonna")
-    assert all(set(r.slots) <= set(snacks) for r in lib if "edes" in r.tags)
-    assert all(set(r.slots) <= set(snacks) for r in lib if set(r.slots) & set(snacks))
-    exists, s = prove(lib, snacks, 7, frozenset({"variety", "sweets"}))
-    assert not exists
-    assert s.too_small_warnings() == SNACKS_TOO_FEW
-    assert prove(lib, snacks, 7, frozenset({"variety"}))[0]
-    assert prove(lib, snacks, 7, frozenset({"sweets"}))[0]
 
 
 # 12 mains, 5 breakfasts and 5 snacks (lib_seed 8): 7 of the 12 lunch/dinner recipes contain potato. With no

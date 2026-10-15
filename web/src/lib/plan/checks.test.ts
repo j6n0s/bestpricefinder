@@ -56,11 +56,6 @@ describe('checkText (value and limit strings as server/bpf/planner/rules.py writ
 		);
 	});
 
-	it('sweets', () => {
-		expect(checkText(check('sweets', '3 édes', '≤ 2', false), 'hu')).toBe('Édesség: 3 (legfeljebb 2)');
-		expect(checkText(check('sweets', '0 édes', '≤ 2'), 'en')).toBe('Sweets: 0 (at most 2)');
-	});
-
 	it('variety, with and without the snack window', () => {
 		expect(checkText(check('variety', '0 ismétlés', '0 ismétlés 5 napon belül'), 'hu')).toBe(
 			`Változatosság: 0 ismétlés (5${NBSP}napon belül)`
@@ -130,7 +125,6 @@ describe('warningText (codes from docs/API.md)', () => {
 			'Ehhez az étkezéshez nincs választható burgonya nélküli recept: ebéd.'
 		);
 		expect(warningText('red_meat_cap_unreachable', 'hu')).toBe('A vörös hús heti felső határa ezekkel a receptekkel nem tartható.');
-		expect(warningText('sweets_cap_unreachable', 'en')).toBe('The weekly limit on sweet dishes cannot be kept with these recipes.');
 		expect(warningText('budget_unreachable', 'hu')).toBe('A heti keret ezekkel a receptekkel nem tartható.');
 		expect(warningText('recipe_cost_missing', 'hu')).toBe('Nincs elég áradat a heti keret ellenőrzéséhez.');
 	});
@@ -139,6 +133,8 @@ describe('warningText (codes from docs/API.md)', () => {
 		expect(warningText('slot_pool_empty', 'hu')).toBe('Ismeretlen figyelmeztetés: slot_pool_empty.');
 		expect(warningText('slot_pool_empty:brunch', 'hu')).toBe('Ismeretlen figyelmeztetés: slot_pool_empty:brunch.');
 		expect(warningText('no_fish_recipe_available:ebed', 'en')).toBe('Unknown note: no_fish_recipe_available:ebed.');
+		// The sweets cap was removed (2026-10-15): its old code is no longer a known warning.
+		expect(warningText('sweets_cap_unreachable', 'en')).toBe('Unknown note: sweets_cap_unreachable.');
 		expect(warningText('toString', 'hu')).toBe('Ismeretlen figyelmeztetés: toString.');
 		expect(warningText('__proto__:ebed', 'hu')).toBe('Ismeretlen figyelmeztetés: __proto__:ebed.');
 	});

@@ -28,14 +28,13 @@
 Warnings (machine codes, in this order):
 * ``slot_pool_empty:<slot>``: no eligible recipe; that slot's meals are ``None``.
 * ``slot_pool_too_small:<slot>``: the variety rule cannot hold for this slot (alone, or with the other slots
-  that share its recipes) within one no-repeat window, or it can hold only with more than ``SWEETS_MAX``
-  sweet meals in some block or with potato on two days in a row. The planner then keeps the other rules and
-  lets this slot repeat (variety is the lowest-priority rule).
+  that share its recipes) within one no-repeat window, or it can hold only with potato on two days in a row.
+  The planner then keeps the other rules and lets this slot repeat (variety is the lowest-priority rule).
 * ``no_fish_recipe_available`` / ``no_legume_recipe_available``: no eligible recipe for that count rule.
 * ``no_meat_free_recipe_available:<slot>``: this slot has recipes, but none is ``husmentes``.
 * ``no_potato_free_recipe_available:<slot>``: every recipe of this main slot contains potato.
-* ``red_meat_cap_unreachable``, ``sweets_cap_unreachable``, ``budget_unreachable``: even the lightest /
-  least sweet / cheapest choice per slot breaks the rule in some block.
+* ``red_meat_cap_unreachable``, ``budget_unreachable``: even the lightest / cheapest choice per slot breaks
+  the rule in some block.
 * ``recipe_cost_missing``: a weekly budget was given but there is no cost table, or the plan uses a recipe
   without a cost estimate (its block then fails the budget rule).
 Pool-level warnings are only emitted when the rule is provably impossible; the search may still fail a
@@ -66,7 +65,6 @@ from .facts import (
 from .rules import (
     COUNT_RULE_MIN_DAYS,
     NO_MEAL,
-    SWEETS_MAX,
     WEEK_DAYS,
     BlockTotals,
     Limits,
@@ -99,8 +97,8 @@ POLISH_MOVES_PER_CELL = 8
 """Local-search moves per plan cell after a construction that meets every rule (leftover polish only)."""
 SETTLE_MOVES_PER_CELL = 12
 """Local-search moves per plan cell after a construction that meets every rule the pool analysis did not rule
-out: only the degree of the impossible rules (repeats in too-small slots, sweets, red meat, cost...) is left
-to reduce."""
+out: only the degree of the impossible rules (repeats in too-small slots, red meat, cost...) is left to
+reduce."""
 MIN_MOVES = 600
 """Floor of the polish and settle budgets, so that short plans also get enough leftover moves."""
 REPAIR_MOVES_PER_CELL = 20
@@ -143,8 +141,6 @@ def block_penalty(t: BlockTotals, lim: Limits) -> int:
         if t.free_days == 0:
             units += 1
             guide += min((t.day_meaty[o] for o in range(WEEK_DAYS) if t.day_meals[o] > 0), default=0)
-    if t.sweets > SWEETS_MAX:
-        units += t.sweets - SWEETS_MAX
     if not red_ok(t, lim):
         units += 1
         limit = lim.red_limit_g(t.days) * lim.red_den
@@ -196,7 +192,6 @@ class _Search:
         self.fish_pool = sub(lambda meal: meal.fish == 1)
         self.legume_pool = sub(lambda meal: meal.legume == 1)
         self.free_pool = sub(lambda meal: meal.meat_free)
-        self.nonsweet_pool = sub(lambda meal: meal.sweet == 0)
         self.nopotato_pool = sub(lambda meal: not meal.potato)
         self.priced_pool = sub(lambda meal: meal.cost is not None)
 
@@ -532,14 +527,6 @@ class _Search:
                 return None
             pos = cells[rng.randrange(len(cells))]
             return self._replace(day, pos, self.free_pool[pos], rng)
-        if rule == "sweets":
-            cells = [
-                (d, p) for d, p in self._cells(week, lambda meal: meal.sweet == 1) if self.nonsweet_pool[p]
-            ]
-            if not cells:
-                return None
-            day, pos = cells[rng.randrange(len(cells))]
-            return self._replace(day, pos, self.nonsweet_pool[pos], rng)
         if rule == "red_meat":
             cells = self._cells(week, lambda meal: meal.red_units > 0)
             if not cells:
@@ -684,41 +671,6 @@ def _potato_free_slots(
     return flagged
 
 
-def _plain_deficit(plain: set[int], meals: Sequence[Meal], length: int, slots: int) -> int:
-    """Cells of ``slots`` slots over ``length`` consecutive days that the recipes ``plain`` cannot fill
-    without a repeat."""
-    return max(0, length * slots - _capacity(plain, meals, length)) if length else 0
-
-
-def _sweets_floor(
-    group: Sequence[int],
-    pools: Mapping[int, tuple[int, ...]],
-    meals: Sequence[Meal],
-    window: int,
-    days: int,
-) -> tuple[int, set[int]]:
-    """The fewest sweet meals the slots of ``group`` need in a block of ``days`` days if no recipe repeats
-    within ``window`` days (every pair of ``group`` must use that window), and the slots that force them.
-
-    For a subset S, any ``L <= window`` consecutive days have ``L x |S|`` cells, of which the non-sweet
-    recipes of S fill at most their capacity; the block splits into ``days // span`` disjoint windows of
-    ``span = min(window, days)`` days plus a remainder, and each needs its own sweet meals."""
-    span = min(window, days)
-    worst = 0
-    culprits: set[int] = set()
-    if span < 1:
-        return worst, culprits
-    for subset in _subsets(group):
-        plain = {m for pos in subset for m in pools[pos] if not meals[m].sweet}
-        size = len(subset)
-        floor = days // span * _plain_deficit(plain, meals, span, size)
-        floor += _plain_deficit(plain, meals, days % span, size)
-        if floor:
-            culprits.update(subset)
-            worst = max(worst, floor)
-    return worst, culprits
-
-
 def analyse_pools(
     n_days: int,
     positions: Sequence[int],
@@ -730,13 +682,11 @@ def analyse_pools(
     search neither enforces nor repairs them), and the slots whose variety rule is given up."""
     active = [pos for pos in positions if pools[pos]]
     main = [pos for pos in active if pos in MAIN_POS]
-    snack = [pos for pos in active if pos not in MAIN_POS]
 
     no_fish = not any(meals[m].fish for pos in active for m in pools[pos])
     no_legume = not any(meals[m].legume for pos in active for m in pools[pos])
     meaty_slots = [pos for pos in active if not any(meals[m].meat_free for m in pools[pos])]
     red_per_day = sum(min(meals[m].red_units for m in pools[pos]) for pos in active)
-    sweet_per_day = sum(1 for pos in active if all(meals[m].sweet for m in pools[pos]))
     cheapest = [[c for m in pools[pos] if (c := meals[m].cost) is not None] for pos in active]
     lengths = _block_lengths(n_days)
     hopeless: list[frozenset[str]] = []
@@ -754,8 +704,6 @@ def analyse_pools(
             )
         if days * red_per_day > lim.red_limit_g(days) * lim.red_den:
             rules.add("red_meat")
-        if days * sweet_per_day > SWEETS_MAX:
-            rules.add("sweets")
         if (
             lim.budget is not None
             and active
@@ -770,24 +718,11 @@ def analyse_pools(
     # variety: within the main window every pair of main slots repeats; within the snack window every pair
     small = _too_small_slots(main, pools, meals, lim.main_window, n_days)
     small |= _too_small_slots(active, pools, meals, lim.snack_window, n_days)
-    # variety together with another rule: when avoiding repeats is only possible by breaking the potato rule
-    # or the sweets cap, the slot repeats instead (variety is the lowest-priority rule)
+    # variety together with another rule: when avoiding repeats is only possible by breaking the potato rule,
+    # the slot repeats instead (variety is the lowest-priority rule)
     if not potato_hopeless:
         open_main = [pos for pos in main if pos not in small]
         small |= _potato_free_slots(open_main, pools, meals, lim.main_window, n_days)
-    for days, dead in zip(lengths, hopeless, strict=True):
-        if "sweets" in dead:
-            continue
-        open_main = [pos for pos in main if pos not in small]
-        main_floor, main_slots = _sweets_floor(open_main, pools, meals, lim.main_window, days)
-        open_snack = [pos for pos in snack if pos not in small]
-        snack_floor, snack_slots = _sweets_floor(open_snack, pools, meals, lim.snack_window, days)
-        open_all = [pos for pos in active if pos not in small]
-        all_floor, all_slots = _sweets_floor(open_all, pools, meals, lim.snack_window, days)
-        if main_floor + snack_floor > SWEETS_MAX:
-            small |= main_slots | snack_slots
-        if all_floor > SWEETS_MAX:
-            small |= all_slots
 
     warnings = [f"slot_pool_empty:{SLOTS_5[pos]}" for pos in positions if not pools[pos]]
     warnings += [f"slot_pool_too_small:{SLOTS_5[pos]}" for pos in positions if pos in small]
@@ -798,7 +733,6 @@ def analyse_pools(
         warnings += [f"no_potato_free_recipe_available:{SLOTS_5[pos]}" for pos in potato_free_missing]
     for rule, code in (
         ("red_meat", "red_meat_cap_unreachable"),
-        ("sweets", "sweets_cap_unreachable"),
         ("budget", "budget_unreachable"),
     ):
         if any(rule in rules for rules in hopeless):

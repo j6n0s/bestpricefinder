@@ -61,7 +61,7 @@ RECIPES = by_id(
         ),
     ]
 )
-RULES = ("fish", "legume", "meat_free_day", "red_meat", "potato", "sweets", "variety")
+RULES = ("fish", "legume", "meat_free_day", "red_meat", "potato", "variety")
 
 
 def check(
@@ -113,7 +113,6 @@ def test_hand_made_plan_full_result() -> None:
         RuleCheck(0, "meat_free_day", True, "4 húsmentes nap", "≥ 1"),
         RuleCheck(0, "red_meat", True, "100 g/fő", "≤ 600 g/fő"),
         RuleCheck(0, "potato", True, "0 nap egymás után", "≤ 1 nap egymás után"),
-        RuleCheck(0, "sweets", True, "0 édes", "≤ 2"),
         RuleCheck(0, "variety", True, "0 ismétlés", "0 ismétlés 5 napon belül"),
     )
 
@@ -187,7 +186,7 @@ def test_count_rules_apply_only_to_blocks_of_at_least_4_days(days: int, applies:
 def test_partial_last_block_of_10_days() -> None:
     rows = [{"ebed": f"veg-{i + 1}"} for i in range(10)]
     checks = check(rows)
-    assert [c.week for c in checks] == [0] * 7 + [1] * 7
+    assert [c.week for c in checks] == [0] * 6 + [1] * 6
     assert rule(checks, "fish", 0).ok is False
     assert rule(checks, "fish", 1) == RuleCheck(1, "fish", True, "n/a", "≥ 1")
 
@@ -303,19 +302,15 @@ def test_potato_days_with_a_gap_in_the_plan_are_not_consecutive() -> None:
     assert rule(check_plan(days, RECIPES, INGREDIENTS, people=1), "potato").ok is True
 
 
-# ───────────────────────────── sweets ─────────────────────────────
+# ───────────────────────────── no sweets rule ─────────────────────────────
 
 
-def test_two_sweets_pass_three_fail() -> None:
-    two = [{"uzsonna": "palacsinta"}, {"uzsonna": "alma"}, {"tizorai": "muffin"}]
-    assert rule(check(two), "sweets") == RuleCheck(0, "sweets", True, "2 édes", "≤ 2")
-    three = [*two, {"tizorai": "piskota"}]
-    assert rule(check(three), "sweets") == RuleCheck(0, "sweets", False, "3 édes", "≤ 2")
-
-
-def test_sweets_cap_is_not_pro_rata() -> None:
-    rows = [{"ebed": f"veg-{i + 1}"} for i in range(7)] + [{"uzsonna": "palacsinta"}, {"uzsonna": "muffin"}]
-    assert rule(check(rows), "sweets", 1) == RuleCheck(1, "sweets", True, "2 édes", "≤ 2")
+def test_sweet_meals_are_not_capped() -> None:
+    """The sweets cap was removed (2026-10-15): any number of sweet (``edes``) meals passes every rule."""
+    rows = [{"uzsonna": "palacsinta", "tizorai": "muffin"}, {"uzsonna": "piskota"}, {"tizorai": "palacsinta"}]
+    checks = check(rows)
+    assert "sweets" not in {c.rule for c in checks}
+    assert all(c.ok for c in checks if c.rule != "variety")
 
 
 # ───────────────────────────── variety ─────────────────────────────

@@ -22,7 +22,7 @@ from bpf.pricing.model import SLOTS_5, Ingredient, Plan, PlanDay, PlanRequest, R
 from tests.test_planner_synth import INGREDIENTS, by_id, random_costs, random_library, random_slots, seeded
 
 MAIN = ("reggeli", "ebed", "vacsora")
-RULE_ORDER = ("fish", "legume", "meat_free_day", "red_meat", "potato", "sweets", "variety", "budget")
+RULE_ORDER = ("fish", "legume", "meat_free_day", "red_meat", "potato", "variety", "budget")
 
 
 def _kg(qty: Decimal, ing: Ingredient) -> Fraction:
@@ -106,7 +106,6 @@ def oracle(
         )
         result[(week, "red_meat")] = grams <= math.floor(Fraction(cap * len(week_days), 7))
         result[(week, "potato")] = not any(potato_day(d) and potato_day(d - 1) for d in week_days)
-        result[(week, "sweets")] = sum("edes" in recipes[r].tags for r in week_meals) <= 2
         result[(week, "variety")] = repeats_by_week.get(week, 0) == 0
         if budget is not None and costs:
             known = [costs[r] * people for r in week_meals if r in costs]

@@ -754,7 +754,7 @@ export interface components {
              * Rule
              * @enum {string}
              */
-            rule: "fish" | "legume" | "meat_free_day" | "red_meat" | "potato" | "sweets" | "variety" | "budget";
+            rule: "fish" | "legume" | "meat_free_day" | "red_meat" | "potato" | "variety" | "budget";
             /** Value */
             value: string;
             /** Week */

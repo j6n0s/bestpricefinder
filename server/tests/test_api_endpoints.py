@@ -959,7 +959,6 @@ def test_plan_suggest_matches_the_planner(
         "meat_free_day",
         "red_meat",
         "potato",
-        "sweets",
         "variety",
     }
 
@@ -1012,7 +1011,6 @@ def test_plan_check(client: TestClient) -> None:
                 "value": "0 nap egymás után",
                 "limit": "≤ 1 nap egymás után",
             },
-            {"week": 0, "rule": "sweets", "ok": True, "value": "0 édes", "limit": "≤ 2"},
             {
                 "week": 0,
                 "rule": "variety",

@@ -291,7 +291,7 @@ test('week plan -> list -> nearby stores -> store totals -> recipes, on the real
 	// The rule checks of the week, as the server computed them.
 	const week0 = plan.checks.filter((check) => check.week === 0);
 	expect(week0.map((check) => check.rule).sort()).toEqual(
-		['fish', 'legume', 'meat_free_day', 'potato', 'red_meat', 'sweets', 'variety'].sort()
+		['fish', 'legume', 'meat_free_day', 'potato', 'red_meat', 'variety'].sort()
 	);
 	const checkItems = page.getByTestId('plan-week-0').getByRole('list', { name: 'A hét összesítése' }).getByRole('listitem');
 	await expect(checkItems).toHaveCount(week0.length);

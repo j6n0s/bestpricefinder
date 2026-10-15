@@ -88,7 +88,6 @@ describe('synthetic mock API', () => {
 			'meat_free_day',
 			'red_meat',
 			'potato',
-			'sweets',
 			'variety'
 		]);
 		expect(of(0, 'fish')).toEqual({ week: 0, rule: 'fish', ok: false, value: '0 hal', limit: '≥ 1' });

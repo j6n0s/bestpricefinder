@@ -108,7 +108,6 @@ Rules (per 7-day block, from public healthy-eating principles; **no MDOSZ/OKOST�
 - `meat_free_day`: ≥1 day where every meal is `husmentes`.
 - `red_meat`: the raw grams of `red_meat` and `processed_meat` ingredient lines eaten per person must be ≤ the cap. Per meal: line kg × 1000 / recipe.servings. Count a partial week pro rata to 7 days.
 - `potato`: no two consecutive days with a `potato` ingredient in any main meal.
-- `sweets`: ≤2 meals with an `edes` recipe.
 - `variety`: the same recipe never repeats within `no_repeat_days`. The exception: a `ket_napos` recipe may fill the same slot on the very next day.
 - `budget` (when given): the estimated cost of the week ≤ the budget.
 
@@ -119,12 +118,13 @@ Selection is a deterministic, seeded constraint search (a feasibility-first cons
 
 Rule details (as implemented; keep the API and UI wording consistent with them):
 - A repeat means `day2 - day1 < no_repeat_days`: 5 allows day 0 and day 5, 1 forbids only same-day repeats, and 0 turns the rule off. Snacks (tizorai, uzsonna) use `min(2, no_repeat_days)`; so does any pair where one of the two meals is a snack. Two-day (`ket_napos`) recipes are paired greedily from the first day, so a third day in a row counts as a repeat.
-- Partial weeks: the red-meat cap and the budget are pro rata (`cap × days // 7`, rounded down). Count rules (fish, legume, meat-free day) report `n/a` (ok) for blocks shorter than 4 days. The sweets cap of 2 is not pro rata.
+- Partial weeks: the red-meat cap and the budget are pro rata (`cap × days // 7`, rounded down). Count rules (fish, legume, meat-free day) report `n/a` (ok) for blocks shorter than 4 days.
 - Potato runs and repeats are followed across week boundaries and reported in the later week. A meat-free day needs at least one meal.
 - Optional recipe lines count towards red meat and potato. Budget: a meal without a cost estimate fails that week's budget; a budget with no cost table gives the warning `recipe_cost_missing` and no budget check.
 - Invalid input raises `ValueError`, and unknown recipe or ingredient ids raise `KeyError` (the API validates first).
-- `slot_pool_too_small:<slot>` also covers slots that could avoid repeats only with more than 2 sweet meals in a week, or with potato on two days in a row; the plan then repeats in that slot.
-- Warning codes: `slot_pool_empty:<slot>`, `slot_pool_too_small:<slot>`, `no_fish_recipe_available`, `no_legume_recipe_available`, `no_meat_free_recipe_available:<slot>`, `no_potato_free_recipe_available:<slot>`, `red_meat_cap_unreachable`, `sweets_cap_unreachable`, `budget_unreachable`, `recipe_cost_missing`.
+- `slot_pool_too_small:<slot>` also covers slots that could avoid repeats only with potato on two days in a row; the plan then repeats in that slot.
+- There is no sweets rule: the `sweets` cap (≤2 `edes` meals a week) was removed on 2026-10-15 at the user's request.
+- Warning codes: `slot_pool_empty:<slot>`, `slot_pool_too_small:<slot>`, `no_fish_recipe_available`, `no_legume_recipe_available`, `no_meat_free_recipe_available:<slot>`, `no_potato_free_recipe_available:<slot>`, `red_meat_cap_unreachable`, `budget_unreachable`, `recipe_cost_missing`.
 
 If the pool cannot satisfy a rule, return the best plan with a failing check and a warning (e.g. `no_fish_recipe_available`); never loop forever. The time budget is 200 ms for 31 days × 5 slots.
 

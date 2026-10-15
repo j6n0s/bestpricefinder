@@ -65,7 +65,7 @@ RecipeTag = Literal[
     "olcso",
     "gyerekbarat",
 ]
-RuleName = Literal["fish", "legume", "meat_free_day", "red_meat", "potato", "sweets", "variety", "budget"]
+RuleName = Literal["fish", "legume", "meat_free_day", "red_meat", "potato", "variety", "budget"]
 
 _QTY_STEP = Decimal("0.001")
 

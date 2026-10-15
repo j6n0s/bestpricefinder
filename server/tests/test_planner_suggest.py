@@ -139,7 +139,7 @@ def test_plan_shape(days: int, slots: tuple[Slot, ...]) -> None:
             assert rid is not None
             assert slot in by_id(LIB)[rid].slots
     weeks = (days + 6) // 7
-    assert [c.week for c in plan.checks] == [w for w in range(weeks) for _ in range(7)]
+    assert [c.week for c in plan.checks] == [w for w in range(weeks) for _ in range(6)]
 
 
 def test_checks_equal_an_independent_check_plan() -> None:
@@ -287,28 +287,18 @@ def test_potato_impossible() -> None:
     assert failing(plan) == {"potato"}
 
 
-def test_sweets_impossible() -> None:
+def test_sweet_meals_are_not_capped() -> None:
+    """The sweets cap was removed (2026-10-15): a snack slot of only sweet recipes is planned normally."""
     sweets = [
         recipe(f"edes-{i}", ("uzsonna",), [("cukor", "0.1"), ("alma", "0.2")], extra_tags=["edes"])
         for i in range(4)
     ]
     lib = [r for r in LIB if "uzsonna" not in r.slots] + sweets
     plan = suggest(lib, slots=("ebed", "uzsonna", "vacsora"))
-    assert plan.warnings == ("sweets_cap_unreachable",)
-    assert failing(plan) == {"sweets"}
-    assert [c.value for c in plan.checks if c.rule == "sweets"] == ["7 édes"]
-
-
-def test_sweets_kept_to_two_when_possible() -> None:
-    sweets = [
-        recipe(f"edes-{i}", ("uzsonna",), [("cukor", "0.1"), ("alma", "0.2")], extra_tags=["edes"])
-        for i in range(10)
-    ]
-    plain = [recipe(f"sima-{i}", ("uzsonna",), [("alma", "0.2"), ("joghurt", "0.1")]) for i in range(3)]
-    lib = [r for r in LIB if "uzsonna" not in r.slots] + sweets + plain
-    plan = suggest(lib, slots=("ebed", "uzsonna", "vacsora"), days=14, seed=3)
+    assert plan.warnings == ()
     assert failing(plan) == set()
-    assert all(int(c.value.split()[0]) <= 2 for c in plan.checks if c.rule == "sweets")
+    assert "sweets" not in {c.rule for c in plan.checks}
+    assert all(day.meals["uzsonna"] in {r.id for r in sweets} for day in plan.days)
 
 
 # ───────────────────────────── pools, exclusions ─────────────────────────────

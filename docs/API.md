@@ -98,10 +98,10 @@ Response:
   - `meat_free_day ≥1`;
   - `red_meat ≤ g/person`;
   - `potato` (at most every second day);
-  - `sweets ≤2`;
   - `variety` (no repeat inside `no_repeat_days` except `ket_napos` recipes on the next day);
   - `budget`, when set;
-- `warnings`: machine codes; the client maps them to HU/EN text. The codes are `slot_pool_empty:<slot>`, `slot_pool_too_small:<slot>`, `no_fish_recipe_available`, `no_legume_recipe_available`, `no_meat_free_recipe_available:<slot>`, `no_potato_free_recipe_available:<slot>`, `red_meat_cap_unreachable`, `sweets_cap_unreachable`, `budget_unreachable` and `recipe_cost_missing`. The rule details are in docs/ENGINE.md.
+- `warnings`: machine codes; the client maps them to HU/EN text. The codes are `slot_pool_empty:<slot>`, `slot_pool_too_small:<slot>`, `no_fish_recipe_available`, `no_legume_recipe_available`, `no_meat_free_recipe_available:<slot>`, `no_potato_free_recipe_available:<slot>`, `red_meat_cap_unreachable`, `budget_unreachable` and `recipe_cost_missing`. The rule details are in docs/ENGINE.md.
+- The `sweets` rule (≤2 sweet meals a week) and its `sweets_cap_unreachable` warning were removed on 2026-10-15 at the user's request; sweet recipes are planned like any other, and the `edes` tag still works as an exclusion.
 
 The same `seed` and input always give the same plan.
 

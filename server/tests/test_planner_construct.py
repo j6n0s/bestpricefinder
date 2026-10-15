@@ -4,7 +4,7 @@
 The property tests compare against brute force: every possible plan of a tiny random request is checked with
 ``check_plan``. With an unlimited node budget the construction must find a plan exactly when one meets every
 rule (so no propagation step ever removes a valid choice), and every ``slot_pool_too_small`` warning must be
-right (no plan keeps the variety rule together with the sweets cap and the potato rule).
+right (no plan keeps the variety rule together with the potato rule).
 """
 
 from __future__ import annotations
@@ -24,7 +24,6 @@ from bpf.planner.rules import Limits, Meal, compile_meals, make_limits
 from bpf.planner.search import (
     PoolAnalysis,
     _potato_free_slots,
-    _sweets_floor,
     _too_small_slots,
     analyse_pools,
 )
@@ -317,23 +316,6 @@ def test_slots_sharing_recipes_across_main_and_snack_are_checked_together() -> N
 # ───────────────────────────── joint pool analysis ─────────────────────────────
 
 
-def test_sweets_floor_counts_the_sweets_variety_forces() -> None:
-    snacks = [recipe(f"sima-{i}", ("tizorai", "uzsonna"), [("alma", "0.2")]) for i in range(3)]
-    sweets = [
-        recipe(f"edes-{i}", ("tizorai", "uzsonna"), [("cukor", "0.1"), ("alma", "0.1")], extra_tags=["edes"])
-        for i in range(3)
-    ]
-    s = setup(snacks + sweets, request(7, ("tizorai", "uzsonna")))
-    # any 2 days hold 4 snack cells and 3 plain snacks: >= 1 sweet per 2 days, 3 per 7-day block
-    floor, slots = _sweets_floor(list(s.active), s.pools, s.meals, 2, 7)
-    assert (floor, slots) == (3, {1, 3})
-    assert _sweets_floor(list(s.active), s.pools, s.meals, 2, 3) == (1, {1, 3})
-    assert s.too_small_warnings() == ("slot_pool_too_small:tizorai", "slot_pool_too_small:uzsonna")
-    # a fourth plain snack is enough
-    more = setup([*snacks, *sweets, recipe("sima-3", ("tizorai", "uzsonna"), [("banan", "0.2")])], s.req)
-    assert more.too_small_warnings() == ()
-
-
 def test_potato_free_slots_need_half_the_window_without_potato() -> None:
     potato = [recipe(f"krumpli-{i}", ("ebed",), [("burgonya", "0.5")]) for i in range(4)]
     plain = [recipe(f"rizs-{i}", ("ebed",), [("rizs", "0.3")]) for i in range(2)]
@@ -346,22 +328,19 @@ def test_potato_free_slots_need_half_the_window_without_potato() -> None:
     assert setup(potato + plain, request(5, ("ebed",))).too_small_warnings() == ()
 
 
-def test_variety_is_given_up_before_the_sweets_cap() -> None:
+def test_sweet_snacks_count_like_any_other_for_variety() -> None:
+    """With the sweets cap gone (2026-10-15), 3 plain and 3 sweet snacks fill 4 snack cells every 2 days."""
     snacks = [recipe(f"sima-{i}", ("tizorai", "uzsonna"), [("alma", "0.2")]) for i in range(3)]
     sweets = [
         recipe(f"edes-{i}", ("tizorai", "uzsonna"), [("cukor", "0.1"), ("alma", "0.1")], extra_tags=["edes"])
         for i in range(3)
     ]
+    assert setup(snacks + sweets, request(7, ("tizorai", "uzsonna"))).too_small_warnings() == ()
     for seed in range(5):
         plan = suggest_plan(snacks + sweets, INGREDIENTS, request(14, ("tizorai", "uzsonna"), seed=seed))
-        assert plan.warnings == (
-            "slot_pool_too_small:tizorai",
-            "slot_pool_too_small:uzsonna",
-            "no_fish_recipe_available",
-            "no_legume_recipe_available",
-        )
-        assert {c.rule for c in plan.checks if not c.ok} == {"variety", "fish", "legume"}
-        assert all(c.ok for c in plan.checks if c.rule == "sweets")
+        assert plan.warnings == ("no_fish_recipe_available", "no_legume_recipe_available")
+        assert {c.rule for c in plan.checks if not c.ok} == {"fish", "legume"}
+        assert "sweets" not in {c.rule for c in plan.checks}
 
 
 # ───────────────────────────── brute force ─────────────────────────────
@@ -403,7 +382,7 @@ def tiny_request(rng: random.Random, recipes_out: list[Recipe]) -> PlanRequest:
     )
 
 
-PREFIX_RULES = frozenset({"variety", "sweets", "potato"})
+PREFIX_RULES = frozenset({"variety", "potato"})
 """Rules that can only get worse as days are added: a failing prefix rules out every plan that extends it."""
 
 
@@ -439,8 +418,8 @@ def test_construction_finds_a_plan_exactly_when_one_exists(seed: int) -> None:
 
 @pytest.mark.parametrize("seed", range(160))
 def test_too_small_warnings_are_right(seed: int) -> None:
-    """A slot_pool_too_small warning claims that no plan keeps the variety rule together with the sweets cap
-    and the potato rule (each counted only where the analysis does not already call it impossible)."""
+    """A slot_pool_too_small warning claims that no plan keeps the variety rule together with the potato rule
+    (counted only where the analysis does not already call it impossible)."""
     rng = seeded(60_000 + seed)
     recipes: list[Recipe] = []
     req = tiny_request(rng, recipes)
@@ -448,23 +427,16 @@ def test_too_small_warnings_are_right(seed: int) -> None:
     if not s.analysis.too_small:
         return
     rules = {"variety"}
-    if not any("sweets" in dead for dead in s.analysis.hopeless):
-        rules.add("sweets")
     if not s.analysis.potato_hopeless:
         rules.add("potato")
     assert not brute_force(s, frozenset(rules)), (req, [r.id for r in recipes], s.analysis.warnings)
 
 
 def near_floor_request(rng: random.Random, recipes_out: list[Recipe]) -> PlanRequest:
-    """A one-slot request near the sweets floor (a snack slot, a few plain and some sweet recipes) or the
-    potato floor (a main slot, a few potato-free and some potato recipes)."""
+    """A one-slot request near the potato floor (a main slot, a few potato-free and some potato recipes)."""
     days = rng.randint(4, 7)
-    if rng.random() < 0.5:
-        slot: Slot = rng.choice(("tizorai", "uzsonna"))
-        marked, marked_tags, window = [("cukor", "0.1")], ["edes"], rng.choice((2, 3, 5))
-    else:
-        slot = rng.choice(("reggeli", "ebed", "vacsora"))
-        marked, marked_tags, window = [("burgonya", "0.4")], [], rng.choice((3, 4, 5))
+    slot: Slot = rng.choice(("reggeli", "ebed", "vacsora"))
+    marked, marked_tags, window = [("burgonya", "0.4")], [], rng.choice((3, 4, 5))
     bases = ("hal", "lencse", "turo", "rizs", "tejfol")
     for i in range(rng.randint(1, 2)):
         extra = ["ket_napos"] if rng.random() < 0.3 else []
@@ -495,7 +467,7 @@ def test_too_small_warnings_near_the_joint_floors_are_right(seed: int) -> None:
 
 
 def test_brute_force_cases_cover_the_joint_warnings() -> None:
-    """The near-floor requests do reach the sweets and potato floors, not only the plain Hall check."""
+    """The near-floor requests do reach the potato floor, not only the plain Hall check."""
     joint = 0
     for seed in range(120):
         rng = seeded(70_000 + seed)

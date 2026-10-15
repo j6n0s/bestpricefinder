@@ -37,7 +37,6 @@ class RecipeFacts:
     fish: bool  # recipe tag "hal"
     legume: bool  # recipe tag "huvelyes"
     meat_free: bool  # recipe tag "husmentes"
-    sweet: bool  # recipe tag "edes"
     two_day: bool  # recipe tag "ket_napos": may fill the same slot on the next day
     potato: bool  # some line's ingredient is tagged "potato" (optional lines included)
     red_meat_g: Fraction  # raw g of red_meat/processed_meat lines per serving (optional lines included)
@@ -85,7 +84,6 @@ def recipe_facts(
         fish="hal" in tags,
         legume="huvelyes" in tags,
         meat_free="husmentes" in tags,
-        sweet="edes" in tags,
         two_day="ket_napos" in tags,
         potato=potato,
         red_meat_g=red_kg * 1000 / recipe.servings,

@@ -75,7 +75,6 @@ export const planHu = {
 	rule_meat_free_day: 'Húsmentes nap',
 	rule_red_meat: 'Vörös hús',
 	rule_potato: 'Burgonya',
-	rule_sweets: 'Édesség',
 	rule_variety: 'Változatosság',
 	rule_budget: 'Keret',
 	// A weekly check is a tile: the rule's name, the value and the target (PlanChecks.svelte).
@@ -103,7 +102,6 @@ export const planHu = {
 	warning_no_meat_free_recipe_available: 'Ehhez az étkezéshez nincs választható húsmentes recept: {slot}.',
 	warning_no_potato_free_recipe_available: 'Ehhez az étkezéshez nincs választható burgonya nélküli recept: {slot}.',
 	warning_red_meat_cap_unreachable: 'A vörös hús heti felső határa ezekkel a receptekkel nem tartható.',
-	warning_sweets_cap_unreachable: 'Az édes ételek heti felső határa ezekkel a receptekkel nem tartható.',
 	warning_budget_unreachable: 'A heti keret ezekkel a receptekkel nem tartható.',
 	warning_recipe_cost_missing: 'Nincs elég áradat a heti keret ellenőrzéséhez.',
 	warning_unknown: 'Ismeretlen figyelmeztetés: {code}.',
