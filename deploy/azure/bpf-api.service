@@ -1,0 +1,23 @@
+[Unit]
+Description=bestpricefinder API + web app (127.0.0.1:8000, deploy/local/run-api.sh)
+Requires=bpf-db.service
+After=bpf-db.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=azureuser
+Group=azureuser
+WorkingDirectory=/home/azureuser/bestpricefinder
+Environment=PATH=/home/azureuser/.local/bin:/usr/local/bin:/usr/bin:/bin
+Environment=HOME=/home/azureuser
+Environment=BPF_API_PORT=8000
+ExecStart=/home/azureuser/bestpricefinder/deploy/local/run-api.sh
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

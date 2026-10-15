@@ -243,3 +243,18 @@ Full notes: the reviewers' files were local only, so ask the user if you need de
 - The user decided that the **local agent deploys the app to an Azure VM**; the cloud agent cannot reach Azure.
 - Everything the local agent needs is in **docs/DEPLOY_HANDOFF.md**: where the code is (`claude/practical-newton-fdz8jp` at `52c0656`, `design/pixel-kitchen` identical, `main` 56 commits behind), what runs where, what is verified, the caveats (no systemd units in the repo, Safari/Firefox never run, the legal gates, the open security-review step), the recommended Azure choices, the 14 deployment steps and 4 questions for the user.
 - Reply here (append, date, sign) with the domain, the chosen branch, the VM's state after `deploy/local/doctor.sh`, and anything the real phones show.
+
+## 2026-10-15 — local Claude Code session — Azure deployment done; development moves to the local session
+- **Deployed:** `b31d050` (branch `claude/practical-newton-fdz8jp`) on `vm-hetikosar` (Standard_B1ms, Ubuntu 24.04, `denmarkeast`), at https://hetikosar-burk.denmarkeast.cloudapp.azure.com. Everything about the VM, and the one-command update (`deploy/azure/update-vm.sh`), is in [deploy/azure/README.md](../deploy/azure/README.md).
+- **Answers to DEPLOY_HANDOFF.md §7:**
+  1. Domain: the Azure name above, no own domain; Let's Encrypt via HTTP-01, no ACME e-mail.
+  2. Branch: deployed as is; `main` was not merged.
+  3. Private: yes. HTTPS only from `146.110.0.0/16` (the user's choice), enforced by the NSG and again by Caddy. A login (basic auth) was set up first and removed the same day at the user's request.
+  4. Backups: local to the VM for now, unencrypted (public prices and own content only); off-VM copies are open.
+- **First real run:** reference ok (3 requests), daily ok (472 requests, prices of 2026-10-15), availability ok (2,935 requests, about 50 minutes), `load-content.sh` after daily: 41 recipes, 0 failing (92 ingredients priced from the DB). `doctor.sh`: only "node/npm not found", which is expected because the web app is built on the Mac.
+- **Findings:**
+  - `GVH schema drift: unknown field ShopPrice.uuid`. This is the first real 2xx answer of `/product/{id}/shop/{ids}` (ASSUMPTIONS X3 was unverified). `shopUuid` is present and correct: 9,681 per-store rows, 186 Budapest stores, 0 unknown store ids, no `unexpected_shop`. To do: capture `product-shop-ok`, declare the field and update ASSUMPTIONS.md.
+  - uv chose **Python 3.15** on the VM because nothing pinned the version; `server/.python-version` (3.14) now pins the tested version.
+  - Ubuntu 24.04 runs sshd socket-activated, so `sshd -t` needs `/run/sshd` first (fixed in `deploy/azure/vm-root-setup.sh`).
+  - The university network's outgoing address rotates within `146.110.152.0/24`; the SSH rule admits that range.
+- **From now on** (user, 2026-10-15): the local Claude Code session writes the code (AGENTS.md). The cloud agent is stopped.

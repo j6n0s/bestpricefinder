@@ -1,0 +1,20 @@
+[Unit]
+Description=bestpricefinder PostgreSQL cluster (localhost:5544, deploy/local/db-start.sh)
+After=network.target
+
+[Service]
+Type=forking
+User=azureuser
+Group=azureuser
+WorkingDirectory=/home/azureuser/bestpricefinder
+Environment=PATH=/home/azureuser/.local/bin:/usr/local/bin:/usr/bin:/bin
+PIDFile=/home/azureuser/bestpricefinder/.data/pg/postmaster.pid
+ExecStart=/home/azureuser/bestpricefinder/deploy/local/db-start.sh
+ExecStop=/home/azureuser/bestpricefinder/deploy/local/db-stop.sh
+TimeoutStartSec=120
+TimeoutStopSec=120
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
