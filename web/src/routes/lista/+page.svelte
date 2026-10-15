@@ -3,7 +3,8 @@
 
 	- The list is made from the plan stored on this device (StoredState.plan) for the chosen days: every planned
 	  meal is `people` servings, summed per recipe (planToListItems), sent to POST /api/list. Only recipe ids
-	  and servings leave the device (no on-hand quantities: a pantry staple is at home or "nincs otthon").
+	  and servings leave the device; the amounts at home (StoredState.pantry.onHand) are subtracted here
+	  ($lib/list/onhand), never sent.
 	- "nincs otthon" (StoredState.pantry.notAtHome), the range, and per list (plan + range: a new plan or
 	  range starts afresh) the ticks, the removed lines, the excluded lines bought anyway and the chosen store
 	  (StoredState.list, helpers in $lib/list/prefs) stay on this device, in the one document of $lib/storage.
@@ -29,6 +30,7 @@
 	import { t, tp } from '$lib/i18n';
 	import { loadRecipes } from '$lib/list/data';
 	import { lineChoices, quoteLines, toggleId } from '$lib/list/lines';
+	import { applyOnHand, onHandMap } from '$lib/list/onhand';
 	import { saveLastList, savedListFor } from '$lib/list/offline';
 	import { listEntry, withListEntry, type ListEntry } from '$lib/list/prefs';
 	import { effectiveRange, type ListRange } from '$lib/list/range';
@@ -137,7 +139,10 @@
 		return () => controller.abort();
 	});
 
-	const lines = $derived(listState.status === 'ready' ? listState.lines : []);
+	// The amounts at home come off first; lines fully covered go to the pantry section.
+	const onHand = $derived(onHandMap(settings.pantry.onHand));
+	const applied = $derived(applyOnHand(listState.status === 'ready' ? listState.lines : [], onHand));
+	const lines = $derived(applied.lines);
 	const choices = $derived(
 		lineChoices(entry?.removed ?? [], settings.pantry.notAtHome, settings.exclusions.ingredients, entry?.included ?? [])
 	);
@@ -243,6 +248,8 @@
 			{/if}
 			<ShoppingList
 				{lines}
+				covered={applied.covered}
+				reduced={applied.reduced}
 				{choices}
 				{checked}
 				ontogglecheck={toggleCheck}

@@ -92,7 +92,7 @@ describe('list choices in the one stored document', () => {
 	});
 
 	it('round-trip and keep the rest of the state', () => {
-		update({ people: 4, pantry: { notAtHome: ['so'] } });
+		update({ people: 4, pantry: { notAtHome: ['so'], onHand: [] } });
 		saveListPrefs(sample());
 		resetForTests();
 		expect(loadListPrefs()).toEqual(sample());

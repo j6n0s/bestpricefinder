@@ -5,8 +5,9 @@
  *
  * Rules (docs/API.md "POST /api/quote", docs/DATA.md):
  * - A pantry line (`ListLineOut.pantry`) is shown in the "valószínűleg otthon van" section and stays out of
- *   the quote, unless the user marked it "nincs otthon" (`StoredState.pantry.notAtHome`). There are no
- *   on-hand quantities: a staple is either at home or bought, so the app never sends `on_hand`.
+ *   the quote, unless the user marked it "nincs otthon" (`StoredState.pantry.notAtHome`): a staple is either
+ *   at home or bought. Amounts at home of any ingredient (`StoredState.pantry.onHand`) are subtracted on the
+ *   device before these rules apply (./onhand.ts); the app never sends `on_hand`.
  * - Tap water (`viz`) is never bought: it stays "otthon van" and offers no "nincs otthon" switch.
  * - A line of an ingredient excluded in the settings (`StoredState.exclusions.ingredients`; it can come back
  *   through an optional recipe line or a hand-picked recipe) is not bought and not quoted, unless the user

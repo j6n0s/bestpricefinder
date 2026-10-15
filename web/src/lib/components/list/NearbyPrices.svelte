@@ -1,6 +1,7 @@
 <!--
 	"Hol a legolcsóbb a közelben?" (BUILD-BRIEF §6.3):
-	1. the explanation card first, then the device's approximate position or a Budapest district;
+	1. the explanation card first, then the device's approximate position, a Budapest district or a point
+	   picked on the on-device map;
 	2. GET /api/stores once (kept in memory) and, ON THE DEVICE, the nearest grocery stores with price data
 	   within the radius (at most 3 per chain, 25 in all); fewer than 2: suggest a wider radius;
 	3. POST /api/quote with the bought lines and the store ids ONLY (never coordinates; sorted by id, so their
@@ -37,6 +38,7 @@
 	import { chainLabel, chainNames, distanceMap, nearbyCandidates, storeAddress, widerRadius } from '$lib/list/stores';
 	import { validQuote, validStores } from '$lib/list/validate';
 	import { isStale, originFromLocation } from '$lib/location';
+	import { describePoint } from '$lib/mappick';
 	import { getMeta } from '$lib/meta.svelte';
 	import type { SavedQuote, StoredLocation } from '$lib/storage';
 	import OriginChooser from './OriginChooser.svelte';
@@ -231,6 +233,15 @@
 	});
 	const district = $derived(origin?.source === 'district' ? districtById(origin.districtId) : null);
 	const districtName = $derived(district ? t('core.district_name', { roman: district.roman }) : '');
+	const mapHint = $derived(origin?.source === 'map' ? describePoint(origin, stores ?? []) : null);
+	const mapOriginText = $derived.by(() => {
+		if (!mapHint) return '';
+		if (mapHint.kind === 'district') {
+			return t('list.origin_map_near', { near: t('core.district_name', { roman: mapHint.district.roman }) });
+		}
+		if (mapHint.kind === 'city') return t('list.origin_map_near', { near: mapHint.city });
+		return t('list.origin_map');
+	});
 
 	function storeLabel(storeId: StoreId): string {
 		const info = storesById.get(storeId);
@@ -279,9 +290,13 @@
 	{#if origin}
 		<div class="origin">
 			<p tabindex="-1" bind:this={originLine} data-testid="origin">
-				{origin.source === 'device'
-					? t('list.origin_device', { time: formatDateTime(location.approx?.at) })
-					: t('list.origin_district', { district: districtName })}
+				{#if origin.source === 'device'}
+					{t('list.origin_device', { time: formatDateTime(location.approx?.at) })}
+				{:else if origin.source === 'map'}
+					{mapOriginText}
+				{:else}
+					{t('list.origin_district', { district: districtName })}
+				{/if}
 			</p>
 			{#if stale}
 				<p class="notice notice-warning" data-testid="position-stale">{t('list.position_stale')}</p>

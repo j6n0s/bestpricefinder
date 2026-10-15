@@ -210,6 +210,10 @@ class ProductDetail(GvhModel):
 class ShopPrice(GvhModel):
     shopUuid: str
     prices: list[PriceEntry]
+    # The row's own id, next to the store's: seen on 2026-10-15 in the first real 2xx answer of the per-store
+    # endpoint (the VM's drift log: "unknown field ShopPrice.uuid"). Unused; declared so it is no longer
+    # drift. The raw sample `product-shop-ok` is still to be captured (ASSUMPTIONS.md X3).
+    uuid: str | None = None
 
 
 class ShopPricesResponse(GvhModel):

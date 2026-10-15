@@ -85,10 +85,16 @@ const fullState = (): StoredState => ({
 			{ index: 1, meals: { ebed: 'lencsefozelek' } }
 		]
 	},
-	pantry: { notAtHome: ['napraforgoolaj'] },
+	pantry: { notAtHome: ['napraforgoolaj'], onHand: [{ ingredientId: 'liszt', qty: 1 }, { ingredientId: 'tojas', qty: 6 }] },
 	exclusions: { tags: ['hal', 'sertes'], ingredients: ['tej'] },
 	preferencesAsked: true,
-	location: { consent: 'granted', source: 'device', districtId: '11', approx: { lat: 47.477, lon: 19.047, at: '2026-10-13T08:00:00.000Z' } },
+	location: {
+		consent: 'granted',
+		source: 'device',
+		districtId: '11',
+		approx: { lat: 47.477, lon: 19.047, at: '2026-10-13T08:00:00.000Z' },
+		manual: { lat: 47.5, lon: 19.06, at: '2026-10-12T08:00:00.000Z' }
+	},
 	list: {
 		range: 'next_week',
 		entries: [
@@ -169,8 +175,8 @@ describe('defaults', () => {
 		const state = load();
 		expect(state).toEqual(defaultState());
 		expect(state).toMatchObject({ version: 1, people: 2, slots: 3, radiusKm: 1.5, language: 'hu', plan: null });
-		expect(state.location).toEqual({ consent: 'unset', source: 'none', districtId: null, approx: null });
-		expect(state.pantry).toEqual({ notAtHome: [] });
+		expect(state.location).toEqual({ consent: 'unset', source: 'none', districtId: null, approx: null, manual: null });
+		expect(state.pantry).toEqual({ notAtHome: [], onHand: [] });
 		expect(state.list).toEqual({ range: 'this_week', entries: [] });
 		expect(isPersistent()).toBe(true);
 	});
@@ -301,7 +307,7 @@ describe('field validation', () => {
 			pantry: { notAtHome: ['olaj', 'olaj', 7, 'Ő'] },
 			exclusions: { tags: ['hal', 'hal', 'unknown_tag', 3], ingredients: ['tej', 'x'] }
 		});
-		expect(state.pantry).toEqual({ notAtHome: ['olaj'] });
+		expect(state.pantry).toEqual({ notAtHome: ['olaj'], onHand: [] });
 		expect(state.exclusions).toEqual({ tags: ['hal'], ingredients: ['tej'] });
 	});
 
@@ -325,13 +331,34 @@ describe('field validation', () => {
 		expect(entry({ checked: 'x', included: null })).toMatchObject({ checked: [], included: [] });
 	});
 
-	it('drops the retired on-hand quantities of older documents (no version bump needed)', () => {
+	it('keeps the amounts at home like cart lines: valid, unique, bounded; a document without them gets []', () => {
 		const state = migrate({
 			...fullState(),
-			pantry: { onHand: [{ ingredientId: 'liszt', qty: 1 }], notAtHome: ['olaj'] }
+			pantry: {
+				notAtHome: ['olaj'],
+				onHand: [
+					{ ingredientId: 'liszt', qty: 1.23456 },
+					{ ingredientId: 'liszt', qty: 2 },
+					{ ingredientId: 'tojas', qty: 0 },
+					{ ingredientId: 'cukor', qty: 1001 },
+					{ ingredientId: 'Ő', qty: 1 },
+					{ ingredientId: 'rizs', qty: 'sok' },
+					'tej',
+					{ ingredientId: 'tej', qty: 1000 }
+				]
+			}
 		});
-		expect(state.pantry).toEqual({ notAtHome: ['olaj'] });
-		expect(JSON.stringify(state)).not.toContain('onHand');
+		expect(state.pantry).toEqual({
+			notAtHome: ['olaj'],
+			onHand: [
+				{ ingredientId: 'liszt', qty: 1.235 },
+				{ ingredientId: 'tej', qty: 1000 }
+			]
+		});
+		const { onHand: _dropped, ...older } = fullState().pantry;
+		expect(migrate({ ...fullState(), pantry: older }).pantry).toEqual({ ...older, onHand: [] });
+		const many = Array.from({ length: 250 }, (_, i) => ({ ingredientId: `aru_${i}`, qty: 1 }));
+		expect(migrate({ ...fullState(), pantry: { notAtHome: [], onHand: many } }).pantry.onHand).toHaveLength(200);
 	});
 
 	it('cleans the list choices strictly: range, keys, removed ids and store ids', () => {
@@ -437,7 +464,25 @@ describe('field validation', () => {
 			...fullState(),
 			location: { consent: 'unset', source: 'device', districtId: null, approx: { lat: 47.5, lon: 19.05, at } }
 		});
-		expect(unset.location).toEqual({ consent: 'unset', source: 'none', districtId: null, approx: null });
+		expect(unset.location).toEqual({ consent: 'unset', source: 'none', districtId: null, approx: null, manual: null });
+	});
+
+	it('keeps a map point without consent, rounded; a missing or bad one drops the "map" source', () => {
+		const at = '2026-10-13T08:00:00.000Z';
+		const loc = (location: unknown) => migrate({ ...fullState(), location }).location;
+		expect(loc({ consent: 'unset', source: 'map', districtId: null, approx: null, manual: { lat: 47.4991, lon: 19.0543, at } })).toEqual({
+			consent: 'unset',
+			source: 'map',
+			districtId: null,
+			approx: null,
+			manual: { lat: 47.499, lon: 19.054, at }
+		});
+		expect(loc({ consent: 'unset', source: 'map', districtId: '05', approx: null, manual: null }).source).toBe('district');
+		expect(loc({ consent: 'unset', source: 'map', districtId: null, approx: null, manual: { lat: 91, lon: 19, at } }).source).toBe('none');
+		expect(loc({ consent: 'granted', source: 'map', districtId: null, approx: { lat: 47.5, lon: 19.05, at }, manual: null }).source).toBe('device');
+		// An older document without the field.
+		const { manual: _dropped, ...older } = fullState().location;
+		expect(loc(older)).toEqual({ ...older, manual: null });
 	});
 
 	it('falls back to a valid origin source', () => {
@@ -447,7 +492,8 @@ describe('field validation', () => {
 			consent: 'unset',
 			source: 'none',
 			districtId: null,
-			approx: null
+			approx: null,
+			manual: null
 		});
 		expect(loc({ consent: 'granted', source: 'satellite', districtId: '23', approx: null }).source).toBe('none');
 		expect(loc({ consent: 'maybe', source: 'none', districtId: '00', approx: null }).consent).toBe('unset');

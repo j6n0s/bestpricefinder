@@ -3,7 +3,9 @@
 	cart is cheapest nearby: in one store, or on a short route through 2–3 stores with a schematic map
 	(NearbyPrices + ShoppingOptions, the same as the plan's shopping list).
 
-	- The goods are GET /api/ingredients with `priced_by: "gvh"` (store prices exist); tap water never.
+	- The goods are GET /api/ingredients with `priced_by: "gvh"` (store prices exist); tap water never. They are
+	  browsed like a shop's menu: a bar of shop sections and, under a section, its kinds of goods ($lib/cart/
+	  categories, from the ingredient tags); or searched by name across every section.
 	- The cart is personal data: it stays on this device (StoredState.cart). Only ingredient ids and amounts
 	  are sent to POST /api/quote, with the nearby store ids; never a position.
 	- Another tab may change the cart: the page reloads it (onExternalChange), and every change starts from a
@@ -14,13 +16,14 @@
 	import { ApiError } from '$lib/api/client';
 	import type { IngredientOut, StoreId } from '$lib/api/types';
 	import { MAX_CART_LINES, approxPieces, buyableGoods, buyableLines, cartListLines, cartQuoteInput, defaultQty, searchGoods, setLineQty, type CartLine } from '$lib/cart/cart';
+	import { categoriesOf, selectGoods, subcategoryLabelKey, type Selection } from '$lib/cart/categories';
 	import QtyStepper from '$lib/components/cart/QtyStepper.svelte';
 	import ErrorState from '$lib/components/ErrorState.svelte';
 	import NearbyPrices from '$lib/components/list/NearbyPrices.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { t, tp } from '$lib/i18n';
 	import { loadIngredients } from '$lib/list/data';
-	import { groupLabelKey, groupLines } from '$lib/list/groups';
+	import { groupLabelKey, groupLines, type ListGroup } from '$lib/list/groups';
 	import { toggleId } from '$lib/list/lines';
 	import { isPersistent, load, onExternalChange, update, type StatePatch, type StoredCart, type StoredLocation, type StoredState } from '$lib/storage';
 
@@ -66,8 +69,19 @@
 	const checked = $derived(new Set(cart.checked));
 
 	let query = $state('');
-	const shown = $derived(searchGoods(goods, query));
+	/** The section (and kind of goods) chosen on the bar; a search looks through every section instead. */
+	let selected = $state<Selection | null>(null);
+	let openMenu = $state<ListGroup | null>(null);
+	const categories = $derived(categoriesOf(goods));
+	const openCategory = $derived(categories.find((category) => category.group === openMenu) ?? null);
+	const searching = $derived(query.trim() !== '');
+	const shown = $derived(searching ? searchGoods(goods, query) : selected ? selectGoods(goods, selected) : goods);
 	const shownGroups = $derived(groupLines(shown));
+	const chosenLabel = $derived.by(() => {
+		if (!selected) return '';
+		const group = t(groupLabelKey(selected.group));
+		return selected.sub === null ? group : t('cart.category_heading', { group, sub: t(subcategoryLabelKey(selected.sub)) });
+	});
 	// The goods list starts open when the cart is empty; the user opens and closes it after that.
 	let browseOpen = $state(load().cart.lines.length === 0);
 	let fullNotice = $state(false);
@@ -76,6 +90,9 @@
 	let searchInput = $state<HTMLInputElement>();
 	let cartTitle = $state<HTMLElement>();
 	let browseList = $state<HTMLElement>();
+	let categoriesNav = $state<HTMLElement>();
+	let categoryButtons = $state<Record<string, HTMLButtonElement | undefined>>({});
+	let chosenHeading = $state<HTMLHeadingElement>();
 
 	function patch(next: StatePatch): void {
 		stored = update(next);
@@ -160,7 +177,57 @@
 		await tick();
 		searchInput?.focus();
 	}
+
+	/** Typing a search looks through every section: the chosen category no longer applies. */
+	function searchTyped(event: Event & { currentTarget: HTMLInputElement }): void {
+		if (event.currentTarget.value.trim() !== '') {
+			selected = null;
+			openMenu = null;
+		}
+	}
+
+	function toggleMenu(group: ListGroup): void {
+		openMenu = openMenu === group ? null : group;
+	}
+
+	function closeMenu(refocus: boolean): void {
+		const group = openMenu;
+		openMenu = null;
+		if (refocus && group !== null) categoryButtons[group]?.focus();
+	}
+
+	/** Chooses a section (sub: null) or one kind of its goods; the search is dropped, focus goes to the heading. */
+	async function choose(group: ListGroup, sub: Selection['sub']): Promise<void> {
+		selected = { group, sub };
+		openMenu = null;
+		query = '';
+		await tick();
+		chosenHeading?.focus();
+	}
+
+	/** Back to every section; focus continues at the bar's button of the section just left. */
+	async function showAll(): Promise<void> {
+		const group = selected?.group ?? null;
+		selected = null;
+		await tick();
+		if (group !== null) categoryButtons[group]?.focus();
+	}
+
+	/** Escape closes the open menu, wherever focus is, and returns to the menu's button. */
+	function documentKeys(event: KeyboardEvent): void {
+		if (event.key === 'Escape' && openMenu !== null) {
+			event.preventDefault();
+			closeMenu(true);
+		}
+	}
+
+	/** A click outside the categories closes the open menu (on wide screens it lies over the goods). */
+	function documentClick(event: MouseEvent): void {
+		if (openMenu !== null && categoriesNav && !categoriesNav.contains(event.target as Node)) closeMenu(false);
+	}
 </script>
+
+<svelte:document onclick={documentClick} onkeydown={documentKeys} />
 
 <svelte:head>
 	<title>{t('core.page_title', { page: t('cart.title') })}</title>
@@ -207,12 +274,14 @@
 									<span class="pieces small muted">{t('cart.pieces', { count: pieces })}</span>
 								{/if}
 							</span>
-							<QtyStepper
-								name={line.name_hu}
-								qty={line.qty}
-								unit={line.unit}
-								onchange={(qty) => setQty(line.ingredient_id, qty, 'cart')}
-							/>
+							<span class="control">
+								<QtyStepper
+									name={line.name_hu}
+									qty={line.qty}
+									unit={line.unit}
+									onchange={(qty) => setQty(line.ingredient_id, qty, 'cart')}
+								/>
+							</span>
 						</li>
 					{/each}
 				</ul>
@@ -228,6 +297,68 @@
 		<summary class="disclosure">
 			<h2>{listLines.length === 0 ? t('cart.browse_title') : t('cart.browse_more')}</h2>
 		</summary>
+		<!-- The shop's menu: a bar of sections; a section with several kinds of goods opens a list of them. -->
+		<nav class="categories" aria-label={t('cart.categories_label')} bind:this={categoriesNav} data-testid="categories">
+			<ul class="bar">
+				{#each categories as category (category.group)}
+					{@const active = !searching && selected?.group === category.group}
+					<li class:active>
+						{#if category.subcategories.length > 1}
+							<button
+								type="button"
+								class="cat"
+								aria-expanded={openMenu === category.group}
+								onclick={() => toggleMenu(category.group)}
+								bind:this={categoryButtons[category.group]}
+							>
+								{t(groupLabelKey(category.group))}<span class="caret" aria-hidden="true"></span>
+							</button>
+						{:else}
+							<button
+								type="button"
+								class="cat"
+								aria-pressed={active}
+								onclick={() => choose(category.group, null)}
+								bind:this={categoryButtons[category.group]}
+							>
+								{t(groupLabelKey(category.group))}
+							</button>
+						{/if}
+					</li>
+				{/each}
+			</ul>
+			{#if openCategory}
+				{@const group = openCategory.group}
+				<div class="menu" data-testid="category-menu">
+					<ul>
+						<li>
+							<button
+								type="button"
+								class="sub"
+								aria-current={selected?.group === group && selected.sub === null ? 'true' : undefined}
+								onclick={() => choose(group, null)}
+							>
+								<span>{t('cart.category_all')}</span>
+								<span class="chevron" aria-hidden="true"></span>
+							</button>
+						</li>
+						{#each openCategory.subcategories as entry (entry.id)}
+							<li>
+								<button
+									type="button"
+									class="sub"
+									aria-current={selected?.group === group && selected.sub === entry.id ? 'true' : undefined}
+									onclick={() => choose(group, entry.id)}
+								>
+									<span>{t(subcategoryLabelKey(entry.id))} <span class="small muted">({tp('cart.goods_count', entry.count)})</span></span>
+									<span class="chevron" aria-hidden="true"></span>
+								</button>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/if}
+		</nav>
 		<div class="field">
 			<label for="goods-search">{t('cart.search_label')}</label>
 			<input
@@ -238,9 +369,16 @@
 				maxlength="40"
 				bind:value={query}
 				bind:this={searchInput}
+				oninput={searchTyped}
 			/>
 		</div>
 		<p class="small" role="status" data-testid="goods-count">{tp('cart.goods_count', shown.length)}</p>
+		{#if selected && !searching}
+			<div class="chosen">
+				<h3 class="group" tabindex="-1" bind:this={chosenHeading} data-testid="chosen-category">{chosenLabel}</h3>
+				<button type="button" class="btn btn-ghost" onclick={showAll}>{t('cart.all_goods')}</button>
+			</div>
+		{/if}
 		{#if fullNotice}
 			<p class="notice notice-warning" role="status">{t('cart.full', { max: MAX_CART_LINES })}</p>
 		{/if}
@@ -252,7 +390,9 @@
 		{:else}
 			<div bind:this={browseList}>
 				{#each shownGroups as group (group.group)}
-					<h3 class="group">{t(groupLabelKey(group.group))}</h3>
+					{#if !selected || searching}
+						<h3 class="group">{t(groupLabelKey(group.group))}</h3>
+					{/if}
 					<ul class="rows">
 						{#each group.lines as good (good.id)}
 							{@const qty = qtyById.get(good.id)}
@@ -264,21 +404,23 @@
 										<span class="pieces small muted">{t('cart.pieces', { count: pieces })}</span>
 									{/if}
 								</span>
-								{#if qty !== undefined}
-									<QtyStepper
-										name={good.name_hu}
-										{qty}
-										unit={good.unit}
-										onchange={(next) => setQty(good.id, next, 'browse')}
-									/>
-								{:else}
-									<button
-										type="button"
-										class="btn btn-secondary add"
-										aria-label={t('cart.add_named', { name: good.name_hu })}
-										onclick={() => add(good)}>{t('cart.add')}</button
-									>
-								{/if}
+								<span class="control">
+									{#if qty !== undefined}
+										<QtyStepper
+											name={good.name_hu}
+											{qty}
+											unit={good.unit}
+											onchange={(next) => setQty(good.id, next, 'browse')}
+										/>
+									{:else}
+										<button
+											type="button"
+											class="btn btn-secondary add"
+											aria-label={t('cart.add_named', { name: good.name_hu })}
+											onclick={() => add(good)}>{t('cart.add')}</button
+										>
+									{/if}
+								</span>
 							</li>
 						{/each}
 					</ul>
@@ -341,10 +483,17 @@
 
 	.row {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
 		gap: var(--space-2) var(--space-3);
 		padding: var(--space-2) var(--space-3);
+	}
+
+	/* A name too long for one line keeps its words: the control moves under it, to the right. */
+	.control {
+		flex: none;
+		margin-left: auto;
 	}
 
 	.row + .row {
@@ -407,6 +556,163 @@
 
 	.field {
 		margin-top: var(--space-3);
+	}
+
+	/* The shop's menu: the sections in one bar (wrapping on narrow screens), the chosen one underlined. */
+	.categories {
+		position: relative;
+		margin-top: var(--space-3);
+	}
+
+	.bar {
+		display: flex;
+		flex-wrap: wrap;
+		list-style: none;
+		margin: 0;
+		padding: 0 var(--space-1);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
+		border-radius: var(--radius-md);
+	}
+
+	.bar li {
+		display: flex;
+		align-items: stretch;
+	}
+
+	.cat {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		min-height: var(--tap);
+		padding: var(--space-2) var(--space-3);
+		border: 0;
+		border-radius: var(--radius-sm);
+		background: transparent;
+		color: inherit;
+		font: inherit;
+		font-weight: 600;
+		line-height: 1.25;
+		text-align: left;
+		cursor: pointer;
+	}
+
+	.cat:focus-visible {
+		outline: 3px solid currentColor;
+		outline-offset: -5px;
+	}
+
+	.bar .active .cat {
+		box-shadow: inset 0 -3px 0 currentColor;
+	}
+
+	@media (hover: hover) {
+		.cat:hover {
+			background: var(--color-primary-hover);
+		}
+	}
+
+	.caret {
+		flex: none;
+		width: 0.45em;
+		height: 0.45em;
+		margin-bottom: 0.2em;
+		border-right: 2px solid currentColor;
+		border-bottom: 2px solid currentColor;
+		transform: rotate(45deg);
+	}
+
+	.cat[aria-expanded='true'] .caret {
+		margin-top: 0.3em;
+		margin-bottom: 0;
+		transform: rotate(-135deg);
+	}
+
+	/* The section's kinds of goods, one per row with a chevron, like the menu of a shop's site. */
+	.menu {
+		margin-top: var(--space-2);
+		padding: var(--space-2);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-card);
+	}
+
+	.menu ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		max-width: 24rem;
+	}
+
+	.sub {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3);
+		width: 100%;
+		min-height: var(--tap);
+		padding: var(--space-2) var(--space-3);
+		border: 0;
+		border-radius: var(--radius-sm);
+		background: transparent;
+		color: inherit;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+	}
+
+	.sub[aria-current='true'] {
+		font-weight: 600;
+		background: var(--color-surface-alt);
+	}
+
+	@media (hover: hover) {
+		.sub:hover {
+			background: var(--color-surface-alt);
+		}
+	}
+
+	.chevron {
+		flex: none;
+		width: 0.5em;
+		height: 0.5em;
+		border-top: 2px solid currentColor;
+		border-right: 2px solid currentColor;
+		transform: rotate(45deg);
+	}
+
+	/* Wide screens: the sections fit in one row with dividers, and the menu drops down over the goods. */
+	@media (min-width: 48rem) {
+		.bar li + li::before {
+			content: '';
+			width: 1px;
+			margin: var(--space-2) 0;
+			background: currentColor;
+			opacity: 0.35;
+		}
+
+		.menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			z-index: 5;
+			margin-top: var(--space-1);
+		}
+	}
+
+	.chosen {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-2) var(--space-3);
+		margin-top: var(--space-4);
+	}
+
+	.chosen .group {
+		margin: 0;
 	}
 
 	.nearby-anchor:focus {

@@ -35,6 +35,8 @@ export const settingsHu = {
 	location_source_none: 'még nincs megadva.',
 	location_source_device: 'a készülék hozzávetőleges helyzete.',
 	location_use_district: 'Kerület használata',
+	location_source_map: 'a térképen választott pont.',
+	location_use_map: 'Térképi pont használata',
 
 	pantry_title: 'Kamra',
 	exclusions_title: 'Kizárt alapanyagok és címkék',

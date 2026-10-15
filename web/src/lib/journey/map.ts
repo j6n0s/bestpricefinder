@@ -1,7 +1,8 @@
 /**
- * Geometry for the journey map: a small schematic map drawn as SVG on the device (no map tiles, no request to
- * any other site). North is up; an equirectangular projection around the points' mean latitude is accurate to
- * well under 1 % over the few kilometres of a shopping trip.
+ * Geometry for the schematic maps drawn as SVG on the device (no map tiles, no request to any other site): the
+ * journey map (`mapFrame`, fitted to its points) and the map picker (`viewFrame`, a centre and a width in km,
+ * with the inverse projection for a tap). North is up; an equirectangular projection around the frame's
+ * latitude is accurate to well under 1 % over a few kilometres and good enough for a tap on a 30 km view.
  */
 import { EARTH_RADIUS_KM, type LatLon } from '../geo';
 
@@ -16,6 +17,8 @@ export interface MapFrame {
 	/** SVG user units per km. */
 	unitsPerKm: number;
 	project(point: LatLon): MapPoint;
+	/** The inverse of `project`: the place under an SVG point. */
+	unproject(point: MapPoint): LatLon;
 }
 
 export interface FrameOptions {
@@ -60,6 +63,37 @@ export function mapFrame(points: readonly LatLon[], options: FrameOptions = DEFA
 		project: (point) => ({
 			x: width / 2 + (east(point) - centreX) * unitsPerKm,
 			y: height / 2 - (north(point) - centreY) * unitsPerKm
+		}),
+		unproject: (point) => ({
+			lat: (centreY + (height / 2 - point.y) / unitsPerKm) / KM_PER_DEGREE,
+			lon: (centreX + (point.x - width / 2) / unitsPerKm) / kmPerLon
+		})
+	};
+}
+
+/** A frame `spanKm` kilometres wide, centred on `centre` (the height follows the frame's aspect ratio). */
+export function viewFrame(
+	centre: LatLon,
+	spanKm: number,
+	options: Pick<FrameOptions, 'width' | 'height'> = DEFAULT_FRAME
+): MapFrame {
+	if (!Number.isFinite(centre.lat) || !Number.isFinite(centre.lon) || !(spanKm > 0)) throw new RangeError('invalid view');
+	const { width, height } = options;
+	const kmPerLon = KM_PER_DEGREE * Math.cos((centre.lat * Math.PI) / 180);
+	const unitsPerKm = width / spanKm;
+	const centreX = centre.lon * kmPerLon;
+	const centreY = centre.lat * KM_PER_DEGREE;
+	return {
+		width,
+		height,
+		unitsPerKm,
+		project: (point) => ({
+			x: width / 2 + (point.lon * kmPerLon - centreX) * unitsPerKm,
+			y: height / 2 - (point.lat * KM_PER_DEGREE - centreY) * unitsPerKm
+		}),
+		unproject: (point) => ({
+			lat: (centreY + (height / 2 - point.y) / unitsPerKm) / KM_PER_DEGREE,
+			lon: (centreX + (point.x - width / 2) / unitsPerKm) / kmPerLon
 		})
 	};
 }

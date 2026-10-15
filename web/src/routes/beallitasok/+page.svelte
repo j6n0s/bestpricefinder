@@ -8,12 +8,14 @@
 	import { onMount, tick } from 'svelte';
 	import DistrictPicker from '$lib/components/DistrictPicker.svelte';
 	import LocationExplainer from '$lib/components/LocationExplainer.svelte';
+	import MapPicker from '$lib/components/MapPicker.svelte';
 	import ExclusionSettings from '$lib/components/settings/ExclusionSettings.svelte';
 	import PantrySettings from '$lib/components/settings/PantrySettings.svelte';
 	import { districtById } from '$lib/districts';
 	import { formatDateTime, formatDistance, formatNumber } from '$lib/format';
 	import { i18n, reloadLanguage, setLanguage, t, tp, type Lang } from '$lib/i18n';
-	import { districtLocation, revokedLocation } from '$lib/location';
+	import type { LatLon } from '$lib/geo';
+	import { clearedMapLocation, districtLocation, mapLocation, revokedLocation } from '$lib/location';
 	import { resetRecipeFilters } from '$lib/plan/filters.svelte';
 	import {
 		clearAll,
@@ -38,6 +40,8 @@
 	let dialog = $state<HTMLDialogElement>();
 	let cancelButton = $state<HTMLButtonElement>();
 	let locateButton = $state<HTMLButtonElement>();
+	// The map disclosure starts open only when the map point is the origin already.
+	let mapOpen = $state(load().location.source === 'map');
 
 	onMount(() =>
 		onExternalChange((next) => {
@@ -88,6 +92,20 @@
 
 	function chooseDistrict(districtId: string | null): void {
 		save({ location: districtLocation(load().location, districtId) });
+	}
+
+	function pickPoint(point: LatLon): void {
+		save({ location: mapLocation(load().location, point) });
+	}
+
+	function clearPoint(): void {
+		save({ location: clearedMapLocation(load().location) });
+	}
+
+	/** The stored map point becomes the origin again (after a district or the device position was chosen). */
+	function useMapPoint(): void {
+		const current = load().location;
+		if (current.manual) save({ location: { ...current, source: 'map' } });
 	}
 
 	async function askClear(): Promise<void> {
@@ -229,21 +247,37 @@
 
 	<DistrictPicker value={loc.districtId} onchange={chooseDistrict} />
 
+	<details class="map" bind:open={mapOpen} data-testid="settings-map">
+		<summary class="disclosure">{t('core.map_pick_open')}</summary>
+		{#key resets}
+			{#if mapOpen}
+				<MapPicker point={loc.manual} onpick={pickPoint} onclear={clearPoint} />
+			{/if}
+		{/key}
+	</details>
+
 	<p data-testid="location-source">
 		{t('settings.location_source_label')}
 		{#if loc.source === 'device'}
 			{t('settings.location_source_device')}
 		{:else if loc.source === 'district' && district}
 			{t('core.district_name', { roman: district.roman })}.
+		{:else if loc.source === 'map' && loc.manual}
+			{t('settings.location_source_map')}
 		{:else}
 			{t('settings.location_source_none')}
 		{/if}
 	</p>
-	{#if loc.source === 'device' && district}
-		<button type="button" class="btn btn-secondary" onclick={() => chooseDistrict(district.id)}>
-			{t('settings.location_use_district')}
-		</button>
-	{/if}
+	<div class="btn-row">
+		{#if loc.source !== 'district' && district}
+			<button type="button" class="btn btn-secondary" onclick={() => chooseDistrict(district.id)}>
+				{t('settings.location_use_district')}
+			</button>
+		{/if}
+		{#if loc.source !== 'map' && loc.manual}
+			<button type="button" class="btn btn-secondary" onclick={useMapPoint}>{t('settings.location_use_map')}</button>
+		{/if}
+	</div>
 </section>
 
 <section class="card" aria-labelledby="set-pantry">
@@ -332,5 +366,17 @@
 
 	.dialog::backdrop {
 		background: rgb(0 0 0 / 0.55);
+	}
+
+	.map {
+		margin-top: var(--space-3);
+	}
+
+	.map summary {
+		display: flex;
+		align-items: center;
+		min-height: var(--tap);
+		cursor: pointer;
+		font-weight: 600;
 	}
 </style>

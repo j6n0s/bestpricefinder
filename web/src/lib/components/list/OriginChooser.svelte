@@ -3,21 +3,26 @@
 	for and one line before the button says it stays on the device (with a link to the privacy page); the
 	browser is asked for a position only when the user presses "Saját helyzetem használata" (low accuracy, 10 s
 	timeout, rounded to about 100 m, kept on this device; only store ids are ever sent). The Budapest district
-	picker is the alternative. The outcome is reported through `onlocation`; the page saves it with $lib/storage.
+	picker and a point picked on the on-device map (MapPicker, behind a closed disclosure) are the alternatives.
+	The outcome is reported through `onlocation`; the page saves it with $lib/storage.
 	Every new location is built from the STORED one (load()), not from the `location` prop: another tab may have
 	revoked the position or deleted everything since this page read it, and that must never be written back.
 -->
 <script lang="ts">
-	import { tick } from 'svelte';
+	import { tick, untrack } from 'svelte';
 	import DistrictPicker from '$lib/components/DistrictPicker.svelte';
 	import LocationPrivacy from '$lib/components/LocationPrivacy.svelte';
+	import MapPicker from '$lib/components/MapPicker.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import type { LatLon } from '$lib/geo';
 	import { t, type PlainKey } from '$lib/i18n';
 	import { locateForList } from '$lib/list/locate';
 	import {
+		clearedMapLocation,
 		declinedLocation,
 		districtLocation,
 		grantedLocation,
+		mapLocation,
 		type LocateFailure
 	} from '$lib/location';
 	import { load, type StoredLocation } from '$lib/storage';
@@ -39,6 +44,8 @@
 	let pending = $state(false);
 	let failure = $state<LocateFailure | null>(null);
 	let locateButton = $state<HTMLButtonElement>();
+	// The map disclosure starts open only when the map point is the origin already.
+	let mapOpen = $state(untrack(() => location.source === 'map'));
 
 	const FAILURE_KEYS: Record<LocateFailure, PlainKey> = {
 		denied: 'core.location_error_denied',
@@ -69,6 +76,15 @@
 		failure = null;
 		onlocation(districtLocation(load().location, districtId));
 	}
+
+	function pickPoint(point: LatLon): void {
+		failure = null;
+		onlocation(mapLocation(load().location, point));
+	}
+
+	function clearPoint(): void {
+		onlocation(clearedMapLocation(load().location));
+	}
 </script>
 
 <section class="card origin" aria-labelledby="{id}-title">
@@ -98,6 +114,14 @@
 			onchange={chooseDistrict}
 		/>
 	</div>
+
+	<details class="map" bind:open={mapOpen} data-testid="origin-map">
+		<summary class="disclosure">{t('core.map_pick_open')}</summary>
+		<!-- Mounted only while open: the picker loads the store list, which the closed chooser never needs. -->
+		{#if mapOpen}
+			<MapPicker point={location.manual} onpick={pickPoint} onclear={clearPoint} />
+		{/if}
+	</details>
 
 	{#if hasOrigin}
 		<div class="btn-row done">
@@ -133,5 +157,17 @@
 
 	.done {
 		margin-top: var(--space-4);
+	}
+
+	.map {
+		margin-top: var(--space-3);
+	}
+
+	.map summary {
+		display: flex;
+		align-items: center;
+		min-height: var(--tap);
+		cursor: pointer;
+		font-weight: 600;
 	}
 </style>

@@ -9,6 +9,8 @@ import {
 	failureFromCode,
 	geoTimeout,
 	grantedLocation,
+	mapLocation,
+	clearedMapLocation,
 	originFromLocation,
 	requestApproxPosition,
 	revokedLocation,
@@ -105,7 +107,8 @@ describe('stored location transitions', () => {
 			consent: 'granted',
 			source: 'device',
 			districtId: '11',
-			approx: { lat: 47.477, lon: 19.047, at: '2026-10-13T08:00:00.000Z' }
+			approx: { lat: 47.477, lon: 19.047, at: '2026-10-13T08:00:00.000Z' },
+			manual: null
 		});
 		expect(originFromLocation(next)).toEqual({ lat: 47.477, lon: 19.047, source: 'device', districtId: null });
 		// The storage sanitiser accepts it unchanged.
@@ -114,14 +117,14 @@ describe('stored location transitions', () => {
 
 	it('declining or revoking deletes the position and keeps the district', () => {
 		const granted = grantedLocation({ ...base(), districtId: '05' }, { lat: 47.5, lon: 19.05 }, now);
-		expect(declinedLocation(granted)).toEqual({ consent: 'declined', source: 'district', districtId: '05', approx: null });
-		expect(revokedLocation(granted)).toEqual({ consent: 'unset', source: 'district', districtId: '05', approx: null });
+		expect(declinedLocation(granted)).toEqual({ consent: 'declined', source: 'district', districtId: '05', approx: null, manual: null });
+		expect(revokedLocation(granted)).toEqual({ consent: 'unset', source: 'district', districtId: '05', approx: null, manual: null });
 		expect(revokedLocation(grantedLocation(base(), { lat: 47.5, lon: 19.05 }, now))).toEqual(base());
 	});
 
 	it('choosing a district makes its centroid the origin; clearing it falls back', () => {
 		const withDistrict = districtLocation(base(), '11');
-		expect(withDistrict).toEqual({ consent: 'unset', source: 'district', districtId: '11', approx: null });
+		expect(withDistrict).toEqual({ consent: 'unset', source: 'district', districtId: '11', approx: null, manual: null });
 		const origin = originFromLocation(withDistrict);
 		expect(origin).toMatchObject({ source: 'district', districtId: '11' });
 		expect(origin?.lat).toBeGreaterThan(47.4);
@@ -142,8 +145,46 @@ describe('stored location transitions', () => {
 	it('has no origin until something is chosen, and none from a position without consent', () => {
 		expect(originFromLocation(base())).toBeNull();
 		expect(
-			originFromLocation({ consent: 'declined', source: 'device', districtId: null, approx: { lat: 47.5, lon: 19, at: '' } })
+			originFromLocation({ consent: 'declined', source: 'device', districtId: null, approx: { lat: 47.5, lon: 19, at: '' }, manual: null })
 		).toBeNull();
+	});
+
+	it('a point picked on the map is the origin, rounded; it survives declining and revoking', () => {
+		const picked = mapLocation(base(), { lat: 47.49876, lon: 19.05432 }, now);
+		expect(picked).toEqual({
+			consent: 'unset',
+			source: 'map',
+			districtId: null,
+			approx: null,
+			manual: { lat: 47.499, lon: 19.054, at: '2026-10-13T08:00:00.000Z' }
+		});
+		expect(originFromLocation(picked)).toEqual({ lat: 47.499, lon: 19.054, source: 'map', districtId: null });
+		expect(migrate({ ...defaultState(), location: picked }).location).toEqual(picked);
+		// Declining or revoking the device position falls back to the map point when there is no district.
+		const granted = grantedLocation(picked, { lat: 47.5, lon: 19.05 }, now);
+		expect(granted.source).toBe('device');
+		expect(declinedLocation(granted)).toMatchObject({ source: 'map', manual: picked.manual });
+		expect(revokedLocation(granted)).toMatchObject({ source: 'map', manual: picked.manual });
+		expect(revokedLocation(grantedLocation({ ...picked, districtId: '05' }, { lat: 47.5, lon: 19.05 }, now)).source).toBe('district');
+		// Choosing a district switches to it and keeps the point; clearing the district comes back to the point.
+		const district = districtLocation(picked, '11');
+		expect(district).toMatchObject({ source: 'district', manual: picked.manual });
+		expect(districtLocation(district, null)).toMatchObject({ source: 'map', districtId: null });
+	});
+
+	it('clearing the map point falls back to the device position, else the district, else none', () => {
+		const picked = mapLocation(base(), { lat: 47.5, lon: 19.05 }, now);
+		expect(clearedMapLocation(picked)).toEqual(base());
+		expect(clearedMapLocation(mapLocation({ ...base(), districtId: '05' }, { lat: 47.5, lon: 19.05 }, now))).toMatchObject({
+			source: 'district',
+			manual: null
+		});
+		const withDevice = mapLocation(grantedLocation(base(), { lat: 47.5, lon: 19.05 }, now), { lat: 47.6, lon: 19.1 }, now);
+		expect(withDevice.source).toBe('map');
+		expect(clearedMapLocation(withDevice)).toMatchObject({ source: 'device', manual: null });
+		// Clearing a point that is not the origin changes nothing else.
+		const district = districtLocation(picked, '11');
+		expect(clearedMapLocation(district)).toEqual({ ...district, manual: null });
 	});
 });
 

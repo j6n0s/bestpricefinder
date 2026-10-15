@@ -14,9 +14,11 @@
 		qty: number;
 		unit: Unit;
 		onchange: (qty: number | null) => void;
+		/** The bin's label ("Törlés a kosárból: {name}" by default; the pantry has its own). */
+		removeKey?: 'cart.remove_named' | 'list.on_hand_remove_named';
 	}
 
-	let { name, qty, unit, onchange }: Props = $props();
+	let { name, qty, unit, onchange, removeKey = 'cart.remove_named' }: Props = $props();
 	const amount = $derived(formatAmount(qty, unit, i18n.lang));
 	const less = $derived(stepQty(qty, unit, -1));
 </script>
@@ -25,7 +27,7 @@
 	<button
 		type="button"
 		class="step"
-		aria-label={less === null ? t('cart.remove_named', { name }) : t('cart.less_named', { name })}
+		aria-label={less === null ? t(removeKey, { name }) : t('cart.less_named', { name })}
 		onclick={() => onchange(less)}
 	>
 		{#if less === null}

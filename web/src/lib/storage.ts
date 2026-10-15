@@ -1,8 +1,8 @@
 /**
  * The ONE place where personal data is kept: the browser's localStorage, on this device only.
  *
- * Nothing in here is ever sent to the server as a whole. Plan, household size, slots, radius, pantry,
- * exclusions (diet preferences are health data, GDPR Art. 9), location consent, the chosen district or the
+ * Nothing in here is ever sent to the server as a whole. Plan, household size, slots, radius, pantry (staples
+ * marked "nincs otthon" and the amounts at home, which the list subtracts on the device), exclusions (diet preferences are health data, GDPR Art. 9), location consent, the chosen district or the
  * approximate location, the shopping-list choices (range, and per list the ticks, removed lines, excluded
  * lines bought anyway and the chosen store), the last loaded list and the chosen store's last quote (so the
  * list still works offline in the shop), the cart (the goods picked by hand, their ticks and chosen store) and
@@ -73,6 +73,8 @@ const DISTRICT_ID = /^(0[1-9]|1\d|2[0-3])$/;
 /** Goods in the cart (src/lib/cart/cart.ts MAX_CART_LINES) and their largest quantity (the API's bound). */
 const MAX_CART_LINES = 100;
 const MAX_CART_QTY = 1000;
+/** Ingredients with an amount at home (StoredState.pantry.onHand): the API's list limit. */
+export const MAX_ON_HAND_LINES = 200;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 /** "Ez a hét", "Jövő hét", "Az egész terv" (src/lib/list/range.ts). */
@@ -138,7 +140,7 @@ export interface StoredPlan {
 }
 
 export type LocationConsent = 'unset' | 'granted' | 'declined';
-export type LocationSource = 'none' | 'device' | 'district';
+export type LocationSource = 'none' | 'device' | 'district' | 'map';
 
 export interface ApproxPosition {
 	/** Rounded to APPROX_DECIMALS. */
@@ -157,6 +159,11 @@ export interface StoredLocation {
 	districtId: string | null;
 	/** Only with consent "granted"; never sent anywhere. */
 	approx: ApproxPosition | null;
+	/**
+	 * A point the user chose on the map (src/lib/components/MapPicker.svelte), not a sensor position, so no
+	 * consent is involved; the origin when `source` is "map". Kept on this device only, never sent anywhere.
+	 */
+	manual: ApproxPosition | null;
 }
 
 /** One good in the cart, in its ingredient's unit (kg, l, db). */
@@ -184,10 +191,15 @@ export interface StoredState {
 	plan: StoredPlan | null;
 	pantry: {
 		/**
-		 * Pantry staples ("valószínűleg otthon van") the user marked "nincs otthon". There are no on-hand
-		 * quantities: staples are either at home (the default) or bought, and the app never sends `on_hand`.
+		 * Pantry staples ("valószínűleg otthon van") the user marked "nincs otthon": staples are either at home
+		 * (the default) or bought.
 		 */
 		notAtHome: string[];
+		/**
+		 * Amounts at home of any ingredient ("Otthon lévő mennyiségek"), in the ingredient's own unit. The list
+		 * subtracts them ON THE DEVICE (src/lib/list/onhand.ts applyOnHand); the app never sends `on_hand`.
+		 */
+		onHand: StoredCartLine[];
 	};
 	exclusions: {
 		tags: RecipeTag[];
@@ -213,10 +225,10 @@ export function defaultState(): StoredState {
 		slots: 3,
 		radiusKm: 1.5,
 		plan: null,
-		pantry: { notAtHome: [] },
+		pantry: { notAtHome: [], onHand: [] },
 		exclusions: { tags: [], ingredients: [] },
 		preferencesAsked: false,
-		location: { consent: 'unset', source: 'none', districtId: null, approx: null },
+		location: { consent: 'unset', source: 'none', districtId: null, approx: null, manual: null },
 		list: { range: 'this_week', entries: [] },
 		lastList: null,
 		lastQuote: null,
@@ -312,7 +324,10 @@ function sanitisePlan(value: unknown): StoredPlan | null {
 
 function sanitisePantry(value: unknown): StoredState['pantry'] {
 	if (!isRecord(value)) return defaultState().pantry;
-	return { notAtHome: idList(value.notAtHome, ID_PATTERNS.ingredient, MAX_LIST) };
+	return {
+		notAtHome: idList(value.notAtHome, ID_PATTERNS.ingredient, MAX_LIST),
+		onHand: sanitiseQtyLines(value.onHand, MAX_ON_HAND_LINES)
+	};
 }
 
 function sanitiseListEntry(value: unknown): ListEntry | null {
@@ -352,27 +367,31 @@ function sanitiseSavedQuote(value: unknown): SavedQuote | null {
 }
 
 /** The cart: valid, unique goods with 0 < qty <= 1000 (rounded to 0.001), at most 100; invalid lines are dropped. */
-function sanitiseCart(value: unknown): StoredCart {
-	if (!isRecord(value)) return defaultState().cart;
+/** Unique ingredient ids with a quantity 0 < qty <= MAX_CART_QTY (rounded to 3 decimals), at most `max`. */
+function sanitiseQtyLines(value: unknown, max: number): StoredCartLine[] {
 	const lines: StoredCartLine[] = [];
 	const seen = new Set<string>();
-	if (Array.isArray(value.lines)) {
-		for (const item of value.lines) {
-			if (lines.length >= MAX_CART_LINES) break;
-			if (!isRecord(item)) continue;
-			const { ingredientId, qty } = item;
-			if (typeof ingredientId !== 'string' || !ID_PATTERNS.ingredient.test(ingredientId) || seen.has(ingredientId)) {
-				continue;
-			}
-			if (!isFiniteNumber(qty)) continue;
-			const rounded = Math.round(qty * 1000) / 1000;
-			if (!(rounded > 0 && rounded <= MAX_CART_QTY)) continue;
-			seen.add(ingredientId);
-			lines.push({ ingredientId, qty: rounded });
+	if (!Array.isArray(value)) return lines;
+	for (const item of value) {
+		if (lines.length >= max) break;
+		if (!isRecord(item)) continue;
+		const { ingredientId, qty } = item;
+		if (typeof ingredientId !== 'string' || !ID_PATTERNS.ingredient.test(ingredientId) || seen.has(ingredientId)) {
+			continue;
 		}
+		if (!isFiniteNumber(qty)) continue;
+		const rounded = Math.round(qty * 1000) / 1000;
+		if (!(rounded > 0 && rounded <= MAX_CART_QTY)) continue;
+		seen.add(ingredientId);
+		lines.push({ ingredientId, qty: rounded });
 	}
+	return lines;
+}
+
+function sanitiseCart(value: unknown): StoredCart {
+	if (!isRecord(value)) return defaultState().cart;
 	return {
-		lines,
+		lines: sanitiseQtyLines(value.lines, MAX_CART_LINES),
 		checked: idList(value.checked, ID_PATTERNS.ingredient, MAX_CART_LINES),
 		storeId: typeof value.storeId === 'string' && ID_PATTERNS.store.test(value.storeId) ? value.storeId : null
 	};
@@ -420,10 +439,14 @@ function sanitiseLocation(value: unknown): StoredLocation {
 	const districtId = typeof value.districtId === 'string' && DISTRICT_ID.test(value.districtId) ? value.districtId : null;
 	// A stored position without consent is dropped: consent is the precondition for keeping it.
 	const approx = consent === 'granted' ? sanitiseApprox(value.approx) : null;
-	let source: LocationSource = value.source === 'device' || value.source === 'district' ? value.source : 'none';
-	if (source === 'device' && approx === null) source = districtId !== null ? 'district' : 'none';
-	if (source === 'district' && districtId === null) source = approx !== null ? 'device' : 'none';
-	return { consent, source, districtId, approx };
+	const manual = sanitiseApprox(value.manual);
+	let source: LocationSource =
+		value.source === 'device' || value.source === 'district' || value.source === 'map' ? value.source : 'none';
+	// A source whose data is missing falls back to another that has data, else to none.
+	if (source === 'device' && approx === null) source = districtId !== null ? 'district' : manual !== null ? 'map' : 'none';
+	if (source === 'district' && districtId === null) source = approx !== null ? 'device' : manual !== null ? 'map' : 'none';
+	if (source === 'map' && manual === null) source = approx !== null ? 'device' : districtId !== null ? 'district' : 'none';
+	return { consent, source, districtId, approx, manual };
 }
 
 /** Validates a version-1 document field by field; invalid fields fall back to their defaults. */

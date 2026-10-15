@@ -35,6 +35,8 @@ export const settingsEn: Messages<typeof settingsHu> = {
 	location_source_none: 'not set yet.',
 	location_source_device: 'your device’s approximate location.',
 	location_use_district: 'Use the district',
+	location_source_map: 'the point chosen on the map.',
+	location_use_map: 'Use the map point',
 
 	pantry_title: 'Pantry',
 	exclusions_title: 'Excluded ingredients and tags',

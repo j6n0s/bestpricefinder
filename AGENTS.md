@@ -1,7 +1,7 @@
 # Working agreement for agents in this repo
 
 **Who writes the code:** the **local Claude Code session** on the founder's Mac, as decided by the user on 2026-10-15 ("I want to continue the development of the app in the claude session"). It owns `server/`, `web/`, `deploy/` and `data/`, may add new `db/migrations/` files, and deploys to the Azure VM ([deploy/azure/README.md](deploy/azure/README.md)). Its working checkout is `~/src/bestpricefinder`, branch `claude/practical-newton-fdz8jp`.
-**Before that:** a cloud-based agent wrote the app from 2026-10-13 to 2026-10-15 (everything up to `b31d050`); it is stopped. If it is ever restarted, it reads this file and `docs/QUESTIONS.md` first and does not push to the branch above without the user's say-so.
+**Before that:** a cloud-based agent wrote the app from 2026-10-13 to 2026-10-15 (everything up to `b31d050`). **Restarted by the user on 2026-10-15** (QUESTIONS.md "map point, pantry amounts, cart categories"): it writes code again when the user asks and pushes to the branch above, so the local session **pulls before editing `web/` or deploying**. Both agents stage explicit paths and never rewrite the branch's history.
 **Who wrote the foundation:** the local session "Meal planning app idea analysis", which produced the research, the spec, the architecture and migration 0001.
 
 Start here: [docs/PROGRESS.md](docs/PROGRESS.md), then [BUILD-BRIEF.md](BUILD-BRIEF.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).

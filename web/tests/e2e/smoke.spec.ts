@@ -439,6 +439,55 @@ test.describe('settings', () => {
 		await expectClean(watcher);
 	});
 
+	test('a point on the map stands in for the position and stays on the device', async ({ page }) => {
+		const watcher = await watch(page);
+		await page.goto('/beallitasok');
+		await expect(page.getByTestId('location-source')).toContainText('még nincs megadva.');
+		const picker = page.getByTestId('settings-map');
+		await picker.getByText('Pont választása a térképen').click();
+		const hint = picker.getByTestId('map-picker-hint');
+		await expect(hint).toHaveText('Még nincs pont.');
+
+		// Keyboard only: Enter puts the point in the middle of the view (Budapest, 28 km wide), an arrow moves it
+		// by a twentieth of the width (1.4 km). Only the rounded point is stored, on this device.
+		await picker.getByTestId('map-picker-map').focus();
+		await page.keyboard.press('Enter');
+		await expect(hint).toHaveText('Választott pont: X. kerület közelében.');
+		await expect(page.getByTestId('location-source')).toContainText('a térképen választott pont.');
+		expect(await storedState(page)).toMatchObject({
+			location: { consent: 'unset', source: 'map', districtId: null, approx: null, manual: { lat: 47.487, lon: 19.125 } }
+		});
+		await page.keyboard.press('ArrowLeft');
+		expect(await storedState(page)).toMatchObject({ location: { source: 'map', manual: { lat: 47.487, lon: 19.106 } } });
+		await expect(hint).toHaveText('Választott pont: VIII. kerület közelében.');
+		await expectAccessible(page, 'settings map');
+		await expectNoHorizontalScroll(page);
+		await page.screenshot({ path: screenshotPath('settings-phone-360-map'), fullPage: true });
+
+		// A district chosen later takes over; the point is kept, and either can be made the starting point.
+		await page.getByLabel('Budapesti kerület').selectOption({ label: 'XI. kerület' });
+		await expect(page.getByTestId('location-source')).toContainText('XI. kerület');
+		await page.getByRole('button', { name: 'Térképi pont használata' }).click();
+		await expect(page.getByTestId('location-source')).toContainText('a térképen választott pont.');
+		expect(await storedState(page)).toMatchObject({ location: { source: 'map', districtId: '11', manual: { lon: 19.106 } } });
+		await page.getByRole('button', { name: 'Kerület használata' }).click();
+		await expect(page.getByTestId('location-source')).toContainText('XI. kerület');
+
+		// Kept across a reload; "Pont törlése" forgets the point, the district stays.
+		await page.reload();
+		await picker.getByText('Pont választása a térképen').click();
+		await expect(hint).toHaveText('Választott pont: VIII. kerület közelében.');
+		await picker.getByRole('button', { name: 'Pont törlése' }).click();
+		await expect(hint).toHaveText('Még nincs pont.');
+		await expect(page.getByTestId('location-source')).toContainText('XI. kerület');
+		await expect(page.getByRole('button', { name: 'Térképi pont használata' })).toHaveCount(0);
+		expect(await storedState(page)).toMatchObject({ location: { source: 'district', districtId: '11', manual: null } });
+		for (const request of watcher.requests) {
+			expect(`${request.url} ${request.body}`).not.toMatch(/47[.,]487|19[.,]1[02]|latitude|longitude/);
+		}
+		await expectClean(watcher);
+	});
+
 	test('asks what you do not eat on the first visit; after "Mentés" it is changed in the settings', async ({ page }) => {
 		const watcher = await watch(page);
 		await page.goto('/');

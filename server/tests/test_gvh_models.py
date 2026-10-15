@@ -284,6 +284,16 @@ def test_shop_prices_and_not_found() -> None:
     )
     assert ok is not None
     assert ok.value.shops[0].prices[0].amount == Decimal(2101)
+    assert ok.drift == ()
+    # The real 2xx answer (first seen on the VM on 2026-10-15) carries `uuid` next to `shopUuid`: declared,
+    # so it is not drift; a missing one is still fine.
+    with_uuid = parse_shop_prices(
+        b'{"shops": [{"uuid": "9b6c2d0e-0000-4000-8000-000000000001", "shopUuid": "tesco-4062", '
+        b'"prices": [{"type": "NORMAL", "amount": 2101, "unitAmount": 2101}]}]}'
+    )
+    assert with_uuid is not None
+    assert with_uuid.value.shops[0].uuid == "9b6c2d0e-0000-4000-8000-000000000001"
+    assert with_uuid.drift == ()
     body = json.dumps(
         {"code": SHOP_PRICES_NOT_FOUND, "message": "Not found prices by product and shops uuid!"}
     )

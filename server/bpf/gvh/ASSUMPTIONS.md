@@ -118,7 +118,7 @@ Unknown extra fields are accepted and recorded as drift warnings (`Model.field`)
 |---|---|---|---|---|
 | X1 | path | the store ids comma-joined and **URL-encoded** (`%2C`), product id URL-encoded | | notes §1 ("comma-joined, URL-encoded") |
 | X2 | chunk size | ≤ 200 ids per call (verified up to 200; URL ≈ 2.5 KB) | | |
-| X3 | root | object `{shops: [{shopUuid, prices: [{type, amount, unitAmount}]}]}` | R | only stores that carry the product. **Not yet verified** (the 2xx sample was skipped on 2026-10-14) |
+| X3 | root | object `{shops: [{uuid, shopUuid, prices: [{type, amount, unitAmount}]}]}` | R | only stores that carry the product. **Seen live 2026-10-15** on the VM (9,681 rows, 186 Budapest stores, no unknown store id): one unknown field, `uuid` (the row's own id next to `shopUuid`), declared optional and unused since then. The raw sample `product-shop-ok` is still to be captured for `tests/test_gvh_fixtures.py` |
 | X4 | not sold at any requested store | a body containing `PRODUCT-SHOP-PRICES-NOT-FOUND`; any error status (4xx, or 5xx, then without retrying) or a 2xx body naming the code without `shops` is accepted | | → empty result. **Confirmed 2026-10-14**: HTTP 404 with `{"code": "PRODUCT-SHOP-PRICES-NOT-FOUND", "message": …}` |
 | X5 | stores not requested in the answer | ignored with a warning | | |
 

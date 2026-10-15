@@ -1,6 +1,7 @@
 <!--
 	The shopping list itself: the lines to buy grouped by shop section (docs/DATA.md order) with check-off
-	boxes, the "valószínűleg otthon van" section with a "nincs otthon" toggle per staple (none for tap water),
+	boxes (a line bought for less because some is at home says so), the "valószínűleg otthon van" section with
+	a "nincs otthon" toggle per staple (none for tap water) and the lines an amount at home covers entirely,
 	the ingredients excluded in the settings (with "mégis megveszem"), and the lines removed by hand. No prices
 	here (so no attribution is needed); the prices are in "Hol a legolcsóbb a közelben?". Every change is
 	reported to the page, which saves it on this device only. Ingredient names come from the content, which is
@@ -13,10 +14,15 @@
 	import { i18n, t, tp } from '$lib/i18n';
 	import { groupLabelKey, groupLines } from '$lib/list/groups';
 	import { canBeBought, isBought, isIncludedExclusion, lineKind, listSections, type LineChoices } from '$lib/list/lines';
+	import type { CoveredLine } from '$lib/list/onhand';
 	import { listAmount } from '$lib/list/packs';
 
 	interface Props {
 		lines: readonly ListLineOut[];
+		/** Lines an amount at home covers entirely ($lib/list/onhand): shown with the pantry, not bought. */
+		covered?: readonly CoveredLine[];
+		/** Per line bought for less: the amount at home that was subtracted. */
+		reduced?: ReadonlyMap<string, number>;
 		choices: LineChoices;
 		checked: ReadonlySet<string>;
 		ontogglecheck: (ingredientId: string, on: boolean) => void;
@@ -28,8 +34,19 @@
 		oninclude: (ingredientId: string) => void;
 	}
 
-	let { lines, choices, checked, ontogglecheck, onclearchecks, onremove, onrestore, onnotathome, oninclude }: Props =
-		$props();
+	let {
+		lines,
+		covered = [],
+		reduced = new Map<string, number>(),
+		choices,
+		checked,
+		ontogglecheck,
+		onclearchecks,
+		onremove,
+		onrestore,
+		onnotathome,
+		oninclude
+	}: Props = $props();
 	const id = $props.id();
 
 	let root = $state<HTMLDivElement>();
@@ -45,6 +62,10 @@
 
 	function amount(line: ListLineOut): string {
 		return listAmount(line.qty, line.unit, i18n.lang);
+	}
+
+	function homeAmount(line: ListLineOut, qty: number): string {
+		return listAmount(qty, line.unit, i18n.lang);
 	}
 
 	async function remove(ingredientId: string): Promise<void> {
@@ -118,6 +139,11 @@
 							<span class="text">
 								<span class="name" lang="hu">{line.name_hu}</span>
 								<span class="qty">{amount(line)}</span>
+								{#if reduced.has(line.ingredient_id)}
+									<span class="small muted" data-testid="on-hand-note"
+										>({t('list.on_hand_line_note', { qty: homeAmount(line, reduced.get(line.ingredient_id) ?? 0) })})</span
+									>
+								{/if}
 							</span>
 						</label>
 						{#if isIncludedExclusion(line, choices)}
@@ -149,12 +175,23 @@
 		</section>
 	{/each}
 
-	{#if pantry.length > 0}
+	{#if pantry.length > 0 || covered.length > 0}
 		<section class="group pantry" aria-labelledby="{id}-pantry">
 			<h2 id="{id}-pantry">{t('list.pantry_title')}</h2>
-			<!-- The switch's label once, over its column; every switch is also named "Nincs otthon: <name>". -->
-			<p class="pantry-head small muted" aria-hidden="true">{t('list.not_at_home')}</p>
+			{#if pantry.length > 0}
+				<!-- The switch's label once, over its column; every switch is also named "Nincs otthon: <name>". -->
+				<p class="pantry-head small muted" aria-hidden="true">{t('list.not_at_home')}</p>
+			{/if}
 			<ul class="lines">
+				{#each covered as item (item.line.ingredient_id)}
+					<li class="line" data-testid="covered-line" data-ingredient-id={item.line.ingredient_id}>
+						<span class="item text">
+							<span class="name" lang="hu">{item.line.name_hu}</span>
+							<span class="qty">{amount(item.line)}</span>
+							<span class="small muted">{t('list.on_hand_covered', { qty: homeAmount(item.line, item.onHand) })}</span>
+						</span>
+					</li>
+				{/each}
 				{#each pantry as line (line.ingredient_id)}
 					{@const missing = lineKind(line, choices) === 'pantry_missing'}
 					<li class="line">
@@ -178,7 +215,12 @@
 					</li>
 				{/each}
 			</ul>
+			{#if covered.length > 0 || reduced.size > 0}
+				<p class="small"><a href="/beallitasok#set-pantry">{t('list.on_hand_edit')}</a></p>
+			{/if}
 		</section>
+	{:else if reduced.size > 0}
+		<p class="small on-hand-edit"><a href="/beallitasok#set-pantry">{t('list.on_hand_edit')}</a></p>
 	{/if}
 
 	{#if sections.excluded.length > 0}
@@ -347,6 +389,10 @@
 		flex: none;
 		justify-content: center;
 		min-width: var(--tap);
+	}
+
+	.on-hand-edit {
+		margin-top: var(--space-4);
 	}
 
 	.pantry-head {

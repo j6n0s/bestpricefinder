@@ -2,7 +2,7 @@
  * POST /api/list from the stored plan: for the chosen range, every planned meal is `people` servings, summed
  * per recipe (`planToListItems` from the plan helpers). Recipes that are no longer in the library are left
  * out (the API would reject the whole request) and reported, so the page can say so. Nothing else is sent:
- * no `on_hand` (the app keeps no on-hand quantities) and no personal data.
+ * no `on_hand` (the amounts at home are subtracted on the device, $lib/list/onhand) and no personal data.
  */
 import type { ListRequest, RecipeId } from '../api/types';
 import { planToListItems, unknownPlanRecipeIds } from '../plan/plan';

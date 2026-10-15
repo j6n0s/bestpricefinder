@@ -7,8 +7,8 @@
  * ties. ("Hol vásárolj?", the single store and the route, is computed on the device from these answers.)
  *
  * Covered at 320×640, 360×740 and 1280×800: list -> location consent -> ranking -> pick a store -> grouped store list,
- * and the district-picker path (with "too few stores, widen the radius"); plus a refused location, the pantry
- * and exclusion settings, and storage refused by the browser. Every test checks: no console errors, no
+ * and the district-picker path (with "too few stores, widen the radius"); plus a refused location, a point
+ * chosen on the map, the pantry (amounts at home) and exclusion settings, and storage refused by the browser. Every test checks: no console errors, no
  * uncaught errors, no CSP violations, no request to another origin, and that no request carries coordinates.
  */
 import { mkdirSync } from 'node:fs';
@@ -947,7 +947,8 @@ test.describe('another tab', () => {
 			consent: 'unset',
 			source: 'district',
 			districtId: '11',
-			approx: null
+			approx: null,
+			manual: null
 		});
 		await expectClean(page, rec);
 		await expectClean(settings, other);
@@ -1127,6 +1128,70 @@ test.describe('location refused by the browser', () => {
 	});
 });
 
+test.describe('a point chosen on the map', () => {
+	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true, permissions: [] });
+
+	test('stands in for the position, stays on the device and can be cleared', async ({ page }) => {
+		const rec = await harness(page);
+		await seed(page, seededState());
+		await page.goto('/lista');
+		await expect(page.getByRole('heading', { name: 'Honnan keressük a boltokat?' })).toBeVisible();
+		const picker = page.getByTestId('origin-map');
+		await picker.getByText('Pont választása a térképen').click();
+		const hint = picker.getByTestId('map-picker-hint');
+		await expect(hint).toHaveText('Még nincs pont.');
+		await expect(picker.getByTestId('map-picker-marker')).toHaveCount(0);
+
+		// The schematic map draws the stores (GET /api/stores) as dots. A tap on the first one (Spar, 100 m north
+		// of the device position) makes it the starting point, to about a pixel (~90 m at the Budapest zoom)
+		// and rounded to 3 decimals like the device position.
+		const map = picker.getByTestId('map-picker-map');
+		const dot = map.locator('circle.store').first();
+		await expect(dot).toBeVisible();
+		const [mapBox, dotBox] = [await map.boundingBox(), await dot.boundingBox()];
+		if (!mapBox || !dotBox) throw new Error('the map is not laid out');
+		await map.click({ position: { x: dotBox.x + dotBox.width / 2 - mapBox.x, y: dotBox.y + dotBox.height / 2 - mapBox.y } });
+		await expect(hint).toHaveText('Választott pont: V. kerület közelében.');
+		await expect(picker.getByTestId('map-picker-marker')).toBeVisible();
+		const stored = await storedJson(page, STORAGE_KEY);
+		expect(stored).toMatchObject({ location: { consent: 'unset', source: 'map', districtId: null, approx: null } });
+		const manual = (stored?.location as { manual: { lat: number; lon: number; at: string } }).manual;
+		expect(manual.lat).toBeCloseTo(47.497, 2);
+		expect(manual.lon).toBeCloseTo(19.054, 2);
+		expect(manual.at).toBe(NOW.toISOString());
+
+		// From the point the list works as from the device's position: the nearby stores are quoted, by id only
+		// (the third-nearest Lidl depends on the exact tap; the other seven do not). The browser is never asked.
+		await expect(page.getByTestId('origin')).toContainText(
+			'Kiindulási pont: a térképen választott pont, V. kerület közelében.'
+		);
+		await expect(page.getByTestId('candidates')).toContainText(sp('8 bolt 1,5 km távolságon belül'));
+		await expect(page.getByTestId('candidates')).toContainText('1 közeli boltról nincs áradat.');
+		await expect(page.getByTestId('rank-row').first()).toBeVisible();
+		const sent = rec.quoteBodies.at(-1);
+		expect(sent?.store_ids).toHaveLength(8);
+		expect(sent?.store_ids).toEqual(
+			expect.arrayContaining(DEVICE_CANDIDATES.filter((id) => id !== 'synthetic-lidl-c'))
+		);
+		expect(await page.evaluate(() => window.__geoCalls?.length)).toBe(0);
+		await expectAccessible(page, 'list map point');
+		await page.screenshot({ path: screenshotPath('list-phone-360-map-point'), fullPage: true });
+
+		// "Kész" closes the chooser; it reopens on the point, close up; "Pont törlése" forgets the point.
+		await page.getByRole('button', { name: 'Kész' }).click();
+		await expect(page.getByTestId('origin')).toBeFocused();
+		await page.getByRole('button', { name: 'Másik kiindulási pont' }).click();
+		await expect(hint).toHaveText('Választott pont: V. kerület közelében.');
+		await expect(picker.getByTestId('map-picker-marker')).toBeVisible();
+		await picker.getByRole('button', { name: 'Pont törlése' }).click();
+		await expect(hint).toHaveText('Még nincs pont.');
+		expect(await storedJson(page, STORAGE_KEY)).toMatchObject({ location: { consent: 'unset', source: 'none', manual: null } });
+		await expect(page.getByTestId('origin')).toHaveCount(0);
+		await expect(page.getByRole('heading', { name: 'Honnan keressük a boltokat?' })).toBeVisible();
+		await expectClean(page, rec);
+	});
+});
+
 test.describe('pantry and exclusion settings', () => {
 	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
 
@@ -1159,11 +1224,54 @@ test.describe('pantry and exclusion settings', () => {
 		await exclusions.getByRole('button', { name: 'vörös lencse visszavétele' }).click();
 		expect(await storedJson(page, STORAGE_KEY)).toMatchObject({ exclusions: { tags: ['hal'], ingredients: [] } });
 
-		// The list now shows the paprika as "nincs otthon" in its section.
+		// "Otthon lévő mennyiségek": any GVH-priced ingredient with the amount at home, in its own unit on the
+		// cart's ladder of round amounts (500 g by default; − steps down 400, 300, 250, 200 g).
+		const onHand = page.getByTestId('on-hand-settings');
+		await expect(onHand).toContainText('Nincs megadott mennyiség.');
+		const onHandSearch = onHand.getByLabel('Alapanyag keresése a kamrához');
+		await onHandSearch.fill('hagy');
+		await onHand.getByRole('button', { name: 'vöröshagyma hozzáadása' }).click();
+		await expect(onHandSearch).toBeFocused();
+		await expect(onHandSearch).toHaveValue('');
+		const onion = onHand.getByRole('group', { name: 'vöröshagyma' });
+		await expect(onion.getByRole('status')).toHaveText(/^500\sg$/);
+		for (let press = 0; press < 4; press += 1) await onion.getByRole('button', { name: 'Kevesebb: vöröshagyma' }).click();
+		await expect(onion.getByRole('status')).toHaveText(/^200\sg$/);
+		await expect(onHand.getByText(/^2\sdb$/)).toBeVisible(); // about 2 pieces at 100 g each
+		await onHandSearch.fill('lencse');
+		await onHand.getByRole('button', { name: 'vörös lencse hozzáadása' }).click();
+		await expect(onHand.getByRole('group', { name: 'vörös lencse' }).getByRole('status')).toHaveText(/^500\sg$/);
+		await onHandSearch.fill('lencse'); // already in the pantry: not offered again
+		await expect(onHand.getByText('Nincs ilyen nevű alapanyag, vagy már a kamrában van.')).toBeVisible();
+		expect(await storedJson(page, STORAGE_KEY)).toMatchObject({
+			pantry: {
+				notAtHome: ['pirospaprika'],
+				onHand: [
+					{ ingredientId: 'voroshagyma', qty: 0.2 },
+					{ ingredientId: 'voros_lencse', qty: 0.5 }
+				]
+			}
+		});
+		await expectNoHorizontalScroll(page);
+		await page.screenshot({ path: screenshotPath('settings-phone-360-on-hand'), fullPage: true });
+
+		// The list shows the paprika as "nincs otthon" in its section and subtracts the amounts at home on the
+		// device: 100 g of onion is bought (200 g at home, noted), the lentils (400 g) are covered by the 500 g
+		// at home and move to the pantry section. The list request never carries the amounts.
 		await page.goto('/lista');
 		await expect(page.getByRole('checkbox', { name: 'Nincs otthon: pirospaprika' })).toBeChecked();
 		await expect(page.getByRole('checkbox', { name: /^pirospaprika/ })).toBeVisible();
-		await expect(page.getByText('9 tétel a listán')).toBeVisible();
+		await expect(page.getByRole('checkbox', { name: /^vöröshagyma\s100\sg/ })).toBeVisible();
+		await expect(page.getByTestId('on-hand-note')).toHaveText(/^\(otthon van 200\sg\)$/);
+		const covered = page.getByTestId('covered-line');
+		await expect(covered).toHaveCount(1);
+		await expect(covered).toContainText('vörös lencse');
+		await expect(covered).toContainText(/400\sg/);
+		await expect(covered).toContainText(/otthon van: 500\sg/);
+		await expect(page.getByRole('checkbox', { name: /^vörös lencse/ })).toHaveCount(0);
+		await expect(page.getByRole('link', { name: 'Kamra módosítása' })).toHaveAttribute('href', '/beallitasok#set-pantry');
+		await expect(page.getByText('8 tétel a listán')).toBeVisible();
+		expect(JSON.stringify(rec.listBodies)).not.toContain('on_hand');
 		await expectClean(page, rec);
 	});
 

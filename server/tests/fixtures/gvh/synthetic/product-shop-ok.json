@@ -1,6 +1,7 @@
 {
  "shops": [
   {
+   "uuid": "shop-price-2999378099761-tesco-1009",
    "shopUuid": "tesco-1009",
    "prices": [
     {
@@ -11,6 +12,7 @@
    ]
   },
   {
+   "uuid": "shop-price-2999378099761-tesco-1014",
    "shopUuid": "tesco-1014",
    "prices": [
     {
@@ -21,6 +23,7 @@
    ]
   },
   {
+   "uuid": "shop-price-2999378099761-tesco-1025",
    "shopUuid": "tesco-1025",
    "prices": [
     {
@@ -31,6 +34,7 @@
    ]
   },
   {
+   "uuid": "shop-price-2999378099761-tesco-1046",
    "shopUuid": "tesco-1046",
    "prices": [
     {

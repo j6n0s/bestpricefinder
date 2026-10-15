@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { haversineKm, type LatLon } from '../geo';
-import { DEFAULT_FRAME, mapFrame, pathData, scaleBar } from './map';
+import { DEFAULT_FRAME, mapFrame, pathData, scaleBar, viewFrame } from './map';
 
 const NYUGATI: LatLon = { lat: 47.5103, lon: 19.0558 };
 const OKTOGON: LatLon = { lat: 47.5052, lon: 19.0634 };
@@ -64,5 +64,30 @@ describe('pathData', () => {
 	it('draws a polyline, rounded to 0.1 unit', () => {
 		expect(pathData([{ x: 1.04, y: 2 }, { x: 3.16, y: 4.25 }])).toBe('M1 2 L3.2 4.3');
 		expect(pathData([])).toBe('');
+	});
+});
+
+describe('unproject and viewFrame', () => {
+	it('unproject is the inverse of project in both frames', () => {
+		const fitted = mapFrame([NYUGATI, OKTOGON, DEAK]);
+		const view = viewFrame(DEAK, 5);
+		for (const frame of [fitted, view]) {
+			for (const point of [NYUGATI, OKTOGON, DEAK]) {
+				const back = frame.unproject(frame.project(point));
+				expect(back.lat).toBeCloseTo(point.lat, 9);
+				expect(back.lon).toBeCloseTo(point.lon, 9);
+			}
+		}
+	});
+
+	it('a view frame is spanKm wide, centred, north up', () => {
+		const frame = viewFrame(DEAK, 5);
+		expect(frame.project(DEAK)).toEqual({ x: DEFAULT_FRAME.width / 2, y: DEFAULT_FRAME.height / 2 });
+		const left = frame.unproject({ x: 0, y: DEFAULT_FRAME.height / 2 });
+		const right = frame.unproject({ x: DEFAULT_FRAME.width, y: DEFAULT_FRAME.height / 2 });
+		expect(haversineKm(left, right)).toBeCloseTo(5, 2);
+		expect(frame.project(NYUGATI).y).toBeLessThan(frame.project(DEAK).y);
+		expect(() => viewFrame(DEAK, 0)).toThrow(RangeError);
+		expect(() => viewFrame({ lat: Number.NaN, lon: 1 }, 1)).toThrow(RangeError);
 	});
 });

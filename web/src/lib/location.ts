@@ -2,6 +2,8 @@
  * Location helpers. The position is requested only after the explanation screen (LocationExplainer), with
  * `enableHighAccuracy: false`, rounded to about 100 m and stored on the device only. It is never sent to
  * the server: distances are computed by src/lib/geo.ts and only store ids leave the device.
+ * The alternatives need no permission: a Budapest district, or a point the user picks on the on-device map
+ * (MapPicker; `StoredLocation.manual`, source "map"), also kept on the device only.
  */
 import { districtById } from './districts';
 import type { LatLon } from './geo';
@@ -97,7 +99,7 @@ export function requestApproxPosition(
 }
 
 export interface Origin extends LatLon {
-	source: 'device' | 'district';
+	source: 'device' | 'district' | 'map';
 	districtId: string | null;
 }
 
@@ -110,7 +112,16 @@ export function originFromLocation(location: StoredLocation): Origin | null {
 		const district = districtById(location.districtId);
 		if (district) return { lat: district.lat, lon: district.lon, source: 'district', districtId: district.id };
 	}
+	if (location.source === 'map' && location.manual) {
+		return { lat: location.manual.lat, lon: location.manual.lon, source: 'map', districtId: null };
+	}
 	return null;
+}
+
+/** The source to fall back to when the device position is no longer used: the district, else the map point. */
+function withoutDevice(previous: StoredLocation): StoredLocation['source'] {
+	if (previous.districtId !== null) return 'district';
+	return previous.manual !== null ? 'map' : 'none';
 }
 
 /** A stored device position older than this is shown as out of date (the list offers to update it). */
@@ -138,7 +149,8 @@ export function grantedLocation(previous: StoredLocation, position: LatLon, now:
 			lat: roundCoordinate(position.lat, APPROX_DECIMALS),
 			lon: roundCoordinate(position.lon, APPROX_DECIMALS),
 			at: now.toISOString()
-		}
+		},
+		manual: previous.manual
 	};
 }
 
@@ -146,19 +158,21 @@ export function grantedLocation(previous: StoredLocation, position: LatLon, now:
 export function declinedLocation(previous: StoredLocation): StoredLocation {
 	return {
 		consent: 'declined',
-		source: previous.districtId !== null ? 'district' : 'none',
+		source: withoutDevice(previous),
 		districtId: previous.districtId,
-		approx: null
+		approx: null,
+		manual: previous.manual
 	};
 }
 
-/** Revoking deletes the stored position; the district choice (not a position of the user) stays. */
+/** Revoking deletes the stored position; the district choice and the map point (not sensor data) stay. */
 export function revokedLocation(previous: StoredLocation): StoredLocation {
 	return {
 		consent: 'unset',
-		source: previous.districtId !== null ? 'district' : 'none',
+		source: withoutDevice(previous),
 		districtId: previous.districtId,
-		approx: null
+		approx: null,
+		manual: previous.manual
 	};
 }
 
@@ -169,8 +183,34 @@ export function districtLocation(previous: StoredLocation, districtId: string | 
 		return {
 			...previous,
 			districtId: null,
-			source: previous.source === 'district' ? (previous.approx ? 'device' : 'none') : previous.source
+			source: previous.source === 'district' ? (previous.approx ? 'device' : previous.manual ? 'map' : 'none') : previous.source
 		};
 	}
 	return { ...previous, districtId: district.id, source: 'district' };
+}
+
+/**
+ * A point chosen on the map becomes the origin (rounded like a device position, about 100 m); a stored device
+ * position and the district choice are kept but not used.
+ */
+export function mapLocation(previous: StoredLocation, point: LatLon, now: Date = new Date()): StoredLocation {
+	return {
+		...previous,
+		source: 'map',
+		manual: {
+			lat: roundCoordinate(point.lat, APPROX_DECIMALS),
+			lon: roundCoordinate(point.lon, APPROX_DECIMALS),
+			at: now.toISOString()
+		}
+	};
+}
+
+/** Deleting the map point; the origin falls back to the device position, else the district, else none. */
+export function clearedMapLocation(previous: StoredLocation): StoredLocation {
+	const device = previous.consent === 'granted' && previous.approx !== null;
+	return {
+		...previous,
+		manual: null,
+		source: previous.source === 'map' ? (device ? 'device' : previous.districtId !== null ? 'district' : 'none') : previous.source
+	};
 }

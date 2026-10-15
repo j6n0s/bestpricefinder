@@ -1,6 +1,6 @@
 # Progress and hand-off (read this first)
 
-**Last updated:** 2026-10-15 by the local Claude Code session (step 10 done: the app runs on the Azure VM; step 9 partly done). Before: 2026-10-14 by the cloud agent (steps 1–8, the cart and route feature). Earlier: 01:50 CEST by the local research session "Meal planning app idea analysis".
+**Last updated:** 2026-10-15 by the cloud agent (the map point, the amounts at home, the cart's category menu, `ShopPrice.uuid`). Before: 2026-10-15 by the local Claude Code session (step 10 done: the app runs on the Azure VM; step 9 partly done). Before: 2026-10-14 by the cloud agent (steps 1–8, the cart and route feature). Earlier: 01:50 CEST by the local research session "Meal planning app idea analysis".
 **Decision by the user (2026-10-15):** development continues in the **local Claude Code session** (AGENTS.md). From 2026-10-13 to 2026-10-15 a cloud-based agent wrote the code; the local session did the research and laid the foundation below.
 **Communication:** the local session and the cloud agent cannot message each other. Use the repo:
 - questions and decisions go in `docs/QUESTIONS.md` (append; date and sign each entry);
@@ -80,7 +80,12 @@ The user relays anything urgent.
   - The bottom bar's first tab is now "Kosár"; the home page is reached through the app name.
 
 - [x] **10. Deployment to an Azure VM** _(done 2026-10-15 by the local session: `b31d050` on `vm-hetikosar`, https://hetikosar-burk.denmarkeast.cloudapp.azure.com, private to 146.110.0.0/16; units, Caddy site, scripts and the update command in [deploy/azure/](../deploy/azure/README.md); details in QUESTIONS.md 2026-10-15 "Azure deployment")_. Plan: [docs/DEPLOY_HANDOFF.md](DEPLOY_HANDOFF.md). The legal gates (GVH request, impresszum, privacy policy) keep it private until the founder clears them.
-- [ ] **11. Open after the deployment**: a real-device pass (iPhone Safari + home screen, Android Chrome, desktop Firefox); declare `ShopPrice.uuid` in `bpf/gvh/models.py` from a real `product-shop-ok` sample; encrypted off-VM backups (needs an `age` key from the founder).
+- [ ] **11. Open after the deployment**: a real-device pass (iPhone Safari + home screen, Android Chrome, desktop Firefox); encrypted off-VM backups (needs an `age` key from the founder); capture a real `product-shop-ok` sample for the GVH fixtures. _(2026-10-15, cloud agent: `ShopPrice.uuid` is declared in `bpf/gvh/models.py` from the VM's drift log, optional and unused, so the drift warning stops; the raw sample is still to be captured by the local session, which can reach GVH. The phone pass and the backups need the founder's devices and keys, so they stay with the local session.)_
+
+- [x] **Extra, asked by the user on 2026-10-15: a point on the map, amounts at home, and the cart's category menu.** _(done 2026-10-15 by the cloud agent; web only, no server or schema change; see QUESTIONS.md 2026-10-15 "map point, pantry amounts, cart categories")_
+  - "Pont választása a térképen" on `/lista` (the origin chooser) and `/beallitasok`: a schematic map drawn on the device (store dots, district numerals, zoom, keyboard nudging; no tiles, no request to any other site) sets the starting point when the position is not available or not wanted. Only the rounded point is stored, on the device.
+  - "Otthon lévő mennyiségek" in Beállítások › Kamra: any good with store prices, with the amount at home; the list subtracts it on the device (a line fully covered moves to the pantry section, a partly covered one is bought for the rest, with a note). `on_hand` is never sent to the API.
+  - `/kosar`: the goods are browsed like a shop's menu: a bar of shop sections and, under a section, its kinds of goods (from the ingredient tags), as the user asked; the name search stays.
 
 ## Founder-only items (agents must not do these)
 - File the GVH re-use request; the draft is in `research/gap-gvh-reuse-legal-route/request_draft_hu.txt`.

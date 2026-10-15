@@ -80,21 +80,22 @@ function good(
 	unit: IngredientOut['unit'],
 	group: string,
 	priced: IngredientOut['priced_by'] = 'gvh',
-	pieceWeight: number | null = null
+	pieceWeight: number | null = null,
+	tags: IngredientOut['tags'] = []
 ): IngredientOut {
-	return { id, name_hu: name, list_group: group, unit, piece_weight_kg: pieceWeight, pantry: false, priced_by: priced, tags: [] };
+	return { id, name_hu: name, list_group: group, unit, piece_weight_kg: pieceWeight, pantry: false, priced_by: priced, tags };
 }
 
 const INGREDIENTS: IngredientOut[] = [
-	good('tej', 'tej', 'l', 'tejtermek_tojas'),
-	good('orolt_kave', 'őrölt kávé', 'kg', 'szaraz_tartos'),
-	good('alma', 'alma', 'kg', 'zoldseg_gyumolcs', 'gvh', 0.18),
-	good('tojas', 'tojás', 'db', 'tejtermek_tojas'),
-	good('kenyer', 'kenyér', 'db', 'pekaru'),
-	good('banan', 'banán', 'kg', 'zoldseg_gyumolcs', 'gvh', 0.17),
+	good('tej', 'tej', 'l', 'tejtermek_tojas', 'gvh', null, ['dairy']),
+	good('orolt_kave', 'őrölt kávé', 'kg', 'szaraz_tartos'), // no tag: "Egyéb" in its section
+	good('alma', 'alma', 'kg', 'zoldseg_gyumolcs', 'gvh', 0.18, ['fruit']),
+	good('tojas', 'tojás', 'db', 'tejtermek_tojas', 'gvh', null, ['egg']),
+	good('kenyer', 'kenyér', 'db', 'pekaru', 'gvh', null, ['grain']),
+	good('banan', 'banán', 'kg', 'zoldseg_gyumolcs', 'gvh', 0.17, ['fruit']),
 	// Not in the cart's goods: no store price, only a KSH estimate, and tap water.
-	good('so', 'só', 'kg', 'fuszer_olaj', 'none'),
-	good('gomba', 'csiperkegomba', 'kg', 'zoldseg_gyumolcs', 'ksh'),
+	good('so', 'só', 'kg', 'fuszer_olaj', 'none', null, ['condiment']),
+	good('gomba', 'csiperkegomba', 'kg', 'zoldseg_gyumolcs', 'ksh', null, ['vegetable']),
 	good('viz', 'víz', 'l', 'egyeb')
 ];
 /** The goods in shop-section order, then by name. */
@@ -371,6 +372,67 @@ for (const viewport of VIEWPORTS) {
 			isMobile: viewport.mobile,
 			hasTouch: viewport.mobile,
 			...WITH_LOCATION
+		});
+
+		test('browse by category: a bar of sections and, under one, its kinds of goods', async ({ page }) => {
+			const rec = await harness(page);
+			await page.goto('/kosar');
+			const browse = page.getByTestId('browse');
+			const bar = page.getByRole('navigation', { name: 'Kategóriák' });
+			await expect(bar.getByRole('button')).toHaveText(['Zöldség, gyümölcs', 'Pékáru', 'Tejtermék, tojás', 'Száraz és tartós élelmiszer']);
+			await expect(page.getByTestId('category-menu')).toHaveCount(0);
+
+			// A section with one kind of goods is chosen straight from the bar.
+			await bar.getByRole('button', { name: 'Pékáru' }).click();
+			await expect(page.getByTestId('chosen-category')).toHaveText('Pékáru');
+			await expect(page.getByTestId('chosen-category')).toBeFocused();
+			await expect(bar.getByRole('button', { name: 'Pékáru' })).toHaveAttribute('aria-pressed', 'true');
+			await expect(page.getByTestId('goods-count')).toHaveText('1 termék');
+			await expect(browse.getByTestId('good')).toHaveText([/kenyér/]);
+			await expect(browse.locator('h3.group')).toHaveCount(1); // the chosen section's heading only
+
+			// A section with several kinds opens a menu: the whole section, or one kind, with how many goods.
+			await bar.getByRole('button', { name: 'Tejtermék, tojás' }).click();
+			const menu = page.getByTestId('category-menu');
+			await expect(bar.getByRole('button', { name: 'Tejtermék, tojás' })).toHaveAttribute('aria-expanded', 'true');
+			await expect(menu.getByRole('button')).toHaveText(['Az egész kategória', 'Tej, sajt, joghurt, tejföl (1 termék)', 'Tojás (1 termék)']);
+			await page.screenshot({ path: screenshotPath(`cart-${viewport.name}-categories`), fullPage: true });
+			await menu.getByRole('button', { name: 'Tojás' }).click();
+			await expect(menu).toHaveCount(0);
+			await expect(bar.getByRole('button', { name: 'Tejtermék, tojás' })).toHaveAttribute('aria-expanded', 'false');
+			await expect(page.getByTestId('chosen-category')).toHaveText('Tejtermék, tojás: Tojás');
+			await expect(page.getByTestId('chosen-category')).toBeFocused();
+			await expect(browse.getByTestId('good')).toHaveText([/tojás/]);
+			await expect(page.getByTestId('goods-count')).toHaveText('1 termék');
+			await page.getByRole('button', { name: 'Kosárba: tojás' }).click();
+			await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
+			await expectAccessible(page, `cart ${viewport.name} category`);
+
+			// Escape closes the menu and returns to its button; "Az egész kategória" shows the whole section.
+			await bar.getByRole('button', { name: 'Tejtermék, tojás' }).click();
+			await expect(menu.getByRole('button', { name: 'Tojás' })).toHaveAttribute('aria-current', 'true');
+			await page.keyboard.press('Escape');
+			await expect(menu).toHaveCount(0);
+			await expect(bar.getByRole('button', { name: 'Tejtermék, tojás' })).toBeFocused();
+			await page.keyboard.press('Enter');
+			await menu.getByRole('button', { name: 'Az egész kategória' }).click();
+			await expect(page.getByTestId('chosen-category')).toHaveText('Tejtermék, tojás');
+			await expect(browse.getByTestId('good')).toHaveText([/^tej/, /^tojás/]);
+			await expect(page.getByTestId('goods-count')).toHaveText('2 termék');
+
+			// A search looks through every section and drops the category; "Minden termék" shows everything again.
+			await page.getByLabel('Keresés a termékek között').fill('alma');
+			await expect(page.getByTestId('chosen-category')).toHaveCount(0);
+			await expect(browse.getByTestId('good')).toHaveText([/^alma/]);
+			await page.getByLabel('Keresés a termékek között').fill('');
+			await expect(page.getByTestId('goods-count')).toHaveText('6 termék');
+			await expect(browse.locator('h3.group')).toHaveCount(4);
+			await bar.getByRole('button', { name: 'Pékáru' }).click();
+			await page.getByRole('button', { name: 'Minden termék' }).click();
+			await expect(page.getByTestId('chosen-category')).toHaveCount(0);
+			await expect(bar.getByRole('button', { name: 'Pékáru' })).toBeFocused();
+			await expect(page.getByTestId('goods-count')).toHaveText('6 termék');
+			await expectClean(page, rec);
 		});
 
 		test('browse -> cart -> one store or a route, with a map', async ({ page }) => {

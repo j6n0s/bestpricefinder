@@ -100,7 +100,9 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list, car
   summary); the chain table ranks only those (`comparableChainCosts`) and shows the others unranked as
   "részleges ár", with a note. `priced_share < 1` always comes with a caveat (`compact` = short form in the
   plan cards and the meal picker).
-- **List:** the plan's range ("Ez a hét" / "Jövő hét" / "Az egész terv") -> POST /api/list; pantry staples are
+- **List:** the plan's range ("Ez a hét" / "Jövő hét" / "Az egész terv") -> POST /api/list; the amounts at
+  home (`pantry.onHand`, Beállítások › Kamra) are subtracted on the device (`$lib/list/onhand`: a covered line
+  moves to the pantry section, a partly covered one is bought for the rest, with a note); pantry staples are
   "valószínűleg otthon van" unless marked "nincs otthon" (tap water never: `NEVER_BOUGHT`); ingredients
   excluded in the settings are kept off the list and out of the prices (an optional recipe line or a
   hand-picked recipe can bring them back) unless the user chooses "mégis megveszem" for that list; ticks,
@@ -121,8 +123,10 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list, car
   tiles, no request anywhere), listed stop by stop with an OpenStreetMap link holding only the store's own
   public position, and can be shown as a list per store. When the route is not worth it, the page says how
   much it would have saved. Ties are never broken by chain or store name. Shown on `/lista` and `/kosar`.
-- **Cart (Kosár):** goods with store prices (`priced_by: "gvh"`, never tap water) browsed by shop section or
-  searched without accents, put in a cart with − / + amounts along round steps (`QTY_LADDERS`; eggs by 10),
+- **Cart (Kosár):** goods with store prices (`priced_by: "gvh"`, never tap water) browsed like a shop's menu
+  (a bar of shop sections and, under a section, its kinds of goods from the ingredient tags:
+  `$lib/cart/categories`) or searched without accents, put in a cart with − / + amounts along round steps
+  (`QTY_LADDERS`; eggs by 10),
   "kb. N db" for goods with a piece weight. The cart is `StoredState.cart` (personal data, on the device only;
   at most 100 goods); goods that lose their store price are flagged and leave the cart at its next change.
   Clearing can be undone. Only ingredient ids and amounts go to POST /api/quote, with the nearby store ids.
@@ -138,8 +142,10 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list, car
 ### Storage (one key)
 
 Everything personal is ONE versioned JSON document under `hetikosar.state` (`$lib/storage`, `StoredState`):
-`language`, `people`, `slots`, `radiusKm`, `plan`, `pantry.notAtHome`, `exclusions` (tags, ingredients),
-`location` (consent, source, district, rounded position with its time), `list` (`range`, and per list
+`language`, `people`, `slots`, `radiusKm`, `plan`, `pantry` (`notAtHome`, and `onHand`: ≤ 200 goods with
+the amount at home), `exclusions` (tags, ingredients), `location` (consent, source, district, the rounded
+device position with its time, and `manual`: the point chosen on the map, rounded the same way), `list`
+(`range`, and per list
 `entries[]` of `{key, checked, removed, included, storeId}`: key ≤ 80 printable ASCII characters, ≤ 12 lists,
 ≤ 500 ticked and ≤ 200 removed ids per list, ids checked against the API's id patterns), and the offline
 copies `lastList` (`{body, savedAt, lines}`, ≤ 500 lines) and `lastQuote` (`{body, savedAt, dataDate, store}`,
@@ -150,10 +156,12 @@ shipped; `clearAll` removes any `hetikosar.` key). "Minden adat törlése" delet
 everything held in memory (the storage module's session copy, the language, the recipe filters); when the
 browser refuses to delete it, this session still shows nothing of it and the page says so.
 
-**No on-hand quantities.** `StoredState.pantry` has no `onHand` any more: the app never had an editor for it,
-and a pantry staple is either at home (the default) or "nincs otthon" (bought). The app therefore never sends
-`on_hand` to POST /api/list (the API client still supports the field, as it is part of the contract). Older
-documents that still carry `pantry.onHand` are cleaned on the next read; no version bump is needed.
+**Amounts at home stay on the device.** `pantry.onHand` (any GVH-priced good, in its own unit on the cart's
+round steps; `<PantrySettings>`) is subtracted from the list by `$lib/list/onhand` before anything is quoted.
+The app never sends `on_hand` to POST /api/list (the API client still supports the field, as it is part of
+the contract), so the list request and its offline copy do not depend on the pantry. A pantry staple is
+otherwise either at home (the default) or "nincs otthon" (bought). The field was added with a default, so no
+version bump was needed.
 
 ### Location: OriginChooser and LocationExplainer
 
@@ -164,8 +172,12 @@ kept on the device, never sent; only store ids leave the device):
 - `<OriginChooser>` (the list): the explanation is always visible above "Saját helyzetem használata"; 10 s
   timeout (`locateForList` in `src/lib/list/locate.ts` passes `{ timeoutMs: 10_000 }`).
 
-No other component may call `navigator.geolocation`. Both offer `<DistrictPicker>` (a district centroid) as
-the alternative.
+No other component may call `navigator.geolocation`. Both offer `<DistrictPicker>` (a district centroid) and
+`<MapPicker>` ("Pont választása a térképen") as the alternatives. The map picker is a schematic SVG drawn on
+the device (`$lib/mappick`, `$lib/journey/map`): the stores as dots, the districts' numerals, zoom presets, a
+tap or the arrow keys to set the point; no tiles and no request to any other site. The point is stored
+rounded (`location.manual`, `source: "map"`), the hint names the nearest district only, and the picker is
+mounted only while its disclosure is open (it loads the store list).
 
 ### Tests
 

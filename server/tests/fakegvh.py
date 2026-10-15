@@ -832,6 +832,8 @@ def shop_prices_json(product: FakeProduct, store_ids: Sequence[str]) -> dict[str
             prices = offer.store_prices(store)
             shops.append(
                 {
+                    # The real answer carries a row uuid next to the store's (seen 2026-10-15).
+                    "uuid": f"shop-price-{product.id}-{store}",
                     "shopUuid": store,
                     "prices": [
                         {"type": t, "amount": _money(a), "unitAmount": _money(product.unit_amount(a))}
