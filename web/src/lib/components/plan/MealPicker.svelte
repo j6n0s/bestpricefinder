@@ -180,8 +180,10 @@
 		cursor: pointer;
 	}
 
-	.option:hover {
-		background: var(--color-surface-alt);
+	@media (hover: hover) {
+		.option:hover {
+			background: var(--color-surface-alt);
+		}
 	}
 
 	.option[aria-current='true'] {

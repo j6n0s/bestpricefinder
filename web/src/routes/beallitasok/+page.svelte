@@ -321,6 +321,8 @@
 
 	.dialog {
 		width: min(28rem, calc(100vw - 2rem));
+		max-height: calc(100dvh - 2rem);
+		overflow-y: auto;
 		padding: var(--space-5);
 		background: var(--color-surface);
 		color: var(--color-text);

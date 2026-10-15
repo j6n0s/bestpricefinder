@@ -167,9 +167,12 @@ a {
 	text-underline-offset: 0.15em;
 }
 
-a:hover {
-	color: var(--color-primary-hover);
-	text-decoration-thickness: 2px;
+/* Hover styles only on devices that can hover: on a touch screen the tapped control would keep them. */
+@media (hover: hover) {
+	a:hover {
+		color: var(--color-primary-hover);
+		text-decoration-thickness: 2px;
+	}
 }
 
 :focus-visible {
@@ -321,9 +324,11 @@ textarea {
 	color: var(--color-on-primary);
 }
 
-.btn-primary:hover:not(:disabled, [aria-disabled='true']) {
-	background: var(--color-primary-hover);
-	color: var(--color-on-primary);
+@media (hover: hover) {
+	.btn-primary:hover:not(:disabled, [aria-disabled='true']) {
+		background: var(--color-primary-hover);
+		color: var(--color-on-primary);
+	}
 }
 
 .btn-secondary {
@@ -332,9 +337,11 @@ textarea {
 	border-color: var(--color-border);
 }
 
-.btn-secondary:hover:not(:disabled, [aria-disabled='true']) {
-	background: var(--color-surface-alt);
-	color: var(--color-text);
+@media (hover: hover) {
+	.btn-secondary:hover:not(:disabled, [aria-disabled='true']) {
+		background: var(--color-surface-alt);
+		color: var(--color-text);
+	}
 }
 
 .btn-danger {
@@ -368,9 +375,11 @@ textarea {
 	font-weight: 600;
 }
 
-.btn-ghost:hover:not(:disabled, [aria-disabled='true']) {
-	background: var(--color-surface-alt);
-	color: var(--color-text);
+@media (hover: hover) {
+	.btn-ghost:hover:not(:disabled, [aria-disabled='true']) {
+		background: var(--color-surface-alt);
+		color: var(--color-text);
+	}
 }
 
 /*
@@ -399,10 +408,6 @@ details[open] > .disclosure::after {
 	cursor: not-allowed;
 }
 
-.choice:has(input:disabled):hover {
-	background: transparent;
-}
-
 .field {
 	display: flex;
 	flex-direction: column;
@@ -412,6 +417,24 @@ details[open] > .disclosure::after {
 .field > label,
 .field-label {
 	font-weight: 600;
+}
+
+/*
+ * iOS Safari only (-webkit-touch-callout exists nowhere else): a date field keeps its row's width and aligns
+ * its value at the start, like a text field, instead of shrinking to a centred value.
+ */
+@supports (-webkit-touch-callout: none) {
+	input[type='date'].input {
+		display: block;
+		min-width: 0;
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
+	input[type='date'].input::-webkit-date-and-time-value {
+		text-align: start;
+		min-height: 1.5em;
+	}
 }
 
 .input,
@@ -448,8 +471,14 @@ details[open] > .disclosure::after {
 	cursor: pointer;
 }
 
-.choice:hover {
-	background: var(--color-surface-alt);
+@media (hover: hover) {
+	.choice:hover {
+		background: var(--color-surface-alt);
+	}
+
+	.choice:has(input:disabled):hover {
+		background: transparent;
+	}
 }
 
 .choice input {

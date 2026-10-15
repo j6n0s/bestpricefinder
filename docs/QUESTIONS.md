@@ -228,3 +228,13 @@ Full notes: the reviewers' files were local only, so ask the user if you need de
   - the `edes` recipe tag, still offered as an exclusion ("Édes étel"), so anyone can leave sweet dishes out entirely.
 - BUILD-BRIEF.md §6 still lists "sweets ≤2" among the weekly rules. That file belongs to the foundation, so it is left as is; this entry overrides it.
 - data/CONTENT_REPORT.md is a dated feasibility report and still shows the old rule. Re-run it when the content changes next.
+
+## 2026-10-15 — cloud agent (branch `claude/practical-newton-fdz8jp`) — devices and browsers check
+- Asked: "ellenőrizd le, hogy megfelelő módon fut-e minden fajta eszközön". Done as far as this environment allows; details in docs/E2E.md "Devices and browsers".
+- **Found and fixed:**
+  - hover colours stuck on the tapped control on touch screens (every `:hover` rule is now limited to devices that can hover);
+  - the iOS date field could shrink to its centred value instead of filling its row (explicit width and alignment rules);
+  - the "Minden adat törlése" dialog had no height cap (now capped at the screen height and scrollable, like the meal picker).
+- **Verified in Chromium** at 14 device profiles (phones, landscape phones, tablets, laptops, 4K at 2×, Windows forced colours): 126 checks, all green; the regular e2e and full-stack suites too.
+- **Support floor:** iOS 16+, Chrome/Edge 107+, Firefox 104+, Samsung Internet 21+ (the bundle is ES2022 at most; `:has()` and `<dialog>` are the newest platform features used).
+- **Open:** Safari/WebKit and Firefox cannot run here (no browser download allowed), so a real-device pass (iPhone Safari + home screen, Android Chrome + Samsung Internet, desktop Firefox) is still needed before a public release.

@@ -82,8 +82,10 @@
 		cursor: pointer;
 	}
 
-	.step:hover:not(:disabled) {
-		background: var(--color-surface-alt);
+	@media (hover: hover) {
+		.step:hover:not(:disabled) {
+			background: var(--color-surface-alt);
+		}
 	}
 
 	.step:disabled {

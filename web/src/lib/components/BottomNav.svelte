@@ -120,9 +120,11 @@
 		text-decoration: none;
 	}
 
-	a:hover {
-		color: var(--color-text);
-		background: var(--color-surface-alt);
+	@media (hover: hover) {
+		a:hover {
+			color: var(--color-text);
+			background: var(--color-surface-alt);
+		}
 	}
 
 	a:focus-visible {

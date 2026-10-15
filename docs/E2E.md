@@ -189,6 +189,16 @@ The API reads `web/build/index.html` and its CSP once, at start-up. After a new 
 - **A killed launcher** (SIGKILL) cannot clean up. Its throwaway cluster is left under `/tmp/bpfpg-*`. Stop it with `pg_ctl -D /tmp/bpfpg-…/pg stop` as the cluster's owner, then delete the directory.
 - **PostgreSQL version.** `pgcluster.py` uses whatever `deploy/local/_common.sh` discovers; `BPF_PG_BIN` overrides it. The scripts support 16 to 18. The cloud container has 16.
 
+## Devices and browsers
+
+**Support floor.** The web build targets Vite's "baseline widely available" set: Chrome/Edge 107+, Firefox 104+, Safari 16+ (iOS 16+), Samsung Internet 21+. The app also needs `:has()`, `<dialog>`, `Object.hasOwn`, `Array.prototype.at` and `structuredClone`, all present from Safari 15.4 / iOS 15.4, so the real floor is **iOS 16 and the 2022 desktop browsers**. Checked on 2026-10-15 by parsing every file of `web/build` (nothing above ES2022; private class fields are the newest syntax) and by listing the CSS and DOM features used. Older browsers get the `<noscript>` text or a blank page, not a broken one.
+
+**Touch and installed (home-screen) use.** Hover styles apply only where a pointer can hover (`@media (hover: hover)`), so a tapped button does not keep its hover colour on a phone. The viewport uses `viewport-fit=cover`; the header, the content and the fixed bottom bar pad by the safe-area insets (notch, home indicator). Inputs are 16 px, so iOS does not zoom in on focus. The date field is told to keep its row's width on iOS. Both modal dialogs are capped at the screen height and scroll. Geolocation needs HTTPS on phones: deploy/local/caddy/README.md.
+
+**What is verified in Chromium** (the only engine installed here; `npm run test:e2e` plus a device sweep run by hand on 2026-10-15, 126 checks): every route at iPhone SE (375×667), iPhone 15 Pro Max (430×932, 3×), Pixel 7 (412×915), Galaxy Fold cover screen (344×882), phones in landscape (667×375 and 915×412), iPad mini and 10th-gen portrait (768×1024, 810×1080), iPad landscape (1024×768, 1366×1024), laptop 1366×768, desktop 1920×1080 and 2560×1440 at 2×, plus Windows forced colours (high contrast). Checked per page: no horizontal scroll, heading order, named controls, text contrast, 44 px touch targets, unique landmarks, the footer reachable above the bottom bar, no focused control hidden behind the bar on short screens, no console errors, no CSP violations, no request to another origin; and both dialogs fit the screen in landscape.
+
+**Not verified here.** WebKit (Safari, every iOS browser) and Gecko (Firefox) are not installed in this environment, so their rendering was checked by feature support only, not by running. Before a public release, open the app once on a real iPhone (Safari and "Add to Home Screen"), an Android phone (Chrome and Samsung Internet) and Firefox on a desktop.
+
 ## Verification
 
 Verified on 2026-10-13 in the cloud container. Versions: PostgreSQL 16.15 (Ubuntu), Python 3.14.6, Node 22.22.0, Playwright 1.56.1 with Chromium build 1194.
