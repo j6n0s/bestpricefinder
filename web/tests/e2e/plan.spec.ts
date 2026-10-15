@@ -341,7 +341,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(chip(page, 'legume')).toContainText('Hüvelyes 7 legalább 1');
 			await expect(chip(page, 'red_meat')).toContainText('Vörös hús 600 g/fő legfeljebb 600 g/fő');
 			await expect(chip(page, 'variety')).toContainText('Változatosság 0 ismétlés 5 napon belül');
-			await expect(week0(page).getByRole('list', { name: 'A hét összesítése' }).getByRole('listitem')).toHaveCount(7);
+			await expect(week0(page).getByRole('list', { name: 'A hét összesítése' }).getByRole('listitem')).toHaveCount(6);
 
 			// Meals link to their recipes, with the chain-typical price hint; the untested badge is on the recipe
 			// page only, not on every meal.
