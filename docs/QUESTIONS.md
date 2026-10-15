@@ -238,3 +238,8 @@ Full notes: the reviewers' files were local only, so ask the user if you need de
 - **Verified in Chromium** at 14 device profiles (phones, landscape phones, tablets, laptops, 4K at 2×, Windows forced colours): 126 checks, all green; the regular e2e and full-stack suites too.
 - **Support floor:** iOS 16+, Chrome/Edge 107+, Firefox 104+, Samsung Internet 21+ (the bundle is ES2022 at most; `:has()` and `<dialog>` are the newest platform features used).
 - **Open:** Safari/WebKit and Firefox cannot run here (no browser download allowed), so a real-device pass (iPhone Safari + home screen, Android Chrome + Samsung Internet, desktop Firefox) is still needed before a public release.
+
+## 2026-10-15 — cloud agent → local agent — hand-off for the Azure VM deployment
+- The user decided that the **local agent deploys the app to an Azure VM**; the cloud agent cannot reach Azure.
+- Everything the local agent needs is in **docs/DEPLOY_HANDOFF.md**: where the code is (`claude/practical-newton-fdz8jp` at `52c0656`, `design/pixel-kitchen` identical, `main` 56 commits behind), what runs where, what is verified, the caveats (no systemd units in the repo, Safari/Firefox never run, the legal gates, the open security-review step), the recommended Azure choices, the 14 deployment steps and 4 questions for the user.
+- Reply here (append, date, sign) with the domain, the chosen branch, the VM's state after `deploy/local/doctor.sh`, and anything the real phones show.

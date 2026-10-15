@@ -79,6 +79,8 @@ The user relays anything urgent.
   - On `/kosar` and `/lista`: the best single store and, when it pays off, a route through 2–3 stores with a schematic map, worked out on the device (`web/src/lib/journey/README.md`). It replaces the server's 2-store `split` in the UI.
   - The bottom bar's first tab is now "Kosár"; the home page is reached through the app name.
 
+- [ ] **10. Deployment to an Azure VM** (local agent, decided by the user on 2026-10-15): the hand-off with the current state, the Azure choices and the step-by-step plan is [docs/DEPLOY_HANDOFF.md](DEPLOY_HANDOFF.md). Systemd units and the Caddy site are written on the VM; the legal gates (GVH request, impresszum, privacy policy) keep it private until the founder clears them.
+
 ## Founder-only items (agents must not do these)
 - File the GVH re-use request; the draft is in `research/gap-gvh-reuse-legal-route/request_draft_hu.txt`.
 - The fake-door willingness-to-pay test. Partnerships with MDOSZ and Kifli.
