@@ -741,6 +741,9 @@ test.describe('cart details', () => {
 		await page.goto('/kosar');
 		await expect(page.getByTestId('cart-count')).toHaveText('99 tétel');
 		await expect(page.getByTestId('cart-dropped')).toHaveText('1 termék kimaradt, mert már nincs bolti ára.');
+		// The dropped good is written out at once, so the header's count agrees with the page's.
+		await expect(page.getByTestId('header-cart-count')).toHaveText('99');
+		expect(((await storedCart(page)) as { lines: unknown[] }).lines).toHaveLength(99);
 
 		// Room for one more: the dropped good makes way.
 		await page.getByText('További termékek').click();

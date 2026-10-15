@@ -12,13 +12,20 @@
 		<link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
 		<title>Heti kosár</title>
-		<!-- The stored theme choice, applied before the first paint (no flash of the other theme); the app
-		     (src/lib/theme.svelte.ts) takes over from here. Allowed by its sha256 hash in svelte.config.js. -->
+		<!-- The stored theme choice, applied before the first paint (no flash of the other theme), with the
+		     browser's bars (the theme-color metas above); the app (src/lib/theme.svelte.ts) takes over from here.
+		     Only a version-1 document counts, as in src/lib/storage.ts. Allowed by its sha256 hash, which
+		     svelte.config.js computes from this file. -->
 		<script>
 			try {
 				var stored = localStorage.getItem('hetikosar.state');
-				var theme = stored && JSON.parse(stored).theme;
-				if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+				var doc = stored && JSON.parse(stored);
+				var theme = doc && doc.version === 1 && doc.theme;
+				if (theme === 'light' || theme === 'dark') {
+					document.documentElement.dataset.theme = theme;
+					var metas = document.querySelectorAll('meta[name="theme-color"]');
+					for (var i = 0; i < metas.length; i++) metas[i].content = theme === 'dark' ? '#000000' : '#ffffff';
+				}
 			} catch (error) {}
 		</script>
 		%sveltekit.head%

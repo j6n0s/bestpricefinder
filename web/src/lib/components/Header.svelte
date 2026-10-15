@@ -5,8 +5,8 @@
 	BUILD-BRIEF §8.2). The header speaks only when something is wrong: the prices are stale, there is no price
 	data yet, or /api/meta failed.
 	The cart count is read from the stored cart and follows every write (this tab's through `onChange`, another
-	tab's through `onExternalChange`); goods that lost their store price are still counted until the cart page
-	drops them.
+	tab's through `onExternalChange`); the cart page writes goods that lost their store price out of the cart as
+	soon as it knows, so the two counts agree.
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
@@ -170,9 +170,12 @@
 		color: var(--color-primary);
 	}
 
+	/* Wraps too (a 320 px screen with 200 % text), so the controls never overflow the bar. */
 	.controls {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
+		justify-content: flex-end;
 		gap: var(--space-2);
 		margin-left: auto;
 	}
@@ -189,34 +192,39 @@
 		padding: 0;
 	}
 
+	/* Pixels, not rem: the icons stay inside their 44 px button when the user enlarges the text. */
 	.icon svg {
-		width: 1.5rem;
-		height: 1.5rem;
+		width: 24px;
+		height: 24px;
 	}
 
 	.cart {
 		position: relative;
 	}
 
+	/* The current page (on /kosar): not colour alone (WCAG 1.4.1): a thicker frame and the inset bar the
+	   bottom bar's active tab has on wide screens; both survive forced colours. */
 	.cart.active {
+		border-width: 3px;
 		border-color: var(--color-primary);
 		color: var(--color-primary);
+		box-shadow: inset 0 -3px 0 var(--color-primary);
 	}
 
-	/* How many goods: a small pill on the basket's corner. */
+	/* How many goods: a small pill on the basket's corner, in pixels so it never covers the basket. */
 	.count {
 		position: absolute;
 		top: -6px;
 		right: -6px;
-		min-width: 1.25rem;
-		height: 1.25rem;
-		padding: 0 0.3rem;
+		min-width: 20px;
+		height: 20px;
+		padding: 0 5px;
 		border-radius: var(--radius-pill);
 		background: var(--color-primary);
 		color: var(--color-on-primary);
-		font-size: 0.6875rem;
+		font-size: 11px;
 		font-weight: 700;
-		line-height: 1.25rem;
+		line-height: 20px;
 		text-align: center;
 	}
 

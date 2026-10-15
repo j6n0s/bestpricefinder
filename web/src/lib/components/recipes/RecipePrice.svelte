@@ -51,8 +51,6 @@
 	.coverage {
 		display: block;
 	}
-
-	.coverage-short {
-		white-space: nowrap;
-	}
+	/* .coverage-short wraps like any text (the number and its % sign share a no-break space), so it fits
+	   a 320 px screen with 200 % text too. */
 </style>

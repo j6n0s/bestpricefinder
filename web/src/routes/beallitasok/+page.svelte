@@ -370,7 +370,8 @@
 	}
 
 	.stepper output {
-		min-width: 6rem;
+		/* Pixels: room for "12 fő" at every text size without pushing "+" off a narrow screen at 200 %. */
+		min-width: 96px;
 		text-align: center;
 		font-weight: 600;
 	}

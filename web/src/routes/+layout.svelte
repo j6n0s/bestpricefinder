@@ -2,7 +2,7 @@
 	App shell: skip link, header (theme and language switches, the cart, data status), offline notice, page
 	content, footer (disclaimer + sources link) and the bottom navigation. /api/meta is loaded once here and
 	shared with every page via context (`getMeta()` from $lib/meta.svelte). The stored language and theme are
-	written to the document here (<html lang>, <html data-theme>).
+	written to the document here (<html lang>, <html data-theme>) and re-read when another tab changes them.
 -->
 <script lang="ts">
 	import '../app.css';
@@ -11,9 +11,10 @@
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import Disclaimer from '$lib/components/Disclaimer.svelte';
 	import Header from '$lib/components/Header.svelte';
-	import { i18n, syncDocumentLang, t } from '$lib/i18n';
+	import { i18n, reloadLanguage, syncDocumentLang, t } from '$lib/i18n';
 	import { MetaStore, provideMeta } from '$lib/meta.svelte';
-	import { syncDocumentTheme, theme } from '$lib/theme.svelte';
+	import { onExternalChange } from '$lib/storage';
+	import { reloadTheme, syncDocumentTheme, theme } from '$lib/theme.svelte';
 
 	let { children }: { children: Snippet } = $props();
 
@@ -48,7 +49,14 @@
 			else addEventListener('load', registerServiceWorker, { once: true });
 		}
 
+		// Another tab changed the language or the theme, or deleted everything: this tab follows.
+		const stopFollowing = onExternalChange(() => {
+			reloadLanguage();
+			reloadTheme();
+		});
+
 		return () => {
+			stopFollowing();
 			removeEventListener('online', onConnectivity);
 			removeEventListener('offline', onConnectivity);
 			removeEventListener('load', registerServiceWorker);

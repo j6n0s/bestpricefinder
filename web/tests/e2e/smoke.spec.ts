@@ -119,6 +119,19 @@ async function expectNavLabelsFit(page: Page): Promise<void> {
 	expect(overflowing, 'nav labels that do not fit').toEqual([]);
 }
 
+/** The header's controls (theme, language, cart) wrap rather than overflow, also with enlarged text. */
+async function expectHeaderFits(page: Page): Promise<void> {
+	const outside = await page.evaluate(() => {
+		const header = document.querySelector('header');
+		if (!header) return ['no header'];
+		return [...header.querySelectorAll<HTMLElement>('a, button, span')]
+			.map((el) => ({ el, rect: el.getBoundingClientRect() }))
+			.filter(({ rect }) => rect.width > 0 && (rect.right > window.innerWidth + 0.5 || rect.left < -0.5))
+			.map(({ el, rect }) => `${el.tagName}.${el.className} right=${Math.round(rect.right)}`);
+	});
+	expect(outside, 'header content outside the viewport').toEqual([]);
+}
+
 async function expectNoHorizontalScroll(page: Page): Promise<void> {
 	const metrics = await page.evaluate(() => {
 		window.scrollTo(10_000, window.scrollY);
@@ -269,6 +282,7 @@ for (const width of [320, 360, 390]) {
 					await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
 					await page.addStyleTag({ content: override.css });
 					await expectNavLabelsFit(page);
+					await expectHeaderFits(page);
 					// Each label stays inside its own tab and the viewport.
 					const outside = await page
 						.getByRole('navigation', { name: 'Fő navigáció' })

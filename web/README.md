@@ -167,7 +167,7 @@ the chosen store only). Every field is validated on every read and write. The gl
 earlier builds is dropped on read (ticks belong to one list; no version bump needed).
 There is no other key: the separate `hetikosar.list` document of earlier builds is retired (it never
 shipped; `clearAll` removes any `hetikosar.` key). "Minden adat törlése" deletes the stored copy AND resets
-everything held in memory (the storage module's session copy, the language, the recipe filters); when the
+everything held in memory (the storage module's session copy, the language, the theme, the recipe filters); when the
 browser refuses to delete it, this session still shows nothing of it and the page says so.
 
 **Amounts at home stay on the device.** `pantry.onHand` (any GVH-priced good, in its own unit on the cart's

@@ -7,7 +7,8 @@
 	  browsed like a shop's menu: a bar of shop sections and, under a section, its kinds of goods ($lib/cart/
 	  categories, from the ingredient tags); or searched by name across every section.
 	- The cart is personal data: it stays on this device (StoredState.cart). Only ingredient ids and amounts
-	  are sent to POST /api/quote, with the nearby store ids; never a position.
+	  are sent to POST /api/quote, with the nearby store ids; never a position. Goods that lost their store
+	  price are written out of the cart when the catalogue arrives (with a notice), so the header's count agrees.
 	- Another tab may change the cart: the page reloads it (onExternalChange), and every change starts from a
 	  fresh load(), so a stale tab never writes old data back.
 -->
@@ -64,7 +65,19 @@
 	const qtyById = $derived(new Map(cart.lines.map((line) => [line.ingredientId, line.qty])));
 	const listLines = $derived(catalogue.status === 'ready' ? cartListLines(cart.lines, byId) : []);
 	const cartGroups = $derived(groupLines(listLines));
-	const dropped = $derived(catalogue.status === 'ready' ? cart.lines.length - listLines.length : 0);
+	/**
+	 * Goods without store prices any more leave the stored cart as soon as the catalogue says so (not only at
+	 * the next change), so the header's count and this page's agree; the notice stays until the next change.
+	 */
+	let dropped = $state(0);
+	$effect(() => {
+		if (catalogue.status !== 'ready') return;
+		const current = load().cart;
+		const kept = buyableLines(current.lines, byId);
+		if (kept.length === current.lines.length) return;
+		dropped = current.lines.length - kept.length;
+		patch({ cart: { ...current, lines: kept } });
+	});
 	const quoteInput = $derived(cartQuoteInput(listLines));
 	const checked = $derived(new Set(cart.checked));
 
@@ -123,6 +136,7 @@
 
 	function setQty(ingredientId: string, qty: number | null, from: 'cart' | 'browse'): void {
 		undoLines = null;
+		dropped = 0;
 		changeCart((current) => {
 			// Goods without store prices any more (the notice says so) leave the cart with this change.
 			const lines = setLineQty(buyableLines(current.lines, byId), ingredientId, qty);
