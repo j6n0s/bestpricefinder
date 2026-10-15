@@ -24,6 +24,11 @@ APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Unattended-Upgrade "1";
 X
 systemctl enable --now unattended-upgrades
+# PostgreSQL runs as azureuser (bpf-db.service): logind's default RemoveIPC=yes would delete its shared memory
+# whenever azureuser's last login session ends ("could not open shared memory segment").
+install -d -m 0755 /etc/systemd/logind.conf.d
+printf '[Login]\nRemoveIPC=no\n' > /etc/systemd/logind.conf.d/90-hetikosar-keep-ipc.conf
+systemctl restart systemd-logind
 # 2 GB swap file.
 if ! swapon --show=NAME --noheadings | grep -qx /swapfile; then
   fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile >/dev/null && swapon /swapfile

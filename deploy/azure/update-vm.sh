@@ -39,7 +39,8 @@ printf '== 2/3 Upload %s to %s\n' "$short" "$host"
 work=$(mktemp -d "${TMPDIR:-/tmp}/bpf-update.XXXXXX")
 trap 'rm -rf "$work"' EXIT
 git archive --format=tar.gz --prefix=bestpricefinder/ -o "$work/code-$commit.tar.gz" HEAD
-tar -czf "$work/web-build-$commit.tar.gz" web/build
+# No macOS extended attributes or ._ files (GNU tar on the VM warns about them).
+COPYFILE_DISABLE=1 tar --no-xattrs --no-mac-metadata -czf "$work/web-build-$commit.tar.gz" web/build
 ssh "${ssh_opts[@]}" "azureuser@$host" 'mkdir -p -m 700 ~/deploy-in'
 scp "${ssh_opts[@]}" "$work/code-$commit.tar.gz" "$work/web-build-$commit.tar.gz" "azureuser@$host:deploy-in/"
 

@@ -257,4 +257,5 @@ Full notes: the reviewers' files were local only, so ask the user if you need de
   - uv chose **Python 3.15** on the VM because nothing pinned the version; `server/.python-version` (3.14) now pins the tested version.
   - Ubuntu 24.04 runs sshd socket-activated, so `sshd -t` needs `/run/sshd` first (fixed in `deploy/azure/vm-root-setup.sh`).
   - The university network's outgoing address rotates within `146.110.152.0/24`; the SSH rule admits that range.
+  - **Outage found and fixed:** systemd-logind's default `RemoveIPC=yes` deleted PostgreSQL's shared memory whenever `azureuser`'s last SSH session ended (the cluster runs as that user), so the API answered `db:false` ("could not open shared memory segment"). Fixed with `/etc/systemd/logind.conf.d/90-hetikosar-keep-ipc.conf` (`RemoveIPC=no`), now part of `deploy/azure/vm-root-setup.sh`.
 - **From now on** (user, 2026-10-15): the local Claude Code session writes the code (AGENTS.md). The cloud agent is stopped.

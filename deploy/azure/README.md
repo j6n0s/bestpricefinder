@@ -63,3 +63,7 @@ az group delete -n rg-hetikosar                    # deletes everything, permane
 
 Ubuntu 24.04 note: sshd is socket-activated, so `/run/sshd` exists only while it runs; `vm-root-setup.sh`
 creates it before `sshd -t`.
+
+PostgreSQL runs as `azureuser`, so logind must keep that user's shared memory after logout: `RemoveIPC=no` in
+`/etc/systemd/logind.conf.d/90-hetikosar-keep-ipc.conf` (set by `vm-root-setup.sh`). Without it the database breaks
+when the last SSH session closes.
