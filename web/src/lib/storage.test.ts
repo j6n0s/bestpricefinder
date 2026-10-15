@@ -5,9 +5,11 @@ import {
 	clearAll,
 	defaultState,
 	isPersistent,
+	isTheme,
 	load,
 	migrate,
 	normaliseRadius,
+	onChange,
 	onExternalChange,
 	resetForTests,
 	save,
@@ -71,6 +73,7 @@ function stored(): unknown {
 const fullState = (): StoredState => ({
 	version: STORAGE_VERSION,
 	language: 'en',
+	theme: 'dark',
 	people: 4,
 	slots: 5,
 	radiusKm: 2.5,
@@ -791,3 +794,48 @@ describe('onExternalChange (another tab)', () => {
 		expect(() => stop()).not.toThrow();
 	});
 });
+
+describe('the theme ("Megjelenés")', () => {
+	it('follows the browser by default and keeps an explicit choice', () => {
+		expect(load().theme).toBe('system');
+		expect(update({ theme: 'dark' }).theme).toBe('dark');
+		expect(load().theme).toBe('dark');
+		expect(isTheme('light') && isTheme('dark') && isTheme('system')).toBe(true);
+		expect(isTheme('auto')).toBe(false);
+	});
+
+	it('falls back to the browser for an unknown stored value', () => {
+		localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultState(), theme: 'sepia' }));
+		resetForTests();
+		expect(load().theme).toBe('system');
+	});
+});
+
+describe('onChange (this tab)', () => {
+	it('announces every write of this tab, and clearAll, with the new state; unsubscribing stops it', () => {
+		const seen: StoredState[] = [];
+		const stop = onChange((state) => seen.push(state));
+		update({ people: 3 });
+		expect(seen.map((state) => state.people)).toEqual([3]);
+		save({ ...load(), people: 4 });
+		expect(seen.map((state) => state.people)).toEqual([3, 4]);
+		clearAll();
+		expect(seen.map((state) => state.people)).toEqual([3, 4, 2]);
+		stop();
+		update({ people: 5 });
+		expect(seen).toHaveLength(3);
+	});
+
+	it('still announces a write the browser refused, and survives a failing subscriber', () => {
+		const seen: number[] = [];
+		onChange(() => {
+			throw new Error('subscriber bug');
+		});
+		onChange((state) => seen.push(state.people));
+		fake.failSet = true;
+		expect(save({ ...defaultState(), people: 6 })).toBe(false);
+		expect(seen).toEqual([6]);
+		expect(isPersistent()).toBe(false);
+	});
+});
+

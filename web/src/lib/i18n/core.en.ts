@@ -12,6 +12,8 @@ export const coreEn: Messages<typeof coreHu> = {
 	nav_list: 'List',
 	nav_settings: 'Settings',
 	lang_toggle_text: 'Magyar',
+	theme_to_dark: 'Dark mode',
+	theme_to_light: 'Light mode',
 
 	data_unavailable: 'The data date is not available right now.',
 	data_none: 'No price data yet.',

@@ -22,9 +22,9 @@ const STORAGE_KEY = 'hetikosar.state';
 const BUILD_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '../../build');
 
 const ROUTES = [
-	// Home has no tab (the app name in the header leads there): the five tabs are the most that fit at 320 px.
+	// Home has no tab (the app name in the header leads there), nor has the cart (the header's basket button).
 	{ path: '/', heading: 'Heti étrend, bevásárlólista, közeli árak', nav: null },
-	{ path: '/kosar', heading: 'Kosár', nav: 'Kosár' },
+	{ path: '/kosar', heading: 'Kosár', nav: null },
 	{ path: '/terv', heading: 'Heti terv', nav: 'Heti terv' },
 	{ path: '/receptek', heading: 'Receptek', nav: 'Receptek' },
 	// The recipe title is the detail page's h1 (it says "Recept" only while loading or on an error).
@@ -169,11 +169,20 @@ for (const viewport of VIEWPORTS) {
 				await expect(page.getByTestId('disclaimer').filter({ visible: true }).first()).toBeVisible();
 				const nav = page.getByRole('navigation', { name: 'Fő navigáció' });
 				await expect(nav).toBeVisible();
+				await expect(nav.getByRole('link')).toHaveCount(4);
 				if (route.nav) {
 					await expect(nav.getByRole('link', { name: route.nav })).toHaveAttribute('aria-current', 'page');
 				} else {
 					await expect(nav.locator('[aria-current="page"]')).toHaveCount(0);
 				}
+				// The header: theme switch, language switch, then the cart, which is the current page only on /kosar.
+				const header = page.getByRole('banner');
+				await expect(header.getByRole('button', { name: 'Sötét mód' })).toBeVisible();
+				await expect(header.getByRole('button', { name: 'English' })).toBeVisible();
+				const headerCart = header.getByRole('link', { name: 'Kosár, 0 tétel' });
+				await expect(headerCart).toHaveAttribute('href', '/kosar');
+				if (route.path === '/kosar') await expect(headerCart).toHaveAttribute('aria-current', 'page');
+				else await expect(headerCart).not.toHaveAttribute('aria-current', 'page');
 				await expect(page).toHaveTitle(/Heti kosár/);
 				await expectNavLabelsFit(page);
 				await expectNoHorizontalScroll(page);
@@ -751,6 +760,82 @@ test.describe('accessibility', () => {
 			});
 			expect(name.length, await control.evaluate((el) => el.outerHTML.slice(0, 80))).toBeGreaterThan(0);
 		}
+		await expectClean(watcher);
+	});
+});
+
+test.describe('theme switch', () => {
+	test.use({ viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
+
+	const background = (page: Page): Promise<string> => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+	const documentTheme = (page: Page): Promise<string | undefined> => page.evaluate(() => document.documentElement.dataset.theme);
+	const themeColors = (page: Page): Promise<(string | null)[]> =>
+		page.evaluate(() => [...document.querySelectorAll('meta[name="theme-color"]')].map((meta) => meta.getAttribute('content')));
+
+	test('the header switch turns the dark theme on and off, kept on the device; the settings can follow the browser again', async ({ page }) => {
+		const watcher = await watch(page);
+		await page.goto('/');
+		expect(await background(page)).toBe('rgb(255, 255, 255)');
+		expect(await documentTheme(page)).toBeUndefined();
+		expect(await themeColors(page)).toEqual(['#ffffff', '#000000']);
+
+		const header = page.getByRole('banner');
+		await header.getByRole('button', { name: 'Sötét mód' }).click();
+		expect(await background(page)).toBe('rgb(0, 0, 0)');
+		expect(await documentTheme(page)).toBe('dark');
+		expect(await themeColors(page)).toEqual(['#000000', '#000000']);
+		expect(await storedState(page)).toMatchObject({ theme: 'dark' });
+		// The same button now offers the way back, and keeps the focus.
+		await expect(header.getByRole('button', { name: 'Világos mód' })).toBeFocused();
+		await expectTextContrast(page, 'chosen dark home');
+		await page.screenshot({ path: screenshotPath('home-phone-360-chosen-dark'), fullPage: true });
+
+		await page.reload();
+		expect(await background(page)).toBe('rgb(0, 0, 0)');
+		await expect(header.getByRole('button', { name: 'Világos mód' })).toBeVisible();
+
+		// The settings offer the three choices; "A rendszer szerint" follows the browser (light here) again.
+		await page.goto('/beallitasok');
+		await expect(page.getByLabel('Sötét', { exact: true })).toBeChecked();
+		await page.getByLabel('A rendszer szerint', { exact: true }).check();
+		expect(await background(page)).toBe('rgb(255, 255, 255)');
+		expect(await documentTheme(page)).toBeUndefined();
+		expect(await themeColors(page)).toEqual(['#ffffff', '#000000']);
+		expect(await storedState(page)).toMatchObject({ theme: 'system' });
+		await page.getByLabel('Világos', { exact: true }).check();
+		expect(await documentTheme(page)).toBe('light');
+		expect(await storedState(page)).toMatchObject({ theme: 'light' });
+		await header.getByRole('button', { name: 'Sötét mód' }).click();
+		await expect(page.getByLabel('Sötét', { exact: true })).toBeChecked();
+		expect(await background(page)).toBe('rgb(0, 0, 0)');
+
+		// "Minden adat törlése" forgets the choice too: the page follows the browser again at once.
+		await page.getByRole('button', { name: 'Minden adat törlése' }).click();
+		await page.getByRole('dialog').getByRole('button', { name: 'Igen, mindent törlök' }).click();
+		await expect(page.getByText('Minden adat törölve.')).toBeVisible();
+		expect(await background(page)).toBe('rgb(255, 255, 255)');
+		await expect(page.getByLabel('A rendszer szerint', { exact: true })).toBeChecked();
+		expect(await storedState(page)).toBeNull();
+		await expectClean(watcher);
+	});
+});
+
+test.describe('theme switch with a dark browser', () => {
+	test.use({ colorScheme: 'dark', viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true });
+
+	test('"Világos" wins over the browser, and the switch offers the light theme first', async ({ page }) => {
+		const watcher = await watch(page);
+		await page.goto('/');
+		expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(0, 0, 0)');
+		const header = page.getByRole('banner');
+		await header.getByRole('button', { name: 'Világos mód' }).click();
+		expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(255, 255, 255)');
+		expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe('light');
+		expect(await page.evaluate(() => [...document.querySelectorAll('meta[name="theme-color"]')].map((meta) => meta.getAttribute('content')))).toEqual(['#ffffff', '#ffffff']);
+		expect(await storedState(page)).toMatchObject({ theme: 'light' });
+		await expectTextContrast(page, 'chosen light home');
+		await page.reload();
+		expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(255, 255, 255)');
 		await expectClean(watcher);
 	});
 });

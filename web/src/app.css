@@ -1,8 +1,10 @@
 /*
  * Heti kosár: design tokens and base styles.
  * - Look: plain and standard: a white page (black in the dark theme) with soft green for the controls.
- * - Colours: light and dark (prefers-color-scheme). Text pairs meet WCAG AA 4.5:1, form-control borders and
- *   the focus ring 3:1; src/lib/contrast.test.ts checks every pair listed there against these values.
+ * - Colours: light and dark, by the browser's setting (prefers-color-scheme) or the user's choice (the header's
+ *   switch, Beállítások › Megjelenés: `data-theme="light|dark"` on <html>, set by src/lib/theme.svelte.ts).
+ *   Text pairs meet WCAG AA 4.5:1, form-control borders and the focus ring 3:1; src/lib/contrast.test.ts checks
+ *   every pair listed there against these values, and that the two copies of the dark tokens are the same.
  * - Fonts: system fonts for reading; Courier New (an installed system font, never downloaded) for titles only.
  *   No external requests of any kind.
  * - No inline styles anywhere (the CSP has no 'unsafe-inline'): style with classes.
@@ -69,8 +71,12 @@
 	--focus-ring: 3px solid var(--color-focus);
 }
 
+/*
+ * The dark theme, in two identical copies (CSS cannot share a block between a media query and a selector):
+ * 1. the browser prefers dark and the user has not chosen light; 2. the user chose dark.
+ */
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not([data-theme='light']) {
 		--color-bg: #000000;
 		--color-surface: #111513;
 		--color-surface-alt: #1a241f;
@@ -98,6 +104,44 @@
 		--color-neutral-text: #e4eae6;
 		--shadow-card: 0 1px 2px rgb(0 0 0 / 0.35);
 	}
+}
+
+:root[data-theme='dark'] {
+	--color-bg: #000000;
+	--color-surface: #111513;
+	--color-surface-alt: #1a241f;
+	--color-text: #f1f5f2;
+	--color-text-muted: #b8c5be;
+	--color-border: #7f958a;
+	--color-border-subtle: #25302a;
+	--color-primary: #7dd3a0;
+	--color-primary-hover: #a3e3bc;
+	--color-on-primary: #06210f;
+	--color-focus: #a6d8ff;
+	--color-danger: #ff8a7a;
+	--color-on-danger: #2a0a07;
+	--color-danger-bg: #3a1315;
+	--color-danger-text: #ffb8ab;
+	--color-warning-bg: #2c2306;
+	--color-warning-text: #ffd978;
+	--color-warning-border: #c99a1a;
+	--color-info-bg: #14202a;
+	--color-info-text: #cfe3f5;
+	--color-success-bg: #12271a;
+	--color-success-text: #a6e6bf;
+	--color-success-border: #4fae78;
+	--color-neutral-bg: #1b201d;
+	--color-neutral-text: #e4eae6;
+	--shadow-card: 0 1px 2px rgb(0 0 0 / 0.35);
+}
+
+/* An explicit choice also tells the browser which built-in control colours to use. */
+:root[data-theme='light'] {
+	color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+	color-scheme: dark;
 }
 
 /* ───────────── base ───────────── */

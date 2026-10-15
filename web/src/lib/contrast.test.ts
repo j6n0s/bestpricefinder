@@ -29,7 +29,23 @@ function block(source: string, start: number): string {
 
 const light = tokens(block(css, css.indexOf(':root')));
 const darkMedia = css.indexOf('@media (prefers-color-scheme: dark)');
-const dark = new Map([...light, ...tokens(block(css, darkMedia))]);
+const darkByMedia = tokens(block(css, darkMedia));
+const dark = new Map([...light, ...darkByMedia]);
+/** The user's explicit choice (Beállítások › Megjelenés) uses a second copy of the same tokens. */
+const darkByChoice = tokens(block(css, css.indexOf(":root[data-theme='dark']")));
+
+describe('the dark theme', () => {
+	it('has the same tokens whether the browser or the user chose it', () => {
+		expect(darkByMedia.size).toBeGreaterThan(10);
+		expect([...darkByChoice]).toEqual([...darkByMedia]);
+	});
+
+	it('is keyed on the media query unless the user chose light, and on the choice otherwise', () => {
+		expect(css.slice(darkMedia, darkMedia + 120)).toContain(":root:not([data-theme='light'])");
+		expect(css).toContain(":root[data-theme='light'] {\n\tcolor-scheme: light;");
+		expect(css).toContain(":root[data-theme='dark'] {\n\tcolor-scheme: dark;");
+	});
+});
 
 function luminance(hex: string): number {
 	const channel = (i: number): number => {

@@ -481,13 +481,14 @@
 		border-radius: var(--radius-md);
 	}
 
+	/* Tight sides: at 360 px a name of about 14 letters still shares its line with the 154 px control. */
 	.row {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
-		gap: var(--space-2) var(--space-3);
-		padding: var(--space-2) var(--space-3);
+		gap: var(--space-2);
+		padding: var(--space-2);
 	}
 
 	/* A name too long for one line keeps its words: the control moves under it, to the right. */

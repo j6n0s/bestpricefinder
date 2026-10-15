@@ -13,9 +13,16 @@
 	import PantrySettings from '$lib/components/settings/PantrySettings.svelte';
 	import { districtById } from '$lib/districts';
 	import { formatDateTime, formatDistance, formatNumber } from '$lib/format';
-	import { i18n, reloadLanguage, setLanguage, t, tp, type Lang } from '$lib/i18n';
+	import { i18n, reloadLanguage, setLanguage, t, tp, type Lang, type PlainKey } from '$lib/i18n';
 	import type { LatLon } from '$lib/geo';
 	import { clearedMapLocation, districtLocation, mapLocation, revokedLocation } from '$lib/location';
+	import { reloadTheme, setTheme, theme } from '$lib/theme.svelte';
+
+	const THEME_LABELS: Readonly<Record<Theme, PlainKey>> = {
+		system: 'settings.theme_system',
+		light: 'settings.theme_light',
+		dark: 'settings.theme_dark'
+	};
 	import { resetRecipeFilters } from '$lib/plan/filters.svelte';
 	import {
 		clearAll,
@@ -28,9 +35,11 @@
 		RADIUS_MAX_KM,
 		RADIUS_MIN_KM,
 		RADIUS_STEP_KM,
+		THEMES,
 		type StatePatch,
 		type StoredLocation,
-		type StoredState
+		type StoredState,
+		type Theme
 	} from '$lib/storage';
 
 	let settings = $state<StoredState>(load());
@@ -76,6 +85,12 @@
 		persistent = isPersistent();
 	}
 
+	function chooseTheme(choice: Theme): void {
+		setTheme(choice);
+		settings = load();
+		persistent = isPersistent();
+	}
+
 	function locationChanged(next: StoredLocation): void {
 		settings = { ...settings, location: next };
 		persistent = isPersistent();
@@ -117,9 +132,10 @@
 	function confirmClear(): void {
 		// clearAll resets the in-memory copy too; false = the stored copy could not be reached or deleted.
 		const removed = clearAll();
-		// Other personal data held in memory for this tab: the language and the recipe filters (a filter such
-		// as "húsmentes" is a diet preference).
+		// Other personal data held in memory for this tab: the language, the theme and the recipe filters (a
+		// filter such as "húsmentes" is a diet preference).
 		reloadLanguage();
+		reloadTheme();
 		resetRecipeFilters();
 		settings = load();
 		persistent = isPersistent();
@@ -220,6 +236,19 @@
 			<input type="radio" name="language" value="en" checked={i18n.lang === 'en'} onchange={() => chooseLanguage('en')} />
 			<span>{t('settings.language_en')}</span>
 		</label>
+	</fieldset>
+</section>
+
+<section class="card" aria-labelledby="set-theme">
+	<h2 id="set-theme">{t('settings.theme_title')}</h2>
+	<fieldset class="choice-group">
+		<legend class="visually-hidden">{t('settings.theme_title')}</legend>
+		{#each THEMES as choice (choice)}
+			<label class="choice">
+				<input type="radio" name="theme" value={choice} checked={theme.preference === choice} onchange={() => chooseTheme(choice)} />
+				<span>{t(THEME_LABELS[choice])}</span>
+			</label>
+		{/each}
 	</fieldset>
 </section>
 

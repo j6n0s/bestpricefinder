@@ -23,6 +23,10 @@ export const settingsEn: Messages<typeof settingsHu> = {
 	language_title: 'Language',
 	language_hu: 'Magyar',
 	language_en: 'English',
+	theme_title: 'Appearance',
+	theme_system: 'Follow the system',
+	theme_light: 'Light',
+	theme_dark: 'Dark',
 
 	location_title: 'Location and district',
 	location_status_label: 'Location',

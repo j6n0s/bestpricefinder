@@ -21,6 +21,10 @@ export const settingsHu = {
 	language_title: 'Nyelv',
 	language_hu: 'Magyar',
 	language_en: 'English',
+	theme_title: 'Megjelenés',
+	theme_system: 'A rendszer szerint',
+	theme_light: 'Világos',
+	theme_dark: 'Sötét',
 
 	location_title: 'Helyzet és kerület',
 	location_status_label: 'Helymeghatározás',

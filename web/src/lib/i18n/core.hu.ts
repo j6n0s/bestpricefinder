@@ -11,6 +11,9 @@ export const coreHu = {
 	nav_settings: 'Beállítások',
 	// The language switch shows the OTHER language's name, in that language.
 	lang_toggle_text: 'English',
+	// The header's theme switch names the theme it turns on.
+	theme_to_dark: 'Sötét mód',
+	theme_to_light: 'Világos mód',
 
 	data_unavailable: 'Az adatok dátuma most nem érhető el.',
 	data_none: 'Még nincs áradat.',

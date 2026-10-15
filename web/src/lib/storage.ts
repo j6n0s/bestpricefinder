@@ -20,7 +20,8 @@
  *   nothing of the old data is shown again in this session, even when the browser refuses storage.
  * - Another tab can change or delete the document at any time: pages subscribe with `onExternalChange` and
  *   build every change from a fresh `load()`, never from a copy read when the page opened, so a stale tab
- *   cannot write deleted data (a revoked position, a cleared plan) back.
+ *   cannot write deleted data (a revoked position, a cleared plan) back. This tab's own writes are announced
+ *   with `onChange` (the header's cart count follows the cart page, for example).
  *
  * Schema changes: adding a field with a default needs no version bump (sanitising fills it in). Changing the
  * meaning or shape of a field needs `STORAGE_VERSION + 1` and a migration step in `MIGRATIONS`.
@@ -44,6 +45,10 @@ export const STORAGE_VERSION = 1;
 
 export const LANGS = ['hu', 'en'] as const;
 export type Lang = (typeof LANGS)[number];
+
+/** The colour theme: the browser's setting ("system", the default), or the user's own choice. */
+export const THEMES = ['system', 'light', 'dark'] as const;
+export type Theme = (typeof THEMES)[number];
 
 export const PEOPLE_MIN = 1;
 export const PEOPLE_MAX = 12;
@@ -185,6 +190,8 @@ export interface StoredCart {
 export interface StoredState {
 	version: typeof STORAGE_VERSION;
 	language: Lang;
+	/** "Megjelenés": light or dark by the user's choice, else by the browser (src/lib/theme.svelte.ts). */
+	theme: Theme;
 	people: number;
 	slots: 3 | 5;
 	radiusKm: number;
@@ -221,6 +228,7 @@ export function defaultState(): StoredState {
 	return {
 		version: STORAGE_VERSION,
 		language: 'hu',
+		theme: 'system',
 		people: 2,
 		slots: 3,
 		radiusKm: 1.5,
@@ -267,6 +275,10 @@ function idList(value: unknown, pattern: RegExp, max: number): string[] {
 
 export function isLang(value: unknown): value is Lang {
 	return typeof value === 'string' && (LANGS as readonly string[]).includes(value);
+}
+
+export function isTheme(value: unknown): value is Theme {
+	return typeof value === 'string' && (THEMES as readonly string[]).includes(value);
 }
 
 export function clampPeople(value: unknown): number | null {
@@ -455,6 +467,7 @@ function sanitiseV1(raw: Record<string, unknown>): StoredState {
 	return {
 		version: STORAGE_VERSION,
 		language: isLang(raw.language) ? raw.language : defaults.language,
+		theme: isTheme(raw.theme) ? raw.theme : defaults.theme,
 		people: clampPeople(raw.people) ?? defaults.people,
 		slots: raw.slots === 3 || raw.slots === 5 ? raw.slots : defaults.slots,
 		radiusKm: normaliseRadius(raw.radiusKm) ?? defaults.radiusKm,
@@ -547,6 +560,30 @@ export function load(): StoredState {
 	return clone(state);
 }
 
+const changeListeners = new Set<(state: StoredState) => void>();
+
+/** Tells this tab's subscribers about a write of this tab (another tab's writes come through `onExternalChange`). */
+function announce(): void {
+	for (const listener of changeListeners) {
+		try {
+			listener(load());
+		} catch {
+			// A failing subscriber must not break the write or the page.
+		}
+	}
+}
+
+/**
+ * Calls `onchange` with the new state after every write of THIS tab (`save`, `update`, `clearAll`), whether
+ * or not the browser kept it. Returns the unsubscribe function.
+ */
+export function onChange(onchange: (state: StoredState) => void): () => void {
+	changeListeners.add(onchange);
+	return () => {
+		changeListeners.delete(onchange);
+	};
+}
+
 /** Validates and stores `state`. Returns false when it could only be kept in memory. */
 export function save(state: StoredState): boolean {
 	const clean = migrate(state);
@@ -555,18 +592,19 @@ export function save(state: StoredState): boolean {
 	if (!storage) {
 		persistent = false;
 		unsaved = true;
+		announce();
 		return false;
 	}
 	try {
 		storage.setItem(STORAGE_KEY, JSON.stringify(clean));
 		persistent = true;
 		unsaved = false;
-		return true;
 	} catch {
 		persistent = false;
 		unsaved = true;
-		return false;
 	}
+	announce();
+	return persistent;
 }
 
 export type StatePatch = Partial<Omit<StoredState, 'version'>>;
@@ -607,6 +645,7 @@ export function clearAll(): boolean {
 		unsaved = true;
 		persistent = false;
 	}
+	announce();
 	return removed;
 }
 
@@ -654,4 +693,5 @@ export function resetForTests(): void {
 	memory = null;
 	unsaved = false;
 	persistent = true;
+	changeListeners.clear();
 }

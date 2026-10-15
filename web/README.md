@@ -66,8 +66,10 @@ src/lib/location.ts            geolocation request (after consent), stored-locat
 src/lib/districts.ts           the 23 Budapest districts (generated data/districts.json)
 src/lib/format.ts              hu-HU money ("1 234 Ft"), quantities, distances, dates ("2026. 10. 13.")
 src/lib/meta.svelte.ts         MetaStore shared through context: getMeta()
-src/lib/components/            Header, BottomNav, Attribution, Disclaimer, Badge, EmptyState, ErrorState,
-                               Spinner, LocationExplainer, DistrictPicker; plan/, recipes/, list/, settings/
+src/lib/theme.svelte.ts        $state colour theme (system / light / dark), written to <html data-theme>
+src/lib/components/            Header (theme switch, language switch, cart), BottomNav (four tabs), Attribution,
+                               Disclaimer, Badge, EmptyState, ErrorState, Spinner, LocationExplainer,
+                               DistrictPicker, MapPicker; plan/, recipes/, list/, settings/
 src/lib/plan/                  plan and recipe helpers (see "Features" below)
 src/lib/list/                  shopping-list and store-price helpers (see its README.md)
 src/service-worker.ts          offline support (see below)
@@ -139,10 +141,22 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list, car
   another tab changes or deletes it; every change is built from a fresh `load()`, so a stale tab never writes
   deleted data (a revoked position, cleared data) back.
 
+### Header, theme and navigation
+
+The header holds the app's name (the way home) and, at the right, the theme switch, the language switch and
+the cart button with how many goods the cart holds (it follows every write: this tab's through `onChange`,
+another tab's through `onExternalChange`). The bottom bar has four tabs (Heti terv, Receptek, Lista,
+Beállítások). The theme (`$lib/theme.svelte`, `StoredState.theme`) is "system" by default: the dark tokens
+apply through `prefers-color-scheme` unless the user chose light; an explicit choice sets
+`data-theme="light|dark"` on `<html>` (`src/app.css` carries the dark tokens twice, and
+`src/lib/contrast.test.ts` checks the two copies are the same) and updates the `theme-color` metas, so the
+browser's bars match. The header's switch toggles the theme that is shown; Beállítások › Megjelenés offers
+"A rendszer szerint" as well. "Minden adat törlése" forgets the choice.
+
 ### Storage (one key)
 
 Everything personal is ONE versioned JSON document under `hetikosar.state` (`$lib/storage`, `StoredState`):
-`language`, `people`, `slots`, `radiusKm`, `plan`, `pantry` (`notAtHome`, and `onHand`: ≤ 200 goods with
+`language`, `theme` (system / light / dark), `people`, `slots`, `radiusKm`, `plan`, `pantry` (`notAtHome`, and `onHand`: ≤ 200 goods with
 the amount at home), `exclusions` (tags, ingredients), `location` (consent, source, district, the rounded
 device position with its time, and `manual`: the point chosen on the map, rounded the same way), `list`
 (`range`, and per list
@@ -216,7 +230,9 @@ dark), 44×44 px touch targets, and unique landmark names. `smoke.spec.ts` also 
   coordinates**: compute distances with `$lib/geo` and send store ids only. Ask for location only through
   `<LocationExplainer>` or `<OriginChooser>` (see "Location" above); offer `<DistrictPicker>` as the
   alternative.
-- **CSP:** `kit.csp` mode `hash` with `style-src 'self'` and no `'unsafe-inline'`. So: style with classes
+- **CSP:** `kit.csp` mode `hash` with `style-src 'self'` and no `'unsafe-inline'`. The one inline script of
+  `src/app.html` (it applies the stored theme before the first paint) is allowed by its sha256 hash, which
+  `svelte.config.js` computes from the file at build time. So: style with classes
   only (no `style="…"` attributes, no `style:` directives), no Svelte transitions/animations, no
   `{@html}` with untrusted data, no inline event handler attributes (Svelte `onclick={…}` is fine), no
   external requests or fonts. SvelteKit's route announcer has an inline style in its generated root

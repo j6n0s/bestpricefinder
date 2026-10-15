@@ -270,3 +270,8 @@ Full notes: the reviewers' files were local only, so ask the user if you need de
 - **Verified:** `npm run check` clean; vitest 649; the Playwright e2e suite (see the commit message for the count) and the full-stack suite; server ruff clean and 2,534 tests passed.
 - **Not done here, stays with the local session / founder:** the real iPhone and Android pass (no devices in the cloud) and the encrypted off-VM backups (need the founder's `age` key and VM access).
 
+## 2026-10-15 — cloud agent — the cart in the header, a theme switch
+- Asked: "the cart should go up in the menubar right after the language chooser and also create a dark template, it also should go up right and before the language chooser."
+- Done (web only): the header's right side is now theme switch → language switch → cart. The cart button shows how many goods the cart holds (`onChange`, a new same-tab subscription in `$lib/storage`, keeps it current) and is the current page on `/kosar`; the bottom bar has four tabs. The theme is stored as `StoredState.theme` ("system" by default, so nothing changes for anyone who never touches the switch); the header's switch turns on the opposite of what is shown, Beállítások › Megjelenés offers "A rendszer szerint", "Világos" and "Sötét". The dark tokens are the existing ones, keyed on `data-theme` as well as on the media query; the `theme-color` metas follow the choice.
+- Verified: svelte-check, vitest, the e2e suite (new tests for the header and the theme) and the full-stack suite; see the commit message for the counts.
+

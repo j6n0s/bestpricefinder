@@ -440,7 +440,10 @@ for (const viewport of VIEWPORTS) {
 			await page.goto('/kosar');
 
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Kosár');
-			await expect(page.getByRole('navigation', { name: 'Fő navigáció' }).getByRole('link', { name: 'Kosár' })).toHaveAttribute('aria-current', 'page');
+			// The cart lives in the header (no tab in the bottom bar); its button says how many goods it holds.
+			const headerCart = page.getByRole('banner').getByRole('link', { name: 'Kosár, 0 tétel' });
+			await expect(headerCart).toHaveAttribute('aria-current', 'page');
+			await expect(page.getByRole('navigation', { name: 'Fő navigáció' }).getByRole('link', { name: 'Kosár' })).toHaveCount(0);
 			await expect(page.getByTestId('cart-count')).toHaveText('0 tétel');
 			await expect(page.getByTestId('cart')).toContainText('A kosarad még üres.');
 
@@ -470,6 +473,8 @@ for (const viewport of VIEWPORTS) {
 
 			// Add: a sensible first amount, about how many pieces; − / + along round amounts.
 			await page.getByRole('button', { name: 'Kosárba: alma' }).click();
+			await expect(page.getByRole('banner').getByRole('link', { name: 'Kosár, 1 tétel' })).toBeVisible();
+			await expect(page.getByTestId('header-cart-count')).toHaveText('1');
 			await expect(goodRow(page, 'alma').getByRole('status')).toHaveAccessibleName(sp('alma: 500 g'));
 			await expect(goodRow(page, 'alma')).toContainText(sp('3 db'));
 			await goodRow(page, 'alma').getByRole('button', { name: 'Több: alma' }).click();

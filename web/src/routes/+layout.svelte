@@ -1,7 +1,8 @@
 <!--
-	App shell: skip link, header (data status), offline notice, page content, footer (disclaimer + sources link)
-	and the bottom navigation. /api/meta is loaded once here and shared with every page via context
-	(`getMeta()` from $lib/meta.svelte).
+	App shell: skip link, header (theme and language switches, the cart, data status), offline notice, page
+	content, footer (disclaimer + sources link) and the bottom navigation. /api/meta is loaded once here and
+	shared with every page via context (`getMeta()` from $lib/meta.svelte). The stored language and theme are
+	written to the document here (<html lang>, <html data-theme>).
 -->
 <script lang="ts">
 	import '../app.css';
@@ -12,6 +13,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import { i18n, syncDocumentLang, t } from '$lib/i18n';
 	import { MetaStore, provideMeta } from '$lib/meta.svelte';
+	import { syncDocumentTheme, theme } from '$lib/theme.svelte';
 
 	let { children }: { children: Snippet } = $props();
 
@@ -20,6 +22,10 @@
 
 	$effect(() => {
 		syncDocumentLang(i18n.lang);
+	});
+
+	$effect(() => {
+		syncDocumentTheme(theme.preference);
 	});
 
 	function registerServiceWorker(): void {

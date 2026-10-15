@@ -77,7 +77,7 @@ The user relays anything urgent.
 - [x] **Extra, asked by the user on 2026-10-14: Kosár (cart) + "Hol vásárolj?" (one store or a route).** _(done 2026-10-14 by the cloud agent; web only, no server or schema change; see QUESTIONS.md 2026-10-14 "cart and route")_
   - `/kosar`: browse or search the goods that have store prices, − / + amounts, kept on the device only.
   - On `/kosar` and `/lista`: the best single store and, when it pays off, a route through 2–3 stores with a schematic map, worked out on the device (`web/src/lib/journey/README.md`). It replaces the server's 2-store `split` in the UI.
-  - The bottom bar's first tab is now "Kosár"; the home page is reached through the app name.
+  - The bottom bar's first tab was "Kosár" (moved into the header on 2026-10-15); the home page is reached through the app name.
 
 - [x] **10. Deployment to an Azure VM** _(done 2026-10-15 by the local session: `b31d050` on `vm-hetikosar`, https://hetikosar-burk.denmarkeast.cloudapp.azure.com, private to 146.110.0.0/16; units, Caddy site, scripts and the update command in [deploy/azure/](../deploy/azure/README.md); details in QUESTIONS.md 2026-10-15 "Azure deployment")_. Plan: [docs/DEPLOY_HANDOFF.md](DEPLOY_HANDOFF.md). The legal gates (GVH request, impresszum, privacy policy) keep it private until the founder clears them.
 - [ ] **11. Open after the deployment**: a real-device pass (iPhone Safari + home screen, Android Chrome, desktop Firefox); encrypted off-VM backups (needs an `age` key from the founder); capture a real `product-shop-ok` sample for the GVH fixtures. _(2026-10-15, cloud agent: `ShopPrice.uuid` is declared in `bpf/gvh/models.py` from the VM's drift log, optional and unused, so the drift warning stops; the raw sample is still to be captured by the local session, which can reach GVH. The phone pass and the backups need the founder's devices and keys, so they stay with the local session.)_
@@ -86,6 +86,7 @@ The user relays anything urgent.
   - "Pont választása a térképen" on `/lista` (the origin chooser) and `/beallitasok`: a schematic map drawn on the device (store dots, district numerals, zoom, keyboard nudging; no tiles, no request to any other site) sets the starting point when the position is not available or not wanted. Only the rounded point is stored, on the device.
   - "Otthon lévő mennyiségek" in Beállítások › Kamra: any good with store prices, with the amount at home; the list subtracts it on the device (a line fully covered moves to the pantry section, a partly covered one is bought for the rest, with a note). `on_hand` is never sent to the API.
   - `/kosar`: the goods are browsed like a shop's menu: a bar of shop sections and, under a section, its kinds of goods (from the ingredient tags), as the user asked; the name search stays.
+  - Later the same day: the cart moved from the bottom bar into the header (after the language switch, with the number of goods), and a theme switch (light / dark, kept on the device; "A rendszer szerint" in Beállítások › Megjelenés) sits before the language switch. The bottom bar has four tabs.
 
 ## Founder-only items (agents must not do these)
 - File the GVH re-use request; the draft is in `research/gap-gvh-reuse-legal-route/request_draft_hu.txt`.
