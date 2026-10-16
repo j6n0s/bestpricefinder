@@ -4,7 +4,8 @@
 	the ingredient tags) or searched by name across every section. "Kosárba" puts a good in the cart at a
 	sensible first amount; the row then shows the − amount + control. The cart itself (the list of the chosen
 	goods, and where it is cheapest) is the Kosár page, reached from the header's basket and from the link
-	under the title. The state is shared with that page through $lib/cart/session.svelte.ts.
+	under the title. The state is shared with that page through $lib/cart/session.svelte.ts; whichever page
+	loads the catalogue first writes the goods without a store price out of the cart, and says so.
 -->
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
@@ -230,6 +231,9 @@
 		{/if}
 		{#if session.fullNotice}
 			<p class="notice notice-warning" role="status">{t('cart.full', { max: MAX_CART_LINES })}</p>
+		{/if}
+		{#if session.dropped > 0}
+			<p class="notice notice-warning" role="status" data-testid="cart-dropped">{tp('cart.dropped', session.dropped)}</p>
 		{/if}
 		{#if shown.length === 0}
 			<div class="notice notice-info">

@@ -42,6 +42,13 @@
 		await tick();
 		undoButton?.focus();
 	}
+
+	/** "Visszavonás" removes itself with its notice: the focus continues at the cart's heading, never at <body>. */
+	async function undoClear(): Promise<void> {
+		session.undoClear();
+		await tick();
+		cartTitle?.focus();
+	}
 </script>
 
 <svelte:head>
@@ -67,7 +74,7 @@
 		{#if session.undoLines}
 			<div class="notice notice-info undo" role="status">
 				<p>{t('cart.cleared')}</p>
-				<button type="button" class="btn btn-secondary" bind:this={undoButton} onclick={() => session.undoClear()}>
+				<button type="button" class="btn btn-secondary" bind:this={undoButton} onclick={undoClear}>
 					{t('cart.undo')}
 				</button>
 			</div>

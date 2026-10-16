@@ -132,7 +132,7 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list, car
   the cart with "Kosárba". The cart page is the list of the chosen goods with − / + amounts along round steps
   (`QTY_LADDERS`; eggs by 10),
   "kb. N db" for goods with a piece weight. The cart is `StoredState.cart` (personal data, on the device only;
-  at most 100 goods); goods that lose their store price are flagged and leave the cart at its next change.
+  at most 100 goods); goods that lose their store price are written out of the cart as soon as the catalogue arrives, on either page, with a notice that stays until the next change.
   Clearing can be undone. Only ingredient ids and amounts go to POST /api/quote, with the nearby store ids.
 - **Offline in the shop:** the last list POST /api/list returned and the chosen store's part of the last
   quote are kept in the storage document (`lastList`, `lastQuote`, `$lib/list/offline`). When a request fails

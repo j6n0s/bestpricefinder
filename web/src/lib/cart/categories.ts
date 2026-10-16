@@ -1,5 +1,5 @@
 /**
- * "Kategóriák" on the cart page: the goods browsed like a shop's menu. A bar of shop sections (the list groups,
+ * "Kategóriák" on the goods page (routes/termekek): the goods browsed like a shop's menu. A bar of shop sections (the list groups,
  * in the docs/DATA.md order) and, under a section, its subcategories: the IngredientTag values of its goods
  * (server/bpf/pricing/model.py; `tags` of GET /api/ingredients), in a fixed order, with "other" for the goods
  * that have no known tag. A good with several tags is in each of them. A section whose goods all fall in one

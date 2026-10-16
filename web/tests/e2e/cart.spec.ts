@@ -438,7 +438,15 @@ for (const viewport of VIEWPORTS) {
 
 		test('browse -> cart -> one store or a route, with a map', async ({ page }) => {
 			const rec = await harness(page);
-			await page.goto('/termekek');
+
+			// An empty cart says so and leads to the goods.
+			await page.goto('/kosar');
+			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Kosár');
+			await expect(page.getByTestId('cart-count')).toHaveText('0 tétel');
+			await expect(page.getByTestId('cart')).toContainText('A kosarad még üres.');
+			const findGoods = page.getByTestId('cart').getByRole('link', { name: 'Termékek keresése' });
+			await expect(findGoods).toHaveAttribute('href', '/termekek');
+			await findGoods.click();
 
 			// The goods page is a tab; the cart lives in the header (no tab), its button says how many goods it holds.
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Termékek');
@@ -708,6 +716,10 @@ test.describe('cart details', () => {
 		await expect(page.getByTestId('cart-count')).toHaveText('2 tétel');
 		await page.getByRole('link', { name: 'További termékek' }).click();
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Termékek');
+		// The goods already in the stored cart show − amount + instead of "Kosárba".
+		await expect(goodRow(page, 'alma').getByRole('status')).toHaveAccessibleName(sp('alma: 500 g'));
+		await expect(goodRow(page, 'tej').getByRole('status')).toHaveAccessibleName(sp('tej: 250 ml'));
+		await expect(page.getByRole('button', { name: 'Kosárba: alma' })).toHaveCount(0);
 
 		// By keyboard: "Kosárba" turns into − amount +, and the focus moves to "+".
 		await page.getByRole('button', { name: 'Kosárba: banán' }).focus();
@@ -734,10 +746,31 @@ test.describe('cart details', () => {
 		await expect(page.getByTestId('cart')).toContainText('Kiürítetted a kosarat.');
 		await expect(page.getByRole('button', { name: 'Visszavonás' })).toBeFocused();
 		expect(await storedCart(page)).toEqual({ lines: [], checked: [], storeId: null });
-		await page.getByRole('button', { name: 'Visszavonás' }).click();
+		await page.getByRole('button', { name: 'Visszavonás' }).press('Enter');
 		await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
+		await expect(page.getByRole('heading', { level: 2, name: /A kosarad/ })).toBeFocused(); // the button is gone
 		expect(await storedCart(page)).toEqual({ lines: [{ ingredientId: 'alma', qty: 0.5 }], checked: [], storeId: null });
 		await expectAccessible(page, 'cart after undo');
+		await expectClean(page, rec);
+	});
+
+	test('a good that lost its store price is dropped, with a notice, on whichever page comes first', async ({ page }) => {
+		const rec = await harness(page);
+		await seed(
+			page,
+			cartState([
+				{ ingredientId: 'alma', qty: 0.5 },
+				{ ingredientId: 'nincs_ilyen', qty: 1 }
+			])
+		);
+		await page.goto('/termekek');
+		await expect(page.getByTestId('cart-dropped')).toHaveText('1 termék kimaradt, mert már nincs bolti ára.');
+		await expect(page.getByTestId('goods-cart-link')).toHaveText('Kosár: 1 tétel');
+		await expect(page.getByTestId('header-cart-count')).toHaveText('1');
+		expect(((await storedCart(page)) as { lines: unknown[] }).lines).toEqual([{ ingredientId: 'alma', qty: 0.5 }]);
+		// The next change clears the notice.
+		await page.getByRole('button', { name: 'Kosárba: tej' }).click();
+		await expect(page.getByTestId('cart-dropped')).toHaveCount(0);
 		await expectClean(page, rec);
 	});
 

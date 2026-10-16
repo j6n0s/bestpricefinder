@@ -126,10 +126,19 @@ export class CartSession {
 		this.patch({ cart: { lines: [], checked: [], storeId: current.storeId } });
 	}
 
+	/**
+	 * Puts the emptied cart's lines back. Lines another tab stored since the clear stay (the restored ones follow
+	 * them, within the cart's limit): a stale copy never writes over newer data.
+	 */
 	undoClear(): void {
-		const lines = this.undoLines;
+		const restored = this.undoLines;
 		this.undoLines = null;
-		if (lines) this.changeCart((current) => ({ ...current, lines }));
+		if (!restored) return;
+		this.changeCart((current) => {
+			const present = new Set(current.lines.map((line) => line.ingredientId));
+			const lines = [...current.lines, ...restored.filter((line) => !present.has(line.ingredientId))].slice(0, MAX_CART_LINES);
+			return { ...current, lines };
+		});
 	}
 
 	toggleCheck(ingredientId: string, on: boolean): void {
