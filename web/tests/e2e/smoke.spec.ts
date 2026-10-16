@@ -24,6 +24,7 @@ const BUILD_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '../../build'
 const ROUTES = [
 	// Home has no tab (the app name in the header leads there), nor has the cart (the header's basket button).
 	{ path: '/', heading: 'Heti étrend, bevásárlólista, közeli árak', nav: null },
+	{ path: '/termekek', heading: 'Termékek', nav: 'Termékek' },
 	{ path: '/kosar', heading: 'Kosár', nav: null },
 	{ path: '/terv', heading: 'Heti terv', nav: 'Heti terv' },
 	{ path: '/receptek', heading: 'Receptek', nav: 'Receptek' },
@@ -182,7 +183,7 @@ for (const viewport of VIEWPORTS) {
 				await expect(page.getByTestId('disclaimer').filter({ visible: true }).first()).toBeVisible();
 				const nav = page.getByRole('navigation', { name: 'Fő navigáció' });
 				await expect(nav).toBeVisible();
-				await expect(nav.getByRole('link')).toHaveCount(4);
+				await expect(nav.getByRole('link')).toHaveCount(5);
 				if (route.nav) {
 					await expect(nav.getByRole('link', { name: route.nav })).toHaveAttribute('aria-current', 'page');
 				} else {

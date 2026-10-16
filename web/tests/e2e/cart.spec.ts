@@ -1,5 +1,6 @@
 /**
- * The cart ("Kosár"): browse the goods, put them in a cart with − / + amounts, and see where the cart is cheapest
+ * The goods page ("Termékek": find the goods, put them in the cart) and the cart ("Kosár": the chosen goods
+ * with − / + amounts), and where the cart is cheapest
  * nearby: in one store, or on a short route through several stores with a map (computed on the device).
  *
  * Every /api answer here is SYNTHETIC test data (see tests/mocks/README.md): store ids "synthetic-…", addresses
@@ -353,7 +354,7 @@ async function seed(page: Page, state: Record<string, unknown>): Promise<void> {
 	);
 }
 
-const goodRow = (page: Page, id: string) => page.getByTestId('browse').locator(`[data-testid="good"][data-ingredient-id="${id}"]`);
+const goodRow = (page: Page, id: string) => page.getByTestId('goods').locator(`[data-testid="good"][data-ingredient-id="${id}"]`);
 
 const VIEWPORTS = [
 	{ name: 'phone-320', width: 320, height: 640, mobile: true },
@@ -376,8 +377,8 @@ for (const viewport of VIEWPORTS) {
 
 		test('browse by category: a bar of sections and, under one, its kinds of goods', async ({ page }) => {
 			const rec = await harness(page);
-			await page.goto('/kosar');
-			const browse = page.getByTestId('browse');
+			await page.goto('/termekek');
+			const browse = page.getByTestId('goods');
 			const bar = page.getByRole('navigation', { name: 'Kategóriák' });
 			await expect(bar.getByRole('button')).toHaveText(['Zöldség, gyümölcs', 'Pékáru', 'Tejtermék, tojás', 'Száraz és tartós élelmiszer']);
 			await expect(page.getByTestId('category-menu')).toHaveCount(0);
@@ -405,7 +406,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(browse.getByTestId('good')).toHaveText([/tojás/]);
 			await expect(page.getByTestId('goods-count')).toHaveText('1 termék');
 			await page.getByRole('button', { name: 'Kosárba: tojás' }).click();
-			await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
+			await expect(page.getByTestId('goods-cart-link')).toHaveText('Kosár: 1 tétel');
 			await expectAccessible(page, `cart ${viewport.name} category`);
 
 			// Escape closes the menu and returns to its button; "Az egész kategória" shows the whole section.
@@ -437,19 +438,20 @@ for (const viewport of VIEWPORTS) {
 
 		test('browse -> cart -> one store or a route, with a map', async ({ page }) => {
 			const rec = await harness(page);
-			await page.goto('/kosar');
+			await page.goto('/termekek');
 
-			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Kosár');
-			// The cart lives in the header (no tab in the bottom bar); its button says how many goods it holds.
-			const headerCart = page.getByRole('banner').getByRole('link', { name: 'Kosár, 0 tétel' });
-			await expect(headerCart).toHaveAttribute('aria-current', 'page');
-			await expect(page.getByRole('navigation', { name: 'Fő navigáció' }).getByRole('link', { name: 'Kosár' })).toHaveCount(0);
-			await expect(page.getByTestId('cart-count')).toHaveText('0 tétel');
-			await expect(page.getByTestId('cart')).toContainText('A kosarad még üres.');
+			// The goods page is a tab; the cart lives in the header (no tab), its button says how many goods it holds.
+			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Termékek');
+			const nav = page.getByRole('navigation', { name: 'Fő navigáció' });
+			await expect(nav.getByRole('link', { name: 'Termékek' })).toHaveAttribute('aria-current', 'page');
+			await expect(nav.getByRole('link', { name: 'Kosár' })).toHaveCount(0);
+			const headerCart = page.getByRole('banner').getByRole('link', { name: /^Kosár, / });
+			await expect(headerCart).toHaveAccessibleName('Kosár, 0 tétel');
+			await expect(headerCart).not.toHaveAttribute('aria-current', 'page');
+			await expect(page.getByTestId('goods-cart-link')).toHaveText('Kosár: 0 tétel');
 
-			// Only goods with store prices, by shop section, then name; the list starts open for an empty cart.
-			const browse = page.getByTestId('browse');
-			await expect(browse).toHaveAttribute('open', '');
+			// Only goods with store prices, by shop section, then name.
+			const browse = page.getByTestId('goods');
 			await expect(page.getByTestId('goods-count')).toHaveText('6 termék');
 			expect(await browse.getByTestId('good').evaluateAll((els) => els.map((el) => el.getAttribute('data-ingredient-id')))).toEqual(GOODS_ORDER);
 			expect(await browse.locator('h3').allTextContents()).toEqual([
@@ -482,7 +484,7 @@ for (const viewport of VIEWPORTS) {
 			await expect(goodRow(page, 'alma')).toContainText(sp('4 db'));
 			await goodRow(page, 'alma').getByRole('button', { name: 'Kevesebb: alma' }).click();
 			await expect(goodRow(page, 'alma').getByRole('status')).toHaveAccessibleName(sp('alma: 500 g'));
-			await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
+			await expect(page.getByTestId('goods-cart-link')).toHaveText('Kosár: 1 tétel');
 			expect(await storedCart(page)).toEqual({ lines: [{ ingredientId: 'alma', qty: 0.5 }], checked: [], storeId: null });
 
 			// At the smallest amount the − is a bin that takes the good out again.
@@ -491,14 +493,15 @@ for (const viewport of VIEWPORTS) {
 			await expect(goodRow(page, 'kenyer').getByRole('button', { name: 'Kevesebb: kenyér' })).toHaveCount(0);
 			await goodRow(page, 'kenyer').getByRole('button', { name: 'Törlés a kosárból: kenyér' }).click();
 			await expect(page.getByRole('button', { name: 'Kosárba: kenyér' })).toBeVisible();
-			await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
+			await expect(page.getByTestId('goods-cart-link')).toHaveText('Kosár: 1 tétel');
 
 			// Eggs come by the box of 10.
 			await page.getByRole('button', { name: 'Kosárba: tej' }).click();
 			await page.getByRole('button', { name: 'Kosárba: tojás' }).click();
 			await expect(goodRow(page, 'tojas').getByRole('status')).toHaveAccessibleName(sp('tojás: 10 db'));
 			await page.getByRole('button', { name: 'Kosárba: őrölt kávé' }).click();
-			await expect(page.getByTestId('cart-count')).toHaveText('4 tétel');
+			await expect(page.getByTestId('goods-cart-link')).toHaveText('Kosár: 4 tétel');
+			await expect(headerCart).toHaveAccessibleName('Kosár, 4 tétel');
 			expect(await storedCart(page)).toEqual({
 				lines: [
 					{ ingredientId: 'alma', qty: 0.5 },
@@ -510,7 +513,14 @@ for (const viewport of VIEWPORTS) {
 				storeId: null
 			});
 
-			// The cart, grouped by shop section.
+			// The cart: the chosen goods, grouped by shop section, on its own page (the header's basket leads there).
+			await headerCart.click();
+			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Kosár');
+			await expect(headerCart).toHaveAttribute('aria-current', 'page');
+			await expect(nav.locator('[aria-current="page"]')).toHaveCount(0);
+			await expect(page.getByTestId('cart-count')).toHaveText('4 tétel');
+			await expect(page.getByTestId('goods')).toHaveCount(0);
+			await expect(page.getByRole('link', { name: 'További termékek' })).toHaveAttribute('href', '/termekek');
 			const cart = page.getByTestId('cart');
 			expect(await cart.getByTestId('cart-line').evaluateAll((els) => els.map((el) => el.getAttribute('data-ingredient-id')))).toEqual([
 				'alma',
@@ -615,10 +625,9 @@ for (const viewport of VIEWPORTS) {
 			await expect(storeList.getByTestId('store-total')).toHaveText(sp('Fizetendő: 5 280 Ft'));
 			expect(await storedCart(page)).toMatchObject({ storeId: 'synthetic-penny-k' });
 
-			// A reload keeps everything on this device; the goods list starts closed for a full cart.
+			// A reload keeps everything on this device.
 			await page.reload();
 			await expect(page.getByTestId('cart-count')).toHaveText('4 tétel');
-			await expect(page.getByTestId('browse')).not.toHaveAttribute('open', '');
 			await expect(page.getByTestId('store-list').getByRole('heading', { level: 3 })).toHaveText('Lista: Penny');
 			await expectClean(page, rec);
 		});
@@ -697,9 +706,8 @@ test.describe('cart details', () => {
 		);
 		await page.goto('/kosar');
 		await expect(page.getByTestId('cart-count')).toHaveText('2 tétel');
-		await expect(page.getByTestId('browse')).not.toHaveAttribute('open', '');
-		await page.getByText('További termékek').click();
-		await expect(page.getByTestId('browse')).toHaveAttribute('open', '');
+		await page.getByRole('link', { name: 'További termékek' }).click();
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Termékek');
 
 		// By keyboard: "Kosárba" turns into − amount +, and the focus moves to "+".
 		await page.getByRole('button', { name: 'Kosárba: banán' }).focus();
@@ -714,6 +722,8 @@ test.describe('cart details', () => {
 		await expect(page.getByRole('button', { name: 'Kosárba: banán' })).toBeFocused();
 
 		// The bin in the cart (tej is at its smallest amount): the line goes, the focus goes to the cart's heading.
+		await page.getByTestId('goods-cart-link').click();
+		await expect(page.getByTestId('cart-count')).toHaveText('2 tétel');
 		await page.getByTestId('cart').getByRole('button', { name: 'Törlés a kosárból: tej' }).press('Enter');
 		await expect(page.getByTestId('cart-count')).toHaveText('1 tétel');
 		await expect(page.getByRole('heading', { level: 2, name: /A kosarad/ })).toBeFocused();
@@ -746,19 +756,22 @@ test.describe('cart details', () => {
 		expect(((await storedCart(page)) as { lines: unknown[] }).lines).toHaveLength(99);
 
 		// Room for one more: the dropped good makes way.
-		await page.getByText('További termékek').click();
+		await page.getByRole('link', { name: 'További termékek' }).click();
 		await page.getByRole('button', { name: 'Kosárba: alma' }).click();
-		await expect(page.getByTestId('cart-count')).toHaveText('100 tétel');
-		await expect(page.getByTestId('cart-dropped')).toHaveCount(0);
+		await expect(page.getByTestId('goods-cart-link')).toHaveText('Kosár: 100 tétel');
+		await expect(page.getByTestId('header-cart-count')).toHaveText('100');
 		const lines = ((await storedCart(page)) as { lines: { ingredientId: string }[] }).lines;
 		expect(lines).toHaveLength(100);
 		expect(lines.map((line) => line.ingredientId)).not.toContain('aru_099');
 		expect(lines.at(-1)).toEqual({ ingredientId: 'alma', qty: 0.5 });
 
-		// Now the cart is full.
+		// Now the cart is full; the cart page no longer shows the notice about the dropped good.
 		await page.getByRole('button', { name: 'Kosárba: tej' }).click();
-		await expect(page.getByTestId('browse')).toContainText('A kosárba legfeljebb 100 termék fér.');
+		await expect(page.getByTestId('goods')).toContainText('A kosárba legfeljebb 100 termék fér.');
+		await expect(page.getByTestId('header-cart-count')).toHaveText('100');
+		await page.getByTestId('goods-cart-link').click();
 		await expect(page.getByTestId('cart-count')).toHaveText('100 tétel');
+		await expect(page.getByTestId('cart-dropped')).toHaveCount(0);
 		await expectClean(page, rec);
 	});
 });

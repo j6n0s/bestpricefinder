@@ -67,7 +67,7 @@ src/lib/districts.ts           the 23 Budapest districts (generated data/distric
 src/lib/format.ts              hu-HU money ("1 234 Ft"), quantities, distances, dates ("2026. 10. 13.")
 src/lib/meta.svelte.ts         MetaStore shared through context: getMeta()
 src/lib/theme.svelte.ts        $state colour theme (system / light / dark), written to <html data-theme>
-src/lib/components/            Header (theme switch, language switch, cart), BottomNav (four tabs), Attribution,
+src/lib/components/            Header (theme switch, language switch, cart), BottomNav (five tabs), Attribution,
                                Disclaimer, Badge, EmptyState, ErrorState, Spinner, LocationExplainer,
                                DistrictPicker, MapPicker; plan/, recipes/, list/, settings/
 src/lib/plan/                  plan and recipe helpers (see "Features" below)
@@ -86,7 +86,8 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list, car
 | Heti terv (plan) | `src/routes/terv` | `src/lib/components/plan/` (PlanForm, DayCard, MealPicker, PlanChecks, PlanWarnings) | `src/lib/plan/` (plan.ts, checks.ts, dates.ts, labels.ts) | `tests/e2e/plan.spec.ts` |
 | Receptek (recipes) | `src/routes/receptek`, `receptek/[id]` | `src/lib/components/recipes/` (RecipeCard, RecipePrice, ChainCostTable, IngredientList, ServingsStepper, NutritionTable, AddToPlan, TagList) | `src/lib/plan/recipes.ts`, `filters.svelte.ts` | `tests/e2e/recipes.spec.ts` |
 | Bevásárlólista + közeli árak (list) | `src/routes/lista` | `src/lib/components/list/` (RangePicker, ShoppingList, NearbyPrices, OriginChooser, StoreRanking, StoreList, StoreLine), `src/lib/components/journey/` (ShoppingOptions, JourneyMap) | `src/lib/list/` (see `src/lib/list/README.md`), `src/lib/journey/` (see its README) | `tests/e2e/list.spec.ts` |
-| Kosár (cart) | `src/routes/kosar` | `src/lib/components/cart/` (QtyStepper), and the list's NearbyPrices + ShoppingOptions | `src/lib/cart/cart.ts`, `src/lib/journey/` | `tests/e2e/cart.spec.ts` |
+| Termékek (goods) | `src/routes/termekek` | `src/lib/components/cart/` (QtyStepper) | `src/lib/cart/cart.ts`, `categories.ts`, `session.svelte.ts` | `tests/e2e/cart.spec.ts` |
+| Kosár (cart) | `src/routes/kosar` | QtyStepper, and the list's NearbyPrices + ShoppingOptions | `src/lib/cart/cart.ts`, `session.svelte.ts`, `src/lib/journey/` | `tests/e2e/cart.spec.ts` |
 | Kamra, kizárások (settings) | `src/routes/beallitasok` | `src/lib/components/settings/` (PantrySettings, ExclusionSettings) | `src/lib/list/settings.ts` | `tests/e2e/list.spec.ts`, `smoke.spec.ts` |
 
 - **Plan:** POST /api/plan/suggest makes the plan, POST /api/plan/check re-checks it after every edit (with the
@@ -125,9 +126,10 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list, car
   tiles, no request anywhere), listed stop by stop with an OpenStreetMap link holding only the store's own
   public position, and can be shown as a list per store. When the route is not worth it, the page says how
   much it would have saved. Ties are never broken by chain or store name. Shown on `/lista` and `/kosar`.
-- **Cart (Kosár):** goods with store prices (`priced_by: "gvh"`, never tap water) browsed like a shop's menu
-  (a bar of shop sections and, under a section, its kinds of goods from the ingredient tags:
-  `$lib/cart/categories`) or searched without accents, put in a cart with − / + amounts along round steps
+- **Goods (Termékek) and the cart (Kosár):** on the goods page the goods with store prices (`priced_by:
+  "gvh"`, never tap water) are browsed like a shop's menu (a bar of shop sections and, under a section, its
+  kinds of goods from the ingredient tags: `$lib/cart/categories`) or searched without accents, and put in
+  the cart with "Kosárba". The cart page is the list of the chosen goods with − / + amounts along round steps
   (`QTY_LADDERS`; eggs by 10),
   "kb. N db" for goods with a piece weight. The cart is `StoredState.cart` (personal data, on the device only;
   at most 100 goods); goods that lose their store price are flagged and leave the cart at its next change.
@@ -145,8 +147,8 @@ tests/e2e/                     Playwright specs (smoke, plan, recipes, list, car
 
 The header holds the app's name (the way home) and, at the right, the theme switch, the language switch and
 the cart button with how many goods the cart holds (it follows every write: this tab's through `onChange`,
-another tab's through `onExternalChange`). The bottom bar has four tabs (Heti terv, Receptek, Lista,
-Beállítások). The theme (`$lib/theme.svelte`, `StoredState.theme`) is "system" by default: the dark tokens
+another tab's through `onExternalChange`). The bottom bar has five tabs (Termékek, Heti terv, Receptek,
+Lista, Beállítások); the cart has no tab, only the header's button and the links on the goods page. The theme (`$lib/theme.svelte`, `StoredState.theme`) is "system" by default: the dark tokens
 apply through `prefers-color-scheme` unless the user chose light; an explicit choice sets
 `data-theme="light|dark"` on `<html>` (`src/app.css` carries the dark tokens twice, and
 `src/lib/contrast.test.ts` checks the two copies are the same) and updates the `theme-color` metas, so the

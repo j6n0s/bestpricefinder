@@ -86,7 +86,8 @@ The user relays anything urgent.
   - "Pont választása a térképen" on `/lista` (the origin chooser) and `/beallitasok`: a schematic map drawn on the device (store dots, district numerals, zoom, keyboard nudging; no tiles, no request to any other site) sets the starting point when the position is not available or not wanted. Only the rounded point is stored, on the device.
   - "Otthon lévő mennyiségek" in Beállítások › Kamra: any good with store prices, with the amount at home; the list subtracts it on the device (a line fully covered moves to the pantry section, a partly covered one is bought for the rest, with a note). `on_hand` is never sent to the API.
   - `/kosar`: the goods are browsed like a shop's menu: a bar of shop sections and, under a section, its kinds of goods (from the ingredient tags), as the user asked; the name search stays.
-  - Later the same day: the cart moved from the bottom bar into the header (after the language switch, with the number of goods), and a theme switch (light / dark, kept on the device; "A rendszer szerint" in Beállítások › Megjelenés) sits before the language switch. The bottom bar has four tabs.
+  - Later the same day: the cart moved from the bottom bar into the header (after the language switch, with the number of goods), and a theme switch (light / dark, kept on the device; "A rendszer szerint" in Beállítások › Megjelenés) sits before the language switch.
+  - 2026-10-16, after the user's correction: the goods are found and put in the cart on their own page, "Termékek" (the bottom bar's first tab, with the category menu and the search); "Kosár" is only the list of the chosen goods with their amounts and the nearby prices.
 
 ## Founder-only items (agents must not do these)
 - File the GVH re-use request; the draft is in `research/gap-gvh-reuse-legal-route/request_draft_hu.txt`.

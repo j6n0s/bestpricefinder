@@ -1,9 +1,13 @@
 /**
- * The cart ("Kosár"): goods picked by hand, without a plan, priced at the nearby stores. The cart is personal
- * data and stays on this device (StoredState.cart).
+ * The goods page ("Termékek": find goods and put them in the cart) and the cart ("Kosár": the list of the
+ * chosen goods, priced at the nearby stores). The cart is personal data and stays on this device
+ * (StoredState.cart).
  */
 export const cartHu = {
 	title: 'Kosár',
+	goods_title: 'Termékek',
+	open_cart: 'Kosár: {items}',
+	find_goods: 'Termékek keresése',
 	loading: 'Termékek betöltése…',
 	error_title: 'A termékek betöltése nem sikerült',
 
@@ -19,7 +23,6 @@ export const cartHu = {
 	dropped_other: '{count} termék kimaradt, mert már nincs bolti ára.',
 	full: 'A kosárba legfeljebb {max} termék fér.',
 
-	browse_title: 'Termékek',
 	browse_more: 'További termékek',
 	categories_label: 'Kategóriák',
 	category_all: 'Az egész kategória',

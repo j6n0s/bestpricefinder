@@ -1,5 +1,5 @@
 <!--
-	Home: the title and the three ways in (plan, recipes, cart). On the first visit it also asks which foods to
+	Home: the title and the three ways in (plan, recipes, goods). On the first visit it also asks which foods to
 	leave out ("Mit nem eszel?"), with the same controls as Settings; the choices are saved on this device as
 	they are made (diet preferences are health data, BUILD-BRIEF §8.9). "Mentés" closes the question for good
 	(StoredState.preferencesAsked) and points to Settings, where they can be changed. No health or price claims.
@@ -53,6 +53,6 @@
 	<div class="btn-row">
 		<a class="btn btn-primary" href="/terv">{t('core.home_cta_plan')}</a>
 		<a class="btn btn-secondary" href="/receptek">{t('core.home_cta_recipes')}</a>
-		<a class="btn btn-secondary" href="/kosar">{t('core.home_cta_cart')}</a>
+		<a class="btn btn-secondary" href="/termekek">{t('core.home_cta_goods')}</a>
 	</div>
 </section>

@@ -3,6 +3,9 @@ import type { Messages } from './types';
 
 export const cartEn: Messages<typeof cartHu> = {
 	title: 'Cart',
+	goods_title: 'Goods',
+	open_cart: 'Cart: {items}',
+	find_goods: 'Find goods',
 	loading: 'Loading the goods…',
 	error_title: 'The goods could not be loaded',
 
@@ -18,7 +21,6 @@ export const cartEn: Messages<typeof cartHu> = {
 	dropped_other: '{count} items were left out: they have no store price any more.',
 	full: 'The cart holds at most {max} items.',
 
-	browse_title: 'Goods',
 	browse_more: 'More goods',
 	categories_label: 'Categories',
 	category_all: 'The whole category',

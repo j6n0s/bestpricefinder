@@ -1,7 +1,8 @@
 <!--
 	Main navigation: a fixed bottom tab bar on narrow screens, a plain row under the header on wide ones.
-	Icons are simple original line drawings; every tab has a visible text label. Four tabs: the home page is
-	reached through the app name in the header, and the cart through the header's basket button.
+	Icons are simple original line drawings; every tab has a visible text label. Five tabs (the most that fit at
+	320 px with enlarged text): the home page is reached through the app name in the header, and the cart (the
+	list of the goods chosen on the Termékek tab) through the header's basket button.
 	While the bar is fixed, its real height (it grows when the user enlarges text or spacing) is published as
 	`--nav-reserved` on <html>, so the layout's bottom padding and scroll padding keep content clear of it.
 	(A CSSOM write, which the CSP allows; no style attribute in the markup.)
@@ -19,6 +20,11 @@
 	}
 
 	const ITEMS: readonly Item[] = [
+		{
+			href: '/termekek',
+			label: 'core.nav_goods',
+			icon: 'M10.5 4a6.5 6.5 0 1 0 0 13a6.5 6.5 0 1 0 0-13zM15.3 15.3 20 20'
+		},
 		{ href: '/terv', label: 'core.nav_plan', icon: 'M4 6h16v14H4zM4 10h16M8.5 3.5v4M15.5 3.5v4M8 14h3M13 14h3M8 17h3' },
 		{
 			href: '/receptek',
@@ -92,7 +98,7 @@
 
 	ul {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-template-columns: repeat(5, minmax(0, 1fr));
 		max-width: var(--content-max);
 		margin: 0 auto;
 		padding: 0;

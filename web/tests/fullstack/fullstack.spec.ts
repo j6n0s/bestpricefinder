@@ -647,8 +647,8 @@ test('cart -> nearby stores -> one store or a route, on the real stack', async (
 	expect(goods.length, 'goods with store prices').toBeGreaterThan(CART_GOODS);
 
 	// ── the goods: every ingredient with store prices (never tap water) ──
-	await openPage(page, '/kosar');
-	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Kosár');
+	await openPage(page, '/termekek');
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Termékek');
 	await expect(page.getByTestId('goods-count')).toHaveText(loose(`${goods.length} termék`));
 	const shownIds = await page.getByTestId('good').evaluateAll((els) => els.map((el) => el.getAttribute('data-ingredient-id') ?? ''));
 	expect([...shownIds].sort()).toEqual(goods.map((good) => good.id).sort());
@@ -659,6 +659,9 @@ test('cart -> nearby stores -> one store or a route, on the real stack', async (
 	for (const id of picked) {
 		await page.locator(`[data-testid="good"][data-ingredient-id="${id}"]`).getByRole('button', { name: /^Kosárba: / }).click();
 	}
+	await expect(page.getByTestId('goods-cart-link')).toHaveText(loose(`Kosár: ${CART_GOODS} tétel`));
+	await page.getByTestId('goods-cart-link').click();
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Kosár');
 	await expect(page.getByTestId('cart-count')).toHaveText(loose(`${CART_GOODS} tétel`));
 	await expect(page.getByTestId('cart-line')).toHaveCount(CART_GOODS);
 
